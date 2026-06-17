@@ -1700,6 +1700,68 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 }
 
 /* ═══════════════════════════════════════════════════════
+   SVC-CAMPAIGN — "ma quale campagna scegliere?" section
+═══════════════════════════════════════════════════════ */
+.svc-campaign {
+  background:
+    radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%);
+}
+
+.svc-campaign__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1rem, 3vw, 2rem);
+  align-items: center;
+}
+
+.svc-campaign__left {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.svc-campaign__img {
+  width: clamp(260px, 42vw, 480px);
+  height: auto;
+  object-fit: contain;
+}
+
+.svc-campaign__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--black);
+  line-height: 1.05;
+  margin-bottom: var(--space-6);
+}
+
+.svc-campaign__pills {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.svc-campaign__pill {
+  display: block;
+  padding: var(--space-3) var(--space-6);
+  background: var(--primary);
+  color: var(--white);
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .svc-campaign__inner { grid-template-columns: 1fr; }
+  .svc-campaign__left { justify-content: center; }
+}
+
+/* ═══════════════════════════════════════════════════════
    SVC-TOOLS — "che tools utilizziamo" section
 ═══════════════════════════════════════════════════════ */
 .svc-tools {
