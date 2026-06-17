@@ -1819,7 +1819,7 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 .svc-magic__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 5vw, 5rem);
+  gap: clamp(1rem, 2vw, 2rem);
   align-items: center;
 }
 
@@ -1829,7 +1829,7 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   justify-content: center;
 }
 .svc-magic__cat img {
-  width: clamp(220px, 35vw, 380px);
+  width: clamp(320px, 50vw, 600px);
   height: auto;
   object-fit: contain;
 }
