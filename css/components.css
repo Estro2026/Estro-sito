@@ -1554,23 +1554,24 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 .svc-hero__right {
   display: flex;
   flex-direction: column;
+  align-self: stretch;
 }
 
 .svc-hero__video-wrap {
   width: 100%;
-  height: 100%;
-  min-height: 300px;
+  flex: 1;
   border-radius: 20px;
   overflow: hidden;
   position: relative;
+  min-height: 400px;
 }
 .svc-hero__video-wrap iframe {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
   display: block;
+  border: none;
 }
 
 .svc-hero__img-wrap {
