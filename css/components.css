@@ -1763,11 +1763,10 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 }
 
 /* ═══════════════════════════════════════════════════════
-   SVC-CLIENTS — logo grid section
+   SVC-CLIENTS — dual marquee ticker
 ═══════════════════════════════════════════════════════ */
 .svc-clients {
-  background: #fff;
-  border-top: var(--border);
+  overflow: hidden;
 }
 
 .svc-clients__title {
@@ -1777,50 +1776,55 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   letter-spacing: 0.04em;
   text-transform: uppercase;
   text-align: center;
-  color: var(--black);
+  color: var(--white);
   margin-bottom: clamp(2.5rem, 5vw, 4rem);
 }
 
-.svc-clients__grid {
-  display: grid;
-  grid-template-columns: repeat(6, 1fr);
-  gap: 1px;
-  border: 1px solid var(--black-08);
-  border-radius: 16px;
+.svc-clients__marquee-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
   overflow: hidden;
+  mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+.svc-clients__track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: marquee-left 40s linear infinite;
+}
+.svc-clients__track--rev {
+  animation-direction: reverse;
+}
+.svc-clients__track:hover,
+.svc-clients__track--rev:hover {
+  animation-play-state: paused;
+}
+
+@keyframes marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .svc-clients__logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 1.5rem;
-  background: #fff;
-  border-right: 1px solid var(--black-08);
-  border-bottom: 1px solid var(--black-08);
-  transition: background var(--dur-fast);
+  flex-shrink: 0;
+  width: 120px;
 }
 .svc-clients__logo img {
   max-width: 100%;
-  max-height: 80px;
+  max-height: 44px;
   object-fit: contain;
-  filter: grayscale(1);
-  opacity: 0.6;
-  transition: filter var(--dur-fast), opacity var(--dur-fast);
-}
-.svc-clients__logo:hover {
-  background: #fdf2f7;
+  filter: brightness(0) invert(1);
+  opacity: 0.75;
+  transition: opacity var(--dur-fast);
 }
 .svc-clients__logo:hover img {
-  filter: grayscale(0);
   opacity: 1;
-}
-
-@media (max-width: 900px) {
-  .svc-clients__grid { grid-template-columns: repeat(3, 1fr); }
-}
-@media (max-width: 500px) {
-  .svc-clients__grid { grid-template-columns: repeat(2, 1fr); }
 }
 
 /* ═══════════════════════════════════════════════════════
