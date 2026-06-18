@@ -6053,6 +6053,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
 }
 .svc-settori__item svg {
   color: var(--black);
+  stroke-width: 1.5px;
 }
 .svc-settori__item span {
   font-family: var(--font-secondary);
@@ -6164,15 +6165,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
   text-align: center;
   line-height: 1.4;
 }
-.svc-integrazione__wave {
-  display: block;
-  line-height: 0;
-}
-.svc-integrazione__wave svg {
-  width: 100%;
-  height: auto;
-  display: block;
-}
+/* wave removed */
 
 /* ═══════════════════════════════════════════════════════
    SVC-STAT-VIDEO — video + 87% stat side by side (dark)
