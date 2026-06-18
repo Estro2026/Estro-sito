@@ -2097,6 +2097,10 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   text-align: center;
   padding-bottom: 0;
   border-bottom: var(--border);
+  min-height: 45vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .svc-statement__text {
   font-family: var(--font-primary);
