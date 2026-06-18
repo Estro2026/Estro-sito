@@ -5796,3 +5796,240 @@ body:has(.hero-video) .nav:not(.scrolled) {
 @media (prefers-reduced-motion: reduce) {
   .clients__row { animation: none; }
 }
+
+/* ═══════════════════════════════════════════════════════
+   SVC-ZAMPA — dark stat section (influencer marketing)
+═══════════════════════════════════════════════════════ */
+.svc-zampa {
+  background: var(--black);
+  padding-block: 0;
+}
+.svc-zampa__title {
+  font-family: var(--font-primary);
+  font-size: clamp(3rem, 8vw, 8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  transform: scaleY(1.18);
+  transform-origin: left top;
+  display: block;
+  padding-block: clamp(3rem, 6vw, 6rem);
+  line-height: 1;
+}
+.svc-zampa__stat-wrap {
+  background: #fff;
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+}
+.svc-zampa__stat {
+  display: flex;
+  align-items: center;
+  gap: clamp(2rem, 5vw, 5rem);
+}
+.svc-zampa__num {
+  font-family: var(--font-primary);
+  font-size: clamp(4rem, 10vw, 9rem);
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: 0.02em;
+  transform: scaleY(1.18);
+  transform-origin: left top;
+  display: block;
+  flex-shrink: 0;
+  line-height: 1;
+}
+.svc-zampa__desc {
+  font-family: var(--font-secondary);
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SVC-COLLAB — featured celebrity video section
+═══════════════════════════════════════════════════════ */
+.svc-collab {
+  background: var(--black);
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+.svc-collab__inner {
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+}
+.svc-collab__video {
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 9/16;
+  max-height: 600px;
+}
+.svc-collab__video iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.svc-collab__info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.svc-collab__label {
+  font-family: var(--font-secondary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+}
+.svc-collab__yt {
+  display: flex;
+  align-items: center;
+}
+.svc-collab__name {
+  font-family: var(--font-primary);
+  font-size: clamp(2.5rem, 5vw, 5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  transform: scaleY(1.18);
+  transform-origin: left top;
+  display: block;
+  line-height: 1;
+}
+.svc-collab__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  padding: 0.6rem 1.4rem;
+  font-family: var(--font-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--white);
+  text-decoration: none;
+  transition: background var(--dur-base), border-color var(--dur-base);
+}
+.svc-collab__btn:hover {
+  background: rgba(255,255,255,0.15);
+  border-color: rgba(255,255,255,0.3);
+}
+
+/* ═══════════════════════════════════════════════════════
+   SVC-COLLAB-GRID — photo grid "alcune collaborazioni"
+═══════════════════════════════════════════════════════ */
+.svc-collab-grid__items {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1.5rem, 3vw, 2.5rem);
+  margin-top: clamp(2rem, 4vw, 3rem);
+}
+.svc-collab-grid__item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+.svc-collab-grid__photo {
+  border-radius: 12px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+.svc-collab-grid__photo img {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  display: block;
+}
+.svc-collab-grid__name {
+  font-family: var(--font-secondary);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--primary);
+  text-align: center;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SVC-TAILOR — tailor made section
+═══════════════════════════════════════════════════════ */
+.svc-tailor {
+  background: #fff;
+}
+.svc-tailor__inner {
+  display: grid;
+  grid-template-columns: 45fr 55fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
+  align-items: center;
+}
+.svc-tailor__visual {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+.svc-tailor__tag {
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-3);
+}
+.svc-tailor__title {
+  font-family: var(--font-primary);
+  font-size: clamp(1.6rem, 3vw, 2.6rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--primary);
+  letter-spacing: 0.04em;
+  transform: scaleY(1.18);
+  transform-origin: left top;
+  display: block;
+  line-height: 1.05;
+  margin-bottom: var(--space-6);
+}
+.svc-tailor__text {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--black-80);
+  line-height: 1.7;
+}
+
+/* ═══════════════════════════════════════════════════════
+   SVC-MINI-FEATURES — icon 3-col grid inside content block
+═══════════════════════════════════════════════════════ */
+.svc-mini-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid #e8e8e8;
+}
+.svc-mini-features__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  text-align: center;
+}
+.svc-mini-features__item svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.svc-mini-features__item span {
+  font-family: var(--font-secondary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--primary);
+  line-height: 1.4;
+}
