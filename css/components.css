@@ -6266,20 +6266,20 @@ body:has(.hero-video) .nav:not(.scrolled) {
   border-radius: 16px;
 }
 
-/* ── stat-video: video full-width above, stat below ── */
+/* ── stat-video: video left, stat right ── */
 .svc-stat-video__inner {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(2rem, 4vw, 3rem);
+  display: grid;
+  grid-template-columns: 55fr 45fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
 }
 .svc-stat-video__stat {
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: clamp(2rem, 5vw, 5rem);
+  flex-direction: column;
+  gap: var(--space-5);
 }
 .svc-stat-video__num {
-  flex-shrink: 0;
+  line-height: 0.9;
 }
 
 /* ── tailor divider ── */
