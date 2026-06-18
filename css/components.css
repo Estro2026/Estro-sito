@@ -2104,12 +2104,12 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 }
 .svc-statement__text {
   font-family: var(--font-primary);
-  font-size: clamp(1.5rem, 2.8vw, 2.6rem);
+  font-size: clamp(2.5rem, 5.5vw, 5rem);
   font-weight: 900;
   text-transform: uppercase;
   color: var(--primary);
-  line-height: 1.2;
-  letter-spacing: 0.06em;
+  line-height: 1.0;
+  letter-spacing: 0.04em;
   transform: scaleY(1.18);
   transform-origin: center top;
   display: block;
