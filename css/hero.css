@@ -1127,10 +1127,7 @@ main { margin: 0; padding: 0; }
 }
 .svc-channels .svc-channels__title { color: var(--black) !important; }
 
-/* svc-statement + svc-blocks-section: chiaro caldo */
+/* svc-statement + svc-blocks-section: stesso bianco della hero */
 .svc-blocks-section {
-  background:
-    radial-gradient(ellipse 50% 40% at 90% 50%, rgba(219,0,90,0.05) 0%, transparent 65%),
-    radial-gradient(ellipse 40% 30% at 5% 50%, rgba(219,0,90,0.04) 0%, transparent 60%),
-    #fafafa !important;
+  background: #fff !important;
 }
