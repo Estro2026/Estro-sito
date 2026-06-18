@@ -1988,7 +1988,9 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   background: var(--white) !important;
   color: var(--black) !important;
   border-color: var(--white) !important;
+  transform: translateY(-2px);
 }
+.svc-caffe .btn--primary::before { display: none; }
 
 @media (max-width: 768px) {
   .svc-caffe__inner { grid-template-columns: 1fr; gap: 2.5rem; }
