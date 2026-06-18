@@ -1107,11 +1107,9 @@ main { margin: 0; padding: 0; }
 .svc-advantages .svc-advantages__item {
   background: rgba(255,255,255,0.10) !important;
   border-color: rgba(255,255,255,0.15) !important;
-  border-left-color: rgba(255,255,255,0.7) !important;
 }
 .svc-advantages .svc-advantages__item:hover {
   background: rgba(255,255,255,0.18) !important;
-  border-left-color: #fff !important;
 }
 .svc-advantages .svc-advantages__num { color: rgba(255,255,255,0.35) !important; opacity: 1 !important; }
 .svc-advantages .svc-advantages__item-title { color: #fff !important; }

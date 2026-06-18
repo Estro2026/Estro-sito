@@ -1925,7 +1925,7 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 .svc-hero__platforms img:hover { transform: scale(1.15); }
 
 /* ═══════════════════════════════════════════════════════
-   SVC-ADVANTAGES — 6-item 2-col benefits grid
+   SVC-ADVANTAGES — 6-item 3-col cards (same style as svc-process)
 ═══════════════════════════════════════════════════════ */
 .svc-advantages__title {
   font-family: var(--font-primary);
@@ -1948,55 +1948,57 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 
 .svc-advantages__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(1rem, 2vw, 1.5rem);
 }
 
 .svc-advantages__item {
+  background: var(--white);
+  border: var(--border);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 2.5vw, 2rem);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  position: relative;
-  border-left: 4px solid var(--primary) !important;
-  padding: clamp(1rem, 1.8vw, 1.5rem) clamp(1rem, 1.8vw, 1.5rem);
-  border: var(--border);
-  border-radius: 12px;
-  background: var(--white);
+  gap: var(--space-4);
   transition: box-shadow var(--dur-base) var(--ease-out), transform var(--dur-base) var(--ease-out);
 }
 .svc-advantages__item:hover {
   box-shadow: var(--shadow-md);
-  transform: translateY(-2px);
+  transform: translateY(-4px);
 }
 
 .svc-advantages__num {
   font-family: var(--font-primary);
-  font-size: clamp(1.8rem, 3.5vw, 3rem);
-  font-weight: 900;
-  letter-spacing: -0.02em;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
   color: var(--primary);
+  opacity: 0.6;
   line-height: 1;
-  opacity: 0.25;
+  text-transform: uppercase;
 }
 
 .svc-advantages__item-title {
   font-family: var(--font-primary);
-  font-size: clamp(0.9rem, 1.4vw, 1.1rem);
-  font-weight: 800;
+  font-size: clamp(1rem, 1.6vw, 1.3rem);
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.02em;
   color: var(--primary);
   line-height: 1.2;
 }
 
 .svc-advantages__item-text {
   font-family: var(--font-secondary);
-  font-size: clamp(0.75rem, 1vw, 0.88rem);
+  font-size: var(--text-sm);
   color: var(--black-60);
-  line-height: 1.6;
+  line-height: 1.7;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .svc-advantages__grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 600px) {
   .svc-advantages__grid { grid-template-columns: 1fr; }
   .svc-advantages { min-height: unset; }
 }
