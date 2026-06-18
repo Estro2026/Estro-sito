@@ -2199,6 +2199,200 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 }
 
 /* ═══════════════════════════════════════════════════════
+   SVC-AI STYLE COMPONENTS
+   (layout reference: Pagina-servizi-AI)
+═══════════════════════════════════════════════════════ */
+
+/* — Section header centrato con eyebrow — */
+.svc-section-header {
+  text-align: center;
+  margin-bottom: clamp(2.5rem, 5vw, 4rem);
+}
+.svc-section-header__eyebrow {
+  display: inline-block;
+  font-family: var(--font-secondary);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-3);
+}
+.svc-section-header__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--black);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+  margin-bottom: var(--space-4);
+}
+.svc-section-header__sub {
+  font-family: var(--font-secondary);
+  font-size: clamp(0.9rem, 1.2vw, 1.05rem);
+  color: var(--black-60);
+  max-width: 560px;
+  margin-inline: auto;
+  line-height: 1.6;
+}
+
+/* — Content block: image + text 2-col — */
+.svc-content-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 5rem);
+  align-items: center;
+  padding-block: clamp(3rem, 6vw, 5rem);
+  border-top: var(--border);
+}
+.svc-content-block:last-child { border-bottom: var(--border); }
+.svc-content-block--flip .svc-content-block__visual { order: 2; }
+.svc-content-block--flip .svc-content-block__copy   { order: 1; }
+
+.svc-content-block__visual {
+  border-radius: 16px;
+  overflow: hidden;
+  background: #f0f0f0;
+  aspect-ratio: 4/3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px dashed #ddd;
+}
+.svc-content-block__visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+.svc-content-block__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  color: var(--primary);
+  opacity: 0.3;
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+}
+.svc-content-block__placeholder svg { width: 40px; height: 40px; }
+
+.svc-content-block__copy {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Eyebrow pill sopra il titolo del blocco */
+.svc-content-block__tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(219,0,90,0.08);
+  color: var(--primary);
+  border-radius: 100px;
+  padding: 0.3rem 0.9rem;
+  font-family: var(--font-secondary);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.svc-content-block__title {
+  font-family: var(--font-primary);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  color: var(--black);
+  line-height: 1.0;
+  letter-spacing: -0.01em;
+}
+
+.svc-content-block__text {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--black-60);
+  line-height: 1.75;
+}
+
+/* Checklist con spunta fucsia */
+.svc-checklist {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: 0;
+  margin: 0;
+}
+.svc-checklist li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--black-80);
+  line-height: 1.5;
+}
+.svc-checklist li::before {
+  content: "✓";
+  color: var(--primary);
+  font-weight: 700;
+  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+/* Box "I Vantaggi" — sfondo rosa, bordo sinistro fucsia */
+.svc-callout {
+  background: rgba(219,0,90,0.05);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 12px 12px 0;
+  padding: 1.25rem 1.5rem;
+}
+.svc-callout__label {
+  font-family: var(--font-secondary);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-3);
+  display: block;
+}
+
+/* Feature badge pills (⚡ Più rapidi, etc.) */
+.svc-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+.svc-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  border: 1.5px solid var(--black-12);
+  border-radius: 100px;
+  padding: 0.45rem 1rem;
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--black);
+  background: var(--white);
+  transition: border-color var(--dur-fast), color var(--dur-fast);
+}
+.svc-badge:hover { border-color: var(--primary); color: var(--primary); }
+.svc-badge__icon { font-size: 1rem; line-height: 1; }
+
+@media (max-width: 768px) {
+  .svc-content-block { grid-template-columns: 1fr; }
+  .svc-content-block--flip .svc-content-block__visual { order: 0; }
+  .svc-content-block--flip .svc-content-block__copy   { order: 0; }
+}
+
+/* ═══════════════════════════════════════════════════════
    SVC-CHANNELS — social platform icons
 ═══════════════════════════════════════════════════════ */
 .svc-channels__title {
