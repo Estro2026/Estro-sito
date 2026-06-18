@@ -6172,3 +6172,65 @@ body:has(.hero-video) .nav:not(.scrolled) {
   height: auto;
   display: block;
 }
+
+/* ═══════════════════════════════════════════════════════
+   SVC-STAT-VIDEO — video + 87% stat side by side (dark)
+═══════════════════════════════════════════════════════ */
+.svc-stat-video {
+  background: var(--black);
+  padding-block: clamp(4rem, 8vw, 7rem);
+}
+.svc-stat-video__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+}
+.svc-stat-video__video {
+  border-radius: 16px;
+  overflow: hidden;
+  aspect-ratio: 9/16;
+  max-height: 540px;
+}
+.svc-stat-video__video iframe {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.svc-stat-video__stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.svc-stat-video__num {
+  font-family: var(--font-primary);
+  font-size: clamp(6rem, 14vw, 13rem);
+  font-weight: 900;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  transform: scaleY(1.18);
+  transform-origin: left top;
+  display: block;
+  line-height: 0.9;
+}
+.svc-stat-video__pct {
+  font-size: 0.6em;
+  vertical-align: super;
+  line-height: 1;
+}
+.svc-stat-video__desc {
+  font-family: var(--font-secondary);
+  font-size: clamp(0.85rem, 1.3vw, 1rem);
+  font-weight: 500;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.7;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  max-width: 380px;
+}
+.svc-stat-video__line {
+  width: 60px;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 2px;
+}
