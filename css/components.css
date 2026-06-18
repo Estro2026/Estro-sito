@@ -2247,34 +2247,44 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   line-height: 1.6;
 }
 
-/* — Content block: image + text 2-col — */
+/* — Wrapper section with light gray bg — */
+.svc-blocks-section {
+  background: #f5f5f5;
+  padding-block: 0;
+}
+.svc-blocks-section .container {
+  padding-block: clamp(2rem, 4vw, 3rem);
+}
+
+/* — Content block: text(wider) + image 2-col — */
 .svc-content-block {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(2rem, 5vw, 5rem);
+  grid-template-columns: 55fr 45fr;
+  gap: clamp(2.5rem, 5vw, 5rem);
   align-items: center;
-  padding-block: clamp(3rem, 6vw, 5rem);
-  border-top: var(--border);
+  padding-block: clamp(2.5rem, 5vw, 4rem);
+  border-top: 1px solid #e0e0e0;
 }
-.svc-content-block:last-child { border-bottom: var(--border); }
-.svc-content-block--flip .svc-content-block__visual { order: 2; }
-.svc-content-block--flip .svc-content-block__copy   { order: 1; }
+.svc-content-block:first-child { border-top: none; }
+.svc-content-block:last-child { padding-bottom: 0; }
+.svc-content-block--flip .svc-content-block__visual { order: 1; }
+.svc-content-block--flip .svc-content-block__copy   { order: 2; }
 
 .svc-content-block__visual {
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  background: #f0f0f0;
+  background: #e8e8e8;
   aspect-ratio: 4/3;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1.5px dashed #ddd;
+  border: 1.5px dashed #c8c8c8;
 }
 .svc-content-block__visual img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  border-radius: 16px;
+  border-radius: 12px;
 }
 .svc-content-block__placeholder {
   display: flex;
@@ -2282,29 +2292,30 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   align-items: center;
   gap: var(--space-2);
   color: var(--primary);
-  opacity: 0.3;
+  opacity: 0.4;
   font-family: var(--font-secondary);
   font-size: var(--text-xs);
+  color: #aaa;
 }
-.svc-content-block__placeholder svg { width: 40px; height: 40px; }
+.svc-content-block__placeholder svg { width: 36px; height: 36px; color: var(--primary); opacity: 0.5; }
 
 .svc-content-block__copy {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
 }
 
-/* Eyebrow pill sopra il titolo del blocco */
+/* Eyebrow pill — fucsia tint bg, fucsia text */
 .svc-content-block__tag {
   display: inline-flex;
   align-items: center;
-  gap: var(--space-2);
-  background: rgba(219,0,90,0.08);
+  gap: 0.4rem;
+  background: rgba(219,0,90,0.10);
   color: var(--primary);
   border-radius: 100px;
-  padding: 0.3rem 0.9rem;
+  padding: 0.28rem 0.85rem;
   font-family: var(--font-secondary);
-  font-size: 0.7rem;
+  font-size: 0.68rem;
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -2313,18 +2324,19 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 
 .svc-content-block__title {
   font-family: var(--font-primary);
-  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   font-weight: 900;
   text-transform: uppercase;
   color: var(--black);
   line-height: 1.0;
   letter-spacing: -0.01em;
+  margin-top: var(--space-1);
 }
 
 .svc-content-block__text {
   font-family: var(--font-secondary);
-  font-size: var(--text-sm);
-  color: var(--black-60);
+  font-size: 0.9rem;
+  color: #444;
   line-height: 1.75;
 }
 
