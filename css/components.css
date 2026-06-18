@@ -2329,7 +2329,10 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   text-transform: uppercase;
   color: var(--black);
   line-height: 1.0;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.04em;
+  transform: scaleY(1.18);
+  transform-origin: left top;
+  display: block;
   margin-top: var(--space-1);
 }
 
