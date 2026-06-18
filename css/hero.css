@@ -1095,3 +1095,32 @@ main { margin: 0; padding: 0; }
   background-size: auto, auto, auto, auto !important;
   background-blend-mode: normal, normal, overlay, normal !important;
 }
+
+/* svc-advantages: FUCSIA (= svc-process) */
+.svc-advantages {
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.09'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #3a0020 0%, #DB005A 45%, #DB005A 65%, #2a001a 100%) !important;
+  background-blend-mode: soft-light, normal !important;
+}
+.svc-advantages .svc-advantages__title { color: #fff !important; }
+.svc-advantages .svc-advantages__item {
+  background: rgba(255,255,255,0.10) !important;
+  border-color: rgba(255,255,255,0.15) !important;
+}
+.svc-advantages .svc-advantages__item:hover { background: rgba(255,255,255,0.16) !important; }
+.svc-advantages .svc-advantages__num { color: rgba(255,255,255,0.4) !important; opacity: 1 !important; }
+.svc-advantages .svc-advantages__item-title { color: #fff !important; }
+.svc-advantages .svc-advantages__item-text  { color: rgba(255,255,255,0.75) !important; }
+
+/* svc-channels: chiaro con grain */
+.svc-channels {
+  background:
+    radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+    linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%) !important;
+  background-size: auto, auto, auto, auto !important;
+  background-blend-mode: normal, normal, overlay, normal !important;
+}
+.svc-channels .svc-channels__title { color: var(--black) !important; }

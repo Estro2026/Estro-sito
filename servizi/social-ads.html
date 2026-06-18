@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ESTRO — Social ADS: advertising su Meta, Instagram, TikTok e LinkedIn con creatività e targeting preciso." />
+  <meta name="description" content="ESTRO — Social ADS: campagne pubblicitarie su Facebook, Instagram, TikTok e altri canali social per trovare nuovi clienti." />
   <meta name="theme-color" content="#FFFFFF" />
   <title>Social ADS — ESTRO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
 </head>
 <body>
 
@@ -76,39 +77,61 @@
 
   <main>
 
-    <section class="page-hero page-hero--services" aria-labelledby="page-title">
-      <div class="page-hero__bg">
-        <div class="page-hero__noise"></div>
-        <div class="page-hero__gradient"></div>
-      </div>
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="../index.html">Home</a>
-          <span class="breadcrumb__sep">／</span>
-          <a href="../servizi.html">Servizi</a>
-          <span class="breadcrumb__sep">／</span>
-          <span class="breadcrumb__current">Social ADS</span>
-        </nav>
-        <div class="page-hero__inner">
-          <div>
-            <p class="page-hero__kicker">Servizio 02</p>
-            <h1 class="page-hero__title" id="page-title">Social<br /><em>ADS</em></h1>
+    <!-- ══ HERO ══════════════════════════════════════════════════ -->
+    <section class="svc-hero" aria-labelledby="page-title">
+      <div class="container svc-hero__inner">
+
+        <div class="svc-hero__left">
+          <p class="svc-hero__kicker">Social ADS</p>
+          <h1 class="svc-hero__title" id="page-title">
+            Trova nuovi clienti<br/>
+            grazie alle campagne<br/>
+            pubblicitarie <em>Social</em>.
+          </h1>
+          <div class="svc-hero__platforms">
+            <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" width="40" height="40" />
+            <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" width="40" height="40" />
+            <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok" width="40" height="40" />
+            <img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn" width="40" height="40" />
+            <img src="https://cdn.simpleicons.org/spotify/1DB954" alt="Spotify" width="40" height="40" />
           </div>
-          <div>
-            <p class="page-hero__sub reveal">Advertising su Meta, Instagram, TikTok e LinkedIn: creatività e targeting per raggiungere il pubblico giusto con il messaggio giusto.</p>
+          <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
+          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
+            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+            <label class="svc-hero__privacy">
+              <input type="checkbox" required />
+              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            </label>
+            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
+          </form>
+        </div>
+
+        <div class="svc-hero__right">
+          <div class="svc-hero__video-wrap">
+            <!-- video Social ADS — aggiungere URL YouTube -->
+            <div style="display:flex;align-items:center;justify-content:center;height:100%;background:#f4f4f4;border-radius:20px;color:#aaa;font-family:var(--font-secondary);font-size:0.85rem;">Video Social ADS</div>
           </div>
         </div>
+
       </div>
     </section>
 
+    <!-- ══ DIVISORE ZAMPA ════════════════════════════════════════ -->
+    <div class="svc-divider">
+      <img src="../foto%20servizi/Estro_zampa%20(1).svg" alt="" aria-hidden="true" class="svc-divider__img" />
+    </div>
+
+    <!-- ══ DESCRIZIONE ════════════════════════════════════════════ -->
     <section class="section service-detail">
       <div class="container">
         <div class="service-detail__grid">
           <div>
-            <p class="section__label reveal">Il servizio</p>
+            <h2 class="svc-section-title reveal">SOCIAL ADS<br/>PER IL TUO BUSINESS!</h2>
             <div class="service-detail__body reveal reveal-delay-1">
-              <p>I social network sono ambienti <strong>visivi e veloci</strong>: le creatività devono fermare lo scroll e comunicare in frazioni di secondo. Progettiamo campagne paid social che coniugano performance e identità di brand.</p>
-              <p>Dalla definizione degli obiettivi alla produzione delle creatività, fino all'ottimizzazione continua del budget — ogni step è presidiato con attenzione analitica e sensibilità creativa.</p>
+              <p>Hai un <strong>e-commerce</strong> e vuoi iniziare ad ottenere risultati concreti o migliorare le tue conversioni? Vuoi creare delle campagne di <strong>lead generation</strong> che funzionano? Vuoi far conoscere il tuo brand a migliaia di persone grazie ai social network?</p>
+              <p>Estro non è una semplice agenzia. <strong>Estro è un collettivo di professionisti e consulenti certificati</strong> che ti aiuta a perseguire i tuoi obiettivi coinvolgendoti nei passi operativi e consigliandoti sul perché e come investire per ottenere il massimo dalle campagne social. Perché da soli siamo bravi, <strong>ma insieme siamo imbattibili</strong>.</p>
             </div>
             <div class="reveal reveal-delay-2" style="margin-top: var(--space-10);">
               <a class="btn btn--primary" href="../contatti.html">Richiedi un preventivo</a>
@@ -116,15 +139,12 @@
           </div>
           <div>
             <div class="service-detail__panel reveal reveal-delay-1">
-              <p class="service-detail__panel-title">Cosa include</p>
+              <p class="service-detail__panel-title">Tipologie di campagne</p>
               <ul class="service-detail__list">
-                <li class="service-detail__item">Strategia di targeting e audience</li>
-                <li class="service-detail__item">Produzione creatività statiche e video</li>
-                <li class="service-detail__item">Setup campagne Meta Ads Manager</li>
-                <li class="service-detail__item">Campagne TikTok e LinkedIn</li>
-                <li class="service-detail__item">Retargeting e lookalike audience</li>
-                <li class="service-detail__item">A/B test creatività e copy</li>
-                <li class="service-detail__item">Report performance mensile</li>
+                <li class="service-detail__item">Campagne Social per E-commerce</li>
+                <li class="service-detail__item">Campagne Social di Lead Generation</li>
+                <li class="service-detail__item">Campagne di Brand Awareness</li>
+                <li class="service-detail__item">Campagne per Attività Locali</li>
               </ul>
             </div>
             <div class="service-detail__cta-box reveal reveal-delay-2">
@@ -136,21 +156,125 @@
       </div>
     </section>
 
-  </main>
+    <!-- ══ VANTAGGI ═══════════════════════════════════════════════ -->
+    <section class="section svc-advantages">
+      <div class="container">
+        <h2 class="svc-advantages__title reveal">ESTRO È IL TUO COMPAGNO IDEALE,<br/>GUARDA QUANTI VANTAGGI!</h2>
+        <div class="svc-advantages__grid">
 
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../assets/Estro_logo05 (1).webp" alt="ESTRO" />
-      </a>
-      <nav class="footer__social" aria-label="Social media">
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Instagram</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">LinkedIn</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Behance</a>
-      </nav>
-      <p class="footer__copy">© 2024 ESTRO. Tutti i diritti riservati.</p>
-    </div>
-  </footer>
+          <div class="svc-advantages__item reveal">
+            <div class="svc-advantages__num">01</div>
+            <h3 class="svc-advantages__item-title">Stop agli sprechi di denaro</h3>
+            <p class="svc-advantages__item-text">Creiamo insieme campagne pubblicitarie efficaci che evitino le spese inutili e portino <strong>risultati concreti nel minor tempo possibile</strong>.</p>
+          </div>
+
+          <div class="svc-advantages__item reveal reveal-delay-1">
+            <div class="svc-advantages__num">02</div>
+            <h3 class="svc-advantages__item-title">Aumentiamo i profitti</h3>
+            <p class="svc-advantages__item-text">Per aumentare le vendite un e-commerce ha bisogno di <strong>traffico di qualità</strong> ed i social possono essere un bacino perfetto dove trovare potenziali clienti con costanza e precisione.</p>
+          </div>
+
+          <div class="svc-advantages__item reveal">
+            <div class="svc-advantages__num">03</div>
+            <h3 class="svc-advantages__item-title">Diventa un leader</h3>
+            <p class="svc-advantages__item-text">Avere una forte identità social per una azienda è importantissimo. <strong>Fatti vedere da migliaia di utenti</strong> e posizionati come uno dei brand di riferimento.</p>
+          </div>
+
+          <div class="svc-advantages__item reveal reveal-delay-1">
+            <div class="svc-advantages__num">04</div>
+            <h3 class="svc-advantages__item-title">Il pubblico migliore al momento giusto</h3>
+            <p class="svc-advantages__item-text">Individuiamo il target più efficace a cui mostrare i tuoi prodotti o servizi e costruiamo insieme una strategia <strong>per mostrarti al pubblico giusto nel momento migliore</strong>.</p>
+          </div>
+
+          <div class="svc-advantages__item reveal">
+            <div class="svc-advantages__num">05</div>
+            <h3 class="svc-advantages__item-title">Sono i numeri a parlare per noi</h3>
+            <p class="svc-advantages__item-text">I nostri tecnici compiono <strong>analisi meticolose e costanti</strong> basate su dati effettivi per ottenere sempre migliori risultati seguendo le più avanzate tecniche di scaling e di ottimizzazione.</p>
+          </div>
+
+          <div class="svc-advantages__item reveal reveal-delay-1">
+            <div class="svc-advantages__num">06</div>
+            <h3 class="svc-advantages__item-title">I soldi sono nelle liste</h3>
+            <p class="svc-advantages__item-text">Grazie alla lead generation potrai avere <strong>contatti di qualità</strong> di persone reali pronte ad essere ricontattate ed interessate ad ascoltarti.</p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CANALI ══════════════════════════════════════════════════ -->
+    <section class="section svc-channels">
+      <div class="container">
+        <h2 class="svc-channels__title reveal">TANTI CANALI PER RAGGIUNGERE<br/>UN UNICO OBIETTIVO: IL TUO</h2>
+        <div class="svc-channels__grid reveal reveal-delay-1">
+          <div class="svc-channels__item">
+            <img src="https://cdn.simpleicons.org/facebook/1877F2" alt="Facebook" />
+            <span>Facebook</span>
+          </div>
+          <div class="svc-channels__item">
+            <img src="https://cdn.simpleicons.org/instagram/E4405F" alt="Instagram" />
+            <span>Instagram</span>
+          </div>
+          <div class="svc-channels__item">
+            <img src="https://cdn.simpleicons.org/tiktok/000000" alt="TikTok" />
+            <span>TikTok</span>
+          </div>
+          <div class="svc-channels__item">
+            <img src="https://cdn.simpleicons.org/linkedin/0A66C2" alt="LinkedIn" />
+            <span>LinkedIn</span>
+          </div>
+          <div class="svc-channels__item">
+            <img src="https://cdn.simpleicons.org/spotify/1DB954" alt="Spotify" />
+            <span>Spotify</span>
+          </div>
+          <div class="svc-channels__item">
+            <img src="https://cdn.simpleicons.org/youtube/FF0000" alt="YouTube" />
+            <span>YouTube</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
+    <section class="section svc-clients">
+      <div class="container">
+        <h2 class="svc-clients__title reveal">ALCUNI AMICI SODDISFATTI CHE CI HANNO DATO FIDUCIA</h2>
+        <div class="svc-clients__grid reveal reveal-delay-1">
+          <div class="svc-clients__logo">Condé Nast</div>
+          <div class="svc-clients__logo">Wudy</div>
+          <div class="svc-clients__logo">Disclaimer</div>
+          <div class="svc-clients__logo">Spotify</div>
+          <div class="svc-clients__logo">Pyrex</div>
+          <div class="svc-clients__logo">Elmec</div>
+          <div class="svc-clients__logo">TEDx</div>
+          <div class="svc-clients__logo">Red Bull</div>
+          <div class="svc-clients__logo">Terranova</div>
+          <div class="svc-clients__logo">Wolf</div>
+          <div class="svc-clients__logo">Elco</div>
+          <div class="svc-clients__logo">SJ Gang</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
+    <section class="section svc-magic">
+      <div class="container svc-magic__inner">
+        <div class="svc-magic__cat reveal">
+          <img src="../foto%20servizi/Foto%20ultima%20sezione.webp" alt="" aria-hidden="true" />
+        </div>
+        <div class="svc-magic__content reveal reveal-delay-1">
+          <h2 class="svc-magic__title">SAPPIAMO FARE UN SACCO DI ALTRE MAGIE</h2>
+          <div class="svc-magic__links">
+            <a class="svc-magic__pill" href="google-ads.html">Google ADS</a>
+            <a class="svc-magic__pill" href="social-media-management.html">Social Media Management</a>
+            <a class="svc-magic__pill" href="graphic-design.html">Motion Graphic e Graphic Design</a>
+            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
 
   <script src="../js/main.js"></script>
 </body>
