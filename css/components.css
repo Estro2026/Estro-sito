@@ -6458,11 +6458,11 @@ body:has(.hero-video) .nav:not(.scrolled) {
   color: var(--primary);
   letter-spacing: -0.01em;
   line-height: 1;
-  margin-bottom: var(--space-3);
+  margin-bottom: var(--space-1);
 }
 /* h3 title nel blocco step — spazio sotto verso subtitle */
 .svc-content-block__copy .svc-content-block__title {
-  margin-bottom: var(--space-4) !important;
+  margin-bottom: var(--space-2) !important;
 }
 .svc-step-subtitle {
   font-family: var(--font-secondary);
@@ -6472,7 +6472,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
   letter-spacing: 0.04em;
   color: var(--black);
   line-height: 1.5;
-  margin-bottom: var(--space-5);
+  margin-bottom: var(--space-3);
 }
 /* corpo testo blocco step */
 .svc-content-block__copy .svc-content-block__text {
