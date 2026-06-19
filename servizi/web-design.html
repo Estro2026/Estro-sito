@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ESTRO — Web Design: siti web, landing page e interfacce digitali progettati per convertire." />
+  <meta name="description" content="ESTRO — Web Design: siti web belli, semplici e funzionali, ottimizzati per la velocità e il SEO." />
   <meta name="theme-color" content="#FFFFFF" />
   <title>Web Design — ESTRO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
 </head>
 <body>
 
@@ -76,81 +77,274 @@
 
   <main>
 
-    <section class="page-hero page-hero--services" aria-labelledby="page-title">
-      <div class="page-hero__bg">
-        <div class="page-hero__noise"></div>
-        <div class="page-hero__gradient"></div>
-      </div>
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="../index.html">Home</a>
-          <span class="breadcrumb__sep">／</span>
-          <a href="../servizi.html">Servizi</a>
-          <span class="breadcrumb__sep">／</span>
-          <span class="breadcrumb__current">Web Design</span>
-        </nav>
-        <div class="page-hero__inner">
-          <div>
-            <p class="page-hero__kicker">Servizio 07</p>
-            <h1 class="page-hero__title" id="page-title">Web<br /><em>Design</em></h1>
+    <!-- ══ HERO ══════════════════════════════════════════════════ -->
+    <section class="svc-hero" aria-labelledby="page-title">
+      <div class="container svc-hero__inner">
+
+        <div class="svc-hero__left">
+          <p class="svc-hero__kicker">Web Design</p>
+          <h1 class="svc-hero__title" id="page-title">Vuoi realizzare<br/>il tuo sito<br/><em>web?</em></h1>
+          <p class="svc-hero__sub"><strong>Siamo specializzati nella <strong>creazione di siti web</strong> belli, semplici e funzionali, che si caricano velocemente e sono facili da gestire.</strong></p>
+          <p class="svc-hero__tagline" style="color:var(--primary);font-weight:600;">Sei nel posto giusto!</p>
+          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
+            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+            <label class="svc-hero__privacy">
+              <input type="checkbox" required />
+              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            </label>
+            <button class="btn btn--primary svc-hero__submit" type="submit">Richiedi informazioni</button>
+          </form>
+        </div>
+
+        <div class="svc-hero__right">
+          <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:4/3;border-radius:16px;">
+            <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="40" height="28" rx="3" stroke="currentColor" stroke-width="2"/><path d="M16 42h16M24 34v8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M10 38h28" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            <span>Immagine sito web</span>
           </div>
-          <div>
-            <p class="page-hero__sub reveal">Siti web, landing page e interfacce digitali progettati per convertire, con un'estetica che riflette la qualità del brand.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ DIVISORE ZAMPA ════════════════════════════════════════ -->
+    <div class="svc-divider">
+      <img src="../foto%20servizi/Estro_zampa%20(1).svg" alt="" aria-hidden="true" class="svc-divider__img" />
+    </div>
+
+    <!-- ══ SERVIZI ════════════════════════════════════════════════ -->
+    <section class="section svc-wd-overview">
+      <div class="container">
+        <h2 class="svc-section-title reveal" style="text-align:center;">Servizi</h2>
+        <div class="svc-wd-cards reveal reveal-delay-1">
+
+          <div class="svc-wd-card">
+            <div class="svc-wd-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="6" width="40" height="28" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M16 42h16M24 34v8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M10 38h28" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="svc-wd-card__title">Sviluppo Siti Web</h3>
+            <p class="svc-wd-card__text">Il tuo sito web è il tuo biglietto da visita, e noi creiamo siti web con personalità da vendere. <strong>Racconta chi sei veramente e raggiungi i tuoi obiettivi di vendita.</strong></p>
+          </div>
+
+          <div class="svc-wd-card">
+            <div class="svc-wd-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="2.5"/><path d="M32 32l8 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <h3 class="svc-wd-card__title">Ottimizzazione SEO</h3>
+            <p class="svc-wd-card__text">SEO: un acronimo, una parola magica che ti porterà in alto sui motori di ricerca. <strong>Raggiungi il maggior numero possibile di utenti web.</strong></p>
+          </div>
+
+          <div class="svc-wd-card">
+            <div class="svc-wd-card__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 14h36M6 22h24M6 30h16" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M36 28l6 6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><rect x="4" y="6" width="40" height="36" rx="3" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <h3 class="svc-wd-card__title">Siti Ecommerce</h3>
+            <p class="svc-wd-card__text">Chi non desidera comprare con un click stando seduto sul divano di casa? <strong>Mostra i tuoi prodotti e aumenta il numero dei tuoi clienti.</strong></p>
+          </div>
+
+        </div>
+
+        <!-- Testo intro -->
+        <div class="svc-wd-intro reveal">
+          <div class="svc-wd-intro__text">
+            <p>Nel nostro lavoro creatività e praticità vanno a braccetto, creiamo per te un sito web cucito su misura, in grado di <strong>raccontare il tuo brand</strong> e <strong>raggiungere gli obiettivi</strong> prefissati: aumentare i profitti, fornire supporto, vendere prodotti.</p>
+            <p>Con noi puoi star certo che ogni parola, foto o video sarà scelto con cura, per trovare i giusti elementi in grado di trasmettere chi sei e il valore aggiunto del tuo marchio.</p>
+            <p>Un sito deve saper raccontare l'anima del tuo brand…caricandosi velocemente. La <strong>user experience</strong> è la chiave di volta del nostro lavoro. Ma un sito deve anche essere in grado di raggiungere il maggior numero di utenti possibile, ed è qui che entra in gioco l'<strong>ottimizzazione SEO</strong>.</p>
+          </div>
+          <div class="svc-wd-intro__visual">
+            <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:1/1;border-radius:16px;">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="20" r="6" stroke="currentColor" stroke-width="2"/><path d="M10 42c0-7.7 6.3-14 14-14s14 6.3 14 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Illustrazione</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ SITI WEB ════════════════════════════════════════════════ -->
+    <section class="section svc-wd-block">
+      <div class="container">
+        <h2 class="svc-section-title reveal" style="text-align:center;color:var(--primary);">Siti Web</h2>
+        <div class="svc-wd-features reveal reveal-delay-1">
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="8" width="36" height="28" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M6 16h36" stroke="currentColor" stroke-width="2.5"/><circle cx="10" cy="12" r="1.5" fill="currentColor"/><circle cx="15" cy="12" r="1.5" fill="currentColor"/><circle cx="20" cy="12" r="1.5" fill="currentColor"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Design pulito e moderno</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="17" y="4" width="14" height="24" rx="3" stroke="currentColor" stroke-width="2.5"/><path d="M21 32h6M24 28v4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="10" y="34" width="28" height="10" rx="2" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Responsive</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8v8M24 32v8M8 24h8M32 24h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="24" r="8" stroke="currentColor" stroke-width="2.5"/><path d="M14.3 14.3l5.7 5.7M28 28l5.7 5.7M14.3 33.7L20 28M28 20l5.7-5.7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Sito veloce</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M16 24l6 6 10-12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Facilità di utilizzo</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="2.5"/><path d="M32 32l8 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Ottimizzazione SEO</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="16" y="22" width="16" height="20" rx="2" stroke="currentColor" stroke-width="2.5"/><path d="M20 22v-6a4 4 0 0 1 8 0v6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><circle cx="24" cy="33" r="2" fill="currentColor"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Conforme GDPR</p>
+          </div>
+        </div>
+
+        <div class="svc-wd-detail reveal">
+          <div class="svc-wd-detail__visual">
+            <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:4/3;border-radius:16px;">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="6" width="36" height="36" rx="4" stroke="currentColor" stroke-width="2"/><path d="M14 20h20M14 26h12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Illustrazione Siti Web</span>
+            </div>
+          </div>
+          <div class="svc-wd-detail__text">
+            <p>Quali sono le tue esigenze? Dalla <strong>redazione di un blog</strong> alla <strong>gestione di calendari ed eventi</strong>, dalla gestione di <strong>Google Maps</strong> alla <strong>vendita</strong> dei tuoi prodotti: grazie alla nostra esperienza con <strong>WordPress, Elementor</strong> e della più aggiornata <strong>tecnologia CMS</strong> (Content Management System) avrai modo di esprimere la personalità del tuo brand, con un <strong>design innovativo</strong> per il tuo sito web.</p>
+            <p>Tutti i siti che progettiamo sono <strong>mobile responsive</strong>, per avere la certezza che il tuo sito web venga visualizzato perfettamente su qualsiasi dispositivo migliorando il tuo posizionamento sui motori di ricerca come Google.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section service-detail">
+    <!-- ══ OTTIMIZZAZIONE SEO ════════════════════════════════════ -->
+    <section class="section svc-wd-block">
       <div class="container">
-        <div class="service-detail__grid">
-          <div>
-            <p class="section__label reveal">Il servizio</p>
-            <div class="service-detail__body reveal reveal-delay-1">
-              <p>Un sito web è spesso il <strong>primo punto di contatto reale</strong> tra un brand e il suo pubblico. Progettiamo esperienze digitali che comunicano chi siete, guidano l'utente con naturalezza e generano risultati misurabili.</p>
-              <p>Il nostro approccio parte dall'UX — dall'architettura delle informazioni e dai flussi di navigazione — e arriva all'UI con un'estetica rigorosa e contemporanea, sempre coerente con l'identità del brand.</p>
+        <h2 class="svc-section-title reveal" style="text-align:center;color:var(--primary);">Ottimizzazione SEO</h2>
+        <div class="svc-wd-features reveal reveal-delay-1">
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="6" y="28" width="6" height="14" rx="1" stroke="currentColor" stroke-width="2.5"/><rect x="16" y="20" width="6" height="22" rx="1" stroke="currentColor" stroke-width="2.5"/><rect x="26" y="12" width="6" height="30" rx="1" stroke="currentColor" stroke-width="2.5"/><rect x="36" y="6" width="6" height="36" rx="1" stroke="currentColor" stroke-width="2.5"/></svg>
             </div>
-            <div class="reveal reveal-delay-2" style="margin-top: var(--space-10);">
-              <a class="btn btn--primary" href="../contatti.html">Richiedi un preventivo</a>
+            <p class="svc-wd-feature__label">Analisi e strategia</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14 16h8M14 22h16M14 28h10" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M28 28l8 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><rect x="4" y="6" width="40" height="36" rx="3" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">On-page SEO</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8c-8.8 0-16 7.2-16 16s7.2 16 16 16 16-7.2 16-16S32.8 8 24 8z" stroke="currentColor" stroke-width="2.5"/><path d="M24 8v32M8 24h32M12 14c3.3 2.7 7.4 4 12 4s8.7-1.3 12-4M12 34c3.3-2.7 7.4-4 12-4s8.7 1.3 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Technical SEO</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 24c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M24 24c0-4.4 3.6-8 8-8s8 3.6 8 8-3.6 8-8 8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/><path d="M20 24h8" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Link building</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8 36V16l16-8 16 8v20l-16 8-16-8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M8 16l16 8 16-8M24 24v12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Creazione di contenuti</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M24 8v4M24 36v4M8 24h4M36 24h4M12.7 12.7l2.8 2.8M32.5 32.5l2.8 2.8M35.3 12.7l-2.8 2.8M15.5 32.5l-2.8 2.8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="24" cy="24" r="4" stroke="currentColor" stroke-width="2"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Geolocalizzazione</p>
+          </div>
+        </div>
+
+        <div class="svc-wd-detail reveal">
+          <div class="svc-wd-detail__visual">
+            <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:4/3;border-radius:16px;">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="22" cy="22" r="14" stroke="currentColor" stroke-width="2"/><path d="M32 32l8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M18 18h8M18 24h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+              <span>Illustrazione SEO</span>
             </div>
           </div>
-          <div>
-            <div class="service-detail__panel reveal reveal-delay-1">
-              <p class="service-detail__panel-title">Cosa include</p>
-              <ul class="service-detail__list">
-                <li class="service-detail__item">UX research e architettura informativa</li>
-                <li class="service-detail__item">Wireframe e prototipazione</li>
-                <li class="service-detail__item">UI design e design system</li>
-                <li class="service-detail__item">Sviluppo front-end responsive</li>
-                <li class="service-detail__item">Landing page ad alta conversione</li>
-                <li class="service-detail__item">E-commerce e shop online</li>
-                <li class="service-detail__item">Ottimizzazione velocità e SEO tecnico</li>
-              </ul>
-            </div>
-            <div class="service-detail__cta-box reveal reveal-delay-2">
-              <span class="service-detail__cta-label">Vuoi saperne di più?</span>
-              <a class="btn btn--outline" href="../contatti.html">Parliamo del tuo progetto</a>
-            </div>
+          <div class="svc-wd-detail__text">
+            <p><strong>SEO</strong>: search engine optimization, ossia l'<strong>ottimizzazione per i motori di ricerca</strong> di ciò che scrivi nel tuo sito web.</p>
+            <p>Quando qualcuno fa una ricerca su Google o altri motori di ricerca, l'algoritmo passa al setaccio il web, cercando le informazioni che risultano più importanti e pertinenti.</p>
+            <p>Ottimizzare un sito significa renderlo, nella forma e nei contenuti, più chiaro, e ciò aiuta i motori di ricerca a capire cosa c'è sul tuo sito web, il <strong>valore della tua attività</strong> e quali sono le <strong>keywords</strong> che la identificano.</p>
+            <p>Per rafforzare la tua <strong>strategia di marketing digitale</strong> è fondamentale partire dalla base, indirizzando e <strong>aumentando il traffico organico</strong> al tuo sito web, e mantenendo una strategia di ottimizzazione sostenibile capace di adattarsi alla continua evoluzione degli algoritmi e strategie dei motori di ricerca.</p>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- ══ E-COMMERCE ════════════════════════════════════════════ -->
+    <section class="section svc-wd-block">
+      <div class="container">
+        <h2 class="svc-section-title reveal" style="text-align:center;color:var(--primary);">E-Commerce</h2>
+        <div class="svc-wd-features reveal reveal-delay-1">
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M24 8v32M8 24h32M12 14c3.3 2.7 7.4 4 12 4s8.7-1.3 12-4M12 34c3.3-2.7 7.4-4 12-4s8.7 1.3 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Supera i limiti geografici</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="16" cy="16" r="6" stroke="currentColor" stroke-width="2.5"/><circle cx="32" cy="16" r="6" stroke="currentColor" stroke-width="2.5"/><path d="M4 40c0-7.7 5.4-14 12-14h16c6.6 0 12 6.3 12 14" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Acquisisci nuovi clienti</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="20" r="10" stroke="currentColor" stroke-width="2.5"/><path d="M24 10V20l6 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 36l24-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Individuare il prodotto più rapidamente</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M24 16v8l4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/><circle cx="24" cy="24" r="2" fill="var(--primary)"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Fornire informazioni dettagliate</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="24" cy="24" r="16" stroke="currentColor" stroke-width="2.5"/><path d="M24 16v8l-4 4" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Rimani sempre aperto</p>
+          </div>
+          <div class="svc-wd-feature">
+            <div class="svc-wd-feature__icon" aria-hidden="true">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M24 8l4 8 9 1.3-6.5 6.3 1.5 9L24 28l-8 4.6 1.5-9L11 17.3l9-1.3L24 8z" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"/><path d="M12 40h24" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg>
+            </div>
+            <p class="svc-wd-feature__label">Crea mercati per prodotti di nicchia</p>
+          </div>
+        </div>
+
+        <div class="svc-wd-detail reveal">
+          <div class="svc-wd-detail__visual">
+            <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:4/3;border-radius:16px;">
+              <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M6 10h4l4 18h20l4-14H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="20" cy="40" r="2" stroke="currentColor" stroke-width="2"/><circle cx="34" cy="40" r="2" stroke="currentColor" stroke-width="2"/></svg>
+              <span>Illustrazione E-Commerce</span>
+            </div>
+          </div>
+          <div class="svc-wd-detail__text">
+            <p>Avere uno <strong>shop online</strong> ormai è fondamentale, il commercio elettronico è la strada da percorrere per tutte le <strong>aziende</strong> che vogliano rimanere <strong>aggiornate</strong>, in linea con i tempi e <strong>competitive</strong>.</p>
+            <p>Non si tratta del commercio del futuro, ma di una realtà concreta e presente.</p>
+            <p>E noi <strong>creiamo la tua vetrina online</strong>, che ti permetta di esporre i tuoi prodotti e raggiungere il <strong>più alto numero di clienti</strong> possibile, per rafforzare le vendite ed espandere le operazioni commerciali, acquisendo un'autorità significativa nel mercato.</p>
+            <p>Un e-commerce ti permette di <strong>comunicare direttamente con i tuoi clienti</strong>, ascoltare i loro feedback e migliorando la loro soddisfazione finale, ti consente di fornire informazioni sui prodotti e <strong>fare pubblicità</strong>.</p>
+            <p>E tutto questo <strong>risparmiando tempo</strong> ed energia!</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ [ALTRE SEZIONI IN ARRIVO] ════════════════════════════ -->
 
   </main>
-
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../assets/Estro_logo05 (1).webp" alt="ESTRO" />
-      </a>
-      <nav class="footer__social" aria-label="Social media">
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Instagram</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">LinkedIn</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Behance</a>
-      </nav>
-      <p class="footer__copy">© 2024 ESTRO. Tutti i diritti riservati.</p>
-    </div>
-  </footer>
 
   <script src="../js/main.js"></script>
 </body>
