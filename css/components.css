@@ -6856,15 +6856,16 @@ body:has(.hero-video) .nav:not(.scrolled) {
   gap: var(--space-6);
 }
 
-/* 4-3 grid for VIDEO (4 top, 3 bottom centered) */
+/* Flex layout for VIDEO — 4 per row, last 3 centered */
 .svc-prod-grid--video {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  display: flex;
+  flex-wrap: wrap;
   gap: var(--space-6);
+  justify-content: center;
 }
 
-.svc-prod-grid--video .svc-prod-card:nth-child(5) {
-  grid-column: 1 / span 1;
+.svc-prod-grid--video .svc-prod-card {
+  flex: 0 0 calc(25% - 1.35rem);
 }
 
 /* Cards */
@@ -6946,13 +6947,13 @@ body:has(.hero-video) .nav:not(.scrolled) {
   .svc-prod-grid--2x2 {
     grid-template-columns: 1fr;
   }
-  .svc-prod-grid--video {
-    grid-template-columns: repeat(2, 1fr);
+  .svc-prod-grid--video .svc-prod-card {
+    flex: 0 0 calc(50% - 0.75rem);
   }
 }
 
 @media (max-width: 600px) {
-  .svc-prod-grid--video {
-    grid-template-columns: 1fr;
+  .svc-prod-grid--video .svc-prod-card {
+    flex: 0 0 100%;
   }
 }
