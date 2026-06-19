@@ -6275,7 +6275,6 @@ body:has(.hero-video) .nav:not(.scrolled) {
   grid-template-columns: 1fr 1fr;
   gap: clamp(3rem, 6vw, 6rem);
   align-items: center;
-  margin-top: clamp(1.5rem, 3vw, 2.5rem);
 }
 .svc-intro-market__text {
   display: flex;

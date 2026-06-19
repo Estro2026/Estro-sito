@@ -1071,13 +1071,9 @@ main { margin: 0; padding: 0; }
 }
 
 /* Watermark "Instagram" — stile identico a .about-section__big della homepage */
-.svc-intro-market__wrap {
-  display: flex !important;
-  flex-direction: column !important;
-}
 .svc-intro-market__big {
   font-family: 'VanguardCF', 'Impact', 'Arial Black', sans-serif !important;
-  font-size: clamp(3rem, 16.5vw, 14rem) !important;
+  font-size: clamp(1.8rem, 8vw, 7.5rem) !important;
   font-weight: 800 !important;
   white-space: nowrap !important;
   display: block !important;
@@ -1087,7 +1083,7 @@ main { margin: 0; padding: 0; }
   letter-spacing: -0.01em !important;
   text-transform: uppercase !important;
   line-height: 1 !important;
-  margin-bottom: 0 !important;
+  margin-bottom: var(--space-4) !important;
   pointer-events: none;
 }
 
