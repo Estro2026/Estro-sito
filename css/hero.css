@@ -406,6 +406,11 @@ main { margin: 0; padding: 0; }
   transform: scale(1.06);
 }
 .client-logo { transition: color 200ms ease, transform 250ms cubic-bezier(0.16,1,0.3,1) !important; }
+/* Uniforma le varianti di dimensione per coerenza visiva */
+.client-logo--xl { font-size: clamp(1.6rem, 2.8vw, 2.8rem) !important; }
+.client-logo--sm { font-size: clamp(1.3rem, 2.2vw, 2.2rem) !important; }
+.client-logo--bold { font-weight: 900 !important; }
+.client-logo--light { font-weight: 700 !important; }
 
 /* ── Nav ─────────────────────────────────────────────── */
 .nav:not(.scrolled) {

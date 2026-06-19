@@ -1816,8 +1816,8 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   width: 200px;
 }
 .svc-clients__logo img {
-  max-width: 182px;
-  max-height: 80px;
+  max-width: 220px;
+  max-height: 100px;
   object-fit: contain;
   filter: brightness(0) invert(1);
   opacity: 0.75;
@@ -6362,7 +6362,8 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-integrazione__title {
   font-family: var(--font-secondary) !important;
   font-size: var(--text-sm) !important;
-  line-height: 1.8 !important;
+  line-height: 1.85 !important;
+  letter-spacing: 0 !important;
   color: var(--black-50) !important;
 }
 
@@ -6370,7 +6371,8 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-tailor__text {
   font-family: var(--font-secondary) !important;
   font-size: var(--text-sm) !important;
-  line-height: 1.8 !important;
+  line-height: 1.85 !important;
+  letter-spacing: 0 !important;
   color: rgba(255,255,255,0.72) !important;
 }
 
