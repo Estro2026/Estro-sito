@@ -6294,3 +6294,135 @@ body:has(.hero-video) .nav:not(.scrolled) {
   border-radius: 2px;
   margin-block: var(--space-5);
 }
+
+/* ═══════════════════════════════════════════════════════
+   TYPOGRAPHY STANDARD — service pages aligned to homepage
+   Fonte: about-section__heading, about-section__kicker,
+          about-section__body (creative director pass)
+═══════════════════════════════════════════════════════ */
+
+/* ── Section headings (h2 level)
+   Match: about-section__heading = clamp(2rem,4.5vw,6rem)
+   letter-spacing -0.025em, line-height 0.92, weight 900
+   ── */
+.svc-process__title,
+.svc-tools__title,
+.svc-clients__title,
+.svc-magic__title,
+.svc-advantages__title,
+.svc-channels__title,
+.svc-section-title,
+.svc-section-header__title {
+  font-family: var(--font-primary) !important;
+  font-size: clamp(var(--text-3xl), 4.5vw, var(--text-7xl)) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.025em !important;
+  line-height: 0.92 !important;
+  transform: none !important;
+}
+
+/* Preserva i colori di contesto (chiaro/scuro) */
+.svc-process__title   { color: var(--black); }
+.svc-tools__title     { color: var(--black); }
+.svc-advantages__title { color: var(--black); }
+.svc-channels__title  { color: var(--black); }
+.svc-section-title    { color: var(--black); }
+.svc-section-header__title { color: var(--black); }
+/* svc-clients e svc-magic: colore gestito da hero.css context */
+
+/* ── Eyebrow / kicker
+   Match: about-section__kicker = text-xs, weight 600, tracking 0.20em
+   ── */
+.svc-section-header__eyebrow,
+.svc-tailor__tag,
+.svc-collab-grid__name,
+.svc-settori__item span,
+.svc-integrazione__item span,
+.svc-talent-pronti__label,
+.svc-mini-features__item span {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-xs) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.18em !important;
+  text-transform: uppercase !important;
+}
+
+/* ── Body text in service sections
+   Match: about-section__body = text-sm 0.8125rem,
+          line-height 1.85, color black-50
+   ── */
+.svc-section-header__sub,
+.svc-content-block__text,
+.svc-features__text,
+.svc-process__card-text,
+.svc-advantages__item-text,
+.svc-talent-pronti__item p,
+.svc-intro-market__text p,
+.svc-integrazione__title {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-sm) !important;
+  line-height: 1.8 !important;
+  color: var(--black-50) !important;
+}
+
+/* Dark-section body text keeps white */
+.svc-tailor__text {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-sm) !important;
+  line-height: 1.8 !important;
+  color: rgba(255,255,255,0.72) !important;
+}
+
+/* ── Card/block titles (h3 level inside cards)
+   Match: service-card__title on homepage
+   ── */
+.svc-process__card-title,
+.svc-advantages__item-title {
+  font-family: var(--font-primary) !important;
+  font-size: clamp(1.05rem, 1.6vw, 1.35rem) !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.02em !important;
+  line-height: 1.15 !important;
+}
+
+/* ── Stat description text
+   Keep readable with proper sizing
+   ── */
+.svc-stat-video__desc {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-sm) !important;
+  line-height: 1.8 !important;
+  letter-spacing: 0.04em !important;
+  color: var(--black-60) !important;
+}
+
+/* ── Checklist text
+   Match about body size
+   ── */
+.svc-checklist li {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-sm) !important;
+  line-height: 1.75 !important;
+}
+
+/* ── Talent pronti title: content-block style
+   Keep scaleY for display heading
+   ── */
+.svc-talent-pronti__title {
+  font-family: var(--font-primary) !important;
+  font-size: clamp(2rem, 4vw, var(--text-6xl)) !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.04em !important;
+  line-height: 0.95 !important;
+  transform: scaleY(1.18) !important;
+  transform-origin: left top !important;
+}
+
+/* ── magic__title on light bg stays black ── */
+.svc-magic__title {
+  color: var(--black) !important;
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem) !important;
+}
