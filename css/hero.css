@@ -1077,7 +1077,7 @@ main { margin: 0; padding: 0; }
   font-weight: 800 !important;
   white-space: nowrap !important;
   position: absolute !important;
-  top: 2rem !important;
+  top: -1rem !important;
   left: -2% !important;
   color: transparent !important;
   -webkit-text-stroke: 1.5px rgba(219,0,90,0.18) !important;
