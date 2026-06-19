@@ -1078,7 +1078,8 @@ main { margin: 0; padding: 0; }
 .svc-tools__title,
 .svc-advantages__title,
 .svc-channels__title,
-.svc-section-header__title {
+.svc-section-header__title,
+.svc-caffe__title {
   font-family: 'VanguardCF', 'Impact', 'Arial Black', sans-serif !important;
   font-size: clamp(2.5rem, 6vw, 85px) !important;
   font-weight: 800 !important;

@@ -6309,7 +6309,8 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-advantages__title,
 .svc-channels__title,
 .svc-section-title,
-.svc-section-header__title {
+.svc-section-header__title,
+.svc-caffe__title {
   font-family: var(--font-primary) !important;
   font-size: clamp(2.5rem, 6vw, 85px) !important;
   font-weight: 800 !important;
