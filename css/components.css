@@ -6426,3 +6426,43 @@ body:has(.hero-video) .nav:not(.scrolled) {
   color: var(--black) !important;
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem) !important;
 }
+
+/* ── svc-intro-market: compact padding + cat tail deco ── */
+.svc-intro-market {
+  padding-block: clamp(2rem, 4vw, 3.5rem) !important;
+  position: relative;
+  overflow: hidden;
+}
+.svc-intro-market__deco {
+  position: absolute;
+  right: -4%;
+  top: 50%;
+  transform: translateY(-50%) scaleX(-1);
+  width: clamp(160px, 22vw, 300px);
+  height: auto;
+  opacity: 0.10;
+  pointer-events: none;
+  user-select: none;
+  z-index: 0;
+}
+.svc-intro-market__inner {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── CTA su sezioni scure: hover bianco/nero ── */
+.svc-tailor .btn--primary:hover,
+.svc-caffe .btn--primary:hover,
+.svc-clients .btn--primary:hover {
+  background: var(--white) !important;
+  color: var(--black) !important;
+  border-color: var(--white) !important;
+}
+.svc-tailor .btn--primary::before,
+.svc-caffe .btn--primary::before {
+  background: var(--white) !important;
+}
+.svc-tailor .btn--primary:hover,
+.svc-caffe .btn--primary:hover {
+  color: var(--black) !important;
+}
