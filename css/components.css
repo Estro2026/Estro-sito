@@ -6091,11 +6091,11 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-talent-pronti__visual img {
   width: auto;
   height: auto;
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 65%;
   object-fit: contain;
   display: block;
   border-radius: 16px;
+  margin: 0 auto;
 }
 .svc-talent-pronti__title {
   font-family: var(--font-primary);
@@ -6144,7 +6144,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
   right: calc(-1 * var(--gutter, 2rem));
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(200px, 28vw, 380px);
+  width: clamp(300px, 40vw, 560px);
   height: auto;
   opacity: 0.9;
   pointer-events: none;
