@@ -1073,7 +1073,7 @@ main { margin: 0; padding: 0; }
 /* Watermark "Instagram" — stile identico a .about-section__big della homepage */
 .svc-intro-market__big {
   font-family: 'VanguardCF', 'Impact', 'Arial Black', sans-serif !important;
-  font-size: clamp(2rem, 8.5vw, 8rem) !important;
+  font-size: clamp(2.5rem, 11vw, 10rem) !important;
   font-weight: 800 !important;
   white-space: nowrap !important;
   display: block !important;
