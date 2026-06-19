@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ESTRO — Produzione Contenuti: foto, video, copy e contenuti digitali per alimentare ogni canale del brand." />
+  <meta name="description" content="ESTRO — Produzione Contenuti: spot pubblicitari e shooting fotografici realizzati con cura, sfruttando tutti gli strumenti tecnici e creativi necessari." />
   <meta name="theme-color" content="#FFFFFF" />
   <title>Produzione Contenuti — ESTRO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
 </head>
 <body>
 
@@ -76,81 +77,180 @@
 
   <main>
 
-    <section class="page-hero page-hero--services" aria-labelledby="page-title">
-      <div class="page-hero__bg">
-        <div class="page-hero__noise"></div>
-        <div class="page-hero__gradient"></div>
-      </div>
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="../index.html">Home</a>
-          <span class="breadcrumb__sep">／</span>
-          <a href="../servizi.html">Servizi</a>
-          <span class="breadcrumb__sep">／</span>
-          <span class="breadcrumb__current">Produzione Contenuti</span>
-        </nav>
-        <div class="page-hero__inner">
-          <div>
-            <p class="page-hero__kicker">Servizio 08</p>
-            <h1 class="page-hero__title" id="page-title">Produzione<br /><em>Contenuti</em></h1>
-          </div>
-          <div>
-            <p class="page-hero__sub reveal">Foto, video, copy e contenuti digitali prodotti con cura artigianale per alimentare ogni canale della comunicazione del brand.</p>
+    <!-- ══ HERO ══════════════════════════════════════════════════ -->
+    <section class="svc-hero" aria-labelledby="page-title">
+      <div class="container svc-hero__inner">
+
+        <div class="svc-hero__left">
+          <p class="svc-hero__kicker">Produzione Contenuti</p>
+          <h1 class="svc-hero__title" id="page-title">Produzione<br/><em>Contenuti</em></h1>
+          <p class="svc-hero__sub"><strong>Uno spot pubblicitario o uno shooting fotografico devono essere realizzati con cura, sfruttando tutti gli strumenti tecnici e creativi necessari.</strong></p>
+          <p class="svc-hero__tagline" style="color:var(--primary);font-weight:600;">Sei nel posto giusto!</p>
+          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
+            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+            <label class="svc-hero__privacy">
+              <input type="checkbox" required />
+              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            </label>
+            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
+          </form>
+        </div>
+
+        <div class="svc-hero__right">
+          <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:4/3;border-radius:16px;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+            <span>Illustrazione video</span>
           </div>
         </div>
+
       </div>
     </section>
 
-    <section class="section service-detail">
+    <!-- ══ DIVISORE ZAMPA ════════════════════════════════════════ -->
+    <div class="svc-divider">
+      <img src="../foto%20servizi/Estro_zampa%20(1).svg" alt="" aria-hidden="true" class="svc-divider__img" />
+    </div>
+
+    <!-- ══ STEP DI PRODUZIONE ════════════════════════════════════ -->
+    <div class="svc-blocks-section">
       <div class="container">
-        <div class="service-detail__grid">
-          <div>
-            <p class="section__label reveal">Il servizio</p>
-            <div class="service-detail__body reveal reveal-delay-1">
-              <p>I contenuti sono la materia prima della comunicazione moderna. Produciamo <strong>foto, video e testi</strong> che hanno una voce chiara, un'estetica riconoscibile e un obiettivo preciso — non generici, non intercambiabili.</p>
-              <p>Ogni contenuto nasce da una direzione creativa consapevole: il formato giusto per il canale giusto, sempre nel rispetto del brand. Dall'idea al file finito, gestiamo l'intera produzione internamente.</p>
-            </div>
-            <div class="reveal reveal-delay-2" style="margin-top: var(--space-10);">
-              <a class="btn btn--primary" href="../contatti.html">Richiedi un preventivo</a>
-            </div>
+
+        <!-- 01 — Moodboard -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">01.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Moodboard</h3>
+            <p class="svc-step-subtitle">FAI PARLARE LE TUE IMMAGINI!</p>
+            <p class="svc-content-block__text">Mostriamo la tua idea attraverso collage di foto che comunicano emozioni, colori, stati d'animo. Gli stessi che desideri trasmettere con il tuo brand.</p>
           </div>
-          <div>
-            <div class="service-detail__panel reveal reveal-delay-1">
-              <p class="service-detail__panel-title">Cosa include</p>
-              <ul class="service-detail__list">
-                <li class="service-detail__item">Direzione creativa e concept</li>
-                <li class="service-detail__item">Fotografia di prodotto e lifestyle</li>
-                <li class="service-detail__item">Produzione video e reels</li>
-                <li class="service-detail__item">Copywriting e content writing</li>
-                <li class="service-detail__item">Post-produzione e color grading</li>
-                <li class="service-detail__item">Contenuti per social media</li>
-                <li class="service-detail__item">Video istituzionali e brand film</li>
-              </ul>
-            </div>
-            <div class="service-detail__cta-box reveal reveal-delay-2">
-              <span class="service-detail__cta-label">Vuoi saperne di più?</span>
-              <a class="btn btn--outline" href="../contatti.html">Parliamo del tuo progetto</a>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+              <span>Moodboard</span>
             </div>
           </div>
         </div>
+
+        <!-- 02 — Casting attori e modelli -->
+        <div class="svc-content-block svc-content-block--flip reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">02.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Casting attori e modelli</h3>
+            <p class="svc-step-subtitle">LI CERCHIAMO, LI TROVIAMO E LI RIPRENDIAMO.</p>
+            <p class="svc-content-block__text">Ricerchiamo e selezioniamo attori e modelli in grado di valorizzare i tuoi contenuti foto e video.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+              <span>Casting</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 — Location scouting -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">03.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Location scouting</h3>
+            <p class="svc-step-subtitle">LUOGHI CHE VALORIZZANO LE TUE IMMAGINI.</p>
+            <p class="svc-content-block__text">Prima di ogni produzione andiamo a caccia dei luoghi più adatti alle riprese del tuo film.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+              <span>Location</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 — Set design -->
+        <div class="svc-content-block svc-content-block--flip reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">04.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Set design</h3>
+            <p class="svc-step-subtitle">I DETTAGLI CHE FANNO LA DIFFERENZA DAVANTI AI RIFLETTORI.</p>
+            <p class="svc-content-block__text">I nostri set sono studiati da scenografi e designers professionisti, che doneranno al tuo video un tocco di pura magia. Non c'è oggetto di scena che non siamo in grado di trovare o realizzare.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3L12 3zm0 12.5c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5z"/></svg>
+              <span>Set design</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 — Lighting design -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">05.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Lighting design</h3>
+            <p class="svc-step-subtitle">T'ILLUMINO D'IMMENSO.</p>
+            <p class="svc-content-block__text">La vera atmosfera di un video o di una foto si ottiene sfruttando la luce solare o la luce artificiale. Siamo maestri di entrambe queste fonti luminose.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M9 21c0 .55.45 1 1 1h4c.55 0 1-.45 1-1v-1H9v1zm3-19C8.14 2 5 5.14 5 9c0 2.38 1.19 4.47 3 5.74V17c0 .55.45 1 1 1h6c.55 0 1-.45 1-1v-2.26c1.81-1.27 3-3.36 3-5.74 0-3.86-3.14-7-7-7z"/></svg>
+              <span>Lighting</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 06 — Stylist -->
+        <div class="svc-content-block svc-content-block--flip reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">06.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Stylist</h3>
+            <p class="svc-step-subtitle">PROVA OUTFIT SEMPRE SUPERATA.</p>
+            <p class="svc-content-block__text">I nostri stylist ti consiglieranno abbinamenti di capi e accessori per lasciare il segno in passerella o in una campagna pubblicitaria.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M11.99 2C6.47 2 2 6.48 2 12s4.47 10 9.99 10C17.52 22 22 17.52 22 12S17.52 2 11.99 2zM12 20c-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8-3.58 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z"/></svg>
+              <span>Stylist</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 07 — Makeup artist -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">07.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Makeup artist</h3>
+            <p class="svc-step-subtitle">I VERI COLORI DELLA TUA PERSONALITÀ.</p>
+            <p class="svc-content-block__text">Un look iconico passa anche dal trucco. Trova il tuo face look ideale per ogni occasione.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M20.71 5.63l-2.34-2.34a1 1 0 0 0-1.41 0l-3.12 3.12 1.41 1.42L16.68 6.3l1.41 1.41-10.4 10.41-1.41-1.41 1.41-1.42-1.41-1.41-1.42 1.41a1 1 0 0 0 0 1.42l2.83 2.83a1 1 0 0 0 1.41 0L20.71 7.05a1 1 0 0 0 0-1.42z"/></svg>
+              <span>Makeup</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 08 — Regia -->
+        <div class="svc-content-block svc-content-block--flip reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">08.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Regia</h3>
+            <p class="svc-step-subtitle">SI VA IN SCENA.</p>
+            <p class="svc-content-block__text">La direzione artistica e organizzativa di uno spot non è uno scherzo. Lo sappiamo bene.</p>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M18 3v2h-2V3H8v2H6V3H4v18h2v-2h2v2h8v-2h2v2h2V3h-2zM8 17H6v-2h2v2zm0-4H6v-2h2v2zm0-4H6V7h2v2zm10 8h-2v-2h2v2zm0-4h-2v-2h2v2zm0-4h-2V7h2v2z"/></svg>
+              <span>Regia</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- [ALTRE SEZIONI IN ARRIVO] -->
+
       </div>
-    </section>
+    </div>
 
   </main>
-
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../assets/Estro_logo05 (1).webp" alt="ESTRO" />
-      </a>
-      <nav class="footer__social" aria-label="Social media">
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Instagram</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">LinkedIn</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Behance</a>
-      </nav>
-      <p class="footer__copy">© 2024 ESTRO. Tutti i diritti riservati.</p>
-    </div>
-  </footer>
 
   <script src="../js/main.js"></script>
 </body>
