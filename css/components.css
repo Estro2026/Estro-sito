@@ -6574,7 +6574,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
 
 /* ── kicker overrides inside svc-wd-about ── */
 .svc-wd-about .about-section__kicker {
-  margin-bottom: var(--space-2);
+  margin-bottom: var(--space-5);
 }
 .svc-wd-about .about-section__kicker::before {
   display: none;
