@@ -2268,9 +2268,9 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 .svc-content-block {
   display: grid;
   grid-template-columns: 55fr 45fr;
-  gap: clamp(2.5rem, 5vw, 5rem);
+  gap: clamp(2rem, 4vw, 4rem);
   align-items: center;
-  padding-block: clamp(2.5rem, 5vw, 4rem);
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
   border-top: 1px solid #e0e0e0;
 }
 .svc-content-block:first-child { border-top: none; }
@@ -2282,7 +2282,7 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   border-radius: 12px;
   overflow: hidden;
   background: #e8e8e8;
-  aspect-ratio: 4/3;
+  aspect-ratio: 5/3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6458,11 +6458,11 @@ body:has(.hero-video) .nav:not(.scrolled) {
   color: var(--primary);
   letter-spacing: -0.01em;
   line-height: 1;
-  margin-bottom: var(--space-1);
+  margin-bottom: 0;
 }
-/* h3 title nel blocco step — spazio sotto verso subtitle */
 .svc-content-block__copy .svc-content-block__title {
-  margin-bottom: var(--space-2) !important;
+  margin-bottom: var(--space-1) !important;
+  line-height: 1 !important;
 }
 .svc-step-subtitle {
   font-family: var(--font-secondary);
@@ -6471,10 +6471,9 @@ body:has(.hero-video) .nav:not(.scrolled) {
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--black);
-  line-height: 1.5;
-  margin-bottom: var(--space-3);
+  line-height: 1.4;
+  margin-bottom: var(--space-2);
 }
-/* corpo testo blocco step */
 .svc-content-block__copy .svc-content-block__text {
   margin-top: 0;
 }
