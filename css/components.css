@@ -6524,6 +6524,117 @@ body:has(.hero-video) .nav:not(.scrolled) {
    WEB DESIGN PAGE
 ═══════════════════════════════════════════════════════ */
 
+/* ── numbered list (stile svc-grid homepage) ── */
+.svc-wd-list-section { padding-block: clamp(3rem, 6vw, 6rem); }
+.svc-wd-list { border-top: 1.5px solid rgba(0,0,0,0.1); }
+.svc-wd-list__item {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: clamp(1rem, 3vw, 3rem);
+  align-items: start;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: 1.5px solid rgba(0,0,0,0.1);
+  transition: background 0.2s;
+}
+.svc-wd-list__item:hover { background: rgba(219,0,90,0.03); }
+.svc-wd-list__num {
+  font-family: var(--font-primary);
+  font-size: clamp(1.8rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  min-width: 3ch;
+}
+.svc-wd-list__name {
+  font-family: var(--font-primary);
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color: var(--black);
+  margin-bottom: 0.5rem;
+}
+.svc-wd-list__desc {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  color: var(--black);
+  max-width: 60ch;
+}
+
+/* ── about-style intro ── */
+.svc-wd-about {
+  position: relative;
+  overflow: hidden;
+  padding-block: clamp(3rem, 6vw, 7rem);
+}
+.svc-wd-about__tail {
+  position: absolute;
+  right: calc(-1 * var(--gutter, 2rem));
+  top: 5%;
+  width: clamp(200px, 30vw, 420px);
+  height: auto;
+  opacity: 0.85;
+  pointer-events: none;
+  z-index: 0;
+}
+.svc-wd-about__grid {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: clamp(2rem, 4vw, 5rem);
+  align-items: start;
+  position: relative;
+  z-index: 1;
+}
+@media (max-width: 768px) {
+  .svc-wd-about__grid { grid-template-columns: 1fr; }
+}
+.svc-wd-about__big {
+  font-family: 'VanguardCF', var(--font-primary), sans-serif;
+  font-size: clamp(6rem, 18vw, 18rem);
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(219,0,90,0.18);
+  text-transform: uppercase;
+  letter-spacing: -0.04em;
+  line-height: 0.9;
+  user-select: none;
+}
+
+/* ── block header (eyebrow + h2) ── */
+.svc-wd-block__header { margin-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+
+/* ── tag/pill list for features ── */
+.svc-wd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+.svc-wd-tag {
+  font-family: var(--font-secondary);
+  font-size: clamp(0.75rem, 1.2vw, 0.9rem);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--black);
+  background: rgba(219,0,90,0.08);
+  border: 1.5px solid rgba(219,0,90,0.2);
+  border-radius: 999px;
+  padding: 0.4em 1.1em;
+  line-height: 1.2;
+  transition: background 0.15s, color 0.15s;
+}
+.svc-wd-tag:hover {
+  background: var(--primary);
+  color: var(--white);
+  border-color: var(--primary);
+}
+
+/* ── dark background block variant ── */
+.svc-wd-block--dark { background: #f7f7f7; }
+
 /* 3-card overview */
 .svc-wd-cards {
   display: grid;
