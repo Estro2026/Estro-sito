@@ -1070,16 +1070,35 @@ main { margin: 0; padding: 0; }
   border-top: none !important;
 }
 
-/* Titoli di sezione principali: identici a .clients__heading della homepage
-   (svc-section-title, svc-magic__title) */
+/* H2 universale pagine servizi — identico a .clients__heading homepage */
 .svc-section-title,
 .svc-magic__title,
-.svc-clients__title {
+.svc-clients__title,
+.svc-process__title,
+.svc-tools__title,
+.svc-advantages__title,
+.svc-channels__title,
+.svc-section-header__title {
   font-family: 'VanguardCF', 'Impact', 'Arial Black', sans-serif !important;
   font-size: clamp(2.5rem, 6vw, 85px) !important;
   font-weight: 800 !important;
   letter-spacing: -0.01em !important;
   line-height: 1.05 !important;
+  text-transform: uppercase !important;
+}
+
+/* H3 universale — proporzione 1:2 → max 41.6px (2.6rem) */
+.svc-process__card-title,
+.svc-advantages__item-title,
+.svc-tailor__title,
+.svc-content-block__title,
+.svc-features__title,
+.svc-integrazione__section-title {
+  font-family: 'VanguardCF', 'Impact', 'Arial Black', sans-serif !important;
+  font-size: clamp(1.25rem, 3vw, 2.6rem) !important;
+  font-weight: 800 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.1 !important;
   text-transform: uppercase !important;
 }
 

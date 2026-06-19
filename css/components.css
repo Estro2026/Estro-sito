@@ -6296,15 +6296,12 @@ body:has(.hero-video) .nav:not(.scrolled) {
 }
 
 /* ═══════════════════════════════════════════════════════
-   TYPOGRAPHY STANDARD — service pages aligned to homepage
-   Fonte: about-section__heading, about-section__kicker,
-          about-section__body (creative director pass)
+   TYPOGRAPHY STANDARD — sistema universale pagine servizi
+   H2 → clamp(2.5rem, 6vw, 85px) | w800 | ls -0.01em
+   H3 → clamp(1.25rem, 3vw, 2.6rem) | w800 | ls -0.01em
 ═══════════════════════════════════════════════════════ */
 
-/* ── Section headings (h2 level)
-   Match: about-section__heading = clamp(2rem,4.5vw,6rem)
-   letter-spacing -0.025em, line-height 0.92, weight 900
-   ── */
+/* ── H2: tutti i titoli di sezione principali ── */
 .svc-process__title,
 .svc-tools__title,
 .svc-clients__title,
@@ -6314,26 +6311,39 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-section-title,
 .svc-section-header__title {
   font-family: var(--font-primary) !important;
-  font-size: clamp(var(--text-3xl), 4.5vw, var(--text-7xl)) !important;
-  font-weight: 900 !important;
+  font-size: clamp(2.5rem, 6vw, 85px) !important;
+  font-weight: 800 !important;
   text-transform: uppercase !important;
-  letter-spacing: -0.025em !important;
-  line-height: 0.92 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.05 !important;
   transform: none !important;
 }
 
-/* Preserva i colori di contesto (chiaro/scuro) */
+/* Colori di contesto */
 .svc-process__title   { color: var(--black); }
 .svc-tools__title     { color: var(--black); }
 .svc-advantages__title { color: var(--black); }
 .svc-channels__title  { color: var(--black); }
 .svc-section-title    { color: var(--black); }
 .svc-section-header__title { color: var(--black); }
-/* svc-clients e svc-magic: colore gestito da hero.css context */
+/* svc-clients e svc-magic: colore gestito da hero.css */
 
-/* ── Eyebrow / kicker
-   Match: about-section__kicker = text-xs, weight 600, tracking 0.20em
-   ── */
+/* ── H3: titoli card/blocco — proporzione 1:2 rispetto all'H2 ── */
+.svc-process__card-title,
+.svc-advantages__item-title,
+.svc-tailor__title,
+.svc-content-block__title,
+.svc-features__title,
+.svc-integrazione__section-title {
+  font-family: var(--font-primary) !important;
+  font-size: clamp(1.25rem, 3vw, 2.6rem) !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.1 !important;
+}
+
+/* ── Eyebrow / kicker ── */
 .svc-section-header__eyebrow,
 .svc-tailor__tag,
 .svc-collab-grid__name,
@@ -6348,10 +6358,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
   text-transform: uppercase !important;
 }
 
-/* ── Body text in service sections
-   Match: about-section__body = text-sm 0.8125rem,
-          line-height 1.85, color black-50
-   ── */
+/* ── Body text ── */
 .svc-section-header__sub,
 .svc-content-block__text,
 .svc-features__text,
@@ -6367,26 +6374,13 @@ body:has(.hero-video) .nav:not(.scrolled) {
   color: var(--black-50) !important;
 }
 
-/* Dark-section body text keeps white */
+/* Body su sfondo scuro */
 .svc-tailor__text {
   font-family: var(--font-secondary) !important;
   font-size: var(--text-sm) !important;
   line-height: 1.85 !important;
   letter-spacing: 0 !important;
   color: rgba(255,255,255,0.72) !important;
-}
-
-/* ── Card/block titles (h3 level inside cards)
-   Match: service-card__title on homepage
-   ── */
-.svc-process__card-title,
-.svc-advantages__item-title {
-  font-family: var(--font-primary) !important;
-  font-size: clamp(1.05rem, 1.6vw, 1.35rem) !important;
-  font-weight: 700 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.02em !important;
-  line-height: 1.15 !important;
 }
 
 /* ── Stat description text
