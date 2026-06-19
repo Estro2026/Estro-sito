@@ -6449,7 +6449,28 @@ body:has(.hero-video) .nav:not(.scrolled) {
   line-height: 1.75 !important;
 }
 
-/* ── Talent pronti title: content-block style
+/* ── Step number + subtitle per strategia-digitale ── */
+.svc-step-num {
+  display: block;
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  color: var(--primary);
+  letter-spacing: -0.01em;
+  line-height: 1;
+  margin-bottom: var(--space-2);
+}
+.svc-step-subtitle {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--black);
+  line-height: 1.5;
+  margin-bottom: var(--space-4);
+}
+
    Keep scaleY for display heading
    ── */
 .svc-talent-pronti__title {
