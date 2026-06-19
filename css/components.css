@@ -6923,3 +6923,129 @@ body:has(.hero-video) .nav:not(.scrolled) {
   .svc-prod__grid--foto,
   .svc-prod__grid--video { grid-template-columns: 1fr; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   MODELLAZIONE 3D — sezioni specifiche
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Banner "COSA POSSIAMO FARE INSIEME" ────────────────────── */
+.svc-3d-banner {
+  position: relative;
+  min-height: clamp(280px, 40vw, 520px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: var(--primary);
+}
+
+.svc-3d-banner__bg {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.18;
+}
+
+.svc-3d-banner__img-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.svc-3d-banner__inner {
+  position: relative;
+  z-index: 1;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+
+.svc-3d-banner__title {
+  font-family: var(--font-primary);
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  line-height: 0.92;
+  color: var(--white);
+}
+
+/* ── Lista puntata use-case ─────────────────────────────────── */
+.svc-3d-list {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-5) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.svc-3d-list li {
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  color: var(--black-75);
+  padding-left: var(--space-5);
+  position: relative;
+  line-height: 1.4;
+}
+
+.svc-3d-list li::before {
+  content: '—';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* ── FACCIAMOLO INSIEME mid-section ────────────────────────── */
+.svc-3d-cta-mid {
+  background: #f7f7f7;
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+
+.svc-3d-cta-mid__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+}
+
+.svc-3d-cta-mid__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2.5rem, 6vw, 85px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 0.95;
+  color: var(--primary);
+}
+
+.svc-3d-cta-mid__right {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.svc-3d-cta-mid__label {
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--black-60);
+}
+
+.svc-3d-cta-mid__text {
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--black-60);
+}
+
+@media (max-width: 768px) {
+  .svc-3d-cta-mid__inner {
+    grid-template-columns: 1fr;
+  }
+}

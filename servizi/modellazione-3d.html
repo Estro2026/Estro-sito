@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="ESTRO — Modellazione e Renderizzazione 3D: visualizzazioni tridimensionali di prodotti, spazi e concetti." />
+  <meta name="description" content="ESTRO — Modellazione e Renderizzazione 3D: video prodotto, render fotorealistici, virtual reality e contenuti pubblicitari 3D per il tuo brand." />
   <meta name="theme-color" content="#FFFFFF" />
   <title>Modellazione e Renderizzazione 3D — ESTRO</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="../css/tokens.css" />
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
 </head>
 <body>
 
@@ -76,81 +77,422 @@
 
   <main>
 
-    <section class="page-hero page-hero--services" aria-labelledby="page-title">
-      <div class="page-hero__bg">
-        <div class="page-hero__noise"></div>
-        <div class="page-hero__gradient"></div>
-      </div>
-      <div class="container">
-        <nav class="breadcrumb" aria-label="Breadcrumb">
-          <a href="../index.html">Home</a>
-          <span class="breadcrumb__sep">／</span>
-          <a href="../servizi.html">Servizi</a>
-          <span class="breadcrumb__sep">／</span>
-          <span class="breadcrumb__current">Modellazione e Renderizzazione 3D</span>
-        </nav>
-        <div class="page-hero__inner">
-          <div>
-            <p class="page-hero__kicker">Servizio 09</p>
-            <h1 class="page-hero__title" id="page-title">3D Render<br />&amp; <em>Modellazione</em></h1>
+    <!-- ══ HERO ══════════════════════════════════════════════════ -->
+    <section class="svc-hero" aria-labelledby="page-title">
+      <div class="container svc-hero__inner">
+
+        <div class="svc-hero__left">
+          <p class="svc-hero__kicker">Modellazione 3D</p>
+          <h1 class="svc-hero__title" id="page-title">Con il <strong>3D Design</strong><br/>puoi rivoluzionare<br/>la presentazione<br/>e la vendita<br/>dei tuoi prodotti!</h1>
+          <p class="svc-hero__sub">Crea esperienze coinvolgenti che trasformano le visualizzazioni in vendite, perfette sia per e-commerce che per trattative commerciali.</p>
+          <p class="svc-hero__tagline">Scopri cosa possiamo fare insieme, richiedi una consulenza.</p>
+          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
+            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+            <label class="svc-hero__privacy">
+              <input type="checkbox" required />
+              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            </label>
+            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
+          </form>
+        </div>
+
+        <div class="svc-hero__right">
+          <div class="svc-content-block__placeholder" style="width:100%;aspect-ratio:4/3;border-radius:16px;">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 3L2 12h3v8h6v-5h2v5h6v-8h3L12 3z"/></svg>
+            <span>Render 3D</span>
           </div>
-          <div>
-            <p class="page-hero__sub reveal">Visualizzazioni tridimensionali di prodotti, spazi e concetti. Render fotorealistici per comunicare prima ancora di produrre.</p>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ══ DIVISORE ZAMPA ════════════════════════════════════════ -->
+    <div class="svc-divider">
+      <img src="../foto%20servizi/Estro_zampa%20(1).svg" alt="" aria-hidden="true" class="svc-divider__img" />
+    </div>
+
+    <!-- ══ BANNER "COSA POSSIAMO FARE INSIEME" ═══════════════════ -->
+    <section class="svc-3d-banner" aria-label="Cosa possiamo fare insieme">
+      <div class="svc-3d-banner__bg">
+        <!-- placeholder immagine blueprint -->
+        <div class="svc-3d-banner__img-placeholder" aria-hidden="true">
+          <svg viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" width="120" opacity="0.25">
+            <rect x="10" y="10" width="60" height="60" rx="2" stroke="white" stroke-width="1.5"/>
+            <line x1="10" y1="30" x2="70" y2="30" stroke="white" stroke-width="0.75"/>
+            <line x1="10" y1="50" x2="70" y2="50" stroke="white" stroke-width="0.75"/>
+            <line x1="30" y1="10" x2="30" y2="70" stroke="white" stroke-width="0.75"/>
+            <line x1="50" y1="10" x2="50" y2="70" stroke="white" stroke-width="0.75"/>
+            <circle cx="40" cy="40" r="12" stroke="white" stroke-width="1.5"/>
+            <text x="32" y="44" fill="white" font-size="10" font-family="serif">ESTRO</text>
+          </svg>
+        </div>
+      </div>
+      <div class="container svc-3d-banner__inner">
+        <h2 class="svc-3d-banner__title reveal">COSA POSSIAMO<br/>FARE INSIEME</h2>
+      </div>
+    </section>
+
+    <!-- ══ SEZIONI USO / COME PUOI UTILIZZARLO ══════════════════ -->
+    <div class="svc-blocks-section">
+      <div class="container">
+
+        <!-- 01 — Video Prodotto -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">01.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Video Prodotto</h3>
+            <p class="svc-step-subtitle">COME PUOI UTILIZZARLO?</p>
+            <ul class="svc-3d-list">
+              <li>Marketing e Pubblicità</li>
+              <li>Allestimenti Fieristici</li>
+              <li>Dimostrazioni e Presentazioni</li>
+              <li>Formazione e Istruzione</li>
+              <li>Customer Experience &amp; Service</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" style="margin-top:var(--space-6);display:inline-block;">Contattaci</a>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+              <span>Video Prodotto</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 02 — Il Tuo Prodotto in 3D -->
+        <div class="svc-content-block svc-content-block--flip reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">02.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Il Tuo Prodotto in 3D</h3>
+            <p class="svc-step-subtitle">COME PUOI UTILIZZARLO?</p>
+            <ul class="svc-3d-list">
+              <li>Marketing e Pubblicità</li>
+              <li>Allestimenti Fieristici</li>
+              <li>Dimostrazioni e Presentazioni</li>
+              <li>Formazione e Istruzione</li>
+              <li>Customer Experience &amp; Service</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" style="margin-top:var(--space-6);display:inline-block;">Contattaci</a>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M21 16.5c0 .38-.21.71-.53.88l-7.9 4.44c-.16.12-.36.18-.57.18-.21 0-.41-.06-.57-.18l-7.9-4.44A1 1 0 0 1 3 16.5v-9c0-.38.21-.71.53-.88l7.9-4.44c.16-.12.36-.18.57-.18.21 0 .41.06.57.18l7.9 4.44c.32.17.53.5.53.88v9z"/></svg>
+              <span>Prodotto 3D</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 — Virtual Reality -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">03.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Virtual Reality</h3>
+            <p class="svc-step-subtitle">COME PUOI UTILIZZARLO?</p>
+            <ul class="svc-3d-list">
+              <li>Marketing e Promozione</li>
+              <li>Vendite e Dimostrazioni</li>
+              <li>Esperienze di acquisto immersive</li>
+              <li>Design e Sviluppo del Prodotto</li>
+              <li>Simulazione e Test</li>
+              <li>Creazione di spazi Virtuali</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" style="margin-top:var(--space-6);display:inline-block;">Contattaci</a>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M20.5 7.5H3.5C2.67 7.5 2 8.17 2 9v9.5c0 .83.67 1.5 1.5 1.5h17c.83 0 1.5-.67 1.5-1.5V9c0-.83-.67-1.5-1.5-1.5zM7.5 16a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zm9 0a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5zM12 6.5c-.83 0-1.5-.67-1.5-1.5S11.17 3.5 12 3.5 13.5 4.17 13.5 5 12.83 6.5 12 6.5z"/></svg>
+              <span>Virtual Reality</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 — Contenuti Pubblicitari -->
+        <div class="svc-content-block svc-content-block--flip reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">04.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Contenuti Pubblicitari</h3>
+            <p class="svc-step-subtitle">COME PUOI UTILIZZARLO?</p>
+            <ul class="svc-3d-list">
+              <li>Attirare l'Attenzione</li>
+              <li>Dimostrare le Caratteristiche del Prodotto</li>
+              <li>Aumentare le Conversioni</li>
+              <li>Versatilità nei Canali di Marketing</li>
+              <li>Supporto per le Campagne Cross-Media</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" style="margin-top:var(--space-6);display:inline-block;">Contattaci</a>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M21 3H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H3V5h18v14z"/></svg>
+              <span>Contenuti Pubblicitari</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 05 — Animazione 3D -->
+        <div class="svc-content-block reveal">
+          <div class="svc-content-block__copy">
+            <span class="svc-step-num">05.</span>
+            <h3 class="svc-content-block__title" style="color:var(--primary);">Animazione 3D</h3>
+            <p class="svc-step-subtitle">COME PUOI UTILIZZARLO?</p>
+            <ul class="svc-3d-list">
+              <li>Demo di Prodotto Interattive</li>
+              <li>Explainer Video e Tutorial</li>
+              <li>Presentazioni Aziendali</li>
+              <li>Spot e Campagne Digitali</li>
+              <li>Motion Graphics e Loghi Animati</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" style="margin-top:var(--space-6);display:inline-block;">Contattaci</a>
+          </div>
+          <div class="svc-content-block__visual">
+            <div class="svc-content-block__placeholder">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 14.5v-9l6 4.5-6 4.5z"/></svg>
+              <span>Animazione 3D</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ══ FACCIAMOLO INSIEME ════════════════════════════════════ -->
+    <section class="svc-3d-cta-mid section">
+      <div class="container svc-3d-cta-mid__inner">
+        <div class="svc-3d-cta-mid__left reveal">
+          <h2 class="svc-3d-cta-mid__title">FACCIAMOLO<br/>INSIEME</h2>
+        </div>
+        <div class="svc-3d-cta-mid__right reveal reveal-delay-1">
+          <div class="svc-3d-cta-mid__icon" aria-hidden="true">
+            <div class="svc-content-block__placeholder" style="aspect-ratio:1;border-radius:50%;max-width:220px;margin:0 auto;">
+              <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M12 1C8.676 1 6 3.676 6 7c0 2.43 1.448 4.51 3.535 5.527C7.89 13.462 7 15.073 7 17h2c0-1.654 1.346-3 3-3s3 1.346 3 3h2c0-1.927-.89-3.538-2.535-4.473C16.552 11.51 18 9.43 18 7c0-3.324-2.676-6-6-6zm0 10c-2.206 0-4-1.794-4-4s1.794-4 4-4 4 1.794 4 4-1.794 4-4 4z"/></svg>
+              <span>Prototipo</span>
+            </div>
+          </div>
+          <p class="svc-3d-cta-mid__label">RIDUCI I COSTI CON PROTOTIPI DIGITALI</p>
+          <p class="svc-3d-cta-mid__text">Il 3D ti consente di visualizzare, testare e presentare il prodotto prima ancora di produrlo fisicamente — risparmiando tempo e risorse.</p>
+          <a class="btn btn--primary" href="../contatti.html">Richiedi una consulenza</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CLIENTI ═══════════════════════════════════════════════ -->
+    <section class="svc-clients">
+      <div class="container">
+        <h2 class="svc-clients__title reveal">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
+      </div>
+      <div class="svc-clients__marquee-wrap">
+        <div class="svc-clients__track">
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+        </div>
+        <div class="svc-clients__track svc-clients__track--rev">
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
+    <section class="section svc-magic">
+      <div class="container svc-magic__inner">
+        <div class="svc-magic__cat reveal">
+          <img src="../foto%20servizi/Foto%20ultima%20sezione.webp" alt="" aria-hidden="true" />
+        </div>
+        <div class="svc-magic__content reveal reveal-delay-1">
+          <h2 class="svc-magic__title">SAPPIAMO FARE UN SACCO DI ALTRE MAGIE</h2>
+          <div class="svc-magic__links">
+            <a class="svc-magic__pill" href="strategia-digitale.html">Strategia Digitale</a>
+            <a class="svc-magic__pill" href="social-media-management.html">Social Media Management</a>
+            <a class="svc-magic__pill" href="google-ads.html">Google ADS</a>
+            <a class="svc-magic__pill" href="social-ads.html">Social ADS</a>
+            <a class="svc-magic__pill" href="graphic-design.html">Graphic Design</a>
+            <a class="svc-magic__pill" href="web-design.html">Web Design</a>
+            <a class="svc-magic__pill" href="produzione-contenuti.html">Produzione Contenuti</a>
+            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
           </div>
         </div>
       </div>
     </section>
 
-    <section class="section service-detail">
-      <div class="container">
-        <div class="service-detail__grid">
-          <div>
-            <p class="section__label reveal">Il servizio</p>
-            <div class="service-detail__body reveal reveal-delay-1">
-              <p>Il 3D permette di comunicare qualcosa che <strong>non esiste ancora</strong> — o che esiste ma non può essere fotografato come dovrebbe. Progettiamo e renderizziamo con un occhio alla qualità fotorealistica e uno alla narrazione visiva.</p>
-              <p>Prodotti, interni, architetture, scenografie digitali: ogni progetto è affrontato con attenzione alla luce, ai materiali, alla composizione — per immagini che convincono e ispirano.</p>
-            </div>
-            <div class="reveal reveal-delay-2" style="margin-top: var(--space-10);">
-              <a class="btn btn--primary" href="../contatti.html">Richiedi un preventivo</a>
-            </div>
-          </div>
-          <div>
-            <div class="service-detail__panel reveal reveal-delay-1">
-              <p class="service-detail__panel-title">Cosa include</p>
-              <ul class="service-detail__list">
-                <li class="service-detail__item">Modellazione 3D da sketch o brief</li>
-                <li class="service-detail__item">Render fotorealistici di prodotto</li>
-                <li class="service-detail__item">Visualizzazione di interni e spazi</li>
-                <li class="service-detail__item">Scenografie digitali per campagne</li>
-                <li class="service-detail__item">Animazioni 3D e turntable</li>
-                <li class="service-detail__item">Asset per AR/VR</li>
-                <li class="service-detail__item">Post-produzione e compositing</li>
-              </ul>
-            </div>
-            <div class="service-detail__cta-box reveal reveal-delay-2">
-              <span class="service-detail__cta-label">Vuoi saperne di più?</span>
-              <a class="btn btn--outline" href="../contatti.html">Parliamo del tuo progetto</a>
-            </div>
-          </div>
+    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
+    <section class="svc-caffe" aria-label="Contattaci">
+      <div class="container svc-caffe__inner">
+        <div class="svc-caffe__left reveal">
+          <h2 class="svc-caffe__title">Prendiamoci<br/>un caffè!</h2>
+          <p class="svc-caffe__sub">Anche virtuale</p>
         </div>
+        <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
+          <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
+          <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+          <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          <label class="svc-caffe__privacy">
+            <input type="checkbox" required />
+            <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+          </label>
+          <button class="btn btn--primary" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
+        </form>
       </div>
     </section>
 
   </main>
-
-  <footer class="footer" role="contentinfo">
-    <div class="container footer__inner">
-      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../assets/Estro_logo05 (1).webp" alt="ESTRO" />
-      </a>
-      <nav class="footer__social" aria-label="Social media">
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Instagram</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">LinkedIn</a>
-        <a class="footer__social-link" href="#" rel="noopener noreferrer">Behance</a>
-      </nav>
-      <p class="footer__copy">© 2024 ESTRO. Tutti i diritti riservati.</p>
-    </div>
-  </footer>
 
   <script src="../js/main.js"></script>
 </body>
