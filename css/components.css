@@ -6457,7 +6457,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-intro-market {
   padding-block: clamp(2rem, 4vw, 3.5rem) !important;
   position: relative;
-  overflow: hidden;
+  overflow: visible;
 }
 .svc-intro-market__deco {
   position: absolute;
