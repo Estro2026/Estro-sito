@@ -6130,8 +6130,37 @@ body:has(.hero-video) .nav:not(.scrolled) {
 ═══════════════════════════════════════════════════════ */
 .svc-integrazione {
   background: #fff;
-  padding-block: clamp(3rem, 6vw, 5rem) 0;
+  padding-block: clamp(1.5rem, 3vw, 2.5rem) clamp(3rem, 6vw, 5rem);
   overflow: hidden;
+}
+.svc-integrazione__header {
+  margin-bottom: clamp(2rem, 4vw, 3rem);
+}
+.svc-integrazione__pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: flex-start;
+}
+.svc-integrazione__pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  border: 1.5px solid rgba(0,0,0,0.12);
+  border-radius: 999px;
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--black);
+  background: #fff;
+  transition: border-color 200ms, color 200ms, background 200ms;
+}
+.svc-integrazione__pill svg { color: var(--primary); flex-shrink: 0; }
+.svc-integrazione__pill:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: rgba(219,0,90,0.04);
 }
 .svc-integrazione__title {
   font-family: var(--font-secondary);
@@ -6433,8 +6462,8 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-intro-market__deco {
   position: absolute;
   left: calc(-1 * var(--gutter, 2rem));
-  top: 50%;
-  transform: translateY(-50%) scaleX(-1);
+  top: 8%;
+  transform: scaleX(-1);
   width: clamp(200px, 28vw, 380px);
   height: auto;
   opacity: 0.9;
