@@ -6272,7 +6272,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
 }
 .svc-intro-market__inner {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 3fr;
   gap: clamp(3rem, 6vw, 6rem);
   align-items: center;
 }
