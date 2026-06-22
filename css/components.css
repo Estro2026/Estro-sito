@@ -4944,7 +4944,7 @@ body:has(.hero-home) .nav:not(.scrolled) .nav__hamburger span {
 :root { --nav-h: 82px; }
 
 /* ── Nav: ripristino colori normali (video è sotto, non dietro) */
-body:has(.hero-home) .nav:not(.scrolled) { background: transparent; }
+body:has(.hero-home) .nav:not(.scrolled) { background: var(--white); border-bottom-color: var(--black-08); }
 body:has(.hero-home) .nav:not(.scrolled) .nav__link,
 body:has(.hero-home) .nav:not(.scrolled) .nav__dropdown-toggle { color: var(--black); }
 body:has(.hero-home) .nav:not(.scrolled) .nav__logo img { filter: none; }
