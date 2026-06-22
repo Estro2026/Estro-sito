@@ -7323,3 +7323,86 @@ body:has(.hero-video) .nav:not(.scrolled) {
   margin-inline: calc(-1 * var(--gutter));
   padding-inline: var(--gutter);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   SERVIZIO AI — fix leggibilità e layout
+   ══════════════════════════════════════════════════════════════ */
+
+/* Body text più leggibile ovunque nella pagina AI */
+.svc-ai-capacita .svc-content-block__text,
+.svc-blocks-section .svc-content-block__text {
+  font-size: var(--text-base);
+  line-height: 1.8;
+  color: var(--black-75);
+}
+
+/* Tag: hug content (già flex-wrap, ma forza inline) */
+.svc-ai-tags {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+/* CTA nei content block: hug content */
+.svc-content-block__copy .btn {
+  display: inline-block !important;
+  width: auto !important;
+}
+
+/* Workflow card title — leggibilità */
+.svc-ai-workflow__card-head {
+  border-bottom: 1.5px solid var(--black-10);
+  padding-bottom: var(--space-4);
+  margin-bottom: var(--space-5);
+}
+.svc-ai-workflow__icon {
+  width: 20px;
+  height: 20px;
+  color: var(--primary);
+}
+.svc-ai-workflow__card-title {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--black);
+}
+
+/* Workflow card: più respiro */
+.svc-ai-workflow__card {
+  padding: clamp(1.75rem, 3vw, 2.5rem);
+}
+
+/* Steps nel workflow: più leggibili */
+.svc-ai-workflow__step {
+  font-size: var(--text-base);
+  color: var(--black-60);
+  line-height: 1.5;
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--black-10);
+}
+.svc-ai-workflow__step:last-child { border-bottom: none; }
+.svc-ai-workflow__num {
+  font-size: var(--text-base);
+  font-weight: 700;
+  min-width: 1.5rem;
+}
+
+/* Checklist: più leggibile */
+.svc-ai-checklist li {
+  font-size: var(--text-base);
+  line-height: 1.65;
+  color: var(--black-75);
+}
+
+/* Steps approccio: più leggibili */
+.svc-ai-step {
+  font-size: var(--text-base);
+  color: var(--black-75);
+}
+
+/* Vantaggi box body */
+.svc-ai-vantaggi .svc-ai-checklist li {
+  color: var(--black-75);
+}
