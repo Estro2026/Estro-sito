@@ -7049,3 +7049,254 @@ body:has(.hero-video) .nav:not(.scrolled) {
     grid-template-columns: 1fr;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   SERVIZIO AI — classi specifiche
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── Kicker con lineetta fucsia ─────────────────────────────── */
+.svc-ai-pill-kicker {
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-4);
+}
+
+/* ── Pill badge per le sotto-sezioni ────────────────────────── */
+.svc-ai-badge {
+  display: inline-flex;
+  align-items: center;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 999px;
+  padding: 0.25rem 0.9rem;
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: var(--space-5);
+}
+
+/* ── Tag pills (Più rapidi, ecc.) ───────────────────────────── */
+.svc-ai-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.svc-ai-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border: 1.5px solid var(--primary);
+  border-radius: 999px;
+  padding: 0.35rem 1rem;
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* ── Checklist (✓ fucsia) ───────────────────────────────────── */
+.svc-ai-checklist {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.svc-ai-checklist li {
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--black-75);
+  padding-left: 1.5rem;
+  position: relative;
+  line-height: 1.5;
+}
+.svc-ai-checklist li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--primary);
+  font-weight: 700;
+}
+
+/* ── Box "I Vantaggi" ───────────────────────────────────────── */
+.svc-ai-vantaggi {
+  background: rgba(219,0,90,0.06);
+  border-left: 3px solid var(--primary);
+  border-radius: 0 8px 8px 0;
+  padding: var(--space-6);
+  margin-top: var(--space-6);
+}
+.svc-ai-vantaggi__title {
+  font-family: var(--font-secondary);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--primary);
+  margin-bottom: var(--space-3);
+}
+
+/* ── Sezione "Le Nostre Capacità" ───────────────────────────── */
+.svc-ai-capacita__head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto clamp(3rem, 6vw, 5rem);
+}
+.svc-ai-capacita__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2.5rem, 6vw, 85px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: var(--space-4);
+}
+.svc-ai-capacita__sub {
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  color: var(--black-60);
+  line-height: 1.6;
+}
+
+/* ── Approccio (2 colonne) ──────────────────────────────────── */
+.svc-ai-approccio {
+  background: #f7f7f7;
+  border-top: var(--border);
+  border-bottom: var(--border);
+}
+.svc-ai-approccio__inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(3rem, 6vw, 6rem);
+  align-items: center;
+}
+.svc-ai-approccio__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: var(--space-6);
+}
+
+/* ── Numbered steps (approccio) ─────────────────────────────── */
+.svc-ai-steps {
+  list-style: none;
+  padding: 0;
+}
+.svc-ai-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) 0;
+  border-bottom: var(--border);
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  color: var(--black-75);
+}
+.svc-ai-step:first-child { border-top: var(--border); }
+.svc-ai-step__num {
+  width: 32px;
+  height: 32px;
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Workflow section ────────────────────────────────────────── */
+.svc-ai-workflow { background: #f7f7f7; }
+.svc-ai-workflow__head {
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto clamp(3rem, 5vw, 4rem);
+}
+.svc-ai-workflow__title {
+  font-family: var(--font-primary);
+  font-size: clamp(2.5rem, 6vw, 85px);
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 1;
+  color: var(--black);
+  margin-bottom: var(--space-4);
+}
+.svc-ai-workflow__sub {
+  font-family: var(--font-secondary);
+  font-size: var(--text-base);
+  color: var(--black-60);
+  line-height: 1.6;
+}
+.svc-ai-workflow__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(1.25rem, 2vw, 2rem);
+}
+.svc-ai-workflow__card {
+  background: var(--white);
+  border: var(--border);
+  border-radius: 16px;
+  padding: clamp(1.5rem, 2.5vw, 2.5rem);
+}
+.svc-ai-workflow__card-head {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.svc-ai-workflow__icon {
+  width: 24px;
+  height: 24px;
+  color: var(--primary);
+  flex-shrink: 0;
+}
+.svc-ai-workflow__card-title {
+  font-family: var(--font-primary);
+  font-size: 1rem;
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--black);
+}
+.svc-ai-workflow__steps {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.svc-ai-workflow__step {
+  display: flex;
+  gap: var(--space-4);
+  font-family: var(--font-secondary);
+  font-size: var(--text-sm);
+  color: var(--black-60);
+  line-height: 1.4;
+}
+.svc-ai-workflow__num {
+  color: var(--primary);
+  font-weight: 700;
+  flex-shrink: 0;
+  min-width: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .svc-ai-approccio__inner,
+  .svc-ai-workflow__grid { grid-template-columns: 1fr; }
+}
