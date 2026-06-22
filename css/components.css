@@ -45,7 +45,7 @@
 }
 
 .nav__logo img {
-  height: 26px;
+  height: 104px;
   width: auto;
   transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
