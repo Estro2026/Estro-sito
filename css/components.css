@@ -7684,3 +7684,22 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-process__card-text  { color: var(--black-75) !important; }
 .svc-ai-step             { color: var(--black-75) !important; }
 
+/* ═══════════════════════════════════════════════════════
+   PLACEHOLDER: plain gray box, NO SVG icons — safety net
+═══════════════════════════════════════════════════════ */
+.svc-content-block__placeholder {
+  background: #f0f0f0 !important;
+  border: none !important;
+  background-image: none !important;
+}
+.svc-content-block__placeholder::before { display: none !important; }
+.svc-content-block__placeholder svg,
+.svc-content-block__placeholder > svg,
+.svc-content-block__placeholder svg:first-child { display: none !important; }
+.svc-content-block__placeholder > span,
+.svc-content-block__placeholder small {
+  color: #aaa !important;
+  opacity: 1 !important;
+  filter: none !important;
+}
+
