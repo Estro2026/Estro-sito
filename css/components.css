@@ -5321,12 +5321,9 @@ body:has(.hero-home) .nav:not(.scrolled) .nav__hamburger span { background: var(
   transform: translateY(-3px);
 }
 
-/* ── Ripristina nav: colori normali (nav non è sopra il video) */
+/* ── Nav trasparente sulle pagine servizio */
 body:has(.hero-video) .nav:not(.scrolled) {
-  background: rgba(255,255,255,0.95);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--black-08);
+  background: transparent;
 }
 body:has(.hero-video) .nav:not(.scrolled) .nav__link,
 body:has(.hero-video) .nav:not(.scrolled) .nav__dropdown-toggle { color: var(--black); }
@@ -5497,12 +5494,9 @@ body:has(.hero-video) .nav:not(.scrolled) .nav__hamburger span { background: var
   transform: translateY(-2px);
 }
 
-/* Nav: su sfondo bianco, stato normale */
+/* Nav: trasparente prima dello scroll */
 body:has(.hero-video) .nav:not(.scrolled) {
-  background: rgba(255,255,255,0.96);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--black-08);
+  background: transparent;
 }
 
 /* Responsive */
@@ -7434,3 +7428,259 @@ body:has(.hero-video) .nav:not(.scrolled) {
   align-self: flex-start;
   margin-top: var(--space-6);
 }
+
+/* ══════════════════════════════════════════════════════════════
+   TASK 1 — ICONE SVG: bold, pop, imponenti nei placeholder
+   ══════════════════════════════════════════════════════════════ */
+
+/* Placeholder visivo: sfondo con gradient accent tint */
+.svc-content-block__placeholder {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: var(--space-4) !important;
+  background: linear-gradient(135deg, #fdf0f5 0%, #f7f7f7 100%) !important;
+  border: 2px solid rgba(219,0,90,0.15) !important;
+  border-radius: 16px !important;
+  position: relative !important;
+  overflow: hidden !important;
+  opacity: 1 !important;
+  color: var(--primary) !important;
+  min-height: 220px !important;
+}
+
+/* Alone decorativo dietro l'icona */
+.svc-content-block__placeholder::before {
+  content: '';
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(219,0,90,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* SVG principale: grande e bold */
+.svc-content-block__placeholder > svg,
+.svc-content-block__placeholder svg:first-child {
+  width: 96px !important;
+  height: 96px !important;
+  color: var(--primary) !important;
+  opacity: 1 !important;
+  stroke-width: 1.5 !important;
+  position: relative;
+  z-index: 1;
+  filter: drop-shadow(0 4px 16px rgba(219,0,90,0.25));
+}
+
+/* Label testuale sotto l'icona */
+.svc-content-block__placeholder > span,
+.svc-content-block__placeholder small {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-xs) !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: var(--primary) !important;
+  opacity: 0.7 !important;
+  position: relative;
+  z-index: 1;
+}
+
+/* Icone nelle process card: più visibili */
+.svc-process__icon {
+  width: 56px !important;
+  height: 56px !important;
+  background: rgba(219,0,90,0.08) !important;
+  border-radius: 12px !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+.svc-process__icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  color: var(--primary) !important;
+  stroke: var(--primary) !important;
+  stroke-width: 1.5 !important;
+}
+
+/* Icone negli advantages: stesse dimensioni */
+.svc-advantages__icon {
+  width: 56px !important;
+  height: 56px !important;
+  background: rgba(219,0,90,0.08) !important;
+  border-radius: 12px !important;
+  padding: 10px !important;
+  box-sizing: border-box !important;
+}
+.svc-advantages__icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  color: var(--primary) !important;
+}
+
+/* Placeholder con aspect-ratio circolare (come in 3d) */
+.svc-content-block__placeholder[style*="border-radius:50%"] > svg,
+.svc-content-block__placeholder[style*="border-radius: 50%"] > svg {
+  width: 72px !important;
+  height: 72px !important;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   TASK 2 — TYPOGRAPHY & VISUAL PATTERN UNIFICATION
+   Si applica a tutte le pagine servizio
+   ══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Hero section: font-size uniforme ── */
+.svc-hero__title {
+  font-size: clamp(1.8rem, 4.5vw, 72px) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.01em !important;
+  line-height: 0.95 !important;
+}
+.svc-hero__kicker {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-xs) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.2em !important;
+  text-transform: uppercase !important;
+  color: var(--primary) !important;
+}
+.svc-hero__sub {
+  font-family: var(--font-secondary) !important;
+  font-size: clamp(0.875rem, 1.2vw, 1rem) !important;
+  color: var(--black-60) !important;
+  line-height: 1.6 !important;
+}
+
+/* ── 2. Titoli di sezione H2: uniformi ── */
+.svc-process__title,
+.svc-tools__title,
+.svc-clients__title,
+.svc-magic__title,
+.svc-advantages__title,
+.svc-channels__title,
+.svc-section-title,
+.svc-section-header__title,
+.svc-caffe__title,
+.svc-ai-capacita__title,
+.svc-ai-workflow__title,
+.svc-3d-banner__title,
+.svc-features__section-title {
+  font-family: var(--font-primary) !important;
+  font-size: clamp(2.5rem, 6vw, 85px) !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.0 !important;
+}
+
+/* ── 3. Titoli H3: card e content block ── */
+.svc-process__card-title,
+.svc-advantages__item-title,
+.svc-content-block__title,
+.svc-features__title,
+.svc-integrazione__section-title,
+.svc-ai-approccio__title,
+.svc-wd-card__title,
+.svc-wd-feature__title {
+  font-family: var(--font-primary) !important;
+  font-size: clamp(1.25rem, 3vw, 2.6rem) !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+  letter-spacing: -0.01em !important;
+  line-height: 1.05 !important;
+}
+
+/* ── 4. Body text: leggibile, uniforme ── */
+.svc-content-block__text,
+.svc-process__card-text,
+.svc-advantages__item-text,
+.svc-section-header__sub,
+.svc-features__text,
+.svc-ai-capacita__sub,
+.svc-ai-workflow__sub,
+.svc-ai-step,
+.svc-ai-checklist li {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-base) !important;
+  line-height: 1.8 !important;
+  color: var(--black-75) !important;
+}
+
+/* ── 5. Sezioni con sfondo alternato: padding-block uniforme ── */
+.svc-process,
+.svc-tools,
+.svc-advantages,
+.svc-channels,
+.svc-ai-capacita,
+.svc-ai-approccio,
+.svc-ai-workflow,
+.svc-ai-service-row,
+.svc-blocks-section,
+.svc-features,
+.svc-integrazione {
+  padding-block: clamp(var(--space-20), 8vw, var(--space-40)) !important;
+}
+
+/* Sfondo alternato: grigio chiaro uniforme */
+.svc-ai-approccio,
+.svc-ai-workflow,
+.svc-ai-service-row--alt {
+  background: #f7f7f7 !important;
+}
+
+/* ── 6. Card/bordered elements: radius, border, padding uniformi ── */
+.svc-process__card,
+.svc-advantages__item,
+.svc-ai-workflow__card,
+.svc-wd-card {
+  border-radius: 16px !important;
+  border: var(--border) !important;
+  padding: clamp(1.5rem, 2.5vw, 2.5rem) !important;
+}
+.svc-process__card:hover,
+.svc-advantages__item:hover {
+  box-shadow: var(--shadow-md) !important;
+  transform: translateY(-4px) !important;
+}
+
+/* ── 7. Content block: spaziatura uniforme ── */
+.svc-content-block {
+  padding-block: clamp(var(--space-8), 3vw, var(--space-16)) !important;
+  border-top: 1px solid var(--black-08) !important;
+}
+.svc-content-block:first-child { border-top: none !important; }
+
+/* ── 8. Section principale: padding uniforme ── */
+.section,
+.svc-blocks-section {
+  padding-block: clamp(var(--space-20), 8vw, var(--space-40));
+}
+
+/* ── 9. Eyebrow / tag pill: uniforme ── */
+.svc-content-block__tag,
+.svc-ai-service-badge,
+.svc-ai-badge {
+  font-family: var(--font-secondary) !important;
+  font-size: var(--text-xs) !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.1em !important;
+  text-transform: uppercase !important;
+  background: rgba(219,0,90,0.08) !important;
+  color: var(--primary) !important;
+  border-radius: 999px !important;
+  padding: 0.35rem 1rem !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 0.4rem !important;
+  width: auto !important;
+  align-self: flex-start !important;
+}
+
+/* ── 10. Colore body text: uniforma var(--black-75) ── */
+.svc-content-block__text { color: var(--black-75) !important; }
+.svc-process__card-text  { color: var(--black-75) !important; }
+.svc-ai-step             { color: var(--black-75) !important; }
+
