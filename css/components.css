@@ -7406,3 +7406,30 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-ai-vantaggi .svc-ai-checklist li {
   color: var(--black-75);
 }
+
+/* ── AI service rows: full-screen alternating backgrounds ─── */
+.svc-ai-service-row {
+  background: var(--white);
+  width: 100%;
+}
+.svc-ai-service-row--alt {
+  background: #f7f7f7;
+}
+.svc-ai-service-row .svc-content-block {
+  background: transparent !important;
+}
+
+/* ── Hug-content: badges & CTAs ─────────────────────────── */
+.svc-ai-service-badge,
+.svc-ai-badge {
+  display: inline-flex !important;
+  width: auto !important;
+  align-self: flex-start;
+}
+.svc-ai-cta,
+.svc-content-block__copy .btn {
+  display: inline-flex !important;
+  width: auto !important;
+  align-self: flex-start;
+  margin-top: var(--space-6);
+}
