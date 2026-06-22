@@ -45,7 +45,7 @@
 }
 
 .nav__logo img {
-  height: 104px;
+  height: 26px;
   width: auto;
   transition: opacity var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
 }
@@ -167,9 +167,7 @@
   transition:
     opacity var(--dur-base) var(--ease-out),
     transform var(--dur-base) var(--ease-out);
-  background: rgba(255,255,255,0.98);
-  backdrop-filter: blur(32px) saturate(200%);
-  -webkit-backdrop-filter: blur(32px) saturate(200%);
+  background: var(--white);
   border: 1px solid var(--black-08);
   min-width: 440px;
   display: grid;
@@ -4944,7 +4942,7 @@ body:has(.hero-home) .nav:not(.scrolled) .nav__hamburger span {
 :root { --nav-h: 82px; }
 
 /* ── Nav: ripristino colori normali (video è sotto, non dietro) */
-body:has(.hero-home) .nav:not(.scrolled) { background: var(--white); border-bottom-color: var(--black-08); }
+body:has(.hero-home) .nav:not(.scrolled) { background: transparent; }
 body:has(.hero-home) .nav:not(.scrolled) .nav__link,
 body:has(.hero-home) .nav:not(.scrolled) .nav__dropdown-toggle { color: var(--black); }
 body:has(.hero-home) .nav:not(.scrolled) .nav__logo img { filter: none; }
