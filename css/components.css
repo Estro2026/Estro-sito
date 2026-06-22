@@ -7411,12 +7411,15 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .svc-ai-service-row {
   background: var(--white);
   width: 100%;
+  padding-block: clamp(3rem, 6vw, 5rem);
 }
 .svc-ai-service-row--alt {
   background: #f7f7f7;
 }
 .svc-ai-service-row .svc-content-block {
   background: transparent !important;
+  padding-block: 0 !important;
+  border-top: none !important;
 }
 
 /* ── Hug-content: badges & CTAs ─────────────────────────── */
