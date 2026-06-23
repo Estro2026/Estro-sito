@@ -7490,19 +7490,20 @@ body:has(.hero-video) .nav:not(.scrolled) {
 
 /* Icone nelle process card: più visibili */
 .svc-process__icon {
-  width: 56px !important;
-  height: 56px !important;
+  width: 80px !important;
+  height: 80px !important;
   background: rgba(219,0,90,0.08) !important;
-  border-radius: 12px !important;
-  padding: 10px !important;
+  border-radius: 20px !important;
+  padding: 14px !important;
   box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
 }
 .svc-process__icon svg {
   width: 100% !important;
   height: 100% !important;
   color: var(--primary) !important;
-  stroke: var(--primary) !important;
-  stroke-width: 1.5 !important;
 }
 
 /* Icone negli advantages: stesse dimensioni */
