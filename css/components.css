@@ -7720,7 +7720,10 @@ body:has(.hero-video) .nav:not(.scrolled) {
   padding-block: clamp(3rem, 6vw, 5rem);
 }
 .smm-row--dark {
-  background: #111;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 0%, rgba(219,0,90,0.22) 0%, transparent 65%),
+    radial-gradient(ellipse 55% 45% at 85% 100%, rgba(99,0,255,0.12) 0%, transparent 65%),
+    #050505;
 }
 .smm-row .svc-content-block,
 .smm-row--dark .svc-content-block {
