@@ -2105,6 +2105,7 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   font-size: clamp(2.5rem, 5.5vw, 5rem);
   font-weight: 900;
   text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--primary);
   line-height: 1.0;
   letter-spacing: 0.04em;
