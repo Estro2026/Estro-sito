@@ -7488,37 +7488,44 @@ body:has(.hero-video) .nav:not(.scrolled) {
   z-index: 1;
 }
 
-/* Icone nelle process card: più visibili */
+/* Icone nelle process card: sfondo solido, icona bianca */
 .svc-process__icon {
   width: 80px !important;
   height: 80px !important;
-  background: rgba(219,0,90,0.08) !important;
+  background: var(--primary) !important;
   border-radius: 20px !important;
+  padding: 16px !important;
+  box-sizing: border-box !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  flex-shrink: 0 !important;
+}
+.svc-process__icon svg {
+  width: 100% !important;
+  height: 100% !important;
+  color: #fff !important;
+  stroke: #fff !important;
+}
+
+/* Icone negli advantages: sfondo solido, icona bianca */
+.svc-advantages__icon {
+  width: 72px !important;
+  height: 72px !important;
+  background: var(--primary) !important;
+  border-radius: 18px !important;
   padding: 14px !important;
   box-sizing: border-box !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-}
-.svc-process__icon svg {
-  width: 100% !important;
-  height: 100% !important;
-  color: var(--primary) !important;
-}
-
-/* Icone negli advantages: stesse dimensioni */
-.svc-advantages__icon {
-  width: 56px !important;
-  height: 56px !important;
-  background: rgba(219,0,90,0.08) !important;
-  border-radius: 12px !important;
-  padding: 10px !important;
-  box-sizing: border-box !important;
+  flex-shrink: 0 !important;
 }
 .svc-advantages__icon svg {
   width: 100% !important;
   height: 100% !important;
-  color: var(--primary) !important;
+  color: #fff !important;
+  stroke: #fff !important;
 }
 
 /* Placeholder con aspect-ratio circolare (come in 3d) */
