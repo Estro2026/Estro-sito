@@ -7712,3 +7712,39 @@ body:has(.hero-video) .nav:not(.scrolled) {
   filter: none !important;
 }
 
+
+/* ── SMM: righe alternato scuro/chiaro ──────────────────── */
+.smm-row {
+  background: var(--white);
+  width: 100%;
+  padding-block: clamp(3rem, 6vw, 5rem);
+}
+.smm-row--dark {
+  background: #111;
+}
+.smm-row .svc-content-block,
+.smm-row--dark .svc-content-block {
+  background: transparent !important;
+  padding-block: 0 !important;
+  border-top: none !important;
+}
+
+/* Testo chiaro su sfondo scuro */
+.smm-title--light { color: var(--white) !important; }
+.smm-text--light  { color: rgba(255,255,255,0.72) !important; }
+.smm-tag--light   {
+  color: var(--primary) !important;
+  background: rgba(219,0,90,0.15) !important;
+  border-color: rgba(219,0,90,0.4) !important;
+}
+.smm-checklist--light li { color: rgba(255,255,255,0.75) !important; }
+.smm-checklist--light li::before { color: var(--primary) !important; }
+
+/* Placeholder su sfondo scuro */
+.smm-placeholder--dark {
+  background: rgba(255,255,255,0.06) !important;
+  border: 1px solid rgba(255,255,255,0.1) !important;
+}
+.smm-placeholder--dark span {
+  color: rgba(255,255,255,0.4) !important;
+}
