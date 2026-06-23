@@ -7751,3 +7751,11 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .smm-placeholder--dark span {
   color: rgba(255,255,255,0.4) !important;
 }
+
+/* SMM statement: sfondo bianco con sfumatura ricorrente fucsia */
+.smm-statement--gradient {
+  background:
+    radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+    radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+    linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%);
+}
