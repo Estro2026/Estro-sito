@@ -3147,17 +3147,27 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
 .cs2__logo--stacked { line-height: 1.1; font-weight: 900; letter-spacing: 0.05em; }
 
 .cs2__logo-img {
-  max-width: 70%;
-  max-height: 60%;
+  max-width: 80%;
+  max-height: 72%;
   width: auto;
   height: auto;
   object-fit: contain;
   position: relative;
   z-index: 1;
   transition: transform 0.4s cubic-bezier(0.16,1,0.3,1), filter 0.4s ease;
-  filter: brightness(1);
 }
 
+/* Tile scuri e fucsia: logo invertito a bianco per contrasto */
+.cs2__tile:nth-child(2) .cs2__logo-img,
+.cs2__tile:nth-child(4) .cs2__logo-img,
+.cs2__tile:nth-child(5) .cs2__logo-img,
+.cs2__tile:nth-child(7) .cs2__logo-img,
+.cs2__tile:nth-child(10) .cs2__logo-img,
+.cs2__tile:nth-child(11) .cs2__logo-img {
+  filter: brightness(0) invert(1);
+}
+
+/* Hover: tutti i tile diventano scuri → logo bianco */
 .cs2__tile:hover .cs2__logo-img {
   transform: scale(1.1);
   filter: brightness(0) invert(1);
