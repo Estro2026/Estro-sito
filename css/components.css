@@ -3173,6 +3173,19 @@ a.contact-info-block:hover .contact-info-block__value { color: var(--primary); }
   filter: brightness(0) invert(1);
 }
 
+/* Loghi più piccoli che necessitano di ingrandimento */
+.cs2__tile:nth-child(2) .cs2__logo-img,
+.cs2__tile:nth-child(3) .cs2__logo-img,
+.cs2__tile:nth-child(5) .cs2__logo-img,
+.cs2__tile:nth-child(6) .cs2__logo-img,
+.cs2__tile:nth-child(7) .cs2__logo-img,
+.cs2__tile:nth-child(8) .cs2__logo-img,
+.cs2__tile:nth-child(9) .cs2__logo-img,
+.cs2__tile:nth-child(11) .cs2__logo-img {
+  max-width: 90%;
+  max-height: 85%;
+}
+
 /* ── Footer CTA ── */
 .cs2__footer {
   display: flex;
