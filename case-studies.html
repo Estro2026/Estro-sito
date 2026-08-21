@@ -298,6 +298,11 @@
     }
     .cs-card:hover .cs-card__logo img { opacity: 1; transform: scale(1.05); }
 
+    /* enlarged variant — less padding, image fills more of the box */
+    .cs-card__logo--xl { padding: 0.4rem 0.6rem !important; }
+    .cs-card__logo--xl img { width: 95%; max-height: 95%; }
+    .cs-card__wordmark--xl span { font-size: clamp(2rem, 5.5vw, 3rem) !important; }
+
     /* wordmark — testo brand */
     .cs-card__wordmark span {
       position: relative;
@@ -812,59 +817,59 @@
     <!-- ══ CARD POOL (sorgente, nascosta) ══════════════════════ -->
     <div id="cs-pool" style="display:none" aria-hidden="true">
       <div class="cs-card" data-cat="brand">
-        <div class="cs-card__logo"><img src="foto case study/artigli-1-150x150.webp" alt="Artigli" /></div>
+        <div class="cs-card__wordmark"><span>Artigli</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Artigli</span><span class="cs-card__cat">Brand &amp; Design</span></div>
       </div>
       <div class="cs-card" data-cat="content">
-        <div class="cs-card__logo"><img src="foto case study/redbull-150x150_pink-150x150.webp" alt="Red Bull" /></div>
+        <div class="cs-card__logo"><img src="loghibrand/redbull.webp" alt="Red Bull" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Red Bull</span><span class="cs-card__cat">Content &amp; Video</span></div>
       </div>
       <div class="cs-card" data-cat="brand">
-        <div class="cs-card__logo"><img src="foto case study/cybergon_rosa.png" alt="Cybergon" /></div>
+        <div class="cs-card__wordmark"><span>Cybergon</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Cybergon</span><span class="cs-card__cat">Web Design</span></div>
       </div>
       <div class="cs-card" data-cat="brand">
-        <div class="cs-card__logo"><img src="foto case study/Dresso_rosa.png" alt="Dresso" /></div>
+        <div class="cs-card__wordmark"><span>Dresso</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Dresso</span><span class="cs-card__cat">Brand &amp; Design</span></div>
       </div>
       <div class="cs-card" data-cat="ecommerce">
-        <div class="cs-card__logo"><img src="foto case study/logo_coseacasa.webp" alt="Cose a Casa" /></div>
+        <div class="cs-card__wordmark"><span>Cose a Casa</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Cose a Casa</span><span class="cs-card__cat">E-commerce</span></div>
       </div>
       <div class="cs-card" data-cat="content">
-        <div class="cs-card__logo"><img src="foto case study/disclaimer-150x150_pink-150x150.webp" alt="Disclaimer" /></div>
+        <div class="cs-card__logo"><img src="loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Disclaimer</span><span class="cs-card__cat">Content &amp; Video</span></div>
       </div>
       <div class="cs-card" data-cat="brand">
-        <div class="cs-card__logo"><img src="foto case study/squarelife-150x150_pink-150x150.webp" alt="Squarelife" /></div>
+        <div class="cs-card__wordmark"><span>Squarelife</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Squarelife</span><span class="cs-card__cat">Web Design</span></div>
       </div>
       <div class="cs-card" data-cat="content">
-        <div class="cs-card__logo"><img src="foto case study/pyrex-150x150_pink-150x150.webp" alt="Pyrex" /></div>
+        <div class="cs-card__logo"><img src="loghibrand/pyrex.webp" alt="Pyrex" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Pyrex</span><span class="cs-card__cat">Content &amp; Video</span></div>
       </div>
       <div class="cs-card" data-cat="content">
-        <div class="cs-card__logo"><img src="foto case study/fragi-150x150_pink-150x150.webp" alt="Fragi" /></div>
+        <div class="cs-card__wordmark"><span>Fragi</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Fragi</span><span class="cs-card__cat">Content &amp; Video</span></div>
       </div>
       <div class="cs-card" data-cat="content">
-        <div class="cs-card__logo"><img src="foto case study/woodoo-150x150_pink.webp" alt="Woodoo Fest" /></div>
+        <div class="cs-card__wordmark"><span>Woodoo Fest</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Woodoo Fest</span><span class="cs-card__cat">Content &amp; Video</span></div>
       </div>
       <div class="cs-card" data-cat="social">
-        <div class="cs-card__logo"><img src="foto case study/logo-come-in-una-favola-v5-1.webp" alt="Come in una Favola" /></div>
+        <div class="cs-card__wordmark"><span>Come in una Favola</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Come in una Favola</span><span class="cs-card__cat">Social Media</span></div>
       </div>
       <div class="cs-card" data-cat="brand">
-        <div class="cs-card__logo"><img src="foto case study/ABC-logo-rosa.webp" alt="ABC Tools Mr. Tools" /></div>
+        <div class="cs-card__logo"><img src="loghibrand/abctools.webp" alt="ABC Tools" /></div>
         <div class="cs-card__info"><span class="cs-card__client">ABC Tools</span><span class="cs-card__cat">Brand &amp; Design</span></div>
       </div>
       <a class="cs-card" data-cat="social" href="case-studies/dama24.html">
-        <div class="cs-card__wordmark"><span>Dama24</span></div>
+        <div class="cs-card__wordmark cs-card__wordmark--xl"><span>Dama24</span></div>
         <div class="cs-card__info"><span class="cs-card__client">Dama24</span><span class="cs-card__cat">Social Media</span></div>
       </a>
       <a class="cs-card" data-cat="strategia" href="case-studies/fanuc.html">
-        <div class="cs-card__wordmark"><span>Fanuc</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/fanuc.webp" alt="Fanuc" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Fanuc</span><span class="cs-card__cat">Strategia</span></div>
       </a>
       <div class="cs-card" data-cat="ai">
@@ -872,19 +877,19 @@
         <div class="cs-card__info"><span class="cs-card__client">Bravo</span><span class="cs-card__cat">AI</span></div>
       </div>
       <div class="cs-card" data-cat="strategia">
-        <div class="cs-card__wordmark"><span>Humanitas</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/humanitas.webp" alt="Humanitas" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Humanitas</span><span class="cs-card__cat">Strategia</span></div>
       </div>
       <div class="cs-card" data-cat="social">
-        <div class="cs-card__wordmark"><span>Leolandia</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/leolandia.webp" alt="Leolandia" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Leolandia</span><span class="cs-card__cat">Social Media</span></div>
       </div>
       <div class="cs-card" data-cat="social">
-        <div class="cs-card__wordmark"><span>Cupra</span></div>
+        <div class="cs-card__logo cs-card__logo--xl"><img src="loghibrand/cupra.webp" alt="Cupra" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Cupra</span><span class="cs-card__cat">Social Media</span></div>
       </div>
       <div class="cs-card" data-cat="ai">
-        <div class="cs-card__wordmark"><span>Elmec</span></div>
+        <div class="cs-card__logo cs-card__logo--xl"><img src="loghibrand/elmec.webp" alt="Elmec" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Elmec</span><span class="cs-card__cat">AI</span></div>
       </div>
       <div class="cs-card" data-cat="influencer">
@@ -892,7 +897,7 @@
         <div class="cs-card__info"><span class="cs-card__client">Kasanova</span><span class="cs-card__cat">Influencer</span></div>
       </div>
       <div class="cs-card" data-cat="influencer">
-        <div class="cs-card__wordmark"><span>Biorepair</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/biorepair.webp" alt="Biorepair" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Biorepair</span><span class="cs-card__cat">Influencer</span></div>
       </div>
       <div class="cs-card" data-cat="brand">
@@ -908,7 +913,7 @@
         <div class="cs-card__info"><span class="cs-card__client">Invicta</span><span class="cs-card__cat">Brand &amp; Design</span></div>
       </div>
       <div class="cs-card" data-cat="strategia">
-        <div class="cs-card__wordmark"><span>Ariston</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/aristonlogo.webp" alt="Ariston" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Ariston</span><span class="cs-card__cat">Strategia</span></div>
       </div>
       <div class="cs-card" data-cat="strategia">
@@ -924,7 +929,7 @@
         <div class="cs-card__info"><span class="cs-card__client">Fantabody</span><span class="cs-card__cat">E-commerce</span></div>
       </div>
       <div class="cs-card" data-cat="influencer">
-        <div class="cs-card__wordmark"><span>SJ</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/sjgang.webp" alt="SJ" /></div>
         <div class="cs-card__info"><span class="cs-card__client">SJ</span><span class="cs-card__cat">Influencer</span></div>
       </div>
       <div class="cs-card" data-cat="content">
@@ -936,7 +941,7 @@
         <div class="cs-card__info"><span class="cs-card__client">Vetrobalsamo</span><span class="cs-card__cat">Web Design</span></div>
       </div>
       <div class="cs-card" data-cat="social">
-        <div class="cs-card__wordmark"><span>Seven</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/seven.webp" alt="Seven" /></div>
         <div class="cs-card__info"><span class="cs-card__client">Seven</span><span class="cs-card__cat">Social Media</span></div>
       </div>
       <div class="cs-card" data-cat="influencer">
@@ -980,7 +985,7 @@
         <div class="cs-card__info"><span class="cs-card__client">Brace 11-25</span><span class="cs-card__cat">Social Media</span></div>
       </div>
       <div class="cs-card" data-cat="content">
-        <div class="cs-card__wordmark"><span>RAI</span></div>
+        <div class="cs-card__logo"><img src="loghibrand/rai.webp" alt="RAI" /></div>
         <div class="cs-card__info"><span class="cs-card__client">RAI — No Name Radio</span><span class="cs-card__cat">Content &amp; Video</span></div>
       </div>
       <div class="cs-card" data-cat="content">

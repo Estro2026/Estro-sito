@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -17,12 +17,61 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/hero.css" />
   <style>
+    /* ── Layout ──────────────────────────────────────────── */
     .contact-home {
       min-height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       box-sizing: border-box;
+      position: relative; /* needed for white overlay child */
+    }
+
+    /* ── Heading: nascosto finché JS non gira splitLetters ── */
+    .contact-home__heading {
+      opacity: 0; /* inline style di splitLetters lo riscrive a 1 */
+    }
+
+    /* ── Page-load reveal: sub → form (staggered CSS) ───────
+       Stesso pattern di .svc-hero--revealed in SMM/google-ads */
+    .contact-home__sub,
+    .contact-home__form {
+      opacity: 0;
+      transform: translateY(22px);
+    }
+    .contact-home--revealed .contact-home__sub {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.55s 0.45s ease, transform 0.55s 0.45s ease;
+    }
+    .contact-home--revealed .contact-home__form {
+      opacity: 1;
+      transform: none;
+      transition: opacity 0.55s 0.65s ease, transform 0.55s 0.65s ease;
+    }
+
+    /* ── .tl (per-letter spans): inline-block per translateY ─ */
+    .contact-home__heading .tl {
+      display: inline-block;
+    }
+
+    /* ── Hub claim: nascosto finché JS non lo guida ──────── */
+    .contact-hub__claim-big,
+    .contact-hub__claim-intro {
+      opacity: 0;
+      transform: translateY(24px);
+      will-change: opacity, transform;
+    }
+    .contact-hub__claim-big .tl {
+      display: inline-block;
+    }
+
+    /* ── Nav: transizione colore fluida (uguale a SMM) ──── */
+    .nav__menu-btn,
+    .nav__menu-icon span,
+    .nav__menu-label-close,
+    .nav__menu-label-open {
+      transition: color 180ms ease, background-color 180ms ease !important;
     }
   </style>
 </head>
@@ -101,12 +150,15 @@
 
   <main>
 
-    <!-- ══ FORM CONTATTI ═══════════════════════════════════════ -->
-    <section class="section contact-home" id="contatti" aria-label="Contatti">
+    <!-- ══ HERO CONTATTI (fuchsia, full viewport) ════════════
+         id="ct-hero" (non "contatti"): evita che main.js guidi
+         il contattiExitOv su questa sezione anziché sull'hub.
+         data-nav-theme="dark": sfondo fucsia → menu bianco.    -->
+    <section class="section contact-home" id="ct-hero" aria-label="Contatti" data-nav-theme="dark">
       <div class="container contact-home__inner">
-        <h2 class="contact-home__heading reveal">CONTATTI</h2>
-        <p class="contact-home__sub reveal">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
-        <form class="contact-home__form reveal" action="#" method="post" novalidate>
+        <h2 class="contact-home__heading">CONTATTI</h2>
+        <p class="contact-home__sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
+        <form class="contact-home__form" action="#" method="post" novalidate>
           <div class="contact-home__row">
             <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
             <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
@@ -128,16 +180,18 @@
             <button class="btn contact-home__submit" type="submit">Invia</button>
           </div>
         </form>
-
       </div>
     </section>
 
-    <!-- ══ SEDI / SOCIAL / CHIAMACI ═════════════════════════════ -->
-    <section class="contact-hub" aria-label="Sedi, social e contatti diretti">
+    <!-- ══ SEDI / SOCIAL / CHIAMACI ═════════════════════════
+         Sfondo bianco. Titolo editoriale: per-lettera
+         scroll-driven (pattern amici/TIPS & TRICKS di main.js).
+         Colonne: .reveal + IO main.js, stagger CSS 0/100/200ms. -->
+    <section class="contact-hub" id="contactHub" aria-label="Sedi, social e contatti diretti">
       <div class="container">
-        <h2 class="contact-hub__claim reveal">
-          <span class="contact-hub__claim-intro">Comunicare è bello, ma una buona strategia digital deve lasciare il segno.</span>
-          <span class="contact-hub__claim-big">Facciamo prendere<br>forma alle tue idee.</span>
+        <h2 class="contact-hub__claim">
+          <span class="contact-hub__claim-intro" id="contactHubIntro">Comunicare è bello, ma una buona strategia digital deve lasciare il segno.</span>
+          <span class="contact-hub__claim-big" id="contactHubBig">Facciamo prendere<br>forma alle tue idee.</span>
         </h2>
 
         <div class="contact-hub__grid">
@@ -189,7 +243,194 @@
   </main>
 
   <script src="js/main.js"></script>
-      <!-- ══ FOOTER ══════════════════════════════════════════ -->
+
+  <!-- ══ MOTION CONTATTI ═══════════════════════════════════
+       Tutto il motion specifico della pagina in un solo IIFE.
+
+       1. "CONTATTI" heading: per-lettera page-load
+          (stesso effetto visivo di TIPS & TRICKS, eseguito
+           al caricamento anziché allo scroll perché above-fold)
+       2. Hero → bianco: overlay scroll-driven reversibile
+       3. Hub titolo: per-lettera scroll-driven identico ad
+          amiciLetters / tipsLetters di main.js
+          formula: p = c01((ENTRY - sR.top) / ENTRY), ENTRY = vh*0.70
+          revealLetters: base=0, dur=0.08, stagger=0.012
+       4. Hub intro: time-based 380ms (pattern panel SMM)
+       5. Hub → footer: distanceToBottom 120px (identico
+          caffè→footer di google-ads.html)              ══ -->
+  <script>
+  (function () {
+    /* ── helpers ─────────────────────────────────────────── */
+    function c01(v) { return Math.max(0, Math.min(1, v)); }
+    function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
+
+    /* splitLetters: stessa logica interna di main.js
+       Preserva <br>, entità HTML, spazi.
+       Setta opacity:1 / transform:none sul container dopo split. */
+    function splitLetters(el) {
+      if (!el) return [];
+      var html = el.innerHTML, out = '';
+      for (var i = 0; i < html.length; i++) {
+        var ch = html[i];
+        if (ch === '<') {
+          var end = html.indexOf('>', i);
+          out += html.slice(i, end + 1); i = end;
+        } else if (ch === '&') {
+          var e2 = html.indexOf(';', i);
+          out += '<span class="tl">' + html.slice(i, e2 + 1) + '</span>'; i = e2;
+        } else if (/\s/.test(ch)) {
+          out += ch;
+        } else {
+          out += '<span class="tl">' + ch + '</span>';
+        }
+      }
+      el.innerHTML = out;
+      el.style.opacity   = '1';
+      el.style.transform = 'none';
+      return Array.from(el.querySelectorAll('.tl'));
+    }
+
+    /* revealLetters: identico a main.js (opacity + translateY(0.8em)) */
+    function revealLetters(letters, p, base, dur) {
+      letters.forEach(function (el, i) {
+        var lP = ease(c01((p - base - i * 0.012) / dur));
+        el.style.opacity   = lP.toFixed(3);
+        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
+      });
+    }
+
+    /* ── 1. Heading "CONTATTI": per-lettera page-load ─────
+       Visivamente = TIPS & TRICKS ma triggato al load
+       (above-fold, niente scroll necessario).
+       Stagger: 0.06s per lettera — opacity + translateY(0.8em). */
+    var headingEl     = document.querySelector('.contact-home__heading');
+    var headingLetters = splitLetters(headingEl);
+
+    headingLetters.forEach(function (el) {
+      el.style.opacity   = '0';
+      el.style.transform = 'translateY(0.8em)';
+    });
+
+    /* Sub e form: reveal via classe (lo stesso sistema di SMM) */
+    var heroSection = document.getElementById('ct-hero');
+
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        /* heading: CSS transition per-lettera con stagger */
+        headingLetters.forEach(function (el, i) {
+          var d = (0.10 + i * 0.06).toFixed(2) + 's';
+          el.style.transition = 'opacity 0.45s ' + d + ' ease, transform 0.45s ' + d + ' ease';
+          el.style.opacity    = '1';
+          el.style.transform  = 'translateY(0)';
+        });
+        /* sub + form */
+        if (heroSection) heroSection.classList.add('contact-home--revealed');
+      });
+    });
+
+    /* ── 2. Hero → bianco: overlay scroll-driven ──────────
+       Overlay bianco (#fff = bg esatta di contact-hub) dentro
+       la hero. Opacità 0→1 mentre hero.top scende da 0 a -range.
+       range = 55% del viewport height: fade fluido e non anticipato. */
+    var heroOv = null;
+    if (heroSection) {
+      heroOv = document.createElement('div');
+      Object.assign(heroOv.style, {
+        position: 'absolute', inset: '0',
+        background: '#ffffff',
+        opacity: '0',
+        pointerEvents: 'none',
+        zIndex: '2',
+      });
+      heroSection.appendChild(heroOv);
+    }
+
+    /* ── 3. Hub titolo editoriale: per-lettera scroll-driven ─
+       Identico ad amiciLetters in main.js:
+         p = c01((ENTRY - sR.top) / ENTRY)  con ENTRY = vh * 0.70
+         revealLetters(letters, p, 0, 0.08)
+       Reversibile. */
+    var hub      = document.getElementById('contactHub');
+    var bigEl    = document.getElementById('contactHubBig');
+    var introEl  = document.getElementById('contactHubIntro');
+    var bigLetters = splitLetters(bigEl);
+
+    /* ── 4. Intro text: time-based 380ms ─────────────────── */
+    var ANIM_MS = 380;
+    var introSt = { p: 0, dir: 0, t0: 0 };
+    var prevCache = {};
+
+    function writeEl(el, key, raw) {
+      var op = ease(raw).toFixed(3);
+      var ty = ((1 - ease(raw)) * 24).toFixed(2);
+      var v  = op + '|' + ty;
+      if (prevCache[key] !== v) {
+        prevCache[key] = v;
+        el.style.opacity   = op;
+        el.style.transform = 'translateY(' + ty + 'px)';
+      }
+    }
+
+    /* ── 5. Hub → footer: distanceToBottom 120px ──────────
+       Identico caffè→footer di google-ads.html.
+       Fixed overlay #0e0e0e — si attiva solo negli ultimi
+       120px di scroll effettivo dal fondo del documento.
+       Reversibile in scroll-up.                             */
+    var hubExitOv = document.createElement('div');
+    Object.assign(hubExitOv.style, {
+      position: 'fixed', inset: '0',
+      background: '#0e0e0e',
+      opacity: '0',
+      pointerEvents: 'none',
+      zIndex: '200',
+      transition: 'none',
+    });
+    document.body.appendChild(hubExitOv);
+
+    /* ── RAF loop ────────────────────────────────────────── */
+    function tick() {
+      requestAnimationFrame(tick);
+      var now = performance.now();
+      var vh  = window.innerHeight;
+
+      /* 2 — Hero → bianco */
+      if (heroOv && heroSection) {
+        var hR    = heroSection.getBoundingClientRect();
+        var range = vh * 0.55;
+        heroOv.style.opacity = ease(c01(-hR.top / range)).toFixed(3);
+      }
+
+      /* 3 — Hub titolo: revealLetters (identico amici main.js) */
+      if (hub) {
+        var sR    = hub.getBoundingClientRect();
+        var ENTRY = vh * 0.70;
+        var p     = c01((ENTRY - sR.top) / ENTRY);
+
+        revealLetters(bigLetters, p, 0, 0.08);
+
+        /* 4 — Intro: time-based, trigger a p > 0.08 */
+        var doReveal = p > 0.08;
+        if (doReveal && introSt.dir !== 1) {
+          introSt.dir = 1; introSt.t0 = now - introSt.p * ANIM_MS;
+        } else if (!doReveal && introSt.dir !== -1) {
+          introSt.dir = -1; introSt.t0 = now - (1 - introSt.p) * ANIM_MS;
+        }
+        if (introSt.dir === 1)       introSt.p = Math.min(1, (now - introSt.t0) / ANIM_MS);
+        else if (introSt.dir === -1) introSt.p = Math.max(0, 1 - (now - introSt.t0) / ANIM_MS);
+        if (introEl) writeEl(introEl, 'intro', introSt.p);
+      }
+
+      /* 5 — Hub → footer: distanceToBottom */
+      var maxScroll       = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      var distanceToBottom = maxScroll - window.scrollY;
+      hubExitOv.style.opacity = ease(c01(1 - distanceToBottom / 120)).toFixed(3);
+    }
+
+    requestAnimationFrame(tick);
+  })();
+  </script>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
@@ -279,6 +520,3 @@
 
 </body>
 </html>
-
-
-

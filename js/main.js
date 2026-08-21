@@ -360,17 +360,7 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
   });
 })();
 
-// ─── Zampa caffè: slide-in da sinistra ────────────────────────
-(function () {
-  const section = document.querySelector('.cta-coffee');
-  if (!section) return;
-  const io = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('in-view'); io.unobserve(e.target); }
-    });
-  }, { threshold: 0.15 });
-  io.observe(section);
-})();
+// ─── Zampa caffè: gestita dal RAF scroll-driven ──────────────
 
 // ─── Coda fucsia: slide-in da sinistra ────────────────────────
 (function () {
@@ -446,7 +436,7 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
   // Esclude il video About (già gestito dallo scroll-scrub separato)
 
   const visuals = [];
-  const visualSel = '.cs2__tile img, .tip-card__img img, .cta-coffee__img';
+  const visualSel = '.cs2__tile img, .tip-card__img img';
 
   document.querySelectorAll(visualSel).forEach(el => {
     el.style.willChange = 'transform';
@@ -568,8 +558,18 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
   const cs2WallTiles  = cs2SectionEl ? [...cs2SectionEl.querySelectorAll('.cs2__tile')] : [];
   const cs2FooterEl   = document.getElementById('cs2Footer');
 
-  // cta-coffee ref
+  // cta-coffee: zampa + testo + CTA → unico progress, sincroni
   const ctaCoffeeEl   = document.getElementById('cta-coffee');
+  const coffeeImgEl   = ctaCoffeeEl?.querySelector('.cta-coffee__img');
+  const coffeeInnerEl = ctaCoffeeEl?.querySelector('.cta-coffee__inner');
+  [coffeeImgEl, coffeeInnerEl].forEach(el => {
+    if (!el) return;
+    el.style.transition = 'none';
+    el.style.opacity    = '0';
+    el.style.willChange = 'transform,opacity';
+  });
+  if (coffeeImgEl)   coffeeImgEl.style.transform   = 'translateX(-60%)';
+  if (coffeeInnerEl) coffeeInnerEl.style.transform  = 'translateX(-60%)';
 
   // Tips sticky refs
   const tipsSectionEl = document.getElementById('tips-section');
@@ -673,10 +673,19 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
         htStageEl.style.opacity = stageFade.toFixed(3);
       }
 
-      // EXIT_BASE: da qui tutto esce insieme (testi + video col + overlay nero)
-      const EXIT_BASE = 0.82;
-      const EXIT_DUR  = 0.18;
-      const tOut = ease(c01((p_about - EXIT_BASE) / EXIT_DUR));
+      // Entrambi i trigger (testo + overlay) basati sulla posizione fisica di amiciSection
+      const amiciR_ov = amiciSection ? rect(amiciSection) : null;
+
+      // Overlay: si scurisce da quando amiciSection entra nel viewport
+      const tBgOut = amiciR_ov ? ease(c01((_vh - amiciR_ov.top) / (_vh * 0.60))) : 0;
+      if (aboutDarkOverlayEl) {
+        aboutDarkOverlayEl.style.opacity = tBgOut.toFixed(3);
+      }
+
+      // Testo/video: inizia a uscire solo dopo che About è fisicamente all'80% fuori viewport
+      // amiciSection.top ≈ 0.20*vh quando About ha scrollato via di 0.80*vh
+      const _tOutRaw = amiciR_ov ? c01((_vh * 0.20 - amiciR_ov.top) / (_vh * 0.30)) : 0;
+      const tOut     = ease(_tOutRaw);
 
       function revealAbout(el, base, dur) {
         if (!el) return;
@@ -685,13 +694,12 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
         el.style.transform = `translateY(${((1 - tIn) * 30 - tOut * 20).toFixed(1)}px)`;
       }
 
-      // ABOUT watermark: per-letter stagger (stesso di SERVIZI) — ingresso e uscita
-      const _aboutExitRaw = c01((p_about - EXIT_BASE) / EXIT_DUR);
-      const _aboutN = aboutLetters.length;
-      const _aExitST = _aboutN > 1 ? 0.45 / (_aboutN - 1) : 0;
+      // ABOUT watermark: per-letter stagger — ingresso da p_about, uscita da amiciSection
+      const _aboutN   = aboutLetters.length;
+      const _aExitST  = _aboutN > 1 ? 0.45 / (_aboutN - 1) : 0;
       aboutLetters.forEach((el, i) => {
         const lP = ease(c01((p_about - i * 0.012) / 0.08));
-        const eP = ease(c01((_aboutExitRaw - i * _aExitST) / 0.55));
+        const eP = ease(c01((_tOutRaw - i * _aExitST) / 0.55));
         el.style.opacity   = (lP * (1 - eP)).toFixed(3);
         el.style.transform = `translateY(${((1 - lP) * 0.8 + eP * 0.8).toFixed(3)}em)`;
       });
@@ -700,11 +708,6 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
       revealAbout(aboutTitleEl,  0.26, 0.22);
       revealAbout(aboutBodyEl,   0.36, 0.25);
       revealAbout(aboutCTAEl,    0.50, 0.22);
-
-      // Overlay nero: sfuma in mentre i contenuti escono (stessa timeline tOut)
-      if (aboutDarkOverlayEl) {
-        aboutDarkOverlayEl.style.opacity = tOut.toFixed(3);
-      }
 
       // Video: play quando inizia ad apparire (p=0.20), ferma e resetta allo scroll-up
       if (aboutVideoEl) {
@@ -741,6 +744,17 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
         el.style.opacity   = (lP * (1 - eP)).toFixed(3);
         el.style.transform = `translateY(${((1 - lP) * 0.8 + eP * 0.8).toFixed(3)}em)`;
       });
+    }
+
+    // ── cta-coffee: unico progress → zampa + testo + CTA sincroni ───────────
+    if (ctaCoffeeEl) {
+      const cCR  = rect(ctaCoffeeEl);
+      const ENTR = _vh * 0.70;
+      // p: 0 = sezione sotto viewport, 1 = sezione top a 0. Simmetrico in reverse.
+      const t = ease(c01((ENTR - cCR.top) / ENTR));
+      const tx = `translateX(${((1 - t) * -60).toFixed(1)}%)`;
+      if (coffeeImgEl)   { coffeeImgEl.style.opacity = t.toFixed(3);   coffeeImgEl.style.transform = tx; }
+      if (coffeeInnerEl) { coffeeInnerEl.style.opacity = t.toFixed(3); coffeeInnerEl.style.transform = tx; }
     }
 
     // ── Reveal titolo Amici ───────────────────────────────────────────────────

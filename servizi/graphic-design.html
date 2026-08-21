@@ -13,6 +13,17 @@
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/hero.css" />
+  <style>
+    .svc-hero { position: relative; overflow: hidden; }
+    .svc-hero__kicker, .svc-hero__title, .svc-hero__sub, .svc-hero__tagline, .svc-hero__form { opacity: 0; transform: translateY(22px); }
+    .svc-hero--revealed .svc-hero__kicker  { opacity: 1; transform: none; transition: opacity 0.55s 0.10s ease, transform 0.55s 0.10s ease; }
+    .svc-hero--revealed .svc-hero__title   { opacity: 1; transform: none; transition: opacity 0.60s 0.25s ease, transform 0.60s 0.25s ease; }
+    .svc-hero--revealed .svc-hero__sub     { opacity: 1; transform: none; transition: opacity 0.55s 0.52s ease, transform 0.55s 0.52s ease; }
+    .svc-hero--revealed .svc-hero__tagline { opacity: 1; transform: none; transition: opacity 0.50s 0.62s ease, transform 0.50s 0.62s ease; }
+    .svc-hero--revealed .svc-hero__form    { opacity: 1; transform: none; transition: opacity 0.55s 0.72s ease, transform 0.55s 0.72s ease; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+  </style>
 </head>
 <body>
 
@@ -426,7 +437,48 @@
     </section>
       </main>
 
+  <script>
+  (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
+  </script>
   <script src="../js/main.js"></script>
+  <script>
+  (function () {
+    'use strict';
+    function c01(v) { return Math.max(0, Math.min(1, v)); }
+    function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
+    var heroEl = document.querySelector('.svc-hero'), magicEl = document.querySelector('.svc-magic'), caffeEl = document.querySelector('.svc-caffe'), navEl = document.querySelector('.nav');
+    var heroOv = null;
+    if (heroEl) { heroOv = document.createElement('div'); Object.assign(heroOv.style, { position:'absolute', inset:'0', background:'#fff', opacity:'0', pointerEvents:'none', zIndex:'10' }); heroEl.appendChild(heroOv); }
+    var magicOv = null;
+    if (magicEl) { magicOv = document.createElement('div'); Object.assign(magicOv.style, { position:'absolute', inset:'0', background:'#DB005A', opacity:'0', pointerEvents:'none', zIndex:'5' }); if (getComputedStyle(magicEl).position === 'static') magicEl.style.position = 'relative'; magicEl.appendChild(magicOv); }
+    var caffeExitOv = document.createElement('div');
+    Object.assign(caffeExitOv.style, { position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'200', transition:'none' });
+    document.body.appendChild(caffeExitOv);
+    var C_DARK = [5,5,5], C_WHITE = [255,255,255], C_FUCHSIA = [219,0,90];
+    function luma(c) { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
+    function blend(a,b,t) { return [a[0]*(1-t)+b[0]*t, a[1]*(1-t)+b[1]*t, a[2]*(1-t)+b[2]*t]; }
+    var prevDark = null;
+    function tick() {
+      requestAnimationFrame(tick);
+      var vh = window.innerHeight;
+      var heroOvOp = 0;
+      if (heroEl && heroOv) { heroOvOp = ease(c01(-heroEl.getBoundingClientRect().top / (vh * 0.45))); heroOv.style.opacity = heroOvOp.toFixed(3); }
+      var magicOvOp = 0;
+      if (magicOv && caffeEl) { var p2 = ease(c01((vh - caffeEl.getBoundingClientRect().top) / vh)); magicOvOp = ease(c01((p2 - 0.25) / 0.75)); magicOv.style.opacity = magicOvOp.toFixed(3); }
+      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      caffeExitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 120)).toFixed(3);
+      if (navEl) {
+        var navMid = (navEl.getBoundingClientRect().height || 80) / 2, base = C_WHITE;
+        if (heroEl) { var hR = heroEl.getBoundingClientRect(); if (hR.top <= navMid && hR.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp); }
+        if (magicEl) { var mR = magicEl.getBoundingClientRect(); if (mR.top <= navMid && mR.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, magicOvOp); }
+        if (caffeEl) { var caR = caffeEl.getBoundingClientRect(); if (caR.top <= navMid && caR.bottom > navMid) base = C_FUCHSIA; }
+        var isDark = luma(base) < 140;
+        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
+      }
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>

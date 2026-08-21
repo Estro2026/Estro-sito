@@ -699,18 +699,9 @@
     .cs2__footer-note { color: rgba(0,0,0,0.45); font-size: clamp(0.75rem, 1vw, 0.9rem); }
     .cs2__footer-btn { border-color: rgba(0,0,0,0.3) !important; color: #000 !important; }
 
-    /* ── cta-coffee: sempre visibile, immagine wipe sinistra→destra ── */
+    /* ── cta-coffee: immagine gestita dal RAF scroll-driven ── */
     .cta-coffee {
       opacity: 1;
-    }
-    .cta-coffee__img {
-      clip-path: inset(0 100% 0 0) !important;
-      opacity: 1 !important;
-      transform: none !important;
-      transition: clip-path 1.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
-    }
-    .cta-coffee.in-view .cta-coffee__img {
-      clip-path: inset(0 0% 0 0) !important;
     }
 
     /* ── Tips & Tricks ────────────────────────────────────── */

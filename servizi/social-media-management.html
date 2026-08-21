@@ -1086,35 +1086,56 @@
     let rafId = null;
     let prev  = {};   /* cache: avoid redundant style writes */
 
-    function set(el, key, val) {
-      if (prev[key] === val) return;
-      prev[key] = val;
-      if (key === 'transform') el.style.transform = val;
-      else el.style.opacity = val;
-    }
+    /*
+     * Reveal scroll-driven — unico progress per pannello, simmetrico in reverse.
+     * Regola: a metà A + metà B nella viewport → contenuto B già in reveal.
+     * localP 0→1 corrisponde all'intera "slice" di scroll assegnata al pannello.
+     *
+     * Per il pannello i>0: la slide-in entry termina a localP≈0.20.
+     * Il reveal contenuto inizia a localP=REVEAL_START (< 0.20) così che
+     * testo e visual appaiano mentre il pannello sta ancora entrando,
+     * e siano completamente leggibili a localP≈0.35.
+     *
+     * Pannello 0 (primo): già visibile, usa REVEAL_START negativo
+     * per mostrare contenuto immediatamente all'ingresso dello stack.
+     */
+    /*
+     * Reveal guidato da rawEntry — il progress grezzo dell'animazione di entrata
+     * del panel (non easato). rawEntry=1 = panel esattamente a translateY(0) =
+     * 100% viewport. Garantisce: quando la sezione è a schermo intero,
+     * tutti i testi e la CTA sono già completamente rivelati.
+     *
+     * Stagger: ogni item aggiunge STAG_RE di ritardo.
+     * 8 items × 0.04 = 0.32 → ultimo item parte a rawEntry=0.32, finisce a 1.0.
+     */
+    const STAG_RE = 0.04;   /* stagger per item su rawEntry */
+    const DUR_RE  = 0.68;   /* durata reveal singolo item su rawEntry */
 
     function tick() {
       rafId = requestAnimationFrame(tick);
 
-      const stackRect  = stack.getBoundingClientRect();
-      /* total scrollable distance inside the stack */
-      const totalScroll = stack.offsetHeight - vh;   /* px scrolled when last panel is fully up */
+      const stackRect   = stack.getBoundingClientRect();
+      const totalScroll = stack.offsetHeight - vh;
       if (totalScroll <= 0) return;
 
-      /* progress 0→1 across the whole stack */
       const globalP = c01(-stackRect.top / totalScroll);
 
       panelData.forEach(({ el, reveals }, i) => {
-        /* Each panel occupies a 1/N slice of globalP */
-        const sliceSize = 1 / N;
+        const sliceSize  = 1 / N;
         const sliceStart = i * sliceSize;
 
-        /* ── entry animation (this panel sliding up) */
-        const entryP = i === 0 ? 1 : ease(c01((globalP - sliceStart + sliceSize * 0.3) / (sliceSize * 0.5)));
-        const ty = i === 0 ? 0 : (1 - entryP) * 60;
+        /* ── rawEntry: progress grezzo 0→1 dell'entrata del panel ── */
+        const rawEntry = i === 0
+          ? 1  /* panel 0: sempre visibile */
+          : c01((globalP - sliceStart + sliceSize * 0.3) / (sliceSize * 0.5));
+
+        /* ── entry animation (this panel sliding up, eased) */
+        const entryP = i === 0 ? 1 : ease(rawEntry);
+        const ty = (1 - entryP) * 60;
 
         /* ── scale-back for the PREVIOUS panel */
-        const coverP = i === 0 ? 0 : ease(c01((globalP - sliceStart) / (sliceSize * 0.4)));
+        const localP = c01((globalP - sliceStart) / sliceSize);
+        const coverP = i === 0 ? 0 : ease(c01(localP / 0.4));
 
         /* apply transform to this panel (entry slide) */
         const thisTY = ty.toFixed(2);
@@ -1125,34 +1146,29 @@
 
         /* scale back previous panel */
         if (i > 0) {
-          const prevEl     = panelData[i - 1].el;
-          const scaleVal   = (1 - coverP * 0.025).toFixed(4);
-          const scaleKey   = 'scale_' + (i - 1);
+          const prevEl   = panelData[i - 1].el;
+          const scaleVal = (1 - coverP * 0.025).toFixed(4);
+          const scaleKey = 'scale_' + (i - 1);
           if (prev[scaleKey] !== scaleVal) {
             prev[scaleKey] = scaleVal;
             prevEl.style.transform = `scale(${scaleVal})`;
           }
         }
 
-        /* ── content reveal stagger ───────────────────────────── */
-        /* starts right as the panel enters (sliceStart), finishes quickly */
-        const REVEAL_START = i === 0 ? 0 : sliceStart + sliceSize * 0.02;
-        const REVEAL_DUR   = sliceSize * 0.18;
-
+        /* ── content reveal: guidato da rawEntry ─────────────────
+         * rawEntry=0 → panel inizia a salire, reveal non iniziato
+         * rawEntry=1 → panel a 100% viewport, tutto rivelato
+         * Stagger distribuito: item 0 parte a rawEntry=0,
+         *   item 7 parte a rawEntry=7×0.04=0.28, finisce a 0.28+0.68=0.96≈1
+         * Scroll-up: rawEntry scende → p scende → reverse automatico.
+         */
         reveals.forEach((el2, ri) => {
-          /* panel 0 content is handled by IntersectionObserver — skip RAF once done */
-          if (i === 0 && el2.dataset.revealDone) return;
-          const stagger   = ri * (REVEAL_DUR / Math.max(reveals.length, 1)) * 0.35;
-          const p         = ease(c01((globalP - REVEAL_START - stagger) / (REVEAL_DUR * 0.5)));
-          const opStr     = p.toFixed(3);
-          const tyStr     = ((1 - p) * 22).toFixed(2);
-          const k         = 'rv_' + i + '_' + ri;
-          const v         = opStr + '|' + tyStr;
-          if (prev[k] !== v) {
-            prev[k] = v;
-            el2.style.opacity   = opStr;
-            el2.style.transform = `translateY(${tyStr}px)`;
-          }
+          const p  = ease(c01((rawEntry - ri * STAG_RE) / DUR_RE));
+          const op = p.toFixed(3);
+          const ty2 = ((1 - p) * 22).toFixed(1);
+          const k  = 'rv_' + i + '_' + ri;
+          const v  = op + '|' + ty2;
+          if (prev[k] !== v) { prev[k] = v; el2.style.opacity = op; el2.style.transform = `translateY(${ty2}px)`; }
         });
       });
     }
