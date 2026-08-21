@@ -1,0 +1,1200 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ESTRO — Domande frequenti su strategia, servizi, metodo e collaborazione." />
+  <title>FAQ — ESTRO</title>
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <style>
+
+    /* ── FOOTER LOGO ──────────────────────────────────────── */
+    .sf-logo img { filter: none !important; height: auto !important; width: clamp(140px, 18vw, 200px) !important; opacity: 1 !important; }
+
+    /* ══ HERO ══════════════════════════════════════════════ */
+    .faq-hero {
+      background: #060606;
+      padding-top: 140px;
+      padding-bottom: clamp(5rem, 9vw, 8rem);
+      padding-left: clamp(1.5rem, 6vw, 7rem);
+      padding-right: clamp(1.5rem, 6vw, 7rem);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: end;
+    }
+    .faq-hero__left {}
+    .faq-hero__right {}
+    .faq-hero__kicker {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 1.5rem;
+    }
+    .faq-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(4rem, 10vw, 130px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.88;
+      letter-spacing: -0.04em;
+      color: #fff;
+    }
+    .faq-hero__sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 2.5rem;
+    }
+    .faq-hero__stat {
+      display: flex;
+      gap: clamp(2rem, 5vw, 4rem);
+      margin-top: 2.5rem;
+    }
+    .faq-hero__stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+    .faq-hero__stat-num {
+      font-family: var(--font-primary);
+      font-size: clamp(3rem, 7vw, 90px);
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+    .faq-hero__stat-label {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.25);
+    }
+    @media (max-width: 900px) {
+      .faq-hero { grid-template-columns: 1fr; }
+    }
+
+    /* ══ BODY ══════════════════════════════════════════════ */
+    .faq-body {
+      background: #f7f7f7;
+      padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 6vw, 7rem);
+    }
+
+    /* Gruppo / Categoria */
+    .faq-group {
+      margin-top: 3rem;
+    }
+    .faq-group:first-child { margin-top: 0; }
+    .faq-group__header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .faq-group__label {
+      font-family: var(--font-secondary);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+      display: block;
+    }
+    .faq-group__line {
+      flex: 1;
+      height: 1px;
+      background: rgba(0,0,0,0.08);
+    }
+
+    /* Accordion card */
+    .faq-item {
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 6px;
+      overflow: hidden;
+      transition: box-shadow 200ms;
+    }
+    .faq-item:hover { box-shadow: 0 2px 16px rgba(0,0,0,0.06); }
+    .faq-item.open { box-shadow: 0 4px 24px rgba(0,0,0,0.08); }
+    .faq-item__q {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+      cursor: pointer;
+      text-align: left;
+    }
+    .faq-item__q-text {
+      font-family: var(--font-secondary);
+      font-size: clamp(0.9rem, 1.15vw, 1rem);
+      font-weight: 600;
+      color: #080808;
+      line-height: 1.45;
+    }
+    .faq-item__icon {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: #f4f4f4;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 200ms;
+    }
+    .faq-item__icon svg {
+      width: 12px;
+      height: 12px;
+      transition: transform 300ms;
+    }
+    .faq-item.open .faq-item__icon { background: var(--primary); }
+    .faq-item.open .faq-item__icon svg { transform: rotate(45deg); }
+    .faq-item__icon svg line { stroke: #080808; }
+    .faq-item.open .faq-item__icon svg line { stroke: #fff; }
+
+    .faq-item__body {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 350ms ease;
+    }
+    .faq-item.open .faq-item__body { max-height: 400px; }
+    .faq-item__a {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.85;
+      color: rgba(0,0,0,0.5);
+      padding: 0 1.5rem 1.5rem;
+      border-top: 1px solid rgba(0,0,0,0.05);
+      padding-top: 1rem;
+      display: block;
+    }
+
+    /* Layout 2 colonne */
+    .faq-layout {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 0 clamp(3rem, 5vw, 6rem);
+    }
+    .faq-nav {
+      position: sticky;
+      top: 100px;
+      align-self: start;
+    }
+    .faq-nav__label {
+      font-family: var(--font-secondary);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.25);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .faq-nav__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .faq-nav__list a {
+      display: block;
+      font-family: var(--font-secondary);
+      font-size: 0.76rem;
+      font-weight: 500;
+      color: rgba(0,0,0,0.38);
+      text-decoration: none;
+      padding: 0.4rem 0 0.4rem 0.85rem;
+      border-left: 2px solid transparent;
+      transition: color 180ms, border-color 180ms;
+    }
+    .faq-nav__list a:hover {
+      color: #080808;
+      border-left-color: var(--primary);
+    }
+
+    /* Form contatti */
+    .faq-contact {
+      background: var(--primary);
+      padding-inline: clamp(1.5rem, 5vw, 5rem);
+    }
+    .faq-contact__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1440px;
+      width: 100%;
+      margin-inline: auto;
+      gap: clamp(3rem, 8vw, 8rem);
+      align-items: center;
+      padding-block: clamp(4rem, 8vw, 7rem);
+    }
+    .faq-contact__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .faq-contact__label {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: block;
+    }
+    .faq-contact__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+    .faq-contact .contact-home__form { width: 100%; display: flex; flex-direction: column; gap: var(--space-4); }
+    .faq-contact .contact-home__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    .faq-contact .contact-home__field {
+      background: #fff !important;
+      border: none !important;
+      border-bottom: none !important;
+      border-radius: 4px !important;
+      color: rgba(0,0,0,0.6) !important;
+      padding: 0.85rem 1.25rem !important;
+      box-shadow: none !important;
+    }
+    .faq-contact .contact-home__field::placeholder { color: rgba(0,0,0,0.4) !important; }
+    .faq-contact .contact-home__field:focus { box-shadow: 0 0 0 2px rgba(0,0,0,0.15) !important; background: #fff !important; border-bottom: none !important; }
+    .faq-contact .contact-home__textarea { width: 100%; margin-bottom: 10px; resize: vertical; min-height: 110px; }
+    .faq-contact .contact-home__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: var(--font-secondary);
+      font-size: 0.8rem !important;
+      color: #fff !important;
+      opacity: 1 !important;
+      margin-bottom: 1.5rem;
+    }
+    .faq-contact .contact-home__privacy a { color: #fff !important; text-decoration: underline; }
+    .faq-contact .contact-home__privacy span { color: #fff !important; }
+    .faq-contact .contact-home__privacy input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border: 1.5px solid #080808;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+      transition: background 150ms;
+    }
+    .faq-contact .contact-home__privacy input[type="checkbox"]:checked {
+      background: var(--primary);
+      border-color: var(--primary);
+    }
+    .faq-contact .contact-home__privacy input[type="checkbox"]:checked::after {
+      content: '';
+      display: block;
+      width: 4px;
+      height: 8px;
+      border: 2px solid #fff;
+      border-top: none;
+      border-left: none;
+      transform: rotate(45deg) translate(2px, -1px);
+      margin: 1px auto 0;
+    }
+    .faq-contact .contact-home__submit-wrap { display: flex; justify-content: center; }
+    .faq-contact .btn--primary { background: #fff !important; color: var(--primary) !important; border-color: #fff !important; }
+    .faq-contact .btn--primary:hover { background: rgba(255,255,255,0.9) !important; }
+
+    @media (max-width: 900px) {
+      .faq-layout { grid-template-columns: 1fr; }
+      .faq-nav { display: none; }
+      .faq-contact__inner { grid-template-columns: 1fr; }
+      .faq-contact .contact-home__row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav" role="banner">
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
+        <img src="Logoestrofooter.webp" alt="ESTRO" />
+      </a>
+      <a class="nav__joinus" href="lavora-con-noi.html">
+        <span class="nav__joinus-avatars">
+          <span class="nav__avatar"></span>
+          <span class="nav__avatar"></span>
+        </span>
+        Join Us
+      </a>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links">
+              <a href="servizi/social-media-management.html">Social media management</a>
+              <a href="servizi/influencer-marketing.html">Influencer marketing</a>
+              <a href="servizi/google-ads.html">Google ads</a>
+              <a href="servizi/social-ads.html">Social ads</a>
+              <a href="servizi/strategia-digitale.html">Strategia digitale</a>
+              <a href="servizi/graphic-design.html">Graphic design</a>
+              <a href="servizi/web-design.html">Web design</a>
+              <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
+              <a href="servizi/servizio-ai.html">AI</a>
+              <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="case-studies.html">Case Studies</a>
+              <a href="news.html">News</a>
+              <a href="tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="faq.html">FAQ</a>
+              <a href="contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
+              <span class="nav__joinus-avatars">
+                <span class="nav__avatar"></span>
+                <span class="nav__avatar"></span>
+              </span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ══ HERO ══════════════════════════════════════════════ -->
+    <section class="faq-hero">
+      <div class="faq-hero__left">
+        <span class="faq-hero__kicker">Domande frequenti</span>
+        <h1 class="faq-hero__title">FAQ</h1>
+      </div>
+      <div class="faq-hero__right">
+        <p class="faq-hero__sub">Le domande che riceviamo più spesso<br>prima di iniziare a lavorare insieme.</p>
+        <div class="faq-hero__stat">
+          <div class="faq-hero__stat-item">
+            <span class="faq-hero__stat-num" data-count="60" data-suffix="+">60+</span>
+            <span class="faq-hero__stat-label">Domande</span>
+          </div>
+          <div class="faq-hero__stat-item">
+            <span class="faq-hero__stat-num" data-count="13">13</span>
+            <span class="faq-hero__stat-label">Categorie</span>
+          </div>
+          <div class="faq-hero__stat-item">
+            <span class="faq-hero__stat-num">24h</span>
+            <span class="faq-hero__stat-label">Risposta</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ACCORDION ═════════════════════════════════════════ -->
+    <section class="faq-body">
+      <div class="faq-layout">
+
+        <!-- Navigazione laterale -->
+        <nav class="faq-nav" aria-label="Categorie FAQ">
+          <span class="faq-nav__label">Categorie</span>
+          <ul class="faq-nav__list">
+            <li><a href="#posizionamento">Posizionamento &amp; Valore</a></li>
+            <li><a href="#metodo">Metodo</a></li>
+            <li><a href="#servizi">Servizi</a></li>
+            <li><a href="#processo">Processo di Lavoro</a></li>
+            <li><a href="#risultati">Risultati e Performance</a></li>
+            <li><a href="#differenziazione">Differenziazione</a></li>
+            <li><a href="#seo">SEO / GEO</a></li>
+            <li><a href="#operativo">Operativo / Contatto</a></li>
+            <li><a href="#selezione">Selezione Clienti</a></li>
+            <li><a href="#pricing">Pricing</a></li>
+            <li><a href="#branding">Branding</a></li>
+            <li><a href="#relazione">Relazione e Collaborazione</a></li>
+            <li><a href="#futuro">Visione Futura</a></li>
+          </ul>
+        </nav>
+
+        <!-- Domande -->
+        <div class="faq-groups">
+
+          <!-- Posizionamento & Valore -->
+          <div class="faq-group" id="posizionamento">
+            <div class="faq-group__header"><span class="faq-group__label">Posizionamento &amp; Valore</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Cosa fa un'agenzia di comunicazione strategica?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Un'agenzia di comunicazione strategica analizza il mercato, il target e il posizionamento del brand per costruire una comunicazione coerente, efficace e orientata agli obiettivi di business.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Cosa vi distingue dalle altre agenzie?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Uniamo strategia, creatività e performance in un unico sistema integrato, con risultati misurabili.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Cosa significa comunicazione strategica?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">La comunicazione strategica definisce cosa dire e perché; quella creativa definisce come dirlo. Un'agenzia completa integra entrambe.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Siete più un'agenzia creativa o strategica?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Entrambe: la strategia guida ogni decisione, la creatività la rende efficace.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Perché è importante avere una strategia prima della creatività?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Senza strategia, la creatività rischia di essere solo estetica. Con una base strategica, ogni contenuto ha un obiettivo misurabile.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Aiutate anche nel posizionamento del brand?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, sviluppiamo strategie di posizionamento che differenziano il brand rispetto ai competitor e ne aumentano la riconoscibilità.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Perché scegliere Estro?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Perché trasformiamo la strategia in risultati concreti, con un approccio integrato e orientato alla crescita.</p></div>
+            </div>
+
+          </div><!-- /posizionamento -->
+
+          <!-- Metodo -->
+          <div class="faq-group" id="metodo">
+            <div class="faq-group__header"><span class="faq-group__label">Metodo</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come funziona il vostro metodo di lavoro?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Seguiamo un framework strutturato: analisi → strategia → creatività → performance → ottimizzazione continua.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come iniziate un progetto?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Partiamo da analisi di brand, mercato e competitor, definizione KPI e pianificazione strategica.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come garantite risultati concreti?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Attraverso monitoraggio costante, A/B test e ottimizzazione continua basata sui dati.</p></div>
+            </div>
+
+          </div><!-- /metodo -->
+
+          <!-- Servizi -->
+          <div class="faq-group" id="servizi">
+            <div class="faq-group__header"><span class="faq-group__label">Servizi</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quali servizi offre Estro?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Strategia digitale, social media, advertising, content production, influencer marketing, web design ed e-commerce.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Offrite un servizio completo o solo singole attività?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Siamo un partner completo che integra tutte le leve digitali per garantire coerenza e performance.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Offrite servizi di branding completo?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, dalla definizione dell'identità fino alla creazione di logo, tone of voice e linee guida.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Gestite anche i social media?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, dalla strategia editoriale alla produzione contenuti e gestione campagne.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Realizzate siti web ottimizzati SEO?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, sviluppiamo siti progettati per essere performanti sia in termini di UX che di visibilità sui motori di ricerca.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Lavorate su lead generation?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, progettiamo strategie per generare contatti qualificati e conversioni.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Con che tipo di aziende lavorate?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Collaboriamo con brand nazionali e internazionali in settori complessi e competitivi. Prada, MiuMiu, Cura, Seat, Tonino Lamborghini, Ariston, Bocconi, Polimi e tanti altri.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Avete esperienza in più settori?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì: lusso, tecnologia, healthcare, retail e industria.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Che tipo di aziende sono adatte a voi?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Aziende con visione di crescita e orientate a investire nel lungo periodo.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">È possibile lavorare senza strategia?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">No: ogni progetto parte da una base strategica.</p></div>
+            </div>
+
+          </div><!-- /servizi -->
+
+          <!-- Processo di Lavoro -->
+          <div class="faq-group" id="processo">
+            <div class="faq-group__header"><span class="faq-group__label">Processo di Lavoro</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come funziona la collaborazione con la vostra agenzia?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Partiamo da un'analisi iniziale, definiamo la strategia, sviluppiamo la creatività e monitoriamo i risultati.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quanto dura un progetto di comunicazione?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">La durata minima per lavorare in modo efficace è di 12 mesi. Questo perché strategia, test e ottimizzazione richiedono tempo per generare risultati concreti e scalabili.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Lavorate con aziende di qualsiasi settore?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, adattiamo il metodo strategico al settore specifico del cliente.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Offrite consulenze strategiche singole?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, è possibile attivare consulenze mirate senza un progetto continuativo.</p></div>
+            </div>
+
+          </div><!-- /processo -->
+
+          <!-- Risultati e Performance -->
+          <div class="faq-group" id="risultati">
+            <div class="faq-group__header"><span class="faq-group__label">Risultati e Performance</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come misurate i risultati delle campagne?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Utilizziamo strumenti di analisi per monitorare KPI come traffico, engagement, conversioni e ROI.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">In quanto tempo si vedono i risultati?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Dipende dal canale: Advertising → primi risultati già nelle prime settimane; Ottimizzazione → 1–3 mesi; Crescita stabile → 3–6 mesi. Questo è il tempo necessario per passare da test a performance.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Condividete report sulle performance?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, condividiamo report chiari e dettagliati con analisi delle performance.</p></div>
+            </div>
+
+          </div><!-- /risultati -->
+
+          <!-- Differenziazione -->
+          <div class="faq-group" id="differenziazione">
+            <div class="faq-group__header"><span class="faq-group__label">Differenziazione</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Cosa vi distingue dalle altre agenzie di comunicazione?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Un approccio integrato tra strategia e creatività, orientato ai risultati e personalizzato su ogni cliente.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Perché lavorare con un'agenzia integrata e non con più fornitori?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Perché quando strategia, contenuti e advertising non parlano tra loro, il risultato è inefficiente. Noi costruiamo tutto insieme, fin dall'inizio.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Create contenuti internamente o vi appoggiate a esterni?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Produciamo in-house. Significa più controllo, più velocità e contenuti pensati per performare, non solo per essere belli.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quanto conta il dato nel vostro lavoro?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Tutto. Ogni scelta creativa è guidata da insight reali e migliorata nel tempo con test e ottimizzazioni.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Che tipo di struttura avete rispetto ad altre agenzie?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Non siamo una persona sola che fa tutto. Siamo un team multidisciplinare che lavora in modo coordinato su ogni progetto.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Perché dovrei lavorare con voi invece di assumere un team interno?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Costruire internamente un team completo (strategia, contenuti, adv, design, gestione) costa circa 250.000€ – 300.000€ l'anno. Con noi hai lo stesso livello di competenze già operative, senza tempi di costruzione e con un investimento più efficiente.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Qual è il vero vantaggio di lavorare con un'agenzia rispetto all'internalizzazione?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Velocità, competenze trasversali e zero costi di struttura. Non devi formare, coordinare o gestire un team: lo trovi già pronto.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">State sostituendo un team interno?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">No. Stiamo accelerando quello che un team interno impiegherebbe mesi (o anni) a costruire.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quando ha senso scegliere un'agenzia invece di assumere?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Quando vuoi risultati subito, senza costruire da zero un reparto marketing complesso.</p></div>
+            </div>
+
+          </div><!-- /differenziazione -->
+
+          <!-- SEO / GEO -->
+          <div class="faq-group" id="seo">
+            <div class="faq-group__header"><span class="faq-group__label">SEO / GEO</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Ottimizzate i contenuti per SEO e AI (GEO)?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, sviluppiamo contenuti ottimizzati sia per motori di ricerca tradizionali che per AI e motori generativi.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Cos'è la GEO (Generative Engine Optimization)?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">È l'ottimizzazione dei contenuti per essere trovati e utilizzati dalle AI (come ChatGPT o Google SGE).</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Posso migliorare la visibilità del mio brand online con voi?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, lavoriamo su SEO, contenuti e strategia per aumentare la presenza digitale.</p></div>
+            </div>
+
+          </div><!-- /seo -->
+
+          <!-- Operativo / Contatto -->
+          <div class="faq-group" id="operativo">
+            <div class="faq-group__header"><span class="faq-group__label">Operativo / Contatto</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come posso iniziare a lavorare con voi?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Puoi contattarci tramite il sito per una prima consulenza conoscitiva. Ti rispondiamo entro 24 ore.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Lavorate solo in Italia o anche all'estero?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Collaboriamo con clienti sia nazionali che internazionali.</p></div>
+            </div>
+
+          </div><!-- /operativo -->
+
+          <!-- Selezione Clienti -->
+          <div class="faq-group" id="selezione">
+            <div class="faq-group__header"><span class="faq-group__label">Selezione Clienti</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Lavorate con tutti i clienti?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">No, selezioniamo i progetti per garantire qualità e risultati.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quali aziende non sono adatte a voi?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Chi cerca solo esecuzione operativa senza visione strategica.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quanti progetti seguite contemporaneamente?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Un numero limitato, per mantenere alto il livello qualitativo.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Lavorate con aziende che partono da zero o solo brand strutturati?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Collaboriamo con realtà ambiziose, indipendentemente dalla dimensione, purché ci sia una visione di crescita chiara.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come capite se un progetto è adatto a voi?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Valutiamo obiettivi, mindset e potenziale del brand: lavoriamo meglio con aziende orientate al lungo periodo.</p></div>
+            </div>
+
+          </div><!-- /selezione -->
+
+          <!-- Pricing -->
+          <div class="faq-group" id="pricing">
+            <div class="faq-group__header"><span class="faq-group__label">Pricing</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Investire in comunicazione garantisce risultati?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Garantisce direzione e crescita, se supportato da una strategia corretta e continuità.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Qual è il budget minimo per lavorare con voi?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Dipende dal progetto, ma lavoriamo con aziende pronte a investire nella crescita.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quando ha senso investire in un'agenzia di comunicazione strategica?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Quando il brand ha bisogno di crescere, differenziarsi o scalare. Non è un costo operativo, ma un investimento strategico.</p></div>
+            </div>
+
+          </div><!-- /pricing -->
+
+          <!-- Branding -->
+          <div class="faq-group" id="branding">
+            <div class="faq-group__header"><span class="faq-group__label">Branding</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quando è necessario fare un rebranding?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Quando il brand non riflette più il posizionamento o limita la crescita.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quanto impatta il branding sui risultati?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">In modo significativo: un brand forte riduce i costi di acquisizione e aumenta la fiducia.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Il design è solo estetica?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">No: è uno strumento strategico per comunicare valore e posizionamento.</p></div>
+            </div>
+
+          </div><!-- /branding -->
+
+          <!-- Relazione e Collaborazione -->
+          <div class="faq-group" id="relazione">
+            <div class="faq-group__header"><span class="faq-group__label">Relazione e Collaborazione</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Quanto coinvolgete il cliente nel processo?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Molto: la collaborazione è fondamentale per ottenere risultati efficaci.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Chi lavorerà sul mio progetto?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Un team dedicato composto da: Account, Project Manager, Strategic Planner, Art Director, Graphic Designer, Copywriter e Social Media Manager. Ogni figura lavora su una parte specifica per garantire qualità e risultati.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">È possibile lavorare a lungo termine?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì, le collaborazioni continuative sono quelle che generano più valore.</p></div>
+            </div>
+
+          </div><!-- /relazione -->
+
+          <!-- Visione Futura -->
+          <div class="faq-group" id="futuro">
+            <div class="faq-group__header"><span class="faq-group__label">Visione Futura (GEO + Authority)</span><div class="faq-group__line"></div></div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come evolve oggi la comunicazione digitale?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Verso modelli sempre più integrati tra dati, creatività e intelligenza artificiale.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Qual è il ruolo dell'AI nella comunicazione?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Supporta analisi e produzione, ma la strategia resta umana.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Come preparate i brand al futuro digitale?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Costruendo ecosistemi solidi e adattabili nel tempo.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Perché affidarsi a un partner certificato come Estro?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Perché lavoriamo con accesso diretto a piattaforme e strumenti avanzati grazie alle certificazioni ufficiali con Google, Meta, TikTok e Sky Media. Questo significa strategie più solide, dati più affidabili e campagne progettate per performare davvero.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">È importante scegliere un'agenzia certificata?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Sì. Le certificazioni non sono un badge: sono accesso a best practice, aggiornamenti e supporto diretto dalle piattaforme. È quello che fa la differenza tra "fare campagne" e farle funzionare.</p></div>
+            </div>
+
+            <div class="faq-item">
+              <button class="faq-item__q">
+                <span class="faq-item__q-text">Perché investire oggi nella comunicazione digitale?</span>
+                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+              </button>
+              <div class="faq-item__body"><p class="faq-item__a">Perché il mercato si muove lì, con o senza di te. Che tu scelga noi o meno, la cosa importante è iniziare a costruire un sistema di acquisizione e crescita sostenibile.</p></div>
+            </div>
+
+          </div><!-- /futuro -->
+
+        </div><!-- /faq-groups -->
+      </div><!-- /faq-layout -->
+    </section>
+
+    <!-- ══ FORM CONTATTI ═════════════════════════════════════ -->
+    <section class="faq-contact">
+      <div class="faq-contact__inner">
+        <div class="faq-contact__left">
+          <span class="faq-contact__label reveal">Hai ancora domande?</span>
+          <h2 class="faq-contact__title reveal">Scrivici.<br>Ti rispondiamo<br>entro 24 ore.</h2>
+        </div>
+        <div class="faq-contact__right">
+          <form class="contact-home__form reveal" action="#" method="post" novalidate>
+            <div class="contact-home__row">
+              <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+            </div>
+            <div class="contact-home__row">
+              <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
+              <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+            </div>
+            <div class="contact-home__row">
+              <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+            </div>
+            <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <label class="contact-home__privacy">
+              <input type="checkbox" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+            </label>
+            <div class="contact-home__submit-wrap">
+              <button class="btn btn--primary" type="submit">Invia</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+  </div>
+
+  <script>
+    (function () {
+      const counters = document.querySelectorAll('[data-count]');
+      if (!counters.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          io.unobserve(entry.target);
+          const el = entry.target;
+          const target = +el.dataset.count;
+          const suffix = el.dataset.suffix || '';
+          const duration = 1400;
+          const start = performance.now();
+          function step(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(ease * target) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.3 });
+      counters.forEach(c => io.observe(c));
+    })();
+  </script>
+
+  <!-- â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="index.html" aria-label="ESTRO â€” Homepage">
+            <img src="Logoestrofooter.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="servizi/social-media-management.html">Social media management</a>
+            <a href="servizi/influencer-marketing.html">Influencer marketing</a>
+            <a href="servizi/google-ads.html">Google Ads</a>
+            <a href="servizi/social-ads.html">Social Ads</a>
+            <a href="servizi/strategia-digitale.html">Strategia digitale</a>
+            <a href="servizi/graphic-design.html">Graphic design</a>
+            <a href="servizi/web-design.html">Web design</a>
+            <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
+            <a href="servizi/servizio-ai.html">AI</a>
+            <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="case-studies.html">Case Studies</a>
+            <a href="news.html">News</a>
+            <a href="tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contatti.html">Contatti</a>
+            <a href="lavora-con-noi.html">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="cookie.html">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">Â© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <script src="js/main.js"></script>
+  <script>
+    document.querySelectorAll('.faq-item__q').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const item = btn.closest('.faq-item');
+        const isOpen = item.classList.contains('open');
+        item.classList.toggle('open', !isOpen);
+      });
+    });
+  </script>
+</body>
+</html>
+
+

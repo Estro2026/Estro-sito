@@ -16,481 +16,1236 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/hero.css" />
+  <style>
+    body { background: #000; }
+    .about-section { border-top: none !important; }
+    .about-section__right { padding-left: clamp(1rem, 4vw, 3.5rem); }
+
+    /* ── About dark overlay: sfuma a nero durante l'uscita ─── */
+    .about-dark-overlay {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 10;
+      will-change: opacity;
+    }
+
+    /* ── Clienti marquee (2 righe) ─────────────────────────── */
+    #amici-section {
+      background: #000 !important;
+      padding-block: clamp(4rem, 8vw, 7rem) clamp(4rem, 8vw, 6rem) !important;
+      border-top: none !important;
+      overflow: hidden !important;
+    }
+    .svc-clients__header { margin-bottom: clamp(2.5rem, 5vw, 4rem) !important; }
+    #amici-title {
+      opacity: 0;
+      transform: translateY(30px);
+      will-change: opacity, transform;
+    }
+    .svc-clients__marquee-wrap {
+      display: flex !important;
+      flex-direction: column !important;
+      gap: 2rem !important;
+      overflow: hidden !important;
+      mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    }
+    .svc-clients__track {
+      display: flex !important;
+      gap: clamp(1.5rem, 3vw, 3rem) !important;
+      width: max-content !important;
+      animation: amici-marquee 110s linear infinite !important;
+    }
+    .svc-clients__track--rev {
+      animation-direction: reverse !important;
+    }
+    .svc-clients__track:hover,
+    .svc-clients__track--rev:hover {
+      animation-play-state: paused !important;
+    }
+    @keyframes amici-marquee {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+    .svc-clients__logo {
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      flex-shrink: 0 !important;
+      width: clamp(100px, 12vw, 180px) !important;
+    }
+    .svc-clients__logo img {
+      max-height: clamp(52px, 7vw, 90px) !important;
+      width: auto !important;
+      max-width: 100% !important;
+      object-fit: contain !important;
+      filter: brightness(0) invert(1) !important;
+      opacity: 0.8 !important;
+      transition: opacity 0.2s !important;
+    }
+    .svc-clients__logo:hover img { opacity: 1 !important; }
+    /* Seven rimane invariato */
+    .svc-clients__logo--seven img {
+      max-height: clamp(32px, 4.5vw, 56px) !important;
+    }
+    /* Loghi più grandi — gerarchia visiva */
+    .svc-clients__logo--big img {
+      max-height: clamp(80px, 11vw, 136px) !important;
+    }
+    .svc-clients__logo--xl img {
+      max-height: clamp(95px, 13.5vw, 166px) !important;
+    }
+    .svc-clients__logo--xxl img {
+      max-height: clamp(140px, 20vw, 250px) !important;
+    }
+
+    /* ══ PARTNER LOADER — barra download scroll-driven nella viewport Servizi ══
+       Appare come pill vuota a piena altezza, poi il fill fucsia avanza da sinistra
+       in modo lineare proporzionale allo scroll (effetto download).
+       Altezza impostata da JS in base alla viewport. Nessuna animazione di crescita.
+       ═══════════════════════════════════════════════════════════════════ */
+    .partner-loader {
+      position: absolute;
+      bottom: clamp(32px, 4.5vh, 64px);
+      left: 3vw;
+      right: 3vw;
+      z-index: 6;
+      /* height: impostata da JS (BAR_MAX_H) — pill sempre a piena altezza */
+      overflow: hidden;
+      opacity: 0;
+      pointer-events: none;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.09); /* pill vuota visibile sul video scuro */
+      will-change: opacity, transform;
+    }
+
+    /* Fill fucsia: clip-path da destra → sinistra, bordi arrotondati su entrambi i lati */
+    .partner-loader__fill {
+      position: absolute;
+      inset: 0;
+      background: #DB005A;
+      border-radius: inherit;
+      /* Stato iniziale: fill completamente nascosto sul lato destro */
+      clip-path: inset(0 100% 0 0 round 9999px);
+      will-change: clip-path;
+    }
+
+    /* Container loghi: sopra il fill, invisibile fino a reveal */
+    .partner-loader__logos {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      opacity: 0;
+      pointer-events: none;
+      will-change: opacity, transform;
+    }
+    .partner-loader__logos.logos-visible {
+      opacity: 1;
+      pointer-events: auto;
+      transition: opacity 0.55s ease;
+    }
+
+    /* Override logo-ticker dentro il loader */
+    .partner-loader .logo-ticker {
+      position: static !important;
+      background: transparent !important;
+      padding: 0 !important;
+      border-top: none !important;
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+      z-index: auto !important;
+    }
+    .partner-loader .logo-ticker__track {
+      height: 100%;
+      align-items: center;
+    }
+    .partner-loader .logo-ticker__set {
+      height: 100%;
+      align-items: center;
+    }
+    /* Loghi partner nella pill — dimensioni individuali per peso visivo bilanciato.
+       Base comune: 38px (lt-item default). Ogni logo corretto singolarmente
+       in base al suo bounding box visivo, non alla classe di taglia.
+       I badge certificazione (Meta, TikTok) sono aumentati rispetto ai wordmark. */
+    .partner-loader .lt-item {
+      width: auto !important;
+      flex-shrink: 0;
+    }
+    /* Dimensioni individuali — priorità massima */
+    .partner-loader .pl-logo--meta    { height: 114px !important; }  /* +10% vs 104px */
+    .partner-loader .pl-logo--tiktok  { height: 122px !important; }  /* +17% vs 104px — aumento marcato */
+    .partner-loader .pl-logo--sky     { height: 71px !important; }   /* +9% vs 65px */
+    .partner-loader .pl-logo--sole    { height: 38px !important; }   /* invariato — wordmark sottile già bilanciato */
+    .partner-loader .pl-logo--conde   { height: 46px !important; }   /* invariato */
+    .partner-loader .pl-logo--rolling { height: 30px !important; }   /* invariato */
+    .partner-loader .pl-logo--google  { height: 46px !important; }   /* +10% vs 42px */
+    .partner-loader .lt-item img {
+      height: 100% !important;
+      width: auto !important;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* Animazione entrata testo hero */
+    @keyframes sr-fadein {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .sr-content .vhero__title span:nth-child(1) { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.10s both; }
+    .sr-content .vhero__title span:nth-child(2) { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.32s both; }
+    .sr-content .vhero__title span:nth-child(3) { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.54s both; }
+    .sr-content .vhero__tagline{ animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.76s both; }
+    .sr-content .vhero__sub    { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.95s both; }
+    .sr-content .vhero__cta    { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 1.12s both; }
+    .sr-scroll-hint            { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 1.40s both, sr-bounce 1.8s ease-in-out 2.5s infinite; }
+
+    /* Override testo hero centrato */
+    .sr-content .vhero__title { align-items: center; }
+    .sr-content .vhero__title span { color: #fff; }
+    .sr-content .vhero__title span:nth-child(2) {
+      color: #DB005A;
+      text-shadow: 0 0 20px rgba(219,0,90,0.22);
+    }
+    .sr-content .vhero__tagline {
+      color: #fff;
+      font-size: clamp(0.7rem, 1.1vw, 1rem);
+      text-shadow: none;
+    }
+    .sr-content .vhero__cta { align-self: center; }
+    .sr-content .vhero__cta::before { background: #fff !important; }
+    .sr-content .vhero__cta:hover { color: #DB005A !important; }
+
+    /* ═══════════════════════════════════════════════════════
+       HERO → SERVICES TRANSITION — unica fonte di verità
+       Struttura: ht-wrapper > ht-stage > [ht-hero | ht-services]
+       I due layer sono position:absolute nello stesso sticky stage.
+       ═══════════════════════════════════════════════════════ */
+
+    /* Wrapper: fornisce la distanza di scroll.
+       650dvh totali: 200dvh transizione, 175dvh scroll card orizzontale, 75dvh banda partner,
+       100dvh extra dopo sticky release (About entra). Stage sticky si libera a 450dvh. */
+    .ht-wrapper {
+      position: relative;
+      height: 650dvh;
+      background: var(--bg, #fff); /* colore About = body bg, evita stacco nero→bianco */
+    }
+
+    /* Stage sticky: si ancora al top, clippa entrambi i layer */
+    .ht-stage {
+      position: sticky;
+      top: 0;
+      width: 100%;
+      height: 100dvh;
+      overflow: hidden;
+      background: #000;
+    }
+
+    /* Layer hero: occupa tutto lo stage */
+    .ht-hero {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: #000;
+      overflow: hidden;
+      will-change: opacity;
+    }
+
+    /* Layer servizi: occupa tutto lo stage, fermo nella posizione finale.
+       Compare esclusivamente tramite opacity — nessun movimento verticale. */
+    .ht-services {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      opacity: 0;
+      will-change: opacity;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Hero internals ── */
+    .sr-bg { position: absolute; inset: 0; z-index: 0; }
+    .sr-bg video {
+      position: absolute; inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transform-origin: top center;
+      transform: scale(3.5);
+      will-change: transform;
+    }
+    .sr-overlay {
+      position: absolute; inset: 0; z-index: 1;
+      background: rgba(0,0,0,0.32);
+    }
+    .sr-content {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; gap: 1.25rem;
+      padding: 0 clamp(1.5rem, 5vw, 5rem);
+      box-sizing: border-box; z-index: 2;
+    }
+    .sr-scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%); z-index: 3;
+      display: flex; flex-direction: column; align-items: center;
+      gap: 6px; font-family: var(--font-secondary);
+      font-size: 0.6rem; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45);
+    }
+
+    /* ── Services internals ── */
+    /* svc-bg: video di sfondo che copre l'intero layer servizi */
+    .svc-bg {
+      position: absolute;
+      inset: -2px;          /* +2px per prevenire seam subpixel sui bordi */
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .svc-bg video {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      object-position: center bottom;
+      transform: scale(1.05); /* scala iniziale, torna a 1 durante il fade-in */
+      transform-origin: center center;
+      will-change: transform;
+    }
+
+    /* Gradient overlay: zona scura in cima che fonde con la hero */
+    .svc-gradients {
+      position: absolute; inset: 0; z-index: 1;
+      pointer-events: none;
+      background: linear-gradient(to bottom,
+        #000 0%,
+        rgba(0,0,0,0.82) 6%,
+        rgba(0,0,0,0.50) 14%,
+        rgba(0,0,0,0.15) 24%,
+        transparent 35%);
+    }
+
+    /* Contenitore contenuti: occupa lo spazio disponibile sopra il ticker.
+       padding-top = altezza nav (impostata da JS via --nav-h) per tenere
+       il contenuto visibile sotto il menu fisso, senza fasce o spazi neri. */
+    .svc-inner {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: var(--nav-h, 4rem);
+      /* Riserva spazio permanente sotto le card per la loading bar.
+         Il valore è il doppio dello shift visivo desiderato (≈50px up → 100px pb).
+         Così il contenuto è sempre nella posizione "alta" definitiva fin dall'ingresso.
+         Aumentato per alzare il blocco testo+card di ~22px visivi. */
+      padding-bottom: clamp(140px, 19vh, 180px);
+      overflow: hidden;
+    }
+
+    /* ── Interattività card durante l'animazione di entrata ── */
+    /* Fase entering: pointer-events OFF — nessun hover possibile */
+    .services-entering .svc-card { pointer-events: none; }
+    /* Fase ready: interazione ripristinata solo dopo composizione completa */
+    .services-ready .svc-card { pointer-events: auto; }
+    /* Stato iniziale (prima dell'entering): anche off */
+    .ht-services:not(.services-ready) .svc-card { pointer-events: none; }
+
+    .svc-header {
+      position: relative;
+      z-index: 3;
+      padding: clamp(0.75rem,1.5vw,1.5rem) clamp(1.5rem,5vw,5rem) clamp(0.5rem,1vw,1rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      /* Stato iniziale: sale dallo scroll, guidato da JS */
+      opacity: 0;
+      transform: translateY(40px);
+      will-change: opacity, transform;
+    }
+
+    /* Titolo SERVIZI — stagger per lettera (reference) */
+    .svc-title {
+      display: flex;
+      font-size: clamp(3rem,7.5vw,7.5rem);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      font-family: var(--font-primary, 'Helvetica Neue', sans-serif);
+      overflow: hidden;
+    }
+    .svc-letter {
+      display: inline-block;
+      color: #fff;
+      opacity: 0;
+      transform: translateY(0.8em);
+    }
+    /* Classe generica per lettere di tutti gli altri titoli principali */
+    .tl {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(0.8em);
+    }
+
+    /* Sottotitolo parola per parola */
+    .svc-sub {
+      margin-top: 0.75rem;
+      font-size: clamp(0.78rem,1vw,0.9rem);
+      color: #fff;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35em;
+    }
+    .svc-word {
+      display: inline-block;
+      opacity: 0;
+      transform: translateX(-10px);
+      /* opacity e transform gestiti da JS scroll-driven — nessuna transition CSS */
+    }
+
+    /* Scroll orizzontale card: gestito via translateX scroll-driven (no drag) */
+    .svc-cards-wrap {
+      position: relative;
+      z-index: 3;
+      overflow: hidden;
+      padding: 0 clamp(1.5rem,5vw,5rem) clamp(1rem,2dvh,1.5rem);
+      margin-top: clamp(1rem,2dvh,1.75rem);
+    }
+    .svc-cards-wrap { background: transparent; }
+    .svc-cards-track { background: transparent; will-change: transform; }
+
+    /* Track flex — entrata animata, z-index sopra i layer video */
+    .svc-cards-track {
+      display: flex;
+      gap: 0;
+      width: max-content;
+      position: relative;
+      z-index: 2;
+    }
+    /* Card compatta — inizia invisibile, entra con slide-up + scale */
+    .svc-card {
+      width: clamp(212px,24.5vw,290px);
+      height: clamp(258px,33dvh,336px);
+      flex-shrink: 0;
+      position: relative;
+      z-index: 1;
+      overflow: hidden;
+      border-radius: 0;
+      display: flex;
+      align-items: flex-end;
+      box-sizing: border-box;
+      cursor: pointer;
+      background: transparent;
+      opacity: 0;
+      transform: translateY(60px) scale(0.97);
+      /* opacity e transform gestiti da JS scroll-driven — nessuna transition CSS */
+    }
+    .svc-card:first-child { border-radius: 14px 0 0 14px; }
+    .svc-card:last-child  { border-radius: 0 14px 14px 0; }
+    /* .visible: classe presente per abilitare gli hover-state figli — opacity/transform da JS */
+    .svc-card.visible { }
+
+    /* Divisore verticale tra card */
+    .svc-card::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 16px;
+      bottom: 16px;
+      width: 1px;
+      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.18) 40%, rgba(255,255,255,0.18) 60%, transparent);
+      z-index: 3;
+      pointer-events: none;
+      transition: opacity 0.35s ease;
+    }
+    .svc-card:last-child::after { display: none; }
+    /* Tutti i divisori spariscono quando qualsiasi card è in hover */
+    .svc-cards-track:has(.svc-card:hover) .svc-card::after { opacity: 0; }
+
+    /* Bridge rettangolare — segue il mouse, largo quanto una card, solido */
+    .svc-card-bridge {
+      position: absolute;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: var(--svc-card-w, 250px);
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(219,0,90,0.95) 0%, rgba(160,0,66,0.98) 100%);
+      transform: translateX(-50%);
+      transition: opacity 0.2s ease;
+      will-change: left;
+    }
+    .svc-card-bridge.visible { opacity: 1; }
+
+    /* Cerchio — segue il mouse, clippato al perimetro della card */
+    .svc-card-circle {
+      position: absolute;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      top: 0; left: 0;
+      width: 170px; height: 170px;
+      border-radius: 50%;
+      background: rgb(255, 255, 255);
+      transform: translate(-50%, -50%);
+      transition: opacity 0.25s ease;
+    }
+    .svc-card-circle.visible { opacity: 0.13; }
+
+    /* Numero watermark */
+    .svc-card__num {
+      position: absolute;
+      top: 0.75rem;
+      right: 1rem;
+      font-size: clamp(2.5rem,5vw,3.5rem);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: 0.02em;
+      color: rgba(255,255,255,0.52);
+      font-family: var(--font-primary,'Helvetica Neue',sans-serif);
+      z-index: 2;
+      user-select: none;
+      pointer-events: none;
+    }
+    .svc-card.visible:hover .svc-card__num { color: rgba(255,255,255,0.22); }
+
+    /* Contenuto — posizionato in basso, sale all'hover */
+    .svc-card__inner {
+      position: relative;
+      z-index: 2;
+      padding: clamp(1rem,2vw,1.4rem);
+      width: 100%;
+      opacity: 0;
+      transform: translateY(190px);
+      transition: opacity 0.4s ease,
+                  transform 1.15s cubic-bezier(0.16,1,0.3,1);
+    }
+    .svc-card.visible .svc-card__inner {
+      opacity: 1;
+      transform: translateY(clamp(50px, 10dvh, 70px));
+      transition-delay: 0.12s;
+    }
+    .svc-card.visible:hover .svc-card__inner {
+      transform: translateY(0);
+      transition-delay: 0s;
+      transition-duration: 1.1s;
+    }
+
+    .svc-card__tag {
+      display: block;
+      font-size: 0.58rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.75);
+      margin-bottom: 0.45rem;
+      font-weight: 500;
+    }
+    .svc-card__title {
+      font-size: clamp(1.1rem,1.9vw,1.5rem);
+      font-weight: 500;
+      color: #fff;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.5rem;
+      font-family: var(--font-primary,'Helvetica Neue',sans-serif);
+    }
+    .svc-card__desc {
+      font-size: clamp(0.75rem,0.88vw,0.83rem);
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      opacity: 0;
+      transition: opacity 0.25s linear;
+    }
+    .svc-card.visible:hover .svc-card__desc {
+      opacity: 1;
+      transition-delay: 0.32s;
+    }
+
+    /* Bottone — appare all'hover */
+    .svc-card__btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      background: rgba(255,255,255,0.18);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 99px;
+      color: #fff;
+      font-size: 0.58rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 0.7rem;
+      overflow: hidden;
+      max-width: 42px;
+      white-space: nowrap;
+      opacity: 0;
+      transition: max-width 0.55s cubic-bezier(0.22,1,0.36,1),
+                  padding   0.55s cubic-bezier(0.22,1,0.36,1),
+                  opacity   0.25s linear,
+                  background 0.3s, border-color 0.3s;
+    }
+    .svc-card.visible:hover .svc-card__btn {
+      opacity: 1;
+      max-width: 200px;
+      padding: 0.7rem 1.3rem;
+      background: rgba(255,255,255,0.22);
+      border-color: rgba(255,255,255,0.7);
+      transition-delay: 0.38s;
+    }
+    .svc-card__btn svg { flex-shrink: 0; width: 14px; height: 14px; transition: transform 0.35s; }
+    .svc-card.visible:hover .svc-card__btn svg { transform: translateX(4px); }
+    .svc-card__btn-label {
+      opacity: 0;
+      max-width: 0;
+      overflow: hidden;
+      transition: opacity 0.3s 0.18s, max-width 0.55s cubic-bezier(0.22,1,0.36,1);
+    }
+    .svc-card.visible:hover .svc-card__btn-label { opacity: 1; max-width: 180px; }
+
+    @keyframes sr-bounce {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(7px); }
+    }
+    .sr-scroll-hint { animation: sr-bounce 1.8s ease-in-out infinite; }
+    @media (prefers-reduced-motion: reduce) {
+      .sr-bg video { transform: scale(1) !important; transition: none !important; }
+      .sr-scroll-hint { animation: none; }
+    }
+
+    /* ══ STICKY RUNWAY SECTIONS (CS / Tips / Contatti) ════════
+       Outer: 200dvh runway, position:relative, no min-height.
+       Inner: sticky, 100dvh, clips content.
+       ═══════════════════════════════════════════════════════ */
+
+    /* ── Case Studies ─────────────────────────────────────── */
+    .cs2 {
+      position: relative !important;
+      height: 200dvh !important;
+      min-height: unset !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      background: transparent !important;
+    }
+    .cs2-sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      overflow: clip;
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: calc(var(--nav-h, 4rem) + 1rem);
+      padding-bottom: 1.5rem;
+      gap: clamp(0.3rem, 1vh, 1rem);
+    }
+    .cs2__wall {
+      max-height: calc(100dvh - 30rem);
+      overflow: visible;
+    }
+    .cs2__intro { margin-bottom: 0; }
+    .cs2__title {
+      font-size: clamp(2rem, 5vw, 5rem);
+      white-space: nowrap;
+      color: var(--primary, #DB005A);
+      opacity: 0;
+      transform: translateY(30px);
+      will-change: opacity, transform;
+    }
+    .cs2__sub {
+      color: rgba(0,0,0,0.5);
+      font-size: clamp(0.8rem, 1.1vw, 1rem);
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: opacity, transform;
+    }
+    .cs2__wall {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: clamp(4px, 0.6vw, 8px);
+    }
+    @media (max-width: 700px) { .cs2__wall { grid-template-columns: repeat(3, 1fr); } }
+    .cs2__tile {
+      opacity: 0;
+      will-change: opacity, transform;
+    }
+    .cs2__footer {
+      margin-top: 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      flex-wrap: wrap;
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: opacity, transform;
+    }
+    .cs2__footer-note { color: rgba(0,0,0,0.45); font-size: clamp(0.75rem, 1vw, 0.9rem); }
+    .cs2__footer-btn { border-color: rgba(0,0,0,0.3) !important; color: #000 !important; }
+
+    /* ── cta-coffee: sempre visibile, immagine wipe sinistra→destra ── */
+    .cta-coffee {
+      opacity: 1;
+    }
+    .cta-coffee__img {
+      clip-path: inset(0 100% 0 0) !important;
+      opacity: 1 !important;
+      transform: none !important;
+      transition: clip-path 1.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
+    .cta-coffee.in-view .cta-coffee__img {
+      clip-path: inset(0 0% 0 0) !important;
+    }
+
+    /* ── Tips & Tricks ────────────────────────────────────── */
+    .tips-section {
+      position: relative !important;
+      height: 200dvh !important;
+      min-height: unset !important;
+      padding: 0 !important;
+      overflow: visible !important;
+      background: transparent !important;
+    }
+    .tips-sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      overflow: clip;
+      background: var(--bg, #fff);
+      display: flex;
+      align-items: center;
+    }
+    .tips-sticky .container { width: 100%; }
+    .tips-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: clamp(0.75rem, 1.5vw, 1.5rem) !important;
+    }
+    .tip-card__img img { max-height: clamp(130px, 26vh, 280px) !important; object-fit: cover; width: 100% !important; height: clamp(130px, 26vh, 280px) !important; }
+    .tips-section__heading {
+      opacity: 0;
+      transform: translateY(30px);
+      will-change: opacity, transform;
+    }
+    .tips-grid .tip-card {
+      opacity: 0;
+      transform: translateY(30px);
+      will-change: opacity, transform;
+    }
+    .tips-section__cta {
+      opacity: 0;
+      transform: translateY(20px);
+      will-change: opacity, transform;
+    }
+
+    /* Per-letter spans: display:inline-block so transforms work */
+    .tl { display: inline-block; }
+    .sf-ghost { color: rgba(255,255,255,0.10) !important; }
+    .sf-ghost .tl { opacity: 0; }
+
+    /* ── Sezione Contatti home ─────────────────────────────── */
+    .hc-section {
+      min-height: 100dvh;
+      display: flex;
+      align-items: center;
+    }
+    .hc-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: clamp(2rem, 4vw, 3.5rem);
+      padding-block: clamp(3rem, 6vw, 5rem);
+      width: 100%;
+    }
+    .hc-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .hc-title {
+      font-family: var(--font-primary);
+      font-size: clamp(2.75rem, 8vw, 6.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+    .hc-sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase;
+    }
+    .hc-form {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .hc-textarea { min-height: 130px; resize: vertical; }
+    .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .hc-submit::before { display: none !important; }
+    #contatti .hc-submit:hover,
+    #contatti .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 600px) {
+      .hc-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
+<!-- Filtro SVG per rimuovere lo sfondo bianco dal video gatto -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs>
+    <filter id="rm-white-bg">
+      <feColorMatrix type="matrix"
+        values="1 0 0 0 0
+                0 1 0 0 0
+                0 0 1 0 0
+               -1.2 -1.2 -1.2 0 3.2"/>
+    </filter>
+  </defs>
+</svg>
 
   <!-- ══ NAV ══════════════════════════════════════════════ -->
   <header class="nav" role="banner">
-    <div class="container nav__inner">
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
-        <img src="assets/Estro_logo05 (1).webp" alt="ESTRO" />
+        <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <nav class="nav__links" aria-label="Menu principale">
-        <a class="nav__link nav__link--active" href="index.html">Home</a>
-        <div class="nav__dropdown">
-          <button class="nav__dropdown-toggle" aria-expanded="false" aria-haspopup="true">
-            Servizi
-            <svg width="10" height="6" viewBox="0 0 10 6" fill="none" aria-hidden="true">
-              <path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <div class="nav__dropdown-menu" role="menu">
-            <a class="nav__dropdown-item" href="servizi/google-ads.html" role="menuitem">Google ADS</a>
-            <a class="nav__dropdown-item" href="servizi/social-ads.html" role="menuitem">Social ADS</a>
-            <a class="nav__dropdown-item" href="servizi/social-media-management.html" role="menuitem">Social Media Management</a>
-            <a class="nav__dropdown-item" href="servizi/influencer-marketing.html" role="menuitem">Influencer Marketing</a>
-            <a class="nav__dropdown-item" href="servizi/strategia-digitale.html" role="menuitem">Strategia Digitale</a>
-            <a class="nav__dropdown-item" href="servizi/graphic-design.html" role="menuitem">Graphic Design</a>
-            <a class="nav__dropdown-item" href="servizi/web-design.html" role="menuitem">Web Design</a>
-            <a class="nav__dropdown-item" href="servizi/produzione-contenuti.html" role="menuitem">Produzione Contenuti</a>
-            <a class="nav__dropdown-item" href="servizi/modellazione-3d.html" role="menuitem">Modellazione 3D</a>
-            <a class="nav__dropdown-item" href="servizi/servizio-ai.html" role="menuitem">Servizio AI</a>
+      <a class="nav__joinus" href="lavora-con-noi.html">
+        <span class="nav__joinus-avatars">
+          <span class="nav__avatar"></span>
+          <span class="nav__avatar"></span>
+        </span>
+        Join Us
+      </a>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links">
+              <a href="servizi/social-media-management.html">Social media management</a>
+              <a href="servizi/influencer-marketing.html">Influencer marketing</a>
+              <a href="servizi/google-ads.html">Google ads</a>
+              <a href="servizi/social-ads.html">Social ads</a>
+              <a href="servizi/strategia-digitale.html">Strategia digitale</a>
+              <a href="servizi/graphic-design.html">Graphic design</a>
+              <a href="servizi/web-design.html">Web design</a>
+              <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
+              <a href="servizi/servizio-ai.html">AI</a>
+              <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="case-studies.html">Case Studies</a>
+              <a href="news.html">News</a>
+              <a href="tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="faq.html">FAQ</a>
+              <a href="contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
+              <span class="nav__joinus-avatars">
+                <span class="nav__avatar"></span>
+                <span class="nav__avatar"></span>
+              </span>
+              Join Us
+            </a>
           </div>
         </div>
-        <a class="nav__link" href="contatti.html">Contatti</a>
-      </nav>
-      <a class="nav__cta" href="contatti.html">Inizia un progetto</a>
-      <button class="nav__hamburger" aria-label="Apri menu" aria-expanded="false">
-        <span></span><span></span><span></span>
-      </button>
+      </div>
     </div>
   </header>
-
-  <div class="nav__mobile" aria-hidden="true">
-    <button class="nav__mobile-close btn btn--ghost" aria-label="Chiudi menu">✕ Chiudi</button>
-    <nav class="nav__mobile-links">
-      <a class="nav__mobile-link" href="index.html">Home</a>
-      <div>
-        <p class="nav__mobile-label">Servizi</p>
-        <div class="nav__mobile-services">
-          <a class="nav__mobile-service" href="servizi/google-ads.html">Google ADS</a>
-          <a class="nav__mobile-service" href="servizi/social-ads.html">Social ADS</a>
-          <a class="nav__mobile-service" href="servizi/social-media-management.html">Social Media</a>
-          <a class="nav__mobile-service" href="servizi/influencer-marketing.html">Influencer Mktg</a>
-          <a class="nav__mobile-service" href="servizi/strategia-digitale.html">Strategia Digitale</a>
-          <a class="nav__mobile-service" href="servizi/graphic-design.html">Graphic Design</a>
-          <a class="nav__mobile-service" href="servizi/web-design.html">Web Design</a>
-          <a class="nav__mobile-service" href="servizi/produzione-contenuti.html">Prod. Contenuti</a>
-          <a class="nav__mobile-service" href="servizi/modellazione-3d.html">3D Render</a>
-          <a class="nav__mobile-service" href="servizi/servizio-ai.html">Servizio AI</a>
-        </div>
-      </div>
-      <a class="nav__mobile-link" href="contatti.html">Contatti</a>
-    </nav>
-  </div>
+  <div class="nav__overlay" aria-hidden="true"></div>
 
   <main>
 
-    <!-- ══ HERO — testo sx 30% | video dx 70% ══════════════ -->
-    <section class="vhero" aria-labelledby="vhero-title">
-      <!-- Colonna sinistra: titolo, sottotitolo, CTA -->
-      <div class="vhero__left">
-        <h1 class="vhero__title" id="vhero-title">
-          <span>LE IDEE</span>
-          <span>PRENDONO</span>
-          <span>FORMA</span>
-        </h1>
-        <p class="vhero__tagline">SCOPRI LA CREATIVITÀ CHE LASCIA IL SEGNO</p>
-        <p class="vhero__sub">Mettiamo lo zampino un po' ovunque!</p>
-        <a class="btn btn--primary vhero__cta" href="contatti.html">CONTATTACI</a>
-      </div>
+    <!-- ══ HERO + SERVIZI: unico sticky stage ══════════════ -->
+    <div class="hero-svc-scene">
 
-      <!-- Colonna destra: video centrato al 70% -->
-      <div class="vhero__right" aria-hidden="true">
-        <div class="vhero__video-box">
-          <iframe
-            class="vhero__iframe"
-            src="https://player.vimeo.com/video/1204833898?autoplay=1&muted=1&loop=1&background=1&controls=0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            frameborder="0"
-            loading="eager"
-            title=""
-          ></iframe>
+    <div class="ht-wrapper" id="ht-wrapper" data-nav-theme="dark">
+      <div class="ht-stage">
+
+        <!-- ── HERO LAYER ──────────────────────────────── -->
+        <div class="ht-hero" id="ht-hero">
+          <div class="sr-bg" aria-hidden="true">
+            <video id="sr-video" src="videoherohome.mp4" autoplay muted loop playsinline></video>
+          </div>
+          <div class="sr-overlay" aria-hidden="true"></div>
+          <div class="sr-content" aria-labelledby="vhero-title">
+            <h1 class="vhero__title" id="vhero-title">
+              <span>LE IDEE</span>
+              <span>PRENDONO</span>
+              <span>FORMA</span>
+            </h1>
+            <p class="vhero__tagline">SCOPRI LA CREATIVITÀ CHE LASCIA IL SEGNO</p>
+            <p class="vhero__sub">Mettiamo lo zampino un po' ovunque!</p>
+            <a class="btn btn--primary vhero__cta" href="contatti.html">CONTATTACI</a>
+          </div>
+          <div class="sr-scroll-hint" aria-hidden="true">
+            <svg width="16" height="22" viewBox="0 0 16 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="14" height="20" rx="7"/><line x1="8" y1="5" x2="8" y2="10"/></svg>
+          </div>
         </div>
-      </div>
-    </section>
 
-    <!-- ══ SERVIZI GRID ══════════════════════════════════════ -->
-    <section class="section svc-grid" id="servizi" aria-label="I nostri servizi">
-      <div class="container">
-        <div class="svc-grid__list">
-
-          <div class="svc-item reveal">
-            <div class="svc-item__num">01.</div>
-            <h3 class="svc-item__name"><a href="servizi/strategia-digitale.html">STRATEGIA DIGITALE</a></h3>
-            <p class="svc-item__desc">Elaboriamo il piano migliore per far <strong>decollare il tuo brand</strong>.</p>
+        <!-- ── SERVICES LAYER ─────────────────────────── -->
+        <div class="ht-services" id="ht-services">
+          <!-- Layer 0: video background (inset -2px per coprire eventuali seam subpixel) -->
+          <div class="svc-bg" aria-hidden="true">
+            <video src="foto%20home/SFONDoSCURO.mp4" autoplay muted loop playsinline></video>
           </div>
-
-          <div class="svc-item reveal reveal-delay-1">
-            <div class="svc-item__num">02.</div>
-            <h3 class="svc-item__name"><a href="servizi/google-ads.html">GOOGLE ADS</a></h3>
-            <p class="svc-item__desc">Vuoi far <strong>crescere la tua attività</strong> con Google Ads? <strong>Sei nel posto giusto!</strong></p>
+          <!-- Layer 1: gradient overlay scuro in cima -->
+          <div class="svc-gradients" aria-hidden="true"></div>
+          <!-- Layer 2: contenuti servizi + ticker (parte dei Servizi) -->
+          <div class="svc-inner">
+            <section id="servizi" aria-label="I nostri servizi" data-nav-theme="dark">
+              <div class="svc-header" id="svcHeader">
+                <div class="svc-title" aria-label="SERVIZI">
+                  <span class="svc-letter">S</span><span class="svc-letter">E</span><span class="svc-letter">R</span><span class="svc-letter">V</span><span class="svc-letter">I</span><span class="svc-letter">Z</span><span class="svc-letter">I</span>
+                </div>
+                <p class="svc-sub">
+                  <span class="svc-word">Dalla</span><span class="svc-word">strategia</span><span class="svc-word">alla</span><span class="svc-word">creatività.</span><span class="svc-word">Tutto</span><span class="svc-word">ciò</span><span class="svc-word">che</span><span class="svc-word">serve</span><span class="svc-word">per</span><span class="svc-word">far</span><span class="svc-word">crescere</span><span class="svc-word">il</span><span class="svc-word">tuo</span><span class="svc-word">brand.</span>
+                </p>
+              </div>
+              <div class="svc-cards-wrap" id="svcCardsWrap">
+                <div class="svc-cards-track" id="svcCardsTrack"></div>
+              </div>
+            </section>
           </div>
-
-          <div class="svc-item reveal reveal-delay-2">
-            <div class="svc-item__num">03.</div>
-            <h3 class="svc-item__name"><a href="servizi/social-ads.html">SOCIAL ADV: META TIKTOK</a></h3>
-            <p class="svc-item__desc">Trova <strong>nuovi clienti</strong> grazie alle campagne pubblicitarie su Facebook e Instagram.</p>
-          </div>
-
-          <div class="svc-item reveal reveal-delay-3">
-            <div class="svc-item__num">04.</div>
-            <h3 class="svc-item__name"><a href="servizi/social-media-management.html">SOCIAL MEDIA MANAGEMENT</a></h3>
-            <p class="svc-item__desc">Costruisci insieme a noi la tua <strong>identità digitale</strong>.</p>
-          </div>
-
-          <div class="svc-item reveal reveal-delay-4">
-            <div class="svc-item__num">05.</div>
-            <h3 class="svc-item__name"><a href="servizi/influencer-marketing.html">INFLUENCER MARKETING</a></h3>
-            <p class="svc-item__desc">Selezioniamo per te i migliori <strong>storytellers digitali</strong>.</p>
-          </div>
-
-          <div class="svc-item reveal">
-            <div class="svc-item__num">06.</div>
-            <h3 class="svc-item__name"><a href="servizi/graphic-design.html">GRAPHIC DESIGN &amp; MOTION GRAPHIC</a></h3>
-            <p class="svc-item__desc">Anima i tuoi contenuti e <strong>crea esperienze uniche</strong>.</p>
-          </div>
-
-          <div class="svc-item reveal reveal-delay-1">
-            <div class="svc-item__num">07.</div>
-            <h3 class="svc-item__name"><a href="servizi/web-design.html">WEB DESIGN &amp; E.COMMERCE</a></h3>
-            <p class="svc-item__desc"><strong>Rivoluzionamo il tuo modo di vendere</strong> costruendo la tua vetrina digitale.</p>
-          </div>
-
-          <div class="svc-item reveal reveal-delay-2">
-            <div class="svc-item__num">08.</div>
-            <h3 class="svc-item__name"><a href="servizi/produzione-contenuti.html">PRODUZIONE CONTENUTI</a></h3>
-            <p class="svc-item__desc"><strong>Tutti i contenuti multimediali</strong> di cui hai bisogno.</p>
-          </div>
-
-          <div class="svc-item reveal reveal-delay-3">
-            <div class="svc-item__num">09.</div>
-            <h3 class="svc-item__name"><a href="servizi/modellazione-3d.html">MODELLAZIONE E RENDERIZZAZIONE 3D</a></h3>
-            <p class="svc-item__desc"><strong>Esperienze coinvolgenti</strong> che trasformano le visualizzazioni in vendite.</p>
-          </div>
-
-          <div class="svc-item reveal reveal-delay-4">
-            <div class="svc-item__num">10.</div>
-            <h3 class="svc-item__name"><a href="servizi/servizio-ai.html">SERVIZI AI PER MARKETING E CREATIVITÀ</a></h3>
-            <p class="svc-item__desc">Dalla creatività alla produzione: <strong>l'intelligenza artificiale al servizio del tuo brand</strong>.</p>
+          <!-- ── PARTNER LOADER — loading bar→fascia fucsia, scroll-driven ──
+               Invisibile finché lo scroll orizzontale delle card non termina.
+               p_loader 0→1 controlla fill, altezza e reveal dei loghi.
+               Due transform separati:
+                 partner-loader__fill → scaleX (fill da sinistra)
+                 logo-ticker__track   → translateX (marquee, gestito da main.js)
+               ────────────────────────────────────────────────────────────── -->
+          <div class="partner-loader" id="partnerLoader">
+            <div class="partner-loader__fill" id="partnerLoaderFill"></div>
+            <div class="partner-loader__logos" id="partnerLoaderLogos">
+              <div class="logo-ticker">
+                <div class="logo-ticker__track">
+                  <div class="logo-ticker__set">
+                    <div class="lt-item lt-item--xxl pl-logo--meta"><img src="Partnerlogos/metalogo.webp" alt="Meta Business Partner" /></div>
+                    <div class="lt-item lt-item--tiktok pl-logo--tiktok"><img src="Partnerlogos/tiktoklogo.webp" alt="TikTok Marketing Partner" /></div>
+                    <div class="lt-item lt-item--xl pl-logo--sky"><img src="Partnerlogos/skymedialogo.webp" alt="Sky Media" /></div>
+                    <div class="lt-item pl-logo--sole"><img src="Partnerlogos/sole24orelogo.webp" alt="Il Sole 24 Ore" /></div>
+                    <div class="lt-item lt-item--big pl-logo--conde"><img src="Partnerlogos/condenastlogo.webp" alt="Condé Nast" /></div>
+                    <div class="lt-item pl-logo--rolling"><img src="Partnerlogos/rollingstonelogo.webp" alt="Rolling Stone" /></div>
+                    <div class="lt-item pl-logo--google"><img src="Partnerlogos/googlepartnerlogo.webp" alt="Google Partner" /></div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
 
         </div>
-      </div>
-    </section>
 
+      </div>
+    </div><!-- /ht-wrapper -->
+
+    </div><!-- /hero-svc-scene -->
 
     <!-- ══ ABOUT ══════════════════════════════════════════════ -->
     <section class="section about-section" id="chi-siamo" aria-labelledby="about-title">
-      <img class="about-section__tail" src="foto%20home/coda-gatto-oshxjrx6o18ghy7peuh9v296dlx7kj6p8c1c09eiv4-1.webp" alt="" aria-hidden="true" />
-      <div class="container">
-        <div class="about-section__grid">
+      <div class="about-sticky">
+        <div class="about-section__big" aria-hidden="true">ABOUT</div>
+        <div class="container">
+          <div class="about-section__grid">
 
-          <div class="about-section__left">
-            <div class="about-section__big" aria-hidden="true">ABOUT</div>
-            <img class="about-section__cat" src="foto%20home/gatto-top-dex-home%20(1).webp" alt="" aria-hidden="true" />
-          </div>
-
-          <div class="about-section__right">
-            <p class="about-section__kicker reveal" >AGENZIA DI COMUNICAZIONE CREATIVA A MILANO</p>
-            <h2 class="about-section__heading reveal reveal-delay-1" id="about-title">
-              SIAMO CURIOSI, AGILI E PRONTI A <em>COLPIRE!</em>
-            </h2>
-            <div class="about-section__body reveal reveal-delay-2">
-              <p>Il nostro obiettivo è offrirti <strong>soluzioni innovative</strong> per raggiungere i <strong>tuoi obiettivi</strong>. Siamo specializzati nella <strong>creazione di campagne</strong> di vario tipo: devi aumentare l'<strong>awareness del tuo brand</strong>, creare <strong>strategie cross-channel innovative</strong> per vendere i tuoi prodotti, <strong>ingaggiare nuovi ambassador ed influencer</strong>?</p>
-              <p class="about-section__pull">Mettici alla prova!</p>
-              <p>Creiamo <strong>connessioni reali</strong> con i tuoi nuovi clienti attraverso progetti che lasciano il segno ottenendo <strong>risultati concreti e quantificabili</strong>, divertendoci nel farlo. Ogni nostro contenuto, che sia una foto, un video o una stories di 15 secondi nasce per <strong>coinvolgere le persone</strong>. Qui troverai innovazione, <strong>visione strategica, competenze progettuali e operative</strong>.</p>
+            <div class="about-section__right">
+              <p class="about-section__kicker">AGENZIA DI COMUNICAZIONE CREATIVA A MILANO</p>
+              <h2 class="about-section__heading" id="about-title">
+                SIAMO CURIOSI, AGILI E PRONTI A <em>COLPIRE!</em>
+              </h2>
+              <div class="about-section__body">
+                <p>Il nostro obiettivo è offrirti <strong>soluzioni innovative</strong> per raggiungere i <strong>tuoi obiettivi</strong>. Siamo specializzati nella <strong>creazione di campagne</strong> di vario tipo: devi aumentare l'<strong>awareness del tuo brand</strong>, creare <strong>strategie cross-channel innovative</strong> per vendere i tuoi prodotti, <strong>ingaggiare nuovi ambassador ed influencer</strong>?</p>
+                <p class="about-section__pull">Mettici alla prova!</p>
+                <p>Creiamo <strong>connessioni reali</strong> con i tuoi nuovi clienti attraverso progetti che lasciano il segno ottenendo <strong>risultati concreti e quantificabili</strong>, divertendoci nel farlo. Ogni nostro contenuto, che sia una foto, un video o una stories di 15 secondi nasce per <strong>coinvolgere le persone</strong>. Qui troverai innovazione, <strong>visione strategica, competenze progettuali e operative</strong>.</p>
+              </div>
+              <div class="about-section__cta">
+                <a class="btn btn--primary" href="ESTRO_Visual identity_Corporate_V01 (5).pdf" target="_blank" rel="noopener">SCARICA LA BROCHURE</a>
+              </div>
             </div>
-            <div class="reveal reveal-delay-3">
-              <a class="btn btn--primary" href="ESTRO_Visual identity_Corporate_V01 (5).pdf" target="_blank" rel="noopener">SCARICA LA BROCHURE</a>
-            </div>
-          </div>
 
+            <div class="about-section__video-col">
+              <video class="about-section__cat" muted playsinline preload="auto" aria-hidden="true">
+                <source src="foto%20home/Asto1.webm" type="video/webm" />
+                <source src="foto%20home/Astro.mp4" type="video/mp4" />
+              </video>
+            </div>
+
+          </div>
         </div>
+        <div class="about-dark-overlay" id="aboutDarkOverlay"></div>
       </div>
     </section>
 
     <!-- ══ CLIENTI ════════════════════════════════════════════ -->
-    <section class="svc-clients" aria-label="I nostri clienti">
-      <div class="container">
-        <h2 class="svc-clients__title reveal">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
+    <section class="svc-clients" id="amici-section" aria-label="I nostri clienti" data-nav-theme="dark">
+      <div class="container svc-clients__header">
+        <h2 class="svc-clients__title" id="amici-title">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
       </div>
       <div class="svc-clients__marquee-wrap">
+        <!-- FILA 1 — scorre a sinistra -->
         <div class="svc-clients__track">
-          <div class="svc-clients__logo"><img src="Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/langelica.webp" alt="L'Angelica" /></div>
           <!-- duplicati per loop continuo -->
-          <div class="svc-clients__logo"><img src="Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/langelica.webp" alt="L'Angelica" /></div>
         </div>
-        <!-- Seconda fila: direzione inversa -->
+        <!-- FILA 2 — scorre a destra -->
         <div class="svc-clients__track svc-clients__track--rev">
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/wudy.webp" alt="Wudy" /></div>
           <!-- duplicati per loop continuo -->
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo"><img src="Loghibrand/wudy.webp" alt="Wudy" /></div>
         </div>
       </div>
     </section>
 
     <!-- ══ CASE STUDIES ══════════════════════════════════════ -->
-    <section class="cs2" aria-labelledby="cs2-title">
+    <section class="cs2" id="case-studies" aria-labelledby="cs2-title">
+      <div class="cs2-sticky" id="cs2Sticky">
 
       <!-- Intro header -->
       <div class="container cs2__intro">
         <h2 class="cs2__title" id="cs2-title">CASE STUDIES</h2>
-        <p class="cs2__sub reveal">Risultati reali. Brand che hanno scelto di non accontentarsi.</p>
+        <p class="cs2__sub" id="cs2Sub">Risultati reali. Brand che hanno scelto</p>
       </div>
 
       <!-- Logo wall — mosaico interattivo -->
       <div class="container">
-        <div class="cs2__wall reveal">
-          <div class="cs2__tile"><img src="foto%20case%20study/ABC-logo-rosa.webp" alt="ABC Tools" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/artigli-1-150x150.webp" alt="Artigli" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/cybergon_rosa.png" alt="Cybergon" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/logo_coseacasa.webp" alt="Cose a Casa" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/Dresso_rosa.png" alt="Dresso" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/squarelife-150x150_pink-150x150.webp" alt="Squarelife" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/disclaimer-150x150_pink-150x150.webp" alt="Disclaimer" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/pyrex-150x150_pink-150x150.webp" alt="Pyrex" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/fragi-150x150_pink-150x150.webp" alt="Fragi" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/logo-come-in-una-favola-v5-1.webp" alt="Come in una Favola" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/redbull-150x150_pink-150x150.webp" alt="Red Bull" class="cs2__logo-img" /></div>
-          <div class="cs2__tile"><img src="foto%20case%20study/woodoo-150x150_pink.webp" alt="Woodoo" class="cs2__logo-img" /></div>
+        <div class="cs2__wall" id="cs2Wall">
+          <div class="cs2__tile" data-idx="0"><img src="foto%20case%20study/ABC-logo-rosa.webp" alt="ABC Tools" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="1"><img src="foto%20case%20study/artigli-1-150x150.webp" alt="Artigli" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="2"><img src="foto%20case%20study/cybergon_rosa.png" alt="Cybergon" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="3"><img src="foto%20case%20study/logo_coseacasa.webp" alt="Cose a Casa" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="4"><img src="foto%20case%20study/Dresso_rosa.png" alt="Dresso" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="5"><img src="foto%20case%20study/squarelife-150x150_pink-150x150.webp" alt="Squarelife" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="6"><img src="foto%20case%20study/disclaimer-150x150_pink-150x150.webp" alt="Disclaimer" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="7"><img src="foto%20case%20study/pyrex-150x150_pink-150x150.webp" alt="Pyrex" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="8"><img src="foto%20case%20study/fragi-150x150_pink-150x150.webp" alt="Fragi" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="9"><img src="foto%20case%20study/logo-come-in-una-favola-v5-1.webp" alt="Come in una Favola" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="10"><img src="foto%20case%20study/redbull-150x150_pink-150x150.webp" alt="Red Bull" class="cs2__logo-img" /></div>
+          <div class="cs2__tile" data-idx="11"><img src="foto%20case%20study/woodoo-150x150_pink.webp" alt="Woodoo" class="cs2__logo-img" /></div>
         </div>
       </div>
 
       <!-- Footer CTA -->
-      <div class="container cs2__footer reveal">
+      <div class="container cs2__footer" id="cs2Footer">
         <span class="cs2__footer-note">Ogni brand ha una storia. La tua è la prossima.</span>
         <a class="btn btn--outline cs2__footer-btn" href="contatti.html">Racconta il tuo progetto</a>
       </div>
 
+      </div><!-- /.cs2-sticky -->
     </section>
 
     <!-- ══ CTA PENNELLATA ═════════════════════════════════════ -->
-    <section class="cta-coffee" aria-label="Contatti CTA">
+    <section class="cta-coffee" id="cta-coffee" aria-label="Contatti CTA">
       <img class="cta-coffee__img" src="foto%20home/zampa-nera3.webp" alt="" aria-hidden="true" />
-      <div class="cta-coffee__inner reveal">
+      <div class="cta-coffee__inner">
         <h2 class="cta-coffee__title">BEVIAMO UN CAFFÈ INSIEME E<br>PARLIAMO DI GRANDI IDEE</h2>
         <a class="btn btn--primary cta-coffee__btn" href="contatti.html">QUANDO CI VEDIAMO?</a>
       </div>
     </section>
 
     <!-- ══ TIPS & TRICKS ══════════════════════════════════════ -->
-    <section class="section tips-section" aria-label="Tips and tricks">
-      <div class="container">
-        <h2 class="tips-section__heading reveal">TIPS &amp; TRICKS</h2>
-        <div class="tips-grid reveal">
-          <article class="tip-card">
-            <div class="tip-card__img">
-              <img src="Foto%20tips%20and%20tricks/cover-tips-%E2%80%93-interactive-reels.webp" alt="Mai più link in bio? Ora i Reel diventano interattivi" loading="lazy" />
-            </div>
-            <p class="tip-card__date">19 MARZO 2025</p>
-            <h3 class="tip-card__title">MAI PIÙ "LINK IN BIO"? ORA I REEL DIVENTANO INTERATTIVI</h3>
-          </article>
-          <article class="tip-card">
-            <div class="tip-card__img">
-              <img src="Foto%20tips%20and%20tricks/social-e-copy-copia.webp" alt="Il copywriter crea il messaggio, il Social Media Manager lo guida" loading="lazy" />
-            </div>
-            <p class="tip-card__date">19 MARZO 2025</p>
-            <h3 class="tip-card__title">IL COPYWRITER CREA IL MESSAGGIO, IL SOCIAL MEDIA MANAGER LO GUIDA: DUE PROFESSIONI, UN UNICO OBIETTIVO.</h3>
-          </article>
-          <article class="tip-card">
-            <div class="tip-card__img">
-              <img src="Foto%20tips%20and%20tricks/happy-sito-v02.webp" alt="Core Web Vitals nel 2024: cosa cambia e come ottimizzare il tuo sito" loading="lazy" />
-            </div>
-            <p class="tip-card__date">26 AGOSTO 2024</p>
-            <h3 class="tip-card__title">CORE WEB VITALS NEL 2024: COSA CAMBIA E COME OTTIMIZZARE IL TUO SITO</h3>
-          </article>
+    <section class="section tips-section" id="tips-section" aria-label="Tips and tricks">
+      <div class="tips-sticky" id="tipsStickyEl">
+        <div class="container">
+          <h2 class="tips-section__heading" id="tipsTitle">TIPS &amp; TRICKS</h2>
+          <div class="tips-grid" id="tipsGrid">
+            <article class="tip-card" data-idx="0">
+              <div class="tip-card__img">
+                <img src="Foto%20tips%20and%20tricks/cover-tips-%E2%80%93-interactive-reels.webp" alt="Mai più link in bio? Ora i Reel diventano interattivi" loading="lazy" />
+              </div>
+              <p class="tip-card__date">19 MARZO 2025</p>
+              <h3 class="tip-card__title">MAI PIÙ "LINK IN BIO"? ORA I REEL DIVENTANO INTERATTIVI</h3>
+            </article>
+            <article class="tip-card" data-idx="1">
+              <div class="tip-card__img">
+                <img src="Foto%20tips%20and%20tricks/social-e-copy-copia.webp" alt="Il copywriter crea il messaggio, il Social Media Manager lo guida" loading="lazy" />
+              </div>
+              <p class="tip-card__date">19 MARZO 2025</p>
+              <h3 class="tip-card__title">IL COPYWRITER CREA IL MESSAGGIO, IL SOCIAL MEDIA MANAGER LO GUIDA: DUE PROFESSIONI, UN UNICO OBIETTIVO.</h3>
+            </article>
+            <article class="tip-card" data-idx="2">
+              <div class="tip-card__img">
+                <img src="Foto%20tips%20and%20tricks/happy-sito-v02.webp" alt="Core Web Vitals nel 2024: cosa cambia e come ottimizzare il tuo sito" loading="lazy" />
+              </div>
+              <p class="tip-card__date">26 AGOSTO 2024</p>
+              <h3 class="tip-card__title">CORE WEB VITALS NEL 2024: COSA CAMBIA E COME OTTIMIZZARE IL TUO SITO</h3>
+            </article>
+          </div>
+          <div class="tips-section__cta" id="tipsCTA">
+            <a class="btn btn--primary" href="tips-tricks.html">SCOPRI TUTTI I TIPS &amp; TRICKS</a>
+          </div>
         </div>
-      </div>
+      </div><!-- /.tips-sticky -->
     </section>
 
     <!-- ══ CONTATTI HOME ════════════════════════════════════ -->
-    <!-- ══ GATTO: sbuca da dietro la sezione contatti ═══════════ -->
-    <div class="gatto-footer" aria-hidden="true">
-      <img src="foto home/gatto-pre-footer.webp" alt="" />
-    </div>
-
-    <section class="section contact-home" id="contatti" aria-label="Contatti">
-      <div class="container contact-home__inner">
-        <h2 class="contact-home__heading reveal">CONTATTI</h2>
-        <p class="contact-home__sub reveal">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
-        <form class="contact-home__form reveal" action="contatti.html" method="get" novalidate>
-          <div class="contact-home__row">
-            <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-            <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+    <section class="svc-caffe svc-caffe--fuchsia hc-section" id="contatti" aria-label="Contatti" data-nav-theme="dark">
+      <div class="container hc-inner">
+        <div class="hc-header reveal">
+          <h2 class="hc-title" id="contattiTitle">Contatti</h2>
+          <p class="hc-sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
+        </div>
+        <form class="hc-form reveal reveal-delay-1" action="contatti.html" method="get" novalidate>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
           </div>
-          <div class="contact-home__row">
-            <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-            <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
           </div>
-          <div class="contact-home__row">
-            <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-            <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
           </div>
-          <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-          <label class="contact-home__privacy">
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+          <label class="svc-caffe__privacy">
             <input type="checkbox" required />
             <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
           </label>
-          <div class="contact-home__submit-wrap">
-            <button class="btn contact-home__submit" type="submit">Invia</button>
-          </div>
+          <button class="btn btn--primary hc-submit" type="submit">Invia</button>
         </form>
       </div>
     </section>
@@ -499,5 +1254,529 @@
 
 
   <script src="js/main.js"></script>
+  <script>
+  // ── TRANSIZIONE HERO → SERVICES + LOADING BAR PARTNER ───────────
+  // Wrapper: 650dvh → scroll totale 550dvh (transizione + orizzontale + banda + HOLD ~75dvh)
+  //   HOLD esteso: dopo i loghi la sezione rimane "bloccata" per ~75dvh prima di passare oltre
+  //
+  // La banda partner è guidata da un accumulatore virtuale (window._partnerAccum 0→1)
+  // driven dal wheel handler in fase 'partner'. Non dipende da p_raw.
+  //
+  // Macchina a stati (window._phase):
+  //   'entering'   → servizi in ingresso, wheel non intercetta
+  //   'horizontal' → scroll orizzontale card
+  //   'partner'    → accumulatore banda, wheel intercetta sempre (preventDefault)
+  //   'hold'       → banda piena, wheel rilascia verso il basso (page scroll)
+  //
+  // LOADING BAR (p_loader 0→1):
+  //   0.00→0.65  fill fucsia 0→72%, barra resta sottile (4px)
+  //   0.65→0.90  fill 72→100% + barra cresce 4px→170px
+  //   0.90→1.00  reveal loghi (opacity 0→1, ticker attivo)
+  (function () {
+    const wrapper  = document.getElementById('ht-wrapper');
+    const video    = document.getElementById('sr-video');
+    if (!wrapper || !video) return;
+
+    const SCALE_START = 3.5, SCALE_END = 1.0;
+
+    function ease(t)          { return -(Math.cos(Math.PI * t) - 1) / 2; }
+    function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+    function phase(p, a, b)   { return ease(clamp((p - a) / (b - a), 0, 1)); }
+
+    const hero       = document.getElementById('ht-hero');
+    const services   = document.getElementById('ht-services');
+    const content    = hero && hero.querySelector('.sr-content');
+    const hint       = hero && hero.querySelector('.sr-scroll-hint');
+    const svcHeader  = services && services.querySelector('.svc-header');
+    const svcBgVid   = services && services.querySelector('.svc-bg video');
+
+    // Lettere e parole: animate scroll-driven (reversibili esattamente)
+    const svcLetters  = document.querySelectorAll('#servizi .svc-letter');
+    const svcWords    = document.querySelectorAll('#servizi .svc-word');
+    // Gradient overlay scuro in cima ai servizi — sparisce una volta che i servizi sono completamente visibili
+    const svcGradients = services && services.querySelector('.svc-gradients');
+
+    // Partner loader elements
+    const pLoader      = document.getElementById('partnerLoader');
+    const pFill        = document.getElementById('partnerLoaderFill');
+    const pLogos       = document.getElementById('partnerLoaderLogos');
+    // Nav height → padding-top svc-inner
+    const nav = document.querySelector('.nav');
+    function setNavH() {
+      if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+    }
+    setNavH();
+    window.addEventListener('resize', setNavH);
+
+    // ── Inizializzazione macchina a stati ────────────────────────
+    // _phase:        'entering' | 'horizontal' | 'partner' | 'hold'
+    // _partnerAccum: accumulatore virtuale banda (0→1), driven dal wheel handler
+    window._phase        = 'entering';
+    window._partnerAccum = 0;
+
+    // ── Stato interattività card ──────────────────────────────────
+    function setEntering() {
+      services.classList.add('services-entering');
+      services.classList.remove('services-ready');
+      // Modifica _svcReady e _phase SOLO nelle fasi entering/horizontal.
+      // Le fasi partner e hold gestiscono il proprio stato via wheel handler.
+      const ph = window._phase;
+      if (ph === 'entering' || ph === 'horizontal') {
+        window._svcReady = false;
+        window._phase = 'entering';
+      }
+    }
+    function setReady() {
+      services.classList.remove('services-entering');
+      services.classList.add('services-ready');
+      window._svcReady = true;
+      // Transizione a horizontal solo dalla fase entering
+      if (window._phase === 'entering') window._phase = 'horizontal';
+    }
+    function resetInteract() {
+      services.classList.remove('services-entering', 'services-ready');
+      window._svcReady     = false;
+      window._cardsAtEnd   = false;
+      window._phase        = 'entering';
+      window._partnerAccum = 0;
+    }
+
+    let logosRevealed = false;
+
+    // Parametri scroll-driven per lettere, parole e card
+    const LETTER_BASE = 0.68, LETTER_STAG = 0.012, LETTER_DUR = 0.08;
+    const WORD_BASE   = 0.73, WORD_STAG   = 0.015, WORD_DUR   = 0.08;
+    const CARD_BASE   = 0.76, CARD_STAG   = 0.018, CARD_DUR   = 0.09;
+
+    function update() {
+      const rect  = wrapper.getBoundingClientRect();
+      const total = wrapper.offsetHeight - window.innerHeight; // 550dvh - 100dvh = 450dvh
+      const p_raw = clamp(-rect.top / total, 0, 1);
+
+      // ── Fase 1 (p): transizione hero→servizi, fisso a 2dvh di scroll ────
+      // K garantisce che p=1 sempre a scrollTop=2dvh×vh, indipendentemente
+      // dall'altezza del wrapper.
+      const PHASE1_END = 2 * window.innerHeight;           // scrollTop dove p=1
+      const K          = total / PHASE1_END;               // ≈ 2.25 con 550dvh
+      const p          = clamp(p_raw * K, 0, 1);
+
+      // ── Fase 2 (h): translateX card orizzontale (70% del range rimanente) ─
+      const remaining  = Math.max(1, total - PHASE1_END);
+      const PHASE2_END = PHASE1_END + remaining * 0.80;
+      const scrollTop  = -rect.top;
+      const h          = clamp((scrollTop - PHASE1_END) / Math.max(1, PHASE2_END - PHASE1_END), 0, 1);
+
+      // ── Fase 3 (pL): banda partner — pL raggiunge 1 al 60%, poi hold ──────
+      const PARTNER_RANGE = (total - PHASE2_END) * 0.40;
+      window._partnerAccum = clamp((scrollTop - PHASE2_END) / Math.max(1, PARTNER_RANGE), 0, 1);
+      const pL = window._partnerAccum;
+
+      // ── TRANSIZIONE HERO → SERVIZI (stesse fasi di prima, ora su p) ──
+
+      video.style.transform = `scale(${(SCALE_START - (SCALE_START - SCALE_END) * phase(p, 0, 0.40)).toFixed(4)})`;
+      if (hint)    hint.style.opacity    = (1 - phase(p, 0.22, 0.44)).toFixed(3);
+      if (content) content.style.opacity = (1 - phase(p, 0.50, 0.66)).toFixed(3);
+      services.style.opacity = phase(p, 0.50, 0.72).toFixed(3);
+
+      if (svcBgVid) {
+        svcBgVid.style.transform = `scale(${(1.05 - 0.05 * phase(p, 0.50, 0.92)).toFixed(4)})`;
+      }
+
+      const hP = phase(p, 0.68, 0.84);
+      if (svcHeader) {
+        svcHeader.style.opacity   = hP.toFixed(3);
+        svcHeader.style.transform = `translateY(${((1 - hP) * 40).toFixed(1)}px)`;
+      }
+
+      // Gradient overlay scuro in cima (svc-gradients): utile durante la transizione
+      // per fondere hero e servizi, ma deve sparire completamente durante il HOLD
+      // per non creare forme scure visibili sopra il video di sfondo.
+      if (svcGradients) {
+        svcGradients.style.opacity = (1 - phase(p, 0.75, 0.95)).toFixed(3);
+      }
+
+      // Hero visibility: quando l'opacità raggiunge 0, nasconde il layer dal rendering
+      // per eliminare qualsiasi artifact di compositing GPU (triangolo/forma nera).
+      const heroOpacity = 1 - phase(p, 0.54, 0.82);
+      hero.style.opacity = heroOpacity.toFixed(3);
+      if (heroOpacity < 0.005) {
+        hero.style.visibility = 'hidden';
+      } else {
+        hero.style.visibility = '';
+      }
+
+      // ── LETTERE (SERVIZI) — stagger per lettera, bidirezionale ───────────
+      svcLetters.forEach((el, i) => {
+        const lP = ease(clamp((p - LETTER_BASE - i * LETTER_STAG) / LETTER_DUR, 0, 1));
+        el.style.opacity   = lP.toFixed(3);
+        el.style.transform = `translateY(${((1 - lP) * 0.8).toFixed(3)}em)`;
+      });
+
+      // ── PAROLE (sottotitolo) — scroll-driven, bidirezionale ───────────
+      svcWords.forEach((el, i) => {
+        const wP = ease(clamp((p - WORD_BASE - i * WORD_STAG) / WORD_DUR, 0, 1));
+        el.style.opacity   = wP.toFixed(3);
+        el.style.transform = `translateX(${((1 - wP) * -10).toFixed(1)}px)`;
+      });
+
+      // ── CARD — scroll-driven, bidirezionale ───────────────────────────
+      const cardEls = document.querySelectorAll('#svcCardsTrack .svc-card');
+      const N_CARDS = cardEls.length;
+      cardEls.forEach((card, i) => {
+        const cP = ease(clamp((p - CARD_BASE - i * CARD_STAG) / CARD_DUR, 0, 1));
+        card.style.opacity   = cP.toFixed(3);
+        card.style.transform = `translateY(${((1 - cP) * 60).toFixed(1)}px) scale(${(0.97 + 0.03 * cP).toFixed(4)})`;
+        // classe .visible abilita solo gli hover-child selector CSS
+        if (cP >= 0.90 && !card.classList.contains('visible'))  card.classList.add('visible');
+        else if (cP < 0.20 && card.classList.contains('visible')) card.classList.remove('visible');
+      });
+
+      // ── TRACK translateX (scroll-driven, h 0→1) ───────────────────────
+      // Il track scivola a sinistra via transform. Le card individuali
+      // mantengono il loro translateY separato (nessun conflitto).
+      {
+        const tr = document.getElementById('svcCardsTrack');
+        const wr = document.getElementById('svcCardsWrap');
+        if (tr && wr) {
+          // naturalLeft = distanza dal bordo sinistro del viewport al bordo sinistro del track
+          // (= padding wrap). Simmetria: l'ultima card termina alla stessa distanza dal bordo destro.
+          // Quindi maxTX = scrollWidth - (viewportWidth - 2*naturalLeft)
+          const naturalLeft = wr.getBoundingClientRect().left + tr.offsetLeft;
+          const maxTX = Math.max(0, 2 * naturalLeft + tr.scrollWidth - window.innerWidth);
+          tr.style.transform = `translateX(${(-h * maxTX).toFixed(1)}px)`;
+        }
+      }
+
+      // ── CSS classes per hover-state card (basato su p) ─────────────────
+      const lastCardP = N_CARDS > 0
+        ? ease(clamp((p - CARD_BASE - (N_CARDS - 1) * CARD_STAG) / CARD_DUR, 0, 1))
+        : 0;
+      if (lastCardP >= 0.90 && !window._svcReady) {
+        setReady();
+      } else if (lastCardP < 0.20 && window._svcReady) {
+        setEntering();
+      }
+      if (p < 0.40) resetInteract();
+
+      // ── PARTNER DOWNLOAD BAR (pL scroll-driven 0→1) ────────────────
+      // pL va da 0→1 mentre l'utente scorre da fine-card a fine-wrapper.
+      // Nessun blocco: lo scroll avviene naturalmente, la banda segue.
+      //
+      // Timeline:
+      //   0.00 → 0.05   pill fade-in
+      //   0.05 → 0.74   fill fucsia da sinistra (0%→100%)
+      //   0.74 → 1.00   loghi visibili + sticky si rilascia → About entra
+
+      if (!pLoader || !pFill || !pLogos) return;
+
+      // Altezza pill = logo più alto (122px TikTok) + padding ~32px → ~154px
+      const BAR_MAX_H = Math.round(clamp(window.innerHeight * 0.16, 132, 162));
+
+      // Pill sempre alla sua altezza finale — nessuna animazione di crescita
+      pLoader.style.height = `${BAR_MAX_H}px`;
+
+      const FADE_END   = 0.05;  // pill completamente visibile
+      const FILL_START = 0.05;  // fill inizia
+      const FILL_END   = 0.74;  // fill al 100% → loghi pronti
+      const LOGO_START = 0.74;  // loghi appaiono (fill al 100%)
+      const LOGO_HIDE  = 0.74;  // loghi spariscono PRIMA che fill scenda da 100%
+      // 0.80 → 1.00: HOLD (wheel rilasciato, page scroll per uscire)
+
+      if (pL <= 0) {
+        // Reset completo: pill nascosta, fill vuoto, loghi nascosti
+        pLoader.style.opacity   = '0';
+        pLoader.style.transform = 'translateY(10px)';
+        pFill.style.clipPath    = 'inset(0 100% 0 0 round 9999px)';
+        if (logosRevealed) { logosRevealed = false; pLogos.classList.remove('logos-visible'); }
+        return;
+      }
+
+      // Fade-in pill (0 → FADE_END) — con ease per ingresso morbido
+      const revealP = ease(clamp(pL / FADE_END, 0, 1));
+      pLoader.style.opacity   = revealP.toFixed(3);
+      pLoader.style.transform = `translateY(${((1 - revealP) * 10).toFixed(1)}px)`;
+
+      // Fill LINEARE da sinistra (FILL_START → FILL_END) — proporzionale allo scroll, come download
+      const fillRaw = clamp((pL - FILL_START) / (FILL_END - FILL_START), 0, 1);
+      // clip-path: inset(top right% bottom left round radius) — taglia da destra
+      pFill.style.clipPath = `inset(0 ${((1 - fillRaw) * 100).toFixed(3)}% 0 0 round 9999px)`;
+
+      // Loghi appaiono SOLO quando fill è al 100% — spariscono appena scende
+      if (pL >= LOGO_START && !logosRevealed) {
+        logosRevealed = true;
+        pLogos.classList.add('logos-visible');
+      } else if (pL < LOGO_HIDE && logosRevealed) {
+        logosRevealed = false;
+        pLogos.classList.remove('logos-visible');
+      }
+      // pL 0.80 → 1.00: HOLD — nessuna modifica strutturale, marquee continua
+    }
+
+    // rAF loop: update gira ogni frame indipendentemente dagli scroll event.
+    // Essenziale: durante HORIZONTAL/PARTNER la pagina non scorre (preventDefault),
+    // quindi nessun 'scroll' event scatterebbe mai — il DOM rimarrebbe congelato.
+    // Con il rAF loop il rendering della banda (_partnerAccum) è sempre aggiornato.
+    (function tick() { update(); requestAnimationFrame(tick); })();
+  })();
+
+  // ── Servizi: card drag + animazioni ────────────────────
+  (function () {
+    const services = [
+      { num:'01', tag:'Strategia',   name:'Strategia Digitale',          desc:'Elaboriamo il piano migliore per far decollare il tuo brand nel panorama digitale.',              href:'servizi/strategia-digitale.html' },
+      { num:'02', tag:'Advertising', name:'Google Ads',                  desc:'Campagne search e display ad alto rendimento per raggiungere chi sta cercando te.',               href:'servizi/google-ads.html' },
+      { num:'03', tag:'Social ADV',  name:'Meta & TikTok ADV',           desc:'Trova nuovi clienti grazie a campagne pubblicitarie su Facebook, Instagram e TikTok.',            href:'servizi/social-ads.html' },
+      { num:'04', tag:'Social',      name:'Social Media Management',     desc:'Costruisci la tua identità digitale e la tua community con noi al tuo fianco.',                  href:'servizi/social-media-management.html' },
+      { num:'05', tag:'Influencer',  name:'Influencer Marketing',        desc:'Selezioniamo i migliori storytellers digitali per amplificare il tuo messaggio.',                href:'servizi/influencer-marketing.html' },
+      { num:'06', tag:'Design',      name:'Graphic Design & Motion',     desc:'Anima i tuoi contenuti e crea esperienze visive che lasciano il segno.',                         href:'servizi/graphic-design.html' },
+      { num:'07', tag:'Digital',     name:'Web Design & E-Commerce',     desc:'Rivoluzionamo il tuo modo di vendere costruendo la tua vetrina digitale su misura.',             href:'servizi/web-design.html' },
+      { num:'08', tag:'Contenuti',   name:'Produzione Contenuti',        desc:'Foto, video, copy e tutto il multimediale di cui il tuo brand ha bisogno.',                      href:'servizi/produzione-contenuti.html' },
+      { num:'09', tag:'3D',          name:'Modellazione & Render 3D',    desc:'Esperienze coinvolgenti che trasformano le visualizzazioni in vendite reali.',                    href:'servizi/modellazione-3d.html' },
+      { num:'10', tag:'AI',          name:'Servizi AI per il Marketing', desc:"L'intelligenza artificiale al servizio della creatività e della crescita del tuo brand.",        href:'servizi/servizio-ai.html' },
+    ];
+
+    const wrap  = document.getElementById('svcCardsWrap');
+    const track = document.getElementById('svcCardsTrack');
+    if (!wrap || !track) return;
+
+    // Costruzione card
+    services.forEach(svc => {
+      const card = document.createElement('div');
+      card.className = 'svc-card';
+      card.innerHTML = `
+        <div class="svc-card__num">${svc.num}</div>
+        <div class="svc-card__inner">
+          <span class="svc-card__tag">${svc.tag}</span>
+          <h2 class="svc-card__title">${svc.name}</h2>
+          <p class="svc-card__desc">${svc.desc}</p>
+          <a class="svc-card__btn" href="${svc.href}">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            <span class="svc-card__btn-label">Scopri il servizio</span>
+          </a>
+        </div>`;
+      track.appendChild(card);
+    });
+
+    const svcSection = document.getElementById('servizi');
+
+    // Animazione header: lettere + parole + card — bidirezionale (entra/esce)
+    const letters = document.querySelectorAll('#servizi .svc-letter');
+    const words   = document.querySelectorAll('#servizi .svc-word');
+    const allCards = () => track.querySelectorAll('.svc-card');
+    const vStart  = 3 * 70; // 210ms — quando la "V" inizia
+    let enterTimers = [];
+
+    function playEnter() {
+      enterTimers.forEach(clearTimeout);
+      enterTimers = [];
+      letters.forEach((el, i) => {
+        enterTimers.push(setTimeout(() => el.classList.add('go'), i * 70));
+      });
+      words.forEach((el, i) => {
+        enterTimers.push(setTimeout(() => el.classList.add('go'), vStart + i * 50));
+      });
+      allCards().forEach((card, i) => {
+        enterTimers.push(setTimeout(() => card.classList.add('visible'), vStart + i * 90));
+      });
+    }
+
+    function playExit() {
+      enterTimers.forEach(clearTimeout);
+      enterTimers = [];
+      // Stagger inverso: prima le card (dall'ultima), poi le words, poi le lettere
+      const cardList = Array.from(allCards()).reverse();
+      cardList.forEach((card, i) => {
+        enterTimers.push(setTimeout(() => {
+          card.classList.remove('visible');
+          card.classList.remove('hovered');
+        }, i * 80));
+      });
+      const afterCards = cardList.length * 80;
+      Array.from(words).reverse().forEach((el, i) => {
+        enterTimers.push(setTimeout(() => el.classList.remove('go'), afterCards + i * 45));
+      });
+      const afterWords = afterCards + words.length * 45;
+      Array.from(letters).reverse().forEach((el, i) => {
+        enterTimers.push(setTimeout(() => el.classList.remove('go'), afterWords + i * 60));
+      });
+    }
+
+    // IntersectionObserver rimosso: il layer è sempre geometricamente nel viewport
+    // (position: absolute; inset: 0) — l'observer sparava immediatamente.
+    // Il trigger è gestito dallo scroll IIFE via window._svcAnim.
+    // playEnter/playExit sono no-op: l'animazione è ora scroll-driven nel transition IIFE
+    window._svcAnim = { playEnter: () => {}, playExit: () => {} };
+
+    // Bridge rettangolare — largo quanto una card, segue il mouse esatto
+    const bridge = document.createElement('span');
+    bridge.className = 'svc-card-bridge';
+    track.prepend(bridge);
+
+    // Cerchio — segue il mouse, clippato geometricamente al perimetro della card
+    const cardCircle = document.createElement('span');
+    cardCircle.className = 'svc-card-circle';
+    track.prepend(cardCircle);
+
+    const CR = 85; // raggio cerchio (metà di 170px)
+
+    wrap.addEventListener('mousemove', e => {
+      // Blocca tutti gli effetti mouse durante l'animazione di entrata
+      if (!window._svcReady) return;
+      const trackRect = track.getBoundingClientRect();
+      const cards     = track.querySelectorAll('.svc-card');
+      const first     = cards[0];
+      const last      = cards[cards.length - 1];
+      if (!first || !last) return;
+
+      // Bridge clamped tra prima e ultima card
+      const minX = first.getBoundingClientRect().left - trackRect.left + first.offsetWidth / 2;
+      const maxX = last.getBoundingClientRect().left  - trackRect.left + last.offsetWidth  / 2;
+      const x    = Math.max(minX, Math.min(maxX, e.clientX - trackRect.left));
+      bridge.style.left = x + 'px';
+      if (!bridge.classList.contains('visible')) bridge.classList.add('visible');
+
+      // Hit-test: il mouse è su una qualsiasi card?
+      const mx = e.clientX, my = e.clientY;
+      let inCards = false;
+      for (const c of cards) {
+        const r = c.getBoundingClientRect();
+        if (mx >= r.left && mx <= r.right && my >= r.top && my <= r.bottom) {
+          inCards = true; break;
+        }
+      }
+
+      if (inCards) {
+        const cx = mx - trackRect.left;
+        const cy = my - trackRect.top;
+        cardCircle.style.left = cx + 'px';
+        cardCircle.style.top  = cy + 'px';
+
+        // Clip al perimetro esterno del track (non per singola card)
+        // — tra le card nessun taglio, il cerchio fluisce liberamente
+        const clipT = Math.max(0, CR - cy);
+        const clipB = Math.max(0, (cy + CR) - track.offsetHeight);
+        const clipL = Math.max(0, CR - cx);
+        const clipR = Math.max(0, (cx + CR) - track.offsetWidth);
+        cardCircle.style.clipPath =
+          `inset(${Math.round(clipT)}px ${Math.round(clipR)}px ${Math.round(clipB)}px ${Math.round(clipL)}px)`;
+
+        cardCircle.classList.add('visible');
+      } else {
+        cardCircle.classList.remove('visible');
+      }
+    });
+
+    wrap.addEventListener('mouseleave', () => {
+      bridge.classList.remove('visible');
+      cardCircle.classList.remove('visible');
+      // Pulisce eventuali stati residui se l'utente esce prima del ready
+    });
+
+    function syncBridgeWidth() {
+      const card = track.querySelector('.svc-card');
+      if (card) track.style.setProperty('--svc-card-w', card.offsetWidth + 'px');
+    }
+    syncBridgeWidth();
+    window.addEventListener('resize', syncBridgeWidth);
+
+
+
+
+    // Lo scroll orizzontale delle card è ora interamente scroll-driven
+    // via translateX sul track (vedi update() nel transition IIFE).
+    // Nessun drag, nessun wheel handler: zero friction sullo scroll verticale.
+  })();
+  </script>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="index.html" aria-label="ESTRO — Homepage">
+            <img src="Logoestrofooter.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="servizi/social-media-management.html">Social media management</a>
+            <a href="servizi/influencer-marketing.html">Influencer marketing</a>
+            <a href="servizi/google-ads.html">Google Ads</a>
+            <a href="servizi/social-ads.html">Social Ads</a>
+            <a href="servizi/strategia-digitale.html">Strategia digitale</a>
+            <a href="servizi/graphic-design.html">Graphic design</a>
+            <a href="servizi/web-design.html">Web design</a>
+            <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
+            <a href="servizi/servizio-ai.html">AI</a>
+            <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="case-studies.html">Case Studies</a>
+            <a href="news.html">News</a>
+            <a href="tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contatti.html">Contatti</a>
+            <a href="lavora-con-noi.html">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="cookie.html">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
 </body>
 </html>
+
+
+

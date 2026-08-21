@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
 /* ─── FONTS ───────────────────────────────────────────── */
 @font-face {
   font-family: 'VanguardCF';
@@ -81,7 +83,15 @@ body {
   font-size: var(--text-base);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-primary);
+  text-wrap: balance;
+}
+
+p { text-wrap: pretty; }
 
 img, video { display: block; max-width: 100%; }
 
@@ -91,6 +101,13 @@ ul, ol { list-style: none; }
 
 button { font-family: var(--font-secondary); cursor: pointer; border: none; background: none; }
 
+/* ─── FOCUS RING ──────────────────────────────────────── */
+.btn:focus-visible,
+[class*="btn--"]:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 3px;
+}
+
 ::selection { background: var(--primary); color: var(--white); }
 
 /* ─── LAYOUT ──────────────────────────────────────────── */
@@ -98,7 +115,8 @@ button { font-family: var(--font-secondary); cursor: pointer; border: none; back
   width: 100%;
   max-width: var(--max-w);
   margin-inline: auto;
-  padding-inline: var(--gutter);
+  padding-inline-start: var(--gutter);
+  padding-inline-end: 0;
 }
 
 /* ─── ACCESSIBILITY ───────────────────────────────────── */
@@ -113,3 +131,105 @@ button { font-family: var(--font-secondary); cursor: pointer; border: none; back
 ::-webkit-scrollbar-track { background: var(--white); }
 ::-webkit-scrollbar-thumb { background: var(--black-10); }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
+
+/* ═══════════════════════════════════════════════════════
+   DARK MODE — token-driven, component-scoped
+   Palette: bg #111 · surface #1c1c1e · surface2 #2c2c2e
+   Text: primary #f5f5f7 · secondary rgba(235,235,245,.6)
+   Separator: rgba(84,84,88,.65) — Apple HIG dark values
+═══════════════════════════════════════════════════════ */
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  /* Override design tokens for dark palette */
+  --bg:      #111111;
+  --surface: #1c1c1e;
+  --surface2:#2c2c2e;
+  --text-primary:   #f5f5f7;
+  --text-secondary: rgba(235,235,245,0.60);
+  --separator:      rgba(84,84,88,0.65);
+}
+
+/* ─── Base ──────────────────────────────────────────── */
+[data-theme="dark"] body {
+  background: var(--bg);
+  color: var(--text-primary, #f5f5f7);
+}
+
+/* ─── Main content bg ───────────────────────────────── */
+[data-theme="dark"] main { background: var(--bg); }
+
+/* ─── Section-level white backgrounds → surface ────── */
+[data-theme="dark"] .svc-grid,
+[data-theme="dark"] .lcn-apply,
+[data-theme="dark"] .lcn-about,
+[data-theme="dark"] .cs-section,
+[data-theme="dark"] .cs-details,
+[data-theme="dark"] .news-grid,
+[data-theme="dark"] .tt-grid,
+[data-theme="dark"] .faq-section,
+[data-theme="dark"] .contact-section,
+[data-theme="dark"] .art-section,
+[data-theme="dark"] .svc-detail,
+[data-theme="dark"] .tip-detail,
+[data-theme="dark"] .stats-section { background: var(--bg); }
+
+/* ─── Cards & tiles → surface ──────────────────────── */
+[data-theme="dark"] .news-card,
+[data-theme="dark"] .tt-card,
+[data-theme="dark"] .cs-card,
+[data-theme="dark"] .svc-card,
+[data-theme="dark"] .faq-item,
+[data-theme="dark"] .lcn-position-item,
+[data-theme="dark"] .svc-acc__item,
+[data-theme="dark"] .svc-icon-card,
+[data-theme="dark"] .client-logo {
+  background: var(--surface);
+  border-color: var(--separator);
+  color: var(--text-primary, #f5f5f7);
+}
+
+/* ─── Inputs & forms ────────────────────────────────── */
+[data-theme="dark"] input,
+[data-theme="dark"] textarea,
+[data-theme="dark"] select {
+  background: var(--surface);
+  border-color: var(--separator);
+  color: var(--text-primary, #f5f5f7);
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: var(--text-secondary, rgba(235,235,245,.6));
+}
+
+/* ─── Partner bar ───────────────────────────────────── */
+[data-theme="dark"] .footer-partners {
+  background: var(--surface);
+  border-top: 1px solid var(--separator);
+}
+[data-theme="dark"] .footer-partners__label {
+  color: var(--text-secondary, rgba(235,235,245,.6));
+}
+[data-theme="dark"] .footer-partners__divider {
+  background: var(--separator);
+}
+[data-theme="dark"] .footer-partners__logos img {
+  filter: grayscale(1) brightness(1.4);
+}
+
+/* ─── Nav ───────────────────────────────────────────── */
+[data-theme="dark"] .nav__menu-btn { color: #f5f5f7; }
+
+/* ─── Typography overrides ──────────────────────────── */
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3,
+[data-theme="dark"] h4,
+[data-theme="dark"] h5,
+[data-theme="dark"] h6 { color: var(--text-primary, #f5f5f7); }
+
+[data-theme="dark"] p { color: var(--text-primary, #f5f5f7); }
+
+/* ─── Scrollbar ─────────────────────────────────────── */
+[data-theme="dark"] ::-webkit-scrollbar-track { background: #111; }
+[data-theme="dark"] ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); }

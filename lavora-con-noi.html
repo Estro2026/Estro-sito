@@ -1,0 +1,779 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ESTRO — Lavora con noi. Entra in un team giovane e dinamico." />
+  <title>Lavora con noi — ESTRO</title>
+  <link rel="stylesheet" href="css/tokens.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <style>
+
+    /* ══ HERO ══════════════════════════════════════════════ */
+    .lcn-hero {
+      position: relative;
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding-top: clamp(7rem, 12vw, 10rem);
+      padding-bottom: clamp(3rem, 5vw, 4rem);
+      padding-left: clamp(1.5rem, 6vw, 7rem);
+      padding-right: clamp(1.5rem, 6vw, 7rem);
+      background: #060606 url('team building.png') center/cover no-repeat;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      box-sizing: border-box;
+    }
+    .lcn-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom,
+        rgba(6,6,6,0.72) 0%,
+        rgba(6,6,6,0.45) 40%,
+        rgba(6,6,6,0.72) 100%);
+      z-index: 0;
+    }
+    .lcn-hero > * { position: relative; z-index: 1; }
+    .lcn-hero__kicker {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 1.75rem;
+    }
+    .lcn-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(3rem, 8vw, 100px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.9;
+      letter-spacing: -0.035em;
+      color: #fff;
+      margin-bottom: clamp(3rem, 5vw, 5rem);
+    }
+    .lcn-hero__bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 2.5rem;
+      max-width: 600px;
+    }
+    .lcn-hero__sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(1rem, 1.5vw, 1.1rem);
+      line-height: 1.8;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 2rem;
+    }
+    .lcn-hero__sub strong {
+      color: rgba(255,255,255,0.9);
+      font-weight: 600;
+    }
+    .lcn-hero .btn--primary::before { background: #fff !important; }
+    .lcn-hero .btn--primary:hover {
+      background: #fff !important;
+      color: #080808 !important;
+      box-shadow: none !important;
+    }
+    .lcn-hero__stats {
+      display: flex;
+      gap: clamp(2rem, 5vw, 5rem);
+      flex-wrap: wrap;
+      border-top: 1px solid rgba(255,255,255,0.15);
+      padding-top: 2rem;
+    }
+    .lcn-hero__stat { display: flex; flex-direction: column; gap: 0.4rem; }
+    .lcn-hero__stat-num {
+      font-family: var(--font-primary);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.9;
+      letter-spacing: -0.03em;
+    }
+    .lcn-hero__stat-label {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.5);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    /* ══ ABOUT ══════════════════════════════════════════════ */
+    .lcn-about {
+      background: #fff;
+      padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 6vw, 7rem);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 5vw, 6rem);
+      align-items: stretch;
+    }
+    .lcn-about__label {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+      display: block;
+      margin-bottom: 2rem;
+    }
+    .lcn-about__text p {
+      font-family: var(--font-secondary);
+      font-size: clamp(0.95rem, 1.2vw, 1.05rem);
+      line-height: 1.9;
+      color: rgba(0,0,0,0.55);
+      margin-bottom: 1.25rem;
+    }
+    .lcn-about__text p:last-child { margin-bottom: 0; }
+    .lcn-about__right {
+      display: flex;
+      flex-direction: column;
+    }
+    .lcn-about__pill {
+      background: #fff;
+      padding: 1.5rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+    .lcn-about__pill-num {
+      font-family: var(--font-primary);
+      font-size: 2.5rem;
+      font-weight: 900;
+      color: #080808;
+      line-height: 1;
+    }
+    .lcn-about__pill-text {
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: rgba(0,0,0,0.45);
+      text-align: right;
+      line-height: 1.4;
+      max-width: 140px;
+    }
+    .lcn-about__pill--pink { background: var(--primary); }
+    .lcn-about__pill--pink .lcn-about__pill-num { color: #fff; }
+    .lcn-about__pill--pink .lcn-about__pill-text { color: rgba(255,255,255,0.7); }
+
+    /* Placeholder ambiente lavorativo */
+    .lcn-about__photo {
+      flex: 1;
+      min-height: 200px;
+      background: #1a1a1a;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 32px 32px;
+      border-radius: 16px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .lcn-about__photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 50%, rgba(219,0,90,0.08), transparent 70%);
+    }
+    .lcn-about__photo-icon {
+      position: relative;
+      z-index: 1;
+      opacity: 0.18;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .lcn-about__photo-icon svg { width: 64px; height: 64px; }
+
+    @media (max-width: 900px) {
+      .lcn-about { grid-template-columns: 1fr; }
+    }
+
+    /* ══ POSIZIONI ══════════════════════════════════════════ */
+    .lcn-positions {
+      background: #080808;
+      padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 6vw, 7rem);
+      border-top: 1px solid rgba(0,0,0,0.05);
+    }
+    .lcn-positions__header {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      margin-bottom: clamp(2.5rem, 4vw, 3.5rem);
+    }
+    .lcn-positions__kicker {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      white-space: nowrap;
+    }
+    .lcn-positions__line {
+      flex: 1;
+      height: 1px;
+      background: rgba(0,0,0,0.1);
+    }
+    .lcn-positions__heading {
+      font-family: var(--font-primary);
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    .lcn-positions__notice {
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.38);
+      margin-bottom: 2.5rem;
+    }
+    .lcn-positions__tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+    }
+    .lcn-pos-tag {
+      font-family: var(--font-secondary);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 0.75rem 1.5rem;
+      border-radius: 100px;
+      transition: border-color 220ms, color 220ms, background 220ms;
+      cursor: default;
+    }
+    .lcn-pos-tag:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: rgba(219,0,90,0.08);
+    }
+
+    /* ══ FORM ════════════════════════════════════════════════ */
+    .lcn-apply {
+      background: var(--primary);
+      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 6vw, 7rem);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .lcn-apply__layout {
+      max-width: 680px;
+    }
+    .lcn-apply__kicker {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.7);
+      display: block;
+      margin-bottom: 1.25rem;
+    }
+    .lcn-apply__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2.5rem, 5vw, 60px);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+      margin-bottom: 1.25rem;
+    }
+    .lcn-apply__sub {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: #fff;
+      margin-bottom: 2.5rem;
+    }
+    .lcn-apply__form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .lcn-apply__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+    .lcn-apply__input {
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      color: rgba(0,0,0,0.7);
+      width: 100%;
+      outline: none;
+      transition: box-shadow 200ms;
+    }
+    .lcn-apply__input::placeholder { color: rgba(0,0,0,0.4); }
+    .lcn-apply__input:focus { box-shadow: 0 0 0 2px rgba(0,0,0,0.15); }
+    @media (max-width: 600px) { .lcn-apply__row { grid-template-columns: 1fr; } }
+    .lcn-apply__select {
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      color: rgba(0,0,0,0.5);
+      width: 100%;
+      outline: none;
+      cursor: pointer;
+      transition: box-shadow 200ms;
+      appearance: none;
+    }
+    .lcn-apply__select:focus { box-shadow: 0 0 0 2px rgba(0,0,0,0.15); }
+    .lcn-apply__select option { color: #080808; background: #fff; }
+    .lcn-apply__file-wrap { position: relative; }
+    .lcn-apply__file-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      cursor: pointer;
+      transition: box-shadow 200ms;
+    }
+    .lcn-apply__file-label:hover { box-shadow: 0 0 0 2px rgba(0,0,0,0.12); }
+    .lcn-apply__file-label span {
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      color: rgba(0,0,0,0.4);
+    }
+    .lcn-apply__file-label strong {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid rgba(219,0,90,0.5);
+      padding: 0.3rem 0.75rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .lcn-apply__file-input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+      width: 100%;
+    }
+    .lcn-apply__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      color: #fff !important;
+      opacity: 1 !important;
+    }
+    .lcn-apply__privacy input[type="checkbox"] {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      min-width: 16px;
+      border: 1.5px solid #080808;
+      border-radius: 3px;
+      background: #fff;
+      cursor: pointer;
+      margin-top: 2px;
+      flex-shrink: 0;
+    }
+    .lcn-apply__privacy input[type="checkbox"]:checked {
+      background: #080808;
+      border-color: #080808;
+    }
+    .lcn-apply__privacy a { color: #fff; text-decoration: underline; }
+    .lcn-apply .btn--primary {
+      background: #fff !important;
+      color: var(--primary) !important;
+      border-color: #fff !important;
+    }
+    .lcn-apply .btn--primary:hover {
+      background: rgba(255,255,255,0.9) !important;
+      color: var(--primary) !important;
+      box-shadow: none !important;
+    }
+
+    /* ══ INFO SEDI ══════════════════════════════════════════ */
+    .lcn-info {
+      background: #060606;
+      padding: clamp(2.5rem, 4vw, 3.5rem) clamp(1.5rem, 6vw, 7rem);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      gap: 3rem;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .lcn-info__item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .lcn-info__label {
+      font-family: var(--font-secondary);
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.18);
+    }
+    .lcn-info__value {
+      font-family: var(--font-secondary);
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.45);
+    }
+    .sf-logo img { filter: none !important; height: auto !important; width: clamp(140px, 18vw, 200px) !important; opacity: 1 !important; }
+  </style>
+</head>
+<body>
+
+  <header class="nav" role="banner">
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
+        <img src="Logoestrofooter.webp" alt="ESTRO" />
+      </a>
+      <a class="nav__joinus" href="lavora-con-noi.html">
+        <span class="nav__joinus-avatars">
+          <span class="nav__avatar"></span>
+          <span class="nav__avatar"></span>
+        </span>
+        Join Us
+      </a>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links">
+              <a href="servizi/social-media-management.html">Social media management</a>
+              <a href="servizi/influencer-marketing.html">Influencer marketing</a>
+              <a href="servizi/google-ads.html">Google ads</a>
+              <a href="servizi/social-ads.html">Social ads</a>
+              <a href="servizi/strategia-digitale.html">Strategia digitale</a>
+              <a href="servizi/graphic-design.html">Graphic design</a>
+              <a href="servizi/web-design.html">Web design</a>
+              <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
+              <a href="servizi/servizio-ai.html">AI</a>
+              <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="case-studies.html">Case Studies</a>
+              <a href="news.html">News</a>
+              <a href="tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="faq.html">FAQ</a>
+              <a href="contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
+              <span class="nav__joinus-avatars">
+                <span class="nav__avatar"></span>
+                <span class="nav__avatar"></span>
+              </span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ══ HERO ══════════════════════════════════════════════ -->
+    <section class="lcn-hero">
+      <div>
+        <span class="lcn-hero__kicker">Unisciti al team</span>
+        <h1 class="lcn-hero__title">La nostra ricerca<br>di nuovi talenti<br>non si ferma mai</h1>
+        <div class="lcn-hero__bottom">
+          <p class="lcn-hero__sub"><strong>Entra in un team giovane e dinamico</strong> e lavora con noi a grandi progetti.</p>
+          <a class="btn btn--primary" href="#candidatura">Inviaci il tuo CV</a>
+        </div>
+      </div>
+      <div class="lcn-hero__stats">
+        <div class="lcn-hero__stat">
+          <span class="lcn-hero__stat-num" data-count="40" data-suffix="+">40+</span>
+          <span class="lcn-hero__stat-label">Creativi nel team</span>
+        </div>
+        <div class="lcn-hero__stat">
+          <span class="lcn-hero__stat-num" data-count="10" data-suffix="+">10+</span>
+          <span class="lcn-hero__stat-label">Anni di esperienza</span>
+        </div>
+        <div class="lcn-hero__stat">
+          <span class="lcn-hero__stat-num" data-count="60" data-suffix="+">60+</span>
+          <span class="lcn-hero__stat-label">Clienti soddisfatti</span>
+        </div>
+        <div class="lcn-hero__stat">
+          <span class="lcn-hero__stat-num" data-count="2">2</span>
+          <span class="lcn-hero__stat-label">Sedi in Italia</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ ABOUT ═════════════════════════════════════════════ -->
+    <section class="lcn-about">
+      <div class="lcn-about__left">
+        <span class="lcn-about__label">Chi siamo</span>
+        <div class="lcn-about__text reveal">
+          <p>Estro è un collettivo di professionisti dove il lavoro viene affrontato con creatività e passione.</p>
+          <p>Un collettivo dove sono le persone e le loro idee a fare la differenza e dove anche chi ha poca esperienza può mettersi in gioco e dove la sua passione può essere trasformato in una professione.</p>
+          <p>Se sei creativo, hai passione per il mondo del marketing o del digitale, che tu sia un esordiente o un professionista affermato in estro c'è sempre bisogno di nuove idee.</p>
+          <p>Qui sotto trovi le figure che stiamo cercando ma se non vedi una categoria a te affine non disperare, mandaci comunque il tuo CV specificando per che posizione ti stai candidando e saremo felici di valutarlo.</p>
+        </div>
+      </div>
+      <div class="lcn-about__right reveal">
+        <div class="lcn-about__photo" aria-hidden="true">
+          <div class="lcn-about__photo-icon">
+            <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="20" cy="20" r="9"/>
+              <circle cx="44" cy="20" r="9"/>
+              <path d="M4 56c0-8.837 7.163-16 16-16h8"/>
+              <path d="M60 56c0-8.837-7.163-16-16-16h-8"/>
+              <path d="M28 56c0-6.627 1.791-12 4-12s4 5.373 4 12"/>
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ POSIZIONI ══════════════════════════════════════════ -->
+    <section class="lcn-positions">
+      <div class="lcn-positions__header">
+        <span class="lcn-positions__kicker">Figure ricercate</span>
+        <span class="lcn-positions__line"></span>
+      </div>
+      <h2 class="lcn-positions__heading">Siamo sempre entusiasti<br>di conoscere nuovi talenti</h2>
+      <p class="lcn-positions__notice">Al momento non ci sono posizioni aperte, ma inviaci comunque il tuo CV.</p>
+      <div class="lcn-positions__tags">
+        <span class="lcn-pos-tag">Graphic Designer</span>
+        <span class="lcn-pos-tag">Social Media Manager</span>
+        <span class="lcn-pos-tag">Copywriter</span>
+        <span class="lcn-pos-tag">Advertiser</span>
+        <span class="lcn-pos-tag">Content Creator</span>
+        <span class="lcn-pos-tag">Web Developer</span>
+        <span class="lcn-pos-tag">Project Manager</span>
+        <span class="lcn-pos-tag">Digital Strategist</span>
+      </div>
+    </section>
+
+    <!-- ══ FORM CANDIDATURA ══════════════════════════════════ -->
+    <section class="lcn-apply" id="candidatura">
+      <div class="lcn-apply__layout">
+        <span class="lcn-apply__kicker">Candidati ora</span>
+        <h2 class="lcn-apply__title">Inviaci il tuo curriculum</h2>
+        <p class="lcn-apply__sub">Iniziamo a conoscerci!</p>
+        <form class="lcn-apply__form" action="#" method="post" enctype="multipart/form-data" novalidate>
+
+          <div class="lcn-apply__row">
+            <input class="lcn-apply__input" type="text" name="nome" placeholder="Nome*" required />
+            <input class="lcn-apply__input" type="text" name="cognome" placeholder="Cognome*" required />
+          </div>
+
+          <select class="lcn-apply__select" name="posizione" required>
+            <option value="" disabled selected>Posizione*</option>
+            <option value="graphic-designer">Graphic Designer</option>
+            <option value="social-media-manager">Social Media Manager</option>
+            <option value="copywriter">Copywriter</option>
+            <option value="advertiser">Advertiser</option>
+            <option value="content-creator">Content Creator</option>
+            <option value="web-developer">Web Developer</option>
+            <option value="project-manager">Project Manager</option>
+            <option value="digital-strategist">Digital Strategist</option>
+          </select>
+
+          <div class="lcn-apply__file-wrap">
+            <label class="lcn-apply__file-label" for="cv-upload">
+              <span id="cv-filename">Mandaci il tuo CV* (PDF max 2MB)</span>
+              <strong>Sfoglia</strong>
+            </label>
+            <input class="lcn-apply__file-input" type="file" id="cv-upload" name="cv" accept=".pdf" required />
+          </div>
+
+          <label class="lcn-apply__privacy">
+            <input type="checkbox" required />
+            <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a>*</span>
+          </label>
+
+          <div>
+            <button class="btn btn--primary" type="submit">Invia</button>
+          </div>
+
+        </form>
+      </div>
+    </section>
+
+  </main>
+  </div>
+
+  <!-- â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="index.html" aria-label=”ESTRO — Homepage”>
+            <img src="Logoestrofooter.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="servizi/social-media-management.html">Social media management</a>
+            <a href="servizi/influencer-marketing.html">Influencer marketing</a>
+            <a href="servizi/google-ads.html">Google Ads</a>
+            <a href="servizi/social-ads.html">Social Ads</a>
+            <a href="servizi/strategia-digitale.html">Strategia digitale</a>
+            <a href="servizi/graphic-design.html">Graphic design</a>
+            <a href="servizi/web-design.html">Web design</a>
+            <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
+            <a href="servizi/servizio-ai.html">AI</a>
+            <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="case-studies.html">Case Studies</a>
+            <a href="news.html">News</a>
+            <a href="tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contatti.html">Contatti</a>
+            <a href="lavora-con-noi.html">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="privacy.html">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="cookie.html">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      const counters = document.querySelectorAll('.lcn-hero__stat-num[data-count]');
+      if (!counters.length) return;
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (!entry.isIntersecting) return;
+          io.unobserve(entry.target);
+          const el = entry.target;
+          const target = +el.dataset.count;
+          const suffix = el.dataset.suffix || '';
+          const duration = 1400;
+          const start = performance.now();
+          function step(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            const ease = 1 - Math.pow(1 - progress, 3);
+            el.textContent = Math.round(ease * target) + suffix;
+            if (progress < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.3 });
+      counters.forEach(c => io.observe(c));
+    })();
+  </script>
+  <script>
+    const input = document.getElementById('cv-upload');
+    const label = document.getElementById('cv-filename');
+    if (input && label) {
+      input.addEventListener('change', () => {
+        label.textContent = input.files[0] ? input.files[0].name : 'Mandaci il tuo CV* (PDF max 2MB)';
+      });
+    }
+  </script>
+</body>
+</html>
+
+

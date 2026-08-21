@@ -1,0 +1,870 @@
+﻿<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="FANUC — Vincere la sfida dell'innovazione. Un caso studio ESTRO." />
+  <title>FANUC — Case Study · ESTRO</title>
+  <link rel="stylesheet" href="../css/tokens.css" />
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/components.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
+  <style>
+    /* ══ FANUC CASE STUDY ═══════════════════════════════════ */
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .d24-hero {
+      background: #080808;
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .d24-hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 50% at 75% 35%, rgba(219,0,90,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 15% 70%, rgba(219,0,90,0.06) 0%, transparent 60%);
+    }
+    .d24-hero__photo {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background: #1a1a1a;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .d24-hero__photo::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64' viewBox='0 0 24 24' fill='none' stroke='rgba(255,255,255,0.12)' stroke-width='1' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='3' width='18' height='18' rx='2'/%3E%3Ccircle cx='8.5' cy='8.5' r='1.5'/%3E%3Cpath d='M21 15l-5-5L5 21'/%3E%3C/svg%3E") center / 80px no-repeat;
+    }
+    .d24-hero__photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, #080808 0%, rgba(8,8,8,0.6) 40%, transparent 70%),
+        linear-gradient(to right, #080808 0%, rgba(8,8,8,0.5) 30%, transparent 60%);
+    }
+    .d24-hero__inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 clamp(1.5rem, 5vw, 6rem) clamp(3rem, 6vw, 5rem);
+    }
+    .d24-hero__kicker {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .d24-hero__kicker-line {
+      width: 40px;
+      height: 1px;
+      background: var(--primary);
+    }
+    .d24-hero__kicker span {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .d24-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(4rem, 11vw, 13rem);
+      color: #fff;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    .d24-hero__sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      color: rgba(255,255,255,0.5);
+      max-width: 52ch;
+      line-height: 1.6;
+    }
+    .d24-hero__meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: clamp(2rem, 6vw, 6rem);
+      flex-wrap: wrap;
+      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 6rem);
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .d24-hero__meta-item { display: flex; flex-direction: column; gap: 0.35rem; }
+    .d24-hero__meta-label {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .d24-hero__meta-value {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ── Intro ──────────────────────────────────────────── */
+    .d24-intro {
+      background: #fff;
+      padding: clamp(5rem, 10vw, 9rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .d24-intro__label {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 2rem;
+      display: block;
+    }
+    .d24-intro__body {
+      font-family: var(--font-secondary);
+      font-size: clamp(1.1rem, 2vw, 1.4rem);
+      line-height: 1.75;
+      color: rgba(0,0,0,0.65);
+      max-width: 860px;
+    }
+    .d24-intro__body strong { color: #000; font-weight: 600; }
+
+    /* ── Blocchi alternati ──────────────────────────────── */
+    .d24-block {
+      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .d24-block--dark  { background: #080808; }
+    .d24-block--white { background: #fff; }
+    .d24-block--grey  { background: #f5f5f5; }
+
+    .d24-block__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 7vw, 7rem);
+      align-items: center;
+      max-width: 1280px;
+    }
+    .d24-block--flip .d24-block__grid { direction: rtl; }
+    .d24-block--flip .d24-block__grid > * { direction: ltr; }
+
+    .d24-block__eyebrow {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+    .d24-block__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 4.5vw, 55px);
+      font-weight: 800;
+      text-transform: uppercase;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1.5rem;
+    }
+    .d24-block--dark .d24-block__title  { color: #fff; }
+    .d24-block--white .d24-block__title { color: #080808; }
+    .d24-block--grey .d24-block__title  { color: #080808; }
+
+    .d24-block__body {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+    .d24-block--dark .d24-block__body  { color: rgba(255,255,255,0.5); }
+    .d24-block--white .d24-block__body { color: rgba(0,0,0,0.5); }
+    .d24-block--grey .d24-block__body  { color: rgba(0,0,0,0.5); }
+
+    .d24-features { display: flex; flex-direction: column; gap: 1.75rem; }
+    .d24-feature { border-left: 2px solid var(--primary); padding-left: 1.4rem; }
+    .d24-feature__title {
+      font-family: var(--font-primary);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      margin-bottom: 0.45rem;
+    }
+    .d24-block--dark .d24-feature__title  { color: #fff; }
+    .d24-block--white .d24-feature__title { color: #080808; }
+    .d24-block--grey .d24-feature__title  { color: #080808; }
+    .d24-feature__text {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      line-height: 1.72;
+    }
+    .d24-block--dark .d24-feature__text  { color: rgba(255,255,255,0.45); }
+    .d24-block--white .d24-feature__text { color: rgba(0,0,0,0.48); }
+    .d24-block--grey .d24-feature__text  { color: rgba(0,0,0,0.48); }
+
+    .d24-visual {
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .d24-block--dark .d24-visual  { background: #141414; border: 1px solid rgba(255,255,255,0.07); }
+    .d24-block--white .d24-visual { background: #f0f0f0; }
+    .d24-block--grey .d24-visual  { background: #e8e8e8; }
+    .d24-visual::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(219,0,90,0.18), transparent 70%);
+    }
+    .d24-visual__label {
+      font-family: var(--font-primary);
+      font-size: clamp(3rem, 7vw, 6rem);
+      text-transform: uppercase;
+      line-height: 0.9;
+      text-align: center;
+      letter-spacing: -0.03em;
+      position: relative;
+      z-index: 1;
+    }
+    .d24-block--dark .d24-visual__label  { color: rgba(255,255,255,0.05); }
+    .d24-block--white .d24-visual__label { color: rgba(0,0,0,0.05); }
+    .d24-block--grey .d24-visual__label  { color: rgba(0,0,0,0.05); }
+
+    /* ── Numeri ─────────────────────────────────────────── */
+    .d24-numbers {
+      background: #080808;
+      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .d24-numbers__label {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+    .d24-numbers__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 5vw, 55px);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+    }
+    .d24-numbers__intro {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.45);
+      max-width: 760px;
+      margin-bottom: clamp(3rem, 5vw, 4rem);
+    }
+    .d24-numbers__grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 4vw, 3rem);
+    }
+    .d24-numbers__col {
+      background: #141414;
+      padding: clamp(2rem, 3vw, 2.5rem);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.06);
+    }
+    .d24-numbers__col-title {
+      font-family: var(--font-primary);
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .d24-numbers__text {
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.5);
+    }
+
+    /* ── Risultati ──────────────────────────────────────── */
+    .d24-results {
+      background: var(--primary);
+      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .d24-results__label {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .d24-results__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2.5rem, 6vw, 55px);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      max-width: 700px;
+    }
+    .d24-results__intro {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.65);
+      max-width: 680px;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+    }
+    .d24-results__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .d24-result {
+      background: rgba(255,255,255,0.12);
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      border-radius: 14px;
+    }
+    .d24-result__title {
+      font-family: var(--font-primary);
+      font-size: clamp(0.95rem, 1.6vw, 1.2rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      margin-bottom: 0.75rem;
+      line-height: 1.15;
+    }
+    .d24-result__text {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ── Quote ──────────────────────────────────────────── */
+    .d24-quote {
+      background: #080808;
+      padding: clamp(6rem, 12vw, 10rem) clamp(1.5rem, 5vw, 6rem);
+      text-align: center;
+    }
+    .d24-quote__mark {
+      font-family: var(--font-primary);
+      font-size: clamp(5rem, 14vw, 12rem);
+      color: rgba(219,0,90,0.12);
+      line-height: 0.6;
+      display: block;
+      margin-bottom: -1.5rem;
+    }
+    .d24-quote__text {
+      font-family: var(--font-secondary);
+      font-size: clamp(1.2rem, 2.5vw, 1.9rem);
+      font-style: italic;
+      line-height: 1.55;
+      color: rgba(255,255,255,0.75);
+      max-width: 760px;
+      margin: 0 auto 3rem;
+    }
+    .d24-quote__cta {
+      display: inline-block;
+      font-family: var(--font-primary);
+      font-size: 0.82rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+      border: 1.5px solid var(--primary);
+      background: var(--primary);
+      padding: 0.95rem 2.4rem;
+      border-radius: 6px;
+      transition: background 220ms, color 220ms;
+      text-decoration: none;
+    }
+    .d24-quote__cta:hover { background: transparent; color: var(--primary); }
+
+    /* ── Form contatti ──────────────────────────────────── */
+    .d24-contact {
+      background: #080808;
+      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 5vw, 6rem);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .d24-contact__label {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1.25rem;
+      display: block;
+    }
+    .d24-contact__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2.5rem, 6vw, 55px);
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 1.0;
+      letter-spacing: -0.02em;
+      margin-bottom: clamp(3rem, 5vw, 4rem);
+    }
+    .d24-contact .contact-home__form {
+      max-width: 900px;
+    }
+    .d24-contact .contact-home__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+    .d24-contact .contact-home__field {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: 8px;
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+      transition: border-color 200ms, background 200ms;
+    }
+    .d24-contact .contact-home__field::placeholder { color: rgba(255,255,255,0.35); }
+    .d24-contact .contact-home__field:focus {
+      border-color: var(--primary);
+      background: rgba(219,0,90,0.05);
+    }
+    .d24-contact .contact-home__textarea {
+      width: 100%;
+      margin-bottom: 16px;
+      resize: vertical;
+      min-height: 140px;
+    }
+    .d24-contact .contact-home__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.75rem;
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 2rem;
+    }
+    .d24-contact .contact-home__privacy a { color: var(--primary); }
+    .d24-contact .contact-home__submit-wrap { display: flex; }
+    .d24-contact .btn--primary::before { background: #fff !important; }
+    .d24-contact .btn--primary:hover {
+      background: #fff !important;
+      color: #080808 !important;
+      box-shadow: none !important;
+    }
+
+    /* ── Back ───────────────────────────────────────────── */
+    .d24-back {
+      background: #080808;
+      padding: 2rem clamp(1.5rem, 5vw, 6rem);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .d24-back__link {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      text-decoration: none;
+      transition: color 200ms;
+    }
+    .d24-back__link:hover { color: #fff; }
+    .d24-back__brand {
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.18);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 860px) {
+      .d24-block__grid { grid-template-columns: 1fr; }
+      .d24-block--flip .d24-block__grid { direction: ltr; }
+      .d24-visual { aspect-ratio: 16/9; }
+      .d24-results__grid { grid-template-columns: 1fr; gap: 12px; }
+      .d24-numbers__grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="nav" role="banner">
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
+        <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+      </a>
+      <a class="nav__joinus" href="../lavora-con-noi.html">
+        <span class="nav__joinus-avatars">
+          <span class="nav__avatar"></span>
+          <span class="nav__avatar"></span>
+        </span>
+        Join Us
+      </a>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links">
+              <a href="../servizi/social-media-management.html">Social media management</a>
+              <a href="../servizi/influencer-marketing.html">Influencer marketing</a>
+              <a href="../servizi/google-ads.html">Google ads</a>
+              <a href="../servizi/social-ads.html">Social ads</a>
+              <a href="../servizi/strategia-digitale.html">Strategia digitale</a>
+              <a href="../servizi/graphic-design.html">Graphic design</a>
+              <a href="../servizi/web-design.html">Web design</a>
+              <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
+              <a href="../servizi/servizio-ai.html">AI</a>
+              <a href="../servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="../case-studies.html">Case Studies</a>
+              <a href="../news.html">News</a>
+              <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="../faq.html">FAQ</a>
+              <a href="../contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ══ HERO ══════════════════════════════════════════ -->
+    <section class="d24-hero">
+      <div class="d24-hero__bg" aria-hidden="true"></div>
+      <div class="d24-hero__photo" aria-hidden="true"></div>
+      <div class="d24-hero__inner">
+        <div class="d24-hero__kicker">
+          <span>Case Study &nbsp;&nbsp;&nbsp;&nbsp; Strategia</span>
+        </div>
+        <h1 class="d24-hero__title">FANUC</h1>
+        <p class="d24-hero__sub">Vincere la sfida dell'innovazione</p>
+      </div>
+      <div class="d24-hero__meta">
+        <div class="d24-hero__meta-item">
+          <span class="d24-hero__meta-label">Settore</span>
+          <span class="d24-hero__meta-value">Automazione industriale</span>
+        </div>
+        <div class="d24-hero__meta-item">
+          <span class="d24-hero__meta-label">Servizi</span>
+          <span class="d24-hero__meta-value">Strategia Digitale · Roadshow · ADV</span>
+        </div>
+        <div class="d24-hero__meta-item">
+          <span class="d24-hero__meta-label">Obiettivo</span>
+          <span class="d24-hero__meta-value">Posizionamento B2B</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ INTRO ══════════════════════════════════════════ -->
+    <section class="d24-intro reveal">
+      <span class="d24-intro__label">Il progetto</span>
+      <p class="d24-intro__body">
+        Tutto è iniziato con una sfida: <strong>una gara nazionale</strong>. Per un leader mondiale come FANUC, non cercavamo un semplice piano di comunicazione, ma una visione capace di rompere gli schemi del settore industriale. Vincere quel pitch ha significato dimostrare che l'automazione non deve essere per forza fredda. Abbiamo proposto una <strong>Strategia Digitale e creativa</strong> che ha convinto il brand a mettere al centro il design e la performance.
+      </p>
+    </section>
+
+    <!-- ══ BLOCCO 1 — testo sx, visual dx ════════════════ -->
+    <section class="d24-block d24-block--dark">
+      <div class="d24-block__grid reveal">
+        <div>
+          <span class="d24-block__eyebrow">01 — La visione</span>
+          <h2 class="d24-block__title">La via della<br/>perfezione</h2>
+          <p class="d24-block__body">Il concept che ci ha portato alla vittoria si ispira all'estetica giapponese e al simbolo dell'Ensō (il cerchio): l'equilibrio perfetto tra uomo e macchina.</p>
+          <div class="d24-features">
+            <div class="d24-feature">
+              <div class="d24-feature__title">Roadshow Italia</div>
+              <div class="d24-feature__text">Abbiamo curato il concept e la logistica creativa di un tour itinerante, gestendo la coerenza tra l'impatto visivo del concept e la narrazione digitale.</div>
+            </div>
+            <div class="d24-feature">
+              <div class="d24-feature__title">Digital hub &amp; performance</div>
+              <div class="d24-feature__text">Abbiamo insieme progettato landing page verticali e ottimizzate per le conversioni. Attraverso campagne Google Ads (Search &amp; Video) mirate a liste CRM e audience lookalike, abbiamo intercettato i decision maker industriali nel momento esatto del bisogno.</div>
+            </div>
+            <div class="d24-feature">
+              <div class="d24-feature__title">Content &amp; social media</div>
+              <div class="d24-feature__text">Abbiamo accompagnato l'intera campagna con un racconto visivo costante. Tra shooting fotografici, video emozionali e grafiche, abbiamo trasformato i canali social in uno spazio vivo, dando un volto umano alla tecnologia e amplificando la risonanza del brand prima, durante e dopo ogni tappa.</div>
+            </div>
+            <div class="d24-feature">
+              <div class="d24-feature__title">Produzione deliveries</div>
+              <div class="d24-feature__text">Abbiamo gestito un flusso costante di asset (social pack, banner, materiali offline) garantendo tempi di esecuzione rapidi e una qualità estetica sempre all'altezza del posizionamento premium di FANUC.</div>
+            </div>
+          </div>
+        </div>
+        <div class="d24-visual">
+          <span class="d24-visual__label">FANUC</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ BLOCCO 2 — visual sx, testo dx ════════════════ -->
+    <section class="d24-block d24-block--white d24-block--flip">
+      <div class="d24-block__grid reveal">
+        <div>
+          <span class="d24-block__eyebrow">02 — Strategia omnichannel</span>
+          <h2 class="d24-block__title">Dal roadshow<br/>al lead</h2>
+          <p class="d24-block__body">Come partner annuale, il nostro compito è stato ottimizzare ogni touchpoint per trasformare l'attenzione in contatti reali.</p>
+          <div class="d24-features">
+            <div class="d24-feature">
+              <div class="d24-feature__title">Roadshow Italia</div>
+              <div class="d24-feature__text">Abbiamo curato il concept e la logistica creativa di un tour itinerante, gestendo la coerenza tra l'impatto visivo del concept e la narrazione digitale.</div>
+            </div>
+            <div class="d24-feature">
+              <div class="d24-feature__title">Digital hub &amp; performance</div>
+              <div class="d24-feature__text">Abbiamo insieme progettato landing page verticali e ottimizzate per le conversioni. Attraverso campagne Google Ads (Search &amp; Video) mirate a liste CRM e audience lookalike, abbiamo intercettato i decision maker industriali nel momento esatto del bisogno.</div>
+            </div>
+            <div class="d24-feature">
+              <div class="d24-feature__title">Content &amp; social media</div>
+              <div class="d24-feature__text">Abbiamo accompagnato l'intera campagna con un racconto visivo costante. Tra shooting fotografici, video emozionali e grafiche, abbiamo trasformato i canali social in uno spazio vivo, dando un volto umano alla tecnologia e amplificando la risonanza del brand prima, durante e dopo ogni tappa.</div>
+            </div>
+            <div class="d24-feature">
+              <div class="d24-feature__title">Produzione deliveries</div>
+              <div class="d24-feature__text">Abbiamo gestito un flusso costante di asset (social pack, banner, materiali offline) garantendo tempi di esecuzione rapidi e una qualità estetica sempre all'altezza del posizionamento premium di FANUC.</div>
+            </div>
+          </div>
+        </div>
+        <div class="d24-visual">
+          <span class="d24-visual__label">Road<br/>show</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ NUMERI ══════════════════════════════════════════ -->
+    <section class="d24-numbers">
+      <span class="d24-numbers__label reveal">I numeri del Roadshow</span>
+      <h2 class="d24-numbers__title reveal">I numeri del Roadshow</h2>
+      <p class="d24-numbers__intro reveal">Tra maggio e luglio 2025, le campagne digitali a supporto delle quattro tappe italiane del CRX Roadshow hanno generato risultati concreti su tutti i canali.</p>
+      <div class="d24-numbers__grid reveal">
+        <div class="d24-numbers__col">
+          <div class="d24-numbers__col-title">Google Ads</div>
+          <p class="d24-numbers__text">Abbiamo registrato oltre 130.000 clic a un CPC medio di €0,05, con 15 conversioni tracciate. Le campagne Demand Gen hanno dominato in termini di volume, mentre la Search ha garantito la qualità: keyword come «cobot» e «robot collaborativi» hanno intercettato professionisti con intento esplicito, portando il CTR fino al 30% su alcune parole chiave.</p>
+        </div>
+        <div class="d24-numbers__col">
+          <div class="d24-numbers__col-title">LinkedIn</div>
+          <p class="d24-numbers__text">Abbiamo raggiunto oltre 164.000 impressioni e generato 1.457 clic qualificati tra Torino, Padova, Bologna e Jesi. Il formato single image si è rivelato il più efficiente con CPC medi tra €1,20 e €1,71 sulle creatività top, confermando che nel B2B industriale la chiarezza del messaggio batte la complessità del formato.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RISULTATI ═══════════════════════════════════════ -->
+    <section class="d24-results">
+      <span class="d24-results__label reveal">Il risultato</span>
+      <h2 class="d24-results__title reveal">Da fornitore<br/>a partner strategico</h2>
+      <p class="d24-results__intro reveal">La collaborazione nata dalla gara ha portato FANUC a un nuovo livello di comunicazione industriale, dove la tecnologia parla finalmente alle persone.</p>
+      <div class="d24-results__grid">
+        <div class="d24-result reveal">
+          <div class="d24-result__title">Efficienza operativa</div>
+          <div class="d24-result__text">La gestione centralizzata di social, adv, landing e offline ha permesso di ottimizzare i tempi.</div>
+        </div>
+        <div class="d24-result reveal reveal-delay-1">
+          <div class="d24-result__title">Qualità dei lead</div>
+          <div class="d24-result__text">Grazie a una strategia di advertising chirurgica, abbiamo generato un flusso costante di lead altamente profilati per la rete vendita.</div>
+        </div>
+        <div class="d24-result reveal reveal-delay-2">
+          <div class="d24-result__title">Autorità di brand</div>
+          <div class="d24-result__text">FANUC non è più solo un produttore di robot, ma un «leader di pensiero» che traccia la strada per l'Industria 5.0.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ QUOTE ══════════════════════════════════════════ -->
+    <section class="d24-quote">
+      <span class="d24-quote__mark" aria-hidden="true">"</span>
+      <p class="d24-quote__text reveal">
+        L'eccellenza tecnica merita una narrazione che sappia distinguersi e generare valore: facciamo squadra.
+      </p>
+      <a href="../contatti.html" class="d24-quote__cta reveal">Il tuo brand ha bisogno di una visione che convinca?</a>
+    </section>
+
+    <!-- ══ FORM CONTATTI ═════════════════════════════════ -->
+    <section class="d24-contact">
+      <span class="d24-contact__label reveal">Parliamoci</span>
+      <h2 class="d24-contact__title reveal">Il tuo brand ha bisogno<br/>di una visione che convinca?</h2>
+      <form class="contact-home__form reveal" action="#" method="post" novalidate>
+        <div class="contact-home__row">
+          <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
+          <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+        </div>
+        <div class="contact-home__row">
+          <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
+          <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+        </div>
+        <div class="contact-home__row">
+          <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
+          <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+        </div>
+        <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+        <label class="contact-home__privacy">
+          <input type="checkbox" required />
+          <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+        </label>
+        <div class="contact-home__submit-wrap">
+          <button class="btn btn--primary" type="submit">Invia</button>
+        </div>
+      </form>
+    </section>
+
+    <!-- ══ BACK ══════════════════════════════════════════ -->
+    <div class="d24-back">
+      <a href="../case-studies.html" class="d24-back__link">← Tutti i case studies</a>
+      <span class="d24-back__brand">ESTRO</span>
+    </div>
+  </main>
+
+  <script src="../js/main.js"></script>
+      <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
+            <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="../servizi/social-media-management.html">Social media management</a>
+            <a href="../servizi/influencer-marketing.html">Influencer marketing</a>
+            <a href="../servizi/google-ads.html">Google Ads</a>
+            <a href="../servizi/social-ads.html">Social Ads</a>
+            <a href="../servizi/strategia-digitale.html">Strategia digitale</a>
+            <a href="../servizi/graphic-design.html">Graphic design</a>
+            <a href="../servizi/web-design.html">Web design</a>
+            <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
+            <a href="../servizi/modellazione-3d.html">Modellazione 3D</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="../case-studies.html">Case Studies</a>
+            <a href="../news.html">News</a>
+            <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="../faq.html">FAQ</a>
+            <a href="../contatti.html">Contatti</a>
+            <a href="../lavora-con-noi.html">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="../privacy.html">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="../cookie.html">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+</body>
+</html>
+
+
+

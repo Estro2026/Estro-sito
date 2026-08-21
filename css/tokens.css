@@ -1,6 +1,8 @@
 :root {
   /* Colors */
   --bg:      #FFFFFF;
+  --surface: #FFFFFF;
+  --surface2:#F5F5F5;
   --black:   #000000;
   --white:   #FFFFFF;
   --primary: #DB005A;
@@ -25,23 +27,43 @@
   --white-90: rgba(255,255,255,0.92);
 
   /* Typography */
-  --font-primary:   'VanguardCF', 'Impact', 'Arial Black', sans-serif;
-  --font-secondary: 'Poppins', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+  --font-primary:   'Special Gothic Expanded One', 'VanguardCF', 'Impact', sans-serif;
+  --font-secondary: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
 
   /* Type scale */
-  --text-xs:   0.6875rem;
-  --text-sm:   0.8125rem;
-  --text-base: 1rem;
-  --text-lg:   1.125rem;
-  --text-xl:   1.3125rem;
-  --text-2xl:  1.625rem;
-  --text-3xl:  2rem;
-  --text-4xl:  2.75rem;
-  --text-5xl:  3.5rem;
-  --text-6xl:  4.5rem;
-  --text-7xl:  6rem;
-  --text-8xl:  8rem;
-  --text-9xl:  11rem;
+  --text-xs:   0.6875rem;      /* label, didascalie */
+  --text-sm:   0.8125rem;      /* testo secondario */
+  --text-base: 1rem;           /* corpo testo */
+  --text-md:   clamp(1.125rem, 1.5vw, 1.25rem);     /* intro testi */
+  --text-lg:   clamp(1.25rem, 2vw, 1.5rem);         /* titoli card */
+  --text-xl:   clamp(1.5rem, 2.5vw, 2rem);          /* sottotitoli sezione */
+  --text-2xl:  clamp(2rem, 4vw, 3rem);              /* titoli sezione */
+  --text-3xl:  clamp(2.5rem, 5vw, 4rem);            /* titoli principali */
+  --text-4xl:  clamp(2.75rem, 6vw, 4.5rem);
+  --text-5xl:  clamp(3rem, 7vw, 5.5rem);
+  --text-6xl:  clamp(3.5rem, 8vw, 6.5rem);
+  --text-7xl:  clamp(4rem, 10vw, 8rem);
+  --text-8xl:  clamp(5rem, 12vw, 10rem);
+  --text-9xl:  clamp(6rem, 16vw, 13rem);
+  --text-hero: clamp(3rem, 8vw, 7rem);              /* hero title */
+
+  /* Section spacing */
+  --section-py: clamp(4rem, 8vw, 7rem);
+  --section-px: clamp(1.5rem, 6vw, 7rem);
+
+  /* Gap scale */
+  --gap-xs: 0.5rem;
+  --gap-sm: 1rem;
+  --gap-md: 1.5rem;
+  --gap-lg: 2.5rem;
+  --gap-xl: 4rem;
+
+  /* Stack scale */
+  --stack-xs: 0.5rem;
+  --stack-sm: 0.75rem;
+  --stack-md: 1.25rem;
+  --stack-lg: 2rem;
+  --stack-xl: 3rem;
 
   /* Spacing */
   --space-1:  0.25rem;
@@ -81,4 +103,30 @@
   --dur-base:  320ms;
   --dur-slow:  550ms;
   --dur-enter: 800ms;
+}
+
+/* ═══════════════════ DARK MODE TOKENS ══════════════════ */
+[data-theme="dark"] {
+  --bg:      #111111;
+  --black:   #f0f0f0;
+  --white:   #111111;
+  --black-04: rgba(255,255,255,0.04);
+  --black-06: rgba(255,255,255,0.06);
+  --black-08: rgba(255,255,255,0.08);
+  --black-10: rgba(255,255,255,0.10);
+  --black-20: rgba(255,255,255,0.20);
+  --black-40: rgba(255,255,255,0.40);
+  --black-50: rgba(255,255,255,0.50);
+  --black-60: rgba(255,255,255,0.60);
+  --black-75: rgba(255,255,255,0.75);
+  --white-06: rgba(0,0,0,0.06);
+  --white-10: rgba(0,0,0,0.10);
+  --white-20: rgba(0,0,0,0.20);
+  --white-55: rgba(0,0,0,0.55);
+  --white-90: rgba(17,17,17,0.92);
+  --border:       1px solid rgba(255,255,255,0.10);
+  --border-hover: 1px solid rgba(255,255,255,0.30);
+  --shadow-sm: 0 2px 8px rgba(0,0,0,0.40), 0 1px 2px rgba(0,0,0,0.20);
+  --shadow-md: 0 8px 24px rgba(0,0,0,0.50), 0 2px 6px rgba(0,0,0,0.20);
+  --shadow-lg: 0 20px 48px rgba(0,0,0,0.60), 0 4px 12px rgba(0,0,0,0.20);
 }
