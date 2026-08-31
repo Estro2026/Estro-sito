@@ -1108,8 +1108,8 @@
      * Stagger: ogni item aggiunge STAG_RE di ritardo.
      * 8 items × 0.04 = 0.32 → ultimo item parte a rawEntry=0.32, finisce a 1.0.
      */
-    const STAG_RE = 0.04;   /* stagger per item su rawEntry */
-    const DUR_RE  = 0.68;   /* durata reveal singolo item su rawEntry */
+    const STAG_RE = 0.025;  /* stagger per item su rawEntry */
+    const DUR_RE  = 0.52;   /* durata reveal singolo item — 8 items done a rawEntry≈0.70 */
 
     function tick() {
       rafId = requestAnimationFrame(tick);
