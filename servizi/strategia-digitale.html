@@ -19,13 +19,7 @@
       height: 100dvh !important; min-height: unset !important;
       max-height: 100dvh !important; overflow: hidden !important;
     }
-    .svc-hero--videobg .svc-hero__inner {
-      height: 100% !important;
-      padding-top: clamp(1rem, 3vw, 3rem) !important;
-      padding-bottom: clamp(1rem, 3vw, 3rem) !important;
-      justify-content: center !important; overflow: hidden !important;
-    }
-    /* Hero reveal */
+/* Hero reveal */
     .svc-hero__kicker, .svc-hero__title, .svc-hero__sub, .svc-hero__tagline, .svc-hero__form { opacity: 0; transform: translateY(22px); }
     .svc-hero--revealed .svc-hero__kicker  { opacity: 1; transform: none; transition: opacity 0.55s 0.10s ease, transform 0.55s 0.10s ease; }
     .svc-hero--revealed .svc-hero__title   { opacity: 1; transform: none; transition: opacity 0.60s 0.25s ease, transform 0.60s 0.25s ease; }
@@ -126,6 +120,20 @@
       .smm-panel__visual { display: none; }
     }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Cos'e una strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "E un piano strutturato che definisce obiettivi, canali, messaggi e azioni da intraprendere per raggiungere i tuoi traguardi di business attraverso il marketing digitale." } },
+    { "@type": "Question", "name": "Perche e importante avere una strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "Senza una strategia si rischia di investire tempo e denaro in attivita slegate tra loro, senza direzione. Una strategia coerente massimizza il ROI e garantisce che ogni azione contribuisca agli obiettivi aziendali." } },
+    { "@type": "Question", "name": "Come si sviluppa una strategia digitale con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Partiamo dall'analisi del tuo brand, del mercato e dei competitor. Definiamo insieme gli obiettivi, i KPI e i canali prioritari, poi costruiamo un piano d'azione dettagliato e misurabile." } },
+    { "@type": "Question", "name": "Quanto dura un progetto di strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "La fase di analisi e definizione strategica richiede generalmente 2-4 settimane. L'implementazione e poi un processo continuativo, con revisioni periodiche per adattare la strategia ai risultati." } },
+    { "@type": "Question", "name": "La strategia digitale include anche i social media?", "acceptedAnswer": { "@type": "Answer", "text": "Si, la strategia digitale e trasversale e comprende social media, advertising, contenuti, SEO, email marketing e qualsiasi altro canale rilevante per i tuoi obiettivi." } },
+    { "@type": "Question", "name": "Come viene misurata l'efficacia della strategia?", "acceptedAnswer": { "@type": "Answer", "text": "Definiamo KPI specifici per ogni obiettivo (traffico, lead, vendite, awareness) e li monitoriamo con report regolari. La strategia viene aggiornata in base ai dati raccolti." } }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -139,12 +147,9 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="../lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -152,7 +157,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="social-media-management.html">Social media management</a>
               <a href="influencer-marketing.html">Influencer marketing</a>
               <a href="google-ads.html">Google ads</a>
@@ -186,10 +191,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -212,16 +215,31 @@
           <h1 class="svc-hero__title" id="page-title"><span style="white-space:nowrap">La tua</span><br/><span style="white-space:nowrap">Strategia</span><br/><em style="white-space:nowrap">Digitale</em><br/><span style="white-space:nowrap">su misura</span></h1>
           <p class="svc-hero__sub">Qualsiasi sia il tuo traguardo è più vicino di quanto pensi. Elaboriamo rapidamente il piano migliore per lanciare in orbita il tuo brand.</p>
           <p class="svc-hero__tagline" style="color:var(--primary);font-weight:600;">Mettiti comodo e preparati a vedere meraviglie</p>
-          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
-            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
-            <label class="svc-hero__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
-            </label>
-            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
-          </form>
+        </div>
+        <div class="svc-hero__right">
+          <div class="svc-hero__form-card">
+            <p class="svc-hero__form-card-label">Scrivici</p>
+            <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="nome" placeholder="Nome*" required />
+                <input class="svc-hero__field" type="text" name="cognome" placeholder="Cognome*" required />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+                <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="azienda" placeholder="Azienda" />
+                <input class="svc-hero__field" type="url" name="sito" placeholder="Sito Web" />
+              </div>
+              <textarea class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="4"></textarea>
+              <label class="svc-hero__privacy">
+                <input type="checkbox" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
+            </form>
+          </div>
         </div>
       </div>
     </section>
@@ -511,38 +529,66 @@
       </div>
     </section>
 
-    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
-    <section class="section svc-magic" id="sd-magic">
-      <div class="container svc-magic__inner">
-        <div class="svc-magic__cat" style="background:rgba(219,0,90,0.08);border-radius:16px;min-height:340px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(219,0,90,0.15);">
-        </div>
-        <div class="svc-magic__content reveal reveal-delay-1">
-          <h2 class="svc-magic__title">SAPPIAMO FARE<br>UN SACCO DI<br>ALTRE MAGIE</h2>
-          <div class="svc-magic__links">
-            <a class="svc-magic__pill" href="influencer-marketing.html">Influencer Marketing</a>
-            <a class="svc-magic__pill" href="social-media-management.html">Social Media Management</a>
-            <a class="svc-magic__pill" href="google-ads.html">Google ADS</a>
-            <a class="svc-magic__pill" href="social-ads.html">Social ADS</a>
-            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
+    
+
+    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
+    
+    <!-- FAQ -->
+    <section class="page-faq">
+      <div class="page-faq__inner">
+        <h2 class="page-faq__title">FAQ</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Cos'e una strategia digitale?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">E un piano strutturato che definisce obiettivi, canali, messaggi e azioni da intraprendere per raggiungere i tuoi traguardi di business attraverso il marketing digitale.</div></div>
           </div>
-        </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Perche e importante avere una strategia digitale?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Senza una strategia si rischia di investire tempo e denaro in attivita slegate tra loro, senza direzione. Una strategia coerente massimizza il ROI e garantisce che ogni azione contribuisca agli obiettivi aziendali.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come si sviluppa una strategia digitale con ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Partiamo dall'analisi del tuo brand, del mercato e dei competitor. Definiamo insieme gli obiettivi, i KPI e i canali prioritari, poi costruiamo un piano d'azione dettagliato e misurabile.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quanto dura un progetto di strategia digitale?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">La fase di analisi e definizione strategica richiede generalmente 2-4 settimane. L'implementazione e poi un processo continuativo, con revisioni periodiche per adattare la strategia ai risultati.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">La strategia digitale include anche i social media?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, la strategia digitale e trasversale e comprende social media, advertising, contenuti, SEO, email marketing e qualsiasi altro canale rilevante per i tuoi obiettivi.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come viene misurata l'efficacia della strategia?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Definiamo KPI specifici per ogni obiettivo (traffico, lead, vendite, awareness) e li monitoriamo con report regolari. La strategia viene aggiornata in base ai dati raccolti.</div></div>
+          </div>
+        </dl>
       </div>
     </section>
 
-    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
-    <section class="svc-caffe svc-caffe--fuchsia" id="sd-caffe" aria-label="Contattaci" data-nav-theme="dark">
+<section class="svc-caffe svc-caffe--fuchsia" id="sd-caffe" aria-label="Contattaci" data-nav-theme="dark">
       <div class="container svc-caffe__inner">
         <div class="svc-caffe__left reveal">
           <h2 class="svc-caffe__title"><span class="caffe-nowrap">Prendiamoci</span><br/>un caffè!</h2>
           <p class="svc-caffe__sub">Anche virtuale</p>
         </div>
         <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
-          <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-          <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-          <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+          </div>
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
           <label class="svc-caffe__privacy">
             <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
           </label>
           <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
         </form>
@@ -855,8 +901,8 @@
             <a href="../servizi/graphic-design.html">Graphic design</a>
             <a href="../servizi/web-design.html">Web design</a>
             <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="../servizi/servizio-ai.html">AI</a>
             <a href="../servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -902,7 +948,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>

@@ -14,6 +14,12 @@
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/hero.css" />
   <style>
+    /* Hero: esattamente 100dvh */
+    .svc-hero--videobg {
+      height: 100dvh !important; min-height: unset !important;
+      max-height: 100dvh !important; overflow: hidden !important;
+    }
+/* Hero reveal */
     .svc-hero { position: relative; overflow: hidden; }
     .svc-hero__kicker, .svc-hero__title, .svc-hero__sub, .svc-hero__tagline, .svc-hero__form { opacity: 0; transform: translateY(22px); }
     .svc-hero--revealed .svc-hero__kicker  { opacity: 1; transform: none; transition: opacity 0.55s 0.10s ease, transform 0.55s 0.10s ease; }
@@ -21,9 +27,243 @@
     .svc-hero--revealed .svc-hero__sub     { opacity: 1; transform: none; transition: opacity 0.55s 0.52s ease, transform 0.55s 0.52s ease; }
     .svc-hero--revealed .svc-hero__tagline { opacity: 1; transform: none; transition: opacity 0.50s 0.62s ease, transform 0.50s 0.62s ease; }
     .svc-hero--revealed .svc-hero__form    { opacity: 1; transform: none; transition: opacity 0.55s 0.72s ease, transform 0.55s 0.72s ease; }
+    /* Nav transitions */
     .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
     .nav__logo img { transition: filter 180ms ease !important; }
+    /* Split-letter .tl spans */
+    .svc-clients__title .tl, .svc-magic__title .tl, .svc-caffe__title .tl {
+      display: inline-block; opacity: 0; transform: translateY(0.8em);
+    }
+    /* Clienti */
+    #pc-clienti { background: #000 !important; color: #fff !important;
+      padding-block: clamp(4rem,8vw,7rem) clamp(4rem,8vw,6rem) !important; overflow: hidden !important; }
+    #pc-clienti .svc-clients__title { opacity:0; transform:translateY(30px); transition:none !important; }
+    #pc-clienti .svc-clients__marquee-wrap { display:flex !important; flex-direction:column !important; gap:2rem !important; }
+    #pc-clienti .svc-clients__track { animation: pc-marquee 110s linear infinite !important; }
+    #pc-clienti .svc-clients__track--rev { animation-direction: reverse !important; }
+    #pc-clienti .svc-clients__track:hover,
+    #pc-clienti .svc-clients__track--rev:hover { animation-play-state: paused !important; }
+    @keyframes pc-marquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    #pc-clienti .svc-clients__logo { width: clamp(100px,12vw,180px) !important; flex-shrink:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; }
+    #pc-clienti .svc-clients__logo img { max-height: clamp(52px,7vw,90px) !important; width:auto !important; filter:brightness(0) invert(1) !important; opacity:0.8 !important; object-fit:contain !important; }
+    #pc-clienti .svc-clients__logo:hover img { opacity: 1 !important; }
+    #pc-clienti .svc-clients__logo--seven img { max-height: clamp(32px,4.5vw,56px) !important; }
+    #pc-clienti .svc-clients__logo--big img   { max-height: clamp(80px,11vw,136px) !important; }
+    #pc-clienti .svc-clients__logo--xl img    { max-height: clamp(95px,13.5vw,166px) !important; }
+    #pc-clienti .svc-clients__logo--xxl img   { max-height: clamp(140px,20vw,250px) !important; }
+    /* Caffè */
+    .svc-caffe .btn { text-align: center; justify-content: center; }
+    .svc-caffe__title .caffe-nowrap { white-space: nowrap; display: inline-block; }
+    /* ── SMM STACKED PANELS ─────────────────────────────────── */
+    .smm-stack { position: relative; height: 800dvh; }
+    .smm-panel {
+      position: sticky; top: 0; height: 100dvh;
+      display: flex; align-items: center; overflow: hidden; will-change: transform;
+    }
+    .smm-panel:nth-child(1) { z-index: 1; }
+    .smm-panel:nth-child(2) { z-index: 2; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(3) { z-index: 3; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(4) { z-index: 4; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(5) { z-index: 5; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(6) { z-index: 6; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(7) { z-index: 7; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(8) { z-index: 8; border-radius: 24px 24px 0 0; }
+    .smm-panel--dark  { background: #050505; color: #fff; }
+    .smm-panel--light { background: #f9f9f9; color: #080808; }
+    .smm-panel__inner {
+      width: 100%; display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem); align-items: center; padding-block: clamp(2rem, 4vw, 4rem);
+    }
+    .smm-panel__copy { display: flex; flex-direction: column; gap: 1.25rem; }
+    .smm-panel__tag {
+      display: inline-flex; align-self: flex-start;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.35em 1em; border-radius: 100px;
+      color: var(--primary, #DB005A); background: rgba(219,0,90,0.12); border: 1px solid rgba(219,0,90,0.3);
+    }
+    .smm-panel__title {
+      font-family: var(--font-primary); font-size: clamp(2.4rem, 4vw, 4.8rem);
+      font-weight: 900; line-height: 0.94; letter-spacing: -0.03em; margin: 0;
+    }
+    .smm-panel--dark .smm-panel__title  { color: #fff; }
+    .smm-panel--light .smm-panel__title { color: #080808; }
+    .smm-panel__text { font-size: clamp(0.88rem, 1vw, 1rem); line-height: 1.75; margin: 0; }
+    .smm-panel--dark .smm-panel__text   { color: rgba(255,255,255,0.68); }
+    .smm-panel--light .smm-panel__text  { color: rgba(0,0,0,0.62); }
+    .smm-panel__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    .smm-panel__list li { font-size: 0.875rem; padding-left: 1.3em; position: relative; }
+    .smm-panel__list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary, #DB005A); font-weight: 700; }
+    .smm-panel--dark .smm-panel__list li  { color: rgba(255,255,255,0.72); }
+    .smm-panel--light .smm-panel__list li { color: rgba(0,0,0,0.68); }
+    .smm-panel__visual {
+      aspect-ratio: 4/3; border-radius: 14px; overflow: hidden;
+      background: rgba(219,0,90,0.10); border: 1px solid rgba(219,0,90,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .smm-panel--light .smm-panel__visual { background: rgba(219,0,90,0.06); }
+    .smm-panel__visual-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.35; }
+    .smm-panel [data-reveal] { opacity: 0; transform: translateY(22px); }
+    .smm-panel .btn { text-align: center; justify-content: center; }
+    @media (max-width: 768px) {
+      .smm-panel__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .smm-panel__visual { display: none; }
+    }
+
+    /* ── PRODUZIONE ACCORDION ───────────────────────────────── */
+    .pc-prod { padding: clamp(4rem,8vw,7rem) 0; }
+    .pc-prod__head { margin-bottom: 3rem; }
+    .pc-prod__kicker { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: #DB005A; margin: 0 0 0.6rem; font-weight: 600; }
+    .pc-prod__title { font-size: clamp(2rem,4vw,3rem); font-weight: 800; margin: 0 0 1rem; line-height: 1.1; font-family: var(--font-primary); }
+    .pc-prod__sub { font-size: clamp(0.9rem,1.2vw,1.05rem); color: rgba(0,0,0,0.55); line-height: 1.7; max-width: 560px; margin: 0; }
+
+    .pc-acc { border-top: 1px solid rgba(0,0,0,0.07); margin-top: 2.5rem; }
+
+    .pc-acc__item {
+      position: relative;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: border-left-color 0.35s,
+                  opacity 0.55s cubic-bezier(.4,0,.2,1),
+                  transform 0.55s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__item.pc-item--in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* barra sinistra che si disegna dall'alto */
+    .pc-acc__item::before {
+      content: ''; position: absolute; left: 0; top: 0;
+      width: 2px; height: 100%; background: #DB005A;
+      transform: scaleY(0); transform-origin: top;
+      transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+      z-index: 1;
+    }
+    .pc-acc__item.is-open::before { transform: scaleY(1); }
+    /* shimmer gradient a sinistra su hover */
+    .pc-acc__item::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(90deg, rgba(219,0,90,0.05) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .pc-acc__item:hover::after, .pc-acc__item.is-open::after { opacity: 1; }
+
+    .pc-acc__head {
+      display: flex; align-items: center; gap: clamp(1rem,3vw,2rem);
+      padding: clamp(1.2rem,2.2vw,1.7rem) clamp(0.5rem,1.5vw,1.5rem);
+      cursor: pointer; user-select: none;
+    }
+
+    .pc-acc__num {
+      font-size: clamp(2rem,4.5vw,3.5rem); font-weight: 900; line-height: 1;
+      font-family: var(--font-primary);
+      color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.15);
+      min-width: clamp(2.6rem,5vw,4.2rem); flex-shrink: 0; display: inline-block;
+      transition: -webkit-text-stroke-color 0.35s, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .pc-acc__item:hover .pc-acc__num,
+    .pc-acc__item.is-open .pc-acc__num {
+      -webkit-text-stroke-color: #DB005A;
+      transform: scale(1.08);
+    }
+
+    .pc-acc__name {
+      flex: 1; font-size: clamp(1rem,1.9vw,1.3rem); font-weight: 700;
+      font-family: var(--font-primary); color: #080808; line-height: 1.25;
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__item:hover .pc-acc__name,
+    .pc-acc__item.is-open .pc-acc__name { transform: translateX(7px); }
+
+    /* ── occhio ── */
+    .pc-acc__eye {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative;
+      transition: background 0.35s, border-color 0.35s, transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .pc-acc__item.is-open .pc-acc__eye { background: #DB005A; border-color: #DB005A; color: #fff; }
+    .pc-acc__item:hover .pc-acc__eye    { border-color: rgba(219,0,90,0.5); transform: scale(1.1); }
+    .pc-acc__item.is-open .pc-acc__eye  { transform: scale(1.1); }
+
+    .pc-acc__eye-svg {
+      width: 26px; height: 26px; position: absolute;
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    /* stato di default: occhio chiuso visibile */
+    .pc-acc__eye-svg--closed { opacity: 1; transform: translateY(0) scale(1); }
+    .pc-acc__eye-svg--open   { opacity: 0; transform: translateY(5px) scale(0.6); }
+    /* stato aperto: occhio aperto visibile con bounce */
+    .pc-acc__item.is-open .pc-acc__eye-svg--closed { opacity: 0; transform: translateY(-5px) scale(0.6); }
+    .pc-acc__item.is-open .pc-acc__eye-svg--open   { opacity: 1; transform: translateY(0) scale(1); animation: pc-eye-pop 0.45s cubic-bezier(.34,1.56,.64,1); }
+
+    @keyframes pc-eye-pop {
+      0%   { transform: translateY(6px) scale(0.4); opacity: 0; }
+      65%  { transform: translateY(-3px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* ── corpo accordion ── */
+    .pc-acc__body {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__body-inner { overflow: hidden; }
+    .pc-acc__item.is-open .pc-acc__body { grid-template-rows: 1fr; }
+
+    .pc-acc__text {
+      padding: 0.2rem 0 2rem clamp(3.6rem,8.5vw,6.6rem);
+      color: rgba(0,0,0,0.52); font-size: clamp(0.87rem,1.1vw,1rem);
+      line-height: 1.85; margin: 0;
+      opacity: 0; transform: translateY(10px); filter: blur(3px);
+      transition: opacity 0.4s 0.1s, transform 0.4s cubic-bezier(.4,0,.2,1) 0.1s, filter 0.4s 0.1s;
+    }
+    .pc-acc__item.is-open .pc-acc__text { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (max-width: 640px) {
+      .pc-acc__text { padding-left: 0.5rem; }
+      .pc-acc__num  { font-size: 2rem; }
+      .pc-acc__eye  { width: 34px; height: 34px; }
+      .pc-acc__eye-svg { width: 20px; height: 20px; }
+    }
+
+    /* ── scroll dots ── */
+    #pc-scroll-dots {
+      position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 9px;
+      z-index: 9999; pointer-events: none;
+      opacity: 0; transition: opacity 0.5s;
+    }
+    #pc-scroll-dots.pc-dots--visible { opacity: 1; }
+    .pc-sd {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: transparent;
+      border: 1.5px solid rgba(219,0,90,0.3);
+      transition: background 0.25s, border-color 0.25s, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+      opacity: 0.35;
+    }
+    .pc-sd.pc-sd--on {
+      background: #DB005A; border-color: #DB005A;
+      transform: scale(1.5); opacity: 1;
+    }
+    @media (max-width: 768px) { #pc-scroll-dots { right: 10px; } }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Che tipo di contenuti produce ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Produciamo video (spot, reel, branded content, tutorial, interviste), foto (product photography, ritratti, reportage aziendale) e contenuti grafici ottimizzati per ogni piattaforma digitale." } },
+    { "@type": "Question", "name": "ESTRO dispone di attrezzatura professionale?", "acceptedAnswer": { "@type": "Answer", "text": "Si, lavoriamo con attrezzatura professionale: telecamere cinema, droni, luci e audio professionali. Disponiamo anche di uno studio interno per riprese in ambiente controllato." } },
+    { "@type": "Question", "name": "I contenuti sono ottimizzati per i social media?", "acceptedAnswer": { "@type": "Answer", "text": "Si, ogni contenuto e prodotto tenendo conto delle specifiche tecniche e delle best practice di ogni piattaforma (formato verticale per Reel/TikTok, orizzontale per YouTube, ecc.)." } },
+    { "@type": "Question", "name": "Quanto tempo ci vuole per produrre un video?", "acceptedAnswer": { "@type": "Answer", "text": "Dipende dalla complessita: un reel semplice puo essere pronto in pochi giorni, mentre uno spot piu elaborato richiede 2-4 settimane tra pre-produzione, riprese e post-produzione." } },
+    { "@type": "Question", "name": "E possibile richiedere contenuti in serie continuativa?", "acceptedAnswer": { "@type": "Answer", "text": "Si, offriamo pacchetti mensili di produzione continuativa, ideali per aziende che necessitano di un flusso costante di contenuti per i canali social e digitali." } },
+    { "@type": "Question", "name": "ESTRO si occupa anche della sceneggiatura e dello storytelling?", "acceptedAnswer": { "@type": "Answer", "text": "Si, il nostro team creativo si occupa di tutto: concept, sceneggiatura, storyboard, regia e post-produzione. Puoi affidarti a noi per l'intero processo creativo." } }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -35,14 +275,11 @@
         <span class="nav__menu-label-open">Chiudi</span>
       </button>
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+        <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="../lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -50,7 +287,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="social-media-management.html">Social media management</a>
               <a href="influencer-marketing.html">Influencer marketing</a>
               <a href="google-ads.html">Google ads</a>
@@ -84,10 +321,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -100,7 +335,7 @@
   <main>
 
     <!-- ══ HERO ══════════════════════════════════════════════════ -->
-    <section class="svc-hero svc-hero--videobg" aria-labelledby="page-title">
+    <section class="svc-hero svc-hero--videobg" id="pc-hero" aria-labelledby="page-title">
       <video class="svc-hero__bgvideo" autoplay muted loop playsinline aria-hidden="true"></video>
       <div class="svc-hero__bgvideo-overlay" aria-hidden="true"></div>
       <div class="container svc-hero__inner">
@@ -110,673 +345,704 @@
           <h1 class="svc-hero__title" id="page-title">Produzione<br/><em>Contenuti</em></h1>
           <p class="svc-hero__sub">Uno spot pubblicitario o uno shooting fotografico devono essere realizzati con cura, sfruttando tutti gli strumenti tecnici e creativi necessari.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
-          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
-            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
-            <label class="svc-hero__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
-            </label>
-            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
-          </form>
         </div>
+        <div class="svc-hero__right">
+          <div class="svc-hero__form-card">
+            <p class="svc-hero__form-card-label">Scrivici</p>
+            <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="nome" placeholder="Nome*" required />
+                <input class="svc-hero__field" type="text" name="cognome" placeholder="Cognome*" required />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+                <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="azienda" placeholder="Azienda" />
+                <input class="svc-hero__field" type="url" name="sito" placeholder="Sito Web" />
+              </div>
+              <textarea class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="4"></textarea>
+              <label class="svc-hero__privacy">
+                <input type="checkbox" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
 
 
 
-    <!-- 01 — Moodboard: CHIARO -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Moodboard</span>
-            <h3 class="svc-content-block__title">Moodboard</h3>
-            <p class="svc-step-subtitle">FAI PARLARE LE TUE IMMAGINI!</p>
-            <p class="svc-content-block__text">Mostriamo la tua idea attraverso collage di foto che comunicano emozioni, colori, stati d'animo. Gli stessi che desideri trasmettere con il tuo brand.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>Moodboard</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <div class="smm-stack" id="pc-stack">
 
-    <!-- 02 — Casting: SCURO -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Casting attori e modelli</span>
-            <h3 class="svc-content-block__title smm-title--light">Casting attori e modelli</h3>
-            <p class="svc-step-subtitle smm-text--light">LI CERCHIAMO, LI TROVIAMO E LI RIPRENDIAMO.</p>
-            <p class="svc-content-block__text smm-text--light">Ricerchiamo e selezioniamo attori e modelli in grado di valorizzare i tuoi contenuti foto e video.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 1 — Moodboard -->
+      <section class="smm-panel smm-panel--light" aria-label="Moodboard">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Moodboard</span>
+            <h3 class="smm-panel__title" data-reveal>Moodboard</h3>
+            <p class="smm-panel__text" data-reveal>Mostriamo la tua idea attraverso collage di foto che comunicano emozioni, colori, stati d'animo. Gli stessi che desideri trasmettere con il tuo brand.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Fai parlare le tue immagini</li>
+              <li data-reveal>Emozioni, colori e stati d'animo</li>
+              <li data-reveal>Identità visiva coerente col brand</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>Casting</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Moodboard</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 03 — Location scouting: CHIARO -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Location scouting</span>
-            <h3 class="svc-content-block__title">Location scouting</h3>
-            <p class="svc-step-subtitle">LUOGHI CHE VALORIZZANO LE TUE IMMAGINI.</p>
-            <p class="svc-content-block__text">Prima di ogni produzione andiamo a caccia dei luoghi più adatti alle riprese del tuo film.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 2 — Casting -->
+      <section class="smm-panel smm-panel--dark" aria-label="Casting attori e modelli">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Casting</span>
+            <h3 class="smm-panel__title" data-reveal>Casting<br>attori e modelli</h3>
+            <p class="smm-panel__text" data-reveal>Ricerchiamo e selezioniamo attori e modelli in grado di valorizzare i tuoi contenuti foto e video. Li cerchiamo, li troviamo e li riprendiamo.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Selezione professionale di talenti</li>
+              <li data-reveal>Attori e modelli per ogni esigenza</li>
+              <li data-reveal>Valorizzazione dei tuoi contenuti</li>
+            </ul>
+            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>Location</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Casting</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 04 — Set design: SCURO -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Set design</span>
-            <h3 class="svc-content-block__title smm-title--light">Set design</h3>
-            <p class="svc-step-subtitle smm-text--light">I DETTAGLI CHE FANNO LA DIFFERENZA DAVANTI AI RIFLETTORI.</p>
-            <p class="svc-content-block__text smm-text--light">I nostri set sono studiati da scenografi e designers professionisti, che doneranno al tuo video un tocco di pura magia. Non c'è oggetto di scena che non siamo in grado di trovare o realizzare.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 3 — Location scouting -->
+      <section class="smm-panel smm-panel--light" aria-label="Location scouting">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Location scouting</span>
+            <h3 class="smm-panel__title" data-reveal>Location<br>scouting</h3>
+            <p class="smm-panel__text" data-reveal>Prima di ogni produzione andiamo a caccia dei luoghi più adatti alle riprese del tuo film. Luoghi che valorizzano le tue immagini.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Ricerca delle location perfette</li>
+              <li data-reveal>Sopralluoghi e permessi inclusi</li>
+              <li data-reveal>Ambienti che amplificano il messaggio</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>Set design</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Location</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 05 — Lighting design: CHIARO -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Lighting design</span>
-            <h3 class="svc-content-block__title">Lighting design</h3>
-            <p class="svc-step-subtitle">T'ILLUMINO D'IMMENSO.</p>
-            <p class="svc-content-block__text">La vera atmosfera di un video o di una foto si ottiene sfruttando la luce solare o la luce artificiale. Siamo maestri di entrambe queste fonti luminose.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 4 — Set design -->
+      <section class="smm-panel smm-panel--dark" aria-label="Set design">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Set design</span>
+            <h3 class="smm-panel__title" data-reveal>Set<br>design</h3>
+            <p class="smm-panel__text" data-reveal>I nostri set sono studiati da scenografi e designers professionisti, che doneranno al tuo video un tocco di pura magia. Non c'è oggetto di scena che non siamo in grado di trovare o realizzare.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>I dettagli fanno la differenza</li>
+              <li data-reveal>Scenografi e designer professionisti</li>
+              <li data-reveal>Oggetti di scena su misura</li>
+            </ul>
+            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>Lighting</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Set design</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 06 — Stylist: SCURO -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Stylist</span>
-            <h3 class="svc-content-block__title smm-title--light">Stylist</h3>
-            <p class="svc-step-subtitle smm-text--light">PROVA OUTFIT SEMPRE SUPERATA.</p>
-            <p class="svc-content-block__text smm-text--light">I nostri stylist ti consiglieranno abbinamenti di capi e accessori per lasciare il segno in passerella o in una campagna pubblicitaria.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 5 — Lighting design -->
+      <section class="smm-panel smm-panel--light" aria-label="Lighting design">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Lighting design</span>
+            <h3 class="smm-panel__title" data-reveal>Lighting<br>design</h3>
+            <p class="smm-panel__text" data-reveal>La vera atmosfera di un video o di una foto si ottiene sfruttando la luce solare o la luce artificiale. Siamo maestri di entrambe queste fonti luminose.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Luce naturale e artificiale</li>
+              <li data-reveal>Atmosfera che racconta il brand</li>
+              <li data-reveal>Illuminazione professionale su set</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>Stylist</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Lighting</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 07 — Makeup artist: CHIARO -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Makeup artist</span>
-            <h3 class="svc-content-block__title">Makeup artist</h3>
-            <p class="svc-step-subtitle">I VERI COLORI DELLA TUA PERSONALITÀ.</p>
-            <p class="svc-content-block__text">Un look iconico passa anche dal trucco. Trova il tuo face look ideale per ogni occasione.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 6 — Stylist -->
+      <section class="smm-panel smm-panel--dark" aria-label="Stylist">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Stylist</span>
+            <h3 class="smm-panel__title" data-reveal>Stylist</h3>
+            <p class="smm-panel__text" data-reveal>I nostri stylist ti consiglieranno abbinamenti di capi e accessori per lasciare il segno in passerella o in una campagna pubblicitaria.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Outfit sempre al top</li>
+              <li data-reveal>Capi e accessori selezionati ad hoc</li>
+              <li data-reveal>Look coerenti con l'identità del brand</li>
+            </ul>
+            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>Makeup</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Stylist</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- 08 — Regia: SCURO -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Regia</span>
-            <h3 class="svc-content-block__title smm-title--light">Regia</h3>
-            <p class="svc-step-subtitle smm-text--light">SI VA IN SCENA.</p>
-            <p class="svc-content-block__text smm-text--light">La direzione artistica e organizzativa di uno spot non è uno scherzo. Lo sappiamo bene.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
+      <!-- 7 — Makeup artist -->
+      <section class="smm-panel smm-panel--light" aria-label="Makeup artist">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Makeup artist</span>
+            <h3 class="smm-panel__title" data-reveal>Makeup<br>artist</h3>
+            <p class="smm-panel__text" data-reveal>Un look iconico passa anche dal trucco. Trova il tuo face look ideale per ogni occasione. I veri colori della tua personalità.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Trucco professionale per foto e video</li>
+              <li data-reveal>Look personalizzati per ogni esigenza</li>
+              <li data-reveal>Makeup duraturo sotto le luci del set</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>Regia</span>
-            </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Makeup</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
+
+      <!-- 8 — Regia -->
+      <section class="smm-panel smm-panel--dark" aria-label="Regia">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Regia</span>
+            <h3 class="smm-panel__title" data-reveal>Regia</h3>
+            <p class="smm-panel__text" data-reveal>La direzione artistica e organizzativa di uno spot non è uno scherzo. Lo sappiamo bene. Si va in scena con professionalità e visione.</p>
+            <ul class="smm-panel__list">
+              <li data-reveal>Direzione artistica completa</li>
+              <li data-reveal>Gestione set e crew professionale</li>
+              <li data-reveal>Dal concept al ciak finale</li>
+            </ul>
+            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
+          </div>
+          <div class="smm-panel__visual" aria-hidden="true">
+            <span class="smm-panel__visual-label">Regia</span>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /smm-stack -->
 
     <!-- ══ PRODUZIONE FOTO ══════════════════════════════════════ -->
-    <section class="svc-prod svc-icons-section" aria-labelledby="prod-foto-title">
+    <section class="pc-prod" aria-labelledby="prod-foto-title">
       <div class="container">
-        <header class="svc-prod__head reveal">
-          <p class="svc-prod__kicker">Cosa facciamo</p>
-          <h2 class="svc-prod__title" id="prod-foto-title">Produzione Foto</h2>
-          <p class="svc-prod__sub">Ogni immagine racconta una storia. Le nostre produzioni fotografiche sono curate in ogni dettaglio per valorizzare il tuo brand con scatti professionali e di impatto.</p>
+        <header class="pc-prod__head reveal">
+          <p class="pc-prod__kicker">Cosa facciamo</p>
+          <h2 class="pc-prod__title" id="prod-foto-title">Produzione Foto</h2>
+          <p class="pc-prod__sub">Ogni immagine racconta una storia. Le nostre produzioni fotografiche sono curate in ogni dettaglio per valorizzare il tuo brand con scatti professionali e di impatto.</p>
         </header>
-        <ul class="svc-icons-grid">
+        <div class="pc-acc">
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--circle svc-icon-card__badge--pink">
-                <!-- Camera fotografica -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="8" y="20" width="48" height="34" rx="5" fill="white" opacity=".15" stroke="white" stroke-width="2.5"/>
-                  <path d="M22 20v-4a2 2 0 012-2h16a2 2 0 012 2v4" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <circle cx="32" cy="37" r="9" stroke="white" stroke-width="2.5"/>
-                  <circle cx="32" cy="37" r="4" fill="white"/>
-                  <rect x="12" y="25" width="6" height="4" rx="1" fill="white" opacity=".6"/>
+          <div class="pc-acc__item is-open">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="true">
+              <span class="pc-acc__num">01</span>
+              <strong class="pc-acc__name">Photo Shooting</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Photo Shooting</span>
-              <span class="svc-icon-card__desc">Servizi fotografici professionali per prodotti, persone e ambienti. Ogni scatto è pensato per trasmettere la giusta emozione.</span>
-            </button>
-          </li>
-
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--diamond svc-icon-card__badge--dark">
-                <!-- Libro aperto -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M32 16 C32 16 20 14 10 18 L10 50 C20 46 32 48 32 48" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                  <path d="M32 16 C32 16 44 14 54 18 L54 50 C44 46 32 48 32 48" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                  <line x1="32" y1="16" x2="32" y2="48" stroke="white" stroke-width="2" opacity=".5"/>
-                  <line x1="15" y1="26" x2="28" y2="26" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-                  <line x1="15" y1="32" x2="28" y2="32" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-                  <line x1="15" y1="38" x2="28" y2="38" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".4"/>
-                  <line x1="36" y1="26" x2="49" y2="26" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-                  <line x1="36" y1="32" x2="49" y2="32" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".7"/>
-                  <line x1="36" y1="38" x2="49" y2="38" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Lookbook e Catalogo</span>
-              <span class="svc-icon-card__desc">Realizziamo lookbook e cataloghi fotografici che esaltano i tuoi prodotti e costruiscono un'identità visiva coerente e raffinata.</span>
-            </button>
-          </li>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Servizi fotografici professionali per prodotti, persone e ambienti. Ogni scatto è pensato per trasmettere la giusta emozione e valorizzare il tuo brand.</p>
+            </div></div>
+          </div>
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--blob svc-icon-card__badge--light">
-                <!-- Bacchetta magica + stelle -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="14" y1="50" x2="44" y2="20" stroke="#DB005A" stroke-width="3.5" stroke-linecap="round"/>
-                  <rect x="38" y="14" width="12" height="12" rx="2" transform="rotate(45 44 20)" fill="#DB005A"/>
-                  <circle cx="18" cy="18" r="3" fill="#DB005A"/>
-                  <circle cx="50" cy="44" r="2" fill="#DB005A" opacity=".6"/>
-                  <path d="M52 14 L54 10 L56 14 L60 16 L56 18 L54 22 L52 18 L48 16 Z" fill="#DB005A"/>
-                  <path d="M12 36 L13 33 L14 36 L17 37 L14 38 L13 41 L12 38 L9 37 Z" fill="#DB005A" opacity=".7"/>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">02</span>
+              <strong class="pc-acc__name">Lookbook &amp; Catalogo</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Photo Retouching</span>
-              <span class="svc-icon-card__desc">Post-produzione fotografica professionale: ritocco, color grading e ottimizzazione delle immagini per ogni canale di comunicazione.</span>
-            </button>
-          </li>
-
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--scallop svc-icon-card__badge--dark">
-                <!-- Occhio + mirino -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 32 C14 14 50 14 58 32 C50 50 14 50 6 32Z" stroke="white" stroke-width="2.5" fill="none"/>
-                  <circle cx="32" cy="32" r="10" stroke="white" stroke-width="2.5"/>
-                  <circle cx="32" cy="32" r="4" fill="white"/>
-                  <line x1="32" y1="8" x2="32" y2="14" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-                  <line x1="32" y1="50" x2="32" y2="56" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-                  <line x1="8" y1="32" x2="14" y2="32" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-                  <line x1="50" y1="32" x2="56" y2="32" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Reportage Eventi</span>
-              <span class="svc-icon-card__desc">Documentiamo i tuoi eventi con occhio narrativo e sensibilità artistica, immortalando ogni momento significativo in scatti autentici.</span>
-            </button>
-          </li>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Realizziamo lookbook e cataloghi fotografici che esaltano i tuoi prodotti e costruiscono un'identità visiva coerente e raffinata.</p>
+            </div></div>
+          </div>
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--circle svc-icon-card__badge--dark">
-                <!-- Megafono -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M10 24 L10 40 L20 40 L36 52 L36 12 L20 24 Z" fill="white"/>
-                  <path d="M44 20 Q54 32 44 44" stroke="white" stroke-width="3" stroke-linecap="round" fill="none"/>
-                  <path d="M48 15 Q62 32 48 49" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity=".4"/>
-                  <rect x="10" y="40" width="6" height="10" rx="2" fill="white" opacity=".5"/>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">03</span>
+              <strong class="pc-acc__name">Photo Retouching</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Campagne Fotografiche</span>
-              <span class="svc-icon-card__desc">Campagne visive studiate per catturare l'essenza del brand e convertire: dalla direzione creativa allo scatto finale.</span>
-            </button>
-          </li>
-
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--diamond svc-icon-card__badge--pink">
-                <!-- Cubo 3D prodotto -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M32 10 L54 22 L54 42 L32 54 L10 42 L10 22 Z" fill="white" opacity=".15" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
-                  <path d="M32 10 L32 32 L10 22" stroke="white" stroke-width="2" opacity=".7"/>
-                  <path d="M32 32 L54 22" stroke="white" stroke-width="2" opacity=".7"/>
-                  <path d="M32 32 L32 54" stroke="white" stroke-width="2" opacity=".5"/>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Fotografia di Prodotto</span>
-              <span class="svc-icon-card__desc">Valorizzazione fotografica dei tuoi prodotti per e-commerce, advertising e comunicazione multicanale.</span>
-            </button>
-          </li>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Post-produzione professionale: ritocco, color grading e ottimizzazione delle immagini per ogni canale di comunicazione.</p>
+            </div></div>
+          </div>
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--blob svc-icon-card__badge--dark">
-                <!-- Drone con eliche -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="28" y="28" width="8" height="8" rx="2" fill="white"/>
-                  <line x1="18" y1="18" x2="28" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="46" y1="18" x2="36" y2="28" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="18" y1="46" x2="28" y2="36" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="46" y1="46" x2="36" y2="36" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <ellipse cx="16" cy="16" rx="8" ry="4" stroke="white" stroke-width="2" transform="rotate(-30 16 16)"/>
-                  <ellipse cx="48" cy="16" rx="8" ry="4" stroke="white" stroke-width="2" transform="rotate(30 48 16)"/>
-                  <ellipse cx="16" cy="48" rx="8" ry="4" stroke="white" stroke-width="2" transform="rotate(30 16 48)"/>
-                  <ellipse cx="48" cy="48" rx="8" ry="4" stroke="white" stroke-width="2" transform="rotate(-30 48 48)"/>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">04</span>
+              <strong class="pc-acc__name">Fotografia di Prodotto &amp; Campagne</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Foto Aerea Drone</span>
-              <span class="svc-icon-card__desc">Scatti aerei con drone professionale per prospettive uniche che valorizzano location, eventi e architetture.</span>
-            </button>
-          </li>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Valorizzazione fotografica per e-commerce e advertising, reportage eventi e campagne visive che catturano l'essenza del brand e convertono.</p>
+            </div></div>
+          </div>
 
-        </ul>
+        </div>
       </div>
     </section>
 
     <!-- ══ PRODUZIONE VIDEO ══════════════════════════════════════ -->
-    <section class="svc-prod svc-icons-section svc-icons-section--alt" aria-labelledby="prod-video-title">
+    <section class="pc-prod" aria-labelledby="prod-video-title">
       <div class="container">
-        <header class="svc-prod__head reveal">
-          <p class="svc-prod__kicker">Cosa facciamo</p>
-          <h2 class="svc-prod__title" id="prod-video-title">Produzione Video</h2>
-          <p class="svc-prod__sub">Dal concept alla distribuzione, realizziamo contenuti video professionali che catturano l'attenzione e raccontano la tua storia in modo memorabile.</p>
+        <header class="pc-prod__head reveal">
+          <p class="pc-prod__kicker">Cosa facciamo</p>
+          <h2 class="pc-prod__title" id="prod-video-title">Produzione Video</h2>
+          <p class="pc-prod__sub">Dal concept alla distribuzione, realizziamo contenuti video professionali che catturano l'attenzione e raccontano la tua storia in modo memorabile.</p>
         </header>
-        <ul class="svc-icons-grid">
+        <div class="pc-acc">
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--circle svc-icon-card__badge--dark">
-                <!-- Videocamera -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="20" width="36" height="26" rx="4" fill="white" opacity=".15" stroke="white" stroke-width="2.5"/>
-                  <path d="M42 27 L58 20 L58 44 L42 37 Z" fill="white" opacity=".8"/>
-                  <circle cx="20" cy="33" r="6" stroke="white" stroke-width="2"/>
-                  <circle cx="20" cy="33" r="2" fill="white"/>
+          <div class="pc-acc__item is-open">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="true">
+              <span class="pc-acc__num">01</span>
+              <strong class="pc-acc__name">Video Shooting</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Video Shooting</span>
-              <span class="svc-icon-card__desc">Riprese video professionali con attrezzatura top di gamma per ogni tipo di produzione.</span>
-            </button>
-          </li>
-
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--scallop svc-icon-card__badge--pink">
-                <!-- Clapperboard -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="10" y="24" width="44" height="30" rx="4" fill="white" opacity=".2" stroke="white" stroke-width="2.5"/>
-                  <rect x="10" y="14" width="44" height="12" rx="4" fill="white"/>
-                  <line x1="20" y1="14" x2="16" y2="26" stroke="#DB005A" stroke-width="3" stroke-linecap="round"/>
-                  <line x1="30" y1="14" x2="26" y2="26" stroke="#DB005A" stroke-width="3" stroke-linecap="round"/>
-                  <line x1="40" y1="14" x2="36" y2="26" stroke="#DB005A" stroke-width="3" stroke-linecap="round"/>
-                  <line x1="50" y1="14" x2="46" y2="26" stroke="#DB005A" stroke-width="3" stroke-linecap="round"/>
-                  <line x1="16" y1="40" x2="48" y2="40" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".6"/>
-                  <line x1="16" y1="48" x2="40" y2="48" stroke="white" stroke-width="2" stroke-linecap="round" opacity=".4"/>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Post Produzione & Editing</span>
-              <span class="svc-icon-card__desc">Montaggio professionale, color grading e sound design per un risultato finale impeccabile.</span>
-            </button>
-          </li>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Riprese video professionali con attrezzatura top di gamma: cinema camera, ottiche anamorfiche, rig completo per ogni tipo di produzione.</p>
+            </div></div>
+          </div>
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--diamond svc-icon-card__badge--light">
-                <!-- Bobina film -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="32" cy="32" r="22" stroke="#DB005A" stroke-width="2.5"/>
-                  <circle cx="32" cy="32" r="8" stroke="#DB005A" stroke-width="2.5"/>
-                  <circle cx="32" cy="32" r="3" fill="#DB005A"/>
-                  <line x1="32" y1="10" x2="32" y2="24" stroke="#DB005A" stroke-width="2" opacity=".5"/>
-                  <line x1="32" y1="40" x2="32" y2="54" stroke="#DB005A" stroke-width="2" opacity=".5"/>
-                  <line x1="10" y1="32" x2="24" y2="32" stroke="#DB005A" stroke-width="2" opacity=".5"/>
-                  <line x1="40" y1="32" x2="54" y2="32" stroke="#DB005A" stroke-width="2" opacity=".5"/>
-                  <line x1="16" y1="16" x2="26" y2="26" stroke="#DB005A" stroke-width="2" opacity=".3"/>
-                  <line x1="38" y1="38" x2="48" y2="48" stroke="#DB005A" stroke-width="2" opacity=".3"/>
-                  <line x1="48" y1="16" x2="38" y2="26" stroke="#DB005A" stroke-width="2" opacity=".3"/>
-                  <line x1="26" y1="38" x2="16" y2="48" stroke="#DB005A" stroke-width="2" opacity=".3"/>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">02</span>
+              <strong class="pc-acc__name">Post Produzione &amp; Editing</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Video Eventi & Aftermovie</span>
-              <span class="svc-icon-card__desc">Documentiamo i tuoi eventi e creiamo aftermovie emozionanti che rivivono i momenti migliori.</span>
-            </button>
-          </li>
-
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--blob svc-icon-card__badge--pink">
-                <!-- Fulmine VFX -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M40 8 L22 34 L32 34 L24 56 L46 28 L36 28 Z" fill="white"/>
-                  <circle cx="50" cy="16" r="3" fill="white" opacity=".5"/>
-                  <circle cx="14" cy="44" r="2" fill="white" opacity=".4"/>
-                  <circle cx="52" cy="44" r="2" fill="white" opacity=".3"/>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">VFX</span>
-              <span class="svc-icon-card__desc">Effetti visivi speciali e animazioni che trasformano la tua idea in qualcosa di straordinario.</span>
-            </button>
-          </li>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Montaggio professionale, color grading cinematografico e sound design per un risultato finale impeccabile.</p>
+            </div></div>
+          </div>
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--circle svc-icon-card__badge--light">
-                <!-- Schermo TV con play -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="6" y="10" width="52" height="36" rx="5" fill="#DB005A" opacity=".12" stroke="#DB005A" stroke-width="2.5"/>
-                  <line x1="24" y1="46" x2="40" y2="46" stroke="#DB005A" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="32" y1="46" x2="32" y2="54" stroke="#DB005A" stroke-width="2.5" stroke-linecap="round"/>
-                  <polygon points="24,18 24,38 44,28" fill="#DB005A"/>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">03</span>
+              <strong class="pc-acc__name">Spot Pubblicitari</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Spot Pubblicitari</span>
-              <span class="svc-icon-card__desc">Creiamo spot che catturano l'attenzione e convertono: dalla sceneggiatura alle riprese fino alla distribuzione.</span>
-            </button>
-          </li>
-
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--scallop svc-icon-card__badge--dark">
-                <!-- Globo + onde wifi -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="32" cy="36" r="18" stroke="white" stroke-width="2.5"/>
-                  <ellipse cx="32" cy="36" rx="8" ry="18" stroke="white" stroke-width="1.5" opacity=".5"/>
-                  <line x1="14" y1="36" x2="50" y2="36" stroke="white" stroke-width="1.5" opacity=".5"/>
-                  <line x1="16" y1="26" x2="48" y2="26" stroke="white" stroke-width="1.5" opacity=".3"/>
-                  <line x1="16" y1="46" x2="48" y2="46" stroke="white" stroke-width="1.5" opacity=".3"/>
-                  <path d="M26 12 Q32 8 38 12" stroke="white" stroke-width="2.5" stroke-linecap="round" fill="none"/>
-                  <path d="M22 8 Q32 2 42 8" stroke="white" stroke-width="2" stroke-linecap="round" fill="none" opacity=".5"/>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Diffusione Web & TV</span>
-              <span class="svc-icon-card__desc">Ottimizziamo e distribuiamo i tuoi contenuti video per tutti i canali digitali e televisivi.</span>
-            </button>
-          </li>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Creiamo spot che catturano l'attenzione e convertono: dalla sceneggiatura alle riprese fino alla distribuzione multicanale.</p>
+            </div></div>
+          </div>
 
-          <li class="svc-icon-card">
-            <button class="svc-icon-card__btn">
-              <div class="svc-icon-card__badge svc-icon-card__badge--diamond svc-icon-card__badge--pink">
-                <!-- Drone con eliche -->
-                <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect x="26" y="26" width="12" height="12" rx="3" fill="white"/>
-                  <line x1="16" y1="16" x2="26" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="48" y1="16" x2="38" y2="26" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="16" y1="48" x2="26" y2="38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <line x1="48" y1="48" x2="38" y2="38" stroke="white" stroke-width="2.5" stroke-linecap="round"/>
-                  <ellipse cx="14" cy="14" rx="7" ry="3.5" stroke="white" stroke-width="2" transform="rotate(-30 14 14)"/>
-                  <ellipse cx="50" cy="14" rx="7" ry="3.5" stroke="white" stroke-width="2" transform="rotate(30 50 14)"/>
-                  <ellipse cx="14" cy="50" rx="7" ry="3.5" stroke="white" stroke-width="2" transform="rotate(30 14 50)"/>
-                  <ellipse cx="50" cy="50" rx="7" ry="3.5" stroke="white" stroke-width="2" transform="rotate(-30 50 50)"/>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">04</span>
+              <strong class="pc-acc__name">Video Eventi &amp; Aftermovie</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
                 </svg>
-              </div>
-              <span class="svc-icon-card__title">Riprese Drone</span>
-              <span class="svc-icon-card__desc">Riprese aeree con drone professionale per prospettive uniche e spettacolari che valorizzano ogni progetto.</span>
-            </button>
-          </li>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Documentiamo i tuoi eventi e creiamo aftermovie emozionanti che rivivono i momenti migliori.</p>
+            </div></div>
+          </div>
 
-        </ul>
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">05</span>
+              <strong class="pc-acc__name">VFX &amp; Animazione</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Effetti visivi speciali e animazioni 2D/3D che trasformano la tua idea in qualcosa di straordinario.</p>
+            </div></div>
+          </div>
+
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">06</span>
+              <strong class="pc-acc__name">Diffusione Web &amp; TV</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Ottimizziamo e distribuiamo i tuoi contenuti video per tutti i canali digitali, social e televisivi.</p>
+            </div></div>
+          </div>
+
+          <div class="pc-acc__item">
+            <div class="pc-acc__head" role="button" tabindex="0" aria-expanded="false">
+              <span class="pc-acc__num">07</span>
+              <strong class="pc-acc__name">Riprese Drone</strong>
+              <span class="pc-acc__eye" aria-hidden="true">
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/>
+                  <circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/>
+                  <line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+                <svg class="pc-acc__eye-svg pc-acc__eye-svg--closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round">
+                  <path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/>
+                  <line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/>
+                </svg>
+              </span>
+            </div>
+            <div class="pc-acc__body"><div class="pc-acc__body-inner">
+              <p class="pc-acc__text">Riprese aeree con drone professionale per prospettive uniche e spettacolari che valorizzano location, eventi e architetture.</p>
+            </div></div>
+          </div>
+
+        </div>
       </div>
     </section>
 
-    <!-- ══ CLIENTI ═══════════════════════════════════════════════ -->
-    <section class="svc-clients">
+    <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
+    <section class="section svc-clients" id="pc-clienti">
       <div class="container">
-        <h2 class="svc-clients__title reveal">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
+        <h2 class="svc-clients__title" id="pc-clienti-title">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
       </div>
       <div class="svc-clients__marquee-wrap">
         <div class="svc-clients__track">
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
         </div>
         <div class="svc-clients__track svc-clients__track--rev">
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
         </div>
       </div>
     </section>
 
-    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
-    <section class="section svc-magic">
-      <div class="container svc-magic__inner">
-        <div class="svc-magic__cat reveal">
-          <img src="../foto%20servizi/Foto%20ultima%20sezione.webp" alt="" aria-hidden="true" />
-        </div>
-        <div class="svc-magic__content reveal reveal-delay-1">
-          <h2 class="svc-magic__title">SAPPIAMO FARE<br>UN SACCO DI<br>ALTRE MAGIE</h2>
-          <div class="svc-magic__links">
-            <a class="svc-magic__pill" href="graphic-design.html">Graphic Design</a>
-            <a class="svc-magic__pill" href="social-media-management.html">Social Media Management</a>
-            <a class="svc-magic__pill" href="web-design.html">Web Design</a>
-            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
-          </div>
-        </div>
-      </div>
-    </section>
+    
 
     <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
-    <section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci">
+    
+    <!-- FAQ -->
+    <section class="page-faq">
+      <div class="page-faq__inner">
+        <h2 class="page-faq__title">FAQ</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Che tipo di contenuti produce ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Produciamo video (spot, reel, branded content, tutorial, interviste), foto (product photography, ritratti, reportage aziendale) e contenuti grafici ottimizzati per ogni piattaforma digitale.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO dispone di attrezzatura professionale?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, lavoriamo con attrezzatura professionale: telecamere cinema, droni, luci e audio professionali. Disponiamo anche di uno studio interno per riprese in ambiente controllato.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">I contenuti sono ottimizzati per i social media?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, ogni contenuto e prodotto tenendo conto delle specifiche tecniche e delle best practice di ogni piattaforma (formato verticale per Reel/TikTok, orizzontale per YouTube, ecc.).</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quanto tempo ci vuole per produrre un video?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Dipende dalla complessita: un reel semplice puo essere pronto in pochi giorni, mentre uno spot piu elaborato richiede 2-4 settimane tra pre-produzione, riprese e post-produzione.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">E possibile richiedere contenuti in serie continuativa?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, offriamo pacchetti mensili di produzione continuativa, ideali per aziende che necessitano di un flusso costante di contenuti per i canali social e digitali.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO si occupa anche della sceneggiatura e dello storytelling?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, il nostro team creativo si occupa di tutto: concept, sceneggiatura, storyboard, regia e post-produzione. Puoi affidarti a noi per l'intero processo creativo.</div></div>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+<section class="svc-caffe svc-caffe--fuchsia" id="pc-caffe" aria-label="Contattaci" data-nav-theme="dark">
       <div class="container svc-caffe__inner">
         <div class="svc-caffe__left reveal">
-          <h2 class="svc-caffe__title">Prendiamoci<br/>un caffè!</h2>
+          <h2 class="svc-caffe__title"><span class="caffe-nowrap">Prendiamoci</span><br/>un caffè!</h2>
           <p class="svc-caffe__sub">Anche virtuale</p>
         </div>
         <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
-          <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-          <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-          <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+          </div>
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
           <label class="svc-caffe__privacy">
             <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
           </label>
           <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
         </form>
@@ -789,36 +1055,267 @@
   </script>
   <script src="../js/main.js"></script>
   <script>
+  /* ── Produzione Contenuti: scroll-driven motion ── */
   (function () {
     'use strict';
+
     function c01(v) { return Math.max(0, Math.min(1, v)); }
     function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
-    var heroEl = document.querySelector('.svc-hero'), magicEl = document.querySelector('.svc-magic'), caffeEl = document.querySelector('.svc-caffe'), navEl = document.querySelector('.nav');
-    var heroOv = null;
-    if (heroEl) { heroOv = document.createElement('div'); Object.assign(heroOv.style, { position:'absolute', inset:'0', background:'#fff', opacity:'0', pointerEvents:'none', zIndex:'10' }); heroEl.appendChild(heroOv); }
-    var magicOv = null;
-    if (magicEl) { magicOv = document.createElement('div'); Object.assign(magicOv.style, { position:'absolute', inset:'0', background:'#DB005A', opacity:'0', pointerEvents:'none', zIndex:'5' }); if (getComputedStyle(magicEl).position === 'static') magicEl.style.position = 'relative'; magicEl.appendChild(magicOv); }
+
+    var heroEl    = document.getElementById('pc-hero');
+    var clientiEl = document.getElementById('pc-clienti');
+    var magicEl   = document.getElementById('pc-magic');
+    var caffeEl   = document.getElementById('pc-caffe');
+    var navEl     = document.querySelector('.nav');
+
+    function splitLetters(el) {
+      if (!el) return [];
+      var raw = el.innerHTML, out = '', i = 0;
+      while (i < raw.length) {
+        if (raw[i] === '<') {
+          var j = raw.indexOf('>', i); out += raw.slice(i, j + 1); i = j + 1;
+        } else if (raw[i] === '&') {
+          var k2 = raw.indexOf(';', i); out += '<span class="tl">' + raw.slice(i, k2 + 1) + '</span>'; i = k2 + 1;
+        } else if (raw[i] === ' ') {
+          out += ' '; i++;
+        } else {
+          out += '<span class="tl">' + raw[i] + '</span>'; i++;
+        }
+      }
+      el.innerHTML = out;
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      return Array.from(el.querySelectorAll('.tl'));
+    }
+
+    function revLetters(letters, p) {
+      letters.forEach(function (el, i) {
+        var lP = ease(c01((p - i * 0.012) / 0.08));
+        el.style.opacity   = lP.toFixed(3);
+        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
+      });
+    }
+
+    function makeTransOv(prevEl, nextBg) {
+      if (!prevEl) return null;
+      var ov = document.createElement('div');
+      Object.assign(ov.style, { position:'absolute', inset:'0', background:nextBg, opacity:'0', pointerEvents:'none', zIndex:'5' });
+      if (getComputedStyle(prevEl).position === 'static') prevEl.style.position = 'relative';
+      prevEl.appendChild(ov);
+      return ov;
+    }
+
+    var heroOv         = makeTransOv(heroEl,    '#fff');
+    var cliToMagicOv   = makeTransOv(clientiEl, '#fff');
+    var magicToCaffeOv = makeTransOv(magicEl,   '#DB005A');
+
     var caffeExitOv = document.createElement('div');
     Object.assign(caffeExitOv.style, { position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'200', transition:'none' });
     document.body.appendChild(caffeExitOv);
+
+    var clientiLetters = splitLetters(document.getElementById('pc-clienti-title'));
+    var magicLetters   = splitLetters(magicEl  && magicEl.querySelector('.svc-magic__title'));
+    var caffeLetters   = splitLetters(caffeEl  && caffeEl.querySelector('.svc-caffe__title'));
+
+    var magicCat   = magicEl && magicEl.querySelector('.svc-magic__cat');
+    var magicLinks = magicEl && magicEl.querySelector('.svc-magic__links');
+    var caffeSub   = caffeEl && caffeEl.querySelector('.svc-caffe__sub');
+    var caffeForm  = caffeEl && caffeEl.querySelector('.svc-caffe__form');
+
+    function unlockContainer(el) {
+      if (!el) return;
+      el.style.cssText += ';opacity:1!important;transform:none!important;transition:none!important';
+    }
+    unlockContainer(magicEl && magicEl.querySelector('.svc-magic__content'));
+    unlockContainer(caffeEl && caffeEl.querySelector('.svc-caffe__left'));
+
+    function initHide(el) {
+      if (!el) return;
+      Object.assign(el.style, { opacity:'0', transform:'translateY(20px)', willChange:'opacity,transform', transition:'none' });
+    }
+    initHide(magicCat);
+    initHide(magicLinks);
+    initHide(caffeSub);
+    initHide(caffeForm);
+
+    document.querySelectorAll('#pc-clienti .reveal,#pc-magic .reveal,#pc-caffe .reveal').forEach(function (el) {
+      el.style.transition = 'none';
+    });
+
+    /* SMM-STACK panel animation */
+    (function () {
+      var stack  = document.getElementById('pc-stack');
+      if (!stack) return;
+      var panels = Array.from(stack.querySelectorAll('.smm-panel'));
+      var N = panels.length;
+      if (!N) return;
+
+      var panelData = panels.map(function (panel) {
+        return { el: panel, reveals: Array.from(panel.querySelectorAll('[data-reveal]')) };
+      });
+
+      var STAG_RE = 0.025, DUR_RE = 0.52;
+      var prev = {}, rafId = null;
+
+      function tick() {
+        rafId = requestAnimationFrame(tick);
+        var stackRect   = stack.getBoundingClientRect();
+        var vh2         = window.innerHeight;
+        var totalScroll = stack.offsetHeight - vh2;
+        if (totalScroll <= 0) return;
+        var globalP = Math.max(0, Math.min(1, -stackRect.top / totalScroll));
+
+        panelData.forEach(function (pd, i) {
+          var sliceSize  = 1 / N;
+          var sliceStart = i * sliceSize;
+          var rawEntry   = i === 0 ? 1 : Math.max(0, Math.min(1, (globalP - sliceStart + sliceSize * 0.3) / (sliceSize * 0.5)));
+          var entryP     = i === 0 ? 1 : (0.5 - Math.cos(Math.PI * rawEntry) / 2);
+          var ty = ((1 - entryP) * 60).toFixed(2);
+          var key = 'ty_' + i;
+          if (prev[key] !== ty) { prev[key] = ty; pd.el.style.transform = 'translateY(' + ty + 'px)'; }
+
+          if (i > 0) {
+            var localP   = Math.max(0, Math.min(1, (globalP - sliceStart) / sliceSize));
+            var coverP   = 0.5 - Math.cos(Math.PI * Math.max(0, Math.min(1, localP / 0.4))) / 2;
+            var scaleVal = (1 - coverP * 0.025).toFixed(4);
+            var skey = 'scale_' + (i - 1);
+            if (prev[skey] !== scaleVal) { prev[skey] = scaleVal; panelData[i-1].el.style.transform = 'scale(' + scaleVal + ')'; }
+          }
+
+          pd.reveals.forEach(function (el2, ri) {
+            var p   = 0.5 - Math.cos(Math.PI * Math.max(0, Math.min(1, (rawEntry - ri * STAG_RE) / DUR_RE))) / 2;
+            var op  = p.toFixed(3);
+            var ty2 = ((1 - p) * 22).toFixed(1);
+            var k   = 'rv_' + i + '_' + ri;
+            var v   = op + '|' + ty2;
+            if (prev[k] !== v) { prev[k] = v; el2.style.opacity = op; el2.style.transform = 'translateY(' + ty2 + 'px)'; }
+          });
+        });
+      }
+
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { if (!rafId) rafId = requestAnimationFrame(tick); }
+        else { if (rafId) { cancelAnimationFrame(rafId); rafId = null; } }
+      }, { threshold: 0 });
+      io.observe(stack);
+
+      /* Ultimo panel → clienti: overlay nero */
+      (function () {
+        var lastPanel = panelData[panelData.length - 1].el;
+        if (!lastPanel || !clientiEl) return;
+        var ovLast = document.createElement('div');
+        Object.assign(ovLast.style, { position:'absolute', inset:'0', background:'#000', opacity:'0', pointerEvents:'none', zIndex:'5' });
+        if (getComputedStyle(lastPanel).position === 'static') lastPanel.style.position = 'relative';
+        lastPanel.appendChild(ovLast);
+        function lastPanelTick() {
+          requestAnimationFrame(lastPanelTick);
+          var vh3 = window.innerHeight;
+          var p3 = 0.5 - Math.cos(Math.PI * Math.max(0, Math.min(1, (vh3 - clientiEl.getBoundingClientRect().top) / vh3))) / 2;
+          ovLast.style.opacity = (0.5 - Math.cos(Math.PI * Math.max(0, Math.min(1, (p3 - 0.25) / 0.75))) / 2).toFixed(3);
+        }
+        requestAnimationFrame(lastPanelTick);
+      })();
+    })();
+
     var C_DARK = [5,5,5], C_WHITE = [255,255,255], C_FUCHSIA = [219,0,90];
     function luma(c) { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
     function blend(a,b,t) { return [a[0]*(1-t)+b[0]*t, a[1]*(1-t)+b[1]*t, a[2]*(1-t)+b[2]*t]; }
     var prevDark = null;
+
+    function p_enter(el) {
+      if (!el) return 0;
+      return ease(c01((window.innerHeight - el.getBoundingClientRect().top) / window.innerHeight));
+    }
+
+    function secP(el) {
+      if (!el) return 0;
+      var ENTRY = window.innerHeight * 0.70;
+      return c01((ENTRY - el.getBoundingClientRect().top) / ENTRY);
+    }
+
+    var stackEl     = document.getElementById('pc-stack');
+    var stackPanels = stackEl ? Array.from(stackEl.querySelectorAll('.smm-panel')) : [];
+    var prodEls     = Array.from(document.querySelectorAll('.pc-prod'));
+
+    var heroOvOp = 0, cliToMagOp = 0, magToCafOp = 0;
+
     function tick() {
       requestAnimationFrame(tick);
       var vh = window.innerHeight;
-      var heroOvOp = 0;
-      if (heroEl && heroOv) { heroOvOp = ease(c01(-heroEl.getBoundingClientRect().top / (vh * 0.45))); heroOv.style.opacity = heroOvOp.toFixed(3); }
-      var magicOvOp = 0;
-      if (magicOv && caffeEl) { var p2 = ease(c01((vh - caffeEl.getBoundingClientRect().top) / vh)); magicOvOp = ease(c01((p2 - 0.25) / 0.75)); magicOv.style.opacity = magicOvOp.toFixed(3); }
+
+      heroOvOp   = p_enter(stackEl || clientiEl);
+      cliToMagOp = ease(c01((p_enter(magicEl) - 0.25) / 0.75));
+      magToCafOp = ease(c01((p_enter(caffeEl) - 0.25) / 0.75));
+
+      if (heroOv)         heroOv.style.opacity         = heroOvOp.toFixed(3);
+      if (cliToMagicOv)   cliToMagicOv.style.opacity   = cliToMagOp.toFixed(3);
+      if (magicToCaffeOv) magicToCaffeOv.style.opacity = magToCafOp.toFixed(3);
+
+      revLetters(clientiLetters, secP(clientiEl));
+
+      var mR = magicEl ? magicEl.getBoundingClientRect() : null;
+      if (mR) {
+        var p1 = ease(c01((vh - mR.top) / vh));
+        revLetters(magicLetters, ease(c01(p1 / 0.85)));
+        var catP = ease(c01((p1 - 0.05) / 0.80));
+        if (magicCat) { magicCat.style.opacity = catP.toFixed(3); magicCat.style.transform = 'translateY(' + ((1-catP)*24).toFixed(1) + 'px)'; }
+        var linksP = ease(c01((p1 - 0.20) / 0.70));
+        if (magicLinks) { magicLinks.style.opacity = linksP.toFixed(3); magicLinks.style.transform = 'translateY(' + ((1-linksP)*20).toFixed(1) + 'px)'; }
+      }
+
+      var cR = caffeEl ? caffeEl.getBoundingClientRect() : null;
+      if (cR) {
+        var p2 = ease(c01((vh - cR.top) / vh));
+        revLetters(caffeLetters, ease(c01(p2 / 0.85)));
+        var subP = ease(c01((p2 - 0.10) / 0.75));
+        if (caffeSub) { caffeSub.style.opacity = subP.toFixed(3); caffeSub.style.transform = 'translateY(' + ((1-subP)*16).toFixed(1) + 'px)'; }
+        var formP = ease(c01((p2 - 0.20) / 0.70));
+        if (caffeForm) { caffeForm.style.opacity = formP.toFixed(3); caffeForm.style.transform = 'translateY(' + ((1-formP)*20).toFixed(1) + 'px)'; }
+      }
+
       var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       caffeExitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 120)).toFixed(3);
+
       if (navEl) {
-        var navMid = (navEl.getBoundingClientRect().height || 80) / 2, base = C_WHITE;
-        if (heroEl) { var hR = heroEl.getBoundingClientRect(); if (hR.top <= navMid && hR.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp); }
-        if (magicEl) { var mR = magicEl.getBoundingClientRect(); if (mR.top <= navMid && mR.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, magicOvOp); }
-        if (caffeEl) { var caR = caffeEl.getBoundingClientRect(); if (caR.top <= navMid && caR.bottom > navMid) base = C_FUCHSIA; }
+        var navMid = (navEl.getBoundingClientRect().height || 80) / 2;
+        var base = C_DARK;
+
+        if (heroEl) {
+          var hR = heroEl.getBoundingClientRect();
+          if (hR.top <= navMid && hR.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp);
+        }
+
+        if (stackEl) {
+          var sR2 = stackEl.getBoundingClientRect();
+          if (sR2.top <= navMid && sR2.bottom > navMid) {
+            for (var si = stackPanels.length - 1; si >= 0; si--) {
+              var spR = stackPanels[si].getBoundingClientRect();
+              if (spR.top <= navMid && spR.bottom > navMid) {
+                base = stackPanels[si].classList.contains('smm-panel--dark') ? C_DARK : C_WHITE;
+                break;
+              }
+            }
+          }
+        }
+
+        prodEls.forEach(function (prod) {
+          var pR = prod.getBoundingClientRect();
+          if (pR.top <= navMid && pR.bottom > navMid) base = C_WHITE;
+        });
+
+        if (clientiEl) {
+          var clR = clientiEl.getBoundingClientRect();
+          if (clR.top <= navMid && clR.bottom > navMid) base = blend(C_DARK, C_WHITE, cliToMagOp);
+        }
+        if (magicEl) {
+          var mgR = magicEl.getBoundingClientRect();
+          if (mgR.top <= navMid && mgR.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, magToCafOp);
+        }
+        if (caffeEl) {
+          var caR2 = caffeEl.getBoundingClientRect();
+          if (caR2.top <= navMid && caR2.bottom > navMid) base = C_FUCHSIA;
+        }
+
         var isDark = luma(base) < 140;
         if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
       }
@@ -826,6 +1323,88 @@
     requestAnimationFrame(tick);
   })();
   </script>
+  <div id="pc-scroll-dots" aria-hidden="true"></div>
+
+  <script>
+  /* ── scroll dots per accordion items ── */
+  (function () {
+    var wrap = document.getElementById('pc-scroll-dots');
+    var items = Array.from(document.querySelectorAll('.pc-acc__item'));
+    if (!items.length) return;
+
+    /* crea un dot per ogni item */
+    items.forEach(function () {
+      var d = document.createElement('span');
+      d.className = 'pc-sd';
+      wrap.appendChild(d);
+    });
+    var dots = Array.from(wrap.querySelectorAll('.pc-sd'));
+
+    /* mostra/nascondi il pannello quando le sezioni accordion sono in viewport */
+    var sections = Array.from(document.querySelectorAll('.pc-acc'));
+    var secObs = new IntersectionObserver(function () {
+      var anyIn = sections.some(function (s) {
+        var r = s.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      });
+      wrap.classList.toggle('pc-dots--visible', anyIn);
+    }, { threshold: 0 });
+    sections.forEach(function (s) { secObs.observe(s); });
+
+    /* accende il dot quando l'item entra in viewport */
+    var itemObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var idx = items.indexOf(entry.target);
+        if (idx >= 0) dots[idx].classList.toggle('pc-sd--on', entry.isIntersecting);
+      });
+    }, { threshold: 0.25 });
+    items.forEach(function (item) { itemObs.observe(item); });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    /* ── accordion toggle ── */
+    document.querySelectorAll('.pc-acc__head').forEach(function (head) {
+      function toggle() {
+        var item = head.closest('.pc-acc__item');
+        var isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        head.setAttribute('aria-expanded', String(!isOpen));
+      }
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    /* ── reveal items in catena: ogni item appare quando il precedente è al 90% visibile ── */
+    var items = Array.from(document.querySelectorAll('.pc-acc__item'));
+
+    function revealNext(idx) {
+      if (idx >= items.length) return;
+      items[idx].classList.add('pc-item--in');
+      if (idx + 1 >= items.length) return;
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].intersectionRatio >= 0.9) {
+          io.disconnect();
+          revealNext(idx + 1);
+        }
+      }, { threshold: [0.9] });
+      io.observe(items[idx]);
+    }
+
+    /* parte quando la prima sezione accordion entra in viewport */
+    var firstAcc = document.querySelector('.pc-acc');
+    if (firstAcc) {
+      var startObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { startObs.disconnect(); revealNext(0); }
+      }, { threshold: 0.05 });
+      startObs.observe(firstAcc);
+    }
+  })();
+  </script>
+
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
@@ -834,7 +1413,7 @@
 
         <div class="sf-col">
           <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
-            <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+            <img src="../Logoestrofooter.webp" alt="ESTRO" />
           </a>
           <p class="sf-tagline">Idee che prendono forma.</p>
         </div>
@@ -850,8 +1429,8 @@
             <a href="../servizi/graphic-design.html">Graphic design</a>
             <a href="../servizi/web-design.html">Web design</a>
             <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="../servizi/servizio-ai.html">AI</a>
             <a href="../servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -897,7 +1476,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>

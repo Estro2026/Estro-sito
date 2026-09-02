@@ -187,7 +187,6 @@
     #smmClienti .svc-clients__logo {
       display: flex !important;
       align-items: center !important;
-      justify-content: center !important;
       flex-shrink: 0 !important;
       width: clamp(100px, 12vw, 180px) !important;
     }
@@ -344,6 +343,20 @@
       .smm-panel__visual { display: none; }
     }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Cos'e il social media management?", "acceptedAnswer": { "@type": "Answer", "text": "E la gestione professionale dei profili social di un'azienda: creazione di contenuti, pianificazione editoriale, pubblicazione, monitoraggio e risposta alla community. L'obiettivo e costruire una presenza coerente e riconoscibile online." } },
+    { "@type": "Question", "name": "Quali social network gestisce ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Gestiamo tutti i principali canali: Instagram, Facebook, TikTok, LinkedIn, YouTube e Spotify. La scelta delle piattaforme dipende dal tuo pubblico e dai tuoi obiettivi di business." } },
+    { "@type": "Question", "name": "Con quale frequenza vengono pubblicati i contenuti?", "acceptedAnswer": { "@type": "Answer", "text": "La frequenza e concordata insieme durante la fase di strategia. In genere lavoriamo con un piano editoriale mensile, con una cadenza ottimale per ogni piattaforma." } },
+    { "@type": "Question", "name": "Come misurate i risultati del social media management?", "acceptedAnswer": { "@type": "Answer", "text": "Monitoriamo KPI come crescita dei follower, reach, engagement rate, impression e clic. Forniamo report periodici per rendere trasparente l'andamento delle attivita." } },
+    { "@type": "Question", "name": "Quanto tempo ci vuole per vedere risultati sui social?", "acceptedAnswer": { "@type": "Answer", "text": "I risultati organici richiedono in media 3-6 mesi di attivita costante. Combinando gestione organica e paid advertising i tempi si accorciano sensibilmente." } },
+    { "@type": "Question", "name": "Producete anche i contenuti visivi (foto e video)?", "acceptedAnswer": { "@type": "Answer", "text": "Si, offriamo anche la produzione completa di contenuti fotografici e video. Gestiamo tutto internamente, dalla ripresa al montaggio e alla post-produzione." } }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -357,12 +370,9 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="../lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -370,7 +380,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="social-media-management.html">Social media management</a>
               <a href="influencer-marketing.html">Influencer marketing</a>
               <a href="google-ads.html">Google ads</a>
@@ -404,10 +414,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -442,16 +450,31 @@
           </div>
           <p class="svc-hero__sub">Se la tua attività non è presente sui social network, allora non esiste! Costruisci insieme a noi la tua immagine social un post alla volta, comunicando quotidianamente con il tuo pubblico reale.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
-          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
-            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
-            <label class="svc-hero__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
-            </label>
-            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
-          </form>
+        </div>
+        <div class="svc-hero__right">
+          <div class="svc-hero__form-card">
+            <p class="svc-hero__form-card-label">Scrivici</p>
+            <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="nome" placeholder="Nome*" required />
+                <input class="svc-hero__field" type="text" name="cognome" placeholder="Cognome*" required />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+                <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="azienda" placeholder="Azienda" />
+                <input class="svc-hero__field" type="url" name="sito" placeholder="Sito Web" />
+              </div>
+              <textarea class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="4"></textarea>
+              <label class="svc-hero__privacy">
+                <input type="checkbox" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
+            </form>
+          </div>
         </div>
 
 
@@ -697,38 +720,66 @@
       </div>
     </section>
 
-    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
-    <section class="section svc-magic" id="smmMagic">
-      <div class="container svc-magic__inner">
-        <div class="svc-magic__cat reveal" style="background:rgba(219,0,90,0.08);border-radius:16px;min-height:340px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(219,0,90,0.15);">
-          <span style="font-size:0.8rem;letter-spacing:0.12em;text-transform:uppercase;opacity:0.35;">Immagine</span>
-        </div>
-        <div class="svc-magic__content reveal reveal-delay-1">
-          <h2 class="svc-magic__title">SAPPIAMO FARE<br>UN SACCO DI<br>ALTRE MAGIE</h2>
-          <div class="svc-magic__links">
-            <a class="svc-magic__pill" href="google-ads.html">Google ADS</a>
-            <a class="svc-magic__pill" href="social-ads.html">Social ADS</a>
-            <a class="svc-magic__pill" href="graphic-design.html">Motion Graphic e Graphic Design</a>
-            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
+    
+
+    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
+    
+    <!-- FAQ -->
+    <section class="page-faq">
+      <div class="page-faq__inner">
+        <h2 class="page-faq__title">FAQ</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Cos'e il social media management?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">E la gestione professionale dei profili social di un'azienda: creazione di contenuti, pianificazione editoriale, pubblicazione, monitoraggio e risposta alla community. L'obiettivo e costruire una presenza coerente e riconoscibile online.</div></div>
           </div>
-        </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quali social network gestisce ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Gestiamo tutti i principali canali: Instagram, Facebook, TikTok, LinkedIn, YouTube e Spotify. La scelta delle piattaforme dipende dal tuo pubblico e dai tuoi obiettivi di business.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Con quale frequenza vengono pubblicati i contenuti?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">La frequenza e concordata insieme durante la fase di strategia. In genere lavoriamo con un piano editoriale mensile, con una cadenza ottimale per ogni piattaforma.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come misurate i risultati del social media management?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Monitoriamo KPI come crescita dei follower, reach, engagement rate, impression e clic. Forniamo report periodici per rendere trasparente l'andamento delle attivita.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quanto tempo ci vuole per vedere risultati sui social?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">I risultati organici richiedono in media 3-6 mesi di attivita costante. Combinando gestione organica e paid advertising i tempi si accorciano sensibilmente.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Producete anche i contenuti visivi (foto e video)?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, offriamo anche la produzione completa di contenuti fotografici e video. Gestiamo tutto internamente, dalla ripresa al montaggio e alla post-produzione.</div></div>
+          </div>
+        </dl>
       </div>
     </section>
 
-    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
-    <section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci" id="smmCaffe" data-nav-theme="dark">
+<section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci" id="smmCaffe" data-nav-theme="dark">
       <div class="container svc-caffe__inner">
         <div class="svc-caffe__left reveal">
           <h2 class="svc-caffe__title"><span class="caffe-nowrap">Prendiamoci</span><br/>un caffè!</h2>
           <p class="svc-caffe__sub">Anche virtuale</p>
         </div>
         <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
-          <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-          <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-          <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+          </div>
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
           <label class="svc-caffe__privacy">
             <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
           </label>
           <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
         </form>
@@ -1407,7 +1458,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>

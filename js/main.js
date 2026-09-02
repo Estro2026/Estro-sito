@@ -1,19 +1,3 @@
-/* ═══════════════════════════════════════════════════════
-   NAV RIGHT WRAPPER — wraps Join Us in nav__right div
-   for correct grid-column-3 alignment
-═══════════════════════════════════════════════════════ */
-document.addEventListener('DOMContentLoaded', () => {
-  const navInner = document.querySelector('.nav__inner');
-  if (!navInner) return;
-  const joinUs = navInner.querySelector('.nav__joinus');
-  if (!joinUs) return;
-  const right = document.createElement('div');
-  right.className = 'nav__right';
-  navInner.removeChild(joinUs);
-  right.appendChild(joinUs);
-  navInner.appendChild(right);
-});
-
 
 /* ═══════════════════════════════════════════════════════
    AVATAR PHOTOS (copyright-free via randomuser.me)
@@ -385,6 +369,38 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
 
 // (Video about gestito dal blocco scroll-scrubbed sopra)
 
+// ─── Nav: scompare sul footer, riappare su scroll-up ─────────
+(function () {
+  var navEl    = document.querySelector('.nav');
+  var footerEl = document.querySelector('.site-footer');
+  if (!navEl || !footerEl) return;
+
+  var footerVisible = false;
+  var lastY = window.scrollY;
+  var scrollingUp = false;
+
+  var io = new IntersectionObserver(function (entries) {
+    footerVisible = entries[0].isIntersecting;
+    update();
+  }, { threshold: 0 });
+  io.observe(footerEl);
+
+  window.addEventListener('scroll', function () {
+    var y = window.scrollY;
+    scrollingUp = y < lastY;
+    lastY = y;
+    update();
+  }, { passive: true });
+
+  function update() {
+    var menuOpen = navEl.classList.contains('menu-open');
+    navEl.classList.toggle('nav--footer-hidden', footerVisible && !scrollingUp && !menuOpen);
+  }
+
+  /* re-evaluate whenever menu opens or closes */
+  new MutationObserver(update).observe(navEl, { attributes: true, attributeFilter: ['class'] });
+})();
+
 
 
 // ─── Icon grid produzione contenuti ──────────────────────────
@@ -593,6 +609,34 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
     tipsSectionEl.appendChild(tipsFuchsiaOv);
   }
 
+  // ── FAQ overlays — tutte le pagine ──────────────────────────────────────────
+  // Per ogni sezione .page-faq:
+  //   1. Overlay nero sulla sezione precedente (sfuma mentre FAQ sale)
+  //   2. Overlay fucsia sulla FAQ (sfuma mentre la sezione successiva sale)
+  const faqOverlays = [...document.querySelectorAll('.page-faq')].map(faqEl => {
+    let prevOv = null;
+    const prevSection = faqEl.previousElementSibling;
+    if (prevSection) {
+      prevOv = document.createElement('div');
+      Object.assign(prevOv.style, {
+        position: 'absolute', inset: '0',
+        background: '#ffffff', opacity: '0',
+        pointerEvents: 'none', zIndex: '5',
+      });
+      prevSection.style.position = 'relative';
+      prevSection.appendChild(prevOv);
+    }
+    const fuchsiaOv = document.createElement('div');
+    Object.assign(fuchsiaOv.style, {
+      position: 'absolute', inset: '0',
+      background: 'var(--primary, #DB005A)', opacity: '0',
+      pointerEvents: 'none', zIndex: '5',
+    });
+    faqEl.style.position = 'relative';
+    faqEl.appendChild(fuchsiaOv);
+    return { faqEl, prevOv, fuchsiaOv, nextEl: faqEl.nextElementSibling };
+  });
+
   // Contatti → footer: overlay fisso sul body (non su Contatti)
   // così rimane visibile anche quando la sezione è scrollata via
   const contattiExitOv = document.createElement('div');
@@ -616,11 +660,15 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
 
   // ── Per-letter split per tutti i titoli principali (stesso stagger di SERVIZI) ──
   const amiciLetters    = splitLetters(amiciTitle);
-  const cs2Letters      = splitLetters(cs2TitleEl);
   const tipsLetters     = splitLetters(tipsTitleEl);
   const contattiTitleEl = document.getElementById('contattiTitle');
   const contattiLetters = splitLetters(contattiTitleEl);
   const sfGhostLetters  = splitLetters(sfGhostEl);
+
+  // ── FAQ titles: split per lettera su ogni pagina ──────────────────────────
+  const faqTitleEls   = [...document.querySelectorAll('.page-faq__title')];
+  const faqTitleLetters = faqTitleEls.map(el => splitLetters(el));
+  const faqSections   = faqTitleEls.map(el => el.closest('.page-faq'));
 
   // ── RAF loop ─────────────────────────────────────────────────────────────
   // READ prima, WRITE dopo: nessun layout thrashing.
@@ -639,6 +687,12 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
     visuals.forEach(    el        => rect(el.closest('section') || el.parentElement));
     transitions.forEach(({ section }) => rect(section));
     if (aboutEl) rect(aboutEl);
+    faqSections.forEach(sec => { if (sec) rect(sec); });
+    faqOverlays.forEach(({ faqEl, nextEl }) => {
+      rect(faqEl);
+      if (nextEl) rect(nextEl);
+    });
+    if (contattiEl) rect(contattiEl);
 
     // — WRITE: scale —
     visuals.forEach(el => {
@@ -765,6 +819,32 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
       revealLetters(amiciLetters, p_amici, 0, 0.08);
     }
 
+    // ── Reveal titoli FAQ (per lettera, stesso stagger di TIPS & TRICKS) ─────
+    faqSections.forEach((sec, idx) => {
+      if (!sec) return;
+      const sR    = rect(sec);
+      const ENTRY = _vh * 0.70;
+      const p_faq = c01((ENTRY - sR.top) / ENTRY);
+      const exitRaw = c01((sR.bottom - _vh * 0.30) / (_vh * 0.30) * -1 + 1);
+      revealLetters(faqTitleLetters[idx], p_faq, 0, 0.08, exitRaw > 0.01 ? exitRaw : 0);
+    });
+
+    // ── FAQ overlays — tutte le pagine ──────────────────────────────────────
+    faqOverlays.forEach(({ faqEl, prevOv, fuchsiaOv, nextEl }) => {
+      const fR = rect(faqEl);
+      // Overlay nero sulla sezione prima: sfuma mentre il top della FAQ sale
+      if (prevOv) {
+        const blackP = ease(c01((_vh - fR.top) / (_vh * 0.35)));
+        prevOv.style.opacity = blackP.toFixed(3);
+      }
+      // Overlay fucsia sulla FAQ: sfuma mentre il top della sezione successiva sale
+      if (nextEl) {
+        const nR = rect(nextEl);
+        const fuchsiaP = ease(c01((_vh - nR.top) / (_vh * 0.30)));
+        fuchsiaOv.style.opacity = fuchsiaP.toFixed(3);
+      }
+    });
+
     // — WRITE: gradient transition overlays —
     transitions.forEach(({ section, ov }) => {
       const r = rect(section);
@@ -793,61 +873,7 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
       el.style.transform = `translateY(${((1 - tIn) * 30 - tOut * 20).toFixed(1)}px)`;
     }
 
-    // ── Case Studies ─────────────────────────────────────────────────────────
-    if (cs2SectionEl) {
-      const p = stickyProg(cs2SectionEl);
-      const EXIT_BASE = 0.78, EXIT_DUR = 0.18;
-      const _csExitRaw = c01((p - EXIT_BASE) / EXIT_DUR);
-      const tOut = ease(_csExitRaw);
-      const _vw = vw();
-
-      revealLetters(cs2Letters, p, 0.42, 0.08, _csExitRaw);
-      revealEl(cs2SubEl,   p, 0.52, 0.14, tOut);
-
-      // Roll configs: {dxF fraction of vw, dyF fraction of vh, rot degrees}
-      // Tiles enter from outside viewport, roll to grid position, with slight overshoot
-      const ROLL = [
-        {dxF:-0.35, dyF:0.28, rot:-310},  // 0 top-left
-        {dxF:-0.18, dyF:0.32, rot: 280},  // 1 top-2
-        {dxF: 0.18, dyF:0.30, rot:-260},  // 2 top-3
-        {dxF: 0.36, dyF:0.26, rot: 320},  // 3 top-right
-        {dxF:-0.38, dyF:0.20, rot:-340},  // 4 mid-left
-        {dxF:-0.16, dyF:0.28, rot: 270},  // 5 mid-2
-        {dxF: 0.16, dyF:0.27, rot:-270},  // 6 mid-3
-        {dxF: 0.38, dyF:0.20, rot: 330},  // 7 mid-right
-        {dxF:-0.36, dyF:0.14, rot:-300},  // 8 bot-left
-        {dxF:-0.15, dyF:0.30, rot: 250},  // 9 bot-2
-        {dxF: 0.15, dyF:0.30, rot:-250},  // 10 bot-3
-        {dxF: 0.36, dyF:0.16, rot: 290},  // 11 bot-right
-      ];
-      // easeBackOut: slight overshoot then settles (c1=1.7)
-      function easeBackOut(t) {
-        const c1 = 1.7;
-        return 1 + (c1+1)*Math.pow(t-1,3) + c1*Math.pow(t-1,2);
-      }
-
-      cs2WallTiles.forEach((el, i) => {
-        const col = i % 4;
-        const row = Math.floor(i / 4);
-        const dist = Math.sqrt(Math.pow(col - 1.5, 2) + Math.pow(row - 1, 2));
-        const base = 0.48 + dist * 0.028; // center tiles enter first
-        const DUR  = 0.14;
-
-        const tRaw = c01((p - base) / DUR);
-        const lP   = easeBackOut(tRaw);   // 0→1 with slight overshoot
-        const rem  = 1 - lP;              // 1→0 (distance remaining)
-
-        const cfg = ROLL[i] || {dxF:0, dyF:0.2, rot:0};
-        const dx  = (cfg.dxF * _vw * rem).toFixed(1);
-        const dy  = (cfg.dyF * _vh * rem).toFixed(1);
-        const rot = (cfg.rot * rem).toFixed(1);
-
-        el.style.opacity   = (Math.min(lP, 1) * (1 - tOut)).toFixed(3);
-        el.style.transform = `translateX(${dx}px) translateY(${dy}px) rotate(${rot}deg)`;
-      });
-
-      revealEl(cs2FooterEl, p, 0.58, 0.14, tOut);
-    }
+    // ── Case Studies (static, no scroll animation) ──────────────────────────
 
     // ── Tips & Tricks ─────────────────────────────────────────────────────────
     if (tipsSectionEl) {
@@ -924,3 +950,72 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
 
   requestAnimationFrame(update);
 }());
+
+/* ═══════════════════════════════════════════════════════
+   PAGE FAQ — titolo animato (parola per parola)
+═══════════════════════════════════════════════════════ */
+
+/* ═══════════════════════════════════════════════════════
+   PAGE FAQ — accordion
+═══════════════════════════════════════════════════════ */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    document.querySelectorAll('.page-faq__list').forEach(function (list) {
+      var first = list.querySelector('.page-faq__item');
+      if (first) {
+        first.classList.add('open');
+        first.querySelector('.page-faq__question').setAttribute('aria-expanded', 'true');
+      }
+    });
+    var EYE_OPEN = '<svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    var EYE_CLOSED = '<svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+
+    document.querySelectorAll('.page-faq__question').forEach(function (btn) {
+      var icon = document.createElement('span');
+      icon.className = 'page-faq__eye';
+      icon.setAttribute('aria-hidden', 'true');
+      icon.innerHTML = EYE_OPEN + EYE_CLOSED;
+      btn.appendChild(icon);
+
+      btn.addEventListener('click', function () {
+        var item = btn.closest('.page-faq__item');
+        var isOpen = item.classList.contains('open');
+        item.closest('.page-faq__list').querySelectorAll('.page-faq__item.open').forEach(function (el) {
+          el.classList.remove('open');
+          el.querySelector('.page-faq__question').setAttribute('aria-expanded', 'false');
+        });
+        if (!isOpen) {
+          item.classList.add('open');
+          btn.setAttribute('aria-expanded', 'true');
+        }
+      });
+      btn.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+      });
+    });
+  });
+}());
+
+/* ── Case Studies tabs ─────────────────────────────── */
+(function () {
+  document.addEventListener('DOMContentLoaded', function () {
+    var tabs   = document.querySelectorAll('.cst-tab');
+    var panels = document.querySelectorAll('.cst-panel');
+    if (!tabs.length) return;
+    tabs.forEach(function (tab) {
+      tab.addEventListener('click', function () {
+        var key = tab.getAttribute('data-cst');
+        tabs.forEach(function (t) {
+          t.classList.remove('on');
+          t.setAttribute('aria-selected', 'false');
+        });
+        panels.forEach(function (p) { p.classList.remove('on'); });
+        tab.classList.add('on');
+        tab.setAttribute('aria-selected', 'true');
+        var panel = document.querySelector('[data-cst-panel="' + key + '"]');
+        if (panel) panel.classList.add('on');
+      });
+    });
+  });
+}());
+

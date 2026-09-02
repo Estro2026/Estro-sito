@@ -13,9 +13,13 @@
     /* ── FOOTER LOGO ──────────────────────────────────────── */
     .sf-logo img { filter: none !important; height: auto !important; width: clamp(140px, 18vw, 200px) !important; opacity: 1 !important; }
 
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+
     /* ══ HERO ══════════════════════════════════════════════ */
     .faq-hero {
-      background: #060606;
+      background: #000;
       padding-top: 140px;
       padding-bottom: clamp(5rem, 9vw, 8rem);
       padding-left: clamp(1.5rem, 6vw, 7rem);
@@ -146,25 +150,29 @@
       line-height: 1.45;
     }
     .faq-item__icon {
-      width: 30px;
-      height: 30px;
-      border-radius: 50%;
-      background: #f4f4f4;
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      background: transparent;
       flex-shrink: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: background 200ms;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; color: #080808;
+      transition: background 0.35s, border-color 0.35s, transform 0.3s cubic-bezier(.34,1.56,.64,1);
     }
+    .faq-item:hover .faq-item__icon { border-color: rgba(219,0,90,0.5); transform: scale(1.1); }
+    .faq-item.open .faq-item__icon  { background: var(--primary); border-color: var(--primary); color: #fff; transform: scale(1.1); }
     .faq-item__icon svg {
-      width: 12px;
-      height: 12px;
-      transition: transform 300ms;
+      width: 26px; height: 26px; position: absolute;
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
     }
-    .faq-item.open .faq-item__icon { background: var(--primary); }
-    .faq-item.open .faq-item__icon svg { transform: rotate(45deg); }
-    .faq-item__icon svg line { stroke: #080808; }
-    .faq-item.open .faq-item__icon svg line { stroke: #fff; }
+    .faq-item__icon .eye-open   { opacity: 0; transform: translateY(5px) scale(0.6); }
+    .faq-item__icon .eye-closed { opacity: 1; transform: translateY(0) scale(1); }
+    .faq-item.open .faq-item__icon .eye-open   { opacity: 1; transform: translateY(0) scale(1); animation: faq-eye-pop 0.45s cubic-bezier(.34,1.56,.64,1); }
+    .faq-item.open .faq-item__icon .eye-closed { opacity: 0; transform: translateY(-5px) scale(0.6); }
+    @keyframes faq-eye-pop {
+      0%   { transform: translateY(6px) scale(0.4); opacity: 0; }
+      65%  { transform: translateY(-3px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(1); }
+    }
 
     .faq-item__body {
       overflow: hidden;
@@ -326,8 +334,6 @@
       margin: 1px auto 0;
     }
     .faq-contact .contact-home__submit-wrap { display: flex; justify-content: center; }
-    .faq-contact .btn--primary { background: #fff !important; color: var(--primary) !important; border-color: #fff !important; }
-    .faq-contact .btn--primary:hover { background: rgba(255,255,255,0.9) !important; }
 
     @media (max-width: 900px) {
       .faq-layout { grid-template-columns: 1fr; }
@@ -349,12 +355,9 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -362,7 +365,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="servizi/social-media-management.html">Social media management</a>
               <a href="servizi/influencer-marketing.html">Influencer marketing</a>
               <a href="servizi/google-ads.html">Google ads</a>
@@ -371,8 +374,8 @@
               <a href="servizi/graphic-design.html">Graphic design</a>
               <a href="servizi/web-design.html">Web design</a>
               <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-              <a href="servizi/servizio-ai.html">AI</a>
               <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+              <a href="servizi/servizio-ai.html">AI</a>
             </nav>
           </div>
           <div class="nav__mega-panel nav__mega-panel--dark">
@@ -396,10 +399,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -470,7 +471,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Cosa fa un'agenzia di comunicazione strategica?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Un'agenzia di comunicazione strategica analizza il mercato, il target e il posizionamento del brand per costruire una comunicazione coerente, efficace e orientata agli obiettivi di business.</p></div>
             </div>
@@ -478,7 +479,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Cosa vi distingue dalle altre agenzie?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Uniamo strategia, creatività e performance in un unico sistema integrato, con risultati misurabili.</p></div>
             </div>
@@ -486,7 +487,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Cosa significa comunicazione strategica?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">La comunicazione strategica definisce cosa dire e perché; quella creativa definisce come dirlo. Un'agenzia completa integra entrambe.</p></div>
             </div>
@@ -494,7 +495,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Siete più un'agenzia creativa o strategica?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Entrambe: la strategia guida ogni decisione, la creatività la rende efficace.</p></div>
             </div>
@@ -502,7 +503,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Perché è importante avere una strategia prima della creatività?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Senza strategia, la creatività rischia di essere solo estetica. Con una base strategica, ogni contenuto ha un obiettivo misurabile.</p></div>
             </div>
@@ -510,7 +511,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Aiutate anche nel posizionamento del brand?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, sviluppiamo strategie di posizionamento che differenziano il brand rispetto ai competitor e ne aumentano la riconoscibilità.</p></div>
             </div>
@@ -518,7 +519,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Perché scegliere Estro?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Perché trasformiamo la strategia in risultati concreti, con un approccio integrato e orientato alla crescita.</p></div>
             </div>
@@ -532,7 +533,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come funziona il vostro metodo di lavoro?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Seguiamo un framework strutturato: analisi → strategia → creatività → performance → ottimizzazione continua.</p></div>
             </div>
@@ -540,7 +541,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come iniziate un progetto?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Partiamo da analisi di brand, mercato e competitor, definizione KPI e pianificazione strategica.</p></div>
             </div>
@@ -548,7 +549,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come garantite risultati concreti?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Attraverso monitoraggio costante, A/B test e ottimizzazione continua basata sui dati.</p></div>
             </div>
@@ -562,7 +563,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quali servizi offre Estro?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Strategia digitale, social media, advertising, content production, influencer marketing, web design ed e-commerce.</p></div>
             </div>
@@ -570,7 +571,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Offrite un servizio completo o solo singole attività?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Siamo un partner completo che integra tutte le leve digitali per garantire coerenza e performance.</p></div>
             </div>
@@ -578,7 +579,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Offrite servizi di branding completo?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, dalla definizione dell'identità fino alla creazione di logo, tone of voice e linee guida.</p></div>
             </div>
@@ -586,7 +587,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Gestite anche i social media?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, dalla strategia editoriale alla produzione contenuti e gestione campagne.</p></div>
             </div>
@@ -594,7 +595,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Realizzate siti web ottimizzati SEO?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, sviluppiamo siti progettati per essere performanti sia in termini di UX che di visibilità sui motori di ricerca.</p></div>
             </div>
@@ -602,7 +603,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Lavorate su lead generation?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, progettiamo strategie per generare contatti qualificati e conversioni.</p></div>
             </div>
@@ -610,7 +611,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Con che tipo di aziende lavorate?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Collaboriamo con brand nazionali e internazionali in settori complessi e competitivi. Prada, MiuMiu, Cura, Seat, Tonino Lamborghini, Ariston, Bocconi, Polimi e tanti altri.</p></div>
             </div>
@@ -618,7 +619,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Avete esperienza in più settori?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì: lusso, tecnologia, healthcare, retail e industria.</p></div>
             </div>
@@ -626,7 +627,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Che tipo di aziende sono adatte a voi?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Aziende con visione di crescita e orientate a investire nel lungo periodo.</p></div>
             </div>
@@ -634,7 +635,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">È possibile lavorare senza strategia?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">No: ogni progetto parte da una base strategica.</p></div>
             </div>
@@ -648,7 +649,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come funziona la collaborazione con la vostra agenzia?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Partiamo da un'analisi iniziale, definiamo la strategia, sviluppiamo la creatività e monitoriamo i risultati.</p></div>
             </div>
@@ -656,7 +657,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quanto dura un progetto di comunicazione?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">La durata minima per lavorare in modo efficace è di 12 mesi. Questo perché strategia, test e ottimizzazione richiedono tempo per generare risultati concreti e scalabili.</p></div>
             </div>
@@ -664,7 +665,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Lavorate con aziende di qualsiasi settore?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, adattiamo il metodo strategico al settore specifico del cliente.</p></div>
             </div>
@@ -672,7 +673,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Offrite consulenze strategiche singole?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, è possibile attivare consulenze mirate senza un progetto continuativo.</p></div>
             </div>
@@ -686,7 +687,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come misurate i risultati delle campagne?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Utilizziamo strumenti di analisi per monitorare KPI come traffico, engagement, conversioni e ROI.</p></div>
             </div>
@@ -694,7 +695,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">In quanto tempo si vedono i risultati?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Dipende dal canale: Advertising → primi risultati già nelle prime settimane; Ottimizzazione → 1–3 mesi; Crescita stabile → 3–6 mesi. Questo è il tempo necessario per passare da test a performance.</p></div>
             </div>
@@ -702,7 +703,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Condividete report sulle performance?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, condividiamo report chiari e dettagliati con analisi delle performance.</p></div>
             </div>
@@ -716,7 +717,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Cosa vi distingue dalle altre agenzie di comunicazione?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Un approccio integrato tra strategia e creatività, orientato ai risultati e personalizzato su ogni cliente.</p></div>
             </div>
@@ -724,7 +725,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Perché lavorare con un'agenzia integrata e non con più fornitori?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Perché quando strategia, contenuti e advertising non parlano tra loro, il risultato è inefficiente. Noi costruiamo tutto insieme, fin dall'inizio.</p></div>
             </div>
@@ -732,7 +733,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Create contenuti internamente o vi appoggiate a esterni?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Produciamo in-house. Significa più controllo, più velocità e contenuti pensati per performare, non solo per essere belli.</p></div>
             </div>
@@ -740,7 +741,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quanto conta il dato nel vostro lavoro?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Tutto. Ogni scelta creativa è guidata da insight reali e migliorata nel tempo con test e ottimizzazioni.</p></div>
             </div>
@@ -748,7 +749,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Che tipo di struttura avete rispetto ad altre agenzie?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Non siamo una persona sola che fa tutto. Siamo un team multidisciplinare che lavora in modo coordinato su ogni progetto.</p></div>
             </div>
@@ -756,7 +757,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Perché dovrei lavorare con voi invece di assumere un team interno?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Costruire internamente un team completo (strategia, contenuti, adv, design, gestione) costa circa 250.000€ – 300.000€ l'anno. Con noi hai lo stesso livello di competenze già operative, senza tempi di costruzione e con un investimento più efficiente.</p></div>
             </div>
@@ -764,7 +765,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Qual è il vero vantaggio di lavorare con un'agenzia rispetto all'internalizzazione?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Velocità, competenze trasversali e zero costi di struttura. Non devi formare, coordinare o gestire un team: lo trovi già pronto.</p></div>
             </div>
@@ -772,7 +773,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">State sostituendo un team interno?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">No. Stiamo accelerando quello che un team interno impiegherebbe mesi (o anni) a costruire.</p></div>
             </div>
@@ -780,7 +781,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quando ha senso scegliere un'agenzia invece di assumere?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Quando vuoi risultati subito, senza costruire da zero un reparto marketing complesso.</p></div>
             </div>
@@ -794,7 +795,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Ottimizzate i contenuti per SEO e AI (GEO)?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, sviluppiamo contenuti ottimizzati sia per motori di ricerca tradizionali che per AI e motori generativi.</p></div>
             </div>
@@ -802,7 +803,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Cos'è la GEO (Generative Engine Optimization)?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">È l'ottimizzazione dei contenuti per essere trovati e utilizzati dalle AI (come ChatGPT o Google SGE).</p></div>
             </div>
@@ -810,7 +811,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Posso migliorare la visibilità del mio brand online con voi?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, lavoriamo su SEO, contenuti e strategia per aumentare la presenza digitale.</p></div>
             </div>
@@ -824,7 +825,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come posso iniziare a lavorare con voi?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Puoi contattarci tramite il sito per una prima consulenza conoscitiva. Ti rispondiamo entro 24 ore.</p></div>
             </div>
@@ -832,7 +833,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Lavorate solo in Italia o anche all'estero?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Collaboriamo con clienti sia nazionali che internazionali.</p></div>
             </div>
@@ -846,7 +847,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Lavorate con tutti i clienti?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">No, selezioniamo i progetti per garantire qualità e risultati.</p></div>
             </div>
@@ -854,7 +855,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quali aziende non sono adatte a voi?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Chi cerca solo esecuzione operativa senza visione strategica.</p></div>
             </div>
@@ -862,7 +863,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quanti progetti seguite contemporaneamente?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Un numero limitato, per mantenere alto il livello qualitativo.</p></div>
             </div>
@@ -870,7 +871,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Lavorate con aziende che partono da zero o solo brand strutturati?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Collaboriamo con realtà ambiziose, indipendentemente dalla dimensione, purché ci sia una visione di crescita chiara.</p></div>
             </div>
@@ -878,7 +879,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come capite se un progetto è adatto a voi?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Valutiamo obiettivi, mindset e potenziale del brand: lavoriamo meglio con aziende orientate al lungo periodo.</p></div>
             </div>
@@ -892,7 +893,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Investire in comunicazione garantisce risultati?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Garantisce direzione e crescita, se supportato da una strategia corretta e continuità.</p></div>
             </div>
@@ -900,7 +901,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Qual è il budget minimo per lavorare con voi?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Dipende dal progetto, ma lavoriamo con aziende pronte a investire nella crescita.</p></div>
             </div>
@@ -908,7 +909,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quando ha senso investire in un'agenzia di comunicazione strategica?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Quando il brand ha bisogno di crescere, differenziarsi o scalare. Non è un costo operativo, ma un investimento strategico.</p></div>
             </div>
@@ -922,7 +923,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quando è necessario fare un rebranding?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Quando il brand non riflette più il posizionamento o limita la crescita.</p></div>
             </div>
@@ -930,7 +931,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quanto impatta il branding sui risultati?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">In modo significativo: un brand forte riduce i costi di acquisizione e aumenta la fiducia.</p></div>
             </div>
@@ -938,7 +939,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Il design è solo estetica?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">No: è uno strumento strategico per comunicare valore e posizionamento.</p></div>
             </div>
@@ -952,7 +953,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Quanto coinvolgete il cliente nel processo?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Molto: la collaborazione è fondamentale per ottenere risultati efficaci.</p></div>
             </div>
@@ -960,7 +961,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Chi lavorerà sul mio progetto?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Un team dedicato composto da: Account, Project Manager, Strategic Planner, Art Director, Graphic Designer, Copywriter e Social Media Manager. Ogni figura lavora su una parte specifica per garantire qualità e risultati.</p></div>
             </div>
@@ -968,7 +969,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">È possibile lavorare a lungo termine?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì, le collaborazioni continuative sono quelle che generano più valore.</p></div>
             </div>
@@ -982,7 +983,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come evolve oggi la comunicazione digitale?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Verso modelli sempre più integrati tra dati, creatività e intelligenza artificiale.</p></div>
             </div>
@@ -990,7 +991,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Qual è il ruolo dell'AI nella comunicazione?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Supporta analisi e produzione, ma la strategia resta umana.</p></div>
             </div>
@@ -998,7 +999,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Come preparate i brand al futuro digitale?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Costruendo ecosistemi solidi e adattabili nel tempo.</p></div>
             </div>
@@ -1006,7 +1007,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Perché affidarsi a un partner certificato come Estro?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Perché lavoriamo con accesso diretto a piattaforme e strumenti avanzati grazie alle certificazioni ufficiali con Google, Meta, TikTok e Sky Media. Questo significa strategie più solide, dati più affidabili e campagne progettate per performare davvero.</p></div>
             </div>
@@ -1014,7 +1015,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">È importante scegliere un'agenzia certificata?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Sì. Le certificazioni non sono un badge: sono accesso a best practice, aggiornamenti e supporto diretto dalle piattaforme. È quello che fa la differenza tra "fare campagne" e farle funzionare.</p></div>
             </div>
@@ -1022,7 +1023,7 @@
             <div class="faq-item">
               <button class="faq-item__q">
                 <span class="faq-item__q-text">Perché investire oggi nella comunicazione digitale?</span>
-                <span class="faq-item__icon"><svg viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg"><line x1="6" y1="1" x2="6" y2="11" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/><line x1="1" y1="6" x2="11" y2="6" stroke="#080808" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+                <span class="faq-item__icon"><svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg><svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg></span>
               </button>
               <div class="faq-item__body"><p class="faq-item__a">Perché il mercato si muove lì, con o senza di te. Che tu scelga noi o meno, la cosa importante è iniziare a costruire un sistema di acquisizione e crescita sostenibile.</p></div>
             </div>
@@ -1060,7 +1061,7 @@
               <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
             </label>
             <div class="contact-home__submit-wrap">
-              <button class="btn btn--primary" type="submit">Invia</button>
+              <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
             </div>
           </form>
         </div>
@@ -1119,8 +1120,8 @@
             <a href="servizi/graphic-design.html">Graphic design</a>
             <a href="servizi/web-design.html">Web design</a>
             <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="servizi/servizio-ai.html">AI</a>
             <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -1166,7 +1167,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>
@@ -1185,6 +1187,105 @@
 
 
   <script src="js/main.js"></script>
+  <script>
+  (function () {
+    var navEl     = document.querySelector('.nav');
+    var heroEl    = document.querySelector('.faq-hero');
+    var bodyEl    = document.querySelector('.faq-body');
+    var contactEl = document.querySelector('.faq-contact');
+    if (!heroEl || !bodyEl || !contactEl) return;
+
+    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    function makeTransOv(el, bg) {
+      if (!el) return null;
+      var ov = document.createElement('div');
+      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      el.appendChild(ov);
+      return ov;
+    }
+    function pHeroExit() {
+      var r = heroEl.getBoundingClientRect();
+      return ease(c01(-r.top / (heroEl.offsetHeight * 0.9)));
+    }
+    function pCentered(el) {
+      if (!el) return 0;
+      var top = el.getBoundingClientRect().top, vh = window.innerHeight;
+      return ease(c01((vh - top) / (vh / 2 + el.offsetHeight / 2)));
+    }
+
+    var heroToBodyOv    = makeTransOv(heroEl, '#f7f7f7');
+    var bodyToContactOv = makeTransOv(bodyEl, '#DB005A');
+
+    var exitOv = document.createElement('div');
+    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
+    document.body.appendChild(exitOv);
+
+    /* hero elements fade-in time-based */
+    var heroKicker = heroEl.querySelector('.faq-hero__kicker');
+    var heroTitle  = heroEl.querySelector('.faq-hero__title');
+    var heroRight  = heroEl.querySelector('.faq-hero__right');
+    if (heroKicker) heroKicker.style.opacity = '0';
+    if (heroTitle)  heroTitle.style.opacity  = '0';
+    if (heroRight)  heroRight.style.opacity  = '0';
+    var startTime = performance.now();
+
+    var entryOv = document.createElement('div');
+    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
+    document.body.appendChild(entryOv);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        entryOv.style.opacity = '0';
+        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
+      });
+    });
+
+    var C_DARK    = [5,   5,   5];
+    var C_WHITE   = [247, 247, 247];
+    var C_FUCHSIA = [219, 0,   90];
+    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
+    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
+    var prevDark = null;
+
+    function tick() {
+      if (heroToBodyOv)    heroToBodyOv.style.opacity    = pHeroExit().toFixed(3);
+      if (bodyToContactOv) bodyToContactOv.style.opacity = pCentered(contactEl).toFixed(3);
+
+      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
+
+      var t = (performance.now() - startTime) / 1000;
+      if (heroKicker) heroKicker.style.opacity = ease(c01((t - 0.05) / 0.45)).toFixed(3);
+      if (heroTitle)  heroTitle.style.opacity  = ease(c01((t - 0.15) / 0.75)).toFixed(3);
+      if (heroRight)  heroRight.style.opacity  = ease(c01((t - 0.55) / 0.6)).toFixed(3);
+
+      if (navEl) {
+        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
+        var effective = C_DARK;
+        [
+          { el: heroEl,    base: C_DARK,    ov: heroToBodyOv,    ovC: C_WHITE   },
+          { el: bodyEl,    base: C_WHITE,   ov: bodyToContactOv, ovC: C_FUCHSIA },
+          { el: contactEl, base: C_FUCHSIA, ov: null,            ovC: null      },
+        ].forEach(function(s) {
+          if (!s.el) return;
+          var r = s.el.getBoundingClientRect();
+          if (r.top <= navMidY && r.bottom > navMidY) {
+            var alpha = ovOp(s.ov);
+            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
+          }
+        });
+        var isDark = luma(effective) < 140;
+        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
   <script>
     document.querySelectorAll('.faq-item__q').forEach(btn => {
       btn.addEventListener('click', () => {

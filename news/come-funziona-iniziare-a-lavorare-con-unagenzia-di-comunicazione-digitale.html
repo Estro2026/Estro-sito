@@ -12,9 +12,13 @@
   <style>
     /* ══ ARTICLE PAGE ════════════════════════════════════════ */
 
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+
     /* ── Hero ───────────────────────────────────────────── */
     .art-hero {
-      background: #060606;
+      background: #000;
       min-height: 86vh;
       display: flex;
       align-items: flex-end;
@@ -724,16 +728,6 @@
     }
     .art-contact .contact-home__privacy a { color: #fff; text-decoration: underline; }
     .art-contact .contact-home__submit-wrap { display: flex; }
-    .art-contact .btn--primary {
-      background: #fff !important;
-      color: var(--primary) !important;
-      border-color: #fff !important;
-    }
-    .art-contact .btn--primary:hover {
-      background: #080808 !important;
-      color: #fff !important;
-      border-color: #080808 !important;
-    }
     @media (max-width: 860px) {
       .art-contact__inner { grid-template-columns: 1fr; }
       .art-contact .contact-home__row { grid-template-columns: 1fr; }
@@ -777,6 +771,19 @@
       .art-results__grid { grid-template-columns: 1fr; }
       .art-step { grid-template-columns: 90px 1fr; gap: 1rem; }
     }
+
+    /* ══ REVEAL ══════════════════════════════════════════════ */
+    .reveal,
+    .art-h2, .art-p, .art-list, .art-callout, .art-step, .art-result-card {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s cubic-bezier(.25,.46,.45,.94), transform 0.65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .reveal.is-visible,
+    .art-h2.is-visible, .art-p.is-visible, .art-list.is-visible,
+    .art-callout.is-visible, .art-step.is-visible, .art-result-card.is-visible {
+      opacity: 1; transform: none;
+    }
   </style>
 </head>
 <body>
@@ -789,14 +796,11 @@
         <span class="nav__menu-label-open">Chiudi</span>
       </button>
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+        <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="../lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -804,7 +808,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="../servizi/social-media-management.html">Social media management</a>
               <a href="../servizi/influencer-marketing.html">Influencer marketing</a>
               <a href="../servizi/google-ads.html">Google ads</a>
@@ -813,8 +817,8 @@
               <a href="../servizi/graphic-design.html">Graphic design</a>
               <a href="../servizi/web-design.html">Web design</a>
               <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
-              <a href="../servizi/servizio-ai.html">AI</a>
               <a href="../servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+              <a href="../servizi/servizio-ai.html">AI</a>
             </nav>
           </div>
           <div class="nav__mega-panel nav__mega-panel--dark">
@@ -836,6 +840,7 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
+              
               <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
@@ -886,8 +891,8 @@
     <!-- ══ RISPOSTA DIRETTA ═══════════════════════════════ -->
     <div class="art-answer">
       <div class="art-answer__inner">
-        <span class="art-answer__label">Risposta diretta</span>
-        <p class="art-answer__text">Lavorare con un'agenzia di comunicazione si avvia in 3 fasi: call conoscitiva gratuita (entro 24–48h), onboarding e strategia (7–10 giorni lavorativi), poi produzione e lancio. Il tutto senza impegno economico iniziale fino alla firma del contratto.</p>
+        <span class="art-answer__label reveal">Risposta diretta</span>
+        <p class="art-answer__text reveal">Lavorare con un'agenzia di comunicazione si avvia in 3 fasi: call conoscitiva gratuita (entro 24–48h), onboarding e strategia (7–10 giorni lavorativi), poi produzione e lancio. Il tutto senza impegno economico iniziale fino alla firma del contratto.</p>
       </div>
     </div>
 
@@ -1069,7 +1074,7 @@
           <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
         </label>
         <div class="contact-home__submit-wrap">
-          <button class="btn btn--primary" type="submit">Invia</button>
+          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
         </div>
       </form>
         </div>
@@ -1084,6 +1089,180 @@
   </main>
 
   <script src="../js/main.js"></script>
+  <script>
+  (function () {
+    var navEl       = document.querySelector('.nav');
+    var heroEl      = document.querySelector('.art-hero');
+    var answerEl    = document.querySelector('.art-answer');
+    var bodies      = document.querySelectorAll('.art-body');
+    var firstBodyEl = bodies[0];
+    var pricingEl   = document.querySelector('.art-pricing');
+    var timelineEl  = document.querySelector('.art-timeline');
+    var resultsEl   = document.querySelector('.art-results');
+    var faqEl       = document.querySelector('.art-faq');
+    var contactEl   = document.querySelector('.art-contact');
+    if (!heroEl || !faqEl || !contactEl) return;
+
+    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    function makeTransOv(el, bg) {
+      if (!el) return null;
+      var ov = document.createElement('div');
+      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      el.appendChild(ov);
+      return ov;
+    }
+
+    /* fade completo quando il 10% dell'altezza della sezione è ancora visibile */
+    function pSectionExit(el) {
+      if (!el) return 0;
+      var bottom    = el.getBoundingClientRect().bottom;
+      var h         = el.offsetHeight;
+      var fadeStart = h * 0.50;
+      var fadeEnd   = h * 0.10;
+      return ease(c01((fadeStart - bottom) / (fadeStart - fadeEnd)));
+    }
+
+    /* un overlay per ogni transizione di colore tra sezioni */
+    var heroToAnswerOv    = makeTransOv(heroEl,      '#DB005A'); /* dark → fuchsia */
+    var answerToBodyOv    = makeTransOv(answerEl,    '#fff');    /* fuchsia → bianco */
+    var bodyToPricingOv   = makeTransOv(firstBodyEl, '#0a0a0a');/* bianco → dark */
+    var pricingToTimeOv   = makeTransOv(pricingEl,   '#fff');   /* dark → bianco */
+    var tightToResultsOv  = makeTransOv(bodies[1],   '#080808');/* bianco → dark */
+    var resultsToFaqOv    = makeTransOv(resultsEl,   '#fff');   /* dark → bianco */
+    var faqToContactOv    = makeTransOv(faqEl,       '#DB005A');/* bianco → fuchsia */
+
+    var exitOv = document.createElement('div');
+    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
+    document.body.appendChild(exitOv);
+
+    /* hero elements fade-in */
+    var heroTitle = heroEl.querySelector('.art-hero__title');
+    var heroMeta  = heroEl.querySelector('.art-hero__meta');
+    var heroIntro = heroEl.querySelector('.art-hero__intro');
+
+    function splitWords(el) {
+      if (!el) return [];
+      var words = el.textContent.trim().split(/\s+/);
+      el.innerHTML = words.map(function(w) {
+        var safe = w.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+        return '<span class="tw" style="display:inline-block;opacity:0;transform:translateY(0.65em)">' + safe + '</span>';
+      }).join(' ');
+      el.style.opacity = '1';
+      return Array.from(el.querySelectorAll('.tw'));
+    }
+    function revWords(words, p, base, dur) {
+      words.forEach(function(w, i) {
+        var lp = ease(c01((p - (base||0) - i*(dur||0.1)) / 0.4));
+        w.style.opacity   = lp.toFixed(3);
+        w.style.transform = 'translateY(' + ((1-lp)*0.65).toFixed(3) + 'em)';
+      });
+    }
+    var heroWords = splitWords(heroTitle);
+
+    if (heroMeta)  { heroMeta.style.opacity  = '0'; heroMeta.style.transform  = 'translateY(10px)'; }
+    if (heroIntro) { heroIntro.style.opacity = '0'; heroIntro.style.transform = 'translateY(12px)'; }
+    var startTime = performance.now();
+
+    var entryOv = document.createElement('div');
+    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
+    document.body.appendChild(entryOv);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        entryOv.style.opacity = '0';
+        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
+      });
+    });
+
+    var C_DARK    = [5,   5,   5];
+    var C_DARK2   = [10,  10,  10];
+    var C_DARK3   = [8,   8,   8];
+    var C_WHITE   = [255, 255, 255];
+    var C_FUCHSIA = [219, 0,   90];
+    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
+    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
+    var prevDark = null;
+
+    var NAV_SECTIONS = [
+      { el: heroEl,      base: C_DARK,    ov: heroToAnswerOv,   ovC: C_FUCHSIA },
+      { el: answerEl,    base: C_FUCHSIA, ov: answerToBodyOv,   ovC: C_WHITE   },
+      { el: firstBodyEl, base: C_WHITE,   ov: bodyToPricingOv,  ovC: C_DARK2   },
+      { el: pricingEl,   base: C_DARK2,   ov: pricingToTimeOv,  ovC: C_WHITE   },
+      { el: timelineEl,  base: C_WHITE,   ov: null,             ovC: null      },
+      { el: bodies[1],   base: C_WHITE,   ov: tightToResultsOv, ovC: C_DARK3   },
+      { el: resultsEl,   base: C_DARK3,   ov: resultsToFaqOv,   ovC: C_WHITE   },
+      { el: faqEl,       base: C_WHITE,   ov: faqToContactOv,   ovC: C_FUCHSIA },
+      { el: contactEl,   base: C_FUCHSIA, ov: null,             ovC: null      },
+    ];
+
+    function tick() {
+      if (heroToAnswerOv)   heroToAnswerOv.style.opacity   = pSectionExit(heroEl).toFixed(3);
+      if (answerToBodyOv)   answerToBodyOv.style.opacity   = pSectionExit(answerEl).toFixed(3);
+      if (bodyToPricingOv)  bodyToPricingOv.style.opacity  = pSectionExit(firstBodyEl).toFixed(3);
+      if (pricingToTimeOv)  pricingToTimeOv.style.opacity  = pSectionExit(pricingEl).toFixed(3);
+      if (tightToResultsOv) tightToResultsOv.style.opacity = pSectionExit(bodies[1]).toFixed(3);
+      if (resultsToFaqOv)   resultsToFaqOv.style.opacity   = pSectionExit(resultsEl).toFixed(3);
+      if (faqToContactOv)   faqToContactOv.style.opacity   = pSectionExit(faqEl).toFixed(3);
+
+      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
+
+      var t = (performance.now() - startTime) / 1000;
+      if (heroMeta) {
+        var mp = ease(c01((t - 0.05) / 0.45));
+        heroMeta.style.opacity   = mp.toFixed(3);
+        heroMeta.style.transform = 'translateY(' + ((1-mp)*10).toFixed(1) + 'px)';
+      }
+      revWords(heroWords, t, 0.1, 0.09);
+      if (heroIntro) {
+        var ip = ease(c01((t - 0.65) / 0.55));
+        heroIntro.style.opacity   = ip.toFixed(3);
+        heroIntro.style.transform = 'translateY(' + ((1-ip)*12).toFixed(1) + 'px)';
+      }
+
+      if (navEl) {
+        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
+        var effective = C_DARK;
+        NAV_SECTIONS.forEach(function(s) {
+          if (!s.el) return;
+          var r = s.el.getBoundingClientRect();
+          if (r.top <= navMidY && r.bottom > navMidY) {
+            var alpha = ovOp(s.ov);
+            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
+          }
+        });
+        var isDark = luma(effective) < 140;
+        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
+  <script>
+    (function() {
+      /* stagger per card e step */
+      document.querySelectorAll('.art-results__grid .art-result-card').forEach(function(el, i) {
+        el.style.transitionDelay = (i * 0.1) + 's';
+      });
+      document.querySelectorAll('.art-steps .art-step').forEach(function(el, i) {
+        el.style.transitionDelay = (i * 0.15) + 's';
+      });
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
+      document.querySelectorAll('.reveal, .art-h2, .art-p, .art-list, .art-callout, .art-step, .art-result-card').forEach(function(el) {
+        /* skip hero elements già gestiti dal RAF */
+        if (!el.closest('.art-hero')) io.observe(el);
+      });
+    })();
+  </script>
   <script>
     document.querySelectorAll('.art-faq__q').forEach(function(q) {
       q.addEventListener('click', function() {
@@ -1102,7 +1281,7 @@
 
         <div class="sf-col">
           <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
-            <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+            <img src="../Logoestrofooter.webp" alt="ESTRO" />
           </a>
           <p class="sf-tagline">Idee che prendono forma.</p>
         </div>
@@ -1118,8 +1297,8 @@
             <a href="../servizi/graphic-design.html">Graphic design</a>
             <a href="../servizi/web-design.html">Web design</a>
             <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="../servizi/servizio-ai.html">AI</a>
             <a href="../servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -1165,7 +1344,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>

@@ -12,10 +12,14 @@
   <link rel="stylesheet" href="css/hero.css" />
   <style>
     /* ══ NEWS PAGE ══════════════════════════════════════════════ */
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span,
+    .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
 
     /* ── Hero ───────────────────────────────────────────────── */
     .nw-hero {
-      background: #050505;
+      background: #000;
       min-height: 60vh;
       display: flex;
       align-items: flex-end;
@@ -366,16 +370,6 @@
     }
     .nw-contact .contact-home__privacy a { color: #fff; text-decoration: underline; }
     .nw-contact .contact-home__submit-wrap { display: flex; }
-    .nw-contact .btn--primary {
-      background: #fff !important;
-      color: var(--primary) !important;
-      border-color: #fff !important;
-    }
-    .nw-contact .btn--primary:hover {
-      background: #080808 !important;
-      color: #fff !important;
-      border-color: #080808 !important;
-    }
     @media (max-width: 860px) {
       .nw-contact__inner { grid-template-columns: 1fr; }
       .nw-contact .contact-home__row { grid-template-columns: 1fr; }
@@ -403,12 +397,9 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -416,7 +407,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="servizi/social-media-management.html">Social media management</a>
               <a href="servizi/influencer-marketing.html">Influencer marketing</a>
               <a href="servizi/google-ads.html">Google ads</a>
@@ -425,8 +416,8 @@
               <a href="servizi/graphic-design.html">Graphic design</a>
               <a href="servizi/web-design.html">Web design</a>
               <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-              <a href="servizi/servizio-ai.html">AI</a>
               <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+              <a href="servizi/servizio-ai.html">AI</a>
             </nav>
           </div>
           <div class="nav__mega-panel nav__mega-panel--dark">
@@ -448,6 +439,7 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
+              
               <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
@@ -519,7 +511,7 @@
           </div>
         </a>
 
-        <a class="nw-card reveal" href="#">
+        <a class="nw-card reveal reveal-delay-2" href="#">
           <div class="nw-card__thumb">
             <div class="nw-card__thumb-icon" aria-hidden="true">
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -551,13 +543,14 @@
           </div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Strategia</span>
+
             <h3 class="nw-card__title">Agenzia di comunicazione o team interno: cosa conviene davvero nel 2026</h3>
             <p class="nw-card__excerpt">Dalla prima call alla strategia operativa: cosa succede davvero nelle prime settimane.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
-        <a class="nw-card reveal" href="#">
+        <a class="nw-card reveal reveal-delay-1" href="#">
           <div class="nw-card__thumb">
             <div class="nw-card__thumb-icon" aria-hidden="true">
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -576,7 +569,7 @@
           </div>
         </a>
 
-        <a class="nw-card reveal" href="#">
+        <a class="nw-card reveal reveal-delay-2" href="#">
           <div class="nw-card__thumb">
             <div class="nw-card__thumb-icon" aria-hidden="true">
               <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -607,7 +600,7 @@
           <p class="nw-contact__sub reveal">Raccontaci il tuo progetto. Trasformiamo idee in brand che lasciano il segno.</p>
         </div>
         <div class="nw-contact__right">
-      <form class="contact-home__form reveal" action="#" method="post" novalidate>
+      <form class="contact-home__form reveal reveal-delay-2" action="#" method="post" novalidate>
         <div class="contact-home__row">
           <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
           <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
@@ -626,7 +619,7 @@
           <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
         </label>
         <div class="contact-home__submit-wrap">
-          <button class="btn btn--primary" type="submit">Invia</button>
+          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
         </div>
       </form>
         </div>
@@ -635,6 +628,147 @@
       </main>
 
   <script src="js/main.js"></script>
+  <script>
+  (function () {
+    var navEl     = document.querySelector('.nav');
+    var heroEl    = document.querySelector('.nw-hero');
+    var gridEl    = document.querySelector('.nw-grid-wrap');
+    var contactEl = document.querySelector('.nw-contact');
+    if (!heroEl || !gridEl || !contactEl) return;
+
+    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    /* ── Split letters ─────────────────────────────────────────── */
+    function splitLetters(el) {
+      if (!el) return [];
+      var raw = el.innerHTML, out = '', i = 0, inWord = false;
+      function closeWord() { if (inWord) { out += '</span>'; inWord = false; } }
+      function openWord()  { if (!inWord) { out += '<span style="display:inline-block;white-space:nowrap">'; inWord = true; } }
+      while (i < raw.length) {
+        if (raw[i] === '<') { var j = raw.indexOf('>', i); closeWord(); out += raw.slice(i, j+1); i = j+1; }
+        else if (raw[i] === ' ' || raw[i] === '\n') { closeWord(); out += raw[i]; i++; }
+        else { openWord(); out += '<span class="tl" style="display:inline-block;opacity:0;transform:translateY(0.7em)">' + raw[i] + '</span>'; i++; }
+      }
+      closeWord();
+      el.innerHTML = out; el.style.opacity = '1';
+      return Array.from(el.querySelectorAll('.tl'));
+    }
+    function revLetters(letters, p, base, dur) {
+      letters.forEach(function(l, i) {
+        var lp = ease(c01((p - (base||0) - i*(dur||0.04)) / 0.35));
+        l.style.opacity   = lp.toFixed(3);
+        l.style.transform = 'translateY(' + ((1-lp)*0.7).toFixed(3) + 'em)';
+      });
+    }
+
+    /* ── Overlays ──────────────────────────────────────────────── */
+    function makeTransOv(el, bg) {
+      if (!el) return null;
+      var ov = document.createElement('div');
+      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      el.appendChild(ov);
+      return ov;
+    }
+
+    /* hero → bianco: 0 all'inizio scroll, 1 quando hero è uscita al 90% */
+    function pHeroExit() {
+      var r = heroEl.getBoundingClientRect();
+      return ease(c01(-r.top / (heroEl.offsetHeight * 0.9)));
+    }
+    /* completa il fade quando el è centrata nel viewport */
+    function pCentered(el) {
+      if (!el) return 0;
+      var top = el.getBoundingClientRect().top, vh = window.innerHeight;
+      return ease(c01((vh - top) / (vh / 2 + el.offsetHeight / 2)));
+    }
+
+    var heroToGridOv    = makeTransOv(heroEl, '#f5f5f5');
+    var gridToContactOv = makeTransOv(gridEl, '#DB005A');
+
+    /* overlay fisso nero per uscita al footer */
+    var exitOv = document.createElement('div');
+    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
+    document.body.appendChild(exitOv);
+
+    /* ── Hero: animazione titolo e testi ───────────────────────── */
+    var heroTitle   = heroEl.querySelector('.nw-hero__title');
+    var heroKicker  = heroEl.querySelector('.nw-hero__kicker');
+    var heroSub     = heroEl.querySelector('.nw-hero__sub');
+    var heroLetters = splitLetters(heroTitle);
+    if (heroKicker) heroKicker.style.opacity = '0';
+    if (heroSub)    heroSub.style.opacity    = '0';
+    var startTime = performance.now();
+
+    /* overlay nero di entrata pagina */
+    var entryOv = document.createElement('div');
+    Object.assign(entryOv.style, {
+      position:'fixed', inset:'0', background:'#000',
+      opacity:'1', pointerEvents:'none', zIndex:'200',
+      transition:'opacity 0.75s ease'
+    });
+    document.body.appendChild(entryOv);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        entryOv.style.opacity = '0';
+        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
+      });
+    });
+
+    /* ── Nav theme ─────────────────────────────────────────────── */
+    var C_DARK    = [5,   5,   5];
+    var C_WHITE   = [245, 245, 245];
+    var C_FUCHSIA = [219, 0,   90];
+    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
+    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
+    var prevDark = null;
+
+    function tick() {
+      /* overlays sezione */
+      if (heroToGridOv)    heroToGridOv.style.opacity    = pHeroExit().toFixed(3);
+      if (gridToContactOv) gridToContactOv.style.opacity = pCentered(contactEl).toFixed(3);
+
+      /* fade nero al footer */
+      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
+
+      /* animazione hero (time-based) */
+      var t = (performance.now() - startTime) / 1000;
+      if (heroLetters.length) {
+        var _p = ease(c01((t - 0.15) / 0.9));
+        var _dur = 0.55 / heroLetters.length; /* stagger che si adatta al numero di lettere */
+        revLetters(heroLetters, _p, 0, _dur);
+      }
+      if (heroKicker) heroKicker.style.opacity = ease(c01((t - 0.05) / 0.45)).toFixed(3);
+      if (heroSub)    heroSub.style.opacity    = ease(c01((t - 0.65) / 0.55)).toFixed(3);
+
+      /* nav theme — blend continuo */
+      if (navEl) {
+        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
+        var effective = C_DARK;
+        [
+          { el: heroEl,    base: C_DARK,    ov: heroToGridOv,    ovC: C_WHITE   },
+          { el: gridEl,    base: C_WHITE,   ov: gridToContactOv, ovC: C_FUCHSIA },
+          { el: contactEl, base: C_FUCHSIA, ov: null,            ovC: null      },
+        ].forEach(function(s) {
+          if (!s.el) return;
+          var r = s.el.getBoundingClientRect();
+          if (r.top <= navMidY && r.bottom > navMidY) {
+            var alpha = ovOp(s.ov);
+            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
+          }
+        });
+        var isDark = luma(effective) < 140;
+        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
@@ -659,8 +793,8 @@
             <a href="servizi/graphic-design.html">Graphic design</a>
             <a href="servizi/web-design.html">Web design</a>
             <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="servizi/servizio-ai.html">AI</a>
             <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -706,7 +840,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>

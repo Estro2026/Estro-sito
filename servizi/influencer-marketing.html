@@ -38,15 +38,7 @@
        Colonna sinistra più larga, gap/padding ridotti, copy
        limitata in larghezza. Font-size quasi invariata.        */
     #imkHero { min-height: 100svh; }
-    #imkHero.svc-hero--videobg .svc-hero__inner {
-      padding-top: clamp(5rem, 11vh, 6.25rem);
-      padding-bottom: clamp(1.25rem, 3vh, 2.25rem);
-      min-height: calc(100svh - 82px);
-      justify-content: center;
-      gap: 0;
-    }
-    #imkHero .svc-hero__left {
-      max-width: min(880px, 100%);
+    #imkHero#imkHero .svc-hero__left {
       width: 100%;
       gap: 0.3rem;
     }
@@ -209,7 +201,6 @@
     #imkClienti .svc-clients__logo {
       display: flex !important;
       align-items: center !important;
-      justify-content: center !important;
       flex-shrink: 0 !important;
       width: clamp(100px, 12vw, 180px) !important;
     }
@@ -231,6 +222,20 @@
     /* ── CTA: stesse metriche dei pannelli SMM ────────────────── */
     .smm-row .btn, .svc-caffe .btn { text-align: center; justify-content: center; }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Cos'e l'influencer marketing?", "acceptedAnswer": { "@type": "Answer", "text": "E una strategia di marketing che sfrutta la credibilita e la community di creator e influencer per promuovere un brand, un prodotto o un servizio in modo autentico e mirato." } },
+    { "@type": "Question", "name": "Come scegliete gli influencer giusti per il mio brand?", "acceptedAnswer": { "@type": "Answer", "text": "Analizziamo il tuo target, il settore e gli obiettivi di campagna. Valutiamo l'engagement rate, la qualita della community, la coerenza dei valori e le performance storiche di ogni creator." } },
+    { "@type": "Question", "name": "ESTRO collabora anche con micro-influencer?", "acceptedAnswer": { "@type": "Answer", "text": "Assolutamente si. I micro-influencer (10k-100k follower) generano spesso un engagement piu autentico e una maggiore fiducia da parte della loro community rispetto ai profili con milioni di follower." } },
+    { "@type": "Question", "name": "Come si misura il successo di una campagna influencer?", "acceptedAnswer": { "@type": "Answer", "text": "Misuriamo reach, impression, engagement, clic, traffico generato e, quando possibile, conversioni dirette. Forniamo un report dettagliato al termine di ogni campagna." } },
+    { "@type": "Question", "name": "Quanto costa una campagna di influencer marketing?", "acceptedAnswer": { "@type": "Answer", "text": "I costi variano in base al numero di creator coinvolti, alla loro dimensione e al tipo di contenuti richiesti. Contattaci per un preventivo personalizzato in base al tuo budget e obiettivi." } },
+    { "@type": "Question", "name": "ESTRO gestisce anche i contratti con gli influencer?", "acceptedAnswer": { "@type": "Answer", "text": "Si, ci occupiamo di tutta la parte contrattuale e organizzativa: briefing, accordi, supervisione dei contenuti e approvazione finale prima della pubblicazione." } }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -244,12 +249,9 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="../lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -257,7 +259,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="social-media-management.html">Social media management</a>
               <a href="influencer-marketing.html">Influencer marketing</a>
               <a href="google-ads.html">Google ads</a>
@@ -291,10 +293,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -322,16 +322,6 @@
           </h1>
           <p class="svc-hero__sub">Scegli l'ambassador giusto con noi.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
-          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
-            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
-            <label class="svc-hero__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
-            </label>
-            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
-          </form>
         </div>
 
       </div>
@@ -711,38 +701,65 @@
       </div>
     </section>
 
-    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
-    <section class="section svc-magic" id="imkMagic">
-      <div class="container svc-magic__inner">
-        <div class="svc-magic__cat reveal">
-          <div class="svc-magic__placeholder" aria-hidden="true"></div>
-        </div>
-        <div class="svc-magic__content reveal reveal-delay-1">
-          <h2 class="svc-magic__title">SAPPIAMO FARE<br>UN SACCO DI<br>ALTRE MAGIE</h2>
-          <div class="svc-magic__links">
-            <a class="svc-magic__pill" href="produzione-contenuti.html">Produzione Contenuti</a>
-            <a class="svc-magic__pill" href="strategia-digitale.html">Strategia Digitale</a>
-            <a class="svc-magic__pill" href="social-media-management.html">Social Media Management</a>
-            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
+    
+    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
+    
+    <!-- FAQ -->
+    <section class="page-faq">
+      <div class="page-faq__inner">
+        <h2 class="page-faq__title">FAQ</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Cos'e l'influencer marketing?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">E una strategia di marketing che sfrutta la credibilita e la community di creator e influencer per promuovere un brand, un prodotto o un servizio in modo autentico e mirato.</div></div>
           </div>
-        </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come scegliete gli influencer giusti per il mio brand?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Analizziamo il tuo target, il settore e gli obiettivi di campagna. Valutiamo l'engagement rate, la qualita della community, la coerenza dei valori e le performance storiche di ogni creator.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO collabora anche con micro-influencer?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Assolutamente si. I micro-influencer (10k-100k follower) generano spesso un engagement piu autentico e una maggiore fiducia da parte della loro community rispetto ai profili con milioni di follower.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come si misura il successo di una campagna influencer?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Misuriamo reach, impression, engagement, clic, traffico generato e, quando possibile, conversioni dirette. Forniamo un report dettagliato al termine di ogni campagna.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quanto costa una campagna di influencer marketing?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">I costi variano in base al numero di creator coinvolti, alla loro dimensione e al tipo di contenuti richiesti. Contattaci per un preventivo personalizzato in base al tuo budget e obiettivi.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO gestisce anche i contratti con gli influencer?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, ci occupiamo di tutta la parte contrattuale e organizzativa: briefing, accordi, supervisione dei contenuti e approvazione finale prima della pubblicazione.</div></div>
+          </div>
+        </dl>
       </div>
     </section>
 
-    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
-    <section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci" id="imkCaffe" data-nav-theme="dark">
+<section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci" id="imkCaffe" data-nav-theme="dark">
       <div class="container svc-caffe__inner">
         <div class="svc-caffe__left reveal">
           <h2 class="svc-caffe__title"><span class="caffe-nowrap">Prendiamoci</span><br/>un caffè!</h2>
           <p class="svc-caffe__sub">Anche virtuale</p>
         </div>
         <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
-          <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-          <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-          <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+          </div>
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
           <label class="svc-caffe__privacy">
             <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
           </label>
           <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
         </form>
@@ -1337,8 +1354,8 @@
             <a href="../servizi/graphic-design.html">Graphic design</a>
             <a href="../servizi/web-design.html">Web design</a>
             <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="../servizi/servizio-ai.html">AI</a>
             <a href="../servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -1384,7 +1401,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>

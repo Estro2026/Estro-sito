@@ -10,6 +10,10 @@
   <link rel="stylesheet" href="css/components.css" />
   <style>
 
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+
     /* ══ HERO ══════════════════════════════════════════════ */
     .lcn-hero {
       position: relative;
@@ -22,7 +26,6 @@
       padding-left: clamp(1.5rem, 6vw, 7rem);
       padding-right: clamp(1.5rem, 6vw, 7rem);
       background: #060606 url('team building.png') center/cover no-repeat;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
       box-sizing: border-box;
     }
     .lcn-hero::before {
@@ -408,16 +411,6 @@
       border-color: #080808;
     }
     .lcn-apply__privacy a { color: #fff; text-decoration: underline; }
-    .lcn-apply .btn--primary {
-      background: #fff !important;
-      color: var(--primary) !important;
-      border-color: #fff !important;
-    }
-    .lcn-apply .btn--primary:hover {
-      background: rgba(255,255,255,0.9) !important;
-      color: var(--primary) !important;
-      box-shadow: none !important;
-    }
 
     /* ══ INFO SEDI ══════════════════════════════════════════ */
     .lcn-info {
@@ -448,6 +441,18 @@
       color: rgba(255,255,255,0.45);
     }
     .sf-logo img { filter: none !important; height: auto !important; width: clamp(140px, 18vw, 200px) !important; opacity: 1 !important; }
+
+    /* ══ REVEAL ══════════════════════════════════════════════ */
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity 0.65s cubic-bezier(.25,.46,.45,.94), transform 0.65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .reveal.is-visible { opacity: 1; transform: none; }
+    .reveal.is-visible.stagger-1 { transition-delay: 0.1s; }
+    .reveal.is-visible.stagger-2 { transition-delay: 0.2s; }
+    .reveal.is-visible.stagger-3 { transition-delay: 0.3s; }
+    .reveal.is-visible.stagger-4 { transition-delay: 0.4s; }
   </style>
 </head>
 <body>
@@ -462,12 +467,9 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -475,7 +477,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="servizi/social-media-management.html">Social media management</a>
               <a href="servizi/influencer-marketing.html">Influencer marketing</a>
               <a href="servizi/google-ads.html">Google ads</a>
@@ -484,8 +486,8 @@
               <a href="servizi/graphic-design.html">Graphic design</a>
               <a href="servizi/web-design.html">Web design</a>
               <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-              <a href="servizi/servizio-ai.html">AI</a>
               <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+              <a href="servizi/servizio-ai.html">AI</a>
             </nav>
           </div>
           <div class="nav__mega-panel nav__mega-panel--dark">
@@ -509,10 +511,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -557,12 +557,12 @@
     <!-- ══ ABOUT ═════════════════════════════════════════════ -->
     <section class="lcn-about">
       <div class="lcn-about__left">
-        <span class="lcn-about__label">Chi siamo</span>
-        <div class="lcn-about__text reveal">
-          <p>Estro è un collettivo di professionisti dove il lavoro viene affrontato con creatività e passione.</p>
-          <p>Un collettivo dove sono le persone e le loro idee a fare la differenza e dove anche chi ha poca esperienza può mettersi in gioco e dove la sua passione può essere trasformato in una professione.</p>
-          <p>Se sei creativo, hai passione per il mondo del marketing o del digitale, che tu sia un esordiente o un professionista affermato in estro c'è sempre bisogno di nuove idee.</p>
-          <p>Qui sotto trovi le figure che stiamo cercando ma se non vedi una categoria a te affine non disperare, mandaci comunque il tuo CV specificando per che posizione ti stai candidando e saremo felici di valutarlo.</p>
+        <span class="lcn-about__label reveal">Chi siamo</span>
+        <div class="lcn-about__text">
+          <p class="reveal">Estro è un collettivo di professionisti dove il lavoro viene affrontato con creatività e passione.</p>
+          <p class="reveal" style="transition-delay:0.12s">Un collettivo dove sono le persone e le loro idee a fare la differenza e dove anche chi ha poca esperienza può mettersi in gioco e dove la sua passione può essere trasformato in una professione.</p>
+          <p class="reveal" style="transition-delay:0.24s">Se sei creativo, hai passione per il mondo del marketing o del digitale, che tu sia un esordiente o un professionista affermato in estro c'è sempre bisogno di nuove idee.</p>
+          <p class="reveal" style="transition-delay:0.36s">Qui sotto trovi le figure che stiamo cercando ma se non vedi una categoria a te affine non disperare, mandaci comunque il tuo CV specificando per che posizione ti stai candidando e saremo felici di valutarlo.</p>
         </div>
       </div>
       <div class="lcn-about__right reveal">
@@ -582,13 +582,13 @@
 
     <!-- ══ POSIZIONI ══════════════════════════════════════════ -->
     <section class="lcn-positions">
-      <div class="lcn-positions__header">
+      <div class="lcn-positions__header reveal">
         <span class="lcn-positions__kicker">Figure ricercate</span>
         <span class="lcn-positions__line"></span>
       </div>
-      <h2 class="lcn-positions__heading">Siamo sempre entusiasti<br>di conoscere nuovi talenti</h2>
-      <p class="lcn-positions__notice">Al momento non ci sono posizioni aperte, ma inviaci comunque il tuo CV.</p>
-      <div class="lcn-positions__tags">
+      <h2 class="lcn-positions__heading reveal" style="transition-delay:0.1s">Siamo sempre entusiasti<br>di conoscere nuovi talenti</h2>
+      <p class="lcn-positions__notice reveal" style="transition-delay:0.2s">Al momento non ci sono posizioni aperte, ma inviaci comunque il tuo CV.</p>
+      <div class="lcn-positions__tags reveal" style="transition-delay:0.3s">
         <span class="lcn-pos-tag">Graphic Designer</span>
         <span class="lcn-pos-tag">Social Media Manager</span>
         <span class="lcn-pos-tag">Copywriter</span>
@@ -603,10 +603,10 @@
     <!-- ══ FORM CANDIDATURA ══════════════════════════════════ -->
     <section class="lcn-apply" id="candidatura">
       <div class="lcn-apply__layout">
-        <span class="lcn-apply__kicker">Candidati ora</span>
-        <h2 class="lcn-apply__title">Inviaci il tuo curriculum</h2>
-        <p class="lcn-apply__sub">Iniziamo a conoscerci!</p>
-        <form class="lcn-apply__form" action="#" method="post" enctype="multipart/form-data" novalidate>
+        <span class="lcn-apply__kicker reveal">Candidati ora</span>
+        <h2 class="lcn-apply__title reveal" style="transition-delay:0.1s">Inviaci il tuo curriculum</h2>
+        <p class="lcn-apply__sub reveal" style="transition-delay:0.2s">Iniziamo a conoscerci!</p>
+        <form class="lcn-apply__form reveal" style="transition-delay:0.35s" action="#" method="post" enctype="multipart/form-data" novalidate>
 
           <div class="lcn-apply__row">
             <input class="lcn-apply__input" type="text" name="nome" placeholder="Nome*" required />
@@ -639,7 +639,7 @@
           </label>
 
           <div>
-            <button class="btn btn--primary" type="submit">Invia</button>
+            <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
           </div>
 
         </form>
@@ -673,8 +673,8 @@
             <a href="servizi/graphic-design.html">Graphic design</a>
             <a href="servizi/web-design.html">Web design</a>
             <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="servizi/servizio-ai.html">AI</a>
             <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -720,7 +720,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>
@@ -739,6 +740,194 @@
 
 
   <script src="js/main.js"></script>
+  <script>
+  (function () {
+    var navEl      = document.querySelector('.nav');
+    var heroEl     = document.querySelector('.lcn-hero');
+    var aboutEl    = document.querySelector('.lcn-about');
+    var posEl      = document.querySelector('.lcn-positions');
+    var applyEl    = document.querySelector('.lcn-apply');
+    if (!heroEl) return;
+
+    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
+    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
+
+    function makeTransOv(el, bg) {
+      if (!el) return null;
+      var ov = document.createElement('div');
+      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
+      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
+      el.appendChild(ov);
+      return ov;
+    }
+    /* fade completo quando il 10% dell'altezza della sezione è ancora visibile */
+    function pSectionExit(el) {
+      if (!el) return 0;
+      var bottom    = el.getBoundingClientRect().bottom;
+      var h         = el.offsetHeight;
+      var fadeStart = h * 0.50;
+      var fadeEnd   = h * 0.10;
+      return ease(c01((fadeStart - bottom) / (fadeStart - fadeEnd)));
+    }
+
+    var heroToAboutOv  = makeTransOv(heroEl, '#fff');
+    if (heroToAboutOv) heroToAboutOv.style.bottom = '-8px'; /* elimina lo stacco hero/about */
+    var aboutToPosOv   = aboutEl ? makeTransOv(aboutEl, '#080808') : null;
+    var posToApplyOv   = posEl   ? makeTransOv(posEl,   '#DB005A') : null;
+
+    var exitOv = document.createElement('div');
+    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
+    document.body.appendChild(exitOv);
+
+    function splitWordsHtml(el) {
+      if (!el) return [];
+      var parts = el.innerHTML.split(/<br\s*\/?>/i);
+      el.innerHTML = parts.map(function(seg) {
+        return seg.trim().split(/\s+/).filter(Boolean).map(function(w) {
+          var safe = w.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+          return '<span class="tw" style="display:inline-block;opacity:0;transform:translateY(0.65em)">' + safe + '</span>';
+        }).join(' ');
+      }).join('<br>');
+      el.style.opacity = '1';
+      return Array.from(el.querySelectorAll('.tw'));
+    }
+    function revWords(words, p, base, dur) {
+      words.forEach(function(w, i) {
+        var lp = ease(c01((p - (base||0) - i*(dur||0.12)) / 0.4));
+        w.style.opacity   = lp.toFixed(3);
+        w.style.transform = 'translateY(' + ((1-lp)*0.65).toFixed(3) + 'em)';
+      });
+    }
+
+    var heroKicker = heroEl.querySelector('.lcn-hero__kicker');
+    var heroTitle  = heroEl.querySelector('.lcn-hero__title');
+    var heroBottom = heroEl.querySelector('.lcn-hero__bottom');
+    var heroStats  = heroEl.querySelector('.lcn-hero__stats');
+    if (heroKicker) { heroKicker.style.opacity = '0'; heroKicker.style.transform = 'translateY(10px)'; }
+    var heroWords = splitWordsHtml(heroTitle);
+    if (heroBottom) { heroBottom.style.opacity = '0'; heroBottom.style.transform = 'translateY(16px)'; }
+    if (heroStats)  { heroStats.style.opacity  = '0'; heroStats.style.transform  = 'translateY(16px)'; }
+    var startTime = performance.now();
+
+    var entryOv = document.createElement('div');
+    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
+    document.body.appendChild(entryOv);
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        entryOv.style.opacity = '0';
+        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
+      });
+    });
+
+    var C_DARK    = [5,   5,   5];
+    var C_WHITE   = [255, 255, 255];
+    var C_DARK2   = [8,   8,   8];
+    var C_FUCHSIA = [219, 0,   90];
+    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
+    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
+    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
+    var prevDark = null;
+
+    function tick() {
+      if (heroToAboutOv)  heroToAboutOv.style.opacity  = pSectionExit(heroEl).toFixed(3);
+      if (aboutToPosOv)   aboutToPosOv.style.opacity   = pSectionExit(aboutEl).toFixed(3);
+      if (posToApplyOv)   posToApplyOv.style.opacity   = pSectionExit(posEl).toFixed(3);
+
+      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
+
+      var t = (performance.now() - startTime) / 1000;
+      if (heroKicker) {
+        var kp = ease(c01((t - 0.05) / 0.4));
+        heroKicker.style.opacity   = kp.toFixed(3);
+        heroKicker.style.transform = 'translateY(' + ((1-kp)*10).toFixed(1) + 'px)';
+      }
+      revWords(heroWords, t, 0.08, 0.14);
+      if (heroBottom) {
+        var bp = ease(c01((t - 0.55) / 0.55));
+        heroBottom.style.opacity   = bp.toFixed(3);
+        heroBottom.style.transform = 'translateY(' + ((1-bp)*16).toFixed(1) + 'px)';
+      }
+      if (heroStats) {
+        var sp = ease(c01((t - 0.75) / 0.55));
+        heroStats.style.opacity   = sp.toFixed(3);
+        heroStats.style.transform = 'translateY(' + ((1-sp)*16).toFixed(1) + 'px)';
+      }
+
+      if (navEl) {
+        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
+        var effective = C_DARK;
+        var sections = [
+          { el: heroEl,   base: C_DARK,    ov: heroToAboutOv, ovC: C_WHITE   },
+          { el: aboutEl,  base: C_WHITE,   ov: aboutToPosOv,  ovC: C_DARK2   },
+          { el: posEl,    base: C_DARK2,   ov: posToApplyOv,  ovC: C_FUCHSIA },
+          { el: applyEl,  base: C_FUCHSIA, ov: null,          ovC: null      },
+        ];
+        sections.forEach(function(s) {
+          if (!s.el) return;
+          var r = s.el.getBoundingClientRect();
+          if (r.top <= navMidY && r.bottom > navMidY) {
+            var alpha = ovOp(s.ov);
+            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
+          }
+        });
+        var isDark = luma(effective) < 140;
+        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
+      }
+
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  })();
+  </script>
+  <script>
+    (function() {
+      /* ── standard reveal (opacity + translateY) ── */
+      var io = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+        });
+      }, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
+      document.querySelectorAll('.reveal').forEach(function(el) { io.observe(el); });
+
+      /* ── word-by-word per i titoli delle sezioni ── */
+      function splitWordsHtml(el) {
+        if (!el) return [];
+        var parts = el.innerHTML.split(/<br\s*\/?>/i);
+        el.innerHTML = parts.map(function(seg) {
+          return seg.trim().split(/\s+/).filter(Boolean).map(function(w) {
+            var safe = w.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+            return '<span class="rw" style="display:inline-block;opacity:0;transform:translateY(0.6em);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(.25,.46,.45,.94)">' + safe + '</span>';
+          }).join(' ');
+        }).join('<br>');
+        el.style.opacity = '1';
+        return Array.from(el.querySelectorAll('.rw'));
+      }
+
+      var wio = new IntersectionObserver(function(entries) {
+        entries.forEach(function(e) {
+          if (!e.isIntersecting) return;
+          var words = e.target._rw;
+          if (words) words.forEach(function(w, i) {
+            w.style.transitionDelay = (i * 0.09) + 's';
+            w.style.opacity = '1';
+            w.style.transform = 'none';
+          });
+          wio.unobserve(e.target);
+        });
+      }, { threshold: 0.15 });
+
+      ['.lcn-positions__heading', '.lcn-apply__title'].forEach(function(sel) {
+        var el = document.querySelector(sel);
+        if (!el) return;
+        el.classList.remove('reveal');
+        el.removeAttribute('style'); /* rimuove transition-delay inline */
+        el.style.opacity = '1';
+        el._rw = splitWordsHtml(el);
+        wio.observe(el);
+      });
+    })();
+  </script>
   <script>
     (function () {
       const counters = document.querySelectorAll('.lcn-hero__stat-num[data-count]');

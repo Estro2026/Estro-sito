@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -635,69 +635,17 @@
 
     /* ── Case Studies ─────────────────────────────────────── */
     .cs2 {
-      position: relative !important;
-      height: 200dvh !important;
-      min-height: unset !important;
-      padding: 0 !important;
-      overflow: visible !important;
-      background: transparent !important;
-    }
-    .cs2-sticky {
-      position: sticky;
-      top: 0;
-      height: 100dvh;
-      overflow: clip;
       background: #fff;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: calc(var(--nav-h, 4rem) + 1rem);
-      padding-bottom: 1.5rem;
-      gap: clamp(0.3rem, 1vh, 1rem);
     }
-    .cs2__wall {
-      max-height: calc(100dvh - 30rem);
-      overflow: visible;
-    }
-    .cs2__intro { margin-bottom: 0; }
     .cs2__title {
-      font-size: clamp(2rem, 5vw, 5rem);
-      white-space: nowrap;
+      font-size: clamp(3rem, 10vw, 150px);
       color: var(--primary, #DB005A);
-      opacity: 0;
-      transform: translateY(30px);
-      will-change: opacity, transform;
-    }
-    .cs2__sub {
-      color: rgba(0,0,0,0.5);
-      font-size: clamp(0.8rem, 1.1vw, 1rem);
-      opacity: 0;
-      transform: translateY(20px);
-      will-change: opacity, transform;
-    }
-    .cs2__wall {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: clamp(4px, 0.6vw, 8px);
-    }
-    @media (max-width: 700px) { .cs2__wall { grid-template-columns: repeat(3, 1fr); } }
-    .cs2__tile {
-      opacity: 0;
-      will-change: opacity, transform;
     }
     .cs2__footer {
-      margin-top: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      opacity: 0;
-      transform: translateY(20px);
-      will-change: opacity, transform;
+      justify-content: center;
     }
-    .cs2__footer-note { color: rgba(0,0,0,0.45); font-size: clamp(0.75rem, 1vw, 0.9rem); }
-    .cs2__footer-btn { border-color: rgba(0,0,0,0.3) !important; color: #000 !important; }
 
     /* ── cta-coffee: immagine gestita dal RAF scroll-driven ── */
     .cta-coffee {
@@ -826,6 +774,20 @@
       .hc-row { grid-template-columns: 1fr; }
     }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Che tipo di agenzia e ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
+    { "@type": "Question", "name": "Quali servizi offre ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI." } },
+    { "@type": "Question", "name": "Con che tipo di clienti lavora ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro." } },
+    { "@type": "Question", "name": "Come si inizia a lavorare con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta piu adatta." } },
+    { "@type": "Question", "name": "Quanto costa un progetto con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "I costi variano in base al servizio e alla complessita del progetto. Offriamo soluzioni su misura per ogni budget: contattaci per ricevere un preventivo personalizzato e senza impegno." } },
+    { "@type": "Question", "name": "ESTRO lavora anche con aziende fuori dalla propria area geografica?", "acceptedAnswer": { "@type": "Answer", "text": "Si, operiamo con clienti in tutta Italia e anche all'estero. Grazie agli strumenti digitali, gestiamo i progetti da remoto senza alcuna limitazione geografica." } }
+  ]
+}
+</script>
 </head>
 <body>
 <!-- Filtro SVG per rimuovere lo sfondo bianco dal video gatto -->
@@ -852,20 +814,18 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
-      </a>
+      <div class="nav__right">
+        <a class="nav__joinus" href="contatti.html">
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="servizi/social-media-management.html">Social media management</a>
               <a href="servizi/influencer-marketing.html">Influencer marketing</a>
               <a href="servizi/google-ads.html">Google ads</a>
@@ -874,8 +834,8 @@
               <a href="servizi/graphic-design.html">Graphic design</a>
               <a href="servizi/web-design.html">Web design</a>
               <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-              <a href="servizi/servizio-ai.html">AI</a>
               <a href="servizi/modellazione-3d.html">Modellazione e renderizzazione</a>
+              <a href="servizi/servizio-ai.html">AI</a>
             </nav>
           </div>
           <div class="nav__mega-panel nav__mega-panel--dark">
@@ -899,10 +859,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -1132,39 +1090,166 @@
 
     <!-- ══ CASE STUDIES ══════════════════════════════════════ -->
     <section class="cs2" id="case-studies" aria-labelledby="cs2-title">
-      <div class="cs2-sticky" id="cs2Sticky">
 
-      <!-- Intro header -->
+      <!-- Titolo -->
       <div class="container cs2__intro">
         <h2 class="cs2__title" id="cs2-title">CASE STUDIES</h2>
-        <p class="cs2__sub" id="cs2Sub">Risultati reali. Brand che hanno scelto</p>
       </div>
 
-      <!-- Logo wall — mosaico interattivo -->
+      <!-- Tab + Panel -->
       <div class="container">
-        <div class="cs2__wall" id="cs2Wall">
-          <div class="cs2__tile" data-idx="0"><img src="foto%20case%20study/ABC-logo-rosa.webp" alt="ABC Tools" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="1"><img src="foto%20case%20study/artigli-1-150x150.webp" alt="Artigli" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="2"><img src="foto%20case%20study/cybergon_rosa.png" alt="Cybergon" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="3"><img src="foto%20case%20study/logo_coseacasa.webp" alt="Cose a Casa" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="4"><img src="foto%20case%20study/Dresso_rosa.png" alt="Dresso" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="5"><img src="foto%20case%20study/squarelife-150x150_pink-150x150.webp" alt="Squarelife" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="6"><img src="foto%20case%20study/disclaimer-150x150_pink-150x150.webp" alt="Disclaimer" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="7"><img src="foto%20case%20study/pyrex-150x150_pink-150x150.webp" alt="Pyrex" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="8"><img src="foto%20case%20study/fragi-150x150_pink-150x150.webp" alt="Fragi" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="9"><img src="foto%20case%20study/logo-come-in-una-favola-v5-1.webp" alt="Come in una Favola" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="10"><img src="foto%20case%20study/redbull-150x150_pink-150x150.webp" alt="Red Bull" class="cs2__logo-img" /></div>
-          <div class="cs2__tile" data-idx="11"><img src="foto%20case%20study/woodoo-150x150_pink.webp" alt="Woodoo" class="cs2__logo-img" /></div>
+
+        <div class="cst-tabs" role="tablist">
+          <button class="cst-tab on" data-cst="fanuc"     role="tab" aria-selected="true">FANUC</button>
+          <button class="cst-tab"    data-cst="redbull"   role="tab" aria-selected="false">Red Bull</button>
+          <button class="cst-tab"    data-cst="leolandia" role="tab" aria-selected="false">Leolandia</button>
+          <button class="cst-tab"    data-cst="ariston"   role="tab" aria-selected="false">Ariston</button>
+          <button class="cst-tab"    data-cst="humanitas" role="tab" aria-selected="false">Humanitas</button>
+          <button class="cst-tab"    data-cst="cupra"     role="tab" aria-selected="false">Cupra</button>
         </div>
-      </div>
 
-      <!-- Footer CTA -->
+        <div class="cst-panels">
+
+          <!-- FANUC -->
+          <div class="cst-panel on" data-cst-panel="fanuc" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img">
+                <img src="Loghibrand/fanuc.webp" alt="FANUC">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__sector">Strategia Digitale &middot; B2B Industrial &middot; Lead Generation</div>
+                  <div class="cst-info__title">Da leader industriale a voce dell&apos;Industria 5.0</div>
+                  <div class="cst-info__text">Per FANUC, leader mondiale nella robotica e automazione, abbiamo progettato una strategia di comunicazione digitale capace di trasformare un brand tecnico in punto di riferimento culturale. Dal CRX Roadshow alle campagne ADV su Google e LinkedIn, ogni touchpoint ottimizzato per generare lead qualificati.</div>
+                  <div class="cst-info__tags"><span>Google Ads</span><span>LinkedIn ADV</span><span>Strategia</span><span>B2B</span></div>
+                </div>
+                <div class="cst-stats">
+                  <div class="cst-stat"><div class="cst-stat__val">130k+</div><div class="cst-stat__lbl">Clic generati</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">164k</div><div class="cst-stat__lbl">Impression LinkedIn</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">&euro;0,05</div><div class="cst-stat__lbl">CPC medio</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Red Bull -->
+          <div class="cst-panel" data-cst-panel="redbull" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img">
+                <img src="Loghibrand/redbull.webp" alt="Red Bull">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__sector">Content &amp; Video &middot; Events &middot; Social Media</div>
+                  <div class="cst-info__title">Content ad alta energia per il brand pi&ugrave; iconico del mondo</div>
+                  <div class="cst-info__text">Per Red Bull abbiamo prodotto contenuti video e fotografici per eventi e attivazioni in Italia, catturando l&apos;essenza del brand &mdash; adrenalina, sport estremo, cultura underground &mdash; e trasformandola in asset social ad alto impatto.</div>
+                  <div class="cst-info__tags"><span>Video</span><span>Fotografia</span><span>Events</span><span>Social</span></div>
+                </div>
+                <div class="cst-stats">
+                  <div class="cst-stat"><div class="cst-stat__val">+5</div><div class="cst-stat__lbl">Eventi coperti</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">100+</div><div class="cst-stat__lbl">Asset prodotti</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">Top</div><div class="cst-stat__lbl">Performance canali ufficiali</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Leolandia -->
+          <div class="cst-panel" data-cst-panel="leolandia" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img">
+                <img src="Loghibrand/leolandia.webp" alt="Leolandia">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__sector">Social Media &middot; Community &middot; ADV</div>
+                  <div class="cst-info__title">Il parco divertimenti pi&ugrave; amato d&apos;Italia vive anche online</div>
+                  <div class="cst-info__text">Gestione social media e campagne ADV per Leolandia, principale parco divertimenti per famiglie in Italia. Comunicazione emotiva e stagionale per raggiungere i genitori con messaggi autentici e generare acquisti di biglietti e abbonamenti.</div>
+                  <div class="cst-info__tags"><span>Social Media</span><span>Meta ADV</span><span>Community</span></div>
+                </div>
+                <div class="cst-stats">
+                  <div class="cst-stat"><div class="cst-stat__val">+60%</div><div class="cst-stat__lbl">Crescita follower</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">1M+</div><div class="cst-stat__lbl">Impression mensili</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">12</div><div class="cst-stat__lbl">Mesi attivi</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ariston -->
+          <div class="cst-panel" data-cst-panel="ariston" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img">
+                <img src="Loghibrand/aristonlogo.webp" alt="Ariston">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__sector">Strategia Digitale &middot; Home &amp; Living &middot; Brand Awareness</div>
+                  <div class="cst-info__title">Comunicazione di prodotto che scalda il brand</div>
+                  <div class="cst-info__text">Con Ariston abbiamo sviluppato una strategia digitale integrata per valorizzare la gamma prodotti e rafforzare il posizionamento premium nel settore della climatizzazione e riscaldamento, raggiungendo nuove audience con contenuti di alta qualit&agrave;.</div>
+                  <div class="cst-info__tags"><span>Strategia</span><span>Content</span><span>Brand Awareness</span></div>
+                </div>
+                <div class="cst-stats">
+                  <div class="cst-stat"><div class="cst-stat__val">+40%</div><div class="cst-stat__lbl">Engagement rate</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">3</div><div class="cst-stat__lbl">Campagne attivate</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">Multi</div><div class="cst-stat__lbl">Mercati europei</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Humanitas -->
+          <div class="cst-panel" data-cst-panel="humanitas" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img">
+                <img src="Loghibrand/humanitas.webp" alt="Humanitas">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__sector">Strategia Digitale &middot; Healthcare &middot; Lead Generation</div>
+                  <div class="cst-info__title">Comunicazione sanitaria che mette le persone al centro</div>
+                  <div class="cst-info__text">Per Humanitas abbiamo sviluppato una strategia nel settore healthcare, tra i pi&ugrave; delicati e regolamentati. Campagne ADV e contenuti mirati per raggiungere pazienti e professionisti con messaggi chiari, autorevoli e rassicuranti.</div>
+                  <div class="cst-info__tags"><span>Strategia</span><span>Google Ads</span><span>Healthcare</span></div>
+                </div>
+                <div class="cst-stats">
+                  <div class="cst-stat"><div class="cst-stat__val">+35%</div><div class="cst-stat__lbl">Lead qualificati</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">-22%</div><div class="cst-stat__lbl">Costo per conversione</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">Top 3</div><div class="cst-stat__lbl">Su keyword strategiche</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Cupra -->
+          <div class="cst-panel" data-cst-panel="cupra" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img">
+                <img src="Loghibrand/cupra.webp" alt="Cupra">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__sector">Social Media &middot; Automotive &middot; Brand Lifestyle</div>
+                  <div class="cst-info__title">Il brand automobilistico che rompe gli schemi</div>
+                  <div class="cst-info__text">Contenuti social che traducono il DNA ribelle e performante di Cupra in storie digitali coinvolgenti. Comunicazione visiva aggressiva e aspirazionale per raggiungere una community giovane e appassionata di automotive e lifestyle.</div>
+                  <div class="cst-info__tags"><span>Social Media</span><span>Visual Content</span><span>Automotive</span></div>
+                </div>
+                <div class="cst-stats">
+                  <div class="cst-stat"><div class="cst-stat__val">+80%</div><div class="cst-stat__lbl">Reach organica</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">4,5%</div><div class="cst-stat__lbl">Engagement rate</div></div>
+                  <div class="cst-stat"><div class="cst-stat__val">50+</div><div class="cst-stat__lbl">Asset visual prodotti</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /.cst-panels -->
+      </div><!-- /.container -->
+
+      <!-- CTA centrata -->
       <div class="container cs2__footer" id="cs2Footer">
-        <span class="cs2__footer-note">Ogni brand ha una storia. La tua è la prossima.</span>
-        <a class="btn btn--outline cs2__footer-btn" href="contatti.html">Racconta il tuo progetto</a>
+        <a class="btn btn--outline cs2__footer-btn" href="case-studies.html">Vedi tutti i case studies</a>
       </div>
 
-      </div><!-- /.cs2-sticky -->
     </section>
 
     <!-- ══ CTA PENNELLATA ═════════════════════════════════════ -->
@@ -1212,7 +1297,41 @@
     </section>
 
     <!-- ══ CONTATTI HOME ════════════════════════════════════ -->
-    <section class="svc-caffe svc-caffe--fuchsia hc-section" id="contatti" aria-label="Contatti" data-nav-theme="dark">
+    
+    <!-- FAQ -->
+    <section class="page-faq page-faq--dark">
+      <div class="page-faq__inner">
+        <h2 class="page-faq__title">FAQ</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia e ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quali servizi offre ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Con che tipo di clienti lavora ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come si inizia a lavorare con ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta piu adatta.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Quanto costa un progetto con ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">I costi variano in base al servizio e alla complessita del progetto. Offriamo soluzioni su misura per ogni budget: contattaci per ricevere un preventivo personalizzato e senza impegno.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO lavora anche con aziende fuori dalla propria area geografica?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, operiamo con clienti in tutta Italia e anche all'estero. Grazie agli strumenti digitali, gestiamo i progetti da remoto senza alcuna limitazione geografica.</div></div>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+<section class="svc-caffe svc-caffe--fuchsia hc-section" id="contatti" aria-label="Contatti" data-nav-theme="dark">
       <div class="container hc-inner">
         <div class="hc-header reveal">
           <h2 class="hc-title" id="contattiTitle">Contatti</h2>
@@ -1702,8 +1821,8 @@
             <a href="servizi/graphic-design.html">Graphic design</a>
             <a href="servizi/web-design.html">Web design</a>
             <a href="servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="servizi/servizio-ai.html">AI</a>
             <a href="servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 

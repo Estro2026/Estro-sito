@@ -14,6 +14,13 @@
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/hero.css" />
   <style>
+    body { background: #000 !important; }
+    /* Hero: esattamente 100dvh */
+    .svc-hero--videobg {
+      height: 100dvh !important; min-height: unset !important;
+      max-height: 100dvh !important; overflow: hidden !important;
+    }
+/* Hero reveal */
     .svc-hero { position: relative; overflow: hidden; }
     .svc-hero__kicker, .svc-hero__title, .svc-hero__sub, .svc-hero__tagline, .svc-hero__form { opacity: 0; transform: translateY(22px); }
     .svc-hero--revealed .svc-hero__kicker  { opacity: 1; transform: none; transition: opacity 0.55s 0.10s ease, transform 0.55s 0.10s ease; }
@@ -21,9 +28,244 @@
     .svc-hero--revealed .svc-hero__sub     { opacity: 1; transform: none; transition: opacity 0.55s 0.52s ease, transform 0.55s 0.52s ease; }
     .svc-hero--revealed .svc-hero__tagline { opacity: 1; transform: none; transition: opacity 0.50s 0.62s ease, transform 0.50s 0.62s ease; }
     .svc-hero--revealed .svc-hero__form    { opacity: 1; transform: none; transition: opacity 0.55s 0.72s ease, transform 0.55s 0.72s ease; }
+    /* Nav transitions */
     .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
     .nav__logo img { transition: filter 180ms ease !important; }
+    /* Split-letter .tl spans */
+    .svc-clients__title .tl, .svc-magic__title .tl, .svc-caffe__title .tl,
+    .svc-ai-approccio__title .tl, .svc-ai-workflow__title .tl {
+      display: inline-block; opacity: 0; transform: translateY(0.8em);
+    }
+    /* Clienti */
+    #ai-clienti { background: #000 !important; color: #fff !important;
+      padding-block: clamp(4rem,8vw,7rem) clamp(4rem,8vw,6rem) !important; overflow: hidden !important; }
+    #ai-clienti .svc-clients__title { opacity:0; transform:translateY(30px); transition:none !important; }
+    #ai-clienti .svc-clients__marquee-wrap { display:flex !important; flex-direction:column !important; gap:2rem !important; }
+    #ai-clienti .svc-clients__track { animation: ai-marquee 110s linear infinite !important; }
+    #ai-clienti .svc-clients__track--rev { animation-direction: reverse !important; }
+    #ai-clienti .svc-clients__track:hover,
+    #ai-clienti .svc-clients__track--rev:hover { animation-play-state: paused !important; }
+    @keyframes ai-marquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    #ai-clienti .svc-clients__logo { width: clamp(100px,12vw,180px) !important; flex-shrink:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; }
+    #ai-clienti .svc-clients__logo img { max-height: clamp(52px,7vw,90px) !important; width:auto !important; filter:brightness(0) invert(1) !important; opacity:0.8 !important; object-fit:contain !important; }
+    #ai-clienti .svc-clients__logo:hover img { opacity: 1 !important; }
+    #ai-clienti .svc-clients__logo--seven img { max-height: clamp(32px,4.5vw,56px) !important; }
+    #ai-clienti .svc-clients__logo--big img   { max-height: clamp(80px,11vw,136px) !important; }
+    #ai-clienti .svc-clients__logo--xl img    { max-height: clamp(95px,13.5vw,166px) !important; }
+    #ai-clienti .svc-clients__logo--xxl img   { max-height: clamp(140px,20vw,250px) !important; }
+    /* Caffè */
+    .svc-caffe .btn { text-align: center; justify-content: center; }
+    .svc-caffe__title .caffe-nowrap { white-space: nowrap; display: inline-block; }
+    /* ── SMM STACKED PANELS ─────────────────────────────────── */
+    .smm-stack { position: relative; height: 400dvh; }
+    .smm-panel {
+      position: sticky; top: 0; height: 100dvh;
+      display: flex; align-items: center; overflow: hidden; will-change: transform;
+    }
+    .smm-panel:nth-child(1) { z-index: 1; }
+    .smm-panel:nth-child(2) { z-index: 2; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(3) { z-index: 3; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(4) { z-index: 4; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(5) { z-index: 5; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(6) { z-index: 6; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(7) { z-index: 7; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(8) { z-index: 8; border-radius: 24px 24px 0 0; }
+    .smm-panel--dark  { background: #050505; color: #fff; }
+    .smm-panel--light { background: #f9f9f9; color: #080808; }
+    .smm-panel__inner {
+      width: 100%; display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem); align-items: center; padding-block: clamp(2rem, 4vw, 4rem);
+    }
+    .smm-panel__copy { display: flex; flex-direction: column; gap: 1.25rem; }
+    .smm-panel__tag {
+      display: inline-flex; align-self: flex-start;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.35em 1em; border-radius: 100px;
+      color: var(--primary, #DB005A); background: rgba(219,0,90,0.12); border: 1px solid rgba(219,0,90,0.3);
+    }
+    .smm-panel__title {
+      font-family: var(--font-primary); font-size: clamp(2.4rem, 4vw, 4.8rem);
+      font-weight: 900; line-height: 0.94; letter-spacing: -0.03em; margin: 0;
+    }
+    .smm-panel--dark .smm-panel__title  { color: #fff; }
+    .smm-panel--light .smm-panel__title { color: #080808; }
+    .smm-panel__text { font-size: clamp(0.88rem, 1vw, 1rem); line-height: 1.75; margin: 0; }
+    .smm-panel--dark .smm-panel__text   { color: rgba(255,255,255,0.68); }
+    .smm-panel--light .smm-panel__text  { color: rgba(0,0,0,0.62); }
+    .smm-panel__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    .smm-panel__list li { font-size: 0.875rem; padding-left: 1.3em; position: relative; }
+    .smm-panel__list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary, #DB005A); font-weight: 700; }
+    .smm-panel--dark .smm-panel__list li  { color: rgba(255,255,255,0.72); }
+    .smm-panel--light .smm-panel__list li { color: rgba(0,0,0,0.68); }
+    .smm-panel__visual {
+      aspect-ratio: 4/3; border-radius: 14px; overflow: hidden;
+      background: rgba(219,0,90,0.10); border: 1px solid rgba(219,0,90,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .smm-panel--light .smm-panel__visual { background: rgba(219,0,90,0.06); }
+    .smm-panel__visual-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.35; }
+    .smm-panel [data-reveal] { opacity: 0; transform: translateY(22px); }
+    .smm-panel .btn { text-align: center; justify-content: center; }
+    @media (max-width: 768px) {
+      .smm-panel__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .smm-panel__visual { display: none; }
+    }
+
+    /* ── PRODUZIONE ACCORDION ───────────────────────────────── */
+    .pc-prod { padding: clamp(4rem,8vw,7rem) 0; }
+    .pc-prod__head { margin-bottom: 3rem; }
+    .pc-prod__kicker { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: #DB005A; margin: 0 0 0.6rem; font-weight: 600; }
+    .pc-prod__title { font-size: clamp(2rem,4vw,3rem); font-weight: 800; margin: 0 0 1rem; line-height: 1.1; font-family: var(--font-primary); }
+    .pc-prod__sub { font-size: clamp(0.9rem,1.2vw,1.05rem); color: rgba(0,0,0,0.55); line-height: 1.7; max-width: 560px; margin: 0; }
+
+    .pc-acc { border-top: 1px solid rgba(0,0,0,0.07); margin-top: 2.5rem; }
+
+    .pc-acc__item {
+      position: relative;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: border-left-color 0.35s,
+                  opacity 0.55s cubic-bezier(.4,0,.2,1),
+                  transform 0.55s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__item.pc-item--in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* barra sinistra che si disegna dall'alto */
+    .pc-acc__item::before {
+      content: ''; position: absolute; left: 0; top: 0;
+      width: 2px; height: 100%; background: #DB005A;
+      transform: scaleY(0); transform-origin: top;
+      transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+      z-index: 1;
+    }
+    .pc-acc__item.is-open::before { transform: scaleY(1); }
+    /* shimmer gradient a sinistra su hover */
+    .pc-acc__item::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(90deg, rgba(219,0,90,0.05) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .pc-acc__item:hover::after, .pc-acc__item.is-open::after { opacity: 1; }
+
+    .pc-acc__head {
+      display: flex; align-items: center; gap: clamp(1rem,3vw,2rem);
+      padding: clamp(1.2rem,2.2vw,1.7rem) clamp(0.5rem,1.5vw,1.5rem);
+      cursor: pointer; user-select: none;
+    }
+
+    .pc-acc__num {
+      font-size: clamp(2rem,4.5vw,3.5rem); font-weight: 900; line-height: 1;
+      font-family: var(--font-primary);
+      color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.15);
+      min-width: clamp(2.6rem,5vw,4.2rem); flex-shrink: 0; display: inline-block;
+      transition: -webkit-text-stroke-color 0.35s, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .pc-acc__item:hover .pc-acc__num,
+    .pc-acc__item.is-open .pc-acc__num {
+      -webkit-text-stroke-color: #DB005A;
+      transform: scale(1.08);
+    }
+
+    .pc-acc__name {
+      flex: 1; font-size: clamp(1rem,1.9vw,1.3rem); font-weight: 700;
+      font-family: var(--font-primary); color: #080808; line-height: 1.25;
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__item:hover .pc-acc__name,
+    .pc-acc__item.is-open .pc-acc__name { transform: translateX(7px); }
+
+    /* ── occhio ── */
+    .pc-acc__eye {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative;
+      transition: background 0.35s, border-color 0.35s, transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .pc-acc__item.is-open .pc-acc__eye { background: #DB005A; border-color: #DB005A; color: #fff; }
+    .pc-acc__item:hover .pc-acc__eye    { border-color: rgba(219,0,90,0.5); transform: scale(1.1); }
+    .pc-acc__item.is-open .pc-acc__eye  { transform: scale(1.1); }
+
+    .pc-acc__eye-svg {
+      width: 26px; height: 26px; position: absolute;
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    /* stato di default: occhio chiuso visibile */
+    .pc-acc__eye-svg--closed { opacity: 1; transform: translateY(0) scale(1); }
+    .pc-acc__eye-svg--open   { opacity: 0; transform: translateY(5px) scale(0.6); }
+    /* stato aperto: occhio aperto visibile con bounce */
+    .pc-acc__item.is-open .pc-acc__eye-svg--closed { opacity: 0; transform: translateY(-5px) scale(0.6); }
+    .pc-acc__item.is-open .pc-acc__eye-svg--open   { opacity: 1; transform: translateY(0) scale(1); animation: pc-eye-pop 0.45s cubic-bezier(.34,1.56,.64,1); }
+
+    @keyframes pc-eye-pop {
+      0%   { transform: translateY(6px) scale(0.4); opacity: 0; }
+      65%  { transform: translateY(-3px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* ── corpo accordion ── */
+    .pc-acc__body {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__body-inner { overflow: hidden; }
+    .pc-acc__item.is-open .pc-acc__body { grid-template-rows: 1fr; }
+
+    .pc-acc__text {
+      padding: 0.2rem 0 2rem clamp(3.6rem,8.5vw,6.6rem);
+      color: rgba(0,0,0,0.52); font-size: clamp(0.87rem,1.1vw,1rem);
+      line-height: 1.85; margin: 0;
+      opacity: 0; transform: translateY(10px); filter: blur(3px);
+      transition: opacity 0.4s 0.1s, transform 0.4s cubic-bezier(.4,0,.2,1) 0.1s, filter 0.4s 0.1s;
+    }
+    .pc-acc__item.is-open .pc-acc__text { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (max-width: 640px) {
+      .pc-acc__text { padding-left: 0.5rem; }
+      .pc-acc__num  { font-size: 2rem; }
+      .pc-acc__eye  { width: 34px; height: 34px; }
+      .pc-acc__eye-svg { width: 20px; height: 20px; }
+    }
+
+    /* ── scroll dots ── */
+    #ai-scroll-dots {
+      position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 9px;
+      z-index: 9999; pointer-events: none;
+      opacity: 0; transition: opacity 0.5s;
+    }
+    #ai-scroll-dots.ai-dots--visible { opacity: 1; }
+    .ai-sd {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: transparent;
+      border: 1.5px solid rgba(219,0,90,0.3);
+      transition: background 0.25s, border-color 0.25s, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+      opacity: 0.35;
+    }
+    .ai-sd.ai-sd--on {
+      background: #DB005A; border-color: #DB005A;
+      transform: scale(1.5); opacity: 1;
+    }
+    @media (max-width: 768px) { #ai-scroll-dots { right: 10px; } }
   </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Che cos'e il servizio AI di ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo soluzioni di intelligenza artificiale applicate al marketing: automazione dei contenuti, chatbot, analisi dei dati, personalizzazione delle campagne e ottimizzazione dei processi comunicativi." } },
+    { "@type": "Question", "name": "Come l'intelligenza artificiale puo aiutare il mio business?", "acceptedAnswer": { "@type": "Answer", "text": "L'AI permette di produrre contenuti piu velocemente, personalizzare la comunicazione su larga scala, analizzare i dati in tempo reale e automatizzare attivita ripetitive, liberando tempo per le attivita strategiche." } },
+    { "@type": "Question", "name": "L'AI sostituisce il lavoro creativo del team ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "No. L'AI e uno strumento che amplifica le capacita del nostro team creativo, non lo sostituisce. Ogni contenuto prodotto con AI viene revisionato, personalizzato e approvato da professionisti prima della pubblicazione." } },
+    { "@type": "Question", "name": "ESTRO crea chatbot e assistenti virtuali?", "acceptedAnswer": { "@type": "Answer", "text": "Si, progettiamo e sviluppiamo chatbot per customer service, lead generation e supporto alle vendite, integrabili su sito web, WhatsApp, Instagram e altre piattaforme." } },
+    { "@type": "Question", "name": "I contenuti creati con AI sono originali e unici?", "acceptedAnswer": { "@type": "Answer", "text": "Si. Utilizziamo l'AI come punto di partenza, ma ogni contenuto viene personalizzato, rielaborato e adattato alla voce e all'identita del tuo brand dal nostro team editoriale." } },
+    { "@type": "Question", "name": "Come vengono gestiti i dati aziendali quando si usano strumenti AI?", "acceptedAnswer": { "@type": "Answer", "text": "La sicurezza dei tuoi dati e una priorita. Utilizziamo strumenti conformi al GDPR e alle normative sulla privacy, e definiamo con ogni cliente le policy di utilizzo dei dati prima di iniziare qualsiasi progetto." } }
+  ]
+}
+</script>
 </head>
 <body>
 
@@ -35,14 +277,11 @@
         <span class="nav__menu-label-open">Chiudi</span>
       </button>
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
-        <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+        <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-      <a class="nav__joinus" href="../lavora-con-noi.html">
-        <span class="nav__joinus-avatars">
-          <span class="nav__avatar"></span>
-          <span class="nav__avatar"></span>
-        </span>
-        Join Us
+            <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
       </a>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
@@ -50,7 +289,7 @@
         <div class="nav__mega-inner">
           <div class="nav__mega-panel nav__mega-panel--dark">
             <p class="nav__mega-label">I Nostri Servizi</p>
-            <nav class="nav__mega-links">
+            <nav class="nav__mega-links nav__mega-links--2col">
               <a href="social-media-management.html">Social media management</a>
               <a href="influencer-marketing.html">Influencer marketing</a>
               <a href="google-ads.html">Google ads</a>
@@ -84,10 +323,8 @@
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
             <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
-              <span class="nav__joinus-avatars">
-                <span class="nav__avatar"></span>
-                <span class="nav__avatar"></span>
-              </span>
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
             </a>
           </div>
@@ -100,7 +337,7 @@
   <main>
 
     <!-- ══ HERO ══════════════════════════════════════════════════ -->
-    <section class="svc-hero svc-hero--videobg" aria-labelledby="page-title">
+    <section class="svc-hero svc-hero--videobg" id="ai-hero" aria-labelledby="page-title">
       <video class="svc-hero__bgvideo" autoplay muted loop playsinline aria-hidden="true">
         <source src="../foto servizi/estro_ai1_4,7MB.mp4" type="video/mp4" />
       </video>
@@ -109,131 +346,126 @@
 
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">AI Creative Production</p>
-          <h1 class="svc-hero__title" id="page-title"><em>L'Intelligenza<br/>Artificiale</em><br/>al servizio<br/>del tuo brand</h1>
+          <h1 class="svc-hero__title" id="page-title"><span style="white-space:nowrap"><em>L'Intelligenza</em></span><br/><span style="white-space:nowrap"><em>Artificiale</em></span><br/><span style="white-space:nowrap">al servizio</span><br/><span style="white-space:nowrap">del tuo brand</span></h1>
           <p class="svc-hero__sub">Utilizziamo l'AI come estensione della direzione creativa per migliorare efficienza, qualità e velocità di esecuzione, mantenendo pieno controllo sul risultato finale.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
-          <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
-            <input class="svc-hero__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-            <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
-            <label class="svc-hero__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
-            </label>
-            <button class="btn btn--primary svc-hero__submit" type="submit">Contattaci</button>
-          </form>
         </div>
+        <div class="svc-hero__right">
+          <div class="svc-hero__form-card">
+            <p class="svc-hero__form-card-label">Scrivici</p>
+            <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="nome" placeholder="Nome*" required />
+                <input class="svc-hero__field" type="text" name="cognome" placeholder="Cognome*" required />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
+                <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+              </div>
+              <div class="svc-hero__form-row">
+                <input class="svc-hero__field" type="text" name="azienda" placeholder="Azienda" />
+                <input class="svc-hero__field" type="url" name="sito" placeholder="Sito Web" />
+              </div>
+              <textarea class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="4"></textarea>
+              <label class="svc-hero__privacy">
+                <input type="checkbox" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
+            </form>
+          </div>
+        </div>
+      </div>
     </section>
 
 
 
-    <!-- ══ UN NUOVO SCENARIO ═════════════════════════════════════ -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">IL CONTESTO</span>
-            <h2 class="svc-content-block__title">Un nuovo scenario per la produzione creativa</h2>
-            <p class="svc-content-block__text">Oggi la comunicazione richiede volumi sempre maggiori di contenuti, su canali differenti, con tempi sempre più compressi e aspettative qualitative elevate.<br/><br/>L'intelligenza artificiale consente di ripensare radicalmente i flussi creativi e produttivi, rendendoli:</p>
-            <div class="svc-ai-tags" style="margin-top:var(--space-6);">
-              <span class="svc-ai-tag">⚡ Più rapidi</span>
-              <span class="svc-ai-tag">⇌ Più flessibili</span>
-              <span class="svc-ai-tag">✕ Più scalabili</span>
-              <span class="svc-ai-tag">◎ Più controllabili</span>
-            </div>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
+    <!-- ══ SMM STACK ════════════════════════════════════════════ -->
+    <div class="smm-stack" id="ai-stack">
+
+      <!-- Panel 1: IL CONTESTO (light) -->
+      <section class="smm-panel smm-panel--light">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>IL CONTESTO</span>
+            <h2 class="smm-panel__title" data-reveal>Un nuovo scenario<br>per la produzione creativa</h2>
+            <p class="smm-panel__text" data-reveal>Oggi la comunicazione richiede volumi sempre maggiori di contenuti, su canali differenti, con tempi sempre più compressi e aspettative qualitative elevate. L'intelligenza artificiale consente di ripensare radicalmente i flussi creativi e produttivi, rendendoli più rapidi, flessibili, scalabili e controllabili.</p>
+            <ul class="smm-panel__list" data-reveal>
+              <li>Più rapidi</li>
+              <li>Più flessibili</li>
+              <li>Più scalabili</li>
+              <li>Più controllabili</li>
+            </ul>
+            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>Nuovo scenario</span>
-            </div>
+          <div class="smm-panel__visual" data-reveal>
+            <span class="smm-panel__visual-label">Il contesto</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ══ E-Commerce e Contenuti Prodotto ══════════════════════ -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">E-Commerce &amp; Prodotto</span>
-            <h2 class="svc-content-block__title smm-title--light">E-Commerce e Contenuti Prodotto</h2>
-            <p class="svc-content-block__text smm-text--light">Partendo da semplici still life o fotografie, realizziamo:</p>
-            <ul class="smm-checklist--light">
-              <li>Ricostruzione del prodotto in alta definizione</li>
-              <li>Inserimento su modelli virtuali</li>
-              <li>Ambientazioni lifestyle</li>
-              <li>Contenuti editoriali pronti per e-commerce, ADV e social</li>
-            </ul>
-            <p class="svc-content-block__text smm-text--light" style="margin-top:var(--space-5);font-weight:600;">I Vantaggi</p>
-            <ul class="smm-checklist--light">
+      <!-- Panel 2: E-Commerce (dark) -->
+      <section class="smm-panel smm-panel--dark">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__visual" data-reveal>
+            <span class="smm-panel__visual-label">E-commerce visual</span>
+          </div>
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>E-Commerce &amp; Prodotto</span>
+            <h2 class="smm-panel__title" data-reveal>E-Commerce e<br>Contenuti Prodotto</h2>
+            <p class="smm-panel__text" data-reveal>Partendo da semplici still life o fotografie, realizziamo contenuti in alta definizione su modelli virtuali, ambientazioni lifestyle, pronti per e-commerce, ADV e social.</p>
+            <ul class="smm-panel__list" data-reveal>
               <li>Tempi e costi di produzione ridotti</li>
               <li>Coerenza visiva su tutta la gamma</li>
               <li>Aumento della qualità percepita del catalogo</li>
               <li>Gestione facilitata di aggiornamenti e stagionalità</li>
             </ul>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>E-commerce visual</span>
-            </div>
+            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ══ Prototipazione e Sviluppo Creativo ═══════════════════ -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Prototipazione</span>
-            <h2 class="svc-content-block__title">Prototipazione e Sviluppo Creativo</h2>
-            <p class="svc-content-block__text">L'intelligenza artificiale consente di accelerare i processi di concept e prototipazione, permettendo di testare rapidamente:</p>
-            <ul class="svc-ai-checklist">
+      <!-- Panel 3: Prototipazione (light) -->
+      <section class="smm-panel smm-panel--light">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Prototipazione</span>
+            <h2 class="smm-panel__title" data-reveal>Prototipazione e<br>Sviluppo Creativo</h2>
+            <p class="smm-panel__text" data-reveal>L'intelligenza artificiale consente di accelerare i processi di concept e prototipazione. Partendo da un unico prototipo base, sviluppiamo render avanzati che consentono ai brand di validare le scelte creative prima della produzione fisica.</p>
+            <ul class="smm-panel__list" data-reveal>
               <li>Varianti colore</li>
-              <li>Materiali</li>
-              <li>Finiture</li>
+              <li>Materiali e finiture</li>
               <li>Configurazioni stilistiche</li>
             </ul>
-            <p class="svc-content-block__text" style="margin-top:var(--space-5);">Partendo anche da un unico prototipo base, sviluppiamo render avanzati che consentono ai brand di validare le scelte creative prima della produzione fisica.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
+            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>Prototipazione</span>
-            </div>
+          <div class="smm-panel__visual" data-reveal>
+            <span class="smm-panel__visual-label">Prototipazione</span>
           </div>
         </div>
-      </div>
-    </div>
+      </section>
 
-    <!-- ══ Campagne Fotografiche e Video ════════════════════════ -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Campagne Foto &amp; Video</span>
-            <h2 class="svc-content-block__title smm-title--light">Campagne Fotografiche e Video</h2>
-            <p class="svc-content-block__text smm-text--light">Progettiamo e realizziamo campagne foto e video generate con AI per:</p>
-            <ul class="smm-checklist--light">
+      <!-- Panel 4: Campagne (dark) -->
+      <section class="smm-panel smm-panel--dark">
+        <div class="container smm-panel__inner">
+          <div class="smm-panel__visual" data-reveal>
+            <span class="smm-panel__visual-label">Campagne AI</span>
+          </div>
+          <div class="smm-panel__copy">
+            <span class="smm-panel__tag" data-reveal>Campagne Foto &amp; Video</span>
+            <h2 class="smm-panel__title" data-reveal>Campagne Fotografiche<br>e Video</h2>
+            <p class="smm-panel__text" data-reveal>Progettiamo campagne foto e video generate con AI per advertising, comunicazione digital, lancio prodotto e contenuti editoriali. Utilizziamo l'AI strategicamente per pre-visualizzare concept, costruire storyboard visivi e produrre contenuti finali ad alto impatto.</p>
+            <ul class="smm-panel__list" data-reveal>
               <li>Advertising</li>
               <li>Comunicazione digital</li>
               <li>Lancio prodotto</li>
               <li>Contenuti editoriali</li>
             </ul>
-            <p class="svc-content-block__text smm-text--light" style="margin-top:var(--space-5);">Nei progetti video utilizziamo l'AI in modo strategico per pre-visualizzare concept, costruire storyboard visivi, validare scene e movimenti, produrre contenuti finali ad alto impatto.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>Campagne AI</span>
-            </div>
+            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
           </div>
         </div>
-      </div>
+      </section>
+
     </div>
 
     <!-- ══ UN APPROCCIO TRASPARENTE ══════════════════════════════ -->
@@ -361,339 +593,643 @@
       </div>
     </section>
 
-    <!-- ══ I NOSTRI SERVIZI AI ══════════════════════════════════ -->
-
-    <!-- AI Creative Production -->
-    <div class="smm-row smm-row--dark">
+    <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
+    <section class="section svc-clients" id="ai-clienti">
       <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Servizio</span>
-            <h2 class="svc-content-block__title smm-title--light">AI Creative Production</h2>
-            <p class="svc-content-block__text smm-text--light">Campagne fotografiche e video, contenuti digitali, visual di brand, asset creativi per ADV e comunicazione multicanale.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>AI Creative Production</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI Product & Ecommerce -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Servizio</span>
-            <h2 class="svc-content-block__title">AI Product &amp; Ecommerce</h2>
-            <p class="svc-content-block__text">Foto prodotto, modelli virtuali, ambientazioni lifestyle, cataloghi digitali, contenuti marketplace.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>AI Product &amp; Ecommerce</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI Prototyping & Concept -->
-    <div class="smm-row smm-row--dark">
-      <div class="container">
-        <div class="svc-content-block svc-content-block--flip reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag smm-tag--light">Servizio</span>
-            <h2 class="svc-content-block__title smm-title--light">AI Prototyping &amp; Concept</h2>
-            <p class="svc-content-block__text smm-text--light">Prototipi visivi, varianti colore e materiali, sviluppo concept, validazione stilistica.</p>
-            <a class="btn btn--outline-white svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder smm-placeholder--dark">
-              <span>AI Prototyping &amp; Concept</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI Ideation & Strategy -->
-    <div class="smm-row">
-      <div class="container">
-        <div class="svc-content-block reveal">
-          <div class="svc-content-block__copy">
-            <span class="svc-content-block__tag">Servizio</span>
-            <h2 class="svc-content-block__title">AI Ideation &amp; Strategy</h2>
-            <p class="svc-content-block__text">Storyboard, moodboard evolute, concept creativi, supporto progettuale avanzato.</p>
-            <a class="btn btn--primary svc-ai-cta" href="../contatti.html">Scopri di più</a>
-          </div>
-          <div class="svc-content-block__visual">
-            <div class="svc-content-block__placeholder">
-              <span>AI Ideation &amp; Strategy</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ══ CLIENTI ═══════════════════════════════════════════════ -->
-    <section class="svc-clients">
-      <div class="container">
-        <h2 class="svc-clients__title reveal">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
+        <h2 class="svc-clients__title" id="ai-clienti-title">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
       </div>
       <div class="svc-clients__marquee-wrap">
         <div class="svc-clients__track">
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
         </div>
         <div class="svc-clients__track svc-clients__track--rev">
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wudy.webp" alt="Wudy" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sj%20gang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/redbull.png" alt="Red Bull" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/l'angelica.webp" alt="L'Angelica" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/disclaimer.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/coswell.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/conde%20nast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/ariston.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo"><img src="../Loghi%20partner/Prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+          <div class="svc-clients__logo"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
         </div>
       </div>
     </section>
 
-    <!-- ══ ALTRE MAGIE ════════════════════════════════════════════ -->
-    <section class="section svc-magic">
-      <div class="container svc-magic__inner">
-        <div class="svc-magic__cat reveal">
-          <img src="../foto%20servizi/Foto%20ultima%20sezione.webp" alt="" aria-hidden="true" />
-        </div>
-        <div class="svc-magic__content reveal reveal-delay-1">
-          <h2 class="svc-magic__title">SAPPIAMO FARE<br>UN SACCO DI<br>ALTRE MAGIE</h2>
-          <div class="svc-magic__links">
-            <a class="svc-magic__pill" href="modellazione-3d.html">Modellazione 3D</a>
-            <a class="svc-magic__pill" href="produzione-contenuti.html">Produzione Contenuti</a>
-            <a class="svc-magic__pill" href="graphic-design.html">Graphic Design</a>
-            <a class="svc-magic__pill svc-magic__pill--outline" href="../contatti.html">Scarica la Brochure</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
+    
     <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
-    <section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci">
+    
+    <!-- FAQ -->
+    <section class="page-faq">
+      <div class="page-faq__inner">
+        <h2 class="page-faq__title">FAQ</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Che cos'e il servizio AI di ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Offriamo soluzioni di intelligenza artificiale applicate al marketing: automazione dei contenuti, chatbot, analisi dei dati, personalizzazione delle campagne e ottimizzazione dei processi comunicativi.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come l'intelligenza artificiale puo aiutare il mio business?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">L'AI permette di produrre contenuti piu velocemente, personalizzare la comunicazione su larga scala, analizzare i dati in tempo reale e automatizzare attivita ripetitive, liberando tempo per le attivita strategiche.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">L'AI sostituisce il lavoro creativo del team ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">No. L'AI e uno strumento che amplifica le capacita del nostro team creativo, non lo sostituisce. Ogni contenuto prodotto con AI viene revisionato, personalizzato e approvato da professionisti prima della pubblicazione.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO crea chatbot e assistenti virtuali?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, progettiamo e sviluppiamo chatbot per customer service, lead generation e supporto alle vendite, integrabili su sito web, WhatsApp, Instagram e altre piattaforme.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">I contenuti creati con AI sono originali e unici?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si. Utilizziamo l'AI come punto di partenza, ma ogni contenuto viene personalizzato, rielaborato e adattato alla voce e all'identita del tuo brand dal nostro team editoriale.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come vengono gestiti i dati aziendali quando si usano strumenti AI?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">La sicurezza dei tuoi dati e una priorita. Utilizziamo strumenti conformi al GDPR e alle normative sulla privacy, e definiamo con ogni cliente le policy di utilizzo dei dati prima di iniziare qualsiasi progetto.</div></div>
+          </div>
+        </dl>
+      </div>
+    </section>
+
+<section class="svc-caffe svc-caffe--fuchsia" id="ai-caffe" aria-label="Contattaci" data-nav-theme="dark">
       <div class="container svc-caffe__inner">
         <div class="svc-caffe__left reveal">
-          <h2 class="svc-caffe__title">Prendiamoci<br/>un caffè!</h2>
+          <h2 class="svc-caffe__title"><span class="caffe-nowrap">Prendiamoci</span><br/>un caffè!</h2>
           <p class="svc-caffe__sub">Anche virtuale</p>
         </div>
         <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
-          <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome e Cognome*" required />
-          <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-          <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+          </div>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+          </div>
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
           <label class="svc-caffe__privacy">
             <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati personali secondo la <a href="../privacy.html">Privacy Policy</a>.*</span>
+            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
           </label>
           <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
         </form>
       </div>
     </section>
-      </main>
+  </main>
 
   <script>
   (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
   </script>
   <script src="../js/main.js"></script>
   <script>
+  /* ── Servizio AI: scroll-driven motion ── */
   (function () {
     'use strict';
+
     function c01(v) { return Math.max(0, Math.min(1, v)); }
     function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
-    var heroEl = document.querySelector('.svc-hero'), magicEl = document.querySelector('.svc-magic'), caffeEl = document.querySelector('.svc-caffe'), navEl = document.querySelector('.nav');
-    var heroOv = null;
-    if (heroEl) { heroOv = document.createElement('div'); Object.assign(heroOv.style, { position:'absolute', inset:'0', background:'#fff', opacity:'0', pointerEvents:'none', zIndex:'10' }); heroEl.appendChild(heroOv); }
-    var magicOv = null;
-    if (magicEl) { magicOv = document.createElement('div'); Object.assign(magicOv.style, { position:'absolute', inset:'0', background:'#DB005A', opacity:'0', pointerEvents:'none', zIndex:'5' }); if (getComputedStyle(magicEl).position === 'static') magicEl.style.position = 'relative'; magicEl.appendChild(magicOv); }
+
+    var heroEl    = document.getElementById('ai-hero');
+    var clientiEl = document.getElementById('ai-clienti');
+    var magicEl   = document.getElementById('ai-magic');
+    var caffeEl   = document.getElementById('ai-caffe');
+    var navEl     = document.querySelector('.nav');
+
+    function splitLetters(el) {
+      if (!el) return [];
+      var raw = el.innerHTML, out = '', i = 0;
+      while (i < raw.length) {
+        if (raw[i] === '<') {
+          var j = raw.indexOf('>', i); out += raw.slice(i, j + 1); i = j + 1;
+        } else if (raw[i] === '&') {
+          var k2 = raw.indexOf(';', i); out += '<span class="tl">' + raw.slice(i, k2 + 1) + '</span>'; i = k2 + 1;
+        } else if (raw[i] === ' ') {
+          out += ' '; i++;
+        } else {
+          out += '<span class="tl">' + raw[i] + '</span>'; i++;
+        }
+      }
+      el.innerHTML = out;
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      return Array.from(el.querySelectorAll('.tl'));
+    }
+
+    function revLetters(letters, p) {
+      letters.forEach(function (el, i) {
+        var lP = ease(c01((p - i * 0.012) / 0.08));
+        el.style.opacity   = lP.toFixed(3);
+        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
+      });
+    }
+
+    function makeTransOv(prevEl, nextBg) {
+      if (!prevEl) return null;
+      var ov = document.createElement('div');
+      Object.assign(ov.style, { position:'absolute', inset:'0', background:nextBg, opacity:'0', pointerEvents:'none', zIndex:'5' });
+      if (getComputedStyle(prevEl).position === 'static') prevEl.style.position = 'relative';
+      prevEl.appendChild(ov);
+      return ov;
+    }
+
+    var heroOv         = makeTransOv(heroEl,    '#fff');
+    var cliToMagicOv   = makeTransOv(clientiEl, '#fff');
+    var magicToCaffeOv = makeTransOv(magicEl,   '#DB005A');
+
     var caffeExitOv = document.createElement('div');
     Object.assign(caffeExitOv.style, { position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'200', transition:'none' });
     document.body.appendChild(caffeExitOv);
+
+    var clientiLetters = splitLetters(document.getElementById('ai-clienti-title'));
+    var magicLetters   = splitLetters(magicEl  && magicEl.querySelector('.svc-magic__title'));
+    var caffeLetters   = splitLetters(caffeEl  && caffeEl.querySelector('.svc-caffe__title'));
+
+    var magicCat   = magicEl && magicEl.querySelector('.svc-magic__cat');
+    var magicLinks = magicEl && magicEl.querySelector('.svc-magic__links');
+    var caffeSub   = caffeEl && caffeEl.querySelector('.svc-caffe__sub');
+    var caffeForm  = caffeEl && caffeEl.querySelector('.svc-caffe__form');
+
+    function unlockContainer(el) {
+      if (!el) return;
+      el.style.cssText += ';opacity:1!important;transform:none!important;transition:none!important';
+    }
+    unlockContainer(magicEl && magicEl.querySelector('.svc-magic__content'));
+    unlockContainer(caffeEl && caffeEl.querySelector('.svc-caffe__left'));
+
+    function initHide(el) {
+      if (!el) return;
+      Object.assign(el.style, { opacity:'0', transform:'translateY(20px)', willChange:'opacity,transform', transition:'none' });
+    }
+    initHide(magicCat);
+    initHide(magicLinks);
+    initHide(caffeSub);
+    initHide(caffeForm);
+
+    document.querySelectorAll('#ai-clienti .reveal,#ai-magic .reveal,#ai-caffe .reveal').forEach(function (el) {
+      el.style.transition = 'none';
+    });
+
     var C_DARK = [5,5,5], C_WHITE = [255,255,255], C_FUCHSIA = [219,0,90];
     function luma(c) { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
     function blend(a,b,t) { return [a[0]*(1-t)+b[0]*t, a[1]*(1-t)+b[1]*t, a[2]*(1-t)+b[2]*t]; }
     var prevDark = null;
+
+    function p_enter(el) {
+      if (!el) return 0;
+      return ease(c01((window.innerHeight - el.getBoundingClientRect().top) / window.innerHeight));
+    }
+    /* 0→1 mentre il TOP di el sale da navH+range a navH */
+    function p_exit(el) {
+      if (!el) return 0;
+      var r = el.getBoundingClientRect();
+      var navH = navEl ? navEl.offsetHeight : 72;
+      var range = window.innerHeight * 0.15;
+      return ease(c01((navH + range - r.top) / range));
+    }
+    /* 0 quando fromEl è centrato, 1 quando toEl è centrato
+       earlyEndVh: 0.5 = completa il fade 0.5vh prima che toEl raggiunga il centro */
+    function p_between(fromEl, toEl, earlyEndVh) {
+      if (!fromEl || !toEl) return 0;
+      var scrollY = window.scrollY;
+      var vpCenter = window.innerHeight / 2;
+      var fromTop = fromEl.getBoundingClientRect().top + scrollY;
+      var toTop   = toEl.getBoundingClientRect().top   + scrollY;
+      var s0 = fromTop + fromEl.offsetHeight / 2 - vpCenter;
+      var s1 = toTop   + toEl.offsetHeight   / 2 - vpCenter - ((earlyEndVh || 0) * window.innerHeight);
+      return ease(c01((scrollY - s0) / (s1 - s0)));
+    }
+
+    function secP(el) {
+      if (!el) return 0;
+      var ENTRY = window.innerHeight * 0.70;
+      return c01((ENTRY - el.getBoundingClientRect().top) / ENTRY);
+    }
+
+    var prodEls = Array.from(document.querySelectorAll('.pc-prod'));
+    var stackEl = document.getElementById('ai-stack');
+    var panels  = stackEl ? Array.from(stackEl.querySelectorAll('.smm-panel')) : [];
+
+    var apprEl = document.querySelector('.svc-ai-approccio');
+    var wfEl   = document.querySelector('.svc-ai-workflow');
+
+    var stackToApprOv = makeTransOv(stackEl, '#fff');
+    var wfToCliOv     = makeTransOv(wfEl,    '#0a0a0a');
+
+    var apprLetters = splitLetters(apprEl && apprEl.querySelector('.svc-ai-approccio__title'));
+    var wfLetters   = splitLetters(wfEl   && wfEl.querySelector('.svc-ai-workflow__title'));
+
+    var apprKicker = apprEl && apprEl.querySelector('.svc-ai-pill-kicker');
+    var apprP1     = apprEl && apprEl.querySelectorAll('.svc-content-block__text')[0];
+    var apprP2     = apprEl && apprEl.querySelectorAll('.svc-content-block__text')[1];
+    var apprBtn    = apprEl && apprEl.querySelector('.btn');
+    var apprRight  = apprEl && apprEl.querySelector('.svc-ai-approccio__right');
+    var wfKicker   = wfEl   && wfEl.querySelector('.svc-ai-pill-kicker');
+    var wfSub      = wfEl   && wfEl.querySelector('.svc-ai-workflow__sub');
+    var wfCards    = wfEl   ? Array.from(wfEl.querySelectorAll('.svc-ai-workflow__card')) : [];
+
+    [apprKicker, apprP1, apprP2, apprBtn, apprRight, wfKicker, wfSub].forEach(function(el) { initHide(el); });
+    wfCards.forEach(function(el) { initHide(el); });
+
+    var heroOvOp = 0, cliToMagOp = 0, magToCafOp = 0;
+
     function tick() {
       requestAnimationFrame(tick);
       var vh = window.innerHeight;
-      var heroOvOp = 0;
-      if (heroEl && heroOv) { heroOvOp = ease(c01(-heroEl.getBoundingClientRect().top / (vh * 0.45))); heroOv.style.opacity = heroOvOp.toFixed(3); }
-      var magicOvOp = 0;
-      if (magicOv && caffeEl) { var p2 = ease(c01((vh - caffeEl.getBoundingClientRect().top) / vh)); magicOvOp = ease(c01((p2 - 0.25) / 0.75)); magicOv.style.opacity = magicOvOp.toFixed(3); }
+
+      heroOvOp   = p_enter(clientiEl);
+      cliToMagOp = ease(c01((p_enter(magicEl) - 0.25) / 0.75));
+      magToCafOp = ease(c01((p_enter(caffeEl) - 0.25) / 0.75));
+
+      if (heroOv)         heroOv.style.opacity         = heroOvOp.toFixed(3);
+      if (cliToMagicOv)   cliToMagicOv.style.opacity   = cliToMagOp.toFixed(3);
+      if (magicToCaffeOv) magicToCaffeOv.style.opacity = magToCafOp.toFixed(3);
+
+      revLetters(clientiLetters, secP(clientiEl));
+
+      var mR = magicEl ? magicEl.getBoundingClientRect() : null;
+      if (mR) {
+        var p1 = ease(c01((vh - mR.top) / vh));
+        revLetters(magicLetters, ease(c01(p1 / 0.85)));
+        var catP = ease(c01((p1 - 0.05) / 0.80));
+        if (magicCat) { magicCat.style.opacity = catP.toFixed(3); magicCat.style.transform = 'translateY(' + ((1-catP)*24).toFixed(1) + 'px)'; }
+        var linksP = ease(c01((p1 - 0.20) / 0.70));
+        if (magicLinks) { magicLinks.style.opacity = linksP.toFixed(3); magicLinks.style.transform = 'translateY(' + ((1-linksP)*20).toFixed(1) + 'px)'; }
+      }
+
+      var cR = caffeEl ? caffeEl.getBoundingClientRect() : null;
+      if (cR) {
+        var p2 = ease(c01((vh - cR.top) / vh));
+        revLetters(caffeLetters, ease(c01(p2 / 0.85)));
+        var subP = ease(c01((p2 - 0.10) / 0.75));
+        if (caffeSub) { caffeSub.style.opacity = subP.toFixed(3); caffeSub.style.transform = 'translateY(' + ((1-subP)*16).toFixed(1) + 'px)'; }
+        var formP = ease(c01((p2 - 0.20) / 0.70));
+        if (caffeForm) { caffeForm.style.opacity = formP.toFixed(3); caffeForm.style.transform = 'translateY(' + ((1-formP)*20).toFixed(1) + 'px)'; }
+      }
+
+      /* stack → approccio overlay */
+      if (stackToApprOv && apprEl) stackToApprOv.style.opacity = p_enter(apprEl).toFixed(3);
+
+      /* workflow → clienti: 0 quando clienti entra dal basso, 1 quando clienti è centrata */
+      if (wfToCliOv && wfEl && clientiEl) {
+        var vh2 = window.innerHeight;
+        var cliTop2 = clientiEl.getBoundingClientRect().top;
+        var wfP = ease(c01((vh2 - cliTop2) / (vh2 / 2 + clientiEl.offsetHeight / 2)));
+        wfToCliOv.style.opacity = wfP.toFixed(3);
+        wfEl.style.background = wfP >= 0.95 ? '#000' : '';
+      }
+
+      /* approccio section */
+      var aR = apprEl ? apprEl.getBoundingClientRect() : null;
+      if (aR) {
+        var aP = ease(c01((vh - aR.top) / vh));
+        revLetters(apprLetters, ease(c01(aP / 0.70)));
+        var aK  = ease(c01((aP - 0.05) / 0.70)); if (apprKicker) { apprKicker.style.opacity = aK.toFixed(3);  apprKicker.style.transform = 'translateY(' + ((1-aK)*18).toFixed(1) + 'px)'; }
+        var aT1 = ease(c01((aP - 0.15) / 0.70)); if (apprP1) { apprP1.style.opacity = aT1.toFixed(3); apprP1.style.transform = 'translateY(' + ((1-aT1)*16).toFixed(1) + 'px)'; }
+        var aT2 = ease(c01((aP - 0.22) / 0.65)); if (apprP2) { apprP2.style.opacity = aT2.toFixed(3); apprP2.style.transform = 'translateY(' + ((1-aT2)*16).toFixed(1) + 'px)'; }
+        var aBt = ease(c01((aP - 0.30) / 0.60)); if (apprBtn)   { apprBtn.style.opacity   = aBt.toFixed(3);  apprBtn.style.transform   = 'translateY(' + ((1-aBt)*14).toFixed(1) + 'px)'; }
+        var aRt = ease(c01((aP - 0.12) / 0.72)); if (apprRight) { apprRight.style.opacity  = aRt.toFixed(3); apprRight.style.transform  = 'translateY(' + ((1-aRt)*18).toFixed(1) + 'px)'; }
+      }
+
+      /* workflow section */
+      var wR2 = wfEl ? wfEl.getBoundingClientRect() : null;
+      if (wR2) {
+        var wP = ease(c01((vh - wR2.top) / vh));
+        revLetters(wfLetters, ease(c01(wP / 0.60)));
+        var wK = ease(c01((wP - 0.05) / 0.65)); if (wfKicker) { wfKicker.style.opacity = wK.toFixed(3); wfKicker.style.transform = 'translateY(' + ((1-wK)*16).toFixed(1) + 'px)'; }
+        var wS = ease(c01((wP - 0.18) / 0.65)); if (wfSub)    { wfSub.style.opacity    = wS.toFixed(3); wfSub.style.transform    = 'translateY(' + ((1-wS)*14).toFixed(1) + 'px)'; }
+        wfCards.forEach(function(card, i) {
+          var cP = ease(c01((wP - 0.22 - i * 0.10) / 0.65));
+          card.style.opacity = cP.toFixed(3);
+          card.style.transform = 'translateY(' + ((1-cP)*22).toFixed(1) + 'px)';
+        });
+      }
+
       var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
       caffeExitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 120)).toFixed(3);
+
       if (navEl) {
-        var navMid = (navEl.getBoundingClientRect().height || 80) / 2, base = C_WHITE;
-        if (heroEl) { var hR = heroEl.getBoundingClientRect(); if (hR.top <= navMid && hR.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp); }
-        if (magicEl) { var mR = magicEl.getBoundingClientRect(); if (mR.top <= navMid && mR.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, magicOvOp); }
-        if (caffeEl) { var caR = caffeEl.getBoundingClientRect(); if (caR.top <= navMid && caR.bottom > navMid) base = C_FUCHSIA; }
+        var navMid = (navEl.getBoundingClientRect().height || 80) / 2;
+        var base = C_DARK;
+
+        if (heroEl) {
+          var hR = heroEl.getBoundingClientRect();
+          if (hR.top <= navMid && hR.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp);
+        }
+
+        if (stackEl) {
+          var stR = stackEl.getBoundingClientRect();
+          if (stR.top <= navMid && stR.bottom > navMid) {
+            panels.forEach(function(panel) {
+              var pR2 = panel.getBoundingClientRect();
+              if (pR2.top <= navMid && pR2.bottom > navMid) {
+                base = panel.classList.contains('smm-panel--dark') ? C_DARK : C_WHITE;
+              }
+            });
+          }
+        }
+        if (apprEl) { var apR = apprEl.getBoundingClientRect(); if (apR.top <= navMid && apR.bottom > navMid) base = C_WHITE; }
+        if (wfEl)   { var wfR = wfEl.getBoundingClientRect();   if (wfR.top <= navMid && wfR.bottom > navMid)   base = C_WHITE; }
+        prodEls.forEach(function (prod) {
+          var pR = prod.getBoundingClientRect();
+          if (pR.top <= navMid && pR.bottom > navMid) base = C_WHITE;
+        });
+
+        if (clientiEl) {
+          var clR = clientiEl.getBoundingClientRect();
+          if (clR.top <= navMid && clR.bottom > navMid) base = blend(C_DARK, C_WHITE, cliToMagOp);
+        }
+        if (magicEl) {
+          var mgR = magicEl.getBoundingClientRect();
+          if (mgR.top <= navMid && mgR.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, magToCafOp);
+        }
+        if (caffeEl) {
+          var caR2 = caffeEl.getBoundingClientRect();
+          if (caR2.top <= navMid && caR2.bottom > navMid) base = C_FUCHSIA;
+        }
+
         var isDark = luma(base) < 140;
         if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
       }
     }
     requestAnimationFrame(tick);
+
+    /* ── smm-stack panel reveal ── */
+    panels.forEach(function(panel) {
+      var revEls = Array.from(panel.querySelectorAll('[data-reveal]'));
+      revEls.forEach(function(el) { el.style.opacity = '0'; el.style.transform = 'translateY(22px)'; });
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          revEls.forEach(function(el, j) {
+            el.style.transition = 'opacity 0.52s ' + (j * 0.025) + 's ease, transform 0.52s ' + (j * 0.025) + 's ease';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
+          obs.disconnect();
+        }
+      }, { threshold: 0.15 });
+      obs.observe(panel);
+    });
+
+    /* ── reveal generale: approccio, workflow e altre sezioni ── */
+    var skipSections = ['ai-clienti','ai-magic','ai-caffe','ai-stack'];
+    Array.from(document.querySelectorAll('.reveal')).filter(function(el) {
+      return !skipSections.some(function(id) { return el.closest('#' + id); })
+        && !el.closest('.svc-ai-approccio')
+        && !el.closest('.svc-ai-workflow');
+    }).forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      var delay = el.classList.contains('reveal-delay-1') ? '0.15s' : '0s';
+      var revObs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          el.style.transition = 'opacity 0.55s ' + delay + ' ease, transform 0.55s ' + delay + ' ease';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          revObs.disconnect();
+        }
+      }, { threshold: 0.12 });
+      revObs.observe(el);
+    });
   })();
   </script>
-      <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <div id="ai-scroll-dots" aria-hidden="true"></div>
+
+  <script>
+  /* ── scroll dots per accordion items ── */
+  (function () {
+    var wrap = document.getElementById('ai-scroll-dots');
+    var items = Array.from(document.querySelectorAll('.pc-acc__item'));
+    if (!items.length) return;
+
+    /* crea un dot per ogni item */
+    items.forEach(function () {
+      var d = document.createElement('span');
+      d.className = 'ai-sd';
+      wrap.appendChild(d);
+    });
+    var dots = Array.from(wrap.querySelectorAll('.ai-sd'));
+
+    /* mostra/nascondi il pannello quando le sezioni accordion sono in viewport */
+    var sections = Array.from(document.querySelectorAll('.pc-acc'));
+    var secObs = new IntersectionObserver(function () {
+      var anyIn = sections.some(function (s) {
+        var r = s.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      });
+      wrap.classList.toggle('ai-dots--visible', anyIn);
+    }, { threshold: 0 });
+    sections.forEach(function (s) { secObs.observe(s); });
+
+    /* accende il dot quando l'item entra in viewport */
+    var itemObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var idx = items.indexOf(entry.target);
+        if (idx >= 0) dots[idx].classList.toggle('ai-sd--on', entry.isIntersecting);
+      });
+    }, { threshold: 0.25 });
+    items.forEach(function (item) { itemObs.observe(item); });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    /* ── accordion toggle ── */
+    document.querySelectorAll('.pc-acc__head').forEach(function (head) {
+      function toggle() {
+        var item = head.closest('.pc-acc__item');
+        var isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        head.setAttribute('aria-expanded', String(!isOpen));
+      }
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    /* ── reveal items in catena: ogni item appare quando il precedente è al 90% visibile ── */
+    var items = Array.from(document.querySelectorAll('.pc-acc__item'));
+
+    function revealNext(idx) {
+      if (idx >= items.length) return;
+      items[idx].classList.add('pc-item--in');
+      if (idx + 1 >= items.length) return;
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].intersectionRatio >= 0.9) {
+          io.disconnect();
+          revealNext(idx + 1);
+        }
+      }, { threshold: [0.9] });
+      io.observe(items[idx]);
+    }
+
+    /* parte quando la prima sezione accordion entra in viewport */
+    var firstAcc = document.querySelector('.pc-acc');
+    if (firstAcc) {
+      var startObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { startObs.disconnect(); revealNext(0); }
+      }, { threshold: 0.05 });
+      startObs.observe(firstAcc);
+    }
+  })();
+  </script>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
@@ -701,7 +1237,7 @@
 
         <div class="sf-col">
           <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
-            <img src="../../Logoestrofooter.webp" alt="ESTRO" />
+            <img src="../Logoestrofooter.webp" alt="ESTRO" />
           </a>
           <p class="sf-tagline">Idee che prendono forma.</p>
         </div>
@@ -717,8 +1253,8 @@
             <a href="../servizi/graphic-design.html">Graphic design</a>
             <a href="../servizi/web-design.html">Web design</a>
             <a href="../servizi/produzione-contenuti.html">Produzione contenuti</a>
-            <a href="../servizi/servizio-ai.html">AI</a>
             <a href="../servizi/modellazione-3d.html">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
           </nav>
         </div>
 
@@ -764,7 +1300,8 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-          </div>
+      </div>
+    </div>
         </div>
 
       </div>
@@ -783,6 +1320,3 @@
 
 </body>
 </html>
-
-
-
