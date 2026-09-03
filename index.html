@@ -21,6 +21,20 @@
     .about-section { border-top: none !important; }
     .about-section__right { padding-left: clamp(1rem, 4vw, 3.5rem); }
 
+    /* About: più respiro alla colonna di testo (era 45%/55% a favore
+       del video). Il visual resta protagonista ma le righe di testo
+       non risultano più compresse. */
+    .about-section__grid {
+      grid-template-columns: 57% 43% !important;
+      gap: clamp(2rem, 4vw, 4rem) !important;
+      align-items: center !important;
+    }
+    .about-section__body { max-width: 62ch; }
+    @media (max-width: 900px) {
+      .about-section__grid { grid-template-columns: 1fr !important; }
+      .about-section__right { padding-left: 0; }
+    }
+
     /* ── About dark overlay: sfuma a nero durante l'uscita ─── */
     .about-dark-overlay {
       position: absolute;
@@ -40,11 +54,6 @@
       overflow: hidden !important;
     }
     .svc-clients__header { margin-bottom: clamp(2.5rem, 5vw, 4rem) !important; }
-    #amici-title {
-      opacity: 0;
-      transform: translateY(30px);
-      will-change: opacity, transform;
-    }
     .svc-clients__marquee-wrap {
       display: flex !important;
       flex-direction: column !important;
@@ -102,54 +111,62 @@
       max-height: clamp(140px, 20vw, 250px) !important;
     }
 
-    /* ══ PARTNER LOADER — barra download scroll-driven nella viewport Servizi ══
-       Appare come pill vuota a piena altezza, poi il fill fucsia avanza da sinistra
-       in modo lineare proporzionale allo scroll (effetto download).
-       Altezza impostata da JS in base alla viewport. Nessuna animazione di crescita.
-       ═══════════════════════════════════════════════════════════════════ */
     .partner-loader {
       position: absolute;
-      bottom: clamp(32px, 4.5vh, 64px);
+      bottom: clamp(16px, 2.5vh, 32px);
       left: 3vw;
       right: 3vw;
       z-index: 6;
-      /* height: impostata da JS (BAR_MAX_H) — pill sempre a piena altezza */
       overflow: hidden;
       opacity: 0;
       pointer-events: none;
       border-radius: 999px;
-      background: rgba(255, 255, 255, 0.09); /* pill vuota visibile sul video scuro */
+      background: rgba(255, 255, 255, 0.09);
       will-change: opacity, transform;
+      display: flex;
+      align-items: stretch;
     }
-
-    /* Fill fucsia: clip-path da destra → sinistra, bordi arrotondati su entrambi i lati */
     .partner-loader__fill {
       position: absolute;
       inset: 0;
       background: #DB005A;
       border-radius: inherit;
-      /* Stato iniziale: fill completamente nascosto sul lato destro */
       clip-path: inset(0 100% 0 0 round 9999px);
       will-change: clip-path;
+      z-index: 0;
     }
-
-    /* Container loghi: sopra il fill, invisibile fino a reveal */
+    .partner-loader__label {
+      position: relative;
+      z-index: 2;
+      flex-shrink: 0;
+      background: #DB005A;
+      color: #fff;
+      font-size: 0.52rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 700;
+      font-family: var(--font-secondary, 'Poppins', sans-serif);
+      padding: 0 clamp(0.875rem, 1.5vw, 1.5rem);
+      display: flex;
+      align-items: center;
+      white-space: nowrap;
+    }
     .partner-loader__logos {
-      position: absolute;
-      inset: 0;
+      position: relative;
+      flex: 1;
+      min-width: 0;
       display: flex;
       align-items: center;
       opacity: 0;
       pointer-events: none;
-      will-change: opacity, transform;
+      will-change: opacity;
+      overflow: hidden;
     }
     .partner-loader__logos.logos-visible {
       opacity: 1;
       pointer-events: auto;
       transition: opacity 0.55s ease;
     }
-
-    /* Override logo-ticker dentro il loader */
     .partner-loader .logo-ticker {
       position: static !important;
       background: transparent !important;
@@ -168,22 +185,17 @@
       height: 100%;
       align-items: center;
     }
-    /* Loghi partner nella pill — dimensioni individuali per peso visivo bilanciato.
-       Base comune: 38px (lt-item default). Ogni logo corretto singolarmente
-       in base al suo bounding box visivo, non alla classe di taglia.
-       I badge certificazione (Meta, TikTok) sono aumentati rispetto ai wordmark. */
     .partner-loader .lt-item {
       width: auto !important;
       flex-shrink: 0;
     }
-    /* Dimensioni individuali — priorità massima */
-    .partner-loader .pl-logo--meta    { height: 114px !important; }  /* +10% vs 104px */
-    .partner-loader .pl-logo--tiktok  { height: 122px !important; }  /* +17% vs 104px — aumento marcato */
-    .partner-loader .pl-logo--sky     { height: 71px !important; }   /* +9% vs 65px */
-    .partner-loader .pl-logo--sole    { height: 38px !important; }   /* invariato — wordmark sottile già bilanciato */
-    .partner-loader .pl-logo--conde   { height: 46px !important; }   /* invariato */
-    .partner-loader .pl-logo--rolling { height: 30px !important; }   /* invariato */
-    .partner-loader .pl-logo--google  { height: 46px !important; }   /* +10% vs 42px */
+    .partner-loader .pl-logo--meta    { height: 72px !important; }
+    .partner-loader .pl-logo--tiktok  { height: 78px !important; }
+    .partner-loader .pl-logo--sky     { height: 46px !important; }
+    .partner-loader .pl-logo--sole    { height: 24px !important; }
+    .partner-loader .pl-logo--conde   { height: 30px !important; }
+    .partner-loader .pl-logo--rolling { height: 19px !important; }
+    .partner-loader .pl-logo--google  { height: 30px !important; }
     .partner-loader .lt-item img {
       height: 100% !important;
       width: auto !important;
@@ -227,11 +239,11 @@
        ═══════════════════════════════════════════════════════ */
 
     /* Wrapper: fornisce la distanza di scroll.
-       650dvh totali: 200dvh transizione, 175dvh scroll card orizzontale, 75dvh banda partner,
-       100dvh extra dopo sticky release (About entra). Stage sticky si libera a 450dvh. */
+       350dvh totali: 200dvh transizione, 75dvh banda partner,
+       75dvh extra dopo sticky release (About entra). */
     .ht-wrapper {
       position: relative;
-      height: 650dvh;
+      height: 350dvh;
       background: var(--bg, #fff); /* colore About = body bg, evita stacco nero→bianco */
     }
 
@@ -300,24 +312,11 @@
     }
 
     /* ── Services internals ── */
-    /* svc-bg: video di sfondo che copre l'intero layer servizi */
-    .svc-bg {
-      position: absolute;
-      inset: -2px;          /* +2px per prevenire seam subpixel sui bordi */
-      z-index: 0;
-      pointer-events: none;
-      overflow: hidden;
-    }
-    .svc-bg video {
-      width: 100%; height: 100%;
-      object-fit: cover;
-      object-position: center bottom;
-      transform: scale(1.05); /* scala iniziale, torna a 1 durante il fade-in */
-      transform-origin: center center;
-      will-change: transform;
+    .ht-services {
+      background: radial-gradient(ellipse 140% 90% at 90% 110%, rgba(219,0,90,0.45) 0%, rgba(219,0,90,0.10) 40%, #000 62%);
     }
 
-    /* Gradient overlay: zona scura in cima che fonde con la hero */
+    /* Gradient overlay scuro in cima (transizione hero) */
     .svc-gradients {
       position: absolute; inset: 0; z-index: 1;
       pointer-events: none;
@@ -329,9 +328,6 @@
         transparent 35%);
     }
 
-    /* Contenitore contenuti: occupa lo spazio disponibile sopra il ticker.
-       padding-top = altezza nav (impostata da JS via --nav-h) per tenere
-       il contenuto visibile sotto il menu fisso, senza fasce o spazi neri. */
     .svc-inner {
       position: relative;
       flex: 1;
@@ -341,243 +337,197 @@
       flex-direction: column;
       justify-content: center;
       padding-top: var(--nav-h, 4rem);
-      /* Riserva spazio permanente sotto le card per la loading bar.
-         Il valore è il doppio dello shift visivo desiderato (≈50px up → 100px pb).
-         Così il contenuto è sempre nella posizione "alta" definitiva fin dall'ingresso.
-         Aumentato per alzare il blocco testo+card di ~22px visivi. */
-      padding-bottom: clamp(140px, 19vh, 180px);
+      padding-bottom: clamp(126px, 15.5vh, 155px);
       overflow: hidden;
     }
 
-    /* ── Interattività card durante l'animazione di entrata ── */
-    /* Fase entering: pointer-events OFF — nessun hover possibile */
+    #servizi { position: relative; }
     .services-entering .svc-card { pointer-events: none; }
-    /* Fase ready: interazione ripristinata solo dopo composizione completa */
     .services-ready .svc-card { pointer-events: auto; }
-    /* Stato iniziale (prima dell'entering): anche off */
     .ht-services:not(.services-ready) .svc-card { pointer-events: none; }
 
+    /* SERVIZI: watermark tipografico di sfondo, non un titolo
+       foreground. Sta dietro alle card, non intercetta il puntatore
+       e non entra mai nel flusso del contenuto. */
+    /* SERVIZI: elemento tipografico di sfondo posizionato sopra la
+       griglia, riempito in grigio (non outline). Resta decorativo:
+       nessun pointer-event, sotto le card nell'ordine di stacking. */
     .svc-header {
       position: relative;
-      z-index: 3;
-      padding: clamp(0.75rem,1.5vw,1.5rem) clamp(1.5rem,5vw,5rem) clamp(0.5rem,1vw,1rem);
+      z-index: 0;
+      padding: clamp(0.5rem, 1.5vh, 1.25rem) 0 clamp(0.5rem, 1.2vh, 1rem);
       display: flex;
       flex-direction: column;
       align-items: center;
+      justify-content: flex-end;
       text-align: center;
-      /* Stato iniziale: sale dallo scroll, guidato da JS */
+      pointer-events: none;
       opacity: 0;
-      transform: translateY(40px);
-      will-change: opacity, transform;
+      will-change: opacity;
     }
-
-    /* Titolo SERVIZI — stagger per lettera (reference) */
     .svc-title {
       display: flex;
-      font-size: clamp(3rem,7.5vw,7.5rem);
+      font-size: min(100px, 13vw);
       font-weight: 900;
-      letter-spacing: -0.02em;
+      letter-spacing: -0.03em;
       line-height: 1;
       font-family: var(--font-primary, 'Helvetica Neue', sans-serif);
-      overflow: hidden;
+      white-space: nowrap;
+      user-select: none;
     }
+    /* Riempimento grigio pieno */
     .svc-letter {
       display: inline-block;
-      color: #fff;
-      opacity: 0;
-      transform: translateY(0.8em);
+      color: rgba(255,255,255,0.16);
+      -webkit-text-stroke: 0;
     }
-    /* Classe generica per lettere di tutti gli altri titoli principali */
-    .tl {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(0.8em);
-    }
+    /* Le card devono stare sopra il titolo */
+    .svc-cards-wrap { z-index: 3; }
 
-    /* Sottotitolo parola per parola */
-    .svc-sub {
-      margin-top: 0.75rem;
-      font-size: clamp(0.78rem,1vw,0.9rem);
-      color: #fff;
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 0.35em;
-    }
-    .svc-word {
-      display: inline-block;
-      opacity: 0;
-      transform: translateX(-10px);
-      /* opacity e transform gestiti da JS scroll-driven — nessuna transition CSS */
-    }
-
-    /* Scroll orizzontale card: gestito via translateX scroll-driven (no drag) */
+    /* Grid 5×2 */
     .svc-cards-wrap {
       position: relative;
       z-index: 3;
-      overflow: hidden;
-      padding: 0 clamp(1.5rem,5vw,5rem) clamp(1rem,2dvh,1.5rem);
-      margin-top: clamp(1rem,2dvh,1.75rem);
+      overflow: visible;
+      padding: 0 clamp(1.5rem,5vw,5rem) clamp(0.75rem,1.5dvh,1.25rem);
+      margin-top: clamp(0.5rem,1dvh,0.875rem);
     }
-    .svc-cards-wrap { background: transparent; }
-    .svc-cards-track { background: transparent; will-change: transform; }
-
-    /* Track flex — entrata animata, z-index sopra i layer video */
     .svc-cards-track {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
       gap: 0;
-      width: max-content;
+      width: 100%;
       position: relative;
       z-index: 2;
+      background: transparent;
     }
-    /* Card compatta — inizia invisibile, entra con slide-up + scale */
+    /* Card: trasparenti nella griglia, contenuto che sale all'hover
+       rivelando descrizione e CTA (comportamento originale). */
     .svc-card {
-      width: clamp(212px,24.5vw,290px);
-      height: clamp(258px,33dvh,336px);
-      flex-shrink: 0;
+      width: 100%;
+      height: clamp(250px, 29dvh, 290px);
       position: relative;
       z-index: 1;
       overflow: hidden;
-      border-radius: 0;
+      border-radius: 0 !important;
       display: flex;
       align-items: flex-end;
       box-sizing: border-box;
       cursor: pointer;
       background: transparent;
-      opacity: 0;
-      transform: translateY(60px) scale(0.97);
-      /* opacity e transform gestiti da JS scroll-driven — nessuna transition CSS */
+      opacity: 1;
+      transform: none;
+      transition: background 0.35s ease;
+      border-radius: 0;
     }
-    .svc-card:first-child { border-radius: 14px 0 0 14px; }
-    .svc-card:last-child  { border-radius: 0 14px 14px 0; }
-    /* .visible: classe presente per abilitare gli hover-state figli — opacity/transform da JS */
-    .svc-card.visible { }
+    .svc-card:hover { background: linear-gradient(135deg, #DB005A 0%, #a80045 100%); }
 
-    /* Divisore verticale tra card */
-    .svc-card::after {
+    /* Angoli esterni della griglia arrotondati (5 colonne × 2 righe) */
+    .svc-card:nth-child(1)  { border-top-left-radius: 18px !important; }
+    .svc-card:nth-child(5)  { border-top-right-radius: 18px !important; }
+    .svc-card:nth-child(6)  { border-bottom-left-radius: 18px !important; }
+    .svc-card:nth-child(10) { border-bottom-right-radius: 18px !important; }
+
+    /* Divisori vetrosi: linee traslucide che sfumano alle estremità,
+       con un filo di luce accanto per l'effetto vetro. */
+    .svc-card::after,
+    .svc-card::before {
       content: '';
       position: absolute;
+      pointer-events: none;
+      z-index: 4;
+      display: block;
+    }
+    /* Verticale — non sull'ultima colonna */
+    .svc-card::after {
+      top: 10%; bottom: 10%;
       right: 0;
-      top: 16px;
-      bottom: 16px;
       width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(255,255,255,0.18) 40%, rgba(255,255,255,0.18) 60%, transparent);
-      z-index: 3;
-      pointer-events: none;
-      transition: opacity 0.35s ease;
+      background: linear-gradient(to bottom,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.28) 22%,
+        rgba(255,255,255,0.28) 78%,
+        rgba(255,255,255,0) 100%);
+      box-shadow: 1px 0 0 rgba(255,255,255,0.06);
     }
-    .svc-card:last-child::after { display: none; }
-    /* Tutti i divisori spariscono quando qualsiasi card è in hover */
-    .svc-cards-track:has(.svc-card:hover) .svc-card::after { opacity: 0; }
-
-    /* Bridge rettangolare — segue il mouse, largo quanto una card, solido */
-    .svc-card-bridge {
-      position: absolute;
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0;
-      top: 0;
+    .svc-card:nth-child(5n)::after { display: none; }
+    /* Orizzontale — solo sotto la prima riga */
+    .svc-card::before {
+      left: 6%; right: 6%;
       bottom: 0;
-      left: 0;
-      width: var(--svc-card-w, 250px);
-      border-radius: 22px;
-      background: linear-gradient(135deg, rgba(219,0,90,0.95) 0%, rgba(160,0,66,0.98) 100%);
-      transform: translateX(-50%);
-      transition: opacity 0.2s ease;
-      will-change: left;
+      height: 1px;
+      background: linear-gradient(to right,
+        rgba(255,255,255,0) 0%,
+        rgba(255,255,255,0.24) 20%,
+        rgba(255,255,255,0.24) 80%,
+        rgba(255,255,255,0) 100%);
+      box-shadow: 0 1px 0 rgba(255,255,255,0.05);
     }
-    .svc-card-bridge.visible { opacity: 1; }
+    .svc-card:nth-child(n+6)::before { display: none; }
+    /* In hover il divisore adiacente sparisce: la card si legge piena */
+    .svc-card:hover::after,
+    .svc-card:hover::before { opacity: 0; transition: opacity 0.3s ease; }
 
-    /* Cerchio — segue il mouse, clippato al perimetro della card */
-    .svc-card-circle {
-      position: absolute;
-      pointer-events: none;
-      z-index: 1;
-      opacity: 0;
-      top: 0; left: 0;
-      width: 170px; height: 170px;
-      border-radius: 50%;
-      background: rgb(255, 255, 255);
-      transform: translate(-50%, -50%);
-      transition: opacity 0.25s ease;
-    }
-    .svc-card-circle.visible { opacity: 0.13; }
-
-    /* Numero watermark */
     .svc-card__num {
       position: absolute;
-      top: 0.75rem;
-      right: 1rem;
-      font-size: clamp(2.5rem,5vw,3.5rem);
+      top: 0.6rem;
+      right: 0.9rem;
+      font-size: clamp(1.9rem,3.2vw,2.6rem);
       font-weight: 900;
       line-height: 1;
-      letter-spacing: 0.02em;
-      color: rgba(255,255,255,0.52);
+      color: rgba(255,255,255,0.45);
       font-family: var(--font-primary,'Helvetica Neue',sans-serif);
       z-index: 2;
       user-select: none;
       pointer-events: none;
+      transition: color 0.35s ease;
     }
-    .svc-card.visible:hover .svc-card__num { color: rgba(255,255,255,0.22); }
+    .svc-card:hover .svc-card__num { color: rgba(255,255,255,0.22); }
 
-    /* Contenuto — posizionato in basso, sale all'hover */
+    /* A riposo il blocco è spinto in basso: restano visibili solo
+       tag e titolo; desc e CTA restano nel DOM, sotto il bordo. */
     .svc-card__inner {
       position: relative;
       z-index: 2;
-      padding: clamp(1rem,2vw,1.4rem);
+      padding: clamp(0.9rem,1.4vw,1.15rem);
       width: 100%;
-      opacity: 0;
-      transform: translateY(190px);
-      transition: opacity 0.4s ease,
-                  transform 1.15s cubic-bezier(0.16,1,0.3,1);
-    }
-    .svc-card.visible .svc-card__inner {
       opacity: 1;
-      transform: translateY(clamp(50px, 10dvh, 70px));
-      transition-delay: 0.12s;
+      transform: translateY(clamp(105px, 13dvh, 125px));
+      transition: transform 1.05s cubic-bezier(0.16,1,0.3,1);
     }
-    .svc-card.visible:hover .svc-card__inner {
-      transform: translateY(0);
-      transition-delay: 0s;
-      transition-duration: 1.1s;
-    }
+    .svc-card:hover .svc-card__inner { transform: translateY(0); }
 
     .svc-card__tag {
       display: block;
-      font-size: 0.58rem;
-      letter-spacing: 0.2em;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.75);
-      margin-bottom: 0.45rem;
+      margin-bottom: 0.3rem;
       font-weight: 500;
     }
     .svc-card__title {
-      font-size: clamp(1.1rem,1.9vw,1.5rem);
+      font-size: clamp(1rem,1.25vw,1.15rem);
       font-weight: 500;
       color: #fff;
-      line-height: 1.15;
+      line-height: 1.25;
       letter-spacing: -0.01em;
       margin-bottom: 0.5rem;
       font-family: var(--font-primary,'Helvetica Neue',sans-serif);
     }
     .svc-card__desc {
-      font-size: clamp(0.75rem,0.88vw,0.83rem);
-      color: rgba(255,255,255,0.85);
-      line-height: 1.6;
-      margin-bottom: 1rem;
       display: -webkit-box;
-      -webkit-line-clamp: 3;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
+      font-size: var(--text-min);
+      color: rgba(255,255,255,0.85);
+      line-height: 1.6;
+      margin-bottom: 0.85rem;
       opacity: 0;
       transition: opacity 0.25s linear;
     }
-    .svc-card.visible:hover .svc-card__desc {
-      opacity: 1;
-      transition-delay: 0.32s;
-    }
+    .svc-card:hover .svc-card__desc { opacity: 1; transition-delay: 0.3s; }
 
-    /* Bottone — appare all'hover */
     .svc-card__btn {
       display: inline-flex;
       align-items: center;
@@ -586,37 +536,34 @@
       border: 1px solid rgba(255,255,255,0.5);
       border-radius: 99px;
       color: #fff;
-      font-size: 0.58rem;
-      letter-spacing: 0.14em;
+      font-size: var(--text-min);
+      letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 0.7rem;
+      padding: 0.6rem;
       overflow: hidden;
       max-width: 42px;
       white-space: nowrap;
       opacity: 0;
       transition: max-width 0.55s cubic-bezier(0.22,1,0.36,1),
-                  padding   0.55s cubic-bezier(0.22,1,0.36,1),
-                  opacity   0.25s linear,
-                  background 0.3s, border-color 0.3s;
+                  padding 0.55s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.25s linear;
     }
-    .svc-card.visible:hover .svc-card__btn {
+    .svc-card:hover .svc-card__btn {
       opacity: 1;
-      max-width: 200px;
-      padding: 0.7rem 1.3rem;
-      background: rgba(255,255,255,0.22);
-      border-color: rgba(255,255,255,0.7);
-      transition-delay: 0.38s;
+      max-width: 240px;
+      padding: 0.6rem 1.2rem;
+      transition-delay: 0.36s;
     }
     .svc-card__btn svg { flex-shrink: 0; width: 14px; height: 14px; transition: transform 0.35s; }
-    .svc-card.visible:hover .svc-card__btn svg { transform: translateX(4px); }
+    .svc-card:hover .svc-card__btn svg { transform: translateX(4px); }
     .svc-card__btn-label {
       opacity: 0;
       max-width: 0;
       overflow: hidden;
       transition: opacity 0.3s 0.18s, max-width 0.55s cubic-bezier(0.22,1,0.36,1);
     }
-    .svc-card.visible:hover .svc-card__btn-label { opacity: 1; max-width: 180px; }
+    .svc-card:hover .svc-card__btn-label { opacity: 1; max-width: 200px; }
 
     @keyframes sr-bounce {
       0%, 100% { transform: translateX(-50%) translateY(0); }
@@ -655,20 +602,15 @@
     /* ── Tips & Tricks ────────────────────────────────────── */
     .tips-section {
       position: relative !important;
-      height: 200dvh !important;
-      min-height: unset !important;
       padding: 0 !important;
       overflow: visible !important;
       background: transparent !important;
     }
     .tips-sticky {
-      position: sticky;
-      top: 0;
-      height: 100dvh;
-      overflow: clip;
-      background: var(--bg, #fff);
+      min-height: 100vh;
       display: flex;
       align-items: center;
+      padding-block: clamp(3rem, 6vw, 5rem);
     }
     .tips-sticky .container { width: 100%; }
     .tips-grid {
@@ -677,26 +619,8 @@
       gap: clamp(0.75rem, 1.5vw, 1.5rem) !important;
     }
     .tip-card__img img { max-height: clamp(130px, 26vh, 280px) !important; object-fit: cover; width: 100% !important; height: clamp(130px, 26vh, 280px) !important; }
-    .tips-section__heading {
-      opacity: 0;
-      transform: translateY(30px);
-      will-change: opacity, transform;
-    }
-    .tips-grid .tip-card {
-      opacity: 0;
-      transform: translateY(30px);
-      will-change: opacity, transform;
-    }
-    .tips-section__cta {
-      opacity: 0;
-      transform: translateY(20px);
-      will-change: opacity, transform;
-    }
 
-    /* Per-letter spans: display:inline-block so transforms work */
-    .tl { display: inline-block; }
     .sf-ghost { color: rgba(255,255,255,0.10) !important; }
-    .sf-ghost .tl { opacity: 0; }
 
     /* ── Sezione Contatti home ─────────────────────────────── */
     .hc-section {
@@ -747,6 +671,32 @@
       gap: 0.875rem;
     }
     .hc-textarea { min-height: 130px; resize: vertical; }
+    /* Consensi: privacy (obbligatorio) e newsletter (facoltativo) */
+    .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+    }
+    .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .hc-consents .svc-caffe__privacy span { line-height: 1.5; }
+    .hc-consents .svc-caffe__privacy em {
+      font-style: normal;
+      opacity: 0.65;
+    }
     .hc-submit {
       width: auto;
       align-self: center;
@@ -772,6 +722,488 @@
     }
     @media (max-width: 600px) {
       .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       SUPERFICIE SCURA CONDIVISA
+       Un'unica sorgente per "nero + gradiente fucsia": tutte le
+       sezioni scure la riusano. Footer escluso per scelta.
+       ═══════════════════════════════════════════════════════════ */
+    :root {
+      --surface-dark: radial-gradient(ellipse 140% 90% at 90% 110%, rgba(219,0,90,0.45) 0%, rgba(219,0,90,0.10) 40%, #000 62%);
+      /* Gerarchia tipografica */
+      --text-body: 1rem;      /* 16px — body, descrizioni, contenuti */
+      --text-ui:   0.875rem;  /* 14px — CTA, tagline, eyebrow, privacy */
+      --text-min:  1rem;      /* alias legacy */
+      /* Curve condivise per reveal e transizioni di sezione */
+      --rv-ease: cubic-bezier(0.22, 1, 0.36, 1);
+      /* Ritmo verticale condiviso card → CTA (Case Studies e Tips) */
+      --cards-cta-gap: clamp(2rem, 3.5vw, 3rem);
+    }
+    .surface-dark,
+    .ht-services,
+    #amici-section,
+    .tips-sticky {
+      background: var(--surface-dark) !important;
+    }
+    .tips-section { background: transparent !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       ABOUT — pin breve, poi scroll naturale
+       Il pin è ottenuto con position:sticky (nessuno scroll-jacking:
+       nessun listener su wheel/touchmove, nessuno snap, nessun
+       timeout). La sua durata = altezza sezione − altezza sticky.
+       Era 280dvh → 180dvh di scroll a vuoto dopo l'animazione.
+       Ora 145dvh: ~45dvh di pin, quanto basta a far percepire il
+       reveal, poi la sezione successiva entra con lo stesso gesto.
+       Naturalmente reversibile in scroll up.
+       ═══════════════════════════════════════════════════════════ */
+    .about-section {
+      height: 145dvh !important;
+      min-height: unset !important;
+    }
+    .about-sticky {
+      position: sticky !important;
+      top: 0 !important;
+      height: 100dvh !important;
+    }
+
+    /* ── Altezza minima sezioni: mai contenuto compresso ─────── */
+    #amici-section,
+    .cs2,
+    .page-faq,
+    .hc-section {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CASE STUDIES
+       ═══════════════════════════════════════════════════════════ */
+    /* Titolo: 150px desktop, una riga sola, scala senza overflow.
+       Il fattore vw è calibrato sul rapporto reale larghezza/font
+       del testo (~8.66×) perché la riga non esca mai dal container. */
+    .cs2__intro { padding-inline: clamp(1.5rem, 2.5vw, 2.5rem) !important; }
+    .cs2__title {
+      font-size: min(150px, 10.4vw) !important;
+      white-space: nowrap !important;
+      line-height: 1 !important;
+    }
+
+    /* Card destra: tutto allineato a sinistra */
+    .cst-right,
+    .cst-info,
+    .cst-info__sector,
+    .cst-info__title,
+    .cst-info__text,
+    .cst-info__tags { text-align: left !important; }
+
+    /* Senza i KPI la card di testo occupa l'intera colonna:
+       spazi ribilanciati su padding e gap interni. */
+    .cst-info {
+      padding: clamp(1.75rem, 2.6vw, 2.5rem) !important;
+      gap: clamp(0.875rem, 1.4vw, 1.25rem) !important;
+      justify-content: center;
+    }
+
+    /* Logo brand sopra al contenuto: più grande e più vicino al
+       testo, senza aria inutile sopra/sotto. */
+    .cst-info__brand {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      height: clamp(58px, 7vw, 82px);
+      margin: 0 0 clamp(0.15rem, 0.35vw, 0.35rem);
+      padding: 0;
+      line-height: 0;
+    }
+    .cst-info__brand img {
+      max-height: 100%;
+      max-width: clamp(180px, 23vw, 260px);
+      width: auto;
+      object-fit: contain;
+      object-position: left center;
+    }
+
+    .cst-info__sector { font-size: var(--text-min) !important; letter-spacing: 0.12em !important; }
+    .cst-info__title  { font-size: clamp(1.35rem, 2.2vw, 2rem) !important; font-weight: 900; }
+    .cst-info__text   { font-size: var(--text-min) !important; line-height: 1.75 !important; }
+
+    /* Tag più leggibili: contrasto, peso e respiro maggiori */
+    .cst-info__tags { gap: 0.5rem !important; margin-top: 0.5rem !important; }
+    .cst-info__tags span {
+      font-size: var(--text-min) !important;
+      font-weight: 600 !important;
+      padding: 0.4rem 0.9rem !important;
+      color: var(--primary, #DB005A) !important;
+      background: rgba(219,0,90,0.08) !important;
+      border: 1.5px solid rgba(219,0,90,0.35) !important;
+      line-height: 1.3;
+    }
+
+    .cst-tab { font-size: var(--text-min) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPS & TRICKS — scuro, CTA più vicina alle card
+       ═══════════════════════════════════════════════════════════ */
+    .tips-section__heading { color: #fff !important; }
+    /* Stesso ritmo verticale card → CTA nelle due sezioni */
+    .tips-section__cta,
+    .cs2__footer {
+      margin-top: var(--cards-cta-gap) !important;
+      padding-top: 0 !important;
+    }
+    .cst-panels { margin-bottom: 0 !important; }
+    .tip-card__date  { color: rgba(255,255,255,0.65) !important; font-size: var(--text-min) !important; }
+    .tip-card__title { color: #fff !important; font-size: clamp(1rem, 1.35vw, 1.2rem) !important; }
+    .tip-card:hover .tip-card__title { color: var(--primary, #DB005A) !important; }
+    /* Card senza box: vivono direttamente sul nero della sezione.
+       La separazione è data da immagine, spaziatura, tipografia,
+       profondità 3D e ombra proiettata sotto la sola immagine. */
+    .tip-card {
+      background: transparent !important;
+      border: none !important;
+      border-radius: 0 !important;
+      padding: 0 !important;
+    }
+    .tip-card__date,
+    .tip-card__title { padding-inline: 0 !important; }
+    .tip-card__img {
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: clamp(0.85rem, 1.4vw, 1.2rem);
+    }
+
+    /* CTA: hover nero su testo bianco */
+    .tips-section__cta .btn {
+      background: var(--primary, #DB005A) !important;
+      color: #fff !important;
+      border: 2px solid var(--primary, #DB005A) !important;
+      transition: background 0.32s var(--ease-out, ease),
+                  border-color 0.32s var(--ease-out, ease),
+                  color 0.32s var(--ease-out, ease),
+                  transform 0.32s var(--ease-out, ease);
+    }
+    .tips-section__cta .btn::before { display: none !important; }
+    .tips-section__cta .btn:hover,
+    .tips-section__cta .btn:focus-visible {
+      background: #fff !important;
+      color: #000 !important;
+      border-color: #fff !important;
+      transform: translateY(-3px);
+      box-shadow: 0 14px 34px rgba(0,0,0,0.35);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FAQ — sfondo bianco, titolo 150px
+       ═══════════════════════════════════════════════════════════ */
+    .page-faq { background: #fff !important; }
+    .page-faq__title {
+      font-size: min(150px, 26vw) !important;
+      line-height: 1 !important;
+    }
+    .page-faq__question     { font-size: clamp(1rem, 1.5vw, 1.25rem) !important; }
+    .page-faq__answer-inner { font-size: var(--text-min) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       ALLINEAMENTO CONTATTI ↔ FAQ
+       Causa strutturale: .container usa max-width 1440px con
+       padding-inline-end: 0 (asimmetrico), mentre .page-faq__inner
+       usa 1240px con padding simmetrico. Qui allineo la geometria.
+       ═══════════════════════════════════════════════════════════ */
+    .hc-inner {
+      max-width: 1240px !important;
+      margin-inline: auto !important;
+      padding-inline: var(--gutter) !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       GERARCHIA TIPOGRAFICA
+       Body principale ≥ 16px · microcopy secondario 14px
+       (header e footer esclusi)
+       ═══════════════════════════════════════════════════════════ */
+    /* — Body: mai sotto i 16px — */
+    .about-section__body,
+    .about-section__body p,
+    .about-section__body li,
+    .cst-info__text,
+    .page-faq__answer-inner,
+    .svc-card__desc,
+    .svc-caffe__field,
+    .tip-card__excerpt { font-size: var(--text-body) !important; }
+    .svc-caffe__field::placeholder { font-size: var(--text-body); }
+
+    /* — Microcopy secondario: 14px — */
+    main .btn,
+    .about-section__kicker,
+    .vhero__sub,
+    .vhero__tagline,
+    .hc-sub,
+    .svc-caffe__privacy,
+    .svc-caffe__privacy span,
+    .svc-card__tag,
+    .partner-loader__label,
+    .cst-info__sector,
+    .cst-info__tags span,
+    .tip-card__date { font-size: var(--text-ui) !important; }
+
+    .svc-card__title { font-size: clamp(1rem, 1.25vw, 1.15rem) !important; }
+
+    /* Barra partner più generosa: label bordeaux + loghi più grandi */
+    .partner-loader__label {
+      background: #7A0030 !important;
+      letter-spacing: 0.14em;
+      padding-inline: clamp(1.1rem, 2vw, 2rem);
+    }
+    /* Barra più compatta: i loghi sfruttano meglio l'altezza utile
+       invece di lasciare aria sopra e sotto. Meta, TikTok, Sky e
+       Sole 24 Ore erano sottodimensionati rispetto agli altri. */
+    .partner-loader__logos { padding-block: 0 !important; }
+    .partner-loader .logo-ticker,
+    .partner-loader .logo-ticker__track,
+    .partner-loader .logo-ticker__set { padding-block: 0 !important; }
+    .partner-loader .lt-item { padding-block: 0 !important; }
+    .partner-loader .pl-logo--meta    { height: 96px !important; }
+    .partner-loader .pl-logo--tiktok  { height: 98px !important; }
+    .partner-loader .pl-logo--sky     { height: 68px !important; }
+    .partner-loader .pl-logo--sole    { height: 40px !important; }
+    .partner-loader .pl-logo--conde   { height: 34px !important; }
+    .partner-loader .pl-logo--rolling { height: 23px !important; }
+    .partner-loader .pl-logo--google  { height: 34px !important; }
+    .partner-loader .lt-item img { object-fit: contain !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       REVEAL SCROLL — libreria differenziata
+       Progressive enhancement puro: lo stato iniziale esiste solo
+       con JS attivo (html.js-reveal). Nessun opacity:0,
+       visibility:hidden o display:none — mai. L'opacità minima è
+       0.66, quindi ogni contenuto resta leggibile e presente in
+       una full-page screenshot anche a reveal non attivato.
+       Stati: [iniziale] → .rv-in (in vista) → .rv-past (uscito in alto)
+       ═══════════════════════════════════════════════════════════ */
+    /* NB: nessun filter:blur() sul testo — in una full-page
+       screenshot gli elementi fuori vista verrebbero catturati
+       sfocati. Il reveal usa solo transform + opacità. */
+    html.js-reveal [data-rv]:not([data-rv="card3d"]) {
+      transition: transform 0.9s var(--rv-ease),
+                  opacity 0.55s ease,
+                  letter-spacing 0.9s var(--rv-ease),
+                  clip-path 0.9s var(--rv-ease);
+      transition-delay: var(--rv-delay, 0s);
+    }
+    /* will-change solo mentre l'elemento è nella fascia attiva */
+    html.js-reveal [data-rv].rv-armed { will-change: transform, opacity; }
+
+    /* — Titoli: stacco deciso, mask dal basso + tracking — */
+    html.js-reveal [data-rv="title"] {
+      transform: translateY(46px) scale(0.94);
+      opacity: 0.7;
+      letter-spacing: 0.05em;
+      clip-path: inset(0 0 16% 0);
+      transform-origin: left bottom;
+    }
+    /* — Body: movimento delicato — */
+    html.js-reveal [data-rv="body"] {
+      transform: translateY(32px) scale(0.985);
+      opacity: 0.74;
+    }
+    /* — Card: ingresso prospettico — */
+    html.js-reveal [data-rv="card"] {
+      transform: perspective(1100px) rotateX(11deg) translateY(48px) translateZ(-70px) scale(0.94);
+      opacity: 0.7;
+      transform-origin: 50% 100%;
+    }
+    /* — Immagini: scale + maschera — */
+    html.js-reveal [data-rv="img"] {
+      transform: scale(1.11);
+      opacity: 0.78;
+      clip-path: inset(14% 7% 14% 7%);
+    }
+    /* — CTA: micro-rotazione, arriva dopo il body — */
+    html.js-reveal [data-rv="cta"] {
+      transform: translateY(28px) scale(0.9) rotate(-1.4deg);
+      opacity: 0.72;
+    }
+    /* — Loghi / elementi grafici — */
+    html.js-reveal [data-rv="logo"] {
+      transform: translateY(20px) scale(0.88);
+      opacity: 0.74;
+    }
+
+    /* Stato a riposo: identico per tutti i tipi.
+       card3d è escluso perché compone il proprio transform con il
+       tilt del puntatore (vedi blocco Tips & Tricks). */
+    html.js-reveal [data-rv]:not([data-rv="card3d"]).rv-in {
+      transform: none;
+      opacity: 1;
+      filter: none;
+      letter-spacing: normal;
+      clip-path: inset(0 0 0 0);
+    }
+
+    /* Uscita verso l'alto: inversa leggera, sempre ben visibile */
+    html.js-reveal [data-rv].rv-past {
+      opacity: 0.84;
+      transition-delay: 0s;
+    }
+    html.js-reveal [data-rv="title"].rv-past { transform: translateY(-16px) scale(0.985); clip-path: inset(0 0 0 0); }
+    html.js-reveal [data-rv="body"].rv-past  { transform: translateY(-12px); }
+    html.js-reveal [data-rv="card"].rv-past  { transform: perspective(1100px) rotateX(-4deg) translateY(-14px) scale(0.985); }
+    html.js-reveal [data-rv="img"].rv-past   { transform: scale(1.03); clip-path: inset(0 0 0 0); }
+    html.js-reveal [data-rv="cta"].rv-past   { transform: translateY(-10px) scale(0.97); }
+    html.js-reveal [data-rv="logo"].rv-past  { transform: translateY(-8px) scale(0.96); }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONI DI SEZIONE — 2 pattern riutilizzabili
+       Progresso 0→1 scritto da un unico rAF (--sxi = ingresso,
+       --sxo = uscita). Solo transform/opacity: nessun reflow,
+       nessuno scroll-jacking, nessuno spazio vuoto.
+       ═══════════════════════════════════════════════════════════ */
+    /* Pattern "rise": la sezione sale e si appoggia sopra la precedente */
+    html.js-reveal .sx-rise {
+      transform: translateY(calc((1 - var(--sxi, 1)) * 72px))
+                 scale(calc(0.945 + var(--sxi, 1) * 0.055));
+      border-radius: calc((1 - var(--sxi, 1)) * 44px) calc((1 - var(--sxi, 1)) * 44px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -26px) calc((1 - var(--sxi, 1)) * 60px) rgba(0,0,0,0.35);
+      overflow: hidden;
+      position: relative;
+      z-index: 2;
+      will-change: transform;
+    }
+    /* Pattern "depth": la sezione uscente arretra nello spazio */
+    html.js-reveal .sx-depth {
+      transform: perspective(1400px)
+                 rotateX(calc(var(--sxo, 0) * 6deg))
+                 translateZ(calc(var(--sxo, 0) * -180px))
+                 scale(calc(1 - var(--sxo, 0) * 0.085));
+      transform-origin: 50% 0%;
+      will-change: transform;
+    }
+    /* Il gradiente della superficie scura scorre con lo scroll */
+    html.js-reveal .sx-sweep {
+      background-position: 50% calc(50% + (var(--sxi, 0.5) - 0.5) * -60px) !important;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal [data-rv],
+      html.js-reveal [data-rv].rv-in,
+      html.js-reveal [data-rv].rv-past {
+        transform: none !important; opacity: 1 !important;
+        filter: none !important; clip-path: none !important;
+        letter-spacing: normal !important; transition: none !important;
+      }
+      html.js-reveal .sx-rise,
+      html.js-reveal .sx-depth { transform: none !important; border-radius: 0 !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPS & TRICKS — card tridimensionali
+       ═══════════════════════════════════════════════════════════ */
+    .tips-grid { perspective: 1400px; perspective-origin: 50% 40%; }
+    /* Un solo transform compone tilt puntatore (--tc-*) e reveal
+       (--rv-*): niente regole che si sovrascrivono a vicenda. */
+    .tip-card {
+      transform-style: preserve-3d;
+      transform: perspective(1400px)
+                 rotateX(calc(var(--tc-rx, 0deg) + var(--rv-rx, 0deg)))
+                 rotateY(var(--tc-ry, 0deg))
+                 translateY(var(--rv-ty, 0px))
+                 translateZ(calc(var(--tc-tz, 0px) + var(--rv-tz, 0px)))
+                 scale(var(--rv-s, 1));
+      transition: transform 0.6s var(--rv-ease);
+      box-shadow: none !important;
+    }
+    .tip-card.tc-live { transition-duration: 0.16s; }
+    /* L'ombra vive sull'immagine, non su un pannello card */
+    .tip-card__img {
+      box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 3px 8px rgba(0,0,0,0.3);
+      transition: transform 0.5s var(--rv-ease), box-shadow 0.5s var(--rv-ease);
+    }
+    .tip-card:hover .tip-card__img {
+      box-shadow: 0 36px 66px rgba(0,0,0,0.55), 0 16px 40px rgba(219,0,90,0.3);
+    }
+
+    /* Reveal delle card Tips: agisce sulle variabili, non sul transform */
+    html.js-reveal .tip-card[data-rv="card3d"] {
+      --rv-ty: 50px; --rv-rx: 11deg; --rv-tz: -80px; --rv-s: 0.94;
+      opacity: 0.7;
+      transition: transform 0.9s var(--rv-ease) var(--rv-delay, 0s),
+                  opacity 0.55s ease var(--rv-delay, 0s),
+                  box-shadow 0.5s var(--rv-ease);
+    }
+    html.js-reveal .tip-card[data-rv="card3d"].rv-in {
+      --rv-ty: 0px; --rv-rx: 0deg; --rv-tz: 0px; --rv-s: 1;
+      opacity: 1;
+    }
+    html.js-reveal .tip-card[data-rv="card3d"].rv-past {
+      --rv-ty: -16px; --rv-rx: -4deg; --rv-tz: 0px; --rv-s: 0.985;
+      opacity: 0.84;
+    }
+    /* Mentre il puntatore è sopra, il tilt deve restare reattivo */
+    html.js-reveal .tip-card[data-rv="card3d"].tc-live {
+      transition: transform 0.16s ease-out,
+                  box-shadow 0.4s var(--rv-ease);
+    }
+    /* Layering: immagine e testo su piani diversi */
+    .tip-card__img   { transform: translateZ(38px); transition: transform 0.5s var(--rv-ease); }
+    .tip-card__date  { transform: translateZ(18px); transition: transform 0.5s var(--rv-ease); }
+    .tip-card__title { transform: translateZ(26px); transition: transform 0.5s var(--rv-ease); }
+    /* Riflesso sottile che segue il puntatore */
+    .tip-card__img { position: relative; }
+    .tip-card__img::after {
+      content: '';
+      position: absolute; inset: 0;
+      pointer-events: none;
+      background: radial-gradient(circle at var(--tc-mx, 50%) var(--tc-my, 50%),
+                  rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 55%);
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+    .tip-card:hover { --tc-tz: 26px; }
+    .tip-card:hover .tip-card__img::after { opacity: 1; }
+    /* Puntatore grossolano / mobile: niente tilt, solo profondità statica */
+    @media (hover: none), (pointer: coarse), (max-width: 768px) {
+      .tips-grid { perspective: none; }
+      .tip-card,
+      .tip-card:hover { transform: none !important; }
+      .tip-card__img,
+      .tip-card__date,
+      .tip-card__title { transform: none !important; }
+      .tip-card__img::after { display: none; }
+    }
+
+    /* ── Responsive ───────────────────────────────────────────── */
+    @media (max-width: 1100px) {
+      .cst-info__brand { height: clamp(34px, 6vw, 44px); }
+    }
+    @media (max-width: 768px) {
+      #amici-section, .cs2, .page-faq, .hc-section {
+        min-height: auto;
+        display: block;
+      }
+      /* Su mobile niente pin: la sezione scorre normalmente */
+      .about-section { height: auto !important; }
+      .about-sticky  { position: static !important; height: auto !important; }
+      .page-faq__title { font-size: min(150px, 30vw) !important; }
+      .tips-grid       { grid-template-columns: 1fr !important; }
+    }
+    @media (max-width: 600px) {
+      .cs2__title { font-size: min(150px, 9.6vw) !important; }
+    }
+
+    /* Viewport bassi: lo stage servizi resta 100dvh, quindi titolo,
+       card e barra vengono compattati per non sovrapporsi mai. */
+    @media (max-height: 820px) {
+      .svc-title       { font-size: min(70px, 11vw); }
+      .svc-header      { padding-bottom: 0.35rem; }
+      .svc-cards-wrap  { margin-top: 0.2rem; padding-bottom: 0.4rem; }
+      .svc-card        { height: clamp(198px, 29.5dvh, 236px); }
+      .svc-card__desc  { -webkit-line-clamp: 1; margin-bottom: 0.55rem; }
+      .svc-card__title { margin-bottom: 0.3rem; }
+      .svc-card__inner { padding: 0.7rem 0.85rem; transform: translateY(clamp(76px, 10.5dvh, 94px)); }
+      .svc-inner       { padding-bottom: clamp(108px, 15vh, 128px); }
     }
   </style>
 <script type="application/ld+json">
@@ -901,10 +1333,6 @@
 
         <!-- ── SERVICES LAYER ─────────────────────────── -->
         <div class="ht-services" id="ht-services">
-          <!-- Layer 0: video background (inset -2px per coprire eventuali seam subpixel) -->
-          <div class="svc-bg" aria-hidden="true">
-            <video src="foto%20home/SFONDoSCURO.mp4" autoplay muted loop playsinline></video>
-          </div>
           <!-- Layer 1: gradient overlay scuro in cima -->
           <div class="svc-gradients" aria-hidden="true"></div>
           <!-- Layer 2: contenuti servizi + ticker (parte dei Servizi) -->
@@ -914,9 +1342,6 @@
                 <div class="svc-title" aria-label="SERVIZI">
                   <span class="svc-letter">S</span><span class="svc-letter">E</span><span class="svc-letter">R</span><span class="svc-letter">V</span><span class="svc-letter">I</span><span class="svc-letter">Z</span><span class="svc-letter">I</span>
                 </div>
-                <p class="svc-sub">
-                  <span class="svc-word">Dalla</span><span class="svc-word">strategia</span><span class="svc-word">alla</span><span class="svc-word">creatività.</span><span class="svc-word">Tutto</span><span class="svc-word">ciò</span><span class="svc-word">che</span><span class="svc-word">serve</span><span class="svc-word">per</span><span class="svc-word">far</span><span class="svc-word">crescere</span><span class="svc-word">il</span><span class="svc-word">tuo</span><span class="svc-word">brand.</span>
-                </p>
               </div>
               <div class="svc-cards-wrap" id="svcCardsWrap">
                 <div class="svc-cards-track" id="svcCardsTrack"></div>
@@ -932,6 +1357,7 @@
                ────────────────────────────────────────────────────────────── -->
           <div class="partner-loader" id="partnerLoader">
             <div class="partner-loader__fill" id="partnerLoaderFill"></div>
+            <div class="partner-loader__label">I NOSTRI PARTNER</div>
             <div class="partner-loader__logos" id="partnerLoaderLogos">
               <div class="logo-ticker">
                 <div class="logo-ticker__track">
@@ -979,7 +1405,7 @@
             </div>
 
             <div class="about-section__video-col">
-              <video class="about-section__cat" muted playsinline preload="auto" aria-hidden="true">
+              <video class="about-section__cat" autoplay loop muted playsinline preload="auto" aria-hidden="true">
                 <source src="foto%20home/Asto1.webm" type="video/webm" />
                 <source src="foto%20home/Astro.mp4" type="video/mp4" />
               </video>
@@ -1118,15 +1544,11 @@
               </div>
               <div class="cst-right">
                 <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/fanuc.webp" alt="FANUC" loading="lazy"></div>
                   <div class="cst-info__sector">Strategia Digitale &middot; B2B Industrial &middot; Lead Generation</div>
                   <div class="cst-info__title">Da leader industriale a voce dell&apos;Industria 5.0</div>
                   <div class="cst-info__text">Per FANUC, leader mondiale nella robotica e automazione, abbiamo progettato una strategia di comunicazione digitale capace di trasformare un brand tecnico in punto di riferimento culturale. Dal CRX Roadshow alle campagne ADV su Google e LinkedIn, ogni touchpoint ottimizzato per generare lead qualificati.</div>
                   <div class="cst-info__tags"><span>Google Ads</span><span>LinkedIn ADV</span><span>Strategia</span><span>B2B</span></div>
-                </div>
-                <div class="cst-stats">
-                  <div class="cst-stat"><div class="cst-stat__val">130k+</div><div class="cst-stat__lbl">Clic generati</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">164k</div><div class="cst-stat__lbl">Impression LinkedIn</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">&euro;0,05</div><div class="cst-stat__lbl">CPC medio</div></div>
                 </div>
               </div>
             </div>
@@ -1140,15 +1562,11 @@
               </div>
               <div class="cst-right">
                 <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/redbull.webp" alt="Red Bull" loading="lazy"></div>
                   <div class="cst-info__sector">Content &amp; Video &middot; Events &middot; Social Media</div>
                   <div class="cst-info__title">Content ad alta energia per il brand pi&ugrave; iconico del mondo</div>
                   <div class="cst-info__text">Per Red Bull abbiamo prodotto contenuti video e fotografici per eventi e attivazioni in Italia, catturando l&apos;essenza del brand &mdash; adrenalina, sport estremo, cultura underground &mdash; e trasformandola in asset social ad alto impatto.</div>
                   <div class="cst-info__tags"><span>Video</span><span>Fotografia</span><span>Events</span><span>Social</span></div>
-                </div>
-                <div class="cst-stats">
-                  <div class="cst-stat"><div class="cst-stat__val">+5</div><div class="cst-stat__lbl">Eventi coperti</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">100+</div><div class="cst-stat__lbl">Asset prodotti</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">Top</div><div class="cst-stat__lbl">Performance canali ufficiali</div></div>
                 </div>
               </div>
             </div>
@@ -1162,15 +1580,11 @@
               </div>
               <div class="cst-right">
                 <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/leolandia.webp" alt="Leolandia" loading="lazy"></div>
                   <div class="cst-info__sector">Social Media &middot; Community &middot; ADV</div>
                   <div class="cst-info__title">Il parco divertimenti pi&ugrave; amato d&apos;Italia vive anche online</div>
                   <div class="cst-info__text">Gestione social media e campagne ADV per Leolandia, principale parco divertimenti per famiglie in Italia. Comunicazione emotiva e stagionale per raggiungere i genitori con messaggi autentici e generare acquisti di biglietti e abbonamenti.</div>
                   <div class="cst-info__tags"><span>Social Media</span><span>Meta ADV</span><span>Community</span></div>
-                </div>
-                <div class="cst-stats">
-                  <div class="cst-stat"><div class="cst-stat__val">+60%</div><div class="cst-stat__lbl">Crescita follower</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">1M+</div><div class="cst-stat__lbl">Impression mensili</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">12</div><div class="cst-stat__lbl">Mesi attivi</div></div>
                 </div>
               </div>
             </div>
@@ -1184,15 +1598,11 @@
               </div>
               <div class="cst-right">
                 <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/aristonlogo.webp" alt="Ariston" loading="lazy"></div>
                   <div class="cst-info__sector">Strategia Digitale &middot; Home &amp; Living &middot; Brand Awareness</div>
                   <div class="cst-info__title">Comunicazione di prodotto che scalda il brand</div>
                   <div class="cst-info__text">Con Ariston abbiamo sviluppato una strategia digitale integrata per valorizzare la gamma prodotti e rafforzare il posizionamento premium nel settore della climatizzazione e riscaldamento, raggiungendo nuove audience con contenuti di alta qualit&agrave;.</div>
                   <div class="cst-info__tags"><span>Strategia</span><span>Content</span><span>Brand Awareness</span></div>
-                </div>
-                <div class="cst-stats">
-                  <div class="cst-stat"><div class="cst-stat__val">+40%</div><div class="cst-stat__lbl">Engagement rate</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">3</div><div class="cst-stat__lbl">Campagne attivate</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">Multi</div><div class="cst-stat__lbl">Mercati europei</div></div>
                 </div>
               </div>
             </div>
@@ -1206,15 +1616,11 @@
               </div>
               <div class="cst-right">
                 <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/humanitas.webp" alt="Humanitas" loading="lazy"></div>
                   <div class="cst-info__sector">Strategia Digitale &middot; Healthcare &middot; Lead Generation</div>
                   <div class="cst-info__title">Comunicazione sanitaria che mette le persone al centro</div>
                   <div class="cst-info__text">Per Humanitas abbiamo sviluppato una strategia nel settore healthcare, tra i pi&ugrave; delicati e regolamentati. Campagne ADV e contenuti mirati per raggiungere pazienti e professionisti con messaggi chiari, autorevoli e rassicuranti.</div>
                   <div class="cst-info__tags"><span>Strategia</span><span>Google Ads</span><span>Healthcare</span></div>
-                </div>
-                <div class="cst-stats">
-                  <div class="cst-stat"><div class="cst-stat__val">+35%</div><div class="cst-stat__lbl">Lead qualificati</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">-22%</div><div class="cst-stat__lbl">Costo per conversione</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">Top 3</div><div class="cst-stat__lbl">Su keyword strategiche</div></div>
                 </div>
               </div>
             </div>
@@ -1228,15 +1634,11 @@
               </div>
               <div class="cst-right">
                 <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/cupra.webp" alt="Cupra" loading="lazy"></div>
                   <div class="cst-info__sector">Social Media &middot; Automotive &middot; Brand Lifestyle</div>
                   <div class="cst-info__title">Il brand automobilistico che rompe gli schemi</div>
                   <div class="cst-info__text">Contenuti social che traducono il DNA ribelle e performante di Cupra in storie digitali coinvolgenti. Comunicazione visiva aggressiva e aspirazionale per raggiungere una community giovane e appassionata di automotive e lifestyle.</div>
                   <div class="cst-info__tags"><span>Social Media</span><span>Visual Content</span><span>Automotive</span></div>
-                </div>
-                <div class="cst-stats">
-                  <div class="cst-stat"><div class="cst-stat__val">+80%</div><div class="cst-stat__lbl">Reach organica</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">4,5%</div><div class="cst-stat__lbl">Engagement rate</div></div>
-                  <div class="cst-stat"><div class="cst-stat__val">50+</div><div class="cst-stat__lbl">Asset visual prodotti</div></div>
                 </div>
               </div>
             </div>
@@ -1250,15 +1652,6 @@
         <a class="btn btn--outline cs2__footer-btn" href="case-studies.html">Vedi tutti i case studies</a>
       </div>
 
-    </section>
-
-    <!-- ══ CTA PENNELLATA ═════════════════════════════════════ -->
-    <section class="cta-coffee" id="cta-coffee" aria-label="Contatti CTA">
-      <img class="cta-coffee__img" src="foto%20home/zampa-nera3.webp" alt="" aria-hidden="true" />
-      <div class="cta-coffee__inner">
-        <h2 class="cta-coffee__title">BEVIAMO UN CAFFÈ INSIEME E<br>PARLIAMO DI GRANDI IDEE</h2>
-        <a class="btn btn--primary cta-coffee__btn" href="contatti.html">QUANDO CI VEDIAMO?</a>
-      </div>
     </section>
 
     <!-- ══ TIPS & TRICKS ══════════════════════════════════════ -->
@@ -1299,7 +1692,7 @@
     <!-- ══ CONTATTI HOME ════════════════════════════════════ -->
     
     <!-- FAQ -->
-    <section class="page-faq page-faq--dark">
+    <section class="page-faq" id="faq">
       <div class="page-faq__inner">
         <h2 class="page-faq__title">FAQ</h2>
         <dl class="page-faq__list">
@@ -1333,11 +1726,11 @@
 
 <section class="svc-caffe svc-caffe--fuchsia hc-section" id="contatti" aria-label="Contatti" data-nav-theme="dark">
       <div class="container hc-inner">
-        <div class="hc-header reveal">
+        <div class="hc-header">
           <h2 class="hc-title" id="contattiTitle">Contatti</h2>
           <p class="hc-sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
         </div>
-        <form class="hc-form reveal reveal-delay-1" action="contatti.html" method="get" novalidate>
+        <form class="hc-form" action="contatti.html" method="get" novalidate>
           <div class="hc-row">
             <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
             <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
@@ -1351,10 +1744,16 @@
             <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
           </div>
           <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-          <label class="svc-caffe__privacy">
-            <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
-          </label>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="hc-privacy">
+              <input type="checkbox" id="hc-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+            </label>
+            <label class="svc-caffe__privacy" for="hc-newsletter">
+              <input type="checkbox" id="hc-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
+          </div>
           <button class="btn btn--primary hc-submit" type="submit">Invia</button>
         </form>
       </div>
@@ -1398,12 +1797,7 @@
     const content    = hero && hero.querySelector('.sr-content');
     const hint       = hero && hero.querySelector('.sr-scroll-hint');
     const svcHeader  = services && services.querySelector('.svc-header');
-    const svcBgVid   = services && services.querySelector('.svc-bg video');
 
-    // Lettere e parole: animate scroll-driven (reversibili esattamente)
-    const svcLetters  = document.querySelectorAll('#servizi .svc-letter');
-    const svcWords    = document.querySelectorAll('#servizi .svc-word');
-    // Gradient overlay scuro in cima ai servizi — sparisce una volta che i servizi sono completamente visibili
     const svcGradients = services && services.querySelector('.svc-gradients');
 
     // Partner loader elements
@@ -1413,7 +1807,12 @@
     // Nav height → padding-top svc-inner
     const nav = document.querySelector('.nav');
     function setNavH() {
-      if (nav) document.documentElement.style.setProperty('--nav-h', nav.offsetHeight + 'px');
+      // La nav è una pill fixed con un offset dall'alto: serve il suo
+      // bordo inferiore reale, non la sola altezza, altrimenti il
+      // contenuto dei servizi le finisce sotto.
+      if (!nav) return;
+      const bottom = Math.round(nav.getBoundingClientRect().bottom);
+      document.documentElement.style.setProperty('--nav-h', bottom + 'px');
     }
     setNavH();
     window.addEventListener('resize', setNavH);
@@ -1453,11 +1852,6 @@
 
     let logosRevealed = false;
 
-    // Parametri scroll-driven per lettere, parole e card
-    const LETTER_BASE = 0.68, LETTER_STAG = 0.012, LETTER_DUR = 0.08;
-    const WORD_BASE   = 0.73, WORD_STAG   = 0.015, WORD_DUR   = 0.08;
-    const CARD_BASE   = 0.76, CARD_STAG   = 0.018, CARD_DUR   = 0.09;
-
     function update() {
       const rect  = wrapper.getBoundingClientRect();
       const total = wrapper.offsetHeight - window.innerHeight; // 550dvh - 100dvh = 450dvh
@@ -1470,14 +1864,12 @@
       const K          = total / PHASE1_END;               // ≈ 2.25 con 550dvh
       const p          = clamp(p_raw * K, 0, 1);
 
-      // ── Fase 2 (h): translateX card orizzontale (70% del range rimanente) ─
-      const remaining  = Math.max(1, total - PHASE1_END);
-      const PHASE2_END = PHASE1_END + remaining * 0.80;
+      // ── Fase 2: nessuno scroll orizzontale (griglia statica) ──────────────
+      const PHASE2_END = PHASE1_END;
       const scrollTop  = -rect.top;
-      const h          = clamp((scrollTop - PHASE1_END) / Math.max(1, PHASE2_END - PHASE1_END), 0, 1);
 
-      // ── Fase 3 (pL): banda partner — pL raggiunge 1 al 60%, poi hold ──────
-      const PARTNER_RANGE = (total - PHASE2_END) * 0.40;
+      // ── Fase 3 (pL): banda partner ────────────────────────────────────────
+      const PARTNER_RANGE = (total - PHASE2_END) * 0.60;
       window._partnerAccum = clamp((scrollTop - PHASE2_END) / Math.max(1, PARTNER_RANGE), 0, 1);
       const pL = window._partnerAccum;
 
@@ -1488,15 +1880,9 @@
       if (content) content.style.opacity = (1 - phase(p, 0.50, 0.66)).toFixed(3);
       services.style.opacity = phase(p, 0.50, 0.72).toFixed(3);
 
-      if (svcBgVid) {
-        svcBgVid.style.transform = `scale(${(1.05 - 0.05 * phase(p, 0.50, 0.92)).toFixed(4)})`;
-      }
-
+      // Watermark SERVIZI: solo fade, nessuno spostamento (è sfondo)
       const hP = phase(p, 0.68, 0.84);
-      if (svcHeader) {
-        svcHeader.style.opacity   = hP.toFixed(3);
-        svcHeader.style.transform = `translateY(${((1 - hP) * 40).toFixed(1)}px)`;
-      }
+      if (svcHeader) svcHeader.style.opacity = hP.toFixed(3);
 
       // Gradient overlay scuro in cima (svc-gradients): utile durante la transizione
       // per fondere hero e servizi, ma deve sparire completamente durante il HOLD
@@ -1515,58 +1901,9 @@
         hero.style.visibility = '';
       }
 
-      // ── LETTERE (SERVIZI) — stagger per lettera, bidirezionale ───────────
-      svcLetters.forEach((el, i) => {
-        const lP = ease(clamp((p - LETTER_BASE - i * LETTER_STAG) / LETTER_DUR, 0, 1));
-        el.style.opacity   = lP.toFixed(3);
-        el.style.transform = `translateY(${((1 - lP) * 0.8).toFixed(3)}em)`;
-      });
-
-      // ── PAROLE (sottotitolo) — scroll-driven, bidirezionale ───────────
-      svcWords.forEach((el, i) => {
-        const wP = ease(clamp((p - WORD_BASE - i * WORD_STAG) / WORD_DUR, 0, 1));
-        el.style.opacity   = wP.toFixed(3);
-        el.style.transform = `translateX(${((1 - wP) * -10).toFixed(1)}px)`;
-      });
-
-      // ── CARD — scroll-driven, bidirezionale ───────────────────────────
-      const cardEls = document.querySelectorAll('#svcCardsTrack .svc-card');
-      const N_CARDS = cardEls.length;
-      cardEls.forEach((card, i) => {
-        const cP = ease(clamp((p - CARD_BASE - i * CARD_STAG) / CARD_DUR, 0, 1));
-        card.style.opacity   = cP.toFixed(3);
-        card.style.transform = `translateY(${((1 - cP) * 60).toFixed(1)}px) scale(${(0.97 + 0.03 * cP).toFixed(4)})`;
-        // classe .visible abilita solo gli hover-child selector CSS
-        if (cP >= 0.90 && !card.classList.contains('visible'))  card.classList.add('visible');
-        else if (cP < 0.20 && card.classList.contains('visible')) card.classList.remove('visible');
-      });
-
-      // ── TRACK translateX (scroll-driven, h 0→1) ───────────────────────
-      // Il track scivola a sinistra via transform. Le card individuali
-      // mantengono il loro translateY separato (nessun conflitto).
-      {
-        const tr = document.getElementById('svcCardsTrack');
-        const wr = document.getElementById('svcCardsWrap');
-        if (tr && wr) {
-          // naturalLeft = distanza dal bordo sinistro del viewport al bordo sinistro del track
-          // (= padding wrap). Simmetria: l'ultima card termina alla stessa distanza dal bordo destro.
-          // Quindi maxTX = scrollWidth - (viewportWidth - 2*naturalLeft)
-          const naturalLeft = wr.getBoundingClientRect().left + tr.offsetLeft;
-          const maxTX = Math.max(0, 2 * naturalLeft + tr.scrollWidth - window.innerWidth);
-          tr.style.transform = `translateX(${(-h * maxTX).toFixed(1)}px)`;
-        }
-      }
-
-      // ── CSS classes per hover-state card (basato su p) ─────────────────
-      const lastCardP = N_CARDS > 0
-        ? ease(clamp((p - CARD_BASE - (N_CARDS - 1) * CARD_STAG) / CARD_DUR, 0, 1))
-        : 0;
-      if (lastCardP >= 0.90 && !window._svcReady) {
-        setReady();
-      } else if (lastCardP < 0.20 && window._svcReady) {
-        setEntering();
-      }
-      if (p < 0.40) resetInteract();
+      // Card sempre visibili (griglia statica)
+      if (p >= 0.72 && !window._svcReady) setReady();
+      else if (p < 0.40) resetInteract();
 
       // ── PARTNER DOWNLOAD BAR (pL scroll-driven 0→1) ────────────────
       // pL va da 0→1 mentre l'utente scorre da fine-card a fine-wrapper.
@@ -1579,8 +1916,7 @@
 
       if (!pLoader || !pFill || !pLogos) return;
 
-      // Altezza pill = logo più alto (122px TikTok) + padding ~32px → ~154px
-      const BAR_MAX_H = Math.round(clamp(window.innerHeight * 0.16, 132, 162));
+      const BAR_MAX_H = Math.round(clamp(window.innerHeight * 0.115, 86, 108));
 
       // Pill sempre alla sua altezza finale — nessuna animazione di crescita
       pLoader.style.height = `${BAR_MAX_H}px`;
@@ -1666,135 +2002,146 @@
       track.appendChild(card);
     });
 
-    const svcSection = document.getElementById('servizi');
-
-    // Animazione header: lettere + parole + card — bidirezionale (entra/esce)
-    const letters = document.querySelectorAll('#servizi .svc-letter');
-    const words   = document.querySelectorAll('#servizi .svc-word');
-    const allCards = () => track.querySelectorAll('.svc-card');
-    const vStart  = 3 * 70; // 210ms — quando la "V" inizia
-    let enterTimers = [];
-
-    function playEnter() {
-      enterTimers.forEach(clearTimeout);
-      enterTimers = [];
-      letters.forEach((el, i) => {
-        enterTimers.push(setTimeout(() => el.classList.add('go'), i * 70));
-      });
-      words.forEach((el, i) => {
-        enterTimers.push(setTimeout(() => el.classList.add('go'), vStart + i * 50));
-      });
-      allCards().forEach((card, i) => {
-        enterTimers.push(setTimeout(() => card.classList.add('visible'), vStart + i * 90));
-      });
-    }
-
-    function playExit() {
-      enterTimers.forEach(clearTimeout);
-      enterTimers = [];
-      // Stagger inverso: prima le card (dall'ultima), poi le words, poi le lettere
-      const cardList = Array.from(allCards()).reverse();
-      cardList.forEach((card, i) => {
-        enterTimers.push(setTimeout(() => {
-          card.classList.remove('visible');
-          card.classList.remove('hovered');
-        }, i * 80));
-      });
-      const afterCards = cardList.length * 80;
-      Array.from(words).reverse().forEach((el, i) => {
-        enterTimers.push(setTimeout(() => el.classList.remove('go'), afterCards + i * 45));
-      });
-      const afterWords = afterCards + words.length * 45;
-      Array.from(letters).reverse().forEach((el, i) => {
-        enterTimers.push(setTimeout(() => el.classList.remove('go'), afterWords + i * 60));
-      });
-    }
-
-    // IntersectionObserver rimosso: il layer è sempre geometricamente nel viewport
-    // (position: absolute; inset: 0) — l'observer sparava immediatamente.
-    // Il trigger è gestito dallo scroll IIFE via window._svcAnim.
-    // playEnter/playExit sono no-op: l'animazione è ora scroll-driven nel transition IIFE
     window._svcAnim = { playEnter: () => {}, playExit: () => {} };
-
-    // Bridge rettangolare — largo quanto una card, segue il mouse esatto
-    const bridge = document.createElement('span');
-    bridge.className = 'svc-card-bridge';
-    track.prepend(bridge);
-
-    // Cerchio — segue il mouse, clippato geometricamente al perimetro della card
-    const cardCircle = document.createElement('span');
-    cardCircle.className = 'svc-card-circle';
-    track.prepend(cardCircle);
-
-    const CR = 85; // raggio cerchio (metà di 170px)
-
-    wrap.addEventListener('mousemove', e => {
-      // Blocca tutti gli effetti mouse durante l'animazione di entrata
-      if (!window._svcReady) return;
-      const trackRect = track.getBoundingClientRect();
-      const cards     = track.querySelectorAll('.svc-card');
-      const first     = cards[0];
-      const last      = cards[cards.length - 1];
-      if (!first || !last) return;
-
-      // Bridge clamped tra prima e ultima card
-      const minX = first.getBoundingClientRect().left - trackRect.left + first.offsetWidth / 2;
-      const maxX = last.getBoundingClientRect().left  - trackRect.left + last.offsetWidth  / 2;
-      const x    = Math.max(minX, Math.min(maxX, e.clientX - trackRect.left));
-      bridge.style.left = x + 'px';
-      if (!bridge.classList.contains('visible')) bridge.classList.add('visible');
-
-      // Hit-test: il mouse è su una qualsiasi card?
-      const mx = e.clientX, my = e.clientY;
-      let inCards = false;
-      for (const c of cards) {
-        const r = c.getBoundingClientRect();
-        if (mx >= r.left && mx <= r.right && my >= r.top && my <= r.bottom) {
-          inCards = true; break;
-        }
-      }
-
-      if (inCards) {
-        const cx = mx - trackRect.left;
-        const cy = my - trackRect.top;
-        cardCircle.style.left = cx + 'px';
-        cardCircle.style.top  = cy + 'px';
-
-        // Clip al perimetro esterno del track (non per singola card)
-        // — tra le card nessun taglio, il cerchio fluisce liberamente
-        const clipT = Math.max(0, CR - cy);
-        const clipB = Math.max(0, (cy + CR) - track.offsetHeight);
-        const clipL = Math.max(0, CR - cx);
-        const clipR = Math.max(0, (cx + CR) - track.offsetWidth);
-        cardCircle.style.clipPath =
-          `inset(${Math.round(clipT)}px ${Math.round(clipR)}px ${Math.round(clipB)}px ${Math.round(clipL)}px)`;
-
-        cardCircle.classList.add('visible');
-      } else {
-        cardCircle.classList.remove('visible');
-      }
-    });
-
-    wrap.addEventListener('mouseleave', () => {
-      bridge.classList.remove('visible');
-      cardCircle.classList.remove('visible');
-      // Pulisce eventuali stati residui se l'utente esce prima del ready
-    });
-
-    function syncBridgeWidth() {
-      const card = track.querySelector('.svc-card');
-      if (card) track.style.setProperty('--svc-card-w', card.offsetWidth + 'px');
-    }
-    syncBridgeWidth();
-    window.addEventListener('resize', syncBridgeWidth);
-
-
-
-
-    // Lo scroll orizzontale delle card è ora interamente scroll-driven
-    // via translateX sul track (vedi update() nel transition IIFE).
-    // Nessun drag, nessun wheel handler: zero friction sullo scroll verticale.
   })();
+
+  // ─── Sistema reveal + transizioni di sezione ──────────────────
+  // Progressive enhancement: se questo blocco non gira, la pagina
+  // resta completamente renderizzata e leggibile (nessuno stato
+  // iniziale viene applicato senza la classe .js-reveal).
+  // Reversibile in entrambe le direzioni di scroll.
+  (function () {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    // Mappa selettore → tipo di reveal (libreria differenziata)
+    const MAP = {
+      title: ['#amici-title', '.cs2__title', '.tips-section__heading',
+              '.page-faq__title', '.hc-title', '.about-section__heading'],
+      body:  ['.about-section__body', '.about-section__kicker',
+              '.cst-info', '.page-faq__item', '.hc-sub'],
+      card:   ['.cst-tabs'],
+      card3d: ['.tips-grid .tip-card'],
+      img:    ['.cst-img', '.about-section__video-col'],
+      cta:   ['.cs2__footer', '.tips-section__cta', '.about-section__cta', '.hc-form'],
+      logo:  ['.cst-info__brand']
+    };
+
+    const els = [];
+    for (const [type, sels] of Object.entries(MAP)) {
+      document.querySelectorAll(sels.join(',')).forEach(el => {
+        if (el.hasAttribute('data-rv')) return;
+        el.setAttribute('data-rv', type);
+        els.push(el);
+      });
+    }
+    if (!els.length) return;
+
+    // Da qui in poi gli stati iniziali diventano attivi
+    document.documentElement.classList.add('js-reveal');
+
+    // Stagger tra fratelli dello stesso gruppo
+    els.forEach(el => {
+      const sibs = el.parentElement
+        ? Array.from(el.parentElement.children).filter(c => c.hasAttribute('data-rv'))
+        : [];
+      const i = sibs.indexOf(el);
+      if (i > 0) el.style.setProperty('--rv-delay', Math.min(i * 0.09, 0.45).toFixed(2) + 's');
+    });
+
+    // Il reveal parte quando l'elemento entra nell'80% della viewport
+    // (rootMargin bottom -20%), non quando raggiunge il centro.
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        const el = e.target;
+        if (e.isIntersecting) {
+          el.classList.add('rv-in', 'rv-armed');
+          el.classList.remove('rv-past');
+        } else {
+          el.classList.remove('rv-in');
+          // sopra la viewport → stato "uscito", sotto → stato iniziale
+          el.classList.toggle('rv-past', e.boundingClientRect.top < 0);
+          el.classList.remove('rv-armed');
+        }
+      });
+    }, { rootMargin: '0px 0px -20% 0px', threshold: 0 });
+
+    els.forEach(el => io.observe(el));
+
+    // ── Transizioni di sezione: un solo rAF per tutte ────────────
+    const RISE  = ['#case-studies', '#tips-section', '#faq', '#contatti'];
+    const DEPTH = ['#amici-section', '#tips-section'];
+    const SWEEP = ['#amici-section', '.tips-sticky'];
+
+    const secs = [];
+    const add = (sel, cls) => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add(cls);
+      let rec = secs.find(s => s.el === el);
+      if (!rec) { rec = { el, rise: false, depth: false, sweep: false }; secs.push(rec); }
+      rec[cls.replace('sx-', '')] = true;
+    });
+    RISE.forEach(s => add(s, 'sx-rise'));
+    DEPTH.forEach(s => add(s, 'sx-depth'));
+    SWEEP.forEach(s => add(s, 'sx-sweep'));
+    if (!secs.length) return;
+
+    const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+    let queued = false;
+
+    function paint() {
+      queued = false;
+      const vh = window.innerHeight;
+      for (const s of secs) {
+        const r = s.el.getBoundingClientRect();
+        if (r.bottom < -vh || r.top > vh * 2) continue; // fuori scena: salta
+        // ingresso: 0 col bordo alto a fondo viewport, 1 quando ha
+        // risalito fino al 15% — banda larga = effetto percepibile
+        const sxi = clamp01((vh - r.top) / (vh * 0.85));
+        // uscita: parte quando il bordo basso sale sopra il 60% della viewport
+        const sxo = clamp01((vh * 0.6 - r.bottom) / (vh * 0.7));
+        s.el.style.setProperty('--sxi', sxi.toFixed(3));
+        s.el.style.setProperty('--sxo', sxo.toFixed(3));
+      }
+    }
+    const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+
+    addEventListener('scroll', schedule, { passive: true });
+    addEventListener('resize', schedule, { passive: true });
+    paint();
+  }());
+
+  // ─── Tips & Tricks: tilt 3D sul puntatore ─────────────────────
+  (function () {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    const grid = document.getElementById('tipsGrid');
+    if (!grid) return;
+    const MAX = 7; // gradi massimi: tilt percepibile ma il testo resta piano
+
+    grid.querySelectorAll('.tip-card').forEach(card => {
+      let raf = null;
+      const onMove = e => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = null;
+          const r = card.getBoundingClientRect();
+          const px = (e.clientX - r.left) / r.width;
+          const py = (e.clientY - r.top) / r.height;
+          card.style.setProperty('--tc-ry', ((px - 0.5) *  2 * MAX).toFixed(2) + 'deg');
+          card.style.setProperty('--tc-rx', ((0.5 - py) *  2 * MAX).toFixed(2) + 'deg');
+          card.style.setProperty('--tc-mx', (px * 100).toFixed(1) + '%');
+          card.style.setProperty('--tc-my', (py * 100).toFixed(1) + '%');
+        });
+      };
+      card.addEventListener('pointerenter', () => card.classList.add('tc-live'));
+      card.addEventListener('pointermove', onMove);
+      card.addEventListener('pointerleave', () => {
+        card.classList.remove('tc-live');
+        card.style.setProperty('--tc-rx', '0deg');
+        card.style.setProperty('--tc-ry', '0deg');
+      });
+    });
+  }());
   </script>
 
   <!-- ══ FOOTER ══════════════════════════════════════════ -->
