@@ -17,13 +17,60 @@
        Va applicata prima del CSS e prima di qualunque animazione,
        così nessuno stato iniziale viene mai scritto nel DOM. */
     (function () {
+      var root = document.documentElement;
+
+      function enable() {
+        if (window.__STATIC_CAPTURE__) return;
+        window.__STATIC_CAPTURE__ = true;
+        root.classList.add('static-capture');
+        // Se la cattura si accende a pagina già viva, le animazioni
+        // hanno già scritto i loro stati intermedi: vanno riportate
+        // a destinazione, non basta la classe.
+        if (window.__captureFinalize) window.__captureFinalize();
+      }
+
+      /* ?live=1 forza la modalità interattiva anche dove il
+         rilevamento automatico direbbe "cattura": serve per provare
+         le animazioni dentro un browser automatizzato. */
+      var forceLive = false;
       try {
         var p = new URLSearchParams(location.search);
-        if (p.get('static') === '1' || p.get('capture') === '1') {
-          window.__STATIC_CAPTURE__ = true;
-          document.documentElement.classList.add('static-capture');
-        }
+        forceLive = p.get('live') === '1';
+        if (p.get('static') === '1' || p.get('capture') === '1') enable();
+        if (location.hash === '#static' || location.hash === '#capture') enable();
       } catch (e) {}
+
+      /* Browser pilotato da automazione (headless, Puppeteer,
+         Playwright, servizi di screenshot): non è mai un utente vero,
+         quindi è sempre una cattura. */
+      try { if (!forceLive && navigator.webdriver) enable(); } catch (e) {}
+
+      /* Stampa e "salva come PDF": è a tutti gli effetti una cattura
+         dell'intera pagina, e senza questo la scena sticky verrebbe
+         stampata a metà timeline. */
+      try {
+        window.addEventListener('beforeprint', enable);
+        var mq = window.matchMedia('print');
+        if (mq.addEventListener) mq.addEventListener('change', function (e) { if (e.matches) enable(); });
+      } catch (e) {}
+
+      /* Screenshot full-page: lo strumento allarga il viewport fino a
+         contenere l'intera pagina. Lì lo stage sticky non ha più
+         scroll da consumare, la timeline resta ferma e la hero
+         verrebbe catturata vuota. Un viewport molto più alto dello
+         schermo fisico non esiste su nessun dispositivo reale,
+         quindi è un segnale sicuro: si passa al layout statico, dove
+         hero e servizi tornano nel flusso, entrambi interi.
+         Il controllo si ripete al resize perché la maggior parte
+         degli strumenti allarga il viewport dopo il load. */
+      function isCaptureViewport() {
+        var screenH = (window.screen && window.screen.height) || 0;
+        var limit = screenH ? screenH * 1.3 : 2000;
+        return window.innerHeight > Math.max(limit, 1600);
+      }
+      function check() { if (!forceLive && isCaptureViewport()) enable(); }
+      check();
+      window.addEventListener('resize', check, { passive: true });
     }());
   </script>
   <link rel="stylesheet" href="css/tokens.css" />
@@ -47,6 +94,78 @@
     @media (max-width: 900px) {
       .about-section__grid { grid-template-columns: 1fr !important; }
       .about-section__right { padding-left: 0; }
+    }
+
+    /* ── Raccordo Servizi → About ───────────────────────────────
+       About è una sezione chiara che arriva subito dopo il nero dei
+       Servizi: senza raccordo il passaggio è un taglio. La testa
+       della sezione parte dal nero pieno e si apre progressivamente
+       sul fondo chiaro, così il background sembra non interrompersi.
+       Sta sotto ai contenuti e non intercetta il puntatore. */
+    .about-sticky::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 34dvh;
+      z-index: 0;
+      pointer-events: none;
+      background: linear-gradient(to bottom,
+        #000             0%,
+        rgba(0,0,0,0.86) 14%,
+        rgba(0,0,0,0.52) 34%,
+        rgba(0,0,0,0.22) 58%,
+        rgba(0,0,0,0.07) 80%,
+        rgba(0,0,0,0)    100%);
+    }
+    /* i contenuti restano sopra il raccordo */
+    .about-sticky > * { position: relative; z-index: 1; }
+
+    /* ── Composizione del contenuto About ───────────────────────
+       Parte dopo il titolo, con lo stesso linguaggio: una velatura
+       liquida che si chiude e micro-spostamenti che si assestano.
+       Nessun elemento è mai nascosto — opacità di partenza alta,
+       nessun display:none, nessuna posizione fuori viewport — così
+       il contenuto esiste anche in uno screenshot dell'intera
+       pagina, che non fa scattare nessun osservatore. */
+    html.js-reveal .about-sticky .about-section__kicker,
+    html.js-reveal .about-sticky .about-section__heading,
+    html.js-reveal .about-sticky .about-section__body,
+    html.js-reveal .about-sticky .about-section__cta,
+    html.js-reveal .about-sticky .about-section__video-col {
+      transform: translateY(16px);
+      opacity: 0.78;
+      filter: blur(1.4px);
+      transition: transform 0.78s var(--rv-ease, cubic-bezier(0.22,1,0.36,1)),
+                  opacity 0.5s ease,
+                  filter 0.5s ease;
+      transition-delay: var(--about-delay, 0s);
+    }
+    /* il ritardo cresce scendendo: il contenuto si compone in cascata
+       dietro al titolo, non tutto insieme */
+    html.js-reveal .about-sticky .about-section__kicker    { --about-delay: 0.16s; }
+    html.js-reveal .about-sticky .about-section__heading   { --about-delay: 0.26s; }
+    html.js-reveal .about-sticky .about-section__body      { --about-delay: 0.40s; }
+    html.js-reveal .about-sticky .about-section__cta       { --about-delay: 0.54s; }
+    html.js-reveal .about-sticky .about-section__video-col { --about-delay: 0.20s; }
+
+    html.js-reveal .about-sticky.about-in .about-section__kicker,
+    html.js-reveal .about-sticky.about-in .about-section__heading,
+    html.js-reveal .about-sticky.about-in .about-section__body,
+    html.js-reveal .about-sticky.about-in .about-section__cta,
+    html.js-reveal .about-sticky.about-in .about-section__video-col {
+      transform: none;
+      opacity: 1;
+      filter: none;
+    }
+    /* In cattura tutto è già composto */
+    .static-capture .about-sticky .about-section__kicker,
+    .static-capture .about-sticky .about-section__heading,
+    .static-capture .about-sticky .about-section__body,
+    .static-capture .about-sticky .about-section__cta,
+    .static-capture .about-sticky .about-section__video-col {
+      transform: none !important;
+      opacity: 1 !important;
+      filter: none !important;
     }
 
     /* ── About dark overlay: sfuma a nero durante l'uscita ─── */
@@ -222,9 +341,10 @@
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    .sr-content .vhero__title span:nth-child(1) { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.10s both; }
-    .sr-content .vhero__title span:nth-child(2) { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.32s both; }
-    .sr-content .vhero__title span:nth-child(3) { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.54s both; }
+    /* La frase entra come un blocco unico: l'acqua deve attraversare
+       "LE IDEE PRENDONO FORMA" tutta insieme, e con le tre parole
+       sfalsate le ultime due comparivano a fronte già passato. */
+    .sr-content .vhero__title { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.10s both; }
     .sr-content .vhero__tagline{ animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.76s both; }
     .sr-content .vhero__sub    { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.95s both; }
     .sr-content .vhero__cta    { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 1.12s both; }
@@ -252,45 +372,78 @@
        I due layer sono position:absolute nello stesso sticky stage.
        ═══════════════════════════════════════════════════════ */
 
-    /* Wrapper: fornisce la distanza di scroll.
-       350dvh totali: 200dvh transizione, 75dvh banda partner,
-       75dvh extra dopo sticky release (About entra). */
+    /* ── Hero e Servizi: due sezioni piene, una sotto l'altra ────
+       Prima erano due layer sovrapposti dentro uno stage sticky da
+       350dvh che si scambiavano in dissolvenza. Quella struttura
+       rendeva impossibile qualunque screenshot dell'intera pagina:
+       essendo nello stesso box, a ogni posizione di scroll uno dei
+       due era per forza a opacità 0. Ora stanno entrambe nel flusso,
+       100dvh ciascuna, quindi ogni strumento le cattura entrambe e
+       ogni sezione occupa esattamente una schermata. */
     .ht-wrapper {
       position: relative;
-      height: 350dvh;
       background: var(--bg, #fff); /* colore About = body bg, evita stacco nero→bianco */
     }
 
-    /* Stage sticky: si ancora al top, clippa entrambi i layer */
     .ht-stage {
-      position: sticky;
-      top: 0;
+      position: relative;
       width: 100%;
-      height: 100dvh;
-      overflow: hidden;
       background: #000;
     }
 
-    /* Layer hero: occupa tutto lo stage */
+    /* Corse di scroll: quanto ogni sezione resta inchiodata prima di
+       lasciare la scena. Sulla hero è il tempo dello zoom del video,
+       sui Servizi la durata della fase principale. */
+    .ht-pin {
+      position: relative;
+      width: 100%;
+    }
+    /* La corsa della hero contiene due tempi: prima lo zoom, poi una
+       pausa a scena ferma. Serve a non incatenare l'uscita del testo
+       alla fine dello zoom — c'è uno scroll in più di respiro prima
+       che qualcosa si muova. */
+    .ht-pin--hero { height: calc(100dvh + var(--hero-zoom-run, 145dvh)); }
+    .ht-pin--svc  { height: calc(100dvh + var(--svc-run, 80dvh)); }
+
     .ht-hero {
-      position: absolute;
-      inset: 0;
+      position: sticky;
+      top: 0;
+      height: 100dvh;
       z-index: 1;
       background: #000;
       overflow: hidden;
-      will-change: opacity;
     }
 
-    /* Layer servizi: occupa tutto lo stage, fermo nella posizione finale.
-       Compare esclusivamente tramite opacity — nessun movimento verticale. */
     .ht-services {
-      position: absolute;
-      inset: 0;
+      position: sticky;
+      top: 0;
+      height: 100dvh;
       z-index: 2;
-      opacity: 0;
-      will-change: opacity;
       display: flex;
       flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Coda nera della hero ───────────────────────────────────
+       Il raccordo con i Servizi vive QUI, dentro la hero, non nella
+       sezione dopo: il visual si spegne progressivamente nel nero e
+       arriva al bordo inferiore già completamente nero, cioè
+       identico allo sfondo dei Servizi. Nessuna fascia intermedia,
+       nessun layer di mezzo, nessun cambio di colore percepibile.
+       Sta sopra al video ma sotto ai contenuti della hero. */
+    .sr-fade {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      height: 46dvh;
+      z-index: 2;
+      pointer-events: none;
+      background: linear-gradient(to bottom,
+        rgba(0,0,0,0)    0%,
+        rgba(0,0,0,0.18) 26%,
+        rgba(0,0,0,0.48) 52%,
+        rgba(0,0,0,0.80) 76%,
+        rgba(0,0,0,0.96) 92%,
+        #000             100%);
     }
 
     /* ── Hero internals ── */
@@ -347,16 +500,15 @@
         #000;
     }
 
-    /* Velo scuro in cima: solo un aggancio iniziale col video, molto
-       più leggero di prima per non spegnere la foschia fucsia. */
+    /* Il velo in cima ai Servizi non serve più: il raccordo lo fa la
+       coda nera della hero. Tenerlo significherebbe rimettere un
+       layer intermedio fra le due sezioni, cioè esattamente quello
+       che deve sparire. Resta nel DOM perché la timeline lo indirizza,
+       ma non dipinge nulla. */
     .svc-gradients {
       position: absolute; inset: 0; z-index: 1;
       pointer-events: none;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,0.32) 0%,
-        rgba(0,0,0,0.14) 8%,
-        rgba(0,0,0,0.04) 16%,
-        transparent 26%);
+      background: none;
     }
 
     .svc-inner {
@@ -366,11 +518,12 @@
       z-index: 2;
       display: flex;
       flex-direction: column;
-      /* Titolo e card ancorati in basso: il blocco sta vicino alla
-         barra partner invece di galleggiare al centro. */
-      justify-content: flex-end;
-      padding-top: var(--nav-h, 4rem);
-      padding-bottom: clamp(126px, 14.6vh, 148px);
+      /* Titolo e card ancorati in alto, subito sotto l'header: il
+         blocco sale verso la nav invece di appoggiarsi alla banda
+         partner, e lo spazio libero si raccoglie in fondo. */
+      justify-content: flex-start;
+      padding-top: calc(var(--nav-h, 4rem) + clamp(0.9rem, 2.4vh, 2.4rem));
+      padding-bottom: clamp(150px, 17vh, 175px);
       overflow: hidden;
     }
 
@@ -398,12 +551,17 @@
       justify-content: flex-end;
       text-align: center;
       pointer-events: none;
-      opacity: 0;
+      /* Nessuno stato iniziale nascosto: il titolo è sempre
+         renderizzato, l'ingresso lavora solo su rifrazione e
+         micro-spostamenti delle lettere. */
+      opacity: 1;
       will-change: opacity;
     }
     .svc-title {
       display: flex;
-      font-size: min(100px, 13vw);
+      /* 150px pieni sul desktop; il min() serve solo a non farlo
+         uscire dai lati su schermi stretti, non a rimpicciolirlo. */
+      font-size: min(150px, 13vw);
       font-weight: 900;
       letter-spacing: -0.03em;
       line-height: 1;
@@ -434,6 +592,12 @@
       -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     }
     .svc-header.tt-run .svc-title { filter: url(#svcTitleFx); }
+    /* Uscita del titolo hero: stessa coppia maschera + rifrazione
+       dell'ingresso, con il fronte che dissolve invece di comporre.
+       Filtro separato da quello d'ingresso perché i due hanno scale
+       indipendenti. Il titolo SERVIZI non ha uscita: una volta
+       composto resta in scena. */
+    html.js-reveal .vhero__title.ttl-out { filter: url(#ttlOutFx); }
     .svc-letter {
       transform: translate3d(var(--tl-x, 0px), var(--tl-y, 0px), 0)
                  scale(var(--tl-s, 1));
@@ -447,7 +611,10 @@
       z-index: 3;
       overflow: visible;
       padding: 0 clamp(1.5rem,5vw,5rem) clamp(0.25rem,0.5dvh,0.5rem);
-      margin-top: clamp(0.15rem,0.3dvh,0.3rem);
+      /* Stacco fra il titolo SERVIZI e la griglia: lo spazio arriva
+         dalla compattazione delle card, quindi la scena resta dentro
+         i 100dvh dello stage. */
+      margin-top: clamp(0.9rem,1.6dvh,1.6rem);
     }
     .svc-cards-track {
       display: grid;
@@ -466,7 +633,7 @@
          sulla card più alta, così in hover il body non viene mai
          tagliato. Il minimo serve solo a dare respiro a riposo. */
       height: auto;
-      min-height: clamp(190px, 22dvh, 220px);
+      min-height: clamp(178px, 21dvh, 205px);
       position: relative;
       z-index: 1;
       overflow: hidden;
@@ -552,7 +719,11 @@
       inset: auto !important;
       opacity: 1 !important;
       visibility: visible !important;
-      height: 100dvh !important;
+      /* Il tetto serve allo screenshot full-page: lì il viewport vale
+         quanto tutta la pagina, e un 100dvh secco farebbe crescere
+         hero e servizi fino a far esplodere il documento. Su viewport
+         normali il minimo resta 100dvh, quindi nulla cambia. */
+      height: min(100dvh, 1200px) !important;
       transform: none !important;
       filter: none !important;
     }
@@ -586,14 +757,23 @@
       transform: none !important;
       filter: none !important;
     }
-    .static-capture .svc-title { -webkit-mask-image: none !important; mask-image: none !important; }
+    .static-capture .svc-title {
+      -webkit-mask-image: none !important;
+      mask-image: none !important;
+      /* il filtro di dispersione non è coperto dalle regole [data-rv] */
+      filter: none !important;
+    }
     .static-capture .svc-letter { transform: none !important; }
+    /* Il marquee scrive un translateX inline: senza reset i loghi
+       verrebbero catturati a metà scorrimento. */
+    .static-capture .partner-loader .logo-ticker__track { transform: none !important; }
+    .static-capture .partner-loader__logos { opacity: 1 !important; }
     .static-capture .svc-cards-wrap { opacity: 1 !important; transform: none !important; }
     /* Card nello stato base: testo completo, niente acqua in corso */
     .static-capture .svc-card__inner { transform: none !important; }
     .static-capture .svc-card__desc,
     .static-capture .svc-card__btn { opacity: 1 !important; max-width: none !important; }
-    .static-capture .svc-card__btn { padding: 0.6rem 1.2rem !important; }
+    .static-capture .svc-card__btn { padding: 0.45rem 1.1rem !important; }
     .static-capture .svc-card__btn-label { opacity: 1 !important; max-width: none !important; }
     .static-capture .svc-fx-ghost { display: none !important; }
     .static-capture .svc-fx-real { -webkit-mask-image: none !important; mask-image: none !important; }
@@ -616,6 +796,23 @@
     .static-capture .about-section { height: auto !important; }
     .static-capture .about-sticky { position: static !important; height: auto !important; }
 
+    /* Screenshot full-page: lo strumento porta il viewport all'altezza
+       dell'intera pagina, quindi ogni min-height in vh/dvh si gonfia
+       della stessa misura e il documento cresce a valanga — la hero
+       finisce schiacciata in cima a decine di migliaia di pixel vuoti.
+       Il tetto riporta le sezioni a un'altezza di schermo plausibile:
+       sotto i 1200px di viewport il minimo resta quello di sempre. */
+    .static-capture .about-sticky .container,
+    .static-capture .svc-clients,
+    .static-capture .cs2,
+    .static-capture .tips-sticky,
+    .static-capture .page-faq,
+    .static-capture .hc-section {
+      min-height: min(100dvh, 1200px) !important;
+      height: auto !important;
+    }
+    .static-capture .tips-section { height: auto !important; }
+
     /* ═══════════════════════════════════════════════════════════
        HEADER — vetro senza stroke perimetrale
        La separazione dal fondo viene dal blur e dalla saturazione,
@@ -628,6 +825,12 @@
       -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
       /* solo una diffusione morbida verso il basso, nessun contorno */
       box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      /* Il vetro cambia formula uscendo dalla scena hero+servizi:
+         la transizione la copre insieme al colore del MENU, così il
+         passaggio non scatta. */
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
     }
     /* Sopra sezioni scure il vetro si scurisce: MENU resta chiaro */
     .nav--on-dark .nav__inner {
@@ -636,23 +839,61 @@
     }
     .nav--on-dark .nav__menu-btn { color: #fff !important; }
 
-    /* ── Sopra HERO e SERVIZI: vetro bianco, non bordeaux ───────
+    /* ── Sopra HERO e SERVIZI: vetro chiaro, tendente al bianco ──
        Finché la scena hero+servizi è in viewport la nav non ha
        .scrolled: è il segnale già usato dal progetto, quindi non
-       serve un secondo sistema. Qui il vetro resta traslucido ma
-       neutro — poca saturazione, nessun glow, nessun tint magenta. */
+       serve un secondo sistema.
+       Il vetro è davvero trasparente: la leggibilità non viene più
+       dalla densità del velo ma dal blur, che scioglie il fondo, e
+       dalla desaturazione, che gli toglie il rosa. Quello che non si
+       può tenere fisso è il colore del MENU: sotto la pill passa un
+       fondo chiaro sulla hero e nero sui Servizi, quindi il testo
+       segue il fondo invece di imporsi su entrambi. */
+    /* Hero: il vetro deve leggersi come vetro, non come un velo scuro.
+       La luce viene dal brightness sul fondo — il video dietro la pill
+       sta intorno a L 0.30 e viene portato in alto — più da un velo
+       bianco leggero. Così la pill resta traslucida e luminosa, con il
+       MENU nero largamente sopra soglia e il fucsia del logo a ~5:1. */
     .nav:not(.scrolled) .nav__inner {
-      background: rgba(255,255,255,0.16) !important;
-      backdrop-filter: blur(26px) saturate(115%) brightness(1.06) !important;
-      -webkit-backdrop-filter: blur(26px) saturate(115%) brightness(1.06) !important;
-      box-shadow: 0 10px 28px rgba(0,0,0,0.18) !important;
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
     }
-    /* Vetro chiaro → MENU scuro. Il simbolo resta fucsia, senza alone. */
-    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; }
+    /* Sopra la hero il fondo è chiaro → MENU nero */
+    .nav:not(.scrolled) .nav__menu-btn {
+      color: #111 !important;
+      text-shadow: none !important;
+    }
+    /* ── Sopra i SERVIZI il fondo è nero ────────────────────────
+       Il vetro resta trasparente come richiesto, quindi sotto la pill
+       c'è il nero: il MENU passa a bianco, esattamente come fa già
+       sopra tutte le altre sezioni scure. Logo e simbolo invece non
+       cambiano: stesso fucsia pieno che hanno nel resto della pagina,
+       nessun filtro e nessun alone. */
+    .nav:not(.scrolled).nav--svc .nav__inner {
+      background: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+      -webkit-backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-btn {
+      color: #fff !important;
+      text-shadow: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__logo img {
+      filter: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    /* Logo e simbolo restano il fucsia di brand, pieno e senza
+       filtri: sul vetro chiaro è la combinazione più leggibile. */
     .nav:not(.scrolled) .nav__menu-icon span {
       background: var(--primary) !important;
       filter: none !important;
     }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
     /* Il simbolo resta fucsia, solo reso più leggibile: nessun neon */
     .nav--on-dark .nav__menu-icon span {
       background: var(--primary) !important;
@@ -677,6 +918,11 @@
     .svc-fx-ghost {
       position: absolute;
       inset: 0;
+      /* Eredita il padding del suo host (inner o num): con inset:0
+         l'equazione left/right lo mantiene comunque dentro la safe
+         area, così il testo fucsia riaffiora esattamente allineato
+         al testo reale, mai sopra il numero né fuori dal bordo. */
+      padding: inherit;
       pointer-events: none;
       user-select: none;
       color: var(--primary, #DB005A);
@@ -727,9 +973,11 @@
 
     .svc-card__num {
       position: absolute;
-      top: 0.55rem;
+      top: 0.4rem;
       right: 0.55rem;
-      font-size: clamp(1.6rem,2.4vw,2.05rem);
+      /* Il tetto è dettato dalla safe area verticale: più grande di
+         così il numero scenderebbe sulla prima riga del titolo. */
+      font-size: clamp(2.05rem, 2.333vw + 0.3rem, 2.4rem);
       font-weight: 900;
       line-height: 1;
       color: rgba(255,255,255,0.45);
@@ -744,7 +992,12 @@
     .svc-card__inner {
       position: relative;
       z-index: 2;
-      padding: clamp(1rem, 1.5vw, 1.3rem);
+      /* Più respiro sopra e ai lati, meno spazio morto in basso
+         (calibrato sulla CTA): il contenuto non tocca i bordi in
+         alto/lati, la card resta comunque compatta in verticale.
+         Il padding-top non si tocca: è quello che tiene il titolo
+         sotto il numero. La compattazione arriva tutta dal basso. */
+      padding: clamp(1.3rem, 1.9vw, 1.6rem) clamp(1.15rem, 1.7vw, 1.45rem) clamp(0.3rem, 0.5vw, 0.4rem);
       width: 100%;
       opacity: 1;
       /* A riposo resta visibile solo la fascia in cima al blocco
@@ -764,36 +1017,47 @@
        Regola strutturale: il numero ha sempre la sua area riservata
        e nessun contenuto — testo reale o copia visuale dell'effetto
        acqua — può entrarci sopra, né a riposo né in hover.
+       La separazione è su due assi: orizzontale per la tagline, che
+       gli corre affianco, e verticale per il titolo, che parte sotto
+       il numero. Riservare spazio anche al titolo era inutile e
+       costoso: gli toglieva la larghezza che gli serve per andare a
+       capo su due righe, quindi la riserva resta solo sulla tagline.
        Il titolo occupa sempre lo spazio di due righe anche quando ne
        usa una: così tagline, titolo, body e CTA partono dalla stessa
        quota su tutte e dieci le card, senza valori per singola card. */
-    .svc-card__tag,
-    .svc-card__title { padding-right: 3rem; }
+    .svc-card__tag { padding-right: clamp(3.6rem, 4vw + 1rem, 4.6rem); }
     /* Titolo e body occupano un box fisso pari al caso peggiore
        (3 righe ciascuno): nessun testo viene troncato e tutte le
        card condividono la stessa griglia verticale, quindi tagline,
        titolo, body e CTA partono dalla stessa quota. */
     .svc-card__title {
       text-wrap: balance;   /* i titoli lunghi vanno a capo, non si comprimono */
-      height: 2.5em;        /* 2 righe a line-height 1.25 */
+      height: 2.44em;       /* 2 righe a line-height 1.22 */
     }
-    .svc-card__desc { height: 6.4em; }   /* 4 righe a line-height 1.6: il body non viene mai troncato */
+    /* L'area riservata al body è espressa come numero di righe per
+       l'interlinea reale: così altezza e line-height non possono più
+       divergere quando si tocca l'una o l'altra. */
+    .svc-card__desc {
+      --svc-desc-lines: 4;
+      --svc-desc-lh: 1.35;
+      height: calc(var(--svc-desc-lines) * var(--svc-desc-lh) * 1em);
+    }
 
     .svc-card__tag {
       display: block;
       letter-spacing: 0.18em;
       text-transform: uppercase;
       color: rgba(255,255,255,0.75);
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.2rem;
       font-weight: 500;
     }
     .svc-card__title {
-      font-size: clamp(1rem,1.25vw,1.15rem);
+      font-size: clamp(1.05rem,1.35vw,1.25rem);
       font-weight: 500;
       color: #fff;
-      line-height: 1.25;
+      line-height: 1.22;
       letter-spacing: -0.01em;
-      margin-bottom: 0.5rem;
+      margin-bottom: 0.05rem;
       font-family: var(--font-primary,'Helvetica Neue',sans-serif);
     }
     .svc-card__desc {
@@ -801,12 +1065,30 @@
       overflow: visible;
       font-size: var(--text-body);
       color: rgba(255,255,255,0.85);
-      line-height: 1.6;
-      margin-bottom: 0.85rem;
+      /* L'altezza si recupera dall'interlinea del body, non dal corpo
+         del testo né da un taglio: 16px restano 16px. */
+      line-height: var(--svc-desc-lh, 1.35);
+      /* Il body e la CTA restano un blocco solo: qui c'era lo stacco
+         più vistoso della card. */
+      margin-bottom: 0.05rem;
       opacity: 0;
       transition: opacity 0.25s linear;
     }
     .svc-card:hover .svc-card__desc { opacity: 1; transition-delay: 0.3s; }
+
+    /* ── Riserva del body al restringersi delle colonne ─────────
+       La griglia resta a 5 colonne a ogni larghezza, quindi più lo
+       schermo si stringe più righe servono alla stessa descrizione:
+       4 sopra i 1360px, 5 fino ai 1100, e così via. Con una riserva
+       fissa a 4 righe il testo eccedente non veniva troncato ma
+       finiva sopra la CTA — a 1200px sfondava di 20px. Qui la
+       riserva segue il numero di righe reale: nessun troncamento,
+       nessuna sovrapposizione, e a parità di larghezza tutte le card
+       condividono la stessa quota per body e CTA. */
+    @media (max-width: 1359px) { .svc-card__desc { --svc-desc-lines: 5; } }
+    @media (max-width: 1080px) { .svc-card__desc { --svc-desc-lines: 6; } }
+    @media (max-width: 980px)  { .svc-card__desc { --svc-desc-lines: 7; } }
+    @media (max-width: 880px)  { .svc-card__desc { --svc-desc-lines: 9; } }
 
     .svc-card__btn {
       display: inline-flex;
@@ -820,9 +1102,11 @@
       letter-spacing: 0.08em;
       text-transform: uppercase;
       text-decoration: none;
-      padding: 0.6rem;
+      /* padding verticale ridotto: la pill resta comoda al tocco ma
+         non aggiunge altezza morta in fondo alla card */
+      padding: 0.45rem 0.6rem;
       overflow: hidden;
-      max-width: 42px;
+      max-width: 38px;
       white-space: nowrap;
       opacity: 0;
       transition: max-width 0.55s cubic-bezier(0.22,1,0.36,1),
@@ -832,7 +1116,7 @@
     .svc-card:hover .svc-card__btn {
       opacity: 1;
       max-width: 240px;
-      padding: 0.6rem 1.2rem;
+      padding: 0.45rem 1.1rem;
       transition-delay: 0.36s;
     }
     .svc-card__btn svg { flex-shrink: 0; width: 14px; height: 14px; transition: transform 0.35s; }
@@ -864,6 +1148,22 @@
     .cs2 {
       background: #fff;
     }
+    /* ── Case Studies in una sola schermata ─────────────────────
+       La sezione misurava 1033px su 900 di viewport: eccedeva di
+       133px e obbligava a scorrere per vedere la CTA finale. Lo
+       spazio viene recuperato solo da padding, margini e altezza
+       del riquadro immagine — nessun testo e nessuna dimensione
+       tipografica è stata toccata. */
+    .cs2 {
+      padding-block: clamp(1.1rem, 2vw, 1.9rem) clamp(1.1rem, 1.8vw, 1.6rem) !important;
+    }
+    .cs2__intro   { margin-bottom: clamp(0.9rem, 1.8vw, 1.5rem) !important; }
+    .cst-tabs     { margin-bottom: 1.2rem !important; }
+    /* La colonna di testo è ciò che detta l'altezza del pannello:
+       il riquadro immagine si limita a seguirla, quindi è qui che si
+       recupera lo spazio — padding e gap, non i testi. */
+    .cst-right    { gap: 10px !important; }
+    .cst-img      { height: clamp(400px, 52vh, 495px) !important; padding: clamp(20px, 2.2vw, 32px) !important; }
     .cs2__title {
       font-size: clamp(3rem, 10vw, 150px);
       color: var(--primary, #DB005A);
@@ -1043,7 +1343,11 @@
       background: var(--surface-dark) !important;
     }
     /* Servizi: stessa sorgente condivisa, variante agganciata in alto */
-    .ht-services { background: var(--surface-dark-top) !important; }
+    /* I Servizi partono da nero pieno: la continuità con la hero non
+       la fa più una foschia fucsia in cima alla sezione, ma la coda
+       nera della hero stessa (.sr-fade). Così non esiste nessun
+       secondo layer fra le due e lo sfondo non si interrompe mai. */
+    .ht-services { background: #000 !important; }
     .tips-section { background: transparent !important; }
 
     /* ═══════════════════════════════════════════════════════════
@@ -1099,21 +1403,26 @@
     .cst-info__tags { text-align: left !important; }
 
     /* Senza i KPI la card di testo occupa l'intera colonna:
-       spazi ribilanciati su padding e gap interni. */
+       spazi ribilanciati su padding e gap interni. Valori tenuti
+       corti perché è questa colonna a dettare l'altezza del pannello,
+       e quindi se la sezione sta o no in una schermata. */
     .cst-info {
-      padding: clamp(1.75rem, 2.6vw, 2.5rem) !important;
-      gap: clamp(0.875rem, 1.4vw, 1.25rem) !important;
+      padding: clamp(1.1rem, 1.8vw, 1.6rem) clamp(1.4rem, 2.2vw, 2rem) !important;
+      gap: clamp(0.6rem, 1vw, 0.9rem) !important;
       justify-content: center;
     }
 
     /* Logo brand sopra al contenuto: più grande e più vicino al
        testo, senza aria inutile sopra/sotto. */
+    /* Il logo occupava una fascia alta con aria sopra e sotto: qui la
+       fascia si accorcia e il margine si azzera, così la card recupera
+       altezza senza toccare i testi. */
     .cst-info__brand {
       display: flex;
       align-items: center;
       justify-content: flex-start;
-      height: clamp(58px, 7vw, 82px);
-      margin: 0 0 clamp(0.15rem, 0.35vw, 0.35rem);
+      height: clamp(42px, 5vw, 58px);
+      margin: 0;
       padding: 0;
       line-height: 0;
     }
@@ -1153,25 +1462,54 @@
       margin-top: var(--cards-cta-gap) !important;
       padding-top: 0 !important;
     }
+    /* Case Studies deve stare in una schermata: qui il ritmo è più
+       corto che in Tips, dove lo spazio non manca. */
+    .cs2__footer { margin-top: clamp(1.2rem, 2vw, 1.8rem) !important; }
     .cst-panels { margin-bottom: 0 !important; }
-    .tip-card__date  { color: rgba(255,255,255,0.65) !important; font-size: var(--text-min) !important; }
-    .tip-card__title { color: #fff !important; font-size: clamp(1rem, 1.35vw, 1.2rem) !important; }
-    .tip-card:hover .tip-card__title { color: var(--primary, #DB005A) !important; }
-    /* Card senza box: vivono direttamente sul nero della sezione.
-       La separazione è data da immagine, spaziatura, tipografia,
-       profondità 3D e ombra proiettata sotto la sola immagine. */
+    /* ── Card Tips: superficie bianca ────────────────────────────
+       Card a fondo bianco sul nero della sezione. Nessun bagliore e
+       nessuna ombra pronunciata: la profondità viene dal contrasto
+       della superficie, non da un alone. */
     .tip-card {
-      background: transparent !important;
+      background: #fff !important;
       border: none !important;
-      border-radius: 0 !important;
-      padding: 0 !important;
+      border-radius: 14px !important;
+      padding: 0 0 clamp(0.9rem, 1.5vw, 1.2rem) !important;
+      overflow: hidden !important;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.16) !important;
     }
+    .tip-card__date  { color: rgba(0,0,0,0.55) !important; font-size: var(--text-min) !important; }
+    .tip-card__title { color: #0b0b0b !important; font-size: clamp(1rem, 1.35vw, 1.2rem) !important; }
+    .tip-card:hover .tip-card__title { color: var(--primary, #DB005A) !important; }
+    .tip-card__excerpt { color: rgba(0,0,0,0.70) !important; }
     .tip-card__date,
-    .tip-card__title { padding-inline: 0 !important; }
+    .tip-card__title,
+    .tip-card__excerpt { padding-inline: clamp(0.9rem, 1.5vw, 1.2rem) !important; }
     .tip-card__img {
-      border-radius: 10px;
+      border-radius: 0 !important;
       overflow: hidden;
-      margin-bottom: clamp(0.85rem, 1.4vw, 1.2rem);
+      margin-bottom: clamp(0.75rem, 1.2vw, 1rem);
+    }
+    /* niente glow né ombre marcate ereditate dal vecchio stile */
+    .tip-card,
+    .tip-card:hover,
+    .tip-card__img,
+    .tip-card__img img { filter: none !important; }
+    .tip-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.22) !important; }
+
+    /* Ingresso: scivolata dal basso, sfalsata card per card, breve.
+       Nessuno stato nascosto duraturo — l'offset è piccolo e
+       l'opacità di partenza resta alta. */
+    html.js-reveal .tips-grid .tip-card {
+      transform: translateY(26px);
+      opacity: 0.55;
+      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
+                  opacity 0.32s ease;
+      transition-delay: var(--tip-delay, 0s);
+    }
+    html.js-reveal .tips-grid.tips-in .tip-card {
+      transform: none;
+      opacity: 1;
     }
 
     /* CTA: hover nero su testo bianco */
@@ -1198,6 +1536,18 @@
        FAQ — sfondo bianco, titolo 150px
        ═══════════════════════════════════════════════════════════ */
     .page-faq { background: #fff !important; }
+    /* Con una domanda aperta la sezione superava la schermata di 75px:
+       lo spazio rientra dal padding verticale, non dall'elenco. */
+    .page-faq { padding-block: clamp(2.5rem, 4vw, 3.6rem) !important; }
+    /* Safe area dell'occhio: in hover e in apertura il cerchio va a
+       scale(1.1), quindi sporge di ~2px oltre la riga. Qui la riga
+       riserva quello spazio e la colonna non può più tagliarlo,
+       qualunque sia la larghezza. */
+    .page-faq__question { padding-right: 8px !important; }
+    .page-faq__eye      { margin-right: 2px !important; }
+    .page-faq__list,
+    .page-faq__item,
+    .page-faq__inner    { overflow: visible !important; }
     .page-faq__title {
       font-size: min(150px, 26vw) !important;
       line-height: 1 !important;
@@ -1249,7 +1599,7 @@
     .svc-card__btn-label,
     .tip-card__date { font-size: var(--text-ui) !important; }
 
-    .svc-card__title { font-size: clamp(1rem, 1.25vw, 1.15rem) !important; }
+    .svc-card__title { font-size: clamp(1.05rem, 1.35vw, 1.25rem) !important; }
 
     /* Il binario usa lo stesso bordeaux della label */
     .partner-loader { background: var(--partner-rail) !important; }
@@ -1390,23 +1740,42 @@
        è riempita da ::after con la superficie della sezione stessa,
        quindi nessun buco nero nemmeno sotto.
        Niente scale: allargherebbe la sezione lasciando bordi vuoti. */
+    /* La sezione che sale copre la coda di quella precedente: con 58px
+       di salita finiva sopra le CTA, che distano 8-20px dal bordo.
+       La corsa scende a 22px — il linguaggio resta lo stesso — e le
+       CTA hanno la loro fascia di sicurezza qui sotto. */
     html.js-reveal .sx-rise {
       position: relative;
       z-index: 2;
-      transform: translateY(calc((1 - var(--sxi, 1)) * -58px));
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
       border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
-      box-shadow: 0 calc((1 - var(--sxi, 1)) * -22px) calc((1 - var(--sxi, 1)) * 48px) rgba(0,0,0,0.30);
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
       will-change: transform;
     }
     html.js-reveal .sx-rise::after {
       content: '';
       position: absolute;
       left: 0; right: 0; top: 100%;
-      height: calc((1 - var(--sxi, 1)) * 58px);
+      height: calc((1 - var(--sxi, 1)) * 22px);
       background: inherit;
       pointer-events: none;
       z-index: -1;
     }
+
+    /* ── CTA sempre in primo piano ───────────────────────────────
+       Due cause reali, corrette qui: la CTA stava sotto la soglia di
+       sovrapposizione della sezione successiva, e il sollevamento in
+       hover veniva tagliato dall'overflow della sezione. */
+    .cs2__footer, .cs2__footer-btn,
+    .tips-section__cta, .tips-section__cta .btn,
+    .about-section__cta, .about-section__cta .btn {
+      position: relative;
+      z-index: 5;
+    }
+    /* Fascia di sicurezza sotto le CTA: deve superare la corsa di
+       salita (22px) più il sollevamento in hover. */
+    .cs2 { padding-bottom: clamp(2.2rem, 3vw, 2.8rem) !important; }
+    .tips-sticky { padding-bottom: clamp(1.8rem, 2.6vw, 2.4rem) !important; }
     /* NB: nessuna regola su .sx-rise > * — scriverebbe transform
        sugli stessi elementi gestiti dal reveal, annullandone lo
        stato iniziale. Il movimento del contenuto è già compito del
@@ -1558,15 +1927,25 @@
     /* Viewport bassi: lo stage servizi resta 100dvh, quindi titolo,
        card e barra vengono compattati per non sovrapporsi mai. */
     @media (max-height: 820px) {
-      .svc-title       { font-size: min(42px, 7vw); }
+      /* Viewport basse: il titolo scende, perché a questa altezza i
+         150px non ci starebbero — verificato, verrebbe tagliato in
+         cima. Resta comunque più generoso di prima. */
+      .svc-title       { font-size: min(46px, 7vw); }
       .svc-header      { padding: 0.15rem 0 0.2rem; }
       .svc-cards-wrap  { margin-top: 0; padding-bottom: 0.2rem; }
       .partner-loader  { bottom: 10px; }
-      .svc-card        { min-height: clamp(170px, 20dvh, 195px); }
-      .svc-card__desc  { margin-bottom: 0.55rem; }
-      .svc-card__title { margin-bottom: 0.3rem; }
-      .svc-card__inner { padding: 0.7rem 0.85rem; --svc-peek: 4.6rem; }
-      .svc-inner       { padding-bottom: clamp(100px, 14vh, 120px); }
+      .svc-card        { min-height: clamp(160px, 19dvh, 185px); }
+      .svc-card__desc  { margin-bottom: 0.28rem; }
+      .svc-card__title { margin-bottom: 0.25rem; }
+      .svc-card__inner { padding: 0.85rem 0.9rem 0.55rem; --svc-peek: 4.6rem; }
+      /* Viewport basse: il blocco torna ancorato in basso. Alzarlo
+         verso l'header qui lo farebbe finire sotto la banda partner,
+         perché lo spazio verticale non basta. */
+      .svc-inner       {
+        padding-top: calc(var(--nav-h, 4rem) + 0.3rem);
+        padding-bottom: clamp(112px, 15vh, 132px);
+        justify-content: flex-end;
+      }
     }
   </style>
 <script type="application/ld+json">
@@ -1673,12 +2052,18 @@
     <div class="ht-wrapper" id="ht-wrapper" data-nav-theme="dark">
       <div class="ht-stage">
 
-        <!-- ── HERO LAYER ──────────────────────────────── -->
+        <!-- ── HERO ─────────────────────────────────────
+             Il contenitore fornisce la corsa di scroll che viene
+             consumata dallo zoom del video: finché dura, la hero
+             resta inchiodata in alto e la pagina non avanza. -->
+        <div class="ht-pin ht-pin--hero">
         <div class="ht-hero" id="ht-hero">
           <div class="sr-bg" aria-hidden="true">
             <video id="sr-video" src="videoherohome.mp4" autoplay muted loop playsinline></video>
           </div>
           <div class="sr-overlay" aria-hidden="true"></div>
+          <!-- Coda nera: chiude la hero sul nero pieno dei Servizi -->
+          <div class="sr-fade" aria-hidden="true"></div>
           <div class="sr-content" aria-labelledby="vhero-title">
             <h1 class="vhero__title" id="vhero-title">
               <span>LE IDEE</span>
@@ -1693,8 +2078,12 @@
             <svg width="16" height="22" viewBox="0 0 16 22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="1" width="14" height="20" rx="7"/><line x1="8" y1="5" x2="8" y2="10"/></svg>
           </div>
         </div>
+        </div><!-- /ht-pin--hero -->
 
-        <!-- ── SERVICES LAYER ─────────────────────────── -->
+        <!-- ── SERVIZI ──────────────────────────────────
+             Stessa logica: la sezione resta bloccata per tutta la
+             sua fase principale, poi rilascia verso About. -->
+        <div class="ht-pin ht-pin--svc">
         <div class="ht-services" id="ht-services">
           <!-- Layer 1: gradient overlay scuro in cima -->
           <div class="svc-gradients" aria-hidden="true"></div>
@@ -1739,6 +2128,7 @@
           </div>
 
         </div>
+        </div><!-- /ht-pin--svc -->
 
       </div>
     </div><!-- /ht-wrapper -->
@@ -2157,6 +2547,7 @@
     function phase(p, a, b)   { return ease(clamp((p - a) / (b - a), 0, 1)); }
 
     const hero       = document.getElementById('ht-hero');
+    const heroPin    = document.querySelector('.ht-pin--hero');
     const services   = document.getElementById('ht-services');
     const content    = hero && hero.querySelector('.sr-content');
     const hint       = hero && hero.querySelector('.sr-scroll-hint');
@@ -2224,14 +2615,17 @@
       };
     }
 
+    // q: 0 = appena arrivato, ancora mosso · 1 = assestato
+    // Il titolo NON parte nascosto: niente maschera, niente opacità a
+    // zero. Arriva rifratto dall'acqua e si mette a fuoco — quindi è
+    // sempre disegnato, anche in uno screenshot preso senza scorrere.
     function titleReveal(q) {
       if (!svcTitle) return;
       if (!ttGeom || !ttGeom.w) ttMeasure();
       if (!ttGeom || !ttGeom.w) return;
 
       if (q >= 0.995) {
-        // stato finale: nessuna maschera, nessun filtro, nessun offset
-        svcTitle.style.removeProperty('--tt-mask');
+        // stato finale: nessun filtro, nessun offset
         ttGeom.letters.forEach(l => {
           l.el.style.removeProperty('--tl-x');
           l.el.style.removeProperty('--tl-y');
@@ -2241,33 +2635,107 @@
         return;
       }
 
-      // il fronte della perturbazione si allarga dall'impatto
-      const grow = clamp((q - 0.16) / 0.72, 0, 1);
-      const r = Math.pow(grow, 0.75) * ttGeom.rmax;
-      const soft = 54;
-      svcTitle.style.setProperty('--tt-mask',
-        `radial-gradient(circle at ${ttGeom.ox.toFixed(0)}px ${ttGeom.oy.toFixed(0)}px, ` +
-        `#000 0px, #000 ${Math.max(0, r - soft).toFixed(0)}px, transparent ${(r + soft).toFixed(0)}px)`);
-
-      // rifrazione: massima al tonfo, si spegne mentre compone
-      const dist = Math.sin(Math.min(1, q / 0.85) * Math.PI) * (1 - q * 0.35);
+      // rifrazione: piena all'arrivo, si spegne mentre si assesta
+      const dist = 1 - q;
       if (ttDisp) {
-        ttDisp.setAttribute('scale', (dist * 26).toFixed(2));
+        ttDisp.setAttribute('scale', (dist * 22).toFixed(2));
         ttTurb.setAttribute('baseFrequency',
           (0.010 + dist * 0.012).toFixed(4) + ' ' + (0.030 + dist * 0.02).toFixed(4));
       }
 
-      // ogni lettera è trascinata finché l'onda non l'ha raggiunta
+      // le lettere si assestano una dopo l'altra, in base alla loro
+      // distanza dal punto d'impatto: micro-spostamenti, mai salti
       ttGeom.letters.forEach(l => {
-        const local = clamp((r - l.d) / 120, 0, 1);   // 0 = non ancora composta
-        const k = (1 - local) * dist;
-        const dir = l.d ? 1 : 0;
-        l.el.style.setProperty('--tl-y', (k * 14 * dir).toFixed(2) + 'px');
-        l.el.style.setProperty('--tl-x', (k * 6 * (l.d % 2 ? 1 : -1)).toFixed(2) + 'px');
-        l.el.style.setProperty('--tl-s', (1 - k * 0.06).toFixed(3));
+        const local = clamp((q - (l.d / ttGeom.rmax) * 0.35) / 0.65, 0, 1);
+        const k = 1 - local;
+        l.el.style.setProperty('--tl-y', (k * 10).toFixed(2) + 'px');
+        l.el.style.setProperty('--tl-x', (k * 5 * (l.d % 2 ? 1 : -1)).toFixed(2) + 'px');
+        l.el.style.setProperty('--tl-s', (1 - k * 0.04).toFixed(3));
       });
     }
     addEventListener('resize', () => { ttGeom = null; }, { passive: true });
+
+    // ── Uscita ad acqua dei titoli ───────────────────────────────
+    // Ingresso e uscita devono parlare la stessa lingua: il titolo
+    // non sfuma via, si disperde. Stessa coppia maschera +
+    // displacement dell'ingresso, con la polarità invertita — il
+    // fronte cancella dall'impatto verso l'esterno invece di
+    // comporre. Un filtro dedicato, così la scala dell'uscita non
+    // interferisce con quella dell'ingresso.
+    let outDisp = null, outTurb = null;
+    if (!document.getElementById('ttlOutFx')) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const s = document.createElementNS(NS, 'svg');
+      s.setAttribute('aria-hidden', 'true');
+      s.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      s.innerHTML =
+        '<filter id="ttlOutFx" x="-30%" y="-30%" width="160%" height="160%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.011 0.032" numOctaves="2" seed="3" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(s);
+      outDisp = s.querySelector('feDisplacementMap');
+      outTurb = s.querySelector('feTurbulence');
+    }
+
+    // Geometria del fronte, misurata sull'elemento intero: l'onda
+    // attraversa tutta la frase, non le singole parole.
+    function outGeom(el, oxF, oyF) {
+      const r = el.getBoundingClientRect();
+      if (!r.width) return null;
+      const ox = r.width * oxF, oy = r.height * oyF;
+      return { ox, oy, rmax: Math.max(
+        Math.hypot(ox, oy), Math.hypot(r.width - ox, oy),
+        Math.hypot(ox, r.height - oy), Math.hypot(r.width - ox, r.height - oy)) + 80 };
+    }
+
+    // e: 0 = titolo intero · 1 = completamente disperso
+    // `soft` allarga la fascia di transizione del fronte: più è largo,
+    // più il testo svanisce per gradi invece di essere mangiato da un
+    // bordo netto. `warp` è l'ampiezza della rifrazione.
+    function disperse(el, geom, maskVar, e, soften, warp) {
+      if (!geom) return;
+      const softMax = soften || 78;
+      const amp     = warp === undefined ? 34 : warp;
+      const rad = Math.pow(e, 0.82) * geom.rmax;
+      // il bordo si ammorbidisce crescendo: a e→0 il fronte è un
+      // punto, così non compare mai un buco al primo frame
+      const soft = Math.min(softMax, rad * 0.9 + 6);
+      el.style.setProperty(maskVar,
+        `radial-gradient(circle at ${geom.ox.toFixed(0)}px ${geom.oy.toFixed(0)}px, ` +
+        `transparent 0px, transparent ${Math.max(0, rad - soft).toFixed(0)}px, ` +
+        `#000 ${(rad + soft).toFixed(0)}px)`);
+      // rifrazione massima a metà dispersione, come il tonfo in entrata
+      const dist = Math.sin(clamp(e, 0, 1) * Math.PI);
+      if (outDisp) {
+        outDisp.setAttribute('scale', (dist * amp).toFixed(2));
+        outTurb.setAttribute('baseFrequency',
+          (0.011 + dist * 0.014 * (amp / 34)).toFixed(4) + ' ' +
+          (0.032 + dist * 0.026 * (amp / 34)).toFixed(4));
+      }
+      return dist;
+    }
+
+    // ── Titolo hero: dispersione in uscita ───────────────────────
+    // Deliberatamente delicata: fronte molto sfumato (la fascia di
+    // dissolvenza è larga quanto mezzo titolo) e rifrazione ridotta a
+    // un terzo. Il titolo si scioglie invece di essere strappato, e
+    // resta leggibile fin quasi alla fine.
+    const heroTitleEl = document.querySelector('.vhero__title');
+    let heroOutGeom = null;
+    function heroTitleOut(e) {
+      if (!heroTitleEl) return;
+      if (e <= 0.002) {
+        heroTitleEl.classList.remove('ttl-out');
+        heroTitleEl.style.removeProperty('--ttl-mask');
+        return;
+      }
+      if (!heroOutGeom) heroOutGeom = outGeom(heroTitleEl, 0.44, 0.52);
+      heroTitleEl.classList.add('ttl-out');
+      disperse(heroTitleEl, heroOutGeom, '--ttl-mask', e, 200, 11);
+    }
+
+    addEventListener('resize', () => { heroOutGeom = null; }, { passive: true });
 
     // ── Inizializzazione macchina a stati ────────────────────────
     // _phase:        'entering' | 'horizontal' | 'partner' | 'hold'
@@ -2303,110 +2771,119 @@
     }
 
     let logosRevealed = false;
+    // Riempimento della banda partner: parte quando la sezione entra
+    // e dura un tempo fisso, non più una corsa di scroll.
+    let barFillStart = 0;
+    const BAR_FILL_MS = 1500;
+    // Ingresso dei Servizi: monotono, non si riavvolge
+    let pInMax = 0;
 
     function update() {
-      const rect  = wrapper.getBoundingClientRect();
-      const total = wrapper.offsetHeight - window.innerHeight; // 550dvh - 100dvh = 450dvh
-      const p_raw = clamp(-rect.top / total, 0, 1);
+      const vh    = window.innerHeight;
+      const heroR = hero.getBoundingClientRect();
+      const svcR  = services.getBoundingClientRect();
 
-      // ── Fase 1 (p): transizione hero→servizi, fisso a 2dvh di scroll ────
-      // K garantisce che p=1 sempre a scrollTop=2dvh×vh, indipendentemente
-      // dall'altezza del wrapper.
-      const PHASE1_END = 2 * window.innerHeight;           // scrollTop dove p=1
-      const K          = total / PHASE1_END;               // ≈ 2.25 con 550dvh
-      const p          = clamp(p_raw * K, 0, 1);
-
-      // ── Fase 2: nessuno scroll orizzontale (griglia statica) ──────────────
-      const PHASE2_END = PHASE1_END;
-      const scrollTop  = -rect.top;
-
-      // ── Fase 3 (pL): banda partner ────────────────────────────────────────
-      const PARTNER_RANGE = (total - PHASE2_END) * 0.60;
-      window._partnerAccum = clamp((scrollTop - PHASE2_END) / Math.max(1, PARTNER_RANGE), 0, 1);
-      const pL = window._partnerAccum;
-
-      // ══ TRANSIZIONE HERO → SERVIZI ═══════════════════════════════
-      // Una sola timeline guidata da p. Regola cardine: i CONTENUTI
-      // TESTUALI non si sovrappongono mai, gli SFONDI invece sì —
-      // è il video della hero a fare da ponte visivo mentre il
-      // fucsia dei servizi emerge dall'alto.
+      // ══ PROGRESSIONI ════════════════════════════════════════════
+      // Ogni sezione ha il proprio contenitore con una corsa di
+      // scroll: finché la corsa non è finita la sezione resta
+      // inchiodata in alto e la pagina non avanza.
       //
-      //   0.00→0.34  il video si assesta
-      //   0.18→0.38  esce l'hint di scroll
-      //   0.30→0.52  ESCONO I TESTI HERO (finiscono a 0.52)
-      //   0.44→0.68  entra lo SFONDO servizi (foschia fucsia)  ← solo sfondo
-      //   0.52→0.57  respiro: nessun testo in scena
-      //   0.57→0.76  entra il TITOLO SERVIZI, protagonista
-      //   0.66→0.94  il video hero viene assorbito
-      //   0.72→0.90  entra la GRIGLIA (al ~79% del titolo)
-      //   poi        la barra partner (fase pL, già successiva)
+      //   pZoom 0→1  hero bloccata: è la corsa dello zoom del video
+      //   pOut  0→1  hero sganciata, esce dall'alto
+      //   pIn   0→1  i Servizi salgono fino ad agganciarsi
       // ═════════════════════════════════════════════════════════════
-      const HERO_TXT_OUT = phase(p, 0.30, 0.52);   // 1 = testi hero fuori
-      const TITLE_IN     = phase(p, 0.57, 0.76);
-      const GRID_IN      = phase(p, 0.72, 0.90);
+      const heroPinR = heroPin ? heroPin.getBoundingClientRect() : heroR;
+      const heroRun  = heroPin ? Math.max(1, heroPin.offsetHeight - vh) : 1;
+      const pZoom    = clamp(-heroPinR.top / heroRun, 0, 1);
+      const pOut     = clamp((-heroPinR.top - heroRun) / (vh * 0.75), 0, 1);
 
-      video.style.transform = `scale(${(SCALE_START - (SCALE_START - SCALE_END) * phase(p, 0, 0.34)).toFixed(4)})`;
-      if (hint) hint.style.opacity = (1 - phase(p, 0.18, 0.38)).toFixed(3);
+      // pIn non torna mai indietro: l'ingresso dei Servizi è un evento
+      // che accade una volta sola. Serve anche agli screenshot che
+      // scorrono la pagina prima di catturarla — dopo il passaggio
+      // titolo e griglia restano al loro stato finale invece di
+      // tornare indietro appena la sezione esce di scena.
+      // pIn è la frazione di sezione entrata in viewport: 0.3 significa
+      // "Servizi visibile al 30%". È su questa scala che sono tarati
+      // gli attacchi degli effetti.
+      pInMax = Math.max(pInMax, clamp((vh - svcR.top) / (svcR.height || vh), 0, 1));
+      const pIn = pInMax;
 
-      // Testi hero: escono per primi e completamente
+      // Il titolo comincia a mettersi a fuoco quando la sezione è
+      // visibile al 60%, non prima. La griglia lo segue, così l'ordine
+      // di lettura resta titolo → card.
+      const TITLE_IN = phase(pIn, 0.60, 0.95);
+      const GRID_IN  = phase(pIn, 0.72, 1);
+
+      // Lo zoom occupa la prima parte della corsa; il resto è una
+       // pausa a scena ferma, con testo e video già a destinazione.
+      // Solo dopo la hero si sgancia e comincia a uscire.
+      const ZOOM_END = 0.58;
+      const zoom = clamp(pZoom / ZOOM_END, 0, 1);
+      video.style.transform = `scale(${(SCALE_START - (SCALE_START - SCALE_END) * zoom).toFixed(4)})`;
+      if (hint) hint.style.opacity = (1 - phase(zoom, 0.25, 0.75)).toFixed(3);
+
+      // I testi della hero se ne vanno solo dopo lo zoom, cioè quando
+      // la sezione ha cominciato davvero a scorrere via.
       if (content) {
-        content.style.opacity   = (1 - HERO_TXT_OUT).toFixed(3);
-        content.style.transform = `translateY(${(HERO_TXT_OUT * -34).toFixed(1)}px)`;
+        const out = phase(pOut, 0, 0.55);
+        content.style.opacity   = (1 - out).toFixed(3);
+        content.style.transform = `translateY(${(out * -34).toFixed(1)}px)`;
       }
 
-      // Layer servizi: entra PRIMA del titolo perché porta lo sfondo.
-      // Titolo e griglia restano a zero finché non è il loro turno,
-      // quindi in scena c'è solo la foschia fucsia sopra al video.
-      services.style.opacity = phase(p, 0.44, 0.68).toFixed(3);
+      // Titolo hero: si disperde nell'acqua con la curva delicata
+      // approvata, in coda all'assestamento del video.
+      heroTitleOut(phase(pOut, 0, 0.70));
 
-      // ── Titolo SERVIZI: impatto nell'acqua e ricomposizione ────
-      //   0.00→0.18  tonfo: la superficie si increspa
-      //   0.18→0.45  dispersione: forme rifratte e trascinate
-      //   0.45→0.85  composizione dall'impatto verso l'esterno
-      //   0.85→1.00  assestamento: nitido e fermo
+      // ── Titolo SERVIZI: si mette a fuoco, non appare ───────────
+      // Nessuna opacità a zero e nessuna maschera che lo nasconda:
+      // il titolo è sempre disegnato, arriva solo rifratto e
+      // leggermente spostato e si assesta. Così esiste anche in uno
+      // screenshot fatto senza scorrere la pagina.
       if (svcHeader) {
-        const q = TITLE_IN;
-        svcHeader.style.opacity = Math.min(1, q / 0.18).toFixed(3);
-        titleReveal(q);
-        svcHeader.classList.toggle('tt-run', q > 0.001 && q < 0.995);
+        titleReveal(TITLE_IN);
+        svcHeader.classList.toggle('tt-run', TITLE_IN < 0.995);
       }
 
-      // Griglia: entra solo quando il titolo è già leggibile
+      // Il MENU segue la sezione che ha davvero sotto: chiara sulla
+      // hero, nera sui Servizi. Il passaggio avviene quando i Servizi
+      // hanno superato la pill dell'header.
+      if (nav) {
+        const navBottom = nav.getBoundingClientRect().bottom;
+        nav.classList.toggle('nav--svc', svcR.top <= navBottom && svcR.bottom > navBottom);
+      }
+
+      // Griglia: si assesta, non compare. Le card sono sempre
+      // disegnate e leggibili — l'ingresso è un micro-scorrimento con
+      // una velatura che si chiude, mai un passaggio da invisibile.
       if (svcCardsWrap) {
-        svcCardsWrap.style.opacity   = GRID_IN.toFixed(3);
-        svcCardsWrap.style.transform = `translateY(${((1 - GRID_IN) * 26).toFixed(1)}px)`;
+        const k = 1 - GRID_IN;
+        svcCardsWrap.style.opacity   = (1 - k * 0.15).toFixed(3);
+        svcCardsWrap.style.transform = `translateY(${(k * 14).toFixed(1)}px)`;
+        svcCardsWrap.style.filter    = k > 0.02 ? `blur(${(k * 1.1).toFixed(2)}px)` : '';
       }
 
-      // Velo scuro in cima: aiuta la fusione all'inizio, poi lascia
-      // spazio alla foschia fucsia.
+      // Velo scuro in cima: si alleggerisce man mano che la sezione
+      // prende la scena, lasciando spazio alla foschia fucsia.
       if (svcGradients) {
-        svcGradients.style.opacity = (1 - phase(p, 0.46, 0.70)).toFixed(3);
+        svcGradients.style.opacity = (1 - phase(pIn, 0.15, 0.55)).toFixed(3);
       }
 
-      // Il video resta percepibile mentre il fucsia emerge: viene
-      // assorbito dopo, non tagliato.
-      const heroOpacity = 1 - phase(p, 0.66, 0.94);
-      hero.style.opacity = heroOpacity.toFixed(3);
-      if (heroOpacity < 0.005) {
-        hero.style.visibility = 'hidden';
-      } else {
-        hero.style.visibility = '';
-      }
+      // Card interattive quando la sezione è davvero in scena
+      if (pIn >= 0.7 && !window._svcReady) setReady();
+      else if (pIn < 0.2) resetInteract();
 
-      // Card sempre visibili (griglia statica)
-      if (p >= 0.72 && !window._svcReady) setReady();
-      else if (p < 0.40) resetInteract();
-
-      // ── PARTNER DOWNLOAD BAR (pL scroll-driven 0→1) ────────────────
-      // pL va da 0→1 mentre l'utente scorre da fine-card a fine-wrapper.
-      // Nessun blocco: lo scroll avviene naturalmente, la banda segue.
-      //
-      // Timeline:
-      //   0.00 → 0.05   pill fade-in
-      //   0.05 → 0.74   fill fucsia da sinistra (0%→100%)
-      //   0.74 → 1.00   loghi visibili + sticky si rilascia → About entra
-
+      // ── PARTNER DOWNLOAD BAR ───────────────────────────────────────
+      // Senza più il pin non c'è scroll interno alla sezione da
+      // consumare: la barra si carica una volta sola, come una vera
+      // progress bar, quando la sezione entra in scena. pL resta a 1,
+      // quindi in qualsiasi screenshot la banda è già piena.
       if (!pLoader || !pFill || !pLogos) return;
+
+      if (pIn >= 0.55 && barFillStart === 0) barFillStart = performance.now();
+      const pL = barFillStart
+        ? clamp((performance.now() - barFillStart) / BAR_FILL_MS, 0, 1)
+        : 0;
+      window._partnerAccum = pL;
 
       const BAR_MAX_H = Math.round(clamp(window.innerHeight * 0.115, 86, 108));
 
@@ -2450,11 +2927,19 @@
       // pL 0.80 → 1.00: HOLD — nessuna modifica strutturale, marquee continua
     }
 
-    // rAF loop: update gira ogni frame indipendentemente dagli scroll event.
-    // Essenziale: durante HORIZONTAL/PARTNER la pagina non scorre (preventDefault),
-    // quindi nessun 'scroll' event scatterebbe mai — il DOM rimarrebbe congelato.
-    // Con il rAF loop il rendering della banda (_partnerAccum) è sempre aggiornato.
-    (function tick() { update(); requestAnimationFrame(tick); })();
+    // rAF loop: update gira ogni frame, non solo sugli scroll event.
+    // Serve perché il riempimento della banda partner è a tempo, non
+    // a scroll: deve avanzare anche a pagina ferma.
+    //
+    // La modalità capture può accendersi anche DOPO il load, quando lo
+    // strumento di screenshot allarga il viewport. Da quel momento la
+    // timeline deve smettere di scrivere: altrimenti continuerebbe a
+    // rimettere ogni frame gli stati intermedi guidati dallo scroll,
+    // sovrascrivendo lo stato finale della cattura.
+    (function tick() {
+      if (!window.__STATIC_CAPTURE__) update();
+      requestAnimationFrame(tick);
+    })();
   })();
 
   // ── Servizi: card drag + animazioni ────────────────────
@@ -2742,15 +3227,17 @@
 
     // Mappa selettore → tipo di reveal (libreria differenziata)
     const MAP = {
+      // About non passa dal reveal generico: scatterebbe al primo
+      // pixel visibile, mentre qui deve partire a sezione entrata al
+      // 60%. Se ne occupa il modulo dedicato più sotto.
       title: ['#amici-title', '.cs2__title', '.tips-section__heading',
-              '.page-faq__title', '.hc-title', '.about-section__heading',
-              '.about-section__big'],
-      body:  ['.about-section__body', '.about-section__kicker',
-              '.cst-info', '.page-faq__item', '.hc-sub'],
+              '.page-faq__title', '.hc-title',
+              '.about-section__big', '.sf-ghost'],
+      body:  ['.cst-info', '.page-faq__item', '.hc-sub'],
       card:   ['.cst-tabs'],
       card3d: ['.tips-grid .tip-card'],
-      img:    ['.cst-img', '.about-section__video-col'],
-      cta:   ['.cs2__footer', '.tips-section__cta', '.about-section__cta', '.hc-form'],
+      img:    ['.cst-img'],
+      cta:   ['.cs2__footer', '.tips-section__cta', '.hc-form'],
       logo:  ['.cst-info__brand']
     };
 
@@ -2868,7 +3355,56 @@
       if (!ttlRaf) ttlDisp.setAttribute('scale', '0');
     }
 
+    // ── Uscita liquida dei grandi titoli ────────────────────────
+    // Stessa coppia maschera + rifrazione dell'entrata, con il fronte
+    // che cancella dal punto d'impatto verso l'esterno. Il titolo si
+    // disperde invece di sfumare, e rientrando torna intero.
+    const ttlOut = new Set();
+    let ttlOutRaf = null;
+    const TTL_OUT_MS = 620;
+
+    function ttlOutFrame() {
+      const now = performance.now();
+      let peak = 0;
+      for (const it of [...ttlOut]) {
+        const q = clamp((now - it.t0) / TTL_OUT_MS, 0, 1);
+        if (!it.el.classList.contains('rv-past')) {
+          // il titolo è tornato in scena: si ricompone e basta
+          it.el.style.removeProperty('--ttl-mask');
+          it.el.classList.remove('ttl-run');
+          ttlOut.delete(it);
+          continue;
+        }
+        const rad = Math.pow(q, 0.82) * it.c.rmax;
+        const soft = Math.min(150, rad * 0.9 + 8);
+        it.el.style.setProperty('--ttl-mask',
+          `radial-gradient(circle at ${it.c.ox.toFixed(0)}px ${it.c.oy.toFixed(0)}px, ` +
+          `transparent 0px, transparent ${Math.max(0, rad - soft).toFixed(0)}px, ` +
+          `#000 ${(rad + soft).toFixed(0)}px)`);
+        peak = Math.max(peak, Math.sin(q * Math.PI) * 0.5);
+        if (q >= 1) ttlOut.delete(it);
+      }
+      ttlDisp.setAttribute('scale', (peak * 26).toFixed(2));
+      ttlOutRaf = ttlOut.size ? requestAnimationFrame(ttlOutFrame) : null;
+      if (!ttlOutRaf) ttlDisp.setAttribute('scale', '0');
+    }
+
+    function waterTitleOut(el) {
+      if ([...ttlOut].some(i => i.el === el)) return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      const ox = r.width * 0.42, oy = r.height * 0.55;
+      const c = { ox, oy, rmax: Math.max(
+        Math.hypot(ox, oy), Math.hypot(r.width - ox, oy),
+        Math.hypot(ox, r.height - oy), Math.hypot(r.width - ox, r.height - oy)) + 90 };
+      el.classList.add('ttl-run');
+      ttlOut.add({ el, c, t0: performance.now() });
+      if (!ttlOutRaf) ttlOutRaf = requestAnimationFrame(ttlOutFrame);
+    }
+
     function waterTitle(el, fast) {
+      // rientrando, il titolo riparte intero
+      el.style.removeProperty('--ttl-mask');
       if (el.dataset.ttlDone === '1') return;
       const c = ttlConfig(el, fast);
       if (!c.w) return;
@@ -2887,11 +3423,15 @@
           if (e.isIntersecting) {
             el.classList.add('rv-in', 'rv-armed');
             el.classList.remove('rv-past');
-            // il titolo si compone mentre la sezione prende la scena
-            if (el.dataset.rv === 'title') waterTitle(el, false);
+            // il titolo si compone mentre la sezione prende la scena.
+            // About è l'eccezione: ha un attacco suo, al 60%.
+            if (el.dataset.rv === 'title' && el.dataset.hold !== '1') waterTitle(el, false);
           } else {
             el.classList.remove('rv-in', 'rv-armed');
             el.classList.toggle('rv-past', past);
+            // l'uscita parla la stessa lingua dell'entrata: il titolo
+            // non sfuma, si disperde nell'acqua
+            if (el.dataset.rv === 'title' && past) waterTitleOut(el);
           }
         });
       });
@@ -2899,10 +3439,52 @@
 
     // La hero non dipende dallo scroll: parte subito al caricamento,
     // più rapida, per non ritardare la lettura del messaggio.
+    // Un solo fronte per tutta la frase: la maschera è misurata sul
+    // titolo intero, quindi l'onda attraversa le tre parole insieme.
+    // Parte con il fade del blocco (0.10s), non prima, altrimenti
+    // l'acqua passerebbe su un titolo ancora invisibile.
+    // ── About: il titolo entra a sezione già ben visibile ────────
+    // Sequenza: la sezione entra → raggiunge il 60% → parte il tonfo
+    // sul titolo ABOUT → perturbazione e rifrazione → ricomposizione
+    // → il resto del contenuto si compone dietro, con lo stesso
+    // linguaggio ma in scala ridotta. Nessun elemento parte nascosto.
+    (function () {
+      const sticky = document.querySelector('.about-sticky');
+      const big    = document.querySelector('.about-section__big');
+      if (!sticky || !big) return;
+      big.dataset.hold = '1';           // il reveal generico lo salta
+      if (window.__STATIC_CAPTURE__) { sticky.classList.add('about-in'); return; }
+      // Frazione visibile calcolata direttamente: con un elemento
+      // sticky l'IntersectionObserver riporta rapporti che non
+      // corrispondono a quanto la sezione è realmente entrata, e
+      // l'attacco finiva ben oltre il 60%.
+      let armed = true;
+      function check() {
+        if (!armed) return;
+        const r = sticky.getBoundingClientRect();
+        const vh = window.innerHeight;
+        const vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / (r.height || vh);
+        if (vis < 0.6) return;
+        armed = false;
+        waterTitle(big, false);
+        sticky.classList.add('about-in');
+        removeEventListener('scroll', onScroll);
+      }
+      let queued = false;
+      function onScroll() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => { queued = false; check(); });
+      }
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', onScroll, { passive: true });
+      check();
+    }());
+
     const heroTitle = document.querySelector('.vhero__title');
     if (heroTitle) {
       heroTitle.setAttribute('data-rv-hero', '1');
-      requestAnimationFrame(() => waterTitle(heroTitle, true));
+      setTimeout(() => requestAnimationFrame(() => waterTitle(heroTitle, true)), 120);
     }
 
     groups.forEach((list, sec) => io.observe(sec));
@@ -2935,10 +3517,19 @@
     // il motion resta coerente da una sezione all'altra.
     // About è esclusa dal transform: contiene un pin sticky e un
     // transform sull'antenato ne romperebbe l'ancoraggio.
+    // About usa la stessa salita delle altre. Il transform va sul
+    // figlio interno, non sulla sezione: quella contiene il pin
+    // sticky e un transform sull'antenato ne romperebbe l'ancoraggio.
+    // Il footer NON sale: sollevandosi lasciava scoperto il fondo
+    // pagina e si vedeva una striscia nera sotto. È la fine del
+    // documento, deve restare appoggiato lì.
     const RISE  = ['#case-studies', '#tips-section', '#faq', '#contatti',
-                   '#amici-section', '.site-footer'];
+                   '#amici-section', '.about-sticky'];
     const DEPTH = [];
-    const SWEEP = ['#amici-section', '.tips-sticky'];
+    // Tips esce da SWEEP: il fondo che scorreva con lo scroll è
+    // rimosso, la sezione usa solo la salita con angoli arrotondati
+    // sopra la sezione precedente, la stessa di Case Studies.
+    const SWEEP = ['#amici-section'];
 
     const secs = [];
     const add = (sel, cls) => document.querySelectorAll(sel).forEach(el => {
@@ -3026,6 +3617,155 @@
         ['--tc-ix','--tc-iy','--tc-tx','--tc-sx','--tc-sy'].forEach(k => set(k, '0px'));
       });
     });
+  }());
+
+  /* ═══════════════════════════════════════════════════════════
+     STATO FINALE DI CATTURA
+     Il CSS .static-capture da solo non basta: copre le proprietà
+     che sa nominare, ma la scena hero→servizi e la banda partner
+     sono guidate da stili inline scritti frame per frame (opacity,
+     transform, clip-path, maschere, classi di stato). Se la
+     cattura si accende dopo il load — lo screenshot full-page che
+     allarga il viewport — quegli inline sono già scritti a metà
+     timeline e restano lì.
+     Qui lo stato finale viene scritto attivamente: ogni elemento
+     scroll-driven viene portato a destinazione e le maschere, i
+     filtri e i clip-path degli effetti acqua vengono azzerati.
+     Idempotente: si può richiamare quante volte serve.
+     ═══════════════════════════════════════════════════════════ */
+  (function () {
+    function clearProps(el, props) {
+      if (!el) return;
+      props.forEach(p => el.style.removeProperty(p));
+    }
+
+    function finalize() {
+      if (!window.__STATIC_CAPTURE__) return;
+
+      // ── Scena hero → servizi: entrambi i layer, interi ──────
+      const hero = document.getElementById('ht-hero');
+      if (hero) {
+        hero.style.opacity = '1';
+        hero.style.visibility = 'visible';
+        hero.style.transform = 'none';
+      }
+      const video = document.getElementById('sr-video');
+      if (video) video.style.transform = 'none';
+
+      const content = document.querySelector('.sr-content');
+      if (content) { content.style.opacity = '1'; content.style.transform = 'none'; }
+
+      const services = document.getElementById('ht-services');
+      if (services) {
+        services.style.opacity = '1';
+        services.classList.add('services-ready');
+        services.classList.remove('services-entering');
+      }
+      const gradients = document.querySelector('.svc-gradients');
+      if (gradients) gradients.style.opacity = '0';
+
+      // ── Titoli: nessuna dispersione a metà corsa ────────────
+      const heroTitle = document.querySelector('.vhero__title');
+      if (heroTitle) {
+        heroTitle.classList.remove('ttl-out', 'ttl-run');
+        clearProps(heroTitle, ['--ttl-mask']);
+      }
+      const svcHeader = document.querySelector('.svc-header');
+      if (svcHeader) {
+        svcHeader.style.opacity = '1';
+        svcHeader.style.transform = 'none';
+        svcHeader.classList.remove('tt-run', 'tt-out');
+      }
+      const svcTitle = document.querySelector('.svc-title');
+      if (svcTitle) clearProps(svcTitle, ['--tt-mask']);
+      document.querySelectorAll('.svc-letter').forEach(l =>
+        clearProps(l, ['--tl-x', '--tl-y', '--tl-s']));
+
+      // ── Griglia e card: tutte visibili, nessun effetto attivo ─
+      const wrap = document.getElementById('svcCardsWrap');
+      if (wrap) { wrap.style.opacity = '1'; wrap.style.transform = 'none'; }
+      document.querySelectorAll('.svc-card').forEach(card => {
+        card.classList.remove('fx-run');
+        clearProps(card, ['--fx-b', '--fx-x', '--fx-y', '--fx-ghost-a']);
+      });
+      document.querySelectorAll('.svc-fx-real').forEach(el =>
+        clearProps(el, ['--fx-mask-real']));
+      document.querySelectorAll('.svc-fx-ghost').forEach(el =>
+        clearProps(el, ['--fx-mask-ghost']));
+
+      // ── Banda partner: stato finale, barra piena e loghi ─────
+      const loader = document.getElementById('partnerLoader');
+      if (loader) {
+        loader.style.opacity = '1';
+        loader.style.transform = 'none';
+        loader.style.height = '104px';
+      }
+      const fill = document.getElementById('partnerLoaderFill');
+      // clip-path all'inizio taglia il fill al 100% da destra: qui la
+      // barra deve risultare caricata, quindi nessun taglio.
+      if (fill) fill.style.clipPath = 'none';
+      const logos = document.getElementById('partnerLoaderLogos');
+      if (logos) {
+        logos.classList.add('logos-visible');
+        logos.style.opacity = '1';
+      }
+      // Il marquee scrive un translateX ogni frame: senza reset i
+      // loghi finirebbero nello screenshot a metà scorrimento.
+      const track = document.querySelector('.partner-loader .logo-ticker__track');
+      if (track) track.style.transform = 'none';
+
+      // ── Reveal di sezione: tutto a destinazione ─────────────
+      document.querySelectorAll('[data-rv]').forEach(el => {
+        el.classList.remove('rv-past', 'rv-armed');
+        el.classList.add('rv-in');
+      });
+    }
+
+    window.__captureFinalize = finalize;
+
+    /* Ingresso sfalsato delle card Tips: entrano una dopo l'altra,
+       non tutte insieme. Il ritardo è per indice, l'osservatore
+       scatta una volta sola. */
+    (function () {
+      const grid = document.querySelector('.tips-grid');
+      if (!grid) return;
+      const cards = [...grid.querySelectorAll('.tip-card')];
+      cards.forEach((c, i) => c.style.setProperty('--tip-delay', (i * 0.085).toFixed(3) + 's'));
+      if (window.__STATIC_CAPTURE__) { grid.classList.add('tips-in'); return; }
+      const io = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+          if (!e.isIntersecting) return;
+          grid.classList.add('tips-in');
+          io.disconnect();
+        });
+      }, { rootMargin: '0px 0px -18% 0px', threshold: 0 });
+      io.observe(grid);
+    }());
+
+    /* Aggancio manuale: se lo strumento di screenshot non rientra in
+       nessuno dei rilevamenti automatici, basta eseguire
+       estroCapture() dalla console prima di catturare. Per tornare
+       alla modalità interattiva si ricarica la pagina. */
+    window.estroCapture = function () {
+      window.__STATIC_CAPTURE__ = true;
+      document.documentElement.classList.add('static-capture');
+      finalize();
+      requestAnimationFrame(finalize);
+      return 'modalità cattura attiva: hero, servizi, card e banda partner nel loro stato finale';
+    };
+
+    // Alla cattura attiva già dal load, e di nuovo dopo un frame:
+    // alcuni moduli scrivono il proprio stato iniziale in rAF.
+    function run() {
+      finalize();
+      requestAnimationFrame(finalize);
+      setTimeout(finalize, 250);
+    }
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', run);
+    } else {
+      run();
+    }
   }());
   </script>
 
