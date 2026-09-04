@@ -50,10 +50,16 @@ document.addEventListener('DOMContentLoaded', function () {
   const darkSections = document.querySelectorAll('[data-nav-theme="dark"]');
   if (!darkSections.length) return;
 
-  let darkCount = 0;
+  // Insieme delle sezioni scure attualmente sotto la nav.
+  // Un Set invece di un contatore: con il contatore le callback
+  // iniziali "non interseca", che l'observer emette per ogni
+  // elemento osservato, sottraevano da un totale già calcolato dal
+  // check sincrono e lo mandavano fuori sincrono, lasciando la nav
+  // nello stato sbagliato sopra le sezioni scure.
+  const darkNow = new Set();
 
   function updateNav() {
-    navEl.classList.toggle('nav--on-dark', darkCount > 0);
+    navEl.classList.toggle('nav--on-dark', darkNow.size > 0);
   }
 
   function makeObserver() {
@@ -61,10 +67,10 @@ document.addEventListener('DOMContentLoaded', function () {
     const margin = Math.round(-(window.innerHeight - navH));
     return new IntersectionObserver(function (entries) {
       entries.forEach(function (e) {
-        darkCount += e.isIntersecting ? 1 : -1;
-        if (darkCount < 0) darkCount = 0;
-        updateNav();
+        if (e.isIntersecting) darkNow.add(e.target);
+        else darkNow.delete(e.target);
       });
+      updateNav();
     }, {
       rootMargin: '0px 0px ' + margin + 'px 0px',
       threshold: 0,
@@ -77,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const navH = navEl.getBoundingClientRect().height || 80;
     darkSections.forEach(function (el) {
       const r = el.getBoundingClientRect();
-      if (r.top < navH && r.bottom > 0) darkCount++;
+      if (r.top < navH && r.bottom > 0) darkNow.add(el);
     });
     updateNav();
   })();
@@ -87,7 +93,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   window.addEventListener('resize', function () {
     obs.disconnect();
-    darkCount = 0;
+    darkNow.clear();
     obs = makeObserver();
     darkSections.forEach(function (el) { obs.observe(el); });
     updateNav();
@@ -266,7 +272,10 @@ if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
 }
 
 // ─── Cursor glow (desktop) ────────────────────────────
-if (window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
+// In modalità capture non va creato: è un layer fisso di 600px che
+// finirebbe nello screenshot come un alone fuori contesto.
+if (!window.__STATIC_CAPTURE__ &&
+    window.matchMedia('(pointer: fine) and (min-width: 1024px)').matches) {
   const glow = document.createElement('div');
   Object.assign(glow.style, {
     position: 'fixed', pointerEvents: 'none', zIndex: '9999',

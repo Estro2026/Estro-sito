@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -12,6 +12,20 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <script>
+    /* Modalità static/capture: ?static=1 (o ?capture=1).
+       Va applicata prima del CSS e prima di qualunque animazione,
+       così nessuno stato iniziale viene mai scritto nel DOM. */
+    (function () {
+      try {
+        var p = new URLSearchParams(location.search);
+        if (p.get('static') === '1' || p.get('capture') === '1') {
+          window.__STATIC_CAPTURE__ = true;
+          document.documentElement.classList.add('static-capture');
+        }
+      } catch (e) {}
+    }());
+  </script>
   <link rel="stylesheet" href="css/tokens.css" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/components.css" />
@@ -113,7 +127,7 @@
 
     .partner-loader {
       position: absolute;
-      bottom: clamp(16px, 2.5vh, 32px);
+      bottom: clamp(12px, 1.6vh, 20px);
       left: 3vw;
       right: 3vw;
       z-index: 6;
@@ -312,20 +326,37 @@
     }
 
     /* ── Services internals ── */
+    /* Foschia fucsia che nasce dal bordo ALTO della sezione e si
+       dissolve nel nero: raccoglie i toni del video della hero e li
+       porta dentro i servizi, così il punto di contatto fra le due
+       sezioni non si legge come uno stacco.
+       Ellisse molto larga (160%) e centrata sopra il bordo: è una
+       foschia diffusa, non un cerchio o una macchia isolata. */
     .ht-services {
-      background: radial-gradient(ellipse 140% 90% at 90% 110%, rgba(219,0,90,0.45) 0%, rgba(219,0,90,0.10) 40%, #000 62%);
+      background:
+        radial-gradient(ellipse 160% 72% at 50% -8%,
+          rgba(232,30,110,0.40) 0%,
+          rgba(219,0,90,0.22)  24%,
+          rgba(219,0,90,0.09)  44%,
+          rgba(219,0,90,0.025) 64%,
+          transparent 80%),
+        linear-gradient(to bottom,
+          rgba(232,30,110,0.13) 0%,
+          rgba(219,0,90,0.05)  20%,
+          transparent 46%),
+        #000;
     }
 
-    /* Gradient overlay scuro in cima (transizione hero) */
+    /* Velo scuro in cima: solo un aggancio iniziale col video, molto
+       più leggero di prima per non spegnere la foschia fucsia. */
     .svc-gradients {
       position: absolute; inset: 0; z-index: 1;
       pointer-events: none;
       background: linear-gradient(to bottom,
-        #000 0%,
-        rgba(0,0,0,0.82) 6%,
-        rgba(0,0,0,0.50) 14%,
-        rgba(0,0,0,0.15) 24%,
-        transparent 35%);
+        rgba(0,0,0,0.32) 0%,
+        rgba(0,0,0,0.14) 8%,
+        rgba(0,0,0,0.04) 16%,
+        transparent 26%);
     }
 
     .svc-inner {
@@ -335,9 +366,11 @@
       z-index: 2;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      /* Titolo e card ancorati in basso: il blocco sta vicino alla
+         barra partner invece di galleggiare al centro. */
+      justify-content: flex-end;
       padding-top: var(--nav-h, 4rem);
-      padding-bottom: clamp(126px, 15.5vh, 155px);
+      padding-bottom: clamp(126px, 14.6vh, 148px);
       overflow: hidden;
     }
 
@@ -355,7 +388,10 @@
     .svc-header {
       position: relative;
       z-index: 0;
-      padding: clamp(0.5rem, 1.5vh, 1.25rem) 0 clamp(0.5rem, 1.2vh, 1rem);
+      /* Il blocco è ancorato in basso: aumentare il padding inferiore
+         dell'header alza il titolo e lo stacca dalla griglia, senza
+         spostare le card. */
+      padding: 0 0 clamp(0.4rem, 0.9vh, 0.7rem);
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -381,6 +417,27 @@
       color: rgba(255,255,255,0.16);
       -webkit-text-stroke: 0;
     }
+    /* Correzione di crenatura solo fra la V e la I: la diagonale
+       della V lascia la I troppo addosso. Le altre coppie restano
+       come sono, il titolo resta compatto. */
+    .svc-title .svc-letter:nth-child(5) { margin-left: 0.055em; }
+
+    /* ── Reveal del titolo: impatto nell'acqua ──────────────────
+       Stesso linguaggio delle card: una perturbazione nasce da un
+       punto d'impatto decentrato, le lettere sono prima disperse e
+       rifratte, poi si ricompongono dall'impatto verso l'esterno.
+       Tutti i valori sono scritti dalla timeline di sezione, così
+       il titolo resta dentro l'unica sequenza hero → servizi. */
+    .svc-title {
+      -webkit-mask-image: var(--tt-mask, none);
+              mask-image: var(--tt-mask, none);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    }
+    .svc-header.tt-run .svc-title { filter: url(#svcTitleFx); }
+    .svc-letter {
+      transform: translate3d(var(--tl-x, 0px), var(--tl-y, 0px), 0)
+                 scale(var(--tl-s, 1));
+    }
     /* Le card devono stare sopra il titolo */
     .svc-cards-wrap { z-index: 3; }
 
@@ -389,8 +446,8 @@
       position: relative;
       z-index: 3;
       overflow: visible;
-      padding: 0 clamp(1.5rem,5vw,5rem) clamp(0.75rem,1.5dvh,1.25rem);
-      margin-top: clamp(0.5rem,1dvh,0.875rem);
+      padding: 0 clamp(1.5rem,5vw,5rem) clamp(0.25rem,0.5dvh,0.5rem);
+      margin-top: clamp(0.15rem,0.3dvh,0.3rem);
     }
     .svc-cards-track {
       display: grid;
@@ -405,7 +462,11 @@
        rivelando descrizione e CTA (comportamento originale). */
     .svc-card {
       width: 100%;
-      height: clamp(250px, 29dvh, 290px);
+      /* Altezza guidata dal contenuto: la griglia pareggia le righe
+         sulla card più alta, così in hover il body non viene mai
+         tagliato. Il minimo serve solo a dare respiro a riposo. */
+      height: auto;
+      min-height: clamp(190px, 22dvh, 220px);
       position: relative;
       z-index: 1;
       overflow: hidden;
@@ -416,11 +477,13 @@
       cursor: pointer;
       background: transparent;
       opacity: 1;
+      /* La card resta strutturalmente ferma: l'effetto vive tutto
+         sul contenuto testuale. */
       transform: none;
-      transition: background 0.35s ease;
       border-radius: 0;
     }
-    .svc-card:hover { background: linear-gradient(135deg, #DB005A 0%, #a80045 100%); }
+    /* Nessuno sfondo fucsia in hover: il fucsia è il testo che si
+       ricompone, e su fondo fucsia sarebbe illeggibile. */
 
     /* Angoli esterni della griglia arrotondati (5 colonne × 2 righe) */
     .svc-card:nth-child(1)  { border-top-left-radius: 18px !important; }
@@ -438,41 +501,235 @@
       z-index: 4;
       display: block;
     }
-    /* Verticale — non sull'ultima colonna */
+    /* Verticale — non sull'ultima colonna.
+       Sfumatura lunga e opacità bassa: la linea si percepisce appena,
+       senza tratto netto né alone. */
     .svc-card::after {
-      top: 10%; bottom: 10%;
+      top: 18%; bottom: 18%;
       right: 0;
       width: 1px;
       background: linear-gradient(to bottom,
         rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.28) 22%,
-        rgba(255,255,255,0.28) 78%,
+        rgba(255,255,255,0.09) 45%,
+        rgba(255,255,255,0.09) 55%,
         rgba(255,255,255,0) 100%);
-      box-shadow: 1px 0 0 rgba(255,255,255,0.06);
     }
     .svc-card:nth-child(5n)::after { display: none; }
     /* Orizzontale — solo sotto la prima riga */
     .svc-card::before {
-      left: 6%; right: 6%;
+      left: 14%; right: 14%;
       bottom: 0;
       height: 1px;
       background: linear-gradient(to right,
         rgba(255,255,255,0) 0%,
-        rgba(255,255,255,0.24) 20%,
-        rgba(255,255,255,0.24) 80%,
+        rgba(255,255,255,0.08) 45%,
+        rgba(255,255,255,0.08) 55%,
         rgba(255,255,255,0) 100%);
-      box-shadow: 0 1px 0 rgba(255,255,255,0.05);
     }
     .svc-card:nth-child(n+6)::before { display: none; }
     /* In hover il divisore adiacente sparisce: la card si legge piena */
     .svc-card:hover::after,
     .svc-card:hover::before { opacity: 0; transition: opacity 0.3s ease; }
 
+    /* ═══════════════════════════════════════════════════════════
+       MODALITÀ STATIC / CAPTURE  (?static=1)
+       La sezione Servizi vive in uno stage sticky sovrapposto alla
+       hero: in una full-page capture, senza scroll, resterebbe a
+       opacity 0. Qui lo stage viene sciolto e hero e servizi
+       tornano nel flusso, entrambi interi, nello stato finale.
+       Il JS non inizializza nessuna animazione (vedi __STATIC_CAPTURE__),
+       quindi non esistono stili inline intermedi da sovrascrivere.
+       ═══════════════════════════════════════════════════════════ */
+    .static-capture .ht-wrapper { height: auto !important; }
+    .static-capture .ht-stage {
+      position: static !important;
+      height: auto !important;
+      overflow: visible !important;
+    }
+    .static-capture .ht-hero,
+    .static-capture .ht-services {
+      position: relative !important;
+      inset: auto !important;
+      opacity: 1 !important;
+      visibility: visible !important;
+      height: 100dvh !important;
+      transform: none !important;
+      filter: none !important;
+    }
+    .static-capture .svc-gradients { opacity: 0 !important; }
+    /* HERO: il video parte a scala 3.5 ed è la timeline a riportarlo
+       a 1. Senza timeline resterebbe ingrandito, quindi in capture va
+       direttamente allo stato finale. */
+    .static-capture #sr-video { transform: none !important; }
+    /* Nessuna animazione d'ingresso o loop in corso: ogni elemento
+       viene catturato nel suo stato finale, non a metà keyframe. */
+    .static-capture .sr-content *,
+    .static-capture .vhero__tagline,
+    .static-capture .vhero__sub,
+    .static-capture .sr-content .btn {
+      animation: none !important;
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    .static-capture .sr-scroll-hint {
+      animation: none !important;
+      transform: translateX(-50%) !important;
+      opacity: 1 !important;
+    }
+    .static-capture .svc-clients__track,
+    .static-capture .logo-ticker__track,
+    .static-capture .cst-panel { animation: none !important; }
+    /* Il bagliore che segue il cursore non ha senso in uno screenshot */
+    .static-capture .cursor-glow { display: none !important; }
+    .static-capture .svc-header {
+      opacity: 1 !important;
+      transform: none !important;
+      filter: none !important;
+    }
+    .static-capture .svc-title { -webkit-mask-image: none !important; mask-image: none !important; }
+    .static-capture .svc-letter { transform: none !important; }
+    .static-capture .svc-cards-wrap { opacity: 1 !important; transform: none !important; }
+    /* Card nello stato base: testo completo, niente acqua in corso */
+    .static-capture .svc-card__inner { transform: none !important; }
+    .static-capture .svc-card__desc,
+    .static-capture .svc-card__btn { opacity: 1 !important; max-width: none !important; }
+    .static-capture .svc-card__btn { padding: 0.6rem 1.2rem !important; }
+    .static-capture .svc-card__btn-label { opacity: 1 !important; max-width: none !important; }
+    .static-capture .svc-fx-ghost { display: none !important; }
+    .static-capture .svc-fx-real { -webkit-mask-image: none !important; mask-image: none !important; }
+    /* Barra partner completa, binario pieno e loghi visibili */
+    .static-capture .partner-loader {
+      opacity: 1 !important;
+      transform: none !important;
+      height: 104px !important;
+    }
+    .static-capture .partner-loader__fill { clip-path: none !important; }
+    .static-capture .partner-loader__logos { opacity: 1 !important; }
+    /* Reveal e transizioni di sezione: tutto già a destinazione */
+    .static-capture [data-rv] {
+      transform: none !important; opacity: 1 !important;
+      filter: none !important; clip-path: none !important;
+      letter-spacing: normal !important;
+    }
+    .static-capture .sx-rise { transform: none !important; border-radius: 0 !important; }
+    .static-capture .sx-rise::after { display: none !important; }
+    .static-capture .about-section { height: auto !important; }
+    .static-capture .about-sticky { position: static !important; height: auto !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — vetro senza stroke perimetrale
+       La separazione dal fondo viene dal blur e dalla saturazione,
+       non da un bordo: niente border, niente inset highlight.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      /* solo una diffusione morbida verso il basso, nessun contorno */
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+    }
+    /* Sopra sezioni scure il vetro si scurisce: MENU resta chiaro */
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+
+    /* ── Sopra HERO e SERVIZI: vetro bianco, non bordeaux ───────
+       Finché la scena hero+servizi è in viewport la nav non ha
+       .scrolled: è il segnale già usato dal progetto, quindi non
+       serve un secondo sistema. Qui il vetro resta traslucido ma
+       neutro — poca saturazione, nessun glow, nessun tint magenta. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.16) !important;
+      backdrop-filter: blur(26px) saturate(115%) brightness(1.06) !important;
+      -webkit-backdrop-filter: blur(26px) saturate(115%) brightness(1.06) !important;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.18) !important;
+    }
+    /* Vetro chiaro → MENU scuro. Il simbolo resta fucsia, senza alone. */
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; }
+    .nav:not(.scrolled) .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    /* Il simbolo resta fucsia, solo reso più leggibile: nessun neon */
+    .nav--on-dark .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: drop-shadow(0 0 1.5px rgba(255,255,255,0.5));
+    }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       WATER TEXT DISPERSION — hover delle card Servizi
+       Il puntatore è il sassolino: dal punto d'ingresso parte un
+       fronte che erode il testo bianco e, dietro di sé, lascia
+       riaffiorare la copia fucsia. Due superfici mascherate nello
+       stesso sistema di coordinate della card, quindi il fronte
+       attraversa numero, categoria, titolo, body e CTA in base
+       alla loro distanza reale dall'impatto.
+       Il testo vero resta nel DOM: le copie sono aria-hidden.
+       ═══════════════════════════════════════════════════════════ */
+    .svc-fx-real { display: block; }
+    .svc-fx-ghost {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      user-select: none;
+      color: var(--primary, #DB005A);
+    }
+    /* La copia eredita la tipografia ma non deve reintrodurre
+       ombre o bordi propri */
+    .svc-fx-ghost * { color: var(--primary, #DB005A) !important; }
+    .svc-fx-ghost .svc-card__btn {
+      border-color: var(--primary, #DB005A) !important;
+      background: transparent !important;
+    }
+    .svc-card__num .svc-fx-ghost { inset: 0; }
+
+    /* Maschere: opache dove il testo si vede, trasparenti dove
+       l'acqua l'ha portato via. --fx-e / --fx-r sono i due fronti. */
+    .svc-fx-real {
+      -webkit-mask-image: var(--fx-mask-real, none);
+              mask-image: var(--fx-mask-real, none);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    }
+    .svc-fx-ghost {
+      -webkit-mask-image: var(--fx-mask-ghost, none);
+              mask-image: var(--fx-mask-ghost, none);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      opacity: var(--fx-ghost-a, 0);
+    }
+    /* Distorsione liquida applicata solo mentre il fronte passa */
+    .svc-card.fx-run .svc-card__inner,
+    .svc-card.fx-run .svc-card__num {
+      filter: url(#svcWaterFx) blur(var(--fx-b, 0px));
+    }
+    .svc-card.fx-run .svc-fx-real,
+    .svc-card.fx-run .svc-fx-ghost {
+      transform: translate3d(var(--fx-x, 0px), var(--fx-y, 0px), 0);
+    }
+
+    /* Senza motion: nessuna dispersione, solo il viraggio cromatico */
+    @media (prefers-reduced-motion: reduce) {
+      .svc-fx-ghost { display: none !important; }
+      .svc-card__num, .svc-card__tag, .svc-card__title,
+      .svc-card__desc, .svc-card__btn { transition: color 0.35s ease; }
+      .svc-card:hover .svc-card__num,
+      .svc-card:hover .svc-card__tag,
+      .svc-card:hover .svc-card__title,
+      .svc-card:hover .svc-card__desc,
+      .svc-card:hover .svc-card__btn { color: var(--primary, #DB005A); }
+    }
+
     .svc-card__num {
       position: absolute;
-      top: 0.6rem;
-      right: 0.9rem;
-      font-size: clamp(1.9rem,3.2vw,2.6rem);
+      top: 0.55rem;
+      right: 0.55rem;
+      font-size: clamp(1.6rem,2.4vw,2.05rem);
       font-weight: 900;
       line-height: 1;
       color: rgba(255,255,255,0.45);
@@ -480,22 +737,47 @@
       z-index: 2;
       user-select: none;
       pointer-events: none;
-      transition: color 0.35s ease;
     }
-    .svc-card:hover .svc-card__num { color: rgba(255,255,255,0.22); }
 
     /* A riposo il blocco è spinto in basso: restano visibili solo
        tag e titolo; desc e CTA restano nel DOM, sotto il bordo. */
     .svc-card__inner {
       position: relative;
       z-index: 2;
-      padding: clamp(0.9rem,1.4vw,1.15rem);
+      padding: clamp(1rem, 1.5vw, 1.3rem);
       width: 100%;
       opacity: 1;
-      transform: translateY(clamp(105px, 13dvh, 125px));
+      /* A riposo resta visibile solo la fascia in cima al blocco
+         (padding + tagline + titolo): indipendente dalla lunghezza
+         del testo, quindi nessuna card taglia il proprio body. */
+      transform: translateY(calc(100% - var(--svc-peek, 6.2rem)));
       transition: transform 1.05s cubic-bezier(0.16,1,0.3,1);
     }
     .svc-card:hover .svc-card__inner { transform: translateY(0); }
+
+    /* Il numero della card sta in alto a destra: quando in hover il
+       blocco testo risale fino al bordo, tag e titolo gli finivano
+       sotto. Un segnaposto flottante riserva quell'angolo, così il
+       testo ci scorre attorno mandando a capo dove serve — senza
+       toccare tipografia, altezze o allineamenti. */
+    /* ── Safe area del numero e griglia verticale condivisa ─────
+       Regola strutturale: il numero ha sempre la sua area riservata
+       e nessun contenuto — testo reale o copia visuale dell'effetto
+       acqua — può entrarci sopra, né a riposo né in hover.
+       Il titolo occupa sempre lo spazio di due righe anche quando ne
+       usa una: così tagline, titolo, body e CTA partono dalla stessa
+       quota su tutte e dieci le card, senza valori per singola card. */
+    .svc-card__tag,
+    .svc-card__title { padding-right: 3rem; }
+    /* Titolo e body occupano un box fisso pari al caso peggiore
+       (3 righe ciascuno): nessun testo viene troncato e tutte le
+       card condividono la stessa griglia verticale, quindi tagline,
+       titolo, body e CTA partono dalla stessa quota. */
+    .svc-card__title {
+      text-wrap: balance;   /* i titoli lunghi vanno a capo, non si comprimono */
+      height: 2.5em;        /* 2 righe a line-height 1.25 */
+    }
+    .svc-card__desc { height: 6.4em; }   /* 4 righe a line-height 1.6: il body non viene mai troncato */
 
     .svc-card__tag {
       display: block;
@@ -515,11 +797,9 @@
       font-family: var(--font-primary,'Helvetica Neue',sans-serif);
     }
     .svc-card__desc {
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      font-size: var(--text-min);
+      display: block;
+      overflow: visible;
+      font-size: var(--text-body);
       color: rgba(255,255,255,0.85);
       line-height: 1.6;
       margin-bottom: 0.85rem;
@@ -731,6 +1011,21 @@
        ═══════════════════════════════════════════════════════════ */
     :root {
       --surface-dark: radial-gradient(ellipse 140% 90% at 90% 110%, rgba(219,0,90,0.45) 0%, rgba(219,0,90,0.10) 40%, #000 62%);
+      /* Variante ancorata in ALTO: serve dove la sezione scura deve
+         agganciarsi cromaticamente a ciò che la precede — è il caso
+         dei Servizi, che raccolgono i toni del video della hero. */
+      --surface-dark-top:
+        radial-gradient(ellipse 160% 72% at 50% -8%,
+          rgba(232,30,110,0.40) 0%,
+          rgba(219,0,90,0.22)  24%,
+          rgba(219,0,90,0.09)  44%,
+          rgba(219,0,90,0.025) 64%,
+          transparent 80%),
+        linear-gradient(to bottom,
+          rgba(232,30,110,0.13) 0%,
+          rgba(219,0,90,0.05)  20%,
+          transparent 46%),
+        #000;
       /* Gerarchia tipografica */
       --text-body: 1rem;      /* 16px — body, descrizioni, contenuti */
       --text-ui:   0.875rem;  /* 14px — CTA, tagline, eyebrow, privacy */
@@ -739,13 +1034,16 @@
       --rv-ease: cubic-bezier(0.22, 1, 0.36, 1);
       /* Ritmo verticale condiviso card → CTA (Case Studies e Tips) */
       --cards-cta-gap: clamp(2rem, 3.5vw, 3rem);
+      /* Bordeaux della barra partner: label e binario usano lo stesso */
+      --partner-rail: #7A0030;
     }
     .surface-dark,
-    .ht-services,
     #amici-section,
     .tips-sticky {
       background: var(--surface-dark) !important;
     }
+    /* Servizi: stessa sorgente condivisa, variante agganciata in alto */
+    .ht-services { background: var(--surface-dark-top) !important; }
     .tips-section { background: transparent !important; }
 
     /* ═══════════════════════════════════════════════════════════
@@ -947,13 +1245,16 @@
     .partner-loader__label,
     .cst-info__sector,
     .cst-info__tags span,
+    .svc-card__btn,
+    .svc-card__btn-label,
     .tip-card__date { font-size: var(--text-ui) !important; }
 
     .svc-card__title { font-size: clamp(1rem, 1.25vw, 1.15rem) !important; }
 
-    /* Barra partner più generosa: label bordeaux + loghi più grandi */
+    /* Il binario usa lo stesso bordeaux della label */
+    .partner-loader { background: var(--partner-rail) !important; }
     .partner-loader__label {
-      background: #7A0030 !important;
+      background: var(--partner-rail) !important;
       letter-spacing: 0.14em;
       padding-inline: clamp(1.1rem, 2vw, 2rem);
     }
@@ -996,39 +1297,59 @@
     /* will-change solo mentre l'elemento è nella fascia attiva */
     html.js-reveal [data-rv].rv-armed { will-change: transform, opacity; }
 
-    /* — Titoli: stacco deciso, mask dal basso + tracking — */
+    /* — Titoli: stesso linguaggio del reveal di SERVIZI.
+       L'impatto e la ricomposizione arrivano da maschera e
+       displacement scritti dal driver JS: qui nessuno stato
+       iniziale nascosto, così senza JS e in capture il titolo è
+       già intero. Nessuna proprietà tipografica viene toccata,
+       quindi zero layout shift. — */
     html.js-reveal [data-rv="title"] {
-      transform: translateY(46px) scale(0.94);
-      opacity: 0.7;
-      letter-spacing: 0.05em;
-      clip-path: inset(0 0 16% 0);
-      transform-origin: left bottom;
+      transform: none !important;
+      opacity: 1;
+      -webkit-mask-image: var(--ttl-mask, none);
+              mask-image: var(--ttl-mask, none);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    }
+    html.js-reveal [data-rv="title"].ttl-run,
+    html.js-reveal [data-rv-hero].ttl-run { filter: url(#ttlWaterFx); }
+    /* Titolo hero: stesso trattamento, senza stato iniziale in CSS */
+    html.js-reveal [data-rv-hero] {
+      -webkit-mask-image: var(--ttl-mask, none);
+              mask-image: var(--ttl-mask, none);
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    }
+    /* In capture nessun titolo è mai a metà composizione */
+    .static-capture [data-rv="title"],
+    .static-capture [data-rv-hero] {
+      -webkit-mask-image: none !important;
+              mask-image: none !important;
+      filter: none !important;
     }
     /* — Body: movimento delicato — */
     html.js-reveal [data-rv="body"] {
-      transform: translateY(32px) scale(0.985);
+      transform: translateY(32px) scale(0.985) !important;
       opacity: 0.74;
     }
     /* — Card: ingresso prospettico — */
     html.js-reveal [data-rv="card"] {
-      transform: perspective(1100px) rotateX(11deg) translateY(48px) translateZ(-70px) scale(0.94);
+      transform: perspective(1100px) rotateX(11deg) translateY(48px) translateZ(-70px) scale(0.94) !important;
       opacity: 0.7;
       transform-origin: 50% 100%;
     }
     /* — Immagini: scale + maschera — */
     html.js-reveal [data-rv="img"] {
-      transform: scale(1.11);
+      transform: scale(1.11) !important;
       opacity: 0.78;
       clip-path: inset(14% 7% 14% 7%);
     }
     /* — CTA: micro-rotazione, arriva dopo il body — */
     html.js-reveal [data-rv="cta"] {
-      transform: translateY(28px) scale(0.9) rotate(-1.4deg);
+      transform: translateY(28px) scale(0.9) rotate(-1.4deg) !important;
       opacity: 0.72;
     }
     /* — Loghi / elementi grafici — */
     html.js-reveal [data-rv="logo"] {
-      transform: translateY(20px) scale(0.88);
+      transform: translateY(20px) scale(0.88) !important;
       opacity: 0.74;
     }
 
@@ -1036,7 +1357,7 @@
        card3d è escluso perché compone il proprio transform con il
        tilt del puntatore (vedi blocco Tips & Tricks). */
     html.js-reveal [data-rv]:not([data-rv="card3d"]).rv-in {
-      transform: none;
+      transform: none !important;
       opacity: 1;
       filter: none;
       letter-spacing: normal;
@@ -1048,12 +1369,12 @@
       opacity: 0.84;
       transition-delay: 0s;
     }
-    html.js-reveal [data-rv="title"].rv-past { transform: translateY(-16px) scale(0.985); clip-path: inset(0 0 0 0); }
-    html.js-reveal [data-rv="body"].rv-past  { transform: translateY(-12px); }
-    html.js-reveal [data-rv="card"].rv-past  { transform: perspective(1100px) rotateX(-4deg) translateY(-14px) scale(0.985); }
-    html.js-reveal [data-rv="img"].rv-past   { transform: scale(1.03); clip-path: inset(0 0 0 0); }
-    html.js-reveal [data-rv="cta"].rv-past   { transform: translateY(-10px) scale(0.97); }
-    html.js-reveal [data-rv="logo"].rv-past  { transform: translateY(-8px) scale(0.96); }
+    html.js-reveal [data-rv="title"].rv-past { transform: translateY(-16px) scale(0.985) !important; }
+    html.js-reveal [data-rv="body"].rv-past  { transform: translateY(-12px) !important; }
+    html.js-reveal [data-rv="card"].rv-past  { transform: perspective(1100px) rotateX(-4deg) translateY(-14px) scale(0.985) !important; }
+    html.js-reveal [data-rv="img"].rv-past   { transform: scale(1.03) !important; clip-path: inset(0 0 0 0); }
+    html.js-reveal [data-rv="cta"].rv-past   { transform: translateY(-10px) scale(0.97) !important; }
+    html.js-reveal [data-rv="logo"].rv-past  { transform: translateY(-8px) scale(0.96) !important; }
 
     /* ═══════════════════════════════════════════════════════════
        TRANSIZIONI DI SEZIONE — 2 pattern riutilizzabili
@@ -1061,26 +1382,35 @@
        --sxo = uscita). Solo transform/opacity: nessun reflow,
        nessuno scroll-jacking, nessuno spazio vuoto.
        ═══════════════════════════════════════════════════════════ */
-    /* Pattern "rise": la sezione sale e si appoggia sopra la precedente */
+    /* Pattern unico "rise" — il linguaggio dei Case Studies.
+       La sezione entrante sale SOPRA la precedente invece di
+       scostarsi da essa: così dietro si continua a vedere il
+       background reale della sezione precedente e non compare mai
+       il nero della pagina. La striscia lasciata scoperta in basso
+       è riempita da ::after con la superficie della sezione stessa,
+       quindi nessun buco nero nemmeno sotto.
+       Niente scale: allargherebbe la sezione lasciando bordi vuoti. */
     html.js-reveal .sx-rise {
-      transform: translateY(calc((1 - var(--sxi, 1)) * 72px))
-                 scale(calc(0.945 + var(--sxi, 1) * 0.055));
-      border-radius: calc((1 - var(--sxi, 1)) * 44px) calc((1 - var(--sxi, 1)) * 44px) 0 0;
-      box-shadow: 0 calc((1 - var(--sxi, 1)) * -26px) calc((1 - var(--sxi, 1)) * 60px) rgba(0,0,0,0.35);
-      overflow: hidden;
       position: relative;
       z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -58px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -22px) calc((1 - var(--sxi, 1)) * 48px) rgba(0,0,0,0.30);
       will-change: transform;
     }
-    /* Pattern "depth": la sezione uscente arretra nello spazio */
-    html.js-reveal .sx-depth {
-      transform: perspective(1400px)
-                 rotateX(calc(var(--sxo, 0) * 6deg))
-                 translateZ(calc(var(--sxo, 0) * -180px))
-                 scale(calc(1 - var(--sxo, 0) * 0.085));
-      transform-origin: 50% 0%;
-      will-change: transform;
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 58px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
     }
+    /* NB: nessuna regola su .sx-rise > * — scriverebbe transform
+       sugli stessi elementi gestiti dal reveal, annullandone lo
+       stato iniziale. Il movimento del contenuto è già compito del
+       sistema di reveal: qui si muove solo la superficie. */
     /* Il gradiente della superficie scura scorre con lo scroll */
     html.js-reveal .sx-sweep {
       background-position: 50% calc(50% + (var(--sxi, 0.5) - 0.5) * -60px) !important;
@@ -1094,8 +1424,8 @@
         filter: none !important; clip-path: none !important;
         letter-spacing: normal !important; transition: none !important;
       }
-      html.js-reveal .sx-rise,
-      html.js-reveal .sx-depth { transform: none !important; border-radius: 0 !important; }
+      html.js-reveal .sx-rise { transform: none !important; border-radius: 0 !important; }
+      html.js-reveal .sx-rise::after { display: none !important; }
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -1116,13 +1446,16 @@
       box-shadow: none !important;
     }
     .tip-card.tc-live { transition-duration: 0.16s; }
-    /* L'ombra vive sull'immagine, non su un pannello card */
+    /* Ombra scura, morbida e ravvicinata: niente alone fucsia.
+       Si sposta in direzione opposta al puntatore, come farebbe una
+       vera ombra portata. */
     .tip-card__img {
-      box-shadow: 0 14px 30px rgba(0,0,0,0.45), 0 3px 8px rgba(0,0,0,0.3);
-      transition: transform 0.5s var(--rv-ease), box-shadow 0.5s var(--rv-ease);
+      box-shadow: 0 10px 22px rgba(0,0,0,0.40), 0 2px 6px rgba(0,0,0,0.28);
+      transition: box-shadow 0.6s var(--rv-ease);
     }
     .tip-card:hover .tip-card__img {
-      box-shadow: 0 36px 66px rgba(0,0,0,0.55), 0 16px 40px rgba(219,0,90,0.3);
+      box-shadow: calc(var(--tc-sx, 0px) * -0.6) calc(16px - var(--tc-sy, 0px) * 0.6) 30px rgba(0,0,0,0.5),
+                  0 4px 10px rgba(0,0,0,0.32);
     }
 
     /* Reveal delle card Tips: agisce sulle variabili, non sul transform */
@@ -1146,29 +1479,58 @@
       transition: transform 0.16s ease-out,
                   box-shadow 0.4s var(--rv-ease);
     }
-    /* Layering: immagine e testo su piani diversi */
-    .tip-card__img   { transform: translateZ(38px); transition: transform 0.5s var(--rv-ease); }
-    .tip-card__date  { transform: translateZ(18px); transition: transform 0.5s var(--rv-ease); }
-    .tip-card__title { transform: translateZ(26px); transition: transform 0.5s var(--rv-ease); }
-    /* Riflesso sottile che segue il puntatore */
+    /* Profondità per parallasse fra piani, non per inclinazione:
+       la cornice resta ferma, l'immagine si muove al suo interno in
+       direzione opposta al puntatore, il testo la seguee di poco.
+       Nessun riflesso, nessuna rotazione marcata. */
     .tip-card__img { position: relative; }
+    .tip-card__img img {
+      transform: translate3d(var(--tc-ix, 0px), var(--tc-iy, 0px), 0) scale(var(--tc-is, 1));
+      transition: transform 0.65s var(--rv-ease);
+      will-change: transform;
+    }
+    /* Piani a profondità diversa: la separazione fra visual, testo e
+       data è ciò che costruisce il volume, più del tilt. */
+    .tip-card__img   { transform: translateZ(var(--tc-z-img, 0px)); }
+    .tip-card__date {
+      transform: translate3d(var(--tc-tx, 0px), 0, var(--tc-z-date, 0px));
+      transition: transform 0.6s var(--rv-ease);
+    }
+    .tip-card__title {
+      transform: translate3d(var(--tc-tx, 0px), 0, var(--tc-z-tit, 0px));
+      transition: transform 0.6s var(--rv-ease);
+    }
+    /* Luce: la card la RICEVE, non la emette. Gradiente ampio e
+       tenue la cui direzione segue il puntatore, più un filo di
+       luce sul bordo alto per dare spessore alla lastra. */
     .tip-card__img::after {
       content: '';
       position: absolute; inset: 0;
       pointer-events: none;
-      background: radial-gradient(circle at var(--tc-mx, 50%) var(--tc-my, 50%),
-                  rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 55%);
+      border-radius: inherit;
+      background: linear-gradient(var(--tc-lightdir, 160deg),
+                  rgba(255,255,255,0.09) 0%,
+                  rgba(255,255,255,0) 42%,
+                  rgba(0,0,0,0.14) 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.13);
       opacity: 0;
-      transition: opacity 0.4s ease;
+      transition: opacity 0.55s ease, background 0.3s linear;
     }
-    .tip-card:hover { --tc-tz: 26px; }
     .tip-card:hover .tip-card__img::after { opacity: 1; }
+    .tip-card:hover {
+      --tc-is: 1.035;
+      --tc-z-img: 2px;
+      --tc-z-tit: 5px;
+      --tc-z-date: 3px;
+    }
+    /* Ritorno morbido allo stato piatto, senza scatto né rimbalzo */
+    .tip-card { transition: transform 0.75s cubic-bezier(0.22, 1, 0.28, 1); }
     /* Puntatore grossolano / mobile: niente tilt, solo profondità statica */
     @media (hover: none), (pointer: coarse), (max-width: 768px) {
       .tips-grid { perspective: none; }
       .tip-card,
       .tip-card:hover { transform: none !important; }
-      .tip-card__img,
+      .tip-card__img img,
       .tip-card__date,
       .tip-card__title { transform: none !important; }
       .tip-card__img::after { display: none; }
@@ -1196,14 +1558,15 @@
     /* Viewport bassi: lo stage servizi resta 100dvh, quindi titolo,
        card e barra vengono compattati per non sovrapporsi mai. */
     @media (max-height: 820px) {
-      .svc-title       { font-size: min(70px, 11vw); }
-      .svc-header      { padding-bottom: 0.35rem; }
-      .svc-cards-wrap  { margin-top: 0.2rem; padding-bottom: 0.4rem; }
-      .svc-card        { height: clamp(198px, 29.5dvh, 236px); }
-      .svc-card__desc  { -webkit-line-clamp: 1; margin-bottom: 0.55rem; }
+      .svc-title       { font-size: min(42px, 7vw); }
+      .svc-header      { padding: 0.15rem 0 0.2rem; }
+      .svc-cards-wrap  { margin-top: 0; padding-bottom: 0.2rem; }
+      .partner-loader  { bottom: 10px; }
+      .svc-card        { min-height: clamp(170px, 20dvh, 195px); }
+      .svc-card__desc  { margin-bottom: 0.55rem; }
       .svc-card__title { margin-bottom: 0.3rem; }
-      .svc-card__inner { padding: 0.7rem 0.85rem; transform: translateY(clamp(76px, 10.5dvh, 94px)); }
-      .svc-inner       { padding-bottom: clamp(108px, 15vh, 128px); }
+      .svc-card__inner { padding: 0.7rem 0.85rem; --svc-peek: 4.6rem; }
+      .svc-inner       { padding-bottom: clamp(100px, 14vh, 120px); }
     }
   </style>
 <script type="application/ld+json">
@@ -1655,7 +2018,7 @@
     </section>
 
     <!-- ══ TIPS & TRICKS ══════════════════════════════════════ -->
-    <section class="section tips-section" id="tips-section" aria-label="Tips and tricks">
+    <section class="section tips-section" id="tips-section" aria-label="Tips and tricks" data-nav-theme="dark">
       <div class="tips-sticky" id="tipsStickyEl">
         <div class="container">
           <h2 class="tips-section__heading" id="tipsTitle">TIPS &amp; TRICKS</h2>
@@ -1782,6 +2145,7 @@
   //   0.65→0.90  fill 72→100% + barra cresce 4px→170px
   //   0.90→1.00  reveal loghi (opacity 0→1, ticker attivo)
   (function () {
+    if (window.__STATIC_CAPTURE__) return;
     const wrapper  = document.getElementById('ht-wrapper');
     const video    = document.getElementById('sr-video');
     if (!wrapper || !video) return;
@@ -1797,6 +2161,7 @@
     const content    = hero && hero.querySelector('.sr-content');
     const hint       = hero && hero.querySelector('.sr-scroll-hint');
     const svcHeader  = services && services.querySelector('.svc-header');
+    const svcCardsWrap = document.getElementById('svcCardsWrap');
 
     const svcGradients = services && services.querySelector('.svc-gradients');
 
@@ -1816,6 +2181,93 @@
     }
     setNavH();
     window.addEventListener('resize', setNavH);
+
+    // ── Reveal del titolo SERVIZI: impatto nell'acqua ────────────
+    // Stessa famiglia tecnica delle card (displacement + mask), così
+    // titolo e hover appartengono allo stesso motion system.
+    const svcTitle = services && services.querySelector('.svc-title');
+    const svcLetters = svcTitle ? [...svcTitle.querySelectorAll('.svc-letter')] : [];
+    let ttDisp = null, ttTurb = null, ttGeom = null;
+
+    if (svcTitle && !document.getElementById('svcTitleFx')) {
+      const NS = 'http://www.w3.org/2000/svg';
+      const s = document.createElementNS(NS, 'svg');
+      s.setAttribute('aria-hidden', 'true');
+      s.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      s.innerHTML =
+        '<filter id="svcTitleFx" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="11" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(s);
+      ttDisp = s.querySelector('feDisplacementMap');
+      ttTurb = s.querySelector('feTurbulence');
+    }
+
+    function ttMeasure() {
+      if (!svcTitle) return;
+      const r = svcTitle.getBoundingClientRect();
+      // impatto leggermente decentrato: non un cerchio al centro
+      const ox = r.width * 0.38, oy = r.height * 0.62;
+      ttGeom = {
+        w: r.width, h: r.height, ox, oy,
+        rmax: Math.max(
+          Math.hypot(ox, oy), Math.hypot(r.width - ox, oy),
+          Math.hypot(ox, r.height - oy), Math.hypot(r.width - ox, r.height - oy)
+        ) + 40,
+        letters: svcLetters.map(el => {
+          const b = el.getBoundingClientRect();
+          const cx = b.left - r.left + b.width / 2;
+          const cy = b.top - r.top + b.height / 2;
+          return { el, d: Math.hypot(cx - ox, cy - oy) };
+        })
+      };
+    }
+
+    function titleReveal(q) {
+      if (!svcTitle) return;
+      if (!ttGeom || !ttGeom.w) ttMeasure();
+      if (!ttGeom || !ttGeom.w) return;
+
+      if (q >= 0.995) {
+        // stato finale: nessuna maschera, nessun filtro, nessun offset
+        svcTitle.style.removeProperty('--tt-mask');
+        ttGeom.letters.forEach(l => {
+          l.el.style.removeProperty('--tl-x');
+          l.el.style.removeProperty('--tl-y');
+          l.el.style.removeProperty('--tl-s');
+        });
+        if (ttDisp) ttDisp.setAttribute('scale', '0');
+        return;
+      }
+
+      // il fronte della perturbazione si allarga dall'impatto
+      const grow = clamp((q - 0.16) / 0.72, 0, 1);
+      const r = Math.pow(grow, 0.75) * ttGeom.rmax;
+      const soft = 54;
+      svcTitle.style.setProperty('--tt-mask',
+        `radial-gradient(circle at ${ttGeom.ox.toFixed(0)}px ${ttGeom.oy.toFixed(0)}px, ` +
+        `#000 0px, #000 ${Math.max(0, r - soft).toFixed(0)}px, transparent ${(r + soft).toFixed(0)}px)`);
+
+      // rifrazione: massima al tonfo, si spegne mentre compone
+      const dist = Math.sin(Math.min(1, q / 0.85) * Math.PI) * (1 - q * 0.35);
+      if (ttDisp) {
+        ttDisp.setAttribute('scale', (dist * 26).toFixed(2));
+        ttTurb.setAttribute('baseFrequency',
+          (0.010 + dist * 0.012).toFixed(4) + ' ' + (0.030 + dist * 0.02).toFixed(4));
+      }
+
+      // ogni lettera è trascinata finché l'onda non l'ha raggiunta
+      ttGeom.letters.forEach(l => {
+        const local = clamp((r - l.d) / 120, 0, 1);   // 0 = non ancora composta
+        const k = (1 - local) * dist;
+        const dir = l.d ? 1 : 0;
+        l.el.style.setProperty('--tl-y', (k * 14 * dir).toFixed(2) + 'px');
+        l.el.style.setProperty('--tl-x', (k * 6 * (l.d % 2 ? 1 : -1)).toFixed(2) + 'px');
+        l.el.style.setProperty('--tl-s', (1 - k * 0.06).toFixed(3));
+      });
+    }
+    addEventListener('resize', () => { ttGeom = null; }, { passive: true });
 
     // ── Inizializzazione macchina a stati ────────────────────────
     // _phase:        'entering' | 'horizontal' | 'partner' | 'hold'
@@ -1873,27 +2325,67 @@
       window._partnerAccum = clamp((scrollTop - PHASE2_END) / Math.max(1, PARTNER_RANGE), 0, 1);
       const pL = window._partnerAccum;
 
-      // ── TRANSIZIONE HERO → SERVIZI (stesse fasi di prima, ora su p) ──
+      // ══ TRANSIZIONE HERO → SERVIZI ═══════════════════════════════
+      // Una sola timeline guidata da p. Regola cardine: i CONTENUTI
+      // TESTUALI non si sovrappongono mai, gli SFONDI invece sì —
+      // è il video della hero a fare da ponte visivo mentre il
+      // fucsia dei servizi emerge dall'alto.
+      //
+      //   0.00→0.34  il video si assesta
+      //   0.18→0.38  esce l'hint di scroll
+      //   0.30→0.52  ESCONO I TESTI HERO (finiscono a 0.52)
+      //   0.44→0.68  entra lo SFONDO servizi (foschia fucsia)  ← solo sfondo
+      //   0.52→0.57  respiro: nessun testo in scena
+      //   0.57→0.76  entra il TITOLO SERVIZI, protagonista
+      //   0.66→0.94  il video hero viene assorbito
+      //   0.72→0.90  entra la GRIGLIA (al ~79% del titolo)
+      //   poi        la barra partner (fase pL, già successiva)
+      // ═════════════════════════════════════════════════════════════
+      const HERO_TXT_OUT = phase(p, 0.30, 0.52);   // 1 = testi hero fuori
+      const TITLE_IN     = phase(p, 0.57, 0.76);
+      const GRID_IN      = phase(p, 0.72, 0.90);
 
-      video.style.transform = `scale(${(SCALE_START - (SCALE_START - SCALE_END) * phase(p, 0, 0.40)).toFixed(4)})`;
-      if (hint)    hint.style.opacity    = (1 - phase(p, 0.22, 0.44)).toFixed(3);
-      if (content) content.style.opacity = (1 - phase(p, 0.50, 0.66)).toFixed(3);
-      services.style.opacity = phase(p, 0.50, 0.72).toFixed(3);
+      video.style.transform = `scale(${(SCALE_START - (SCALE_START - SCALE_END) * phase(p, 0, 0.34)).toFixed(4)})`;
+      if (hint) hint.style.opacity = (1 - phase(p, 0.18, 0.38)).toFixed(3);
 
-      // Watermark SERVIZI: solo fade, nessuno spostamento (è sfondo)
-      const hP = phase(p, 0.68, 0.84);
-      if (svcHeader) svcHeader.style.opacity = hP.toFixed(3);
-
-      // Gradient overlay scuro in cima (svc-gradients): utile durante la transizione
-      // per fondere hero e servizi, ma deve sparire completamente durante il HOLD
-      // per non creare forme scure visibili sopra il video di sfondo.
-      if (svcGradients) {
-        svcGradients.style.opacity = (1 - phase(p, 0.75, 0.95)).toFixed(3);
+      // Testi hero: escono per primi e completamente
+      if (content) {
+        content.style.opacity   = (1 - HERO_TXT_OUT).toFixed(3);
+        content.style.transform = `translateY(${(HERO_TXT_OUT * -34).toFixed(1)}px)`;
       }
 
-      // Hero visibility: quando l'opacità raggiunge 0, nasconde il layer dal rendering
-      // per eliminare qualsiasi artifact di compositing GPU (triangolo/forma nera).
-      const heroOpacity = 1 - phase(p, 0.54, 0.82);
+      // Layer servizi: entra PRIMA del titolo perché porta lo sfondo.
+      // Titolo e griglia restano a zero finché non è il loro turno,
+      // quindi in scena c'è solo la foschia fucsia sopra al video.
+      services.style.opacity = phase(p, 0.44, 0.68).toFixed(3);
+
+      // ── Titolo SERVIZI: impatto nell'acqua e ricomposizione ────
+      //   0.00→0.18  tonfo: la superficie si increspa
+      //   0.18→0.45  dispersione: forme rifratte e trascinate
+      //   0.45→0.85  composizione dall'impatto verso l'esterno
+      //   0.85→1.00  assestamento: nitido e fermo
+      if (svcHeader) {
+        const q = TITLE_IN;
+        svcHeader.style.opacity = Math.min(1, q / 0.18).toFixed(3);
+        titleReveal(q);
+        svcHeader.classList.toggle('tt-run', q > 0.001 && q < 0.995);
+      }
+
+      // Griglia: entra solo quando il titolo è già leggibile
+      if (svcCardsWrap) {
+        svcCardsWrap.style.opacity   = GRID_IN.toFixed(3);
+        svcCardsWrap.style.transform = `translateY(${((1 - GRID_IN) * 26).toFixed(1)}px)`;
+      }
+
+      // Velo scuro in cima: aiuta la fusione all'inizio, poi lascia
+      // spazio alla foschia fucsia.
+      if (svcGradients) {
+        svcGradients.style.opacity = (1 - phase(p, 0.46, 0.70)).toFixed(3);
+      }
+
+      // Il video resta percepibile mentre il fucsia emerge: viene
+      // assorbito dopo, non tagliato.
+      const heroOpacity = 1 - phase(p, 0.66, 0.94);
       hero.style.opacity = heroOpacity.toFixed(3);
       if (heroOpacity < 0.005) {
         hero.style.visibility = 'hidden';
@@ -2005,18 +2497,254 @@
     window._svcAnim = { playEnter: () => {}, playExit: () => {} };
   })();
 
+  // ─── Servizi: WATER TEXT DISPERSION ───────────────────────────
+  // Sostituisce integralmente il precedente hover delle card.
+  // Il puntatore è il sassolino: dal punto esatto d'ingresso parte
+  // un fronte che erode il testo bianco e, dietro di sé, lascia
+  // riaffiorare la copia fucsia. Numero, categoria, titolo, body e
+  // CTA vengono raggiunti in base alla loro distanza reale
+  // dall'impatto, non a uno stagger sull'ordine DOM.
+  // Il testo vero resta nel DOM: le copie sono aria-hidden.
+  (function () {
+    const track = document.getElementById('svcCardsTrack');
+    if (!track) return;
+    const cards = [...track.querySelectorAll('.svc-card')];
+    if (!cards.length) return;
+    if (window.__STATIC_CAPTURE__) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+
+    // ── Filtro di distorsione liquida, condiviso ────────────────
+    const NS = 'http://www.w3.org/2000/svg';
+    const svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('focusable', 'false');
+    svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+    svg.innerHTML =
+      '<filter id="svcWaterFx" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">' +
+        '<feTurbulence type="fractalNoise" baseFrequency="0.016 0.045" numOctaves="2" seed="7" result="n"/>' +
+        '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+      '</filter>';
+    document.body.appendChild(svg);
+    const dispMap = svg.querySelector('feDisplacementMap');
+    const turb    = svg.querySelector('feTurbulence');
+
+    // ── Costruzione delle due superfici per ogni card ───────────
+    // real  = testo originale, viene eroso
+    // ghost = copia fucsia, riaffiora dietro il fronte
+    function buildSurfaces(host) {
+      if (host.querySelector(':scope > .svc-fx-real')) return null;
+      const real = document.createElement('span');
+      real.className = 'svc-fx-real';
+      while (host.firstChild) real.appendChild(host.firstChild);
+      host.appendChild(real);
+
+      const ghost = document.createElement('span');
+      ghost.className = 'svc-fx-ghost';
+      ghost.setAttribute('aria-hidden', 'true');
+      ghost.innerHTML = real.innerHTML;
+      // la copia non deve essere raggiungibile da tastiera
+      ghost.querySelectorAll('a,button,input,[tabindex]')
+        .forEach(el => { el.setAttribute('tabindex', '-1'); el.removeAttribute('id'); });
+      host.appendChild(ghost);
+      return { real, ghost };
+    }
+
+    const items = [];
+    for (const card of cards) {
+      const inner = card.querySelector('.svc-card__inner');
+      const num   = card.querySelector('.svc-card__num');
+      const surfaces = [];
+      [inner, num].forEach(host => {
+        if (!host) return;
+        const s = buildSurfaces(host);
+        if (s) surfaces.push(s);
+      });
+      if (surfaces.length) items.push({ card, surfaces, state: 'idle', t0: 0, mx: 0, my: 0, rmax: 300 });
+    }
+    if (!items.length) return;
+
+    // ── Tempi (totale percepito ≈ 0.68s in entrata, −26%) ───────
+    // Stessa curva e stesso concept: il feedback arriva subito e lo
+    // stato finale fucsia è raggiunto senza code di assestamento.
+    const SWEEP   = 0.47;  // s — il fronte attraversa la card
+    const SETTLE  = 0.21;  // s — assestamento dopo il fronte
+    const LEAVE   = 0.28;  // s — riassorbimento all'uscita
+    const GAP     = 46;    // px — quanto il fronte fucsia resta indietro
+    const SOFT    = 26;    // px — morbidezza del bordo del fronte
+    const DISP    = 22;    // scala massima della distorsione
+    const BLUR    = 0.8;   // px
+    const DRAG    = 3;     // px di trascinamento
+
+    const easeOut = t => 1 - Math.pow(1 - t, 2.4);
+    let raf = null;
+
+    function maskFor(surfEl, item, rErase, rReveal) {
+      const r = surfEl.getBoundingClientRect();
+      const mx = (item.cx - r.left).toFixed(1);
+      const my = (item.cy - r.top).toFixed(1);
+      return {
+        real: `radial-gradient(circle at ${mx}px ${my}px, transparent 0px, transparent ${Math.max(0, rErase - SOFT).toFixed(1)}px, #000 ${(rErase + SOFT).toFixed(1)}px)`,
+        ghost: `radial-gradient(circle at ${mx}px ${my}px, #000 0px, #000 ${Math.max(0, rReveal - SOFT).toFixed(1)}px, transparent ${(rReveal + SOFT).toFixed(1)}px)`
+      };
+    }
+
+    function apply(item, prog, dir) {
+      // prog 0→1 lungo il passaggio del fronte
+      const e = easeOut(prog);
+      const rErase  = e * item.rmax;
+      const rReveal = Math.max(0, rErase - GAP * (1 - prog * 0.35));
+      // la distorsione vive solo mentre il fronte sta passando
+      const inten = Math.sin(Math.min(1, prog) * Math.PI);
+      const st = item.card.style;
+      st.setProperty('--fx-b', (inten * BLUR).toFixed(2) + 'px');
+      st.setProperty('--fx-x', (inten * DRAG * dir).toFixed(2) + 'px');
+      st.setProperty('--fx-y', (inten * DRAG * 0.4).toFixed(2) + 'px');
+      st.setProperty('--fx-ghost-a', '1');
+      for (const s of item.surfaces) {
+        const m = maskFor(s.real, item, rErase, rReveal);
+        s.real.style.setProperty('--fx-mask-real', m.real);
+        s.ghost.style.setProperty('--fx-mask-ghost', m.ghost);
+      }
+      return inten;
+    }
+
+    // Stato stabile a hover completato: tutto fucsia, nitido
+    function setActive(item) {
+      item.card.classList.remove('fx-run');
+      const st = item.card.style;
+      ['--fx-b','--fx-x','--fx-y'].forEach(k => st.removeProperty(k));
+      st.setProperty('--fx-ghost-a', '1');
+      for (const s of item.surfaces) {
+        s.real.style.setProperty('--fx-mask-real', 'radial-gradient(circle, transparent 0, transparent 100%)');
+        s.ghost.style.setProperty('--fx-mask-ghost', 'radial-gradient(circle, #000 0, #000 100%)');
+      }
+    }
+
+    // Ritorno completo allo stato originale: nessuna variabile
+    function setIdle(item) {
+      item.state = 'idle';
+      item.card.classList.remove('fx-run');
+      const st = item.card.style;
+      ['--fx-b','--fx-x','--fx-y','--fx-ghost-a'].forEach(k => st.removeProperty(k));
+      for (const s of item.surfaces) {
+        s.real.style.removeProperty('--fx-mask-real');
+        s.ghost.style.removeProperty('--fx-mask-ghost');
+      }
+    }
+
+    function tick() {
+      const now = performance.now();
+      let alive = false;
+      let peak = 0;
+
+      for (const item of items) {
+        if (item.state === 'idle' || item.state === 'active') continue;
+        alive = true;
+        const t = (now - item.t0) / 1000;
+
+        if (item.state === 'enter') {
+          if (t < SWEEP) {
+            peak = Math.max(peak, apply(item, t / SWEEP, 1));
+          } else if (t < SWEEP + SETTLE) {
+            const k = 1 - (t - SWEEP) / SETTLE;
+            peak = Math.max(peak, apply(item, 1, 1) * k);
+            const st = item.card.style;
+            st.setProperty('--fx-b', (k * BLUR * 0.4).toFixed(2) + 'px');
+            st.setProperty('--fx-x', (k * DRAG * 0.3).toFixed(2) + 'px');
+            st.setProperty('--fx-y', '0px');
+          } else {
+            item.state = 'active';
+            setActive(item);
+          }
+        } else if (item.state === 'leave') {
+          const k = t / LEAVE;
+          if (k < 1) {
+            // il fronte si ritira: il fucsia viene riassorbito
+            peak = Math.max(peak, apply(item, 1 - k, -1) * 0.7);
+          } else {
+            setIdle(item);
+          }
+        }
+      }
+
+      // la distorsione condivisa segue l'intensità massima in scena
+      dispMap.setAttribute('scale', (peak * DISP).toFixed(2));
+      turb.setAttribute('baseFrequency', (0.016 + peak * 0.010).toFixed(4) + ' ' + (0.045 + peak * 0.02).toFixed(4));
+
+      raf = alive ? requestAnimationFrame(tick) : null;
+      if (!raf) dispMap.setAttribute('scale', '0');
+    }
+
+    function start(item, state, ev) {
+      if (ev) {
+        const cr = item.card.getBoundingClientRect();
+        item.cx = ev.clientX;
+        item.cy = ev.clientY;
+        // Il raggio deve coprire card E blocco di contenuto: a riposo
+        // body e CTA stanno sotto il bordo della card e risalgono
+        // durante l'hover, quindi la sola card non basta.
+        const boxes = [cr];
+        item.surfaces.forEach(s => boxes.push(s.real.getBoundingClientRect()));
+        let far = 0;
+        for (const b of boxes) {
+          for (const x of [b.left, b.right]) {
+            for (const y of [b.top, b.bottom]) {
+              far = Math.max(far, Math.hypot(ev.clientX - x, ev.clientY - y));
+            }
+          }
+        }
+        item.rmax = far + SOFT * 2;
+      }
+      item.state = state;
+      item.t0 = performance.now();
+      item.card.classList.add('fx-run');
+      if (!raf) raf = requestAnimationFrame(tick);
+    }
+
+    // Delega: un solo listener, resiste a ricostruzioni della griglia
+    track.addEventListener('pointerover', e => {
+      const card = e.target.closest && e.target.closest('.svc-card');
+      if (!card) return;
+      const item = items.find(i => i.card === card);
+      if (!item || item.state === 'enter' || item.state === 'active') return;
+      start(item, 'enter', e);
+    });
+    track.addEventListener('pointerout', e => {
+      const card = e.target.closest && e.target.closest('.svc-card');
+      if (!card) return;
+      // ignora gli spostamenti interni alla stessa card
+      if (e.relatedTarget && card.contains(e.relatedTarget)) return;
+      const item = items.find(i => i.card === card);
+      if (!item || item.state === 'idle' || item.state === 'leave') return;
+      start(item, 'leave', null);
+    });
+  })();
+
   // ─── Sistema reveal + transizioni di sezione ──────────────────
   // Progressive enhancement: se questo blocco non gira, la pagina
   // resta completamente renderizzata e leggibile (nessuno stato
   // iniziale viene applicato senza la classe .js-reveal).
   // Reversibile in entrambe le direzioni di scroll.
   (function () {
+    if (window.__STATIC_CAPTURE__) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    // Questo script sta nel corpo della pagina, prima del footer:
+    // senza attendere il parsing completo il footer non verrebbe
+    // mai agganciato al sistema di transizioni.
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init, { once: true });
+    } else {
+      init();
+    }
+
+    function init() {
 
     // Mappa selettore → tipo di reveal (libreria differenziata)
     const MAP = {
       title: ['#amici-title', '.cs2__title', '.tips-section__heading',
-              '.page-faq__title', '.hc-title', '.about-section__heading'],
+              '.page-faq__title', '.hc-title', '.about-section__heading',
+              '.about-section__big'],
       body:  ['.about-section__body', '.about-section__kicker',
               '.cst-info', '.page-faq__item', '.hc-sub'],
       card:   ['.cst-tabs'],
@@ -2039,37 +2767,177 @@
     // Da qui in poi gli stati iniziali diventano attivi
     document.documentElement.classList.add('js-reveal');
 
-    // Stagger tra fratelli dello stesso gruppo
+    // ── Il reveal è per SEZIONE, non per singolo elemento ───────
+    // Osservare ogni elemento separatamente produceva incoerenze:
+    // nella sezione About, che resta in pin, la CTA si fermava a
+    // pochi pixel dalla soglia e non scattava finché il pin non si
+    // rilasciava. Legando il reveal alla sezione, tutti i suoi
+    // elementi appartengono a un'unica timeline coordinata e
+    // partono quando la sezione sta diventando protagonista.
+    const groups = new Map();
     els.forEach(el => {
-      const sibs = el.parentElement
-        ? Array.from(el.parentElement.children).filter(c => c.hasAttribute('data-rv'))
-        : [];
-      const i = sibs.indexOf(el);
-      if (i > 0) el.style.setProperty('--rv-delay', Math.min(i * 0.09, 0.45).toFixed(2) + 's');
+      const sec = el.closest('section, footer') || el;
+      if (!groups.has(sec)) groups.set(sec, []);
+      groups.get(sec).push(el);
     });
 
-    // Il reveal parte quando l'elemento entra nell'80% della viewport
-    // (rootMargin bottom -20%), non quando raggiunge il centro.
+    // Stagger secondo la posizione verticale reale nella sezione
+    groups.forEach(list => {
+      list.sort((a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top);
+      list.forEach((el, i) => {
+        if (i > 0) el.style.setProperty('--rv-delay', Math.min(i * 0.085, 0.4).toFixed(3) + 's');
+      });
+    });
+
+    // ══ Reveal ad acqua dei grandi titoli ═══════════════════════
+    // Stesso concept del titolo SERVIZI — impatto, perturbazione,
+    // dispersione, ricomposizione — esteso a tutti i grandi titoli
+    // della pagina. Un solo filtro e un solo rAF condivisi.
+    // Il testo resta intatto nel DOM: si agisce solo su maschera e
+    // displacement, quindi nessun layout shift e nessuna modifica
+    // tipografica.
+    const NSVG = 'http://www.w3.org/2000/svg';
+    let ttlDisp = null, ttlTurb = null;
+    (function () {
+      const s = document.createElementNS(NSVG, 'svg');
+      s.setAttribute('aria-hidden', 'true');
+      s.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      s.innerHTML =
+        '<filter id="ttlWaterFx" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.012 0.034" numOctaves="2" seed="5" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(s);
+      ttlDisp = s.querySelector('feDisplacementMap');
+      ttlTurb = s.querySelector('feTurbulence');
+    }());
+
+    const ttlActive = new Set();
+    let ttlRaf = null;
+    let ttlSeed = 0;
+    const clamp = (v, lo, hi) => v < lo ? lo : v > hi ? hi : v;
+
+    // Calibrazione sul singolo titolo: stesso principio, intensità e
+    // ampiezza proporzionate alla dimensione e alla lunghezza.
+    function ttlConfig(el, fast) {
+      const r = el.getBoundingClientRect();
+      const fs = parseFloat(getComputedStyle(el).fontSize) || 40;
+      const diag = Math.hypot(r.width, r.height) || 300;
+      const i = (ttlSeed++ % 3);
+      return {
+        w: r.width, h: r.height,
+        // punto d'impatto leggermente diverso per ogni titolo
+        ox: r.width * (0.32 + i * 0.13),
+        oy: r.height * (i === 1 ? 0.34 : 0.62),
+        rmax: diag * 1.15 + 60,
+        // titoli lunghi: propagazione più estesa, non più lenta
+        soft: Math.min(90, Math.max(26, fs * 0.55)),
+        // hero: più rapido, deve lasciare subito leggere
+        dur: fast ? 0.46 : Math.min(0.78, 0.5 + fs / 460),
+        // titoli grandi: perturbazione un filo più scenografica
+        disp: Math.min(30, 12 + fs * 0.10)
+      };
+    }
+
+    function ttlFrame() {
+      const now = performance.now();
+      let peak = 0;
+      for (const it of [...ttlActive]) {
+        const q = (now - it.t0) / 1000 / it.c.dur;
+        if (q >= 1) {
+          it.el.style.removeProperty('--ttl-mask');
+          it.el.classList.remove('ttl-run');
+          ttlActive.delete(it);
+          continue;
+        }
+        const c = it.c;
+        // il fronte si allarga dall'impatto e ricompone le lettere
+        const grow = clamp((q - 0.14) / 0.72, 0, 1);
+        const rad = Math.pow(grow, 0.72) * c.rmax;
+        it.el.style.setProperty('--ttl-mask',
+          `radial-gradient(circle at ${c.ox.toFixed(0)}px ${c.oy.toFixed(0)}px, ` +
+          `#000 0px, #000 ${Math.max(0, rad - c.soft).toFixed(0)}px, ` +
+          `transparent ${(rad + c.soft).toFixed(0)}px)`);
+        // rifrazione massima al tonfo, spenta alla ricomposizione
+        peak = Math.max(peak, Math.sin(Math.min(1, q / 0.88) * Math.PI) * (1 - q * 0.3) * (c.disp / 30));
+      }
+      ttlDisp.setAttribute('scale', (peak * 30).toFixed(2));
+      ttlTurb.setAttribute('baseFrequency',
+        (0.012 + peak * 0.010).toFixed(4) + ' ' + (0.034 + peak * 0.018).toFixed(4));
+      ttlRaf = ttlActive.size ? requestAnimationFrame(ttlFrame) : null;
+      if (!ttlRaf) ttlDisp.setAttribute('scale', '0');
+    }
+
+    function waterTitle(el, fast) {
+      if (el.dataset.ttlDone === '1') return;
+      const c = ttlConfig(el, fast);
+      if (!c.w) return;
+      el.dataset.ttlDone = '1';
+      el.classList.add('ttl-run');
+      ttlActive.add({ el, c, t0: performance.now() });
+      if (!ttlRaf) ttlRaf = requestAnimationFrame(ttlFrame);
+    }
+
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
-        const el = e.target;
-        if (e.isIntersecting) {
-          el.classList.add('rv-in', 'rv-armed');
-          el.classList.remove('rv-past');
-        } else {
-          el.classList.remove('rv-in');
-          // sopra la viewport → stato "uscito", sotto → stato iniziale
-          el.classList.toggle('rv-past', e.boundingClientRect.top < 0);
-          el.classList.remove('rv-armed');
-        }
+        const list = groups.get(e.target);
+        if (!list) return;
+        const past = e.boundingClientRect.top < 0;
+        list.forEach(el => {
+          if (e.isIntersecting) {
+            el.classList.add('rv-in', 'rv-armed');
+            el.classList.remove('rv-past');
+            // il titolo si compone mentre la sezione prende la scena
+            if (el.dataset.rv === 'title') waterTitle(el, false);
+          } else {
+            el.classList.remove('rv-in', 'rv-armed');
+            el.classList.toggle('rv-past', past);
+          }
+        });
       });
-    }, { rootMargin: '0px 0px -20% 0px', threshold: 0 });
+    }, { rootMargin: '0px 0px -12% 0px', threshold: 0 });
 
-    els.forEach(el => io.observe(el));
+    // La hero non dipende dallo scroll: parte subito al caricamento,
+    // più rapida, per non ritardare la lettura del messaggio.
+    const heroTitle = document.querySelector('.vhero__title');
+    if (heroTitle) {
+      heroTitle.setAttribute('data-rv-hero', '1');
+      requestAnimationFrame(() => waterTitle(heroTitle, true));
+    }
 
-    // ── Transizioni di sezione: un solo rAF per tutte ────────────
-    const RISE  = ['#case-studies', '#tips-section', '#faq', '#contatti'];
-    const DEPTH = ['#amici-section', '#tips-section'];
+    groups.forEach((list, sec) => io.observe(sec));
+
+    // ── Reset anticipato ────────────────────────────────────────
+    // Causa del "reset tardivo": un elemento uscito resta nello
+    // stato di uscita finché non rientra davvero in viewport, e il
+    // ritorno allo stato iniziale si vede accadere. Qui, appena la
+    // sezione si avvicina (600px prima), l'elemento viene riportato
+    // allo stato iniziale con le transizioni disattivate: quando
+    // diventa visibile è già pronto per il reveal.
+    const prep = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const list = groups.get(e.target);
+        if (!list) return;
+        list.forEach(el => {
+          if (el.classList.contains('rv-in') || !el.classList.contains('rv-past')) return;
+          el.style.transition = 'none';
+          el.classList.remove('rv-past');
+          void el.offsetWidth;            // forza il ricalcolo prima di riattivare
+          el.style.transition = '';
+        });
+      });
+    }, { rootMargin: '600px 0px 600px 0px', threshold: 0 });
+    groups.forEach((list, sec) => sec !== document.body && prep.observe(sec));
+
+    // ── Transizioni di sezione: un solo rAF, un solo pattern ─────
+    // Tutte le sezioni usano il linguaggio dei Case Studies, così
+    // il motion resta coerente da una sezione all'altra.
+    // About è esclusa dal transform: contiene un pin sticky e un
+    // transform sull'antenato ne romperebbe l'ancoraggio.
+    const RISE  = ['#case-studies', '#tips-section', '#faq', '#contatti',
+                   '#amici-section', '.site-footer'];
+    const DEPTH = [];
     const SWEEP = ['#amici-section', '.tips-sticky'];
 
     const secs = [];
@@ -2107,45 +2975,62 @@
     addEventListener('scroll', schedule, { passive: true });
     addEventListener('resize', schedule, { passive: true });
     paint();
+
+    } // fine init
   }());
 
   // ─── Tips & Tricks: tilt 3D sul puntatore ─────────────────────
   (function () {
+    if (window.__STATIC_CAPTURE__) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
 
     const grid = document.getElementById('tipsGrid');
     if (!grid) return;
-    const MAX = 7; // gradi massimi: tilt percepibile ma il testo resta piano
+
+    // Profondità per parallasse fra piani: rotazione appena accennata
+    // (2°), l'immagine scorre nella cornice in direzione opposta al
+    // puntatore, il testo la segue di poco e l'ombra si sposta al
+    // contrario. Nessun glare, nessun tilt marcato.
+    const ROT = 4;    // gradi — inclinazione verso il cursore
+    const IMG = 10;   // px di scorrimento immagine (controcorrente)
+    const TXT = 4;    // px di scorrimento testo
+    const SHD = 14;   // px di spostamento ombra
 
     grid.querySelectorAll('.tip-card').forEach(card => {
       let raf = null;
-      const onMove = e => {
+      const set = (k, v) => card.style.setProperty(k, v);
+
+      card.addEventListener('pointerenter', () => card.classList.add('tc-live'));
+      card.addEventListener('pointermove', e => {
         if (raf) return;
         raf = requestAnimationFrame(() => {
           raf = null;
           const r = card.getBoundingClientRect();
-          const px = (e.clientX - r.left) / r.width;
-          const py = (e.clientY - r.top) / r.height;
-          card.style.setProperty('--tc-ry', ((px - 0.5) *  2 * MAX).toFixed(2) + 'deg');
-          card.style.setProperty('--tc-rx', ((0.5 - py) *  2 * MAX).toFixed(2) + 'deg');
-          card.style.setProperty('--tc-mx', (px * 100).toFixed(1) + '%');
-          card.style.setProperty('--tc-my', (py * 100).toFixed(1) + '%');
+          const dx = (e.clientX - r.left) / r.width  - 0.5; // -0.5 → 0.5
+          const dy = (e.clientY - r.top)  / r.height - 0.5;
+          set('--tc-ry', (dx *  2 * ROT).toFixed(2) + 'deg');
+          set('--tc-rx', (-dy * 2 * ROT).toFixed(2) + 'deg');
+          set('--tc-ix', (-dx * 2 * IMG).toFixed(1) + 'px');
+          set('--tc-iy', (-dy * 2 * IMG).toFixed(1) + 'px');
+          set('--tc-tx', ( dx * 2 * TXT).toFixed(1) + 'px');
+          set('--tc-sx', ( dx * 2 * SHD).toFixed(1) + 'px');
+          set('--tc-sy', ( dy * 2 * SHD).toFixed(1) + 'px');
+          // la luce arriva dal lato opposto al cursore
+          set('--tc-lightdir', (180 + Math.atan2(dy, dx) * 180 / Math.PI).toFixed(0) + 'deg');
         });
-      };
-      card.addEventListener('pointerenter', () => card.classList.add('tc-live'));
-      card.addEventListener('pointermove', onMove);
+      });
       card.addEventListener('pointerleave', () => {
         card.classList.remove('tc-live');
-        card.style.setProperty('--tc-rx', '0deg');
-        card.style.setProperty('--tc-ry', '0deg');
+        ['--tc-rx','--tc-ry'].forEach(k => set(k, '0deg'));
+        ['--tc-ix','--tc-iy','--tc-tx','--tc-sx','--tc-sy'].forEach(k => set(k, '0px'));
       });
     });
   }());
   </script>
 
   <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
