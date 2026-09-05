@@ -12,6 +12,13 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <!-- Font dei titoli, richiesto qui e non solo dall'@import dentro
+       base.css: l'@import parte solo dopo che base.css è stato scaricato
+       e letto, cioè un giro di rete più tardi. Con il link nell'head la
+       richiesta parte subito, in parallelo ai CSS, e il periodo di
+       blocco (display=block) resta impercettibile. Stessa URL
+       dell'@import: una sola richiesta. -->
+  <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=block" rel="stylesheet">
   <script>
     /* Modalità static/capture: ?static=1 (o ?capture=1).
        Va applicata prima del CSS e prima di qualunque animazione,
@@ -96,30 +103,6 @@
       .about-section__right { padding-left: 0; }
     }
 
-    /* ── Raccordo Servizi → About ───────────────────────────────
-       About è una sezione chiara che arriva subito dopo il nero dei
-       Servizi: senza raccordo il passaggio è un taglio. La testa
-       della sezione parte dal nero pieno e si apre progressivamente
-       sul fondo chiaro, così il background sembra non interrompersi.
-       Sta sotto ai contenuti e non intercetta il puntatore. */
-    .about-sticky::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 34dvh;
-      z-index: 0;
-      pointer-events: none;
-      background: linear-gradient(to bottom,
-        #000             0%,
-        rgba(0,0,0,0.86) 14%,
-        rgba(0,0,0,0.52) 34%,
-        rgba(0,0,0,0.22) 58%,
-        rgba(0,0,0,0.07) 80%,
-        rgba(0,0,0,0)    100%);
-    }
-    /* i contenuti restano sopra il raccordo */
-    .about-sticky > * { position: relative; z-index: 1; }
-
     /* ── Composizione del contenuto About ───────────────────────
        Parte dopo il titolo, con lo stesso linguaggio: una velatura
        liquida che si chiude e micro-spostamenti che si assestano.
@@ -132,12 +115,11 @@
     html.js-reveal .about-sticky .about-section__body,
     html.js-reveal .about-sticky .about-section__cta,
     html.js-reveal .about-sticky .about-section__video-col {
-      transform: translateY(16px);
+      transform: translateY(16px) scale(0.94);
+      transform-origin: left center;
       opacity: 0.78;
-      filter: blur(1.4px);
       transition: transform 0.78s var(--rv-ease, cubic-bezier(0.22,1,0.36,1)),
-                  opacity 0.5s ease,
-                  filter 0.5s ease;
+                  opacity 0.5s ease;
       transition-delay: var(--about-delay, 0s);
     }
     /* il ritardo cresce scendendo: il contenuto si compone in cascata
@@ -157,6 +139,133 @@
       opacity: 1;
       filter: none;
     }
+    /* Il watermark ABOUT condivide data-rv="title" solo per ereditare
+       maschera + filtro acqua: la regola generica [data-rv="title"]
+       .rv-in/.rv-past aggiunge però un translateY+scale pensato per i
+       titoli normali, un effetto estraneo che qui non deve comparire —
+       il watermark si muove solo via acqua, mai via transform. */
+    html.js-reveal .about-section__big.rv-in,
+    html.js-reveal .about-section__big.rv-past {
+      transform: none !important;
+      opacity: 1 !important;
+    }
+    /* ── About: la sezione entra come #amici-section ─────────────
+       La salita con angoli arrotondati e ombra (.sx-rise) era già
+       agganciata a .about-sticky — non può stare sulla sezione, che
+       contiene il pin sticky — ma restava invisibile: la superficie
+       chiara è dipinta su .about-section, che non sale, quindi gli
+       angoli e l'ombra si trovavano su una scatola trasparente e il
+       raccordo fra le due sezioni non si vedeva mai.
+       In #amici-section il fondo sta sull'elemento che si solleva:
+       qui si fa lo stesso — superficie sullo sticky, sezione
+       trasparente, così il pannello sale sul nero con i suoi angoli
+       e la sua ombra, e sx-sweep può muoverne il gradiente. Il fondo
+       è lo stesso identico delle sezioni chiare (hero.css, "SEZIONI
+       CHIARE"): About resta indistinguibile dalle sue vicine a
+       transizione finita.
+       Il tratto di sezione fuori dallo sticky — i 45dvh di corsa del
+       pin — non è mai in viewport, quindi non serve colorarlo.
+       Il padding-top della sezione resta: è la fascia nera che tiene
+       il pannello staccato dalla banda fucsia dei partner, e i 22px
+       di salita corrono dentro quella fascia senza toccarla. */
+    /* La sezione è NERA PIENA, non il gradiente chiaro: tutto ciò che
+       sporge alle transizioni — la striscia in cima che il pannello
+       scopre salendo, e i 45dvh di corsa del pin sotto il pannello,
+       quelli che in scroll-up si vedono fra il pannello e AMICI —
+       deve leggersi nero. Il gradiente chiaro sta solo sul pannello,
+       che è la superficie vera della sezione.
+       Nero esplicito e non trasparente: così non dipende da cosa c'è
+       dietro e non può tornare a mostrare sfumature. */
+    .about-section {
+      background: #000 !important;
+      background-blend-mode: normal !important;
+    }
+    /* La corsa cambia verso: il pannello parte 22px più in BASSO e
+       si assesta salendo, invece di sollevarsi 22px sopra la propria
+       posizione a riposo. Il gesto è lo stesso di #amici-section —
+       superficie che sale, angoli che si chiudono, fondo che scorre —
+       ma il bordo alto non supera mai la posizione finale, quindi la
+       banda fucsia dei partner non può essere coperta: è per
+       costruzione, non per una questione di pochi pixel.
+       (Mandare il pannello sotto la scena via z-index risolveva la
+       sovrapposizione ma nascondeva la corsa: l'effetto spariva.) */
+    html.js-reveal .about-sticky {
+      transform: translateY(calc((1 - var(--sxi, 1)) * 22px)) !important;
+      /* l'ombra di .sx-rise si proietta verso l'alto (0 -14px 34px):
+         così com'è velerebbe il bordo basso della banda. Ridotta
+         entro il margine che la corsa verso il basso libera. */
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -6px)
+                    calc((1 - var(--sxi, 1)) * 16px) rgba(0,0,0,0.35) !important;
+    }
+    .about-sticky {
+      background:
+        radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%) !important;
+      background-size: auto, auto, auto, auto !important;
+      background-blend-mode: normal, normal, overlay, normal !important;
+      /* sx-sweep muove background-position con lo scroll: con il
+         repeat di default i layer si affiancano e la copia dei
+         radiali fucsia disegna una riga rosa sul bordo del pannello,
+         proprio sulla giunzione con AMICI. Niente repeat, e il colore
+         di fondo continua la superficie dove lo spostamento scopre
+         (le due estremità del gradiente sono bianche, quindi non si
+         vede alcuna giunta). */
+      background-repeat: no-repeat !important;
+      background-color: #fff !important;
+    }
+
+    /* ── AMICI: pin breve, esattamente come About ────────────────
+       Stessa meccanica di .about-section/.about-sticky, e stessa
+       scelta di fondo: nessuno scroll-jacking, solo position:sticky.
+       La sezione è la corsa (145dvh: 100 di pannello + 45 di pin),
+       il figlio .amici-sticky è il pannello alto 100dvh che resta
+       agganciato in alto e tiene il contenuto centrato.
+       La superficie scura passa sul pannello perché è lui l'elemento
+       che sale (.sx-rise): sulla sezione, che non si muove, angoli e
+       ombra resterebbero su una scatola invisibile — è esattamente
+       l'errore corretto su About. Per lo stesso motivo la sezione
+       resta trasparente: gli angoli si leggono su ciò che c'è
+       dietro, cioè il pannello chiaro di About. */
+    #amici-section {
+      height: 145dvh !important;
+      min-height: unset !important;
+      padding-block: 0 !important;
+      /* nero pieno, come About: ciò che sporge alle transizioni non
+         deve mai essere una sfumatura */
+      background: #000 !important;
+      /* il clip serve al marquee, e va dove sta il contenuto */
+      overflow: visible !important;
+      display: block !important;
+    }
+    .amici-sticky {
+      position: sticky !important;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding-block: clamp(4rem, 8vw, 7rem) clamp(4rem, 8vw, 6rem);
+      background: var(--surface-dark) !important;
+    }
+
+    /* Effetto acqua sui titoli tipografici: esattamente il linguaggio
+       del titolo SERVIZI — rifrazione a campana più assestamento
+       delle singole lettere dal punto d'impatto. NON il reveal a
+       maschera dei grandi titoli, che è un altro effetto: lì il
+       titolo viene scoperto da un fronte circolare, qui è sempre
+       disegnato e si mette a fuoco. Per lo stesso motivo i titoli
+       che usano questo effetto non passano dal reveal generico
+       (nessun data-rv) e ognuno ha il proprio filtro, così due
+       titoli che partono insieme non si rubano la scala.
+       Il filtro sta sul titolo intero e il testo non viene toccato:
+       niente span per lettera, quindi nessuna perdita di crenatura e
+       nessun allargamento nell'istante in cui l'effetto parte. */
+    /* In cattura i titoli sono sempre interi */
+    .static-capture .about-section__big,
+    .static-capture .svc-clients__title { filter: none !important; }
     /* In cattura tutto è già composto */
     .static-capture .about-sticky .about-section__kicker,
     .static-capture .about-sticky .about-section__heading,
@@ -180,13 +289,79 @@
     }
 
     /* ── Clienti marquee (2 righe) ─────────────────────────── */
-    #amici-section {
+    /* Padding, clip e fondo stanno sul pannello sticky, non sulla
+       sezione: la sezione è solo la corsa del pin. */
+    #amici-section { border-top: none !important; }
+    .amici-sticky {
       background: #000 !important;
-      padding-block: clamp(4rem, 8vw, 7rem) clamp(4rem, 8vw, 6rem) !important;
-      border-top: none !important;
+      /* Il pannello è alto esattamente 100dvh e ritaglia: quindi il
+         padding alto deve garantire lo spazio della nav (che gli
+         passa sopra) senza che i loghi escano dal fondo. */
+      padding-block: max(clamp(4rem, 8vw, 7rem), calc(var(--nav-h, 88px) + 1rem))
+                     clamp(4rem, 8vw, 6rem) !important;
       overflow: hidden !important;
+      /* stessa ragione del pannello About: sx-sweep sposta il fondo e
+         il repeat ne affiancherebbe una copia sul bordo */
+      background-repeat: no-repeat !important;
+      background-color: #000 !important;
+    }
+    /* ── Regione video ───────────────────────────────────────────
+       Copre tutta la sezione e la forma sta dentro per intero:
+       object-fit CONTAIN, non cover, quindi il video non viene mai
+       ritagliato, e object-position al centro lo tiene centrato nel
+       pannello. Sotto chiude una sfumatura di 8rem verso il nero.
+       Sta dietro a tutto il contenuto e non intercetta il puntatore,
+       così titolo e marquee restano leggibili e cliccabili. */
+    .amici-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      isolation: isolate;
+    }
+    .amici-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      /* Il fucsia ESTRO entra fra i colori della forma: la banda
+         calda del video viene portata sulla tinta di brand (#DB005A,
+         hue ~336°) ruotando la crominanza di -54°. Il filtro agisce
+         sui soli pixel del video — la fascia trasparente attorno alla
+         forma resta nera — e conserva luci, ombre e volume: il colore
+         entra nella forma, non ci viene steso sopra. */
+      filter: hue-rotate(-54deg) saturate(1.08);
+    }
+    .amici-video__fade {
+      pointer-events: none;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8rem;
+      background: linear-gradient(to bottom, transparent, #0a0a0a);
+    }
+    /* Il contenuto del pannello sta sopra al video */
+    .amici-sticky > .container,
+    .amici-sticky > .svc-clients__marquee-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Viewport bassi: il pannello non può crescere, quindi si
+       comprimono padding e stacco sotto il titolo invece di far
+       uscire la seconda fila di loghi dal ritaglio. */
+    @media (max-height: 780px) {
+      .amici-sticky {
+        padding-block: calc(var(--nav-h, 88px) + 1rem)
+                       clamp(1.5rem, 4vh, 3rem) !important;
+      }
+      .amici-sticky .svc-clients__header {
+        margin-bottom: clamp(1rem, 3vh, 2rem) !important;
+      }
     }
     .svc-clients__header { margin-bottom: clamp(2.5rem, 5vw, 4rem) !important; }
+
     .svc-clients__marquee-wrap {
       display: flex !important;
       flex-direction: column !important;
@@ -341,14 +516,13 @@
       from { opacity: 0; transform: translateY(28px); }
       to   { opacity: 1; transform: translateY(0); }
     }
-    /* La frase entra come un blocco unico: l'acqua deve attraversare
-       "LE IDEE PRENDONO FORMA" tutta insieme, e con le tre parole
-       sfalsate le ultime due comparivano a fronte già passato. */
-    .sr-content .vhero__title { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.10s both; }
-    .sr-content .vhero__tagline{ animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.76s both; }
-    .sr-content .vhero__sub    { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 0.95s both; }
-    .sr-content .vhero__cta    { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 1.12s both; }
-    .sr-scroll-hint            { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 1.40s both, sr-bounce 1.8s ease-in-out 2.5s infinite; }
+    /* Nessuna entrata in dissolvenza atterrando sulla pagina: la hero
+       è già composta al primo frame. Prima titolo, tagliolino, sub e
+       CTA comparivano in cascata da opacità 0 (sr-fadein, ritardi da
+       0.10s a 1.12s) — è il fade che si vedeva appena arrivati.
+       Il keyframe resta definito perché lo usa ancora il suggerimento
+       di scroll, l'unico elemento che ha senso far arrivare dopo. */
+    .sr-scroll-hint { animation: sr-fadein 0.75s cubic-bezier(0.22,1,0.36,1) 1.40s both, sr-bounce 1.8s ease-in-out 2.5s infinite; }
 
     /* Override testo hero centrato */
     .sr-content .vhero__title { align-items: center; }
@@ -382,7 +556,12 @@
        ogni sezione occupa esattamente una schermata. */
     .ht-wrapper {
       position: relative;
-      background: var(--bg, #fff); /* colore About = body bg, evita stacco nero→bianco */
+      /* Nero, non il bianco di --bg: un eventuale filo di sub-pixel
+         fra la fine dello stage sticky e l'inizio di About deve
+         mostrare nero (come Servizi e come la testa del raccordo),
+         mai il bianco del tema chiaro — è quella la riga bianca che
+         si vede scorrendo. */
+      background: #000;
     }
 
     .ht-stage {
@@ -403,7 +582,12 @@
        alla fine dello zoom — c'è uno scroll in più di respiro prima
        che qualcosa si muova. */
     .ht-pin--hero { height: calc(100dvh + var(--hero-zoom-run, 145dvh)); }
-    .ht-pin--svc  { height: calc(100dvh + var(--svc-run, 80dvh)); }
+    /* La corsa dopo l'aggancio era di 80dvh: 180dvh in tutto, quasi
+       il doppio di ogni altra sezione agganciata. Scende a 45dvh, così
+       Servizi misura 145dvh esatti come Case Studies, Tips, FAQ e
+       Contatti. L'animazione non cambia: il suo progresso è
+       normalizzato sull'altezza di .ht-services, non sul pin. */
+    .ht-pin--svc  { height: calc(100dvh + var(--svc-run, 45dvh)); }
 
     .ht-hero {
       position: sticky;
@@ -528,6 +712,73 @@
     }
 
     #servizi { position: relative; }
+
+    /* ── Servizi: la forma come frammento ─────────────────────────
+       Stesso video della sezione AMICI, trattato all'opposto: là è
+       intera, contenuta e centrata; qui è ingrandita quasi due volte
+       e ancorata in basso a destra, quindi entra tagliata dal bordo —
+       si legge come un dettaglio ravvicinato della stessa materia.
+       È lo sfondo dell'INTERA scena Servizi: sta su .ht-services, non
+       dentro #servizi, quindi copre anche la fascia sotto la griglia
+       fino alla banda partner. Nessun contenitore, nessun margine,
+       nessun angolo arrotondato che la ritagli.
+       Due maschere, una per elemento:
+         · sul contenitore, una sfumatura che spegne il video nella
+           fascia alta — lì deve restare il nero pieno su cui si
+           chiude la coda della hero (.sr-fade), che altrimenti si
+           vedrebbe tagliata da un bordo di video;
+         · sul video, una maschera radiale che ne spegne i contorni,
+           così il frammento non ha un bordo rettangolare.
+       Sta sotto a titolo e card e non intercetta il puntatore. */
+    /* NB: il layer .ht-services è trasparente (il nero sta sul
+       contenitore del pin, vedi più avanti), così lascia vedere il
+       video che gli sta dietro. Continua a ritagliare il proprio
+       contenuto — marquee dei partner e card — ed è esattamente il
+       motivo per cui il video non può stare dentro di lui. */
+    .svc-video {
+      /* agganciato come il layer: stessa corsa, stessa posizione */
+      position: sticky;
+      top: 0;
+      /* 45dvh più alto della scena: nella transizione verso About la
+         sezione si scopre progressivamente, e senza questo margine il
+         video finiva tagliato appena sotto la banda fucsia dei loghi,
+         lasciando comparire il nero dietro About. Il margine negativo
+         serve a non occupare spazio nel flusso: la scena Servizi deve
+         restare dov'era. */
+      height: 145dvh;
+      margin-bottom: -145dvh;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      -webkit-mask-image: linear-gradient(to bottom,
+        transparent 0%, rgba(0,0,0,0.35) 10%, #000 21%, #000 100%);
+              mask-image: linear-gradient(to bottom,
+        transparent 0%, rgba(0,0,0,0.35) 10%, #000 21%, #000 100%);
+    }
+    .svc-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.85) rotate(9deg);
+      transform-origin: 74% 62%;
+      /* stessa rotazione di crominanza della sezione AMICI, così le
+         due forme sono la stessa materia: il fucsia ESTRO resta la
+         tinta dominante. Più scura, perché qui è fondo di lettura. */
+      filter: hue-rotate(-54deg) saturate(1.05) brightness(0.6);
+      opacity: 0.6;
+      /* centro e raggio verticale ri-ancorati: il riquadro ora è alto
+         145dvh invece di 100, e senza questo il frammento scivolava
+         in basso rispetto alla scena */
+      -webkit-mask-image: radial-gradient(ellipse 64% 50% at 74% 40%,
+        #000 0%, rgba(0,0,0,0.6) 46%, transparent 78%);
+              mask-image: radial-gradient(ellipse 64% 50% at 74% 40%,
+        #000 0%, rgba(0,0,0,0.6) 46%, transparent 78%);
+    }
+    /* Il titolo sta sopra al frammento (le card hanno già z-index 3).
+       Selettore per id: più a valle c'è .svc-header { z-index: 0 },
+       che a parità di specificità vincerebbe. */
+    #svcHeader { z-index: 1; }
     .services-entering .svc-card { pointer-events: none; }
     .services-ready .svc-card { pointer-events: auto; }
     .ht-services:not(.services-ready) .svc-card { pointer-events: none; }
@@ -598,10 +849,10 @@
        indipendenti. Il titolo SERVIZI non ha uscita: una volta
        composto resta in scena. */
     html.js-reveal .vhero__title.ttl-out { filter: url(#ttlOutFx); }
-    .svc-letter {
-      transform: translate3d(var(--tl-x, 0px), var(--tl-y, 0px), 0)
-                 scale(var(--tl-s, 1));
-    }
+    /* Nessun transform sulle lettere: l'unico effetto sul titolo è la
+       rifrazione del filtro. Il vecchio assestamento per lettera
+       (spostamento + scala) è stato rimosso perché si sommava
+       all'acqua e si leggeva come un restringimento. */
     /* Le card devono stare sopra il titolo */
     .svc-cards-wrap { z-index: 3; }
 
@@ -795,6 +1046,8 @@
     .static-capture .sx-rise::after { display: none !important; }
     .static-capture .about-section { height: auto !important; }
     .static-capture .about-sticky { position: static !important; height: auto !important; }
+    .static-capture #amici-section { height: auto !important; }
+    .static-capture .amici-sticky { position: static !important; height: auto !important; }
 
     /* Screenshot full-page: lo strumento porta il viewport all'altezza
        dell'intera pagina, quindi ogni min-height in vh/dvh si gonfia
@@ -1180,18 +1433,79 @@
     }
 
     /* ── Tips & Tricks ────────────────────────────────────── */
+    /* Stessa meccanica di About, AMICI e Case Studies: la sezione è
+       la corsa del pin (145dvh), il figlio .tips-sticky è il pannello
+       alto 100dvh agganciato in alto. La superficie scura sta sul
+       pannello — è lui a salire con .sx-rise — e la sezione resta
+       nera: è ciò che sporge alle transizioni. */
     .tips-section {
       position: relative !important;
       padding: 0 !important;
       overflow: visible !important;
-      background: transparent !important;
+      background: #000 !important;
     }
     .tips-sticky {
-      min-height: 100vh;
+      min-height: 0;
       display: flex;
       align-items: center;
-      padding-block: clamp(3rem, 6vw, 5rem);
+      padding-block: clamp(1.6rem, 3.2vh, 3rem);
+      overflow: hidden;
     }
+    @media (min-width: 1024px) and (min-height: 700px) {
+      .tips-section { height: 145dvh !important; }
+      .tips-sticky {
+        position: sticky !important;
+        top: 0;
+        height: 100dvh;
+      }
+    }
+    .static-capture .tips-section { height: auto !important; }
+    .static-capture .tips-sticky { position: static !important; height: auto !important; }
+
+    /* ── Sfondo: la forma che sorge dal bordo basso ───────────────
+       Terza elaborazione della stessa materia. In AMICI la forma è
+       intera e centrata, nei Servizi è un frammento ingrandito a
+       destra; qui è capovolta e ancorata in basso, quindi se ne vede
+       solo la calotta che sale dal bordo — come un pianeta che
+       sorge. La maschera la spegne verso l'alto, dove stanno titolo
+       e card. Stessa rotazione di crominanza delle altre due, così
+       resta la stessa materia col fucsia ESTRO. */
+    .tips-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    /* Il video riempie tutta la sezione: COVER, non contain — nessuna
+       fascia vuota, nessun bordo, la forma non è dentro un riquadro
+       ma è il fondo stesso.
+       Comportamento diverso dalle altre due sezioni: là la forma è
+       ferma (intera in AMICI, frammento fisso nei Servizi), qui
+       RUOTA lentamente su sé stessa, in continuo. È il movimento a
+       distinguerla, non l'inquadratura. */
+    .tips-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform-origin: 50% 50%;
+      animation: tips-orbit 96s linear infinite;
+      filter: hue-rotate(-54deg) saturate(1.05) brightness(0.66);
+      opacity: 0.58;
+    }
+    /* la scala tiene coperti gli angoli mentre ruota: senza, in
+       diagonale si scoprirebbero */
+    @keyframes tips-orbit {
+      from { transform: rotate(0deg) scale(1.45); }
+      to   { transform: rotate(360deg) scale(1.45); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .tips-video__el { animation: none; transform: scale(1.2); }
+    }
+    .static-capture .tips-video__el { animation: none; }
+    /* Titolo, griglia e CTA stanno sopra allo sfondo */
+    .tips-sticky > .container { position: relative; z-index: 1; }
     .tips-sticky .container { width: 100%; }
     .tips-grid {
       display: grid !important;
@@ -1203,10 +1517,55 @@
     .sf-ghost { color: rgba(255,255,255,0.10) !important; }
 
     /* ── Sezione Contatti home ─────────────────────────────── */
+    /* Stessa meccanica delle altre sezioni con il pin: la sezione è
+       la corsa (145dvh) ed è nera, .hc-inner è il pannello 100dvh
+       agganciato in alto che porta il fucsia e sale con .sx-rise. */
     .hc-section {
-      min-height: 100dvh;
-      display: flex;
-      align-items: center;
+      min-height: 0;
+      background: #000 !important;
+      overflow: visible;
+      padding: 0 !important;
+    }
+    .hc-inner {
+      background: var(--primary, #DB005A);
+      justify-content: center;
+      overflow: hidden;
+    }
+    @media (min-width: 820px) and (min-height: 560px) {
+      .hc-section { height: 145dvh !important; }
+      .hc-inner {
+        position: sticky !important;
+        top: 0;
+        height: 100dvh;
+      }
+    }
+    .static-capture .hc-section { height: auto !important; }
+    .static-capture .hc-inner { position: static !important; height: auto !important; }
+
+    /* Ingresso del contenuto: stesso linguaggio di About — il blocco
+       si compone in cascata dietro al titolo, con la stessa curva e
+       gli stessi ritardi crescenti. Nessuno stato nascosto: opacità
+       di partenza alta e spostamento contenuto. */
+    html.js-reveal .hc-inner .hc-sub,
+    html.js-reveal .hc-inner .hc-form {
+      transform: translateY(16px) scale(0.94);
+      transform-origin: center;
+      opacity: 0.78;
+      transition: transform 0.78s var(--rv-ease, cubic-bezier(0.22,1,0.36,1)),
+                  opacity 0.5s ease;
+      transition-delay: var(--hc-delay, 0s);
+    }
+    html.js-reveal .hc-inner .hc-sub  { --hc-delay: 0.18s; }
+    html.js-reveal .hc-inner .hc-form { --hc-delay: 0.34s; }
+    html.js-reveal .hc-inner.hc-in .hc-sub,
+    html.js-reveal .hc-inner.hc-in .hc-form {
+      transform: none;
+      opacity: 1;
+    }
+    .static-capture .hc-inner .hc-sub,
+    .static-capture .hc-inner .hc-form {
+      transform: none !important;
+      opacity: 1 !important;
     }
     .hc-inner {
       display: flex;
@@ -1338,17 +1697,251 @@
       --partner-rail: #7A0030;
     }
     .surface-dark,
-    #amici-section,
+    .amici-sticky,
     .tips-sticky {
       background: var(--surface-dark) !important;
     }
+    /* Va dopo la regola qui sopra: la scorciatoia `background`
+       rimette repeat e colore trasparente. Senza questo sx-sweep
+       affianca una copia del gradiente e sul bordo del pannello
+       compare una riga fucsia. */
+    .amici-sticky {
+      /* Nessun pattern e nessun gradiente: il fondo è nero pieno e
+         l'unica immagine della sezione è il video. `background-image:
+         none` è esplicito perché la regola condivisa più a valle
+         (.surface-dark, .amici-sticky, .tips-sticky) rimetterebbe il
+         gradiente della superficie scura. */
+      background-image: none !important;
+      background-repeat: no-repeat !important;
+      background-color: #000 !important;
+    }
+
+    /* ── CASE STUDIES: pin come About e AMICI ────────────────────
+       Stessa meccanica delle due sezioni precedenti: la sezione è la
+       corsa (145dvh), il figlio .cs2-sticky è il pannello 100dvh
+       agganciato in alto, con la superficie chiara addosso — è lui
+       che sale, quindi angoli e ombra di .sx-rise si vedono. La
+       sezione resta nera: è ciò che sporge alle transizioni.
+       NB: niente overflow:hidden sul pannello. Su .cs2 c'era
+       (components.css) e tagliava il sollevamento in hover della CTA
+       "Vedi tutti i case studies", che ora si muove libera come
+       "Scarica la brochure". */
+    #case-studies {
+      min-height: unset !important;
+      padding-block: 0 !important;
+      background: #000 !important;
+      overflow: visible !important;
+      display: block !important;
+    }
+    .cs2-sticky {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      /* il padding alto tiene il titolo libero dalla nav, che gli
+         passa sopra; in basso resta la fascia di sicurezza della CTA */
+      /* In basso serve una fascia di sicurezza vera: la CTA in hover
+         si solleva e proietta un'ombra di ~32px, e la sezione
+         successiva le sale sopra di 22px (.sx-rise) coprendola — è
+         l'effetto "il pulsante sparisce dentro il contenitore sotto".
+         Con questo margine l'ombra resta dentro il pannello. */
+      padding-block: calc(var(--nav-h, 88px) + clamp(0.5rem, 1.5vh, 1.2rem))
+                     clamp(2.6rem, 5vh, 3.4rem);
+      background:
+        radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%);
+      background-size: auto, auto, auto, auto;
+      background-blend-mode: normal, normal, overlay, normal;
+      background-repeat: no-repeat;
+      background-color: #fff;
+    }
+    /* Il pannello deve stare in una schermata: qui si comprime il
+       ritmo verticale, non i testi. Il riquadro immagine è la parte
+       elastica, come già previsto dal blocco "Case Studies compatto". */
+    .cs2-sticky .cs2__intro { margin-bottom: clamp(0.5rem, 1.4vh, 1.1rem) !important; }
+    .cs2-sticky .cst-tabs   { margin-bottom: clamp(0.5rem, 1.4vh, 1rem) !important; }
+    .cs2-sticky .cs2__footer { margin-top: clamp(0.8rem, 2vh, 1.5rem) !important; }
+    /* Il riquadro immagine si allunga fino all'altezza della riga:
+       la griglia è già in stretch, era l'altezza fissa a impedirlo.
+       Così a zoom-out finito il placeholder e la card di fianco
+       chiudono sulla stessa linea. */
+    .cs2-sticky .cst-img {
+      height: auto !important;
+      align-self: stretch !important;
+      padding: clamp(14px, 1.8vw, 32px) !important;
+    }
+
+    /* ── Profondità per valore, non per ombra ────────────────────
+       Il problema era il bianco su bianco: card, placeholder e fondo
+       sezione stavano tutti sullo stesso valore, quindi nessun piano
+       si staccava. Qui i tre piani vengono separati dal TONO:
+         · fondo sezione — chiaro, il piano più lontano;
+         · card di testo — bianco pieno, il piano più vicino;
+         · placeholder   — superficie scura, il piano opposto.
+       Nessuna ombra, nessun alone, nessun finto rilievo: il contrasto
+       fa il lavoro, come in una stampa. */
+    /* Il riquadro immagine è dichiaratamente un PLACEHOLDER: chiaro,
+       neutro e con i segni convenzionali del posto-immagine — bordo
+       tratteggiato, campitura a righe diagonali appena accennata e
+       un'etichetta in basso. Quando arriverà la fotografia basterà
+       togliere questo blocco: il fondo lo copre comunque. */
+    .cs2-sticky .cst-img {
+      position: relative;
+      background:
+        repeating-linear-gradient(135deg,
+          rgba(26,8,16,0.045) 0px, rgba(26,8,16,0.045) 1px,
+          transparent 1px, transparent 11px),
+        linear-gradient(158deg, #f4eef1 0%, #efe6ec 100%) !important;
+      border: 1.5px dashed rgba(26,8,16,0.26) !important;
+    }
+    /* Etichetta: dice cos'è senza rubare la scena al logo */
+    .cs2-sticky .cst-img::after {
+      content: 'IMMAGINE CASE STUDY · PLACEHOLDER';
+      position: absolute;
+      left: 0; right: 0;
+      bottom: clamp(10px, 1.4vw, 18px);
+      text-align: center;
+      font-family: var(--font-secondary, sans-serif);
+      font-size: clamp(9px, 0.72vw, 11px);
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      color: rgba(26,8,16,0.42);
+      pointer-events: none;
+    }
+    /* La card di testo prende volume dal colore, non dai bordi: il
+       fondo della sezione scende su un rosato più deciso, e la card
+       resta il bianco più pulito che ci sia — su un campo tinto il
+       bianco si stacca da solo. Dentro la card, una progressione
+       leggerissima dall'alto (bianco pieno) al basso (un velo di
+       rosa) le dà una superficie che prende luce invece di essere una
+       campitura piatta. Il contorno passa dal grigio al fucsia
+       diluito: appartiene alla tavolozza, non è una riga neutra. */
+    .cs2-sticky {
+      background:
+        radial-gradient(ellipse 55% 40% at 88% 22%, rgba(219,0,90,0.10) 0%, transparent 70%),
+        radial-gradient(ellipse 45% 35% at 8% 82%, rgba(219,0,90,0.07) 0%, transparent 70%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E"),
+        linear-gradient(180deg, #fdf6f9 0%, #f7e8f0 52%, #fdf6f9 100%) !important;
+    }
+    /* La card di testo è NERA: è lei a portare il contrasto della
+       sezione, su un campo chiaro e rosato. Il contenuto si ribalta
+       di conseguenza — non basta scurire il fondo, va rifatta la
+       gerarchia in negativo. */
+    .cs2-sticky .cst-info {
+      background: linear-gradient(178deg,
+        #1b141b 0%,
+        #14101a 55%,
+        #0d0a11 100%) !important;
+      border: 1px solid rgba(255,255,255,0.10) !important;
+    }
+    /* Logo del brand: sul nero va in bianco, come nella sezione
+       clienti e nella banda partner. */
+    .cs2-sticky .cst-info__brand img {
+      filter: brightness(0) invert(1) !important;
+      opacity: 0.95;
+    }
+    /* Gerarchia in negativo: titolo bianco pieno, testo bianco
+       smorzato, settore e tag sul fucsia — che sul nero guadagna
+       forza invece di perderla. */
+    .cs2-sticky .cst-info__title { color: #fff !important; }
+    .cs2-sticky .cst-info__text  { color: rgba(255,255,255,0.72) !important; }
+    .cs2-sticky .cst-info__text strong { color: #fff !important; }
+    .cs2-sticky .cst-info__sector { color: #ff2e7e !important; }
+    .cs2-sticky .cst-info__tags span {
+      color: #fff !important;
+      background: rgba(219,0,90,0.26) !important;
+      border-color: rgba(255,255,255,0.22) !important;
+    }
+    /* Tab: la selezionata si riempie di fucsia invece di essere una
+       pastiglia bianca su bianco appena bordata. */
+    .cs2-sticky .cst-tab {
+      background: rgba(26,8,16,0.04) !important;
+      border-color: rgba(26,8,16,0.14) !important;
+      color: rgba(26,8,16,0.62) !important;
+    }
+    .cs2-sticky .cst-tab.on {
+      background: var(--primary, #DB005A) !important;
+      border-color: var(--primary, #DB005A) !important;
+      color: #fff !important;
+    }
+    /* È la card di testo a dettare l'altezza della riga (l'immagine la
+       segue): lo spazio si recupera da padding e gap, mai dai testi. */
+    .cs2-sticky .cst-info {
+      padding: clamp(0.75rem, 1.2vw, 1.05rem) clamp(1.2rem, 2vw, 1.8rem) !important;
+      gap: clamp(0.35rem, 0.65vw, 0.6rem) !important;
+    }
+    /* Logo del brand sopra al testo: più grande, e più vicino a ciò
+       che ha sopra e sotto — i margini negativi recuperano parte del
+       gap della card, così il logo cresce senza allungare la colonna
+       (che è quella che decide se la sezione sta in una schermata). */
+    .cs2-sticky .cst-info__brand {
+      height: clamp(58px, 6.8vw, 88px) !important;
+      /* la card è una colonna flex: senza questo il logo veniva
+         schiacciato dallo shrink e l'altezza richiesta non si vedeva */
+      flex: 0 0 auto !important;
+      margin-block: -0.45rem -0.3rem !important;
+      padding: 0 !important;
+    }
+    .cs2-sticky .cst-info__brand img {
+      max-height: 100% !important;
+      max-width: clamp(230px, 29vw, 340px) !important;
+    }
+    /* Taratura per singolo logo: i file hanno margini interni molto
+       diversi, quindi a parità di riquadro alcuni marchi risultano
+       piccoli e altri invadenti. Si corregge con una scala — non con
+       l'altezza del riquadro — così l'altezza della card non cambia
+       e resta allineata al placeholder. */
+    .cs2-sticky .cst-info__brand img[src*="aristonlogo"],
+    .cs2-sticky .cst-info__brand img[src*="humanitas"],
+    .cs2-sticky .cst-info__brand img[src*="cupra"] {
+      transform: scale(1.24);
+      transform-origin: left center;
+    }
+    /* Leolandia è un marchio orizzontale: alla stessa altezza di
+       riquadro risultava largo 214px contro gli 88-109 degli altri,
+       quindi pesava molto di più. La scala lo riporta in linea. */
+    .cs2-sticky .cst-info__brand img[src*="leolandia"] {
+      transform: scale(0.6);
+      transform-origin: left center;
+    }
+    /* Il font dei titoli ha un solo peso reale (400): chiedendo 900 il
+       browser lo ingrassa per conto suo e a 32px il risultato è
+       impastato. Qui si torna al peso disegnato. */
+    .cs2-sticky .cst-info__title { font-weight: 400 !important; }
+    /* Il pin vale solo dove il contenuto ci sta davvero in una
+       schermata. Sotto i 1100px la griglia del pannello passa a
+       colonna singola e le tab vanno su due righe: lì la sezione ha
+       bisogno di più di 100dvh, e bloccarla significherebbe tagliarla.
+       Stessa logica per le viewport basse. */
+    @media (min-width: 1100px) and (min-height: 760px) {
+      #case-studies { height: 145dvh !important; }
+      .cs2-sticky {
+        position: sticky !important;
+        top: 0;
+        height: 100dvh;
+      }
+    }
+    @media (max-width: 768px) {
+      .cs2-sticky { padding-block: clamp(2.5rem, 6vw, 4rem) !important; }
+    }
+    .static-capture #case-studies { height: auto !important; }
+    .static-capture .cs2-sticky { position: static !important; height: auto !important; }
     /* Servizi: stessa sorgente condivisa, variante agganciata in alto */
     /* I Servizi partono da nero pieno: la continuità con la hero non
        la fa più una foschia fucsia in cima alla sezione, ma la coda
        nera della hero stessa (.sr-fade). Così non esiste nessun
-       secondo layer fra le due e lo sfondo non si interrompe mai. */
-    .ht-services { background: #000 !important; }
-    .tips-section { background: transparent !important; }
+       secondo layer fra le due e lo sfondo non si interrompe mai.
+       Il nero non sta più sul layer ma sul contenitore del pin: il
+       layer deve restare trasparente per lasciar vedere il video che
+       gli sta dietro (vedi .svc-video). La continuità con la coda
+       della hero non cambia — il nero è lo stesso, solo un piano più
+       indietro. */
+    .ht-services { background: transparent !important; }
+    .ht-pin--svc { background: #000; }
+    /* Nera come le altre sezioni con il pin: è ciò che sporge alle
+       transizioni, mentre la superficie sta sul pannello sticky. */
+    .tips-section { background: #000 !important; }
 
     /* ═══════════════════════════════════════════════════════════
        ABOUT — pin breve, poi scroll naturale
@@ -1371,7 +1964,7 @@
     }
 
     /* ── Altezza minima sezioni: mai contenuto compresso ─────── */
-    #amici-section,
+    /* Amici è fuori: la sua altezza la decide il pannello sticky */
     .cs2,
     .page-faq,
     .hc-section {
@@ -1380,6 +1973,15 @@
       flex-direction: column;
       justify-content: center;
     }
+    /* Ecco lo spazio enorme sopra "FAQ": non era del pannello, era
+       della sezione. justify-content: center centrava il pannello da
+       900px dentro la corsa da 1305px, lasciandogli sopra 202px di
+       nero che si vedono per tutta la fase di ingresso, prima che il
+       pin si attacchi. Il pannello parte dal bordo alto: il pin si
+       attacca subito e sopra il titolo non c'è più niente. */
+    .cs2,
+    .page-faq,
+    .hc-section { justify-content: flex-start; }
 
     /* ═══════════════════════════════════════════════════════════
        CASE STUDIES
@@ -1497,16 +2099,22 @@
     .tip-card__img img { filter: none !important; }
     .tip-card:hover { box-shadow: 0 6px 18px rgba(0,0,0,0.22) !important; }
 
-    /* Ingresso: scivolata dal basso, sfalsata card per card, breve.
-       Nessuno stato nascosto duraturo — l'offset è piccolo e
-       l'opacità di partenza resta alta. */
+    /* Ingresso: scivolata dal basso ASIMMETRICA. Le tre card non
+       partono dalla stessa quota né con lo stesso passo — corsa,
+       durata e ritardo cambiano per colonna — così il gruppo entra
+       come tre elementi distinti invece che come un blocco unico.
+       Nessuno stato nascosto duraturo: l'opacità di partenza resta
+       alta e l'offset è contenuto. */
     html.js-reveal .tips-grid .tip-card {
-      transform: translateY(26px);
+      transform: translateY(var(--tip-ty, 26px));
       opacity: 0.55;
-      transition: transform 0.5s cubic-bezier(0.22,1,0.36,1),
+      transition: transform var(--tip-dur, 0.5s) cubic-bezier(0.22,1,0.36,1),
                   opacity 0.32s ease;
       transition-delay: var(--tip-delay, 0s);
     }
+    html.js-reveal .tips-grid .tip-card:nth-child(1) { --tip-ty: 86px;  --tip-dur: 0.86s; }
+    html.js-reveal .tips-grid .tip-card:nth-child(2) { --tip-ty: 34px;  --tip-dur: 0.58s; }
+    html.js-reveal .tips-grid .tip-card:nth-child(3) { --tip-ty: 124px; --tip-dur: 1.02s; }
     html.js-reveal .tips-grid.tips-in .tip-card {
       transform: none;
       opacity: 1;
@@ -1533,12 +2141,277 @@
     }
 
     /* ═══════════════════════════════════════════════════════════
+       MURO DELLE RECENSIONI — tre colonne che scorrono
+       ═══════════════════════════════════════════════════════════ */
+    /* Stessa meccanica delle altre sezioni con il pin: la sezione è
+       la corsa (145dvh) ed è nera, il figlio .wall-sticky è il
+       pannello 100dvh agganciato in alto che porta la superficie
+       bianca e sale con .sx-rise. */
+    .wall {
+      background: #000 !important;
+      padding: 0 !important;
+      overflow: visible;
+    }
+    .wall-sticky {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      background: #fff;
+      overflow: hidden;
+      padding-block: max(clamp(2rem, 4vw, 3.5rem), calc(var(--nav-h, 88px) + 0.75rem))
+                     clamp(1.6rem, 3vh, 2.6rem);
+    }
+    @media (min-width: 900px) and (min-height: 640px) {
+      .wall { height: 145dvh !important; }
+      .wall-sticky {
+        position: sticky !important;
+        top: 0;
+        height: 100dvh;
+      }
+    }
+    .static-capture .wall { height: auto !important; }
+    .static-capture .wall-sticky { position: static !important; height: auto !important; }
+
+    .wall__intro { text-align: center; }
+    /* Stesso font, peso, scala e crenatura degli altri titoli di
+       sezione (riferimento: .cs2__title e .page-faq__title). Il
+       titolo è corto apposta: a 150px una frase lunga non ci sta in
+       una riga, e spezzarla lo avrebbe reso diverso dagli altri. */
+    .wall__title {
+      font-family: var(--font-primary);
+      font-size: min(150px, 10.4vw);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      color: var(--primary, #DB005A);
+      margin-bottom: clamp(1.2rem, 2.6vw, 2.2rem);
+    }
+    /* Tre colonne che scorrono in verticale: la centrale in senso
+       opposto, così il muro non si legge come un unico blocco che
+       scivola. La maschera spegne le tessere in alto e in basso. */
+    .wall__cols {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(0.8rem, 1.6vw, 1.4rem);
+      /* dentro il pannello agganciato il muro prende l'altezza che
+         resta, senza farlo crescere oltre i 100dvh */
+      flex: 1;
+      min-height: 0;
+      padding-inline: clamp(1rem, 4vw, 3rem);
+      -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+              mask-image: linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+    }
+    .wall__col { overflow: hidden; }
+    .wall__track {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.8rem, 1.6vw, 1.4rem);
+      animation: wall-scroll var(--wall-dur, 46s) linear infinite;
+      will-change: transform;
+    }
+    .wall__col:nth-child(2) .wall__track { animation-direction: reverse; }
+    .wall__cols:hover .wall__track { animation-play-state: paused; }
+    @keyframes wall-scroll {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-50%); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .wall__track { animation: none; }
+    }
+    .static-capture .wall__track { animation: none; }
+
+    /* Tessera: bordo di vetro — superficie appena velata, contorno
+       chiaro sopra e più marcato sotto, come un pannello smerigliato.
+       Nessuna ombra proiettata. */
+    .wall__card {
+      flex: 0 0 auto;
+      border-radius: 18px;
+      padding: clamp(1rem, 1.6vw, 1.5rem);
+      background: linear-gradient(168deg,
+        rgba(255,255,255,0.92) 0%,
+        rgba(253,242,247,0.86) 100%);
+      border: 1px solid rgba(219,0,90,0.16);
+      -webkit-backdrop-filter: blur(6px);
+              backdrop-filter: blur(6px);
+      outline: 1px solid rgba(255,255,255,0.7);
+      outline-offset: -3px;
+    }
+    .wall__quote {
+      font-family: var(--font-secondary, sans-serif);
+      font-size: clamp(0.86rem, 1vw, 0.98rem);
+      line-height: 1.65;
+      color: rgba(0,0,0,0.74);
+      margin: 0 0 clamp(0.7rem, 1.1vw, 1rem);
+    }
+    .wall__by {
+      display: flex;
+      align-items: baseline;
+      gap: 0.5rem;
+      font-family: var(--font-secondary, sans-serif);
+      font-size: var(--text-min, 0.72rem);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .wall__name { font-weight: 700; color: #0b0b0b; }
+    .wall__role { color: rgba(0,0,0,0.45); }
+    @media (max-width: 900px) {
+      .wall__cols { grid-template-columns: repeat(2, 1fr); }
+      .wall__col:nth-child(3) { display: none; }
+    }
+    @media (max-width: 600px) {
+      .wall__cols { grid-template-columns: 1fr; }
+      .wall__col:nth-child(2) { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
        FAQ — sfondo bianco, titolo 150px
        ═══════════════════════════════════════════════════════════ */
-    .page-faq { background: #fff !important; }
-    /* Con una domanda aperta la sezione superava la schermata di 75px:
-       lo spazio rientra dal padding verticale, non dall'elenco. */
-    .page-faq { padding-block: clamp(2.5rem, 4vw, 3.6rem) !important; }
+    /* ── FAQ: nera, agganciata, con la forma sullo sfondo ────────
+       Stessa meccanica delle altre sezioni con il pin: la sezione è
+       la corsa ed è nera, .page-faq__inner è il pannello 100dvh
+       agganciato che sale con .sx-rise e porta la superficie scura.
+       Il contenuto passa in negativo: su nero le domande e le
+       risposte vanno ribaltate, non basta cambiare il fondo. */
+    /* La sezione è trasparente: il nero sta su .faq-video, che è la
+       superficie che sale. Se lo tenesse la sezione, gli angoli
+       arrotondati della salita mostrerebbero il suo nero invece della
+       sezione precedente e la transizione non si vedrebbe. */
+    .page-faq {
+      background: transparent !important;
+      overflow: visible !important;
+      position: relative;
+    }
+    /* Il pannello non ha più un fondo suo: il nero e il video stanno
+       sulla sezione madre e devono restare visibili sotto. */
+    .page-faq__inner {
+      position: relative;
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden !important;
+      /* Lo stacco alto era legato all'altezza della nav (100px), ma il
+         titolo ha già dentro di sé 39px sopra le maiuscole: il
+         disegno partiva molto più in basso del previsto.
+         56px è il minimo praticabile: la nav è una pill sempre
+         visibile larga quanto la viewport e col bordo basso a 88px,
+         quindi sotto i 49px il titolo le finirebbe dietro. Così
+         l'inchiostro parte a 95px, con 7px di margine. */
+      padding-block: 92px 16px;
+    }
+    @media (min-width: 820px) and (min-height: 560px) {
+      .page-faq { height: 145dvh !important; }
+      .page-faq__inner {
+        position: sticky !important;
+        top: 0;
+        height: 100dvh;
+      }
+    }
+    .static-capture .page-faq__inner { position: static !important; height: auto !important; }
+
+    /* Sfondo dell'intera sezione madre: figlio diretto di .page-faq,
+       quindi inset: 0 copre tutti i 145dvh della corsa, non la sola
+       viewport agganciata. Nessuna maschera che lo confini a una
+       zona. Sopra e sotto due sfumature al nero da 200px lo fondono
+       con la pagina, come nel componente di riferimento. */
+    .faq-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      background: #000;
+    }
+    /* .faq-video è la superficie della sezione, quindi è lei a fare la
+       salita: il pattern .sx-rise vuole position: relative, che qui
+       staccherebbe il video dal riquadro della sezione, perciò
+       riscrivo le sole dichiarazioni visive. Il pannello delle
+       domande ha il suo .sx-rise e sale in sincrono, con gli stessi
+       valori. L'altezza va oltre il fondo di 22px, quanto la salita:
+       così sotto non si apre mai una striscia scoperta. */
+    html.js-reveal .faq-video.sx-rise {
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: calc(100% + 22px);
+      z-index: 0;
+      box-shadow: none;
+    }
+    html.js-reveal .faq-video.sx-rise::after { content: none; }
+    /* Stessi valori della sezione Servizi: ingrandita 1.85 e ruotata
+       di 9°, stessa rotazione di crominanza, stessa luminosità. Qui
+       però copre tutta la sezione, senza la maschera radiale che nei
+       Servizi la riduce a frammento. */
+    .faq-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.85) rotate(9deg);
+      transform-origin: 74% 62%;
+      filter: hue-rotate(-54deg) saturate(1.05) brightness(0.6);
+      opacity: 0.6;
+    }
+    .faq-video__fade {
+      position: absolute;
+      left: 0; right: 0;
+      height: 200px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .faq-video__fade--top    { top: 0;    background: linear-gradient(to bottom, #000, transparent); }
+    .faq-video__fade--bottom { bottom: 0; background: linear-gradient(to top,    #000, transparent); }
+
+
+    /* Il contenuto sta sopra al video */
+    .page-faq__title,
+    .page-faq__list { position: relative; z-index: 1; }
+    /* Le domande occupano il pannello invece di stare centrate come un
+       blocco corto: erano 680px in un pannello da 900, e i 220px
+       avanzati diventavano due bande vuote sopra e sotto (146px e
+       73px, contro i 100/27 di Passaparola). Ora la cornice è la
+       stessa delle altre sezioni e lo spazio va tra le voci.
+       Con le risposte aperte lo spazio in più si azzera da sé e le
+       voci tornano alla loro altezza naturale. */
+    @media (min-width: 820px) and (min-height: 560px) {
+      .page-faq__list {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+      }
+      /* Lo spazio va DENTRO le voci, non tra una voce e l'altra:
+         distribuito tra le righe spezzava il ritmo dei filetti e si
+         leggeva come aria di troppo. Così le righe sono tutte alte
+         uguali e l'elenco è continuo dal titolo al fondo. */
+      .page-faq__item {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+    }
+    /* Il pannello è alto esattamente 100dvh e ritaglia: con una
+       risposta aperta il contenuto sforava di 9px. Lo spazio si
+       recupera dallo stacco sotto il titolo, non dai testi. */
+    @media (min-width: 820px) and (min-height: 560px) {
+      /* lo stacco sotto il titolo lo fissa la regola più a valle,
+         insieme al recupero dello spazio interno del font */
+      /* Le risposte sono passate a 16px (minimo tipografico) e con una
+         aperta il contenuto tornava a sforare: lo spazio si recupera
+         dalle spaziature delle voci, non dai testi. */
+      .page-faq__question { padding-block: clamp(0.7rem, 1.6vh, 1.1rem) !important; }
+    }
+
+    /* Gerarchia in negativo */
+    .page-faq__question { color: #fff !important; }
+    .page-faq__answer-inner { color: rgba(255,255,255,0.72) !important; }
+    .page-faq__item { border-color: rgba(255,255,255,0.16) !important; }
+    /* La sezione madre non ha padding, come .cs2 e .hc-section: è solo
+       la corsa dello scroll. Il respiro lo dà il pannello agganciato,
+       con gli stessi valori di .wall-sticky. Il padding che c'era qui
+       (57,6px sopra e sotto) mangiava l'altezza della corsa e rendeva
+       la FAQ più ariosa di ogni altra sezione. */
+    .page-faq { padding-block: 0 !important; }
     /* Safe area dell'occhio: in hover e in apertura il cerchio va a
        scale(1.1), quindi sporge di ~2px oltre la riga. Qui la riga
        riserva quello spazio e la colonna non può più tagliarlo,
@@ -1548,9 +2421,18 @@
     .page-faq__list,
     .page-faq__item,
     .page-faq__inner    { overflow: visible !important; }
+    /* Il vuoto sopra e sotto "FAQ" non era padding: è lo spazio che il
+       font si porta dietro dentro la riga — 39px sopra le maiuscole e
+       ~30px sotto la linea di base, su un corpo di 150px. Con
+       line-height:1 restava tutto lì. I due margini negativi lo
+       tolgono, così il riquadro del titolo coincide con il disegno
+       delle lettere e il padding del pannello torna a misurare quello
+       che si vede. */
     .page-faq__title {
       font-size: min(150px, 26vw) !important;
       line-height: 1 !important;
+      margin-top: -0.26em !important;
+      margin-bottom: -0.14em !important;
     }
     .page-faq__question     { font-size: clamp(1rem, 1.5vw, 1.25rem) !important; }
     .page-faq__answer-inner { font-size: var(--text-min) !important; }
@@ -1561,10 +2443,21 @@
        padding-inline-end: 0 (asimmetrico), mentre .page-faq__inner
        usa 1240px con padding simmetrico. Qui allineo la geometria.
        ═══════════════════════════════════════════════════════════ */
+    /* Il pannello porta il fucsia, quindi deve essere largo quanto la
+       viewport: con max-width 1240px restava una cornice nera ai lati
+       e si vedeva solo una porzione di fucsia. La misura editoriale
+       (1240px) passa al contenuto, che resta incolonnato al centro. */
     .hc-inner {
-      max-width: 1240px !important;
-      margin-inline: auto !important;
-      padding-inline: var(--gutter) !important;
+      max-width: none !important;
+      width: 100% !important;
+      margin-inline: 0 !important;
+      padding-inline: 0 !important;
+    }
+    .hc-inner > * {
+      width: 100%;
+      max-width: 1240px;
+      margin-inline: auto;
+      padding-inline: var(--gutter);
     }
 
     /* ═══════════════════════════════════════════════════════════
@@ -1588,7 +2481,6 @@
     .about-section__kicker,
     .vhero__sub,
     .vhero__tagline,
-    .hc-sub,
     .svc-caffe__privacy,
     .svc-caffe__privacy span,
     .svc-card__tag,
@@ -1711,8 +2603,14 @@
       opacity: 1;
       filter: none;
       letter-spacing: normal;
-      clip-path: inset(0 0 0 0);
     }
+    /* Il clip-path a riposo serve SOLO al reveal delle immagini, che
+       è l'unico ad animarlo (da inset(14% 7%) a inset(0)). Rimetterlo
+       su tutti i tipi ritagliava ogni elemento rivelato esattamente
+       sul suo border box: le CTA, sollevandosi di 2px in hover,
+       finivano tagliate in cima — misurato, contenitore con clip a
+       173px e pulsante a 171 — e l'ombra veniva tranciata sotto. */
+    html.js-reveal [data-rv="img"].rv-in { clip-path: inset(0 0 0 0); }
 
     /* Uscita verso l'alto: inversa leggera, sempre ben visibile */
     html.js-reveal [data-rv].rv-past {
@@ -1766,6 +2664,37 @@
        Due cause reali, corrette qui: la CTA stava sotto la soglia di
        sovrapposizione della sezione successiva, e il sollevamento in
        hover veniva tagliato dall'overflow della sezione. */
+    /* ── CTA Case Studies = CTA About ────────────────────────────
+       "Vedi tutti i case studies" è ora btn--primary come "Scarica la
+       brochure": fucsia pieno con testo bianco, e in hover nero con
+       la tendina che entra da sinistra più il sollevamento.
+       In components.css .cs2__footer-btn ha due regole pensate per la
+       versione outline (bordo e testo neri a riposo, fucsia in hover):
+       vanno neutralizzate qui, altrimenti la CTA continuerebbe a
+       comportarsi in modo diverso dall'altra. */
+    .cs2__footer-btn {
+      border-color: var(--primary, #DB005A) !important;
+      color: var(--white, #fff) !important;
+    }
+    .cs2__footer-btn:hover,
+    .cs2__footer-btn:focus-visible {
+      border-color: var(--black, #000) !important;
+      background: var(--black, #000) !important;
+      color: var(--white, #fff) !important;
+    }
+    /* La "tendina" nera di .btn--primary (::before) attraversa il
+       pulsante in 0.32s, mentre il fondo passa a nero in 0.18s: per
+       un terzo di secondo il pulsante si legge tagliato in due —
+       metà nera e metà fucsia, con uno stacco netto verticale — e su
+       un pulsante largo come questo si nota parecchio.
+       Sul risultato finale la tendina non aggiunge niente, perché
+       fondo e tendina sono entrambi neri: qui si toglie, e resta la
+       sola transizione di colore, pulita e della stessa durata.
+       Vale anche per la CTA di About, che ha la stessa costruzione e
+       lo stesso difetto: le due restano identiche. */
+    .cs2__footer-btn::before,
+    .about-section__cta .btn::before { display: none !important; }
+
     .cs2__footer, .cs2__footer-btn,
     .tips-section__cta, .tips-section__cta .btn,
     .about-section__cta, .about-section__cta .btn {
@@ -1800,47 +2729,48 @@
     /* ═══════════════════════════════════════════════════════════
        TIPS & TRICKS — card tridimensionali
        ═══════════════════════════════════════════════════════════ */
-    .tips-grid { perspective: 1400px; perspective-origin: 50% 40%; }
-    /* Un solo transform compone tilt puntatore (--tc-*) e reveal
-       (--rv-*): niente regole che si sovrascrivono a vicenda. */
+    /* ── Card Tips: trattamento editoriale ───────────────────────
+       Via il 3D (prospettiva, tilt sul puntatore, rotazioni): le card
+       si comportano come voci di una rivista. L'immagine vive dentro
+       una cornice che la ritaglia e si avvicina appena in hover, la
+       data resta un'etichetta, il titolo prende un filetto che si
+       traccia da sinistra. Nessuna inclinazione, nessuna ombra
+       proiettata sulla card. */
+    .tips-grid { perspective: none; }
     .tip-card {
-      transform-style: preserve-3d;
-      transform: perspective(1400px)
-                 rotateX(calc(var(--tc-rx, 0deg) + var(--rv-rx, 0deg)))
-                 rotateY(var(--tc-ry, 0deg))
-                 translateY(var(--rv-ty, 0px))
-                 translateZ(calc(var(--tc-tz, 0px) + var(--rv-tz, 0px)))
-                 scale(var(--rv-s, 1));
+      transform: translateY(var(--rv-ty, 0px));
       transition: transform 0.6s var(--rv-ease);
       box-shadow: none !important;
     }
-    .tip-card.tc-live { transition-duration: 0.16s; }
-    /* Ombra scura, morbida e ravvicinata: niente alone fucsia.
-       Si sposta in direzione opposta al puntatore, come farebbe una
-       vera ombra portata. */
+    /* La cornice ritaglia l'immagine, che in hover si avvicina di
+       poco: il movimento sta dentro la cornice, non sulla card. */
     .tip-card__img {
-      box-shadow: 0 10px 22px rgba(0,0,0,0.40), 0 2px 6px rgba(0,0,0,0.28);
-      transition: box-shadow 0.6s var(--rv-ease);
+      overflow: hidden;
+      box-shadow: none !important;
     }
-    .tip-card:hover .tip-card__img {
-      box-shadow: calc(var(--tc-sx, 0px) * -0.6) calc(16px - var(--tc-sy, 0px) * 0.6) 30px rgba(0,0,0,0.5),
-                  0 4px 10px rgba(0,0,0,0.32);
+    .tip-card__img img {
+      transition: transform 0.7s var(--rv-ease), filter 0.5s ease;
+      transform-origin: 50% 50%;
     }
+    .tip-card:hover .tip-card__img img { transform: scale(1.06); }
 
-    /* Reveal delle card Tips: agisce sulle variabili, non sul transform */
+
+    /* Reveal delle card Tips: salita ASIMMETRICA. Le tre card non
+       partono dalla stessa quota né nello stesso istante — corsa,
+       ritardo e durata cambiano per colonna — così entrano come tre
+       elementi distinti e non come un blocco unico. */
     html.js-reveal .tip-card[data-rv="card3d"] {
-      --rv-ty: 50px; --rv-rx: 11deg; --rv-tz: -80px; --rv-s: 0.94;
-      opacity: 0.7;
+      --rv-ty: 34px;
+      opacity: 0.72;
       transition: transform 0.9s var(--rv-ease) var(--rv-delay, 0s),
-                  opacity 0.55s ease var(--rv-delay, 0s),
-                  box-shadow 0.5s var(--rv-ease);
+                  opacity 0.55s ease var(--rv-delay, 0s);
     }
     html.js-reveal .tip-card[data-rv="card3d"].rv-in {
-      --rv-ty: 0px; --rv-rx: 0deg; --rv-tz: 0px; --rv-s: 1;
+      --rv-ty: 0px;
       opacity: 1;
     }
     html.js-reveal .tip-card[data-rv="card3d"].rv-past {
-      --rv-ty: -16px; --rv-rx: -4deg; --rv-tz: 0px; --rv-s: 0.985;
+      --rv-ty: -12px;
       opacity: 0.84;
     }
     /* Mentre il puntatore è sopra, il tilt deve restare reattivo */
@@ -1910,13 +2840,15 @@
       .cst-info__brand { height: clamp(34px, 6vw, 44px); }
     }
     @media (max-width: 768px) {
-      #amici-section, .cs2, .page-faq, .hc-section {
+      .cs2, .page-faq, .hc-section {
         min-height: auto;
         display: block;
       }
-      /* Su mobile niente pin: la sezione scorre normalmente */
+      /* Su mobile niente pin: le sezioni scorrono normalmente */
       .about-section { height: auto !important; }
       .about-sticky  { position: static !important; height: auto !important; }
+      #amici-section { height: auto !important; }
+      .amici-sticky  { position: static !important; height: auto !important; }
       .page-faq__title { font-size: min(150px, 30vw) !important; }
       .tips-grid       { grid-template-columns: 1fr !important; }
     }
@@ -1947,6 +2879,72 @@
         justify-content: flex-end;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       MINIMO TIPOGRAFICO: 16px
+       Il token --text-min era già 1rem, ma diversi elementi avevano
+       misure scritte a mano sotto soglia — fino a 9.3px nel footer.
+       Qui vengono riportati tutti al minimo. Il blocco sta in fondo
+       al foglio di proposito: le regole che abbassavano il corpo
+       arrivano più avanti nella cascata e, a parità di specificità,
+       vincevano su un blocco messo prima.
+       Dove esisteva una scala fluida si usa max(16px, …): sopra i
+       16px la scala continua a lavorare come prima.
+       ═══════════════════════════════════════════════════════════ */
+    .svc-card__btn-label,
+    .cst-info__sector,
+    .cst-info__text,
+    .cst-tab,
+    .tip-card__date,
+    .tip-card__excerpt,
+    .partner-loader__label,
+    .nav__mega-label,
+    .nav__menu-label-open,
+    .nav__menu-label-close,
+    .sf-col__title,
+    .sf-contact__label,
+    .sf-col a,
+    .sf-legal,
+    .sf-legal a,
+    .page-faq__answer-inner,
+    .wall__quote,
+    .wall__by,
+    .wall__name,
+    .wall__role,
+    .svc-caffe__privacy,
+    .svc-caffe__privacy *,
+    .sf-tagline,
+    .sf-contact,
+    .sf-contact *,
+    .sf-legal__copy,
+    .sf-legal__copy * { font-size: max(16px, var(--text-min, 1rem)) !important; }
+
+    /* Le tre eccezioni al minimo: tagline, tag e CTA restano a 14px.
+       Sono etichette, non testo di lettura: portarle a 16 le avrebbe
+       fatte pesare quanto i contenuti. */
+    .vhero__tagline,
+    .vhero__sub,
+    .sf-tagline,
+    .about-section__kicker,
+    .svc-card__tag,
+    .cst-info__tags span,
+    .tip-card__date { font-size: 14px !important; }
+    /* .btn ha una regola con !important più a valle: qui serve una
+       specificità più alta, non un'altra dichiarazione uguale. */
+    a.btn, button.btn, .btn.btn { font-size: 14px !important; }
+    /* Le due CTA della nav stavano a 11px: sono CTA, quindi 14px
+       come tutte le altre. */
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+    /* Il sottotitolo dei Contatti non è una tagline decorativa: è la
+       frase che invita a scrivere, quindi sta al minimo di lettura
+       come il resto del corpo testo. */
+    p.hc-sub { font-size: 16px !important; }
+
+    /* Il footer sale con .sx-rise: la fascia ::after che riempie lo
+       spazio sotto sta fuori dal suo riquadro, quindi il footer non
+       può più ritagliare. La scritta ESTRO gigante resta contenuta:
+       il ritaglio ce l'ha .sf-ghost per conto suo. */
+    footer.site-footer { overflow: visible; }
   </style>
 <script type="application/ld+json">
 {
@@ -2084,6 +3082,18 @@
              Stessa logica: la sezione resta bloccata per tutta la
              sua fase principale, poi rilascia verso About. -->
         <div class="ht-pin ht-pin--svc">
+        <!-- Sfondo video della scena Servizi. Sta FUORI da
+             .ht-services, come suo fratello agganciato: il layer
+             ritaglia il proprio contenuto (marquee dei partner, card)
+             e ritagliava anche questo, tagliando il video appena sotto
+             la banda fucsia. Qui invece può proseguire 45dvh più in
+             basso e coprire la fascia che la transizione verso About
+             scopre. Il layer resta trasparente e lo lascia vedere.
+             Decorativo: aria-hidden, muto, non cliccabile. -->
+        <div class="svc-video" aria-hidden="true">
+          <video class="svc-video__el" autoplay loop muted playsinline preload="metadata"
+                 src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        </div>
         <div class="ht-services" id="ht-services">
           <!-- Layer 1: gradient overlay scuro in cima -->
           <div class="svc-gradients" aria-hidden="true"></div>
@@ -2172,6 +3182,19 @@
 
     <!-- ══ CLIENTI ════════════════════════════════════════════ -->
     <section class="svc-clients" id="amici-section" aria-label="I nostri clienti" data-nav-theme="dark">
+      <!-- Pannello agganciato: stessa meccanica di .about-sticky —
+           la sezione è la corsa, questo figlio è il pannello 100dvh
+           che resta in alto mentre la corsa scorre. -->
+      <div class="amici-sticky">
+      <!-- Regione video in alto: occupa il 75% dell'altezza del
+           pannello, in copertura, con la sfumatura che ne chiude il
+           bordo basso. Decorativa: aria-hidden, nessun suono,
+           nessun controllo, non intercetta il puntatore. -->
+      <div class="amici-video" aria-hidden="true">
+        <video class="amici-video__el" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        <div class="amici-video__fade"></div>
+      </div>
       <div class="container svc-clients__header">
         <h2 class="svc-clients__title" id="amici-title">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
       </div>
@@ -2265,10 +3288,15 @@
           <div class="svc-clients__logo"><img src="Loghibrand/wudy.webp" alt="Wudy" /></div>
         </div>
       </div>
+      </div><!-- /amici-sticky -->
     </section>
 
     <!-- ══ CASE STUDIES ══════════════════════════════════════ -->
     <section class="cs2" id="case-studies" aria-labelledby="cs2-title">
+      <!-- Pannello agganciato: stessa meccanica di .about-sticky e
+           .amici-sticky — la sezione è la corsa del pin, questo
+           figlio è il pannello 100dvh che resta in alto. -->
+      <div class="cs2-sticky">
 
       <!-- Titolo -->
       <div class="container cs2__intro">
@@ -2402,14 +3430,24 @@
 
       <!-- CTA centrata -->
       <div class="container cs2__footer" id="cs2Footer">
-        <a class="btn btn--outline cs2__footer-btn" href="case-studies.html">Vedi tutti i case studies</a>
+        <a class="btn btn--primary cs2__footer-btn" href="case-studies.html">Vedi tutti i case studies</a>
       </div>
 
+      </div><!-- /cs2-sticky -->
     </section>
 
     <!-- ══ TIPS & TRICKS ══════════════════════════════════════ -->
     <section class="section tips-section" id="tips-section" aria-label="Tips and tricks" data-nav-theme="dark">
       <div class="tips-sticky" id="tipsStickyEl">
+        <!-- Stessa forma delle altre due sezioni, terza elaborazione:
+             qui non è intera e centrata (AMICI) né un frammento
+             ingrandito (Servizi), ma sorge dal bordo basso — se ne
+             vede solo la calotta superiore, capovolta e spenta verso
+             l'alto. Decorativa: aria-hidden, muta, non cliccabile. -->
+        <div class="tips-video" aria-hidden="true">
+          <video class="tips-video__el" autoplay loop muted playsinline preload="metadata"
+                 src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        </div>
         <div class="container">
           <h2 class="tips-section__heading" id="tipsTitle">TIPS &amp; TRICKS</h2>
           <div class="tips-grid" id="tipsGrid">
@@ -2442,12 +3480,42 @@
       </div><!-- /.tips-sticky -->
     </section>
 
+    <!-- ══ MURO DELLE RECENSIONI ═══════════════════════════════
+         Tre colonne di tessere che scorrono in verticale, a velocità
+         e versi diversi, su fondo bianco. Nessuna CTA: la sezione è
+         solo il muro.
+         NB: i testi sono SEGNAPOSTO, non recensioni reali — vanno
+         sostituiti con quelle vere prima della pubblicazione. Ogni
+         tessera lo dichiara nell'attributo data-placeholder. -->
+    <section class="section wall" id="muro" aria-labelledby="wall-title">
+      <div class="wall-sticky">
+        <div class="container wall__intro">
+          <h2 class="wall__title" id="wall-title">PASSAPAROLA</h2>
+        </div>
+        <div class="wall__cols" id="wallCols"></div>
+      </div>
+    </section>
+
     <!-- ══ CONTATTI HOME ════════════════════════════════════ -->
-    
+
     <!-- FAQ -->
     <section class="page-faq" id="faq">
+      <!-- Sfondo dell'INTERA sezione madre, non del pannello delle
+           domande: sta qui, fuori da .page-faq__inner, così copre
+           tutti i 145dvh della corsa e non solo la viewport
+           agganciata. Stessa sorgente e stesso trattamento della
+           sezione Servizi — frammento ingrandito e ruotato, con la
+           crominanza portata sul fucsia ESTRO. Sopra e sotto due
+           sfumature al nero lo fondono con la pagina.
+           Decorativo: aria-hidden, muto. -->
+      <div class="faq-video" aria-hidden="true">
+        <video class="faq-video__el" id="faqVideo" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        <div class="faq-video__fade faq-video__fade--top"></div>
+        <div class="faq-video__fade faq-video__fade--bottom"></div>
+      </div>
       <div class="page-faq__inner">
-        <h2 class="page-faq__title">FAQ</h2>
+        <h2 class="page-faq__title" id="faqTitle">FAQ</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia e ESTRO?</button>
@@ -2619,39 +3687,59 @@
     // Il titolo NON parte nascosto: niente maschera, niente opacità a
     // zero. Arriva rifratto dall'acqua e si mette a fuoco — quindi è
     // sempre disegnato, anche in uno screenshot preso senza scorrere.
-    function titleReveal(q) {
+    //
+    // Due accorgimenti tengono il passaggio fluido invece di scattoso:
+    //  1) smorzamento temporale — lo scroll arriva a pacchetti, non a
+    //     frame: il valore mostrato insegue il target con una costante
+    //     di tempo, così ogni salto di scroll diventa una corsa.
+    //  2) rifrazione a campana — la distorsione nasce da zero, monta e
+    //     si spegne. Prima era già al massimo a q=0: il titolo
+    //     compariva fermo e sbriciolato, e si leggeva come un errore
+    //     di rendering invece che come acqua.
+    let ttQ = 0, ttT = 0, ttPrimed = false;
+    function titleReveal(target) {
       if (!svcTitle) return;
       if (!ttGeom || !ttGeom.w) ttMeasure();
       if (!ttGeom || !ttGeom.w) return;
 
-      if (q >= 0.995) {
-        // stato finale: nessun filtro, nessun offset
-        ttGeom.letters.forEach(l => {
-          l.el.style.removeProperty('--tl-x');
-          l.el.style.removeProperty('--tl-y');
-          l.el.style.removeProperty('--tl-s');
-        });
+      // Primo frame: il valore mostrato PARTE dal target, non da zero.
+      // Senza questo, un refresh con i Servizi già in vista trovava
+      // target 1 e ttQ 0, e l'inseguimento rigiocava tutta la corsa:
+      // si vedeva l'assestamento delle lettere (fino al 3% di scala)
+      // su un titolo che doveva essere già fermo.
+      if (!ttPrimed) { ttPrimed = true; ttQ = target; }
+
+      const now = performance.now();
+      const dt  = ttT ? Math.min(0.05, (now - ttT) / 1000) : 1 / 60;
+      ttT = now;
+      // costante di tempo più lunga: la corsa dura un filo di più e
+      // arriva più morbida
+      ttQ += (target - ttQ) * (1 - Math.exp(-dt / 0.16));
+      if (target > 0.995 && ttQ > 0.995) ttQ = 1;
+      const q = ttQ;
+
+      if (svcHeader) svcHeader.classList.toggle('tt-run', q < 0.99);
+
+      // SOLO ACQUA: il titolo non si muove e non cambia scala.
+      // L'assestamento per lettera (translate + scale fino al 3%) è
+      // stato rimosso: era un secondo effetto sovrapposto alla
+      // rifrazione, e in certi refresh si leggeva come un titolo che
+      // si stringe e poi si riespande. Qui l'unica cosa che varia è
+      // la rifrazione del filtro.
+      if (q >= 0.99) {
         if (ttDisp) ttDisp.setAttribute('scale', '0');
         return;
       }
 
-      // rifrazione: piena all'arrivo, si spegne mentre si assesta
-      const dist = 1 - q;
+      // rifrazione a campana: nasce, monta e si spegne. Ampiezza
+      // contenuta: oltre i ~14px le lettere si sfaldano e l'effetto
+      // non legge più come acqua.
+      const wave = Math.sin(clamp(q, 0, 1) * Math.PI);
       if (ttDisp) {
-        ttDisp.setAttribute('scale', (dist * 22).toFixed(2));
+        ttDisp.setAttribute('scale', (wave * 14).toFixed(2));
         ttTurb.setAttribute('baseFrequency',
-          (0.010 + dist * 0.012).toFixed(4) + ' ' + (0.030 + dist * 0.02).toFixed(4));
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
       }
-
-      // le lettere si assestano una dopo l'altra, in base alla loro
-      // distanza dal punto d'impatto: micro-spostamenti, mai salti
-      ttGeom.letters.forEach(l => {
-        const local = clamp((q - (l.d / ttGeom.rmax) * 0.35) / 0.65, 0, 1);
-        const k = 1 - local;
-        l.el.style.setProperty('--tl-y', (k * 10).toFixed(2) + 'px');
-        l.el.style.setProperty('--tl-x', (k * 5 * (l.d % 2 ? 1 : -1)).toFixed(2) + 'px');
-        l.el.style.setProperty('--tl-s', (1 - k * 0.04).toFixed(3));
-      });
     }
     addEventListener('resize', () => { ttGeom = null; }, { passive: true });
 
@@ -2805,13 +3893,20 @@
       // pIn è la frazione di sezione entrata in viewport: 0.3 significa
       // "Servizi visibile al 30%". È su questa scala che sono tarati
       // gli attacchi degli effetti.
-      pInMax = Math.max(pInMax, clamp((vh - svcR.top) / (svcR.height || vh), 0, 1));
+      // Guardia contro vh/altezza a 0 (tab in background al primo
+      // frame, layout non ancora pronto): senza fallback la divisione
+      // produce 0/0 = NaN, che con Math.max avvelena pInMax per
+      // sempre — il titolo restava "bloccato" per tutta la sessione.
+      const pInRaw = clamp((vh - svcR.top) / (svcR.height || vh || 1), 0, 1);
+      if (Number.isFinite(pInRaw)) pInMax = Math.max(pInMax, pInRaw);
       const pIn = pInMax;
 
       // Il titolo comincia a mettersi a fuoco quando la sezione è
       // visibile al 60%, non prima. La griglia lo segue, così l'ordine
       // di lettura resta titolo → card.
-      const TITLE_IN = phase(pIn, 0.60, 0.95);
+      // Finestra d'attacco più larga: la corsa comincia prima e si
+      // distende, così l'acqua dura leggermente di più.
+      const TITLE_IN = phase(pIn, 0.50, 1);
       const GRID_IN  = phase(pIn, 0.72, 1);
 
       // Lo zoom occupa la prima parte della corsa; il resto è una
@@ -2840,8 +3935,9 @@
       // leggermente spostato e si assesta. Così esiste anche in uno
       // screenshot fatto senza scorrere la pagina.
       if (svcHeader) {
+        // tt-run la gestisce titleReveal, che conosce il valore
+        // smorzato realmente in scena, non il target di scroll
         titleReveal(TITLE_IN);
-        svcHeader.classList.toggle('tt-run', TITLE_IN < 0.995);
       }
 
       // Il MENU segue la sezione che ha davvero sotto: chiara sulla
@@ -2941,6 +4037,66 @@
       requestAnimationFrame(tick);
     })();
   })();
+ 
+  // ── Muro delle recensioni ─────────────────────────────────────
+  // Tre colonne di tessere che scorrono in verticale. Ogni colonna
+  // contiene due copie del proprio gruppo: l'animazione va a -50% e
+  // riparte, quindi il ciclo non ha giunte.
+  //
+  // ATTENZIONE: i testi qui sotto sono SEGNAPOSTO, non recensioni
+  // reali. Vanno sostituiti con quelle vere (o collegati alla fonte
+  // che le pubblica) prima di andare online: pubblicare recensioni
+  // inventate come se fossero autentiche non è una cosa che si fa.
+  (function () {
+    const host = document.getElementById('wallCols');
+    if (!host) return;
+
+    const PLACEHOLDER = [
+      ['Testo segnaposto della recensione: qui va il commento reale del cliente, due o tre righe, con il risultato concreto ottenuto.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: sostituire con le parole vere del cliente, senza ritoccarle.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: va bene anche breve, purché sia autentica e attribuita a una persona reale.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: se arriva da Google o LinkedIn, conviene citare la fonte accanto al nome.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: qui il cliente racconta il problema di partenza e come è stato risolto.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: una frase che dica cosa è cambiato dopo il lavoro insieme.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: meglio poche righe vere che un paragrafo costruito a tavolino.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: il muro funziona se le voci sono diverse fra loro.', 'Nome Cognome', 'Ruolo · Azienda'],
+      ['Testo segnaposto della recensione: aggiungere la data se la raccolta è recente.', 'Nome Cognome', 'Ruolo · Azienda'],
+    ];
+
+    const COLS = 3;
+    const DUR = ['46s', '38s', '54s'];   // velocità diverse per colonna
+
+    const card = ([quote, name, role]) => {
+      const el = document.createElement('article');
+      el.className = 'wall__card';
+      el.dataset.placeholder = 'true';
+      const p = document.createElement('p');
+      p.className = 'wall__quote';
+      p.textContent = '“' + quote + '”';
+      const by = document.createElement('p');
+      by.className = 'wall__by';
+      const n = document.createElement('span');
+      n.className = 'wall__name'; n.textContent = name;
+      const r = document.createElement('span');
+      r.className = 'wall__role'; r.textContent = role;
+      by.append(n, r);
+      el.append(p, by);
+      return el;
+    };
+
+    for (let c = 0; c < COLS; c++) {
+      const col = document.createElement('div');
+      col.className = 'wall__col';
+      const track = document.createElement('div');
+      track.className = 'wall__track';
+      track.style.setProperty('--wall-dur', DUR[c]);
+      const mine = PLACEHOLDER.filter((_, i) => i % COLS === c);
+      // due copie: l'animazione scorre di metà traccia e riparte
+      for (let copy = 0; copy < 2; copy++) mine.forEach(t => track.appendChild(card(t)));
+      col.appendChild(track);
+      host.appendChild(col);
+    }
+  }());
 
   // ── Servizi: card drag + animazioni ────────────────────
   (function () {
@@ -3227,12 +4383,16 @@
 
     // Mappa selettore → tipo di reveal (libreria differenziata)
     const MAP = {
-      // About non passa dal reveal generico: scatterebbe al primo
-      // pixel visibile, mentre qui deve partire a sezione entrata al
-      // 60%. Se ne occupa il modulo dedicato più sotto.
-      title: ['#amici-title', '.cs2__title', '.tips-section__heading',
-              '.page-faq__title', '.hc-title',
-              '.about-section__big', '.sf-ghost'],
+      // Il watermark ABOUT non è in questa lista: il reveal generico
+      // dei grandi titoli è quello a maschera, un effetto diverso da
+      // quello di SERVIZI. ABOUT ha il suo modulo dedicato più sotto,
+      // che parla la lingua di SERVIZI e parte a sezione entrata.
+      // #amici-title e .cs2__title sono fuori per lo stesso motivo
+      // del watermark ABOUT: usano l'acqua per lettere, non il
+      // fronte a maschera.
+      // .page-faq__title, .hc-title e .sf-ghost sono fuori: usano
+      // l'acqua come gli altri titoli, non il fronte a maschera.
+      title: [],
       body:  ['.cst-info', '.page-faq__item', '.hc-sub'],
       card:   ['.cst-tabs'],
       card3d: ['.tips-grid .tip-card'],
@@ -3243,6 +4403,9 @@
 
     const els = [];
     for (const [type, sels] of Object.entries(MAP)) {
+      // una lista vuota produrrebbe un selettore vuoto, che in
+      // querySelectorAll è un errore e fermerebbe tutto l'init
+      if (!sels.length) continue;
       document.querySelectorAll(sels.join(',')).forEach(el => {
         if (el.hasAttribute('data-rv')) return;
         el.setAttribute('data-rv', type);
@@ -3382,7 +4545,14 @@
           `transparent 0px, transparent ${Math.max(0, rad - soft).toFixed(0)}px, ` +
           `#000 ${(rad + soft).toFixed(0)}px)`);
         peak = Math.max(peak, Math.sin(q * Math.PI) * 0.5);
-        if (q >= 1) ttlOut.delete(it);
+        if (q >= 1) {
+          // dispersione completata: il filtro non serve più (resta
+          // solo la maschera, che tiene il titolo disperso fuori
+          // scena). Senza questo il titolo si portava dietro un
+          // layer di filtro per il resto della sessione.
+          it.el.classList.remove('ttl-run');
+          ttlOut.delete(it);
+        }
       }
       ttlDisp.setAttribute('scale', (peak * 26).toFixed(2));
       ttlOutRaf = ttlOut.size ? requestAnimationFrame(ttlOutFrame) : null;
@@ -3402,6 +4572,19 @@
       if (!ttlOutRaf) ttlOutRaf = requestAnimationFrame(ttlOutFrame);
     }
 
+    // Rientrando in scena il titolo deve tornare intero. L'uscita
+    // liquida lascia sul posto la maschera che lo tiene disperso: per
+    // un titolo che non ha un secondo ingresso — il watermark ABOUT,
+    // che parte una volta sola — quello stato restava per sempre, e
+    // tornando indietro il titolo si vedeva eroso o non si vedeva.
+    function ttlRestore(el) {
+      for (const it of [...ttlOut]) if (it.el === el) ttlOut.delete(it);
+      // se l'entrata è in corso non si tocca niente: la scrive lei
+      if ([...ttlActive].some(i => i.el === el)) return;
+      el.style.removeProperty('--ttl-mask');
+      el.classList.remove('ttl-run');
+    }
+
     function waterTitle(el, fast) {
       // rientrando, il titolo riparte intero
       el.style.removeProperty('--ttl-mask');
@@ -3414,6 +4597,143 @@
       if (!ttlRaf) ttlRaf = requestAnimationFrame(ttlFrame);
     }
 
+    // ── Acqua sui titoli tipografici (linguaggio SERVIZI) ───────
+    // Rifrazione a campana sul titolo intero, le stesse curve di
+    // titleReveal. Diverso dal reveal a maschera qui sopra: il titolo
+    // è sempre disegnato, arriva rifratto e si mette a fuoco, quindi
+    // esiste anche in uno screenshot preso senza scorrere.
+    //
+    // Il titolo NON viene toccato nel DOM. Prima lo spezzavo in span
+    // lettera per lettera per farle assestare una dopo l'altra: due
+    // effetti sovrapposti all'acqua, e soprattutto due difetti
+    //   · le lettere in inline-block perdono crenatura e legature,
+    //     quindi nell'istante in cui l'effetto partiva il titolo si
+    //     allargava di scatto — è lo "stretch" che si vedeva al
+    //     refresh, prima ancora della rifrazione;
+    //   · la scala per lettera (fino al 3%) si leggeva come un
+    //     restringimento.
+    // Senza movimento per lettera la divisione non serve: il filtro
+    // agisce sull'elemento intero, il testo resta esattamente com'è
+    // (niente aria-label di servizio, niente rischio di a capo dentro
+    // una parola).
+    // Un filtro per titolo: due titoli che partono insieme avrebbero
+    // altrimenti una sola scala condivisa e si disturberebbero.
+    let wlSeq = 0;
+
+    function wlMakeFilter() {
+      const id = 'wlWaterFx' + (++wlSeq);
+      const s = document.createElementNS(NSVG, 'svg');
+      s.setAttribute('aria-hidden', 'true');
+      s.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      s.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="11" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(s);
+      return { id, disp: s.querySelector('feDisplacementMap'), turb: s.querySelector('feTurbulence') };
+    }
+
+    // ms: durata della sequenza. Un titolo su più righe la vuole un
+    // filo più lunga, l'onda ha più strada da fare.
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      const fx = wlMakeFilter();
+      // il filtro va inline: l'id cambia per titolo, quindi non può
+      // stare in una regola CSS
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        // rifrazione a campana: nasce, monta, si spegne. È l'unica
+        // cosa che varia: il titolo non si muove e non cambia scala.
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        // assestato: nessun filtro residuo
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+
+    // ── Titoli di sezione con l'acqua ───────────────────────────
+    // Il testo non viene toccato, quindi resta integro per gli screen
+    // reader e per il ritorno a capo. La sequenza
+    // parte quando il titolo è ben in scena.
+    (function () {
+      if (window.__STATIC_CAPTURE__) return;
+      [['amici-title', 1000], ['cs2-title', 900], ['tipsTitle', 900],
+       ['wall-title', 950], ['faqTitle', 900],
+       ['contattiTitle', 900]].forEach(([id, ms]) => {
+        const t = document.getElementById(id);
+        if (!t) return;
+        const ob = new IntersectionObserver(es => {
+          es.forEach(e => {
+            if (!e.isIntersecting) return;
+            waterLetters(t, ms);
+            ob.disconnect();
+          });
+        }, { threshold: 0.45 });
+        ob.observe(t);
+      });
+    }());
+
+    // ── Contatti: il contenuto si compone come in About ─────────
+    // Il pannello è agganciato, quindi non basta guardare quando
+    // entra: si aspetta che sia davvero in scena (60% di altezza
+    // visibile), poi il blocco si compone in cascata dietro al
+    // titolo — stessa sequenza della sezione About.
+    (function () {
+      const panel = document.querySelector('.hc-inner');
+      if (!panel) return;
+      if (window.__STATIC_CAPTURE__) { panel.classList.add('hc-in'); return; }
+      let armed = true;
+      function check() {
+        if (!armed) return;
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.bottom <= 0 || r.top >= vh) return;
+        const vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / (r.height || vh);
+        if (vis < 0.6 && r.top > vh * 0.28) return;
+        armed = false;
+        panel.classList.add('hc-in');
+        removeEventListener('scroll', onScroll);
+      }
+      let queued = false;
+      function onScroll() {
+        if (queued) return;
+        queued = true;
+        requestAnimationFrame(() => { queued = false; check(); });
+      }
+      addEventListener('scroll', onScroll, { passive: true });
+      addEventListener('resize', onScroll, { passive: true });
+      requestAnimationFrame(check);
+      addEventListener('load', () => requestAnimationFrame(check), { once: true });
+    }());
+
+    // ── Footer: acqua sulla scritta ESTRO ───────────────────────
+    // Deve essere già in corso quando il footer entra in scena, non
+    // dopo: la soglia è bassa e il margine inferiore anticipa
+    // l'osservatore di mezzo schermo.
+    (function () {
+      const ghost = document.querySelector('.sf-ghost');
+      if (!ghost || window.__STATIC_CAPTURE__) return;
+      const ob = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          waterLetters(ghost, 1000);
+          ob.disconnect();
+        });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      ob.observe(ghost);
+    }());
+
     const io = new IntersectionObserver(entries => {
       entries.forEach(e => {
         const list = groups.get(e.target);
@@ -3425,7 +4745,10 @@
             el.classList.remove('rv-past');
             // il titolo si compone mentre la sezione prende la scena.
             // About è l'eccezione: ha un attacco suo, al 60%.
-            if (el.dataset.rv === 'title' && el.dataset.hold !== '1') waterTitle(el, false);
+            if (el.dataset.rv === 'title') {
+              ttlRestore(el);
+              if (el.dataset.hold !== '1') waterTitle(el, false);
+            }
           } else {
             el.classList.remove('rv-in', 'rv-armed');
             el.classList.toggle('rv-past', past);
@@ -3448,12 +4771,18 @@
     // sul titolo ABOUT → perturbazione e rifrazione → ricomposizione
     // → il resto del contenuto si compone dietro, con lo stesso
     // linguaggio ma in scala ridotta. Nessun elemento parte nascosto.
+    //
+    // L'effetto è quello del titolo SERVIZI, non il reveal a maschera
+    // dei grandi titoli: stesse curve, stesso filtro, stesso
+    // assestamento per lettera. Solo il tempo è diverso — qui non c'è
+    // una corsa di scroll da seguire, quindi la sequenza gira a tempo.
     (function () {
       const sticky = document.querySelector('.about-sticky');
       const big    = document.querySelector('.about-section__big');
       if (!sticky || !big) return;
       big.dataset.hold = '1';           // il reveal generico lo salta
       if (window.__STATIC_CAPTURE__) { sticky.classList.add('about-in'); return; }
+
       // Frazione visibile calcolata direttamente: con un elemento
       // sticky l'IntersectionObserver riporta rapporti che non
       // corrispondono a quanto la sezione è realmente entrata, e
@@ -3464,9 +4793,24 @@
         const r = sticky.getBoundingClientRect();
         const vh = window.innerHeight;
         const vis = Math.max(0, Math.min(r.bottom, vh) - Math.max(r.top, 0)) / (r.height || vh);
-        if (vis < 0.6) return;
+        // La sezione deve essere davvero in scena. Senza questa
+        // guardia il primo check() sincrono — che gira a init, con
+        // la scena hero+servizi non ancora dimensionata — trovava
+        // About in cima al documento e consumava lì il reveal: il
+        // titolo risultava "già fatto" e arrivando davvero sulla
+        // sezione non succedeva più niente.
+        if (r.bottom <= 0 || r.top >= vh) return;
+        // Attacco robusto. Con il solo criterio della frazione
+        // visibile uno scroll a salti larghi (trackpad veloce, PgDn,
+        // tasto Fine) poteva portare la sezione da vis 0.3 a già
+        // superata senza mai passare per 0.6: da quel momento la
+        // condizione non era più soddisfacibile e il titolo ABOUT
+        // restava senza effetto acqua per tutta la sessione. Basta
+        // che uno dei due criteri sia vero — frazione visibile, o
+        // bordo alto della sezione già entrato nel viewport.
+        if (vis < 0.6 && r.top > vh * 0.28) return;
         armed = false;
-        waterTitle(big, false);
+        waterLetters(big, 900);
         sticky.classList.add('about-in');
         removeEventListener('scroll', onScroll);
       }
@@ -3478,7 +4822,10 @@
       }
       addEventListener('scroll', onScroll, { passive: true });
       addEventListener('resize', onScroll, { passive: true });
-      check();
+      // Primo controllo a layout fatto, non dentro l'init: serve solo
+      // al caso "pagina aperta già in corrispondenza di About".
+      requestAnimationFrame(check);
+      addEventListener('load', () => requestAnimationFrame(check), { once: true });
     }());
 
     const heroTitle = document.querySelector('.vhero__title');
@@ -3520,16 +4867,24 @@
     // About usa la stessa salita delle altre. Il transform va sul
     // figlio interno, non sulla sezione: quella contiene il pin
     // sticky e un transform sull'antenato ne romperebbe l'ancoraggio.
-    // Il footer NON sale: sollevandosi lasciava scoperto il fondo
-    // pagina e si vedeva una striscia nera sotto. È la fine del
-    // documento, deve restare appoggiato lì.
-    const RISE  = ['#case-studies', '#tips-section', '#faq', '#contatti',
-                   '#amici-section', '.about-sticky'];
+    // Il footer sale come le altre sezioni. La salita va su
+    // .site-footer, non su .sf-inner: il fondo #0e0e0e è lì, e su
+    // .sf-inner si muoveva del contenuto senza superficie, quindi
+    // non si vedeva niente. La striscia sotto la riempie ::after,
+    // che eredita lo stesso fondo — per questo il footer non può
+    // più ritagliare (overflow: visible).
+    // Amici e About agganciano la salita al pannello sticky, non alla
+    // sezione: la sezione è solo la corsa del pin, non si muove, e un
+    // transform sull'antenato romperebbe l'ancoraggio dello sticky.
+    const RISE  = ['.cs2-sticky', '.tips-sticky', '.wall-sticky',
+                   '.page-faq__inner', '.faq-video', '.hc-inner',
+                   '.site-footer',
+                   '.amici-sticky', '.about-sticky'];
     const DEPTH = [];
     // Tips esce da SWEEP: il fondo che scorreva con lo scroll è
     // rimosso, la sezione usa solo la salita con angoli arrotondati
     // sopra la sezione precedente, la stessa di Case Studies.
-    const SWEEP = ['#amici-section'];
+    const SWEEP = ['.amici-sticky', '.about-sticky'];
 
     const secs = [];
     const add = (sel, cls) => document.querySelectorAll(sel).forEach(el => {
@@ -3554,7 +4909,14 @@
         if (r.bottom < -vh || r.top > vh * 2) continue; // fuori scena: salta
         // ingresso: 0 col bordo alto a fondo viewport, 1 quando ha
         // risalito fino al 15% — banda larga = effetto percepibile
-        const sxi = clamp01((vh - r.top) / (vh * 0.85));
+        // La corsa non può essere più lunga di quanto l'elemento
+        // riesca davvero a salire: il footer è alto meno di mezza
+        // viewport e sta a fondo pagina, quindi con una corsa fissa
+        // restava fermo a metà effetto (sollevato di ~7px per
+        // sempre). Legando la corsa all'altezza dell'elemento le
+        // sezioni alte non cambiano e il footer arriva a fine corsa.
+        const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+        const sxi = clamp01((vh - r.top) / run);
         // uscita: parte quando il bordo basso sale sopra il 60% della viewport
         const sxo = clamp01((vh * 0.6 - r.bottom) / (vh * 0.7));
         s.el.style.setProperty('--sxi', sxi.toFixed(3));
@@ -3571,7 +4933,12 @@
   }());
 
   // ─── Tips & Tricks: tilt 3D sul puntatore ─────────────────────
+  // DISATTIVATO: le card sono passate a un trattamento editoriale
+  // (immagine che si avvicina dentro la cornice, filetto che si
+  // traccia sotto la data). Il modulo resta qui, spento da un return,
+  // perché il tilt possa essere ripreso senza riscriverlo.
   (function () {
+    return;
     if (window.__STATIC_CAPTURE__) return;
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
@@ -3730,7 +5097,10 @@
       const grid = document.querySelector('.tips-grid');
       if (!grid) return;
       const cards = [...grid.querySelectorAll('.tip-card')];
-      cards.forEach((c, i) => c.style.setProperty('--tip-delay', (i * 0.085).toFixed(3) + 's'));
+      // ritardi asimmetrici: la seconda card parte per ultima, così
+      // le tre non arrivano in fila ordinata
+      const DELAYS = ['0s', '0.18s', '0.07s'];
+      cards.forEach((c, i) => c.style.setProperty('--tip-delay', DELAYS[i % DELAYS.length]));
       if (window.__STATIC_CAPTURE__) { grid.classList.add('tips-in'); return; }
       const io = new IntersectionObserver(entries => {
         entries.forEach(e => {

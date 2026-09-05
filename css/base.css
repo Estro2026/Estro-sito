@@ -1,6 +1,32 @@
-@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+/* Due import separati perché le due famiglie vogliono due strategie
+   diverse di caricamento.
+   · Special Gothic Expanded One è il font dei titoli ed è MOLTO più
+     largo dei fallback: lo stesso testo misura 766px con Impact e
+     1264px con lui (+65%). Con display=swap il browser disegnava
+     prima Impact e poi sostituiva, e il titolo si allargava di scatto
+     — è lo "stretch" che si vedeva al refresh, prima dell'effetto
+     acqua. Con display=block il testo non viene disegnato con il
+     fallback: niente sostituzione, niente salto di larghezza.
+   · DM Sans è il font del testo corrente e resta su swap: lì il
+     fallback è preferibile a un attimo di testo invisibile. */
+@import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=block');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&display=swap');
 
 /* ─── FONTS ───────────────────────────────────────────── */
+/* Fallback con metriche allineate al font dei titoli.
+   Impact è largo il 60% di Special Gothic Expanded One (766px contro
+   1264px sullo stesso testo): finché il webfont non è pronto il
+   browser misura comunque il testo con il fallback, e all'arrivo il
+   titolo cambierebbe larghezza. Con size-adjust il fallback occupa
+   quasi esattamente lo stesso spazio, quindi non c'è nessun salto —
+   né visibile né di layout. */
+@font-face {
+  font-family: 'TitleFallback';
+  src: local('Impact'), local('Haettenschweiler'), local('Arial Narrow Bold');
+  size-adjust: 158.5%;
+  font-weight: 100 900;
+  font-style: normal;
+}
 @font-face {
   font-family: 'VanguardCF';
   src: url('Vanguard/VanguardCF-Thin.otf') format('opentype');
