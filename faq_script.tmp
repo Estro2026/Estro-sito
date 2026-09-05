@@ -1,0 +1,122 @@
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     FAQ — stesso motore della homepage: acqua sui titoli, salita
+     fra sezioni scritta da un solo rAF, ingresso in cascata.
+     Parte a documento pronto perché il footer sta più in basso di
+     questo script: senza attendere, la salita non lo troverebbe.
+     ═══════════════════════════════════════════════════════════ */
+  function faqBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+
+    // il titolo della hero è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.getElementById('faqHeroTitle'), 1000));
+
+    [['faqContactTitle', 950]].forEach(([id, ms]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
+      }, { threshold: 0.45 });
+      io.observe(el);
+    });
+
+    const ghost = document.querySelector('.sf-ghost');
+    if (ghost) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(ghost, 1000); io.disconnect(); } });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      io.observe(ghost);
+    }
+
+    /* ── Salita fra sezioni ────────────────────────────────── */
+    const RISE = ['.faq-body', '.faq-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          // la corsa non può essere più lunga di quanto l'elemento
+          // riesca davvero a salire
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso in cascata ───────────────────────────────── */
+    document.querySelectorAll('[data-cascade]').forEach(panel => {
+      if (RM) { panel.classList.add('cs-in'); return; }
+      const check = () => {
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.top > vh || r.bottom < 0) return false;
+        const vis = (Math.min(vh, r.bottom) - Math.max(0, r.top)) / Math.min(vh, r.height || vh);
+        if (vis >= 0.4 || r.top <= vh * 0.5) { panel.classList.add('cs-in'); return true; }
+        return false;
+      };
+      const io = new IntersectionObserver(() => { if (check()) io.disconnect(); },
+        { threshold: [0, 0.2, 0.4, 0.6] });
+      io.observe(panel);
+      requestAnimationFrame(check);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', faqBoot);
+  } else { faqBoot(); }
+  </script>

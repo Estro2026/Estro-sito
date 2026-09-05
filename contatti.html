@@ -17,61 +17,392 @@
   <link rel="stylesheet" href="css/components.css" />
   <link rel="stylesheet" href="css/hero.css" />
   <style>
-    /* ── Layout ──────────────────────────────────────────── */
-    .contact-home {
-      min-height: 100dvh;
+    /* Le regole della vecchia pagina (heading e claim tenuti a
+       opacità 0 in attesa di uno script per lettere, e la sezione
+       .contact-home fucsia) sono state rimosse: i titoli ora usano
+       l'acqua e i blocchi la cascata, come in homepage. */
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage, da chiuso e da aperto
+       Il markup era già uguale: quello che mancava erano queste
+       regole, che in home stanno nello <style> della pagina.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__menu-icon span,
+    .nav--on-dark .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    /* In home l'etichetta del mega menu resta a 16px come il resto
+       delle voci: qui deve valere lo stesso. */
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE FRA SEZIONI — stesso pattern della homepage
+       Progresso 0→1 scritto da un solo rAF (--sxi). La sezione
+       entrante sale sopra la precedente con gli angoli
+       arrotondati; la fascia sotto la riempie ::after con la
+       stessa superficie, quindi non si apre mai un buco.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    /* La sezione dei contatti porta solo il valore: la salita la
+       fanno il video e il pannello, insieme, con lo stesso --sxi
+       ereditato — se ognuno lo calcolasse dal proprio riquadro
+       partirebbero sfasati. */
+    html.js-reveal .ct-section.sx-rise {
+      transform: none;
+      border-radius: 0;
+      box-shadow: none;
+      z-index: auto;
+      will-change: auto;
+    }
+    html.js-reveal .ct-section.sx-rise::after { content: none; }
+    /* Stessa ragione per il hub: ora contiene un pannello agganciato,
+       e un transform sull'antenato romperebbe l'ancoraggio. La
+       sezione porta il valore, il pannello fa la salita. */
+    html.js-reveal .contact-hub.sx-rise {
+      transform: none;
+      border-radius: 0;
+      box-shadow: none;
+      z-index: auto;
+      will-change: auto;
+    }
+    html.js-reveal .contact-hub.sx-rise::after { content: none; }
+    html.js-reveal .contact-hub > .container {
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .ct-section .ct-video {
+      inset: 0 0 auto 0;
+      height: calc(100% + 22px);
+      z-index: 0;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .ct-section .ct-inner {
+      /* sticky, non relative: qui il pannello è agganciato */
+      position: sticky;
+      z-index: 1;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+    }
+    /* Il footer non ritaglia: la fascia della salita sta fuori dal
+       suo riquadro. La scritta ESTRO resta contenuta lo stesso,
+       perché il ritaglio ce l'ha .sf-ghost per conto suo. */
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       CONTATTI — nera con il video delle sezioni scure della home
+       ═══════════════════════════════════════════════════════════ */
+    .ct-section {
+      position: relative;
+      background: transparent;
+      overflow: visible;
+      padding: 0;
       display: flex;
       flex-direction: column;
       justify-content: center;
-      box-sizing: border-box;
-      position: relative; /* needed for white overlay child */
+    }
+    /* ── Blocco identico alle sezioni della homepage ──────────
+       La sezione è la corsa dello scroll (145dvh) e non ritaglia;
+       il figlio è il pannello agganciato alto una schermata esatta,
+       che porta la superficie. Il footer resta fuori. */
+    .ct-section,
+    .contact-hub {
+      height: 145dvh;
+      overflow: visible;
+      padding-block: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .ct-inner,
+    .contact-hub > .container {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* La superficie chiara sta sul pannello, perché è il pannello a
+       salire. Ma il pannello è un .container, cioè incolonnato:
+       col fondo addosso si vedeva un riquadro bianco dentro la
+       sezione bianca — un contenitore dentro l'altro. Qui il
+       pannello va a tutta larghezza e la misura editoriale passa al
+       contenuto, che resta al centro. */
+    .contact-hub { background: #000; }
+    .contact-hub > .container {
+      max-width: none !important;
+      margin-inline: 0 !important;
+      padding-inline: 0 !important;
+      background:
+        radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+        linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%);
+      padding-block: clamp(2rem, 4vw, 3.5rem);
+    }
+    .contact-hub__claim,
+    .contact-hub__grid {
+      width: 100%;
+      max-width: 1440px;
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+    .contact-hub__claim { margin-bottom: clamp(1.6rem, 3.4vw, 3rem) !important; }
+    /* Icone un filo più grandi */
+    .contact-hub__icon { width: 19px; height: 19px; }
+    @media (max-width: 819px), (max-height: 559px) {
+      .ct-section, .contact-hub { height: auto; }
+      .ct-inner, .contact-hub > .container {
+        position: static;
+        height: auto;
+        overflow: visible;
+      }
+    }
+    .ct-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      background: #000;
+    }
+    /* Stessi valori della home: frammento ingrandito e ruotato,
+       con la crominanza portata sul fucsia ESTRO. */
+    .ct-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.85) rotate(9deg);
+      transform-origin: 74% 62%;
+      filter: hue-rotate(-54deg) saturate(1.05) brightness(0.6);
+      opacity: 0.6;
+    }
+    .ct-video__fade {
+      position: absolute;
+      left: 0; right: 0;
+      height: 200px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .ct-video__fade--top    { top: 0;    background: linear-gradient(to bottom, #000, transparent); }
+    .ct-video__fade--bottom { bottom: 0; background: linear-gradient(to top,    #000, transparent); }
+
+    /* ── Form: stesse misure della sezione Contatti in home ──── */
+    .hc-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* col titolo a 150px e i consensi a 16 il blocco sforava di
+         4px: lo spazio rientra dagli stacchi, non dai testi */
+      gap: clamp(1.25rem, 2.6vw, 2.2rem);
+      padding-block: max(clamp(2rem, 4vw, 3rem), calc(var(--nav-h, 88px) + 0.75rem)) clamp(2rem, 4vw, 3rem);
+      width: 100%;
+    }
+    .hc-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .hc-title {
+      font-family: var(--font-primary);
+      /* stesso corpo dei titoli di sezione: 150px su desktop */
+      font-size: min(150px, 26vw);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+    .hc-sub {
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase;
+    }
+    .hc-form {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .hc-textarea { min-height: 130px; resize: vertical; }
+    .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.75);
+    }
+    .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    /* I consensi sono testo da leggere prima di spuntare una
+       casella, non microcopy decorativo: minimo di lettura. */
+    .hc-consents .svc-caffe__privacy span,
+    .hc-consents .svc-caffe__privacy a,
+    .hc-consents .svc-caffe__privacy em { line-height: 1.5; font-size: 16px !important; }
+    /* Le pill dell'hub stavano a 13px */
+    .contact-hub__pill { font-size: 16px !important; }
+    /* CTA del form: identica a quella della home, stesse misure e
+       stesso comportamento in hover (bordo bianco su fondo vuoto
+       che si riempie di bianco con testo fucsia, sollevandosi di
+       2px). La tendina ::before del bottone resta disattivata: era
+       quella che tagliava in due la CTA durante il passaggio. */
+    .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .hc-submit::before { display: none !important; }
+    #ct-hero .hc-submit:hover,
+    #ct-hero .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .hc-row { grid-template-columns: 1fr; }
     }
 
-    /* ── Heading: nascosto finché JS non gira splitLetters ── */
-    .contact-home__heading {
-      opacity: 0; /* inline style di splitLetters lo riscrive a 1 */
+    /* ═══════════════════════════════════════════════════════════
+       INGRESSO DEI TESTI — stesso linguaggio della homepage
+       Il blocco si compone in cascata dietro al titolo, con la
+       stessa curva e ritardi crescenti. Nessuno stato nascosto:
+       opacità di partenza alta e spostamento contenuto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal [data-cascade] .hc-sub,
+    html.js-reveal [data-cascade] .hc-form,
+    html.js-reveal [data-cascade] .contact-hub__claim-intro,
+    html.js-reveal [data-cascade] .contact-hub__col {
+      transform: translateY(16px) scale(0.94);
+      transform-origin: center;
+      opacity: 0.78;
+      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.5s ease;
+      transition-delay: var(--cs-delay, 0s);
     }
-
-    /* ── Page-load reveal: sub → form (staggered CSS) ───────
-       Stesso pattern di .svc-hero--revealed in SMM/google-ads */
-    .contact-home__sub,
-    .contact-home__form {
-      opacity: 0;
-      transform: translateY(22px);
-    }
-    .contact-home--revealed .contact-home__sub {
-      opacity: 1;
+    html.js-reveal [data-cascade] .hc-sub                  { --cs-delay: 0.18s; }
+    html.js-reveal [data-cascade] .hc-form                 { --cs-delay: 0.34s; }
+    html.js-reveal [data-cascade] .contact-hub__claim-intro{ --cs-delay: 0.18s; }
+    html.js-reveal [data-cascade] .contact-hub__col:nth-child(1) { --cs-delay: 0.30s; }
+    html.js-reveal [data-cascade] .contact-hub__col:nth-child(2) { --cs-delay: 0.42s; }
+    html.js-reveal [data-cascade] .contact-hub__col:nth-child(3) { --cs-delay: 0.54s; }
+    html.js-reveal [data-cascade].cs-in .hc-sub,
+    html.js-reveal [data-cascade].cs-in .hc-form,
+    html.js-reveal [data-cascade].cs-in .contact-hub__claim-intro,
+    html.js-reveal [data-cascade].cs-in .contact-hub__col {
       transform: none;
-      transition: opacity 0.55s 0.45s ease, transform 0.55s 0.45s ease;
-    }
-    .contact-home--revealed .contact-home__form {
       opacity: 1;
-      transform: none;
-      transition: opacity 0.55s 0.65s ease, transform 0.55s 0.65s ease;
     }
 
-    /* ── .tl (per-letter spans): inline-block per translateY ─ */
-    .contact-home__heading .tl {
-      display: inline-block;
+    /* ── Hub: il claim lungo sta sotto il suo titolo ─────────── */
+    .contact-hub__claim {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.6rem, 1.4vw, 1.1rem);
     }
+    /* I tre box erano invisibili: avevano la classe .reveal, che
+       li tiene a opacità 0 finché non arriva la classe .visible da
+       main.js, che su questa pagina non veniva mai aggiunta. Ora
+       l'ingresso è quello in cascata qui sopra e la classe non
+       serve più. */
+    .contact-hub__col { opacity: 1; }
 
-    /* ── Hub claim: nascosto finché JS non lo guida ──────── */
-    .contact-hub__claim-big,
-    .contact-hub__claim-intro {
-      opacity: 0;
-      transform: translateY(24px);
-      will-change: opacity, transform;
-    }
-    .contact-hub__claim-big .tl {
-      display: inline-block;
-    }
+    /* ── Tipografia allineata alla homepage ─────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
 
-    /* ── Nav: transizione colore fluida (uguale a SMM) ──── */
-    .nav__menu-btn,
-    .nav__menu-icon span,
-    .nav__menu-label-close,
-    .nav__menu-label-open {
-      transition: color 180ms ease, background-color 180ms ease !important;
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise,
+      html.js-reveal .ct-section .ct-video,
+      html.js-reveal .ct-section .ct-inner { transform: none; }
     }
   </style>
 </head>
@@ -88,10 +419,11 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -145,53 +477,65 @@
 
   <main>
 
-    <!-- ══ HERO CONTATTI (fuchsia, full viewport) ════════════
-         id="ct-hero" (non "contatti"): evita che main.js guidi
-         il contattiExitOv su questa sezione anziché sull'hub.
-         data-nav-theme="dark": sfondo fucsia → menu bianco.    -->
-    <section class="section contact-home" id="ct-hero" aria-label="Contatti">
-      <div class="container contact-home__inner">
-        <h2 class="contact-home__heading">CONTATTI</h2>
-        <p class="contact-home__sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
-        <form class="contact-home__form" action="#" method="post" novalidate>
-          <div class="contact-home__row">
-            <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-            <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+
+    <!-- ══ CONTATTI ══════════════════════════════════════════
+         Nera con il video di sfondo delle sezioni scure della
+         home, non più fucsia. Struttura e classi sono quelle
+         della sezione Contatti in homepage (hc-*), così il form
+         ha le stesse misure senza doverle ridichiarare. -->
+    <section class="ct-section" id="ct-hero" aria-label="Contatti" data-nav-theme="dark">
+      <div class="ct-video" aria-hidden="true">
+        <video class="ct-video__el" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        <div class="ct-video__fade ct-video__fade--top"></div>
+        <div class="ct-video__fade ct-video__fade--bottom"></div>
+      </div>
+      <div class="container hc-inner ct-inner" data-cascade>
+        <div class="hc-header">
+          <h2 class="hc-title" id="ctTitle">Contatti</h2>
+          <p class="hc-sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
+        </div>
+        <form class="hc-form" action="#" method="post" novalidate>
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
           </div>
-          <div class="contact-home__row">
-            <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-            <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
           </div>
-          <div class="contact-home__row">
-            <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-            <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+          <div class="hc-row">
+            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
           </div>
-          <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-          <label class="contact-home__privacy">
-            <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
-          </label>
-          <div class="contact-home__submit-wrap">
-            <button class="btn contact-home__submit" type="submit">Invia</button>
+          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="ct-privacy">
+              <input type="checkbox" id="ct-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+            </label>
+            <label class="svc-caffe__privacy" for="ct-newsletter">
+              <input type="checkbox" id="ct-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
           </div>
+          <button class="btn btn--primary hc-submit" type="submit">Invia</button>
         </form>
       </div>
     </section>
 
-    <!-- ══ SEDI / SOCIAL / CHIAMACI ═════════════════════════
-         Sfondo bianco. Titolo editoriale: per-lettera
-         scroll-driven (pattern amici/TIPS & TRICKS di main.js).
-         Colonne: .reveal + IO main.js, stagger CSS 0/100/200ms. -->
-    <section class="contact-hub" id="contactHub" aria-label="Sedi, social e contatti diretti">
+    <!-- ══ SEDI / SOCIAL / CHIAMACI ═════════════════════════ -->
+    <section class="contact-hub" id="contactHub" aria-label="Sedi, social e contatti diretti" data-cascade>
       <div class="container">
+        <!-- Il claim lungo sta SOTTO il suo titolo, non sopra -->
         <h2 class="contact-hub__claim">
-          <span class="contact-hub__claim-intro" id="contactHubIntro">Comunicare è bello, ma una buona strategia digital deve lasciare il segno.</span>
-          <span class="contact-hub__claim-big" id="contactHubBig">Facciamo prendere<br>forma alle tue idee.</span>
+          <span class="contact-hub__claim-big" id="ctHubTitle">Facciamo prendere<br>forma alle tue idee.</span>
+          <span class="contact-hub__claim-intro" id="ctHubIntro">Comunicare è bello, ma una buona strategia digital deve lasciare il segno.</span>
         </h2>
 
         <div class="contact-hub__grid">
 
-          <div class="contact-hub__col reveal">
+          <div class="contact-hub__col">
             <img class="contact-hub__cat" src="foto%20home/gatto-pre-footer.webp" alt="" aria-hidden="true" />
             <h3 class="contact-hub__title">SEDI</h3>
             <div class="contact-hub__pills">
@@ -199,14 +543,10 @@
                 <svg class="contact-hub__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5a4.5 4.5 0 0 1 4.5 4.5c0 3.2-4.5 8.5-4.5 8.5S3.5 9.2 3.5 6A4.5 4.5 0 0 1 8 1.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="8" cy="6" r="1.6" stroke="currentColor" stroke-width="1.5"/></svg>
                 Milano
               </a>
-              <a class="contact-hub__pill" href="https://maps.google.com/?q=Gallarate" target="_blank" rel="noopener noreferrer">
-                <svg class="contact-hub__icon" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M8 1.5a4.5 4.5 0 0 1 4.5 4.5c0 3.2-4.5 8.5-4.5 8.5S3.5 9.2 3.5 6A4.5 4.5 0 0 1 8 1.5Z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/><circle cx="8" cy="6" r="1.6" stroke="currentColor" stroke-width="1.5"/></svg>
-                Gallarate
-              </a>
-            </div>
+                    </div>
           </div>
 
-          <div class="contact-hub__col reveal reveal-delay-1">
+          <div class="contact-hub__col">
             <img class="contact-hub__cat" src="foto%20home/gatto-pre-footer.webp" alt="" aria-hidden="true" />
             <h3 class="contact-hub__title">SOCIAL</h3>
             <div class="contact-hub__pills">
@@ -221,7 +561,7 @@
             </div>
           </div>
 
-          <div class="contact-hub__col reveal reveal-delay-2">
+          <div class="contact-hub__col">
             <img class="contact-hub__cat" src="foto%20home/gatto-pre-footer.webp" alt="" aria-hidden="true" />
             <h3 class="contact-hub__title">CHIAMACI</h3>
             <div class="contact-hub__pills">
@@ -254,200 +594,162 @@
        5. Hub → footer: distanceToBottom 120px (identico
           caffè→footer di google-ads.html)              ══ -->
   <script>
-  (function () {
-    /* ── helpers ─────────────────────────────────────────── */
-    function c01(v) { return Math.max(0, Math.min(1, v)); }
-    function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
+  /* ═══════════════════════════════════════════════════════════
+     CONTATTI — stesso motore della homepage
+     Tre pezzi, gli stessi dell'index: l'acqua sui titoli, la
+     salita fra sezioni scritta da un solo rAF, e l'ingresso in
+     cascata dei blocchi di testo.
+     ═══════════════════════════════════════════════════════════ */
+  // Il footer sta più in basso di questo script nel documento:
+  // senza attendere il parsing, la salita non lo troverebbe.
+  function ctBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
 
-    var navEl = document.querySelector('.nav');
-    var prevNavDark = null;
-    /* hero è fucsia (scuro) → nav scuro subito */
-    if (navEl) { navEl.classList.add('nav--on-dark'); prevNavDark = true; }
-
-    /* splitLetters: stessa logica interna di main.js
-       Preserva <br>, entità HTML, spazi.
-       Setta opacity:1 / transform:none sul container dopo split. */
-    function splitLetters(el) {
-      if (!el) return [];
-      var html = el.innerHTML, out = '';
-      for (var i = 0; i < html.length; i++) {
-        var ch = html[i];
-        if (ch === '<') {
-          var end = html.indexOf('>', i);
-          out += html.slice(i, end + 1); i = end;
-        } else if (ch === '&') {
-          var e2 = html.indexOf(';', i);
-          out += '<span class="tl">' + html.slice(i, e2 + 1) + '</span>'; i = e2;
-        } else if (/\s/.test(ch)) {
-          out += ch;
-        } else {
-          out += '<span class="tl">' + ch + '</span>';
-        }
-      }
-      el.innerHTML = out;
-      el.style.opacity   = '1';
-      el.style.transform = 'none';
-      return Array.from(el.querySelectorAll('.tl'));
+    /* ── Acqua sui titoli ────────────────────────────────────
+       Rifrazione con feTurbulence + feDisplacementMap, curva a
+       campana: parte da zero, sale e torna a zero. Nessuna
+       trasformazione sul testo, quindi niente stiramenti. */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
     }
 
-    /* revealLetters: identico a main.js (opacity + translateY(0.8em)) */
-    function revealLetters(letters, p, base, dur) {
-      letters.forEach(function (el, i) {
-        var lP = ease(c01((p - base - i * 0.012) / dur));
-        el.style.opacity   = lP.toFixed(3);
-        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
-      });
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
     }
 
-    /* ── 1. Heading "CONTATTI": per-lettera page-load ─────
-       Visivamente = TIPS & TRICKS ma triggato al load
-       (above-fold, niente scroll necessario).
-       Stagger: 0.06s per lettera — opacity + translateY(0.8em). */
-    var headingEl     = document.querySelector('.contact-home__heading');
-    var headingLetters = splitLetters(headingEl);
-
-    headingLetters.forEach(function (el) {
-      el.style.opacity   = '0';
-      el.style.transform = 'translateY(0.8em)';
+    // l'introduzione NON prende l'acqua: è testo corrente, entra
+    // con la cascata come i corpi testo della home
+    [['ctTitle', 1000], ['ctHubTitle', 950]].forEach(([id, ms]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
+      }, { threshold: 0.45 });
+      io.observe(el);
     });
 
-    /* Sub e form: reveal via classe (lo stesso sistema di SMM) */
-    var heroSection = document.getElementById('ct-hero');
+    /* La scritta ESTRO del footer parte appena si atterra sul
+       footer, non a metà: soglia bassa e margine negativo. */
+    const ghost = document.querySelector('.sf-ghost');
+    if (ghost) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(ghost, 1000); io.disconnect(); } });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      io.observe(ghost);
+    }
 
-    requestAnimationFrame(function () {
-      requestAnimationFrame(function () {
-        /* heading: CSS transition per-lettera con stagger */
-        headingLetters.forEach(function (el, i) {
-          var d = (0.10 + i * 0.06).toFixed(2) + 's';
-          el.style.transition = 'opacity 0.45s ' + d + ' ease, transform 0.45s ' + d + ' ease';
-          el.style.opacity    = '1';
-          el.style.transform  = 'translateY(0)';
-        });
-        /* sub + form */
-        if (heroSection) heroSection.classList.add('contact-home--revealed');
-      });
+    /* ── Transizione fra sezioni ─────────────────────────────
+       Stesso pattern della home: un solo rAF scrive --sxi, il CSS
+       fa il resto. Sulla sezione dei contatti il valore lo porta
+       la sezione e lo ereditano video e pannello, così salgono
+       insieme (era il difetto corretto sulla FAQ). */
+    const RISE = ['.ct-section', '.contact-hub', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          // la corsa non può essere più lunga di quanto l'elemento
+          // riesca a salire: il footer è basso e sta a fondo pagina
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso in cascata dei testi ───────────────────────
+       Stesso linguaggio di About e Contatti in home: il blocco si
+       compone dietro al titolo, con ritardi crescenti. */
+    document.querySelectorAll('[data-cascade]').forEach(panel => {
+      const check = () => {
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.top > vh || r.bottom < 0) return false;
+        const vis = (Math.min(vh, r.bottom) - Math.max(0, r.top)) / Math.min(vh, r.height || vh);
+        if (vis >= 0.5 || r.top <= vh * 0.4) { panel.classList.add('cs-in'); return true; }
+        return false;
+      };
+      if (RM) { panel.classList.add('cs-in'); return; }
+      const io = new IntersectionObserver(() => { if (check()) io.disconnect(); },
+        { threshold: [0, 0.25, 0.5, 0.75] });
+      io.observe(panel);
+      requestAnimationFrame(check);
     });
 
-    /* ── 2. Hero → bianco: overlay scroll-driven ──────────
-       Overlay bianco (#fff = bg esatta di contact-hub) dentro
-       la hero. Opacità 0→1 mentre hero.top scende da 0 a -range.
-       range = 55% del viewport height: fade fluido e non anticipato. */
-    var heroOv = null;
-    if (heroSection) {
-      heroOv = document.createElement('div');
-      Object.assign(heroOv.style, {
-        position: 'absolute', inset: '0',
-        background: '#ffffff',
-        opacity: '0',
-        pointerEvents: 'none',
-        zIndex: '2',
-      });
-      heroSection.appendChild(heroOv);
-    }
-
-    /* ── 3. Hub titolo editoriale: per-lettera scroll-driven ─
-       Identico ad amiciLetters in main.js:
-         p = c01((ENTRY - sR.top) / ENTRY)  con ENTRY = vh * 0.70
-         revealLetters(letters, p, 0, 0.08)
-       Reversibile. */
-    var hub      = document.getElementById('contactHub');
-    var bigEl    = document.getElementById('contactHubBig');
-    var introEl  = document.getElementById('contactHubIntro');
-    var bigLetters = splitLetters(bigEl);
-
-    /* ── 4. Intro text: time-based 380ms ─────────────────── */
-    var ANIM_MS = 380;
-    var introSt = { p: 0, dir: 0, t0: 0 };
-    var prevCache = {};
-
-    function writeEl(el, key, raw) {
-      var op = ease(raw).toFixed(3);
-      var ty = ((1 - ease(raw)) * 24).toFixed(2);
-      var v  = op + '|' + ty;
-      if (prevCache[key] !== v) {
-        prevCache[key] = v;
-        el.style.opacity   = op;
-        el.style.transform = 'translateY(' + ty + 'px)';
-      }
-    }
-
-    /* ── 5. Hub → footer: distanceToBottom 120px ──────────
-       Identico caffè→footer di google-ads.html.
-       Fixed overlay #0e0e0e — si attiva solo negli ultimi
-       120px di scroll effettivo dal fondo del documento.
-       Reversibile in scroll-up.                             */
-    var hubExitOv = document.createElement('div');
-    Object.assign(hubExitOv.style, {
-      position: 'fixed', inset: '0',
-      background: '#0e0e0e',
-      opacity: '0',
-      pointerEvents: 'none',
-      zIndex: '200',
-      transition: 'none',
-    });
-    document.body.appendChild(hubExitOv);
-
-    /* ── RAF loop ────────────────────────────────────────── */
-    function tick() {
-      requestAnimationFrame(tick);
-      var now = performance.now();
-      var vh  = window.innerHeight;
-
-      /* 2 — Hero → bianco */
-      if (heroOv && heroSection) {
-        var hR    = heroSection.getBoundingClientRect();
-        var range = vh * 0.55;
-        heroOv.style.opacity = ease(c01(-hR.top / range)).toFixed(3);
-      }
-
-      /* 3 — Hub titolo: revealLetters (identico amici main.js) */
-      if (hub) {
-        var sR    = hub.getBoundingClientRect();
-        var ENTRY = vh * 0.70;
-        var p     = c01((ENTRY - sR.top) / ENTRY);
-
-        revealLetters(bigLetters, p, 0, 0.08);
-
-        /* 4 — Intro: time-based, trigger a p > 0.08 */
-        var doReveal = p > 0.08;
-        if (doReveal && introSt.dir !== 1) {
-          introSt.dir = 1; introSt.t0 = now - introSt.p * ANIM_MS;
-        } else if (!doReveal && introSt.dir !== -1) {
-          introSt.dir = -1; introSt.t0 = now - (1 - introSt.p) * ANIM_MS;
+    /* ── Nav chiara/scura secondo la sezione sotto la pill ───── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const marks = [...document.querySelectorAll('[data-nav-theme]')];
+      let wasDark = null;
+      const sync = () => {
+        const probe = nav.getBoundingClientRect().bottom - 6;
+        let dark = false;
+        for (const m of marks) {
+          const r = m.getBoundingClientRect();
+          if (r.top <= probe && r.bottom >= probe) dark = m.dataset.navTheme === 'dark';
         }
-        if (introSt.dir === 1)       introSt.p = Math.min(1, (now - introSt.t0) / ANIM_MS);
-        else if (introSt.dir === -1) introSt.p = Math.max(0, 1 - (now - introSt.t0) / ANIM_MS);
-        if (introEl) writeEl(introEl, 'intro', introSt.p);
-      }
-
-      /* 5 — Hub → footer: distanceToBottom */
-      var maxScroll       = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      var distanceToBottom = maxScroll - window.scrollY;
-      hubExitOv.style.opacity = ease(c01(1 - distanceToBottom / 120)).toFixed(3);
-
-      /* Nav blend: fucsia (hero) → bianco (hub) */
-      if (navEl) {
-        var midY  = (navEl.getBoundingClientRect().height || 72) / 2;
-        var isDark = true;
-        var hR2  = heroSection ? heroSection.getBoundingClientRect() : null;
-        var hubR = hub ? hub.getBoundingClientRect() : null;
-        if (hR2 && hR2.top <= midY && hR2.bottom > midY) {
-          var ovA  = heroOv ? (parseFloat(heroOv.style.opacity) || 0) : 0;
-          /* luma fucsia ≈ 75, luma bianco = 255 */
-          isDark = ((1 - ovA) * 75 + ovA * 255) < 140;
-        } else if (hubR && hubR.top <= midY && hubR.bottom > midY) {
-          isDark = false;
-        }
-        if (isDark !== prevNavDark) { prevNavDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
+        if (dark !== wasDark) { wasDark = dark; nav.classList.toggle('nav--on-dark', dark); }
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
     }
-
-    requestAnimationFrame(tick);
-  })();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ctBoot);
+  } else { ctBoot(); }
   </script>
 
   <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
