@@ -1448,10 +1448,12 @@
       min-height: 0;
       display: flex;
       align-items: center;
-      padding-block: clamp(1.6rem, 3.2vh, 3rem);
+      padding-block: max(clamp(1.6rem, 3.2vh, 3rem), calc(var(--nav-h, 88px) + 0.75rem)) clamp(1.6rem, 3.2vh, 3rem);
       overflow: hidden;
     }
-    @media (min-width: 1024px) and (min-height: 700px) {
+    /* Stessa soglia delle altre sezioni agganciate (era 1024×700, e
+       fra 820 e 1024 Tips restava l'unica senza pin). */
+    @media (min-width: 820px) and (min-height: 560px) {
       .tips-section { height: 145dvh !important; }
       .tips-sticky {
         position: sticky !important;
@@ -1494,25 +1496,89 @@
       filter: hue-rotate(-54deg) saturate(1.05) brightness(0.66);
       opacity: 0.58;
     }
-    /* la scala tiene coperti gli angoli mentre ruota: senza, in
-       diagonale si scoprirebbero */
+    /* La scala tiene coperti gli angoli mentre ruota. 1.45 non
+       bastava: su una viewport 1440×900, a 45° servono almeno 1.84
+       volte l'altezza per non scoprire il bordo del fotogramma — ed
+       era proprio quello il "taglio netto" che compariva a tratti,
+       il lato del video, non una forma. 1.95 lascia margine anche
+       sulle proporzioni più alte. */
     @keyframes tips-orbit {
-      from { transform: rotate(0deg) scale(1.45); }
-      to   { transform: rotate(360deg) scale(1.45); }
+      from { transform: rotate(0deg) scale(1.95); }
+      to   { transform: rotate(360deg) scale(1.95); }
     }
     @media (prefers-reduced-motion: reduce) {
-      .tips-video__el { animation: none; transform: scale(1.2); }
+      .tips-video__el { animation: none; transform: scale(1.95); }
     }
     .static-capture .tips-video__el { animation: none; }
     /* Titolo, griglia e CTA stanno sopra allo sfondo */
     .tips-sticky > .container { position: relative; z-index: 1; }
     .tips-sticky .container { width: 100%; }
+    /* Impaginazione asimmetrica: a sinistra una card che vale in
+       altezza le due di destra messe una sopra l'altra. */
     .tips-grid {
       display: grid !important;
-      grid-template-columns: repeat(3, 1fr) !important;
+      grid-template-columns: 1.28fr 1fr !important;
+      grid-template-rows: 1fr 1fr !important;
       gap: clamp(0.75rem, 1.5vw, 1.5rem) !important;
+      height: clamp(260px, 40vh, 440px) !important;
     }
-    .tip-card__img img { max-height: clamp(130px, 26vh, 280px) !important; object-fit: cover; width: 100% !important; height: clamp(130px, 26vh, 280px) !important; }
+    .tip-card--feature { grid-row: 1 / span 2; }
+    /* Le due card piccole restano immagine sopra e testo sotto, ma
+       devono stare esattamente in metà colonna: l'immagine prende lo
+       spazio che avanza invece di avere un'altezza fissa. */
+    .tip-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 0;
+    }
+    /* Nelle due card piccole il titolo è lungo e, lasciato libero,
+       si prendeva tutta la card: l'immagine restava alta 20px. Qui la
+       proporzione è fissata — l'immagine tiene sempre la sua metà e
+       il titolo si ferma a due righe. */
+    .tip-card__img {
+      flex: 0 0 58%;
+      min-height: 0;
+    }
+    .tip-card:not(.tip-card--feature) .tip-card__title {
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .tip-card__img img {
+      width: 100% !important;
+      height: 100% !important;
+      max-height: none !important;
+      object-fit: cover;
+    }
+    /* Card grande: l'immagine è tutta la card e il testo ci sta
+       sopra. */
+    .tip-card__scrim {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      /* Velatura piena sotto, dove sta il testo, che si apre verso
+         l'alto: il testo regge su qualsiasi foto e l'immagine resta
+         scoperta nella metà superiore. */
+      background: linear-gradient(to top,
+                  rgba(0,0,0,0.98) 0%,
+                  rgba(0,0,0,0.95) 20%,
+                  rgba(0,0,0,0.78) 38%,
+                  rgba(0,0,0,0.34) 58%,
+                  rgba(0,0,0,0) 82%);
+      transition: opacity 0.6s ease;
+      opacity: 1;
+    }
+    .tip-card__over {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: clamp(1rem, 2vw, 1.75rem);
+      z-index: 2;
+    }
+    .tip-card--feature .tip-card__date  { color: rgba(255,255,255,0.72) !important; padding-inline: 0 !important; }
+    .tip-card--feature .tip-card__title { color: #fff !important; padding-inline: 0 !important;
+                                          font-size: clamp(1.15rem, 1.9vw, 1.75rem) !important; }
+    .tip-card--feature:hover .tip-card__title { color: #fff !important; }
 
     .sf-ghost { color: rgba(255,255,255,0.10) !important; }
 
@@ -2108,13 +2174,16 @@
     html.js-reveal .tips-grid .tip-card {
       transform: translateY(var(--tip-ty, 26px));
       opacity: 0.55;
-      transition: transform var(--tip-dur, 0.5s) cubic-bezier(0.22,1,0.36,1),
+      /* Bounce: la curva supera la quota d'arrivo e rientra. Le tre
+         card mantengono corse e durate diverse, quindi rimbalzano
+         una dopo l'altra invece che all'unisono. */
+      transition: transform var(--tip-dur, 0.5s) cubic-bezier(0.18, 1.5, 0.36, 1),
                   opacity 0.32s ease;
       transition-delay: var(--tip-delay, 0s);
     }
-    html.js-reveal .tips-grid .tip-card:nth-child(1) { --tip-ty: 86px;  --tip-dur: 0.86s; }
-    html.js-reveal .tips-grid .tip-card:nth-child(2) { --tip-ty: 34px;  --tip-dur: 0.58s; }
-    html.js-reveal .tips-grid .tip-card:nth-child(3) { --tip-ty: 124px; --tip-dur: 1.02s; }
+    html.js-reveal .tips-grid .tip-card:nth-child(1) { --tip-ty: 86px;  --tip-dur: 0.86s; --tip-delay: 0s; }
+    html.js-reveal .tips-grid .tip-card:nth-child(2) { --tip-ty: 34px;  --tip-dur: 0.58s; --tip-delay: 0.12s; }
+    html.js-reveal .tips-grid .tip-card:nth-child(3) { --tip-ty: 124px; --tip-dur: 1.02s; --tip-delay: 0.22s; }
     html.js-reveal .tips-grid.tips-in .tip-card {
       transform: none;
       opacity: 1;
@@ -2193,7 +2262,11 @@
     .wall__cols {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: clamp(0.8rem, 1.6vw, 1.4rem);
+      /* Lo stacco fra le colonne è più largo di quello fra le card
+         della stessa colonna: senza, le tre liste si leggevano come
+         un'unica fila continua. */
+      column-gap: clamp(1.6rem, 3.4vw, 3rem);
+      row-gap: clamp(0.8rem, 1.6vw, 1.4rem);
       /* dentro il pannello agganciato il muro prende l'altezza che
          resta, senza farlo crescere oltre i 100dvh */
       flex: 1;
@@ -2211,7 +2284,20 @@
       will-change: transform;
     }
     .wall__col:nth-child(2) .wall__track { animation-direction: reverse; }
-    .wall__cols:hover .wall__track { animation-play-state: paused; }
+    /* La pausa è della singola colonna: passando sopra a una, le
+       altre due continuano a scorrere. */
+    .wall__col:hover .wall__track { animation-play-state: paused; }
+    /* Trascinabile: la mano dice che si può prendere, e durante il
+       trascinamento niente selezione del testo né scroll della
+       pagina sul gesto verticale (touch-action). */
+    .wall__col {
+      cursor: grab;
+      touch-action: pan-x;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .wall__col.wall--dragging { cursor: grabbing; }
+    .wall__col.wall--dragging .wall__track { animation-play-state: paused; }
     @keyframes wall-scroll {
       from { transform: translateY(0); }
       to   { transform: translateY(-50%); }
@@ -2298,7 +2384,7 @@
          visibile larga quanto la viewport e col bordo basso a 88px,
          quindi sotto i 49px il titolo le finirebbe dietro. Così
          l'inchiostro parte a 95px, con 7px di margine. */
-      padding-block: 92px 16px;
+      padding-block: 92px 48px;
     }
     @media (min-width: 820px) and (min-height: 560px) {
       .page-faq { height: 145dvh !important; }
@@ -2330,14 +2416,37 @@
        domande ha il suo .sx-rise e sale in sincrono, con gli stessi
        valori. L'altezza va oltre il fondo di 22px, quanto la salita:
        così sotto non si apre mai una striscia scoperta. */
-    html.js-reveal .faq-video.sx-rise {
-      position: absolute;
+    /* La sezione porta solo il valore --sxi, non la salita: contiene
+       un pin sticky e un transform sull'antenato ne romperebbe
+       l'ancoraggio. */
+    html.js-reveal .page-faq.sx-rise {
+      position: relative;
+      z-index: auto;
+      transform: none;
+      border-radius: 0;
+      box-shadow: none;
+      will-change: auto;
+    }
+    html.js-reveal .page-faq.sx-rise::after { content: none; }
+    /* Video e pannello salgono con lo stesso --sxi ereditato dalla
+       sezione: stessa corsa, stesso raggio, stesso istante. */
+    html.js-reveal .page-faq .faq-video {
       inset: 0 0 auto 0;
       height: calc(100% + 22px);
-      z-index: 0;
-      box-shadow: none;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      /* stessa ombra del pattern .sx-rise: senza, la salita si vede
+         a metà — è l'ombra a staccare la sezione da quella sotto */
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
     }
-    html.js-reveal .faq-video.sx-rise::after { content: none; }
+    html.js-reveal .page-faq .page-faq__inner {
+      position: sticky;
+      z-index: 3;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      will-change: transform;
+    }
     /* Stessi valori della sezione Servizi: ingrandita 1.85 e ruotata
        di 9°, stessa rotazione di crominanza, stessa luminosità. Qui
        però copre tutta la sezione, senza la maschera radiale che nei
@@ -2366,30 +2475,10 @@
     /* Il contenuto sta sopra al video */
     .page-faq__title,
     .page-faq__list { position: relative; z-index: 1; }
-    /* Le domande occupano il pannello invece di stare centrate come un
-       blocco corto: erano 680px in un pannello da 900, e i 220px
-       avanzati diventavano due bande vuote sopra e sotto (146px e
-       73px, contro i 100/27 di Passaparola). Ora la cornice è la
-       stessa delle altre sezioni e lo spazio va tra le voci.
-       Con le risposte aperte lo spazio in più si azzera da sé e le
-       voci tornano alla loro altezza naturale. */
-    @media (min-width: 820px) and (min-height: 560px) {
-      .page-faq__list {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-      }
-      /* Lo spazio va DENTRO le voci, non tra una voce e l'altra:
-         distribuito tra le righe spezzava il ritmo dei filetti e si
-         leggeva come aria di troppo. Così le righe sono tutte alte
-         uguali e l'elenco è continuo dal titolo al fondo. */
-      .page-faq__item {
-        flex: 1 1 auto;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-      }
-    }
+    /* Le voci non si allungano più per riempire il pannello: stirate
+       arrivavano a filo del bordo alto e di quello basso, e la
+       sezione non respirava. Restano alla loro altezza naturale e il
+       blocco si centra, così sopra e sotto c'è di nuovo margine. */
     /* Il pannello è alto esattamente 100dvh e ritaglia: con una
        risposta aperta il contenuto sforava di 9px. Lo spazio si
        recupera dallo stacco sotto il titolo, non dai testi. */
@@ -2479,8 +2568,6 @@
     /* — Microcopy secondario: 14px — */
     main .btn,
     .about-section__kicker,
-    .vhero__sub,
-    .vhero__tagline,
     .svc-caffe__privacy,
     .svc-caffe__privacy span,
     .svc-card__tag,
@@ -2816,12 +2903,29 @@
       transition: opacity 0.55s ease, background 0.3s linear;
     }
     .tip-card:hover .tip-card__img::after { opacity: 1; }
+    /* Hover: l'immagine si avvicina e deriva lentamente, come una
+       carrellata. Il movimento sta dentro la cornice, che non si
+       muove; sulla card grande la velatura si scurisce un po' così
+       il testo resta leggibile mentre l'immagine si schiarisce. */
     .tip-card:hover {
-      --tc-is: 1.035;
+      --tc-is: 1.09;
       --tc-z-img: 2px;
       --tc-z-tit: 5px;
       --tc-z-date: 3px;
     }
+    .tip-card:hover .tip-card__img img {
+      transition: transform 5s cubic-bezier(0.22, 0.61, 0.36, 1);
+      animation: tipDrift 7s ease-in-out 0.35s infinite alternate;
+    }
+    @keyframes tipDrift {
+      from { translate: 0 0; }
+      to   { translate: -1.6% -1.2%; }
+    }
+    .tip-card--feature:hover .tip-card__scrim { opacity: 1; }
+    @media (prefers-reduced-motion: reduce) {
+      .tip-card:hover .tip-card__img img { animation: none; transition: none; }
+    }
+    .static-capture .tip-card__img img { animation: none !important; }
     /* Ritorno morbido allo stato piatto, senza scatto né rimbalzo */
     .tip-card { transition: transform 0.75s cubic-bezier(0.22, 1, 0.28, 1); }
     /* Puntatore grossolano / mobile: niente tilt, solo profondità statica */
@@ -2922,8 +3026,6 @@
     /* Le tre eccezioni al minimo: tagline, tag e CTA restano a 14px.
        Sono etichette, non testo di lettura: portarle a 16 le avrebbe
        fatte pesare quanto i contenuti. */
-    .vhero__tagline,
-    .vhero__sub,
     .sf-tagline,
     .about-section__kicker,
     .svc-card__tag,
@@ -2939,6 +3041,179 @@
        frase che invita a scrivere, quindi sta al minimo di lettura
        come il resto del corpo testo. */
     p.hc-sub { font-size: 16px !important; }
+    /* Tagline e sottotitolo dell'hero: sono le due frasi che
+       introducono il sito, non etichette. Vanno al minimo di lettura
+       come il resto del corpo testo. */
+    p.vhero__tagline, p.vhero__sub { font-size: 16px !important; }
+
+    /* Le CTA dentro le card dei Servizi: il testo del pulsante sta
+       nell'etichetta interna, che il minimo di 16px aveva alzato
+       lasciandola più grande del pulsante che la contiene. */
+    .svc-card__btn,
+    .svc-card__btn .svc-card__btn-label { font-size: 14px !important; }
+
+    /* Footer: tutte le voci a 14px. È chiusura di pagina, non testo
+       di lettura — resta fuori solo la scritta ESTRO di sfondo, che
+       ha un corpo suo. */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4,
+    .site-footer .sf-col__title,
+    .site-footer .sf-contact__label,
+    .site-footer .sf-legal__copy,
+    .site-footer .sf-legal__sep { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    /* Card grande dei Tips — sta qui in fondo perché le regole
+       generiche di .tip-card (padding e margine sotto l'immagine)
+       arrivano più a valle e vincerebbero: sulla card grande
+       l'immagine È la card, quindi niente padding, niente margine e
+       nessun fondo bianco che spunti sotto. */
+    .tips-grid .tip-card {
+      padding: 0 !important;
+      gap: 0 !important;
+      background: #000 !important;
+      overflow: hidden;
+    }
+    .tips-grid .tip-card .tip-card__img {
+      flex: 1 1 100% !important;
+      height: 100% !important;
+      margin-bottom: 0 !important;
+      overflow: hidden !important;
+      border-radius: inherit;
+    }
+    /* Le immagini uscivano dal riquadro nero: la parallasse le sposta
+       di qualche pixel (--tc-ix/--tc-iy) e la deriva in hover di un
+       altro 1,6%, ma a scala 1 non c'era margine e sul bordo si
+       scopriva la foto oltre la cornice. Con un ingrandimento di
+       partenza il margine c'è, e il ritaglio della cornice non viene
+       mai superato. */
+    /* A riposo l'immagine sta esattamente dentro la cornice: niente
+       ingrandimento, quindi niente da ritagliare. È l'ingrandimento
+       che si vedeva spuntare da sotto il layer nero durante lo
+       slide-up — con la card in movimento il ritaglio del riquadro
+       non teneva il passo. L'ingrandimento serve solo in hover, dove
+       la card è ferma e la parallasse ha bisogno di margine. */
+    .tips-grid .tip-card { --tc-is: 1; }
+    .tips-grid .tip-card:hover { --tc-is: 1.12; }
+    /* Ritaglio dichiarato: il contenuto non può essere disegnato
+       fuori dal riquadro nemmeno mentre la card si muove. */
+    .tips-grid .tip-card { contain: paint; }
+
+    /* Le card si confondevano col fondo: nere su un video scuro,
+       senza bordo, sembravano buchi. Un filo di luce sul contorno e
+       un'ombra piena le staccano, e in hover il contorno passa al
+       fucsia — la card si accende invece di limitarsi a zoomare. */
+    .tips-grid .tip-card {
+      border: 1px solid rgba(255,255,255,0.16) !important;
+      border-radius: 14px !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.55) !important;
+      transition: border-color 0.4s var(--rv-ease), box-shadow 0.4s var(--rv-ease);
+    }
+    .tips-grid .tip-card:hover {
+      border-color: var(--primary, #DB005A) !important;
+      box-shadow: 0 22px 54px rgba(0,0,0,0.65) !important;
+    }
+    /* A riposo l'immagine non ha né trasformazioni proprie né un
+       livello di composizione suo: con will-change e translateZ
+       stava su un layer separato dalla velatura e dal testo, e
+       durante il rimbalzo d'ingresso i due layer non arrivavano
+       nello stesso fotogramma — è lo scivolamento che si vedeva
+       scendendo verso la sezione. Il 3D si accende solo quando il
+       puntatore è sulla card (.tc-live), dove serve. */
+    .tips-grid .tip-card .tip-card__img,
+    .tips-grid .tip-card .tip-card__img img {
+      will-change: auto;
+    }
+    .tips-grid .tip-card:not(.tc-live) .tip-card__img { transform: none; }
+    .tips-grid .tip-card:not(.tc-live) .tip-card__img img {
+      transform: scale(var(--tc-is, 1));
+    }
+    .tips-grid .tip-card.tc-live .tip-card__img img { will-change: transform; }
+
+    /* ── Placeholder Case Studies: movimento 3D in hover ──────────
+       L'inclinazione va sull'immagine dentro la cornice, non sulla
+       cornice: quella è già impegnata dal reveal (clip-path) e
+       muoverla farebbe litigare le due animazioni. La prospettiva
+       sta sul contenitore, così la rotazione è vera e non un
+       semplice scorrimento. */
+    /* La prospettiva sta sulla coppia, non sulle singole card: così
+       le due si inclinano nello stesso spazio e la scena ha un
+       davanti e un dietro, invece di due effetti scollegati. */
+    .cs2-sticky .cst-grid { perspective: 1100px; }
+    .cs2-sticky .cst-img,
+    .cs2-sticky .cst-right {
+      transform-style: preserve-3d;
+      transition: box-shadow 0.6s var(--rv-ease);
+    }
+    /* La card nera non ha effetti in hover: resta ferma. */
+    .cs2-sticky .cst-right { transform: none; }
+    .cs2-sticky .cst-img { perspective: 900px; }
+    .cs2-sticky .cst-img img {
+      transform: rotateX(var(--ci-rx, 0deg)) rotateY(var(--ci-ry, 0deg))
+                 translate3d(var(--ci-tx, 0px), var(--ci-ty, 0px), var(--ci-z, 0px));
+      transform-style: preserve-3d;
+      transition: transform 0.6s var(--rv-ease);
+      will-change: transform;
+    }
+    /* Mentre il puntatore è sopra, la risposta dev'essere immediata */
+    .cs2-sticky .cst-img.ci-live img { transition: transform 0.12s ease-out; }
+    @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+      .cs2-sticky .cst-img img { transform: none !important; }
+    }
+    .static-capture .cs2-sticky .cst-img img { transform: none !important; }
+    /* Testo allineato a sinistra in tutte le card. */
+    .tips-grid .tip-card__over,
+    .tips-grid .tip-card__date,
+    .tips-grid .tip-card__title { text-align: left !important; }
+    .tips-grid .tip-card__date,
+    .tips-grid .tip-card__title {
+      color: #fff !important;
+      padding-inline: 0 !important;
+    }
+    .tips-grid .tip-card__date { color: rgba(255,255,255,0.78) !important; }
+    .tips-grid .tip-card:hover .tip-card__title { color: #fff !important; }
+    /* Sulle due card piccole il titolo è più corto in altezza: due
+       righe, corpo ridotto, così la velatura resta bassa e l'immagine
+       si vede quasi tutta. */
+    .tips-grid .tip-card:not(.tip-card--feature) .tip-card__title {
+      font-size: clamp(0.95rem, 1.15vw, 1.1rem) !important;
+      line-height: 1.25 !important;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Bounce all'ingresso. L'entrata delle card la governa il reveal
+       card3d (--rv-ty), non le variabili --tip-*, e più a valle una
+       regola generica di .tip-card riscriveva comunque la
+       transizione: per questo la curva va imposta qui, in fondo.
+       Salita, durata e ritardo restano diversi per card, così i tre
+       rimbalzi non cadono insieme. */
+    html.js-reveal .tips-grid .tip-card[data-rv="card3d"] {
+      transition: transform var(--tip-dur, 0.8s) cubic-bezier(0.18, 1.5, 0.36, 1) var(--tip-delay, 0s),
+                  opacity 0.5s ease var(--tip-delay, 0s),
+                  box-shadow 0.4s var(--rv-ease) !important;
+    }
+    html.js-reveal .tips-grid .tip-card:nth-child(1) { --rv-ty: 86px;  --tip-dur: 0.90s; --tip-delay: 0s;    }
+    html.js-reveal .tips-grid .tip-card:nth-child(2) { --rv-ty: 34px;  --tip-dur: 0.62s; --tip-delay: 0.12s; }
+    html.js-reveal .tips-grid .tip-card:nth-child(3) { --rv-ty: 124px; --tip-dur: 1.05s; --tip-delay: 0.22s; }
+    html.js-reveal .tips-grid .tip-card[data-rv="card3d"].rv-in { --rv-ty: 0px; }
+    /* Mentre il puntatore è sopra la card, il tilt deve restare
+       immediato: qui il rimbalzo darebbe l'effetto di gelatina. */
+    html.js-reveal .tips-grid .tip-card[data-rv="card3d"].tc-live {
+      transition: transform 0.16s ease-out,
+                  box-shadow 0.4s var(--rv-ease) !important;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .tips-grid .tip-card[data-rv="card3d"] {
+        transition: opacity 0.4s ease !important;
+      }
+    }
 
     /* Il footer sale con .sx-rise: la fascia ::after che riempie lo
        spazio sotto sta fuori dal suo riquadro, quindi il footer non
@@ -3451,26 +3726,42 @@
         <div class="container">
           <h2 class="tips-section__heading" id="tipsTitle">TIPS &amp; TRICKS</h2>
           <div class="tips-grid" id="tipsGrid">
-            <article class="tip-card" data-idx="0">
+            <!-- Card grande: occupa da sola l'altezza delle due a
+                 destra e il testo sta SOPRA l'immagine. La leggibilità
+                 la dà .tip-card__scrim, una velatura dal basso che si
+                 sovrappone alla foto, non un fondo pieno. -->
+            <article class="tip-card tip-card--feature" data-idx="0">
               <div class="tip-card__img">
                 <img src="Foto%20tips%20and%20tricks/cover-tips-%E2%80%93-interactive-reels.webp" alt="Mai più link in bio? Ora i Reel diventano interattivi" loading="lazy" />
+                <div class="tip-card__scrim" aria-hidden="true"></div>
+                <div class="tip-card__over">
+                  <p class="tip-card__date">19 MARZO 2025</p>
+                  <h3 class="tip-card__title">MAI PIÙ "LINK IN BIO"? ORA I REEL DIVENTANO INTERATTIVI</h3>
+                </div>
               </div>
-              <p class="tip-card__date">19 MARZO 2025</p>
-              <h3 class="tip-card__title">MAI PIÙ "LINK IN BIO"? ORA I REEL DIVENTANO INTERATTIVI</h3>
             </article>
+            <!-- Anche le due card piccole hanno il testo sopra la
+                 foto: così l'immagine prende tutta la card invece di
+                 restare schiacciata sopra il titolo. -->
             <article class="tip-card" data-idx="1">
               <div class="tip-card__img">
                 <img src="Foto%20tips%20and%20tricks/social-e-copy-copia.webp" alt="Il copywriter crea il messaggio, il Social Media Manager lo guida" loading="lazy" />
+                <div class="tip-card__scrim" aria-hidden="true"></div>
+                <div class="tip-card__over">
+                  <p class="tip-card__date">19 MARZO 2025</p>
+                  <h3 class="tip-card__title">IL COPYWRITER CREA IL MESSAGGIO, IL SOCIAL MEDIA MANAGER LO GUIDA</h3>
+                </div>
               </div>
-              <p class="tip-card__date">19 MARZO 2025</p>
-              <h3 class="tip-card__title">IL COPYWRITER CREA IL MESSAGGIO, IL SOCIAL MEDIA MANAGER LO GUIDA: DUE PROFESSIONI, UN UNICO OBIETTIVO.</h3>
             </article>
             <article class="tip-card" data-idx="2">
               <div class="tip-card__img">
                 <img src="Foto%20tips%20and%20tricks/happy-sito-v02.webp" alt="Core Web Vitals nel 2024: cosa cambia e come ottimizzare il tuo sito" loading="lazy" />
+                <div class="tip-card__scrim" aria-hidden="true"></div>
+                <div class="tip-card__over">
+                  <p class="tip-card__date">26 AGOSTO 2024</p>
+                  <h3 class="tip-card__title">CORE WEB VITALS NEL 2024: COSA CAMBIA E COME OTTIMIZZARE IL TUO SITO</h3>
+                </div>
               </div>
-              <p class="tip-card__date">26 AGOSTO 2024</p>
-              <h3 class="tip-card__title">CORE WEB VITALS NEL 2024: COSA CAMBIA E COME OTTIMIZZARE IL TUO SITO</h3>
             </article>
           </div>
           <div class="tips-section__cta" id="tipsCTA">
@@ -4064,7 +4355,7 @@
     ];
 
     const COLS = 3;
-    const DUR = ['46s', '38s', '54s'];   // velocità diverse per colonna
+    const DUR = ['32s', '26s', '38s'];   // velocità diverse per colonna, ~30% più svelte
 
     const card = ([quote, name, role]) => {
       const el = document.createElement('article');
@@ -4096,6 +4387,62 @@
       col.appendChild(track);
       host.appendChild(col);
     }
+
+    // ── Trascinamento: ogni colonna per conto suo ────────────
+    // Tre liste autonome, non un muro solo: il gesto vive sulla
+    // colonna, quindi trascinarne una non tocca le altre, che
+    // continuano a scorrere.
+    // Le colonne restano animate dal CSS; il trascinamento aggiunge
+    // uno scostamento suo con la proprietà `translate`, che è
+    // indipendente da `transform` e quindi non litiga con i
+    // keyframes. Lo scostamento viene riportato dentro l'altezza di
+    // mezza traccia: l'elenco è duplicato e l'animazione scorre
+    // esattamente di metà, quindi ogni multiplo di quella misura è
+    // una posizione equivalente e il giro resta senza cuciture.
+    const wrap = (v, span) => span ? ((v % span) + span) % span - span : v;
+
+    host.querySelectorAll('.wall__col').forEach(col => {
+      const track = col.querySelector('.wall__track');
+      if (!track) return;
+      let dragging = false, startY = 0, moved = 0, offset = 0;
+
+      const apply = () => {
+        const half = track.scrollHeight / 2;
+        track.style.translate = '0 ' + wrap(offset, half).toFixed(1) + 'px';
+      };
+
+      col.addEventListener('pointerdown', e => {
+        if (e.button !== 0) return;
+        dragging = true;
+        moved = 0;
+        startY = e.clientY;
+        col.classList.add('wall--dragging');
+        col.setPointerCapture(e.pointerId);
+      });
+
+      col.addEventListener('pointermove', e => {
+        if (!dragging) return;
+        const dy = e.clientY - startY;
+        startY = e.clientY;
+        moved += Math.abs(dy);
+        offset += dy;
+        apply();
+      });
+
+      const end = e => {
+        if (!dragging) return;
+        dragging = false;
+        col.classList.remove('wall--dragging');
+        if (e.pointerId != null && col.hasPointerCapture(e.pointerId)) {
+          col.releasePointerCapture(e.pointerId);
+        }
+      };
+      col.addEventListener('pointerup', end);
+      col.addEventListener('pointercancel', end);
+      // un trascinamento non deve aprire il link/selezionare il testo
+      col.addEventListener('click', e => { if (moved > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+      col.addEventListener('dragstart', e => e.preventDefault());
+    });
   }());
 
   // ── Servizi: card drag + animazioni ────────────────────
@@ -4877,7 +5224,15 @@
     // sezione: la sezione è solo la corsa del pin, non si muove, e un
     // transform sull'antenato romperebbe l'ancoraggio dello sticky.
     const RISE  = ['.cs2-sticky', '.tips-sticky', '.wall-sticky',
-                   '.page-faq__inner', '.faq-video', '.hc-inner',
+                   // FAQ: la salita la governa la SEZIONE, non i due
+                   // figli. Prima erano nell'elenco entrambi e ognuno
+                   // calcolava il proprio --sxi dal proprio riquadro
+                   // (uno alto 1305px, l'altro 900): partivano
+                   // sfasati ed è per questo che la transizione non
+                   // si comportava come le altre. Ora il valore lo
+                   // scrive la sezione e i figli lo ereditano, quindi
+                   // video e pannello salgono insieme.
+                   '.page-faq', '.hc-inner',
                    '.site-footer',
                    '.amici-sticky', '.about-sticky'];
     const DEPTH = [];
@@ -4982,6 +5337,54 @@
         card.classList.remove('tc-live');
         ['--tc-rx','--tc-ry'].forEach(k => set(k, '0deg'));
         ['--tc-ix','--tc-iy','--tc-tx','--tc-sx','--tc-sy'].forEach(k => set(k, '0px'));
+      });
+    });
+  }());
+
+  /* ═══════════════════════════════════════════════════════════
+     PLACEHOLDER CASE STUDIES — movimento 3D in hover
+     Stesso linguaggio delle card Tips: inclinazione verso il
+     puntatore e un filo di avvicinamento, niente di più.
+     ═══════════════════════════════════════════════════════════ */
+  (function csImgTilt() {
+    if (matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
+    const grids = document.querySelectorAll('.cs2-sticky .cst-grid');
+    if (!grids.length) return;
+
+    // Il 3D resta all'immagine; la card nera usa il suo segno
+    // editoriale (filetto + rientro), non un'inclinazione.
+    const IMG_ROT   = 11;  // gradi — immagine
+    const IMG_SHIFT = 12;  // px — scorrimento immagine
+    const IMG_LIFT  = 46;  // px — avvicinamento immagine
+
+    grids.forEach(grid => {
+      const frame = grid.querySelector('.cst-img');
+      let raf = null;
+      const setF = (k, v) => frame && frame.style.setProperty(k, v);
+
+      grid.addEventListener('pointerenter', () => {
+        grid.classList.add('cg-live');
+        if (frame) frame.classList.add('ci-live');
+        setF('--ci-z', IMG_LIFT + 'px');
+      });
+      grid.addEventListener('pointermove', e => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = null;
+          const r = grid.getBoundingClientRect();
+          const dx = (e.clientX - r.left) / r.width  - 0.5;   // -0.5 → 0.5
+          const dy = (e.clientY - r.top)  / r.height - 0.5;
+          setF('--ci-ry', ( dx * 2 * IMG_ROT).toFixed(2) + 'deg');
+          setF('--ci-rx', (-dy * 2 * IMG_ROT).toFixed(2) + 'deg');
+          setF('--ci-tx', ( dx * 2 * IMG_SHIFT).toFixed(1) + 'px');
+          setF('--ci-ty', ( dy * 2 * IMG_SHIFT).toFixed(1) + 'px');
+        });
+      });
+      grid.addEventListener('pointerleave', () => {
+        grid.classList.remove('cg-live');
+        if (frame) frame.classList.remove('ci-live');
+        ['--ci-rx','--ci-ry'].forEach(k => setF(k, '0deg'));
+        ['--ci-tx','--ci-ty','--ci-z'].forEach(k => setF(k, '0px'));
       });
     });
   }());
