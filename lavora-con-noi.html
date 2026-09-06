@@ -1355,12 +1355,22 @@
         <form class="lcn-apply__form reveal" style="transition-delay:0.35s" action="#" method="post" enctype="multipart/form-data" novalidate>
 
           <div class="lcn-apply__row">
-            <input class="lcn-apply__input" type="text" name="nome" placeholder="Nome*" required />
-            <input class="lcn-apply__input" type="text" name="cognome" placeholder="Cognome*" required />
+            <div class="f-field">
+              <label class="f-label" for="lcn-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="lcn-f-nome" class="lcn-apply__input" type="text" name="nome" placeholder="Mario" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="lcn-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="lcn-f-cognome" class="lcn-apply__input" type="text" name="cognome" placeholder="Rossi" required />
+            </div>
           </div>
 
-          <select class="lcn-apply__select" name="posizione" required>
-            <option value="" disabled selected>Posizione*</option>
+          <div class="f-field">
+
+            <label class="f-label" for="lcn-f-posizione">Posizione <span class="f-label__req" aria-hidden="true">*</span></label>
+
+            <select id="lcn-f-posizione" class="lcn-apply__select" name="posizione" required>
+            <option value="" disabled selected>Posizione</option>
             <option value="graphic-designer">Graphic Designer</option>
             <option value="social-media-manager">Social Media Manager</option>
             <option value="copywriter">Copywriter</option>
@@ -1369,14 +1379,20 @@
             <option value="web-developer">Web Developer</option>
             <option value="project-manager">Project Manager</option>
             <option value="digital-strategist">Digital Strategist</option>
-          </select>
+            </select>
+          </div>
 
-          <div class="lcn-apply__file-wrap">
-            <label class="lcn-apply__file-label" for="cv-upload">
-              <span id="cv-filename">Mandaci il tuo CV* (PDF max 2MB)</span>
+          <div class="f-field">
+
+            <label class="f-label" for="cv-upload">CV <span class="f-label__req" aria-hidden="true">*</span></label>
+
+            <div class="lcn-apply__file-wrap">
+              <label class="lcn-apply__file-label" for="cv-upload">
+              <span id="cv-filename">Mandaci il tuo CV (PDF max 2MB)</span>
               <strong>Sfoglia</strong>
             </label>
             <input class="lcn-apply__file-input" type="file" id="cv-upload" name="cv" accept=".pdf" required />
+            </div>
           </div>
 
           <label class="lcn-apply__privacy">

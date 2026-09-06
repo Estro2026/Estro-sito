@@ -50,8 +50,10 @@
     #imkHero .svc-hero__kicker  { margin-bottom: 0.1rem; }
     #imkHero .svc-hero__sub     { max-width: 46ch; margin-bottom: 0.15rem; }
     #imkHero .svc-hero__tagline { margin-bottom: 0.35rem; }
-    #imkHero .svc-hero__form    { max-width: 560px; }
-    #imkHero .svc-hero__submit  { margin-top: 0.25rem; }
+    /* Il form non ha piu' misure sue: la scheda in hero e i campi
+       dentro seguono le stesse regole condivise delle altre pagine
+       servizi, altrimenti qui la colonna restava piu' stretta e gli
+       elementi cadevano in posizioni diverse. */
     @media (max-width: 900px) {
       #imkHero .svc-hero__left { max-width: 100%; }
     }
@@ -63,18 +65,15 @@
     }
 
     /* ── CORREZIONI 3/5 — card reveal identico a TIPS & TRICKS ──
-       Stato iniziale nascosto; il RAF in fondo pagina le anima
-       con lo stesso stagger/easing delle tip-card in home.      */
-    #imkCollab .svc-collab-grid__item,
-    #imkSettori .svc-settori__item {
-      opacity: 0;
-      transform: translateY(30px);
-      will-change: opacity, transform;
-    }
+       Nessuno stato nascosto: le card entrano con la stessa
+       animazione discreta del corpo di About e restano visibili. */
 
     /* ── SMM STACKED PANELS: identici a social-media-management.html ── */
-    .smm-stack { position: relative; height: 600dvh; }
-    #imkPanelStack { height: 500dvh; } /* 5 pannelli × 100dvh */
+    /* La corsa da 500dvh e' rimasta dai cinque pannelli impilati
+       che c'erano prima dell'accordion: teneva la sezione appesa
+       per cinque schermate di scroll. Ora l'altezza la decide
+       .svc-path, una schermata e poco piu'. */
+    .smm-stack { position: relative; }
     .smm-panel {
       position: sticky; top: 0; height: 100dvh;
       overflow: hidden; display: flex; align-items: center;
@@ -128,12 +127,6 @@
     #imkPanelStack .smm-panel [data-reveal] { opacity: 0; transform: translateY(22px); }
     #imkPanelStack .smm-panel .btn { text-align: center; justify-content: center; }
 
-    /* ── CORREZIONE 7 — titolo "Ad integrazione..." split-letter ─ */
-    #imkIntegrazioneTitle .tl {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(0.8em);
-    }
 
     /* ── CORREZIONE 8 — placeholder neutro al posto della foto ── */
     .svc-magic__cat .svc-magic__placeholder {
@@ -147,34 +140,34 @@
     /* ── CORREZIONE 9 — "PRENDIAMOCI" su una riga sola ────────── */
     .svc-caffe__title .caffe-nowrap { white-space: nowrap; display: inline-block; }
 
-    /* ── Hero → sezione successiva: overlay bianco ────────────── */
-    #heroToNextOv {
-      position: absolute; inset: 0;
-      background: #fff; opacity: 0;
-      z-index: 10; pointer-events: none;
-    }
 
-    /* ── Titoli split-letter: stato iniziale (come TIPS & TRICKS) ── */
-    #imkStatNum .tl,
-    #imkIntroTitle .tl,
-    #imkCollabTitle .tl,
-    #imkSettoriTitle .tl,
-    #imkTalentTitle .tl,
-    #imkClientiTitle .tl,
-    .svc-magic__title .tl,
-    .svc-caffe__title .tl {
-      display: inline-block;
-      opacity: 0;
-      transform: translateY(0.8em);
-    }
-    #imkClientiTitle { opacity: 0; transform: translateY(30px); will-change: opacity, transform; }
+    /* Il fondo del documento e' scuro, come su SMM e Google Ads.
+       Le sezioni salgono l'una sull'altra con gli angoli alti
+       arrotondati fino a 32px: dentro quei due angoli non c'e' la
+       sezione precedente, c'e' il fondo della pagina. Lasciato al
+       bianco di sistema, scorrendo si vedeva spuntare dall'alto
+       quella che sembrava un'altra sezione chiara. */
+    html, body { background-color: #050505; }
+
+    /* I titoli non partono piu' nascosti. Erano tenuti a opacita'
+       zero e li riaccendeva lettera per lettera un RAF legato allo
+       scroll: tolto quello, senza questa rimozione sarebbero
+       rimasti invisibili per sempre. L'effetto acqua lavora sul
+       titolo intero, non sulle singole lettere. */
 
     /* ── Clienti: identica a homepage / SMM ───────────────────── */
+    /* La sezione e' la corsa del pannello, come nelle altre
+       pagine: senza padding e senza taglio. Con i respiri di
+       sezione sommati al pannello da 100dvh restava un mare di
+       vuoto sopra e sotto ai loghi. */
     #imkClienti {
       background: #000 !important;
-      padding-block: clamp(4rem, 8vw, 7rem) clamp(4rem, 8vw, 6rem) !important;
       border-top: none !important;
-      overflow: hidden !important;
+      min-height: 0 !important;
+      height: 118dvh !important;
+      display: block !important;
+      padding: 0 !important;
+      overflow: visible !important;
     }
     #imkClienti .svc-clients__header { margin-bottom: clamp(2.5rem, 5vw, 4rem) !important; }
     #imkClienti .svc-clients__marquee-wrap {
@@ -205,7 +198,6 @@
       width: clamp(100px, 12vw, 180px) !important;
     }
     #imkClienti .svc-clients__logo img {
-      max-height: clamp(52px, 7vw, 90px) !important;
       width: auto !important;
       max-width: 100% !important;
       object-fit: contain !important;
@@ -222,133 +214,398 @@
     /* ── CTA: stesse metriche dei pannelli SMM ────────────────── */
     .smm-row .btn, .svc-caffe .btn { text-align: center; justify-content: center; }
 
-    /* ═══════════════════════════════════════════════════════════
-       SERVIZI — GALLERIA A FISARMONICA
-       Prima ogni servizio era un pannello a tutta pagina, uno sotto
-       l'altro: per sapere quanti fossero bisognava scorrerli tutti.
-       Ora stanno tutti nella stessa sezione, uno per riga e tutti
-       visibili insieme; si apre quello che interessa e dentro ci
-       sono la foto e il testo. Una riga aperta alla volta, così
-       l'elenco resta leggibile a colpo d'occhio.
-       ═══════════════════════════════════════════════════════════ */
-    .svc-acc {
-      background: #f9f9f9;
-      color: #080808;
-      padding-block: clamp(3.5rem, 7vw, 6rem);
+
+
+    /* ── Corpi della nav, come in homepage ─────────────────────
+       La scritta MENU sta al minimo di lettura (16px), la CTA
+       "Contattaci" a 14px come tutte le CTA del sito. Qui non
+       c'erano e restavano ai valori di default del componente. */
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: max(16px, var(--text-min, 1rem)) !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ── La hero non copre il raccordo ─────────────────────────
+       Avevo tenuto la hero sopra per non far vedere il bianco
+       della sezione seguente nella prima schermata: ma cosi' la
+       salita non si vedeva mai, perche' la sovrapposizione e'
+       costante. Vince la transizione: la hero sta sotto e il
+       raccordo arrotondato si vede da subito. */
+    .svc-hero--videobg {
+      position: relative;
+      z-index: 1;
     }
-    .svc-acc__list {
-      border-top: 1px solid rgba(0,0,0,0.10);
+
+    /* ── Sfondo della hero: segnaposto dichiarato ──────────────
+       Il <video> di sfondo non ha ancora una sorgente, quindi la
+       hero restava nera senza che si capisse perche'. Qui il posto
+       si dichiara: trama diagonale, cornice tratteggiata e la
+       scritta che dice cos'e'. Appena si mette l'immagine (o il
+       video) basta togliere .svc-hero__ph dal markup. */
+    .svc-hero__ph {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(135deg,
+          rgba(255,255,255,0.045) 0 14px,
+          transparent 14px 28px),
+        #141014;
     }
-    .svc-acc__item {
-      border-bottom: 1px solid rgba(0,0,0,0.10);
+    .svc-hero__ph::before {
+      content: '';
+      position: absolute;
+      inset: clamp(12px, 1.4vw, 22px);
+      border: 1px dashed rgba(255,255,255,0.22);
+      border-radius: 10px;
     }
-    .svc-acc__head { margin: 0; }
-    .svc-acc__btn {
-      width: 100%;
-      display: grid;
-      grid-template-columns: auto 1fr auto;
+    .svc-hero__ph-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
       align-items: center;
-      gap: clamp(1rem, 3vw, 2.25rem);
-      padding: clamp(1.1rem, 2.2vw, 1.75rem) 0;
+      gap: 0.7rem;
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+    }
+    .svc-hero__ph-label svg { width: 22px; height: 22px; flex-shrink: 0; }
+    @media (max-width: 700px) {
+      .svc-hero__ph-label { font-size: 12px; letter-spacing: 0.12em; }
+    }
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       Stesse regole del vetro della nav: chiaro sopra hero e
+       servizi, scuro sopra le sezioni scure, con il MENU che segue
+       il fondo invece di imporsi. Prima questa pagina aveva solo un
+       pezzo di quel sistema e sul dark il testo bianco finiva su
+       vetro bianco.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      /* solo una diffusione morbida verso il basso, nessun contorno */
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      /* Il vetro cambia formula uscendo dalla scena hero+servizi:
+         la transizione la copre insieme al colore del MENU, così il
+         passaggio non scatta. */
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    /* Sopra sezioni scure il vetro si scurisce: MENU resta chiaro */
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+
+    /* ── Sopra HERO e SERVIZI: vetro chiaro, tendente al bianco ──
+       Finché la scena hero+servizi è in viewport la nav non ha
+       .scrolled: è il segnale già usato dal progetto, quindi non
+       serve un secondo sistema.
+       Il vetro è davvero trasparente: la leggibilità non viene più
+       dalla densità del velo ma dal blur, che scioglie il fondo, e
+       dalla desaturazione, che gli toglie il rosa. Quello che non si
+       può tenere fisso è il colore del MENU: sotto la pill passa un
+       fondo chiaro sulla hero e nero sui Servizi, quindi il testo
+       segue il fondo invece di imporsi su entrambi. */
+    /* Hero: il vetro deve leggersi come vetro, non come un velo scuro.
+       La luce viene dal brightness sul fondo — il video dietro la pill
+       sta intorno a L 0.30 e viene portato in alto — più da un velo
+       bianco leggero. Così la pill resta traslucida e luminosa, con il
+       MENU nero largamente sopra soglia e il fucsia del logo a ~5:1. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    /* Sopra la hero il fondo è chiaro → MENU nero */
+    .nav:not(.scrolled) .nav__menu-btn {
+      color: #111 !important;
+      text-shadow: none !important;
+    }
+    /* ── Sopra i SERVIZI il fondo è nero ────────────────────────
+       Il vetro resta trasparente come richiesto, quindi sotto la pill
+       c'è il nero: il MENU passa a bianco, esattamente come fa già
+       sopra tutte le altre sezioni scure. Logo e simbolo invece non
+       cambiano: stesso fucsia pieno che hanno nel resto della pagina,
+       nessun filtro e nessun alone. */
+    .nav:not(.scrolled).nav--svc .nav__inner {
+      background: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+      -webkit-backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-btn {
+      color: #fff !important;
+      text-shadow: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__logo img {
+      filter: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    /* Logo e simbolo restano il fucsia di brand, pieno e senza
+       filtri: sul vetro chiaro è la combinazione più leggibile. */
+    .nav:not(.scrolled) .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    /* Il simbolo resta fucsia, solo reso più leggibile: nessun neon */
+    .nav--on-dark .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: drop-shadow(0 0 1.5px rgba(255,255,255,0.5));
+    }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    /* ═══════════════════════════════════════════════════════════
+       SERVIZI — TIMELINE ORIZZONTALE
+       I servizi sono un percorso, non un elenco: una linea con sei
+       tappe numerate, tutte visibili insieme. Si clicca una tappa e
+       sotto si apre il suo riquadro, uno alla volta. La linea si
+       riempie di fucsia fino alla tappa scelta.
+       ═══════════════════════════════════════════════════════════ */
+    /* La sezione e' la corsa; il pannello dentro resta agganciato
+       in alto e occupa una schermata intera, come le sezioni della
+       homepage. La corsa e' poco piu' alta della schermata: quanto
+       basta perche' il pannello si fermi e poi lasci il posto. */
+    .svc-path {
+      background: #fff;
+      color: #080808;
+      /* corsa breve: quanto basta perche' il pannello si fermi un
+         attimo e poi lasci il posto. A 135dvh restava incollato
+         troppo a lungo mentre si scorreva. */
+      height: 112dvh;
+      padding-block: 0;
+    }
+    .svc-path__sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+      /* la nav e' fissa e alta circa 100px: senza questo spazio il
+         titolo le finiva sotto. Qui sopra c'e' aria vera, non il
+         minimo indispensabile. */
+      padding-top: clamp(8rem, 16vh, 11rem);
+      padding-bottom: clamp(2rem, 4vh, 3rem);
+    }
+    /* Dentro la schermata nulla scorre: il riquadro prende
+       l'altezza del suo contenuto e i respiri intorno sono tarati
+       perche' il caso piu' lungo — testo, quattro punti e la CTA —
+       ci stia comunque. Se scorresse, la CTA finirebbe fuori vista:
+       e' l'unica cosa che non puo' succedere. */
+    .svc-path__sticky > .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+      min-height: 0;
+    }
+    .svc-path__sticky .svc-path__head { margin-bottom: clamp(1.25rem, 2.8vh, 2rem); }
+    .svc-path__sticky .svc-tabs {
+      gap: clamp(1rem, 2.2vh, 1.6rem);
+      /* la timeline resta alta quanto serve, il riquadro si prende
+         lo spazio che avanza nella schermata: cosi' il fondo della
+         card non sfora mai il bordo basso */
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .svc-path__sticky .svc-tabs__panels { flex: 1 1 auto; min-height: 0; }
+    .svc-path__sticky .svc-tabs__panel {
+      height: 100%;
+      padding: clamp(1.1rem, 2.2vh, 1.6rem);
+      gap: clamp(1.25rem, 2.4vw, 2.25rem);
+    }
+    /* la foto riempie l'altezza del riquadro invece di imporgliela:
+       con un rapporto fisso era lei a farlo diventare troppo alto */
+    .svc-path__sticky .svc-tabs__media { aspect-ratio: auto; height: 100%; }
+    .svc-path__sticky .svc-tabs__copy {
+      overflow: visible;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .svc-path__sticky .svc-tabs__text { line-height: 1.6; }
+    .svc-path__sticky .svc-tabs__points { gap: 0.35rem; }
+
+    /* ── Testata della sezione ─────────────────────────────────
+       Titolo e occhiello aprono la sezione, sopra la timeline. */
+    .svc-path__head {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+    .svc-path__head .smm-panel__big-title {
+      font-size: min(60px, 9vw) !important;
+      line-height: 1.05;
+      color: var(--primary, #DB005A);
+      /* le parole non si spezzano mai: vanno a capo intere */
+      word-break: keep-all;
+      overflow-wrap: normal;
+      hyphens: none;
+      /* larghezza tarata perche' stia su due righe */
+      max-width: 19ch;
+      margin: 0 auto;
+    }
+    .svc-path__head .smm-panel__statement-sub {
+      color: rgba(0,0,0,0.62);
+      font-size: 16px;
+      margin-top: clamp(1.25rem, 2.5vw, 2rem);
+      line-height: 1.5;
+      /* su una riga sola */
+      max-width: none;
+      white-space: nowrap;
+      margin-inline: auto;
+    }
+    .svc-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2rem, 4vw, 3.25rem);
+    }
+    .svc-tabs__strip {
+      position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 0;
+      padding-top: 6px;
+      --p: 0;
+    }
+    .svc-tabs__strip::before,
+    .svc-tabs__strip::after {
+      content: '';
+      position: absolute;
+      top: 25px;
+      height: 2px;
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    .svc-tabs__strip::before {
+      left: calc(100% / var(--n, 6) / 2);
+      right: calc(100% / var(--n, 6) / 2);
+      background: rgba(0,0,0,0.10);
+    }
+    .svc-tabs__strip::after {
+      left: calc(100% / var(--n, 6) / 2);
+      width: calc((100% - 100% / var(--n, 6)) * var(--p));
+      background: var(--primary, #DB005A);
+      transition: width var(--dur-base, 460ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
+    }
+    .svc-tabs__tab {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0 0.6rem;
+      min-width: 0;
+      text-align: center;
       background: none;
       border: 0;
-      text-align: left;
       cursor: pointer;
       color: inherit;
       font: inherit;
-      transition: opacity var(--dur-fast, 180ms) ease;
     }
-    .svc-acc__btn:hover { opacity: 0.72; }
-    .svc-acc__btn:focus-visible {
+    .svc-tabs__tab:focus-visible {
       outline: 2px solid var(--primary, #DB005A);
-      outline-offset: 4px;
-      border-radius: 6px;
+      outline-offset: 6px;
+      border-radius: 10px;
     }
-    .svc-acc__num {
+    .svc-tabs__num {
+      position: relative;
+      z-index: 1;
+      width: 40px; height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
       font-family: var(--font-secondary);
-      font-size: 14px;
-      font-weight: 600;
-      letter-spacing: 0.1em;
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(0,0,0,0.45);
+      background: #fff;
+      border: 2px solid rgba(0,0,0,0.12);
+      transition: transform var(--dur-base, 360ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1)),
+                  background var(--dur-base, 360ms) ease,
+                  border-color var(--dur-base, 360ms) ease,
+                  color var(--dur-base, 360ms) ease,
+                  box-shadow var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-done .svc-tabs__num {
+      border-color: var(--primary, #DB005A);
       color: var(--primary, #DB005A);
     }
-    .svc-acc__heading {
-      display: flex;
-      flex-direction: column;
-      gap: 0.4rem;
-      min-width: 0;
+    .svc-tabs__tab:hover .svc-tabs__num {
+      border-color: var(--primary, #DB005A);
+      transform: translateY(-2px);
     }
-    .svc-acc__tag {
+    .svc-tabs__tab.is-active .svc-tabs__num {
+      background: var(--primary, #DB005A);
+      border-color: var(--primary, #DB005A);
+      color: #fff;
+      transform: scale(1.22);
+      box-shadow: 0 10px 26px rgba(219,0,90,0.32);
+    }
+    .svc-tabs__tag {
       font-family: var(--font-secondary);
       font-size: 14px;
       font-weight: 600;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: rgba(0,0,0,0.42);
+      color: rgba(0,0,0,0.38);
+      transition: color var(--dur-base, 360ms) ease;
     }
-    .svc-acc__title {
+    .svc-tabs__tab.is-active .svc-tabs__tag { color: var(--primary, #DB005A); }
+    .svc-tabs__title {
       font-family: var(--font-primary);
-      font-size: clamp(1.5rem, 3.4vw, 2.9rem);
-      line-height: 1.05;
-      letter-spacing: -0.02em;
+      font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+      line-height: 1.25;
       font-weight: 400;
       font-synthesis-weight: none;
-      /* le parole non si spezzano mai: se non ci stanno vanno a capo */
+      color: rgba(0,0,0,0.55);
       overflow-wrap: normal;
       word-break: normal;
       hyphens: none;
+      transition: color var(--dur-base, 360ms) ease;
     }
-    /* Il segno di apertura: una croce che diventa meno */
-    .svc-acc__mark {
-      position: relative;
-      width: 22px; height: 22px;
-      flex-shrink: 0;
-    }
-    .svc-acc__mark::before,
-    .svc-acc__mark::after {
-      content: '';
-      position: absolute;
-      top: 50%; left: 0;
-      width: 100%; height: 2px;
-      margin-top: -1px;
-      background: var(--primary, #DB005A);
-      transition: transform var(--dur-base, 320ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
-    }
-    .svc-acc__mark::after { transform: rotate(90deg); }
-    .svc-acc__item.is-open .svc-acc__mark::after { transform: rotate(0deg); }
-
-    /* L'apertura: la riga cresce da 0fr a 1fr, quindi l'altezza si
-       anima da sola qualunque sia la lunghezza del contenuto — con
-       max-height servirebbe indovinarla a mano. */
-    .svc-acc__panel {
-      display: grid;
-      grid-template-rows: 0fr;
-      transition: grid-template-rows var(--dur-base, 380ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
-    }
-    .svc-acc__item.is-open .svc-acc__panel { grid-template-rows: 1fr; }
-    .svc-acc__panel-inner {
-      overflow: hidden;
+    .svc-tabs__tab.is-active .svc-tabs__title { color: #080808; }
+    .svc-tabs__panels { position: relative; }
+    .svc-tabs__panel[hidden] { display: none !important; }
+    .svc-tabs__panel {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: clamp(1.5rem, 4vw, 3.5rem);
-      align-items: start;
-      opacity: 0;
-      transition: opacity var(--dur-base, 320ms) ease;
+      gap: clamp(1.75rem, 3.5vw, 3.5rem);
+      align-items: stretch;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 22px;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      box-shadow: 0 26px 64px rgba(0,0,0,0.10);
+      animation: svcTabIn var(--dur-base, 420ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1)) both;
     }
-    .svc-acc__item.is-open .svc-acc__panel-inner {
-      opacity: 1;
-      transition-delay: 0.08s;
+    @keyframes svcTabIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
     }
-    /* il padding sta dentro il figlio, non sul pannello: se stesse
-       sul pannello resterebbe visibile anche da chiuso */
-    .svc-acc__panel-inner > * { padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem); }
-
-    /* Il riquadro della foto. Oggi ospita l'etichetta del servizio;
-       basta aggiungerci un <img class="svc-acc__media-img"> perché
-       diventi la foto vera, senza toccare nient'altro. */
-    .svc-acc__media {
+    .svc-tabs__media {
       position: relative;
       aspect-ratio: 4/3;
-      border-radius: 14px;
+      border-radius: 16px;
       overflow: hidden;
       background: rgba(219,0,90,0.06);
       border: 1px solid rgba(219,0,90,0.15);
@@ -356,15 +613,14 @@
       align-items: center;
       justify-content: center;
     }
-    .svc-acc__media-img {
+    .svc-tabs__media-img {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
+      width: 100%; height: 100%;
       object-fit: cover;
       display: block;
     }
-    .svc-acc__media-label {
+    .svc-tabs__media-label {
       font-family: var(--font-secondary);
       font-size: 14px;
       letter-spacing: 0.12em;
@@ -373,100 +629,323 @@
       padding: 1rem;
       text-align: center;
     }
-    .svc-acc__copy {
+    .svc-tabs__copy {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      gap: 1.1rem;
+      justify-content: center;
+      gap: 1rem;
     }
-    .svc-acc__text {
+    .svc-tabs__copy > :first-child { margin-top: 0; }
+    .svc-tabs__text {
       font-size: max(16px, 1rem);
       line-height: 1.75;
       color: rgba(0,0,0,0.62);
       margin: 0;
     }
-    .svc-acc__points {
+    .svc-tabs__points {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
-    .svc-acc__points li {
+    .svc-tabs__points li {
       font-size: max(16px, 1rem);
       line-height: 1.6;
       color: rgba(0,0,0,0.68);
-      padding-left: 1.4em;
+      padding-left: 1.5em;
       position: relative;
     }
-    .svc-acc__points li::before {
-      content: '✓';
-      position: absolute;
-      left: 0;
-      color: var(--primary, #DB005A);
-      font-weight: 700;
-    }
-    .svc-acc__cta {
-      font-size: 14px !important;
-      text-align: center;
-      justify-content: center;
-    }
-    @media (max-width: 860px) {
-      .svc-acc__panel-inner { grid-template-columns: 1fr; }
-      /* su mobile la foto viene dopo il testo: la riga aperta deve
-         mostrare per prima la cosa che si è chiesto di leggere */
-      .svc-acc__media { order: 2; }
-      .svc-acc__copy  { order: 1; }
-      .svc-acc__panel-inner > * { padding-bottom: 1.25rem; }
-      .svc-acc__panel-inner > :last-child { padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem); }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .svc-acc__panel,
-      .svc-acc__panel-inner,
-      .svc-acc__mark::before,
-      .svc-acc__mark::after { transition: none; }
-    }
-    /* ═══════════════════════════════════════════════════════════
-       EFFETTI CONDIVISI DELLE PAGINE SERVIZI
-       Gli stessi di news, tips&tricks e dei case study: la sezione
-       che entra sale con gli angoli che si arrotondano, i titoli
-       ondeggiano una volta come acqua, i testi entrano dal basso
-       un blocco alla volta. Qui non c'erano affatto.
-       ═══════════════════════════════════════════════════════════ */
-    html.js-reveal .sx-rise {
-      position: relative;
-      z-index: 2;
-      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
-      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
-      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
-      will-change: transform;
-    }
-    html.js-reveal .sx-rise::after {
+    .svc-tabs__points li::before {
       content: '';
       position: absolute;
-      left: 0; right: 0; top: 100%;
-      height: calc((1 - var(--sxi, 1)) * 22px);
-      background: inherit;
+      left: 0; top: 0.62em;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary, #DB005A);
+    }
+    .svc-tabs__cta {
+      font-size: 14px !important;
+      margin-top: 0.35rem;
+    }
+    /* In hover la CTA si ribalta: fondo nero e testo bianco. Il
+       bianco che c'era prima nasceva quando la sezione era scura;
+       ora che il pannello e' su carta bianca sparirebbe dentro il
+       fondo. */
+    .svc-tabs__panel .svc-tabs__cta:hover,
+    .svc-tabs__panel .svc-tabs__cta:focus-visible {
+      background: #080808 !important;
+      background-image: none !important;
+      border-color: #080808 !important;
+      color: #fff !important;
+    }
+    .svc-tabs__panel .svc-tabs__cta:hover::before { display: none !important; }
+    @media (max-width: 1100px) {
+      .svc-tabs__strip {
+        grid-auto-columns: minmax(170px, 1fr);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+      }
+      .svc-tabs__tab { scroll-snap-align: center; }
+      .svc-tabs__strip::before,
+      .svc-tabs__strip::after { display: none; }
+    }
+    @media (max-width: 760px) {
+      .svc-tabs__panel { grid-template-columns: 1fr; }
+      .svc-tabs__media { order: 2; }
+      .svc-tabs__copy  { order: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .svc-tabs__num, .svc-tabs__strip::after { transition: none; }
+      .svc-tabs__panel { animation: none; }
+    }
+
+    /* ── Video dietro la sezione "amici" ───────────────────────
+       Stessa regione video della homepage: sta sotto al contenuto,
+       il fucsia del brand entra fra i colori della forma ruotando
+       la crominanza, e una sfumatura ne chiude il bordo basso. */
+    .svc-clients { position: relative; isolation: isolate; }
+    .amici-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
       pointer-events: none;
-      z-index: -1;
     }
-    footer.site-footer { overflow: visible; }
-    /* negli angoli ritagliati dalla salita passava il bianco della
-       pagina: il fondo del documento va scuro come le sezioni */
-    html, body { background-color: #050505; }
-
-    /* Ingresso dei testi, linguaggio del corpo di About: nessuno
-       stato nascosto duraturo — opacita di partenza alta e
-       spostamento contenuto, un blocco alla volta. */
-    html.js-reveal .ab-armed {
-      transform: translateY(14px);
-      opacity: 0.72;
-      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-                  opacity 0.45s ease;
+    .amici-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: hue-rotate(-54deg) saturate(1.08);
     }
-    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+    .amici-video__fade {
+      pointer-events: none;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8rem;
+      background: linear-gradient(to bottom, transparent, #0a0a0a);
+    }
+    /* Il contenuto sta sopra al video. Il selettore chiedeva il
+       figlio diretto della sezione, ma da quando il pannello
+       agganciato si e' messo in mezzo il titolo non lo era piu': il
+       video, assoluto e a z-index 0, gli passava davanti e lo si
+       vedeva sparire e ricomparire scorrendo. */
+    .svc-clients .container,
+    .svc-clients .svc-clients__header,
+    .svc-clients .svc-clients__marquee-wrap {
+      position: relative;
+      z-index: 1;
+    }
 
+    /* ── Clienti e FAQ: pannelli agganciati ────────────────────
+       Come in homepage: la sezione e' la corsa, il figlio dentro
+       resta fermo in alto per una schermata intera e poi lascia il
+       posto. Prima le due sezioni erano solo alte una schermata,
+       senza fermarsi. */
+    .svc-clients,
+    .page-faq {
+      min-height: 0 !important;
+      height: 118dvh !important;
+      display: block !important;
+      /* La corsa non deve tagliare ne' avere padding: con overflow
+         hidden il pannello si ancorava a questa scatola invece che
+         alla finestra, e con i padding lo spazio interno restava
+         piu' basso del pannello, quindi non aveva dove fermarsi.
+         Il taglio e i respiri passano al pannello. */
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    .svc-clients .svc-clients__sticky,
+    .page-faq .page-faq__sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* il video di sfondo sta dentro il pannello, quindi lo copre
+       per tutta la schermata */
+    .svc-clients .svc-clients__sticky { background: #050505; }
+    .svc-clients .amici-video { height: 100%; }
+    .page-faq .page-faq__sticky {
+      background: var(--surface-dark, #0a0a0a);
+      padding-block: clamp(4rem, 8vh, 6rem);
+    }
+    /* la lista delle domande scorre dentro il pannello solo se
+       davvero non ci sta, non per difetto */
+    .page-faq .page-faq__inner { max-height: 100%; overflow: auto; }
+
+    /* ── Sezione "Prendiamoci un caffè" ────────────────────────
+       Corpo e CTA identici al form prima del footer in homepage:
+       campi a 16px, area messaggio 130px, form largo al massimo
+       780px, e il pulsante trasparente col bordo bianco da 2px che
+       si inverte all'hover — non piu il pulsante pieno a tutta
+       larghezza che aveva questa pagina. */
+    .svc-caffe .svc-caffe__form {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .svc-caffe .hc-row { gap: 0.875rem; }
+    .svc-caffe .svc-caffe__field {
+      font-size: 1rem !important;
+    }
+    .svc-caffe .svc-caffe__field::placeholder { font-size: 1rem; }
+    .svc-caffe .hc-textarea { min-height: 130px; resize: vertical; }
+    .svc-caffe .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    /* i due consensi vanno a 16px come il resto del form: la
+       regola generale del microcopy li teneva a 14 */
+    .svc-caffe .hc-consents .svc-caffe__privacy,
+    .svc-caffe .hc-consents .svc-caffe__privacy span,
+    .svc-caffe .hc-consents .svc-caffe__privacy a,
+    .svc-caffe .hc-consents .svc-caffe__privacy em {
+      font-size: 16px !important;
+      line-height: 1.5;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy em {
+      font-style: normal;
+      opacity: 0.65;
+    }
+    .svc-caffe .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      font-size: 0.875rem !important;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .svc-caffe .hc-submit::before { display: none !important; }
+    .svc-caffe .hc-submit:hover,
+    .svc-caffe .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ── FAQ su carta bianca ───────────────────────────────────
+       Era sul fondo scuro come clienti: due sezioni scure di fila
+       si leggevano come una sola. */
+    .page-faq .page-faq__sticky { background: #fff !important; }
+    .page-faq,
+    .page-faq .page-faq__title,
+    .page-faq .page-faq__question { color: #080808 !important; }
+    .page-faq .page-faq__answer-inner { color: rgba(0,0,0,0.66) !important; }
+    .page-faq .page-faq__item { border-color: rgba(0,0,0,0.10) !important; }
+    .page-faq .page-faq__q-icon,
+    .page-faq .page-faq__question::after { color: var(--primary, #DB005A) !important; }
+
+    /* ── Clienti: la sezione prende il colore del video ────────
+       Il video ha il fondo nero pieno e sul grigio scuro della
+       sezione se ne vedeva il bordo. Stesso nero, e il contorno
+       sparisce. */
+    .svc-clients__sticky { background: #000 !important; }
+    .amici-video__fade { background: linear-gradient(to bottom, transparent, #000) !important; }
+
+    /* ── Niente dissolvenza sul footer ─────────────────────────
+       Il footer entrava sfumando: era l'unica sezione a farlo e
+       stonava con la salita che usano tutte le altre. */
+    .site-footer,
+    .site-footer * {
+      animation: none !important;
+    }
+    html.js-reveal .site-footer { opacity: 1 !important; }
+
+    /* ── Tipografia: minimi condivisi ──────────────────────────
+       Corpo mai sotto i 16px; tagline, tag e CTA a 14px. */
+    main p, main li, main a, main span, main label,
+    main input, main textarea,
+    .svc-tabs__text, .svc-tabs__points li,
+    .page-faq__answer-inner,
+    .service-detail__body p,
+    .svc-tools__item span { font-size: max(16px, 1rem) !important; }
+    main a.btn, main button.btn, .btn.btn,
+    .svc-tabs__cta,
+    .svc-hero__tagline,
+    .svc-tabs__tag,
+    .svc-caffe__privacy,
+    .svc-hero__kicker,
+    .svc-clients__logo span,
+    .svc-tabs__media-label { font-size: 14px !important; }
+    /* I titoli non seguono il minimo del corpo. Qui c'era un
+       font-size: revert !important che li riportava alla misura
+       del browser — minuscola — e che, dichiarato in pagina,
+       batteva le misure condivise. Le misure dei titoli stanno
+       ora tutte in components.css. */
+    .smm-panel__statement-sub { font-size: 16px !important; }
+    .page-faq__question { font-size: max(16px, 1rem) !important; }
+
+    /* ── Sezioni a piena schermata con blocco leggero ──────────
+       Come in homepage: ogni sezione e' una corsa poco piu' alta
+       della finestra, con dentro un pannello che resta fermo per
+       una schermata. Fanno eccezione la sezione fucsia e il
+       footer, che restano come sono. */
+    .svc-generic-runway {
+      height: 118dvh !important;
+      min-height: 0 !important;
+      display: block !important;
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    .svc-generic-sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding-block: clamp(4rem, 8vh, 6rem);
+    }
+
+    /* ── Niente scorrimento orizzontale ────────────────────────
+       Alcune griglie a colonne fisse sforavano il contenitore. */
+    .svc-process__grid,
+    .svc-channels__grid,
+    .svc-tools__grid,
+    .service-detail__grid { max-width: 100%; }
+    .svc-process__card,
+    .svc-channels__card { min-width: 0; }
+    /* le card del processo entrano ruotate e sbalzate: e' voluto,
+       ma una sbordava di 22px. clip taglia senza creare un
+       contenitore di scorrimento, quindi non tocca le sticky. */
+    .svc-process { overflow-x: clip; }
   </style>
 <script type="application/ld+json">
 {
@@ -495,10 +974,11 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="../contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -554,8 +1034,13 @@
 
     <!-- ══ HERO ══════════════════════════════════════════════════ -->
     <section class="svc-hero svc-hero--videobg" id="imkHero" aria-labelledby="page-title" data-nav-theme="dark">
-      <div id="heroToNextOv" aria-hidden="true"></div>
       <video class="svc-hero__bgvideo" autoplay muted loop playsinline aria-hidden="true"></video>
+      <div class="svc-hero__ph" aria-hidden="true">
+        <span class="svc-hero__ph-label">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="4" width="19" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="8.5" cy="9.5" r="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 17l5-5 3.5 3.5L15 11l6 6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Immagine hero — segnaposto
+        </span>
+      </div>
       <div class="svc-hero__bgvideo-overlay" aria-hidden="true"></div>
       <div class="container svc-hero__inner">
 
@@ -563,46 +1048,76 @@
           <p class="svc-hero__kicker">Influencer Marketing</p>
           <h1 class="svc-hero__title" id="page-title">
             <em>Influencer marketing</em>:<br/>
-            vuoi realizzare la tua<br/>
-            prossima campagna?
+            la tua prossima campagna
           </h1>
           <p class="svc-hero__sub">Scegli l'ambassador giusto con noi.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
         </div>
 
+        <div class="svc-hero__right">
+          <div class="svc-hero__form-card">
+            <p class="svc-hero__form-card-label">Scrivici</p>
+            <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
+              <div class="svc-hero__form-row">
+                <div class="f-field">
+                  <label class="f-label" for="imk-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="imk-f-nome" class="svc-hero__field" type="text" name="nome" placeholder="Mario" required />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="imk-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="imk-f-cognome" class="svc-hero__field" type="text" name="cognome" placeholder="Rossi" required />
+                </div>
+              </div>
+              <div class="svc-hero__form-row">
+                <div class="f-field">
+                  <label class="f-label" for="imk-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="imk-f-email" class="svc-hero__field" type="email" name="email" placeholder="mario@azienda.it" required />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="imk-f-telefono">Telefono</label>
+                  <input id="imk-f-telefono" class="svc-hero__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+                </div>
+              </div>
+              <div class="svc-hero__form-row">
+                <div class="f-field">
+                  <label class="f-label" for="imk-f-azienda">Azienda</label>
+                  <input id="imk-f-azienda" class="svc-hero__field" type="text" name="azienda" placeholder="Nome azienda" />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="imk-f-sito">Sito Web</label>
+                  <input id="imk-f-sito" class="svc-hero__field" type="url" name="sito" placeholder="www.acme.it" />
+                </div>
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="imk-f-messaggio">Messaggio</label>
+                <textarea id="imk-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+              </div>
+              <div class="hc-consents">
+                <label class="svc-hero__privacy" for="imk-hero-privacy">
+                  <input type="checkbox" id="imk-hero-privacy" name="privacy" required />
+                  <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+                </label>
+                <label class="svc-hero__privacy" for="imk-hero-newsletter">
+                  <input type="checkbox" id="imk-hero-newsletter" name="newsletter" value="si" />
+                  <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+                </label>
+              </div>
+              <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
+            </form>
+          </div>
+        </div>
+
       </div>
     </section>
 
-
-
-    <!-- ══ STAT + VIDEO ═════════════════════════════════════════ -->
-    <section class="svc-stat-video" id="imkStat">
-      <div class="container svc-stat-video__inner">
-        <div class="svc-stat-video__video reveal">
-          <iframe
-            src="https://www.youtube.com/embed/sOF8RorxYgw"
-            title="ESTRO Agency — Influencer Marketing"
-            frameborder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <div class="svc-stat-video__stat reveal reveal-delay-1">
-          <span class="svc-stat-video__num" id="imkStatNum">87<span class="svc-stat-video__pct">%</span></span>
-          <p class="svc-stat-video__desc svc-stat-video__desc--nowrap">
-            <span>degli utenti di Instagram sostiene</span>
-            <span>di aver completato un acquisto</span>
-            <span>in seguito alla raccomandazione</span>
-            <span>di un influencer</span>
-          </p>
-          <div class="svc-stat-video__line" aria-hidden="true"></div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ══ INTRO MERCATO ═════════════════════════════════════════ -->
+    <!-- ══ INSTAGRAM: il mercato, il video e il dato ══ -->
     <section class="imk-intro" id="imkIntro">
-      <div class="container imk-intro__inner">
+      <!-- Una griglia sola per tutta la sezione: a sinistra il testo
+           con la foto, a destra il video con il dato. Serviva un
+           contenitore comune perche' le due meta' stessero sulla
+           stessa riga e la sezione entrasse in una schermata. -->
+      <div class="container imk-intro__grid">
+      <div class="imk-intro__inner">
         <div class="imk-intro__text reveal">
           <p class="imk-intro__kicker">Influencer Marketing</p>
           <h2 class="imk-intro__title" id="imkIntroTitle">Instagram</h2>
@@ -614,6 +1129,34 @@
         <div class="imk-intro__photo reveal reveal-delay-1">
           <img src="../Foto%20influencer%20marketing/Rita-Ora-newpost11.webp" alt="Influencer marketing" />
         </div>
+      </div>
+      <!-- Il dato e il video stavano in una sezione loro: due elementi
+           in mezzo a una schermata vuota. Sono la prova di quello che
+           il testo qui sopra racconta, quindi stanno nella stessa
+           sezione. -->
+      <div class="svc-stat-video" id="imkStat">
+        <div class="svc-stat-video__inner">
+          <div class="svc-stat-video__video reveal">
+            <iframe
+              src="https://www.youtube.com/embed/sOF8RorxYgw"
+              title="ESTRO Agency — Influencer Marketing"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+          <div class="svc-stat-video__stat reveal reveal-delay-1">
+            <span class="svc-stat-video__num" id="imkStatNum">87<span class="svc-stat-video__pct">%</span></span>
+            <p class="svc-stat-video__desc svc-stat-video__desc--nowrap">
+              <span>degli utenti di Instagram sostiene</span>
+              <span>di aver completato un acquisto</span>
+              <span>in seguito alla raccomandazione</span>
+              <span>di un influencer</span>
+            </p>
+            <div class="svc-stat-video__line" aria-hidden="true"></div>
+          </div>
+        </div>
+      </div>
       </div>
     </section>
 
@@ -646,144 +1189,109 @@
 
     <!-- ══ RITAGLIAMO → I REPORT: smm-stack identico a SMM ════════ -->
     <!-- ══ SERVIZI — galleria a fisarmonica ═══════════════════════ -->
-    <section class="svc-acc" id="imkPanelStack" aria-label="I servizi">
+    <section class="svc-path" id="imkPanelStack" aria-label="I servizi">
+      <div class="svc-path__sticky">
       <div class="container">
-        <div class="svc-acc__list">
-          <article class="svc-acc__item is-open" aria-label="Tailor Made">
-            <h3 class="svc-acc__head">
-              <button class="svc-acc__btn" type="button" id="imk-acc-1-h" aria-controls="imk-acc-1" aria-expanded="true">
-                <span class="svc-acc__num" aria-hidden="true">01</span>
-                <span class="svc-acc__heading">
-                  <span class="svc-acc__tag">Tailor Made</span>
-                  <span class="svc-acc__title">Ritagliamo su misura la soluzione migliore</span>
-                </span>
-                <span class="svc-acc__mark" aria-hidden="true"></span>
-              </button>
-            </h3>
-            <div class="svc-acc__panel" id="imk-acc-1" role="region" aria-labelledby="imk-acc-1-h">
-              <div class="svc-acc__panel-inner">
-                <div class="svc-acc__media">
-                  <span class="svc-acc__media-label">Influencer Marketing</span>
-                </div>
-                <div class="svc-acc__copy">
-                  <p class="svc-acc__text">Per trovare la giusta strategia ci vuole fiuto, e noi siamo specializzati per farlo. I tuoi obiettivi sono importanti e noi li prendiamo a cuore.</p>
-                  <p class="svc-acc__text">La nostra squadra di <strong>Strategist, Creativi, Talent &amp; Account Manager</strong> è pronta ad accogliere ogni sfida. <strong>Siamo qui per affiancarti in ogni fase del progetto</strong>, dalla pianificazione e gestione delle campagne, alla misurazione e <strong>ottimizzazione dei risultati</strong>.</p>
-                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Inizia ora</a>
-                </div>
+        <div class="svc-path__head">
+          <h2 class="smm-panel__big-title" id="imk-path-title">I CREATOR GIUSTI PER IL TUO MARCHIO.</h2>
+          <p class="smm-panel__statement-sub">Cinque tappe, dalla selezione alla misura dei risultati.</p>
+        </div>
+        <div class="svc-tabs">
+          <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
+            <button class="svc-tabs__tab is-active" type="button" role="tab" id="imk-tab-1" aria-controls="imk-pan-1" aria-selected="true" tabindex="0">
+              <span class="svc-tabs__num" aria-hidden="true">01</span>
+              <span class="svc-tabs__tag">Tailor Made</span>
+              <span class="svc-tabs__title">Ritagliamo su misura la soluzione migliore</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="imk-tab-2" aria-controls="imk-pan-2" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">02</span>
+              <span class="svc-tabs__tag">Campagne</span>
+              <span class="svc-tabs__title">Campagne di Influencer Marketing</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="imk-tab-3" aria-controls="imk-pan-3" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">03</span>
+              <span class="svc-tabs__tag">Talent Scouting</span>
+              <span class="svc-tabs__title">Trovare il talent giusto per te</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="imk-tab-4" aria-controls="imk-pan-4" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">04</span>
+              <span class="svc-tabs__tag">Performance</span>
+              <span class="svc-tabs__title">Monitoriamo, ottimizziamo e gestiamo</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="imk-tab-5" aria-controls="imk-pan-5" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">05</span>
+              <span class="svc-tabs__tag">Reportistica</span>
+              <span class="svc-tabs__title">I report sono una cosa seria</span>
+            </button>
+          </div>
+          <div class="svc-tabs__panels">
+            <div class="svc-tabs__panel is-active" role="tabpanel" id="imk-pan-1" aria-labelledby="imk-tab-1">
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Influencer Marketing</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Per trovare la giusta strategia ci vuole fiuto, e noi siamo specializzati per farlo. I tuoi obiettivi sono importanti e noi li prendiamo a cuore.</p>
+                <p class="svc-tabs__text">La nostra squadra di <strong>Strategist, Creativi, Talent &amp; Account Manager</strong> è pronta ad accogliere ogni sfida. <strong>Siamo qui per affiancarti in ogni fase del progetto</strong>, dalla pianificazione e gestione delle campagne, alla misurazione e <strong>ottimizzazione dei risultati</strong>.</p>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
               </div>
             </div>
-          </article>
-          <article class="svc-acc__item" aria-label="Campagne">
-            <h3 class="svc-acc__head">
-              <button class="svc-acc__btn" type="button" id="imk-acc-2-h" aria-controls="imk-acc-2" aria-expanded="false">
-                <span class="svc-acc__num" aria-hidden="true">02</span>
-                <span class="svc-acc__heading">
-                  <span class="svc-acc__tag">Campagne</span>
-                  <span class="svc-acc__title">Campagne di Influencer Marketing</span>
-                </span>
-                <span class="svc-acc__mark" aria-hidden="true"></span>
-              </button>
-            </h3>
-            <div class="svc-acc__panel" id="imk-acc-2" role="region" aria-labelledby="imk-acc-2-h">
-              <div class="svc-acc__panel-inner">
-                <div class="svc-acc__media">
-                  <span class="svc-acc__media-label">Campagne</span>
-                </div>
-                <div class="svc-acc__copy">
-                  <p class="svc-acc__text">Creatività e competenza vanno a braccetto. <strong>Strategist</strong> e <strong>Creativi</strong> analizzano lo scenario di riferimento del tuo brand, valutano tutte le opportunità e la tecnologia necessaria, per poi <strong>sviluppare un piano su misura per te</strong>, capace di portarti a raggiungere i tuoi obiettivi.</p>
-                  <ul class="svc-acc__points">
-                    <li>Analisi scenario competitivo</li>
-                    <li>Strategia creativa</li>
-                    <li>Allocazione budget</li>
-                  </ul>
-                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
-                </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="imk-pan-2" aria-labelledby="imk-tab-2" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Campagne</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Creatività e competenza vanno a braccetto. <strong>Strategist</strong> e <strong>Creativi</strong> analizzano lo scenario di riferimento del tuo brand, valutano tutte le opportunità e la tecnologia necessaria, per poi <strong>sviluppare un piano su misura per te</strong>, capace di portarti a raggiungere i tuoi obiettivi.</p>
+                <ul class="svc-tabs__points">
+                  <li>Analisi scenario competitivo</li>
+                  <li>Strategia creativa</li>
+                  <li>Allocazione budget</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
               </div>
             </div>
-          </article>
-          <article class="svc-acc__item" aria-label="Talent Scouting">
-            <h3 class="svc-acc__head">
-              <button class="svc-acc__btn" type="button" id="imk-acc-3-h" aria-controls="imk-acc-3" aria-expanded="false">
-                <span class="svc-acc__num" aria-hidden="true">03</span>
-                <span class="svc-acc__heading">
-                  <span class="svc-acc__tag">Talent Scouting</span>
-                  <span class="svc-acc__title">Trovare il talent giusto per te</span>
-                </span>
-                <span class="svc-acc__mark" aria-hidden="true"></span>
-              </button>
-            </h3>
-            <div class="svc-acc__panel" id="imk-acc-3" role="region" aria-labelledby="imk-acc-3-h">
-              <div class="svc-acc__panel-inner">
-                <div class="svc-acc__media">
-                  <span class="svc-acc__media-label">Talent</span>
-                </div>
-                <div class="svc-acc__copy">
-                  <p class="svc-acc__text">Trovare i talent giusti non è facile, <strong>il nostro team</strong> è in grado di analizzare i dati e <strong>prevedere le performance di un'attivazione</strong>, creando liste di influencer autentici e accuratamente selezionati.</p>
-                  <ul class="svc-acc__points">
-                    <li>Scouting e selezione creator basata su dati</li>
-                    <li>Brief creativo e approvazione contenuti</li>
-                    <li>Gestione contratti e fee</li>
-                    <li>Coordinamento attivazioni e product seeding</li>
-                    <li>Reportistica e analisi ROI</li>
-                  </ul>
-                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
-                </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="imk-pan-3" aria-labelledby="imk-tab-3" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Talent</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Trovare i talent giusti non è facile, <strong>il nostro team</strong> è in grado di analizzare i dati e <strong>prevedere le performance di un'attivazione</strong>, creando liste di influencer autentici e accuratamente selezionati.</p>
+                <ul class="svc-tabs__points">
+                  <li>Scouting e selezione creator basata su dati</li>
+                  <li>Brief creativo e approvazione contenuti</li>
+                  <li>Gestione contratti e fee</li>
+                  <li>Coordinamento attivazioni e product seeding</li>
+                  <li>Reportistica e analisi ROI</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
               </div>
             </div>
-          </article>
-          <article class="svc-acc__item" aria-label="Performance">
-            <h3 class="svc-acc__head">
-              <button class="svc-acc__btn" type="button" id="imk-acc-4-h" aria-controls="imk-acc-4" aria-expanded="false">
-                <span class="svc-acc__num" aria-hidden="true">04</span>
-                <span class="svc-acc__heading">
-                  <span class="svc-acc__tag">Performance</span>
-                  <span class="svc-acc__title">Monitoriamo, ottimizziamo e gestiamo</span>
-                </span>
-                <span class="svc-acc__mark" aria-hidden="true"></span>
-              </button>
-            </h3>
-            <div class="svc-acc__panel" id="imk-acc-4" role="region" aria-labelledby="imk-acc-4-h">
-              <div class="svc-acc__panel-inner">
-                <div class="svc-acc__media">
-                  <span class="svc-acc__media-label">Performance</span>
-                </div>
-                <div class="svc-acc__copy">
-                  <p class="svc-acc__text">Dal primo <strong>brief</strong> fino alla <strong>misurazione delle performance</strong>: i numeri ci piacciono e li sappiamo leggere, sappiamo capire quando le performance possono dirsi soddisfacenti e quando invece bisogna repentinamente cambiare strategia.</p>
-                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
-                </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="imk-pan-4" aria-labelledby="imk-tab-4" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Performance</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Dal primo <strong>brief</strong> fino alla <strong>misurazione delle performance</strong>: i numeri ci piacciono e li sappiamo leggere, sappiamo capire quando le performance possono dirsi soddisfacenti e quando invece bisogna repentinamente cambiare strategia.</p>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
               </div>
             </div>
-          </article>
-          <article class="svc-acc__item" aria-label="Report">
-            <h3 class="svc-acc__head">
-              <button class="svc-acc__btn" type="button" id="imk-acc-5-h" aria-controls="imk-acc-5" aria-expanded="false">
-                <span class="svc-acc__num" aria-hidden="true">05</span>
-                <span class="svc-acc__heading">
-                  <span class="svc-acc__tag">Reportistica</span>
-                  <span class="svc-acc__title">I report sono una cosa seria</span>
-                </span>
-                <span class="svc-acc__mark" aria-hidden="true"></span>
-              </button>
-            </h3>
-            <div class="svc-acc__panel" id="imk-acc-5" role="region" aria-labelledby="imk-acc-5-h">
-              <div class="svc-acc__panel-inner">
-                <div class="svc-acc__media">
-                  <span class="svc-acc__media-label">Report</span>
-                </div>
-                <div class="svc-acc__copy">
-                  <p class="svc-acc__text">E noi lo sappiamo bene: non solo <strong>monitoriamo con attenzione le performance dei contenuti</strong> degli ambassador selezionati, ma alla fine di ogni campagna forniamo un <strong>report dettagliato</strong> e completo per capire quali obiettivi sono stati raggiunti.</p>
-                  <ul class="svc-acc__points">
-                    <li>Controllo contenuti</li>
-                    <li>Gestione progetto</li>
-                    <li>Report in tempo reale</li>
-                  </ul>
-                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
-                </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="imk-pan-5" aria-labelledby="imk-tab-5" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Report</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">E noi lo sappiamo bene: non solo <strong>monitoriamo con attenzione le performance dei contenuti</strong> degli ambassador selezionati, ma alla fine di ogni campagna forniamo un <strong>report dettagliato</strong> e completo per capire quali obiettivi sono stati raggiunti.</p>
+                <ul class="svc-tabs__points">
+                  <li>Controllo contenuti</li>
+                  <li>Gestione progetto</li>
+                  <li>Report in tempo reale</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
               </div>
             </div>
-          </article>
+          </div>
         </div>
       </div>
+      </div><!-- /.svc-path__sticky -->
     </section>
 
     <!-- ══ I SETTORI ════════════════════════════════════════════════ -->
@@ -853,24 +1361,55 @@
         </div>
         <div class="svc-talent-pronti__content">
           <h2 class="svc-talent-pronti__title" id="imkTalentTitle">I talent pronti a comunicare<br/>il tuo business</h2>
-          <div class="svc-talent-pronti__item reveal reveal-delay-1">
-            <h4 class="svc-talent-pronti__label">– Influencer Verificati</h4>
-            <p>Ci occupiamo di <strong>selezionare e verificare tutti i talent</strong> per ogni tipo di attivazione. Prima di proporti un ambassador deve passare una nostra accurata selezione e rispettare i nostri parametri qualitativi.</p>
-          </div>
-          <div class="svc-talent-pronti__item reveal reveal-delay-2">
-            <h4 class="svc-talent-pronti__label">– Influencer Competenti</h4>
-            <p>Le competenze sono essenziali per realizzare contenuti di qualità. Selezioniamo i nostri talent in base alle loro <strong>competenze per settore merceologico</strong>, in modo da garantirti la massima qualità possibile.</p>
-          </div>
-          <div class="svc-talent-pronti__item reveal reveal-delay-3">
-            <h4 class="svc-talent-pronti__label">– Influencer Professionali</h4>
-            <p>I nostri influencer sono in grado di realizzare campagne all'avanguardia capaci di <strong>aumentare la tua brand reputation</strong>. Tutti i nostri influencer sono autentici e sviluppano relazioni autentiche con la community di riferimento.</p>
+          <!-- Tre schede al posto di tre blocchi impilati. Tre
+               paragrafi lunghi uno sotto l'altro, con la foto a
+               fianco e la fascia in coda, non entravano in una
+               schermata per quanto si stringessero i respiri: e'
+               la quantita' di testo a occhio a essere troppa, non
+               la spaziatura. Aprendone uno alla volta l'altezza
+               della sezione la decide il paragrafo piu' lungo,
+               non la somma dei tre. Stessa meccanica dei servizi
+               qui sopra. Nessuna parola tolta: le etichette sono
+               i titoli delle schede, i paragrafi il contenuto. -->
+          <div class="svc-tabs talent-tabs">
+            <div class="svc-tabs__strip" role="tablist" aria-label="I talent">
+              <button class="svc-tabs__tab is-active" type="button" role="tab" id="imk-tal-tab-1" aria-controls="imk-tal-pan-1" aria-selected="true" tabindex="0">
+                <span class="svc-tabs__num" aria-hidden="true">01</span>
+                <span class="svc-tabs__title">– Influencer Verificati</span>
+              </button>
+              <button class="svc-tabs__tab" type="button" role="tab" id="imk-tal-tab-2" aria-controls="imk-tal-pan-2" aria-selected="false" tabindex="-1">
+                <span class="svc-tabs__num" aria-hidden="true">02</span>
+                <span class="svc-tabs__title">– Influencer Competenti</span>
+              </button>
+              <button class="svc-tabs__tab" type="button" role="tab" id="imk-tal-tab-3" aria-controls="imk-tal-pan-3" aria-selected="false" tabindex="-1">
+                <span class="svc-tabs__num" aria-hidden="true">03</span>
+                <span class="svc-tabs__title">– Influencer Professionali</span>
+              </button>
+            </div>
+            <div class="svc-tabs__panels">
+              <div class="svc-tabs__panel is-active" role="tabpanel" id="imk-tal-pan-1" aria-labelledby="imk-tal-tab-1">
+                <div class="svc-tabs__copy">
+                  <p class="svc-tabs__text">Ci occupiamo di <strong>selezionare e verificare tutti i talent</strong> per ogni tipo di attivazione. Prima di proporti un ambassador deve passare una nostra accurata selezione e rispettare i nostri parametri qualitativi.</p>
+                </div>
+              </div>
+              <div class="svc-tabs__panel" role="tabpanel" id="imk-tal-pan-2" aria-labelledby="imk-tal-tab-2" hidden>
+                <div class="svc-tabs__copy">
+                  <p class="svc-tabs__text">Le competenze sono essenziali per realizzare contenuti di qualità. Selezioniamo i nostri talent in base alle loro <strong>competenze per settore merceologico</strong>, in modo da garantirti la massima qualità possibile.</p>
+                </div>
+              </div>
+              <div class="svc-tabs__panel" role="tabpanel" id="imk-tal-pan-3" aria-labelledby="imk-tal-tab-3" hidden>
+                <div class="svc-tabs__copy">
+                  <p class="svc-tabs__text">I nostri influencer sono in grado di realizzare campagne all'avanguardia capaci di <strong>aumentare la tua brand reputation</strong>. Tutti i nostri influencer sono autentici e sviluppano relazioni autentiche con la community di riferimento.</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- ══ AD INTEGRAZIONE ══════════════════════════════════════════ -->
-    <section class="svc-integrazione" id="imkIntegrazione">
+      <!-- Le tre voci in coda stavano in una sezione loro, tre
+           capsule in mezzo al bianco. Sono il seguito naturale di
+           quello che i talent sanno fare: stanno qui. -->
+      <div class="svc-integrazione" id="imkIntegrazione">
       <img class="svc-integrazione__deco" src="../foto%20home/coda-gatto-oshxjrx6o18ghy7peuh9v296dlx7kj6p8c1c09eiv4-1.webp" alt="" aria-hidden="true" />
       <div class="container">
         <div class="svc-integrazione__header reveal">
@@ -892,103 +1431,107 @@
           </div>
         </div>
       </div>
+      </div>
     </section>
 
     <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
     <section class="svc-clients" id="imkClienti" aria-label="I nostri clienti" data-nav-theme="dark">
-      <div class="container svc-clients__header">
-        <h2 class="svc-clients__title" id="imkClientiTitle">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
-      </div>
-      <div class="svc-clients__marquee-wrap">
-        <!-- FILA 1 — scorre a sinistra -->
-        <div class="svc-clients__track">
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
-          <!-- duplicati per loop continuo -->
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+      <!-- Pannello agganciato, come in homepage. -->
+      <div class="svc-clients__sticky">
+        <div class="container svc-clients__header">
+          <h2 class="svc-clients__title" id="imkClientiTitle">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
         </div>
-        <!-- FILA 2 — scorre a destra -->
-        <div class="svc-clients__track svc-clients__track--rev">
-          <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
-          <!-- duplicati per loop continuo -->
-          <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+        <div class="svc-clients__marquee-wrap">
+          <!-- FILA 1 — scorre a sinistra -->
+          <div class="svc-clients__track">
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+            <!-- duplicati per loop continuo -->
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          </div>
+          <!-- FILA 2 — scorre a destra -->
+          <div class="svc-clients__track svc-clients__track--rev">
+            <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+            <!-- duplicati per loop continuo -->
+            <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          </div>
         </div>
-      </div>
+      </div><!-- /.svc-clients__sticky -->
     </section>
 
     
@@ -996,7 +1539,8 @@
     
     <!-- FAQ -->
     <section class="page-faq">
-      <div class="page-faq__inner">
+      <div class="page-faq__sticky">
+        <div class="page-faq__inner">
         <h2 class="page-faq__title">FAQ</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
@@ -1025,6 +1569,7 @@
           </div>
         </dl>
       </div>
+      </div><!-- /.page-faq__sticky -->
     </section>
 
 <section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci" id="imkCaffe" data-nav-theme="dark">
@@ -1035,18 +1580,39 @@
         </div>
         <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get" novalidate>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
-            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            <div class="f-field">
+              <label class="f-label" for="imk-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="imk-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="imk-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="imk-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+            </div>
           </div>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            <div class="f-field">
+              <label class="f-label" for="imk-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="imk-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="imk-f-telefono">Telefono</label>
+              <input id="imk-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+            </div>
           </div>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
-            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            <div class="f-field">
+              <label class="f-label" for="imk-f-azienda">Azienda</label>
+              <input id="imk-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="imk-f-sito">Sito Web</label>
+              <input id="imk-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+            </div>
           </div>
-          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+          <div class="f-field">
+            <label class="f-label" for="imk-f-messaggio">Messaggio</label>
+            <textarea id="imk-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+          </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="imkCaffe-privacy">
               <input type="checkbox" id="imkCaffe-privacy" name="privacy" required />
@@ -1075,554 +1641,42 @@
     });
   })();
 
+  /* ── Tema della nav ────────────────────────────────────────────
+     Qui c'era un impianto di effetti tutto suo: i titoli si
+     scrivevano lettera per lettera al passare dello scroll e poi si
+     ri-cancellavano in uscita, le card comparivano e sparivano, e
+     fra una sezione e l'altra una serie di overlay sfumava un
+     colore sull'altro. Era il motivo per cui mezza pagina risultava
+     invisibile e per cui le transizioni erano dissolvenze invece
+     della salita usata ovunque. Tutto rimosso: i titoli usano
+     l'effetto acqua e i testi l'entrata del corpo di About, come
+     nelle altre pagine, e le sezioni si passano il testimone con
+     .sx-rise. Di questo blocco resta solo il tema della nav, che
+     serve ancora. */
   (function () {
     'use strict';
-
-    /* ── helpers condivisi ────────────────────────────────────── */
-    const c01  = v => Math.max(0, Math.min(1, v));
-    const ease = t => 0.5 - Math.cos(Math.PI * t) / 2;
-
-    /* ── splitLetters: copia 1:1 da main.js / SMM ─────────────── */
-    function splitLetters(el) {
-      if (!el) return [];
-      const html = el.innerHTML;
-      let result = '';
-      for (let i = 0; i < html.length; i++) {
-        const ch = html[i];
-        if (ch === '<') {
-          const end = html.indexOf('>', i);
-          result += html.slice(i, end + 1);
-          i = end;
-        } else if (ch === '&') {
-          const end = html.indexOf(';', i);
-          result += `<span class="tl">${html.slice(i, end + 1)}</span>`;
-          i = end;
-        } else if (/\s/.test(ch)) {
-          result += ch;
-        } else {
-          result += `<span class="tl">${ch}</span>`;
-        }
-      }
-      el.innerHTML = result;
-      el.style.opacity = '1';
-      el.style.transform = 'none';
-      return [...el.querySelectorAll('.tl')];
-    }
-
-    /* ── revealLetters: copia 1:1 da main.js (TIPS & TRICKS) ──── */
-    function revealLetters(letters, p, base, dur, pExitRaw) {
-      const n = letters.length;
-      const eRaw = pExitRaw || 0;
-      const EXIT_STAG = n > 1 ? 0.45 / (n - 1) : 0;
-      const EXIT_EACH = 0.55;
-      letters.forEach((el, i) => {
-        const lP = ease(c01((p - base - i * 0.012) / dur));
-        const eP = ease(c01((eRaw - i * EXIT_STAG) / EXIT_EACH));
-        el.style.opacity   = (lP * (1 - eP)).toFixed(3);
-        el.style.transform = `translateY(${((1 - lP) * 0.8 + eP * 0.8).toFixed(3)}em)`;
-      });
-    }
-
-    /* ── stickyProg: copia 1:1 da main.js ─────────────────────── */
-    function stickyProg(sectionEl) {
-      if (!sectionEl) return 0;
-      const sR = sectionEl.getBoundingClientRect();
-      const _vh = window.innerHeight;
-      const ENTRY_RANGE = _vh * 0.70;
-      const total = Math.max(sectionEl.offsetHeight - _vh, 0);
-      return c01((ENTRY_RANGE - sR.top) / (total + ENTRY_RANGE));
-    }
-
-    /* ═══════════════════════════════════════════════════════════
-       1. TITOLI — sistema TIPS & TRICKS
-       base=0.42, dur=0.08, EXIT_BASE=0.95, EXIT_DUR=0.05
-       L'uscita (exit) viene applicata SOLO alle sezioni con runway
-       (offsetHeight > vh): su una sezione più bassa del viewport
-       p=0.95 verrebbe raggiunto subito dopo l'entrata e il titolo
-       sparirebbe appena finito di comparire.
-    ═══════════════════════════════════════════════════════════ */
-    const TITLES = [
-      { sec: 'imkStat',     title: 'imkStatNum' },      /* 87%                                */
-      { sec: 'imkIntro',    title: 'imkIntroTitle' },   /* INSTAGRAM                          */
-      { sec: 'imkCollab',   title: 'imkCollabTitle' },  /* ALCUNE COLLABORAZIONI              */
-      { sec: 'imkSettori',  title: 'imkSettoriTitle' }, /* I SETTORI DEI NOSTRI INFLUENCER    */
-      { sec: 'imkTalent',   title: 'imkTalentTitle' },  /* I TALENT PRONTI A COMUNICARE...    */
-      { sec: 'imkIntegrazione', title: 'imkIntegrazioneTitle' }, /* AD INTEGRAZIONE...        */
-    ];
-
-    TITLES.forEach(({ sec, title }) => {
-      const secEl   = document.getElementById(sec);
-      const titleEl = document.getElementById(title);
-      if (!secEl || !titleEl) return;
-
-      const letters = splitLetters(titleEl);
-      letters.forEach(el => {
-        el.style.opacity   = '0';
-        el.style.transform = 'translateY(0.8em)';
-        el.style.display   = 'inline-block';
-      });
-
-      function tick() {
-        requestAnimationFrame(tick);
-        const p = stickyProg(secEl);
-        const hasRunway = secEl.offsetHeight > window.innerHeight;
-        const exitRaw = hasRunway ? c01((p - 0.95) / 0.05) : 0;
-        revealLetters(letters, p, 0.42, 0.08, exitRaw);
-      }
-      requestAnimationFrame(tick);
-    });
-
-    /* ═══════════════════════════════════════════════════════════
-       1-bis. CARD / ELEMENTI — sistema TIPS & TRICKS
-       In home le tip-card usano: base = 0.52 + i*0.08, dur = 0.14,
-       translateY 30px, easing `ease`, guidato da stickyProg della
-       sezione e con la stessa uscita (tOut) del titolo.
-       Lo stagger viene compresso quando gli elementi sono molti,
-       così l'ultimo rientra comunque nella corsa di scroll.
-    ═══════════════════════════════════════════════════════════ */
-    function revealCards(secEl, els, opts) {
-      if (!secEl || !els.length) return;
-      const o        = opts || {};
-      const BASE     = o.base != null ? o.base : 0.52;
-      const DUR      = o.dur  != null ? o.dur  : 0.14;
-      const SHIFT    = o.shift != null ? o.shift : 30;
-      const SPAN     = o.span != null ? o.span : 0.34;
-      const stag     = els.length > 1
-        ? Math.min(0.08, SPAN / (els.length - 1))
-        : 0;
-
-      els.forEach(el => {
-        el.style.opacity   = '0';
-        el.style.transform = `translateY(${SHIFT}px)`;
-        el.style.willChange = 'opacity, transform';
-      });
-
-      function tick() {
-        requestAnimationFrame(tick);
-        const p    = stickyProg(secEl);
-        const tOut = secEl.offsetHeight > window.innerHeight
-          ? ease(c01((p - 0.95) / 0.05))
-          : 0;
-        els.forEach((el, i) => {
-          const tIn = ease(c01((p - (BASE + i * stag)) / DUR));
-          el.style.opacity   = (tIn * (1 - tOut)).toFixed(3);
-          el.style.transform = `translateY(${((1 - tIn) * SHIFT - tOut * 20).toFixed(1)}px)`;
-        });
-      }
-      requestAnimationFrame(tick);
-    }
-
-    /* CORREZIONE 3 — ALCUNE COLLABORAZIONI */
-    revealCards(
-      document.getElementById('imkCollab'),
-      [...document.querySelectorAll('#imkCollab .svc-collab-grid__item')]
-    );
-
-    /* CORREZIONE 5 — I SETTORI DEI NOSTRI INFLUENCER */
-    revealCards(
-      document.getElementById('imkSettori'),
-      [...document.querySelectorAll('#imkSettori .svc-settori__item')]
-    );
-
-    /* blocchi RITAGLIAMO → I REPORT: gestiti dal panelData RAF (vedi sotto) */
-
-    /* ── smm-stack RITAGLIAMO → I REPORT: panelData RAF identico a SMM ── */
-    (function () {
-      const stack  = document.getElementById('imkPanelStack');
-      const panels = stack ? Array.from(stack.querySelectorAll('.smm-panel')) : [];
-      const N      = panels.length;
-      if (!N) return;
-
-      const panelData = panels.map(panel => ({
-        el: panel,
-        reveals: Array.from(panel.querySelectorAll('[data-reveal]')),
-      }));
-
-      let _vh = window.innerHeight;
-      window.addEventListener('resize', () => { _vh = window.innerHeight; }, { passive: true });
-
-      let rafId2 = null;
-      let prevP  = {};
-
-      /* ── time-based reveal state ─────────────────────────────── */
-      const ANIM_MS2    = 380;
-      const STAGGER_MS2 = 35;
-      const panelAnim2  = panelData.map(() => ({ p: 0, dir: 0, t0: 0 }));
-
-      function panelTick() {
-        rafId2 = requestAnimationFrame(panelTick);
-        const now = performance.now();
-        const stackRect   = stack.getBoundingClientRect();
-        const totalScroll = stack.offsetHeight - _vh;
-        if (totalScroll <= 0) return;
-
-        const globalP = c01(-stackRect.top / totalScroll);
-
-        panelData.forEach(({ el, reveals }, i) => {
-          const sliceSize  = 1 / N;
-          const sliceStart = i * sliceSize;
-
-          /* entry slide */
-          const entryP = i === 0 ? 1 : ease(c01((globalP - sliceStart + sliceSize * 0.3) / (sliceSize * 0.5)));
-          const ty     = i === 0 ? 0 : (1 - entryP) * 60;
-          const thisTY = ty.toFixed(2);
-          if (prevP['ty_' + i] !== thisTY) { prevP['ty_' + i] = thisTY; el.style.transform = `translateY(${thisTY}px)`; }
-
-          /* scale back previous panel */
-          if (i > 0) {
-            const coverP   = ease(c01((globalP - sliceStart) / (sliceSize * 0.4)));
-            const prevEl2  = panelData[i - 1].el;
-            const scaleVal = (1 - coverP * 0.025).toFixed(4);
-            const scaleKey = 'scale_' + (i - 1);
-            if (prevP[scaleKey] !== scaleVal) { prevP[scaleKey] = scaleVal; prevEl2.style.transform = `scale(${scaleVal})`; }
-          }
-
-          /* content reveal: time-based, triggered a localP > 0.10 */
-          const localP = c01((globalP - sliceStart) / sliceSize);
-          const state  = panelAnim2[i];
-          const shouldReveal = localP > 0.10;
-
-          if (shouldReveal && state.dir !== 1) {
-            state.dir = 1;
-            state.t0  = now - state.p * ANIM_MS2;
-          } else if (!shouldReveal && state.dir !== -1) {
-            state.dir = -1;
-            state.t0  = now - (1 - state.p) * ANIM_MS2;
-          }
-          if (state.dir === 1)       state.p = Math.min(1, (now - state.t0) / ANIM_MS2);
-          else if (state.dir === -1) state.p = Math.max(0, 1 - (now - state.t0) / ANIM_MS2);
-
-          const totalMs2 = ANIM_MS2 + reveals.length * STAGGER_MS2;
-          reveals.forEach((el2, ri) => {
-            if (i === 0 && el2.dataset.revealDone) return;
-            const elapsed = state.p * totalMs2 - ri * STAGGER_MS2;
-            const p       = ease(c01(elapsed / ANIM_MS2));
-            const opStr   = p.toFixed(3);
-            const tyStr   = ((1 - p) * 22).toFixed(2);
-            const k = 'rv_' + i + '_' + ri;
-            const v = opStr + '|' + tyStr;
-            if (prevP[k] !== v) { prevP[k] = v; el2.style.opacity = opStr; el2.style.transform = `translateY(${tyStr}px)`; }
-          });
-        });
-      }
-
-      /* avvia solo quando lo stack è in viewport */
-      const stackIO = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) { if (!rafId2) rafId2 = requestAnimationFrame(panelTick); }
-        else { if (rafId2) { cancelAnimationFrame(rafId2); rafId2 = null; } }
-      }, { threshold: 0 });
-      stackIO.observe(stack);
-
-      /* ultimo panel → imkSettori: overlay scuro (come faceTick in SMM) */
-      const lastPanel = panels[panels.length - 1];
-      const settoriEl = document.getElementById('imkSettori');
-      if (lastPanel && settoriEl) {
-        const ovLast = document.createElement('div');
-        Object.assign(ovLast.style, {
-          position: 'absolute', inset: '0', background: '#0a0a0a',
-          opacity: '0', pointerEvents: 'none', zIndex: '5',
-        });
-        if (getComputedStyle(lastPanel).position === 'static') lastPanel.style.position = 'relative';
-        lastPanel.appendChild(ovLast);
-        function lastPanelTick() {
-          requestAnimationFrame(lastPanelTick);
-          const sR = settoriEl.getBoundingClientRect();
-          const p  = ease(c01((_vh - sR.top) / _vh));
-          ovLast.style.opacity = ease(c01((p - 0.25) / 0.75)).toFixed(3);
-        }
-        requestAnimationFrame(lastPanelTick);
-      }
-    })();
-
-    /* ── Clienti: stessa reveal di homepage/SMM (base 0, ENTRY 0.70vh) ── */
-    (function () {
-      const titleEl = document.getElementById('imkClientiTitle');
-      const section = document.getElementById('imkClienti');
-      if (!titleEl || !section) return;
-      const letters = splitLetters(titleEl);
-
-      function rafLoop() {
-        requestAnimationFrame(rafLoop);
-        const _vh   = window.innerHeight;
-        const sR    = section.getBoundingClientRect();
-        const ENTRY = _vh * 0.70;
-        const p     = c01((ENTRY - sR.top) / ENTRY);
-        letters.forEach((el, i) => {
-          const lP = ease(c01((p - i * 0.012) / 0.08));
-          el.style.opacity   = lP.toFixed(3);
-          el.style.transform = `translateY(${((1 - lP) * 0.8).toFixed(3)}em)`;
-        });
-      }
-      requestAnimationFrame(rafLoop);
-    })();
-
-    /* ═══════════════════════════════════════════════════════════
-       2. TRANSIZIONI DI SFONDO tra sezioni adiacenti
-       L'overlay sta SOTTO il contenuto (z-index 0, figli a 1):
-       ricolora solo lo sfondo della sezione uscente verso il
-       colore della sezione entrante. Completamente reversibile.
-    ═══════════════════════════════════════════════════════════ */
-    const SECTION_FLOW = [
-      { id: 'imkHero',         bg: '#050505' },
-      { id: 'imkStat',         bg: '#ffffff' },
-      { id: 'imkIntro',        bg: '#ffffff' },
-      { id: 'imkCollab',       bg: '#ffffff' },
-      /* imkPanelStack: transizioni interne gestite dal panelData RAF */
-      { id: 'imkSettori',      bg: '#0a0a0a' },
-      { id: 'imkTalent',       bg: '#f8f3f6' },
-      { id: 'imkIntegrazione', bg: '#ffffff' },
-      { id: 'imkClienti',      bg: '#000000' },
-      { id: 'imkMagic',        bg: '#ffffff' },
-      { id: 'imkCaffe',        bg: '#DB005A' },
-    ];
-
-    const flow = SECTION_FLOW
-      .map(s => ({ ...s, el: document.getElementById(s.id) }))
-      .filter(s => s.el);
-
-    /* overlay dietro il contenuto */
-    function makeBgOv(fromEl, toColor) {
-      [...fromEl.children].forEach(ch => {
-        const cs = getComputedStyle(ch);
-        if (cs.position === 'static') ch.style.position = 'relative';
-        if (cs.zIndex === 'auto') ch.style.zIndex = '1';
-      });
-      const ov = document.createElement('div');
-      Object.assign(ov.style, {
-        position: 'absolute', inset: '0',
-        background: toColor, opacity: '0',
-        pointerEvents: 'none', zIndex: '0',
-      });
-      if (getComputedStyle(fromEl).position === 'static') fromEl.style.position = 'relative';
-      fromEl.appendChild(ov);
-      return ov;
-    }
-
-    const bgTransitions = [];
-    for (let i = 0; i < flow.length - 1; i++) {
-      const from = flow[i], to = flow[i + 1];
-      /* hero, clienti→magic e magic→caffe hanno overlay dedicati (copia SMM) */
-      if (from.id === 'imkHero' || from.id === 'imkClienti' || from.id === 'imkMagic') continue;
-      if (from.bg.toLowerCase() === to.bg.toLowerCase()) continue; /* stesso colore: inutile */
-      bgTransitions.push({
-        ov: makeBgOv(from.el, to.bg),
-        fromEl: from.el,
-        toEl: to.el,
-        toRgb: hexRgb(to.bg),
-        op: 0,
-      });
-    }
-
-    /* ── Hero → sezione successiva: overlay bianco (copia SMM) ── */
-    const heroEl  = document.getElementById('imkHero');
-    const heroOv  = document.getElementById('heroToNextOv');
-    const nextSec = document.getElementById('imkStat');
-
-    /* ── clienti → magic → caffe: copia esatta della logica SMM ── */
-    const clientiEl = document.getElementById('imkClienti');
-    const magicEl   = document.getElementById('imkMagic');
-    const caffeEl   = document.getElementById('imkCaffe');
-
-    function makeCoverOv(prevEl, nextBg) {
-      const ov = document.createElement('div');
-      Object.assign(ov.style, {
-        position: 'absolute', inset: '0',
-        background: nextBg, opacity: '0',
-        pointerEvents: 'none', zIndex: '5',
-      });
-      if (getComputedStyle(prevEl).position === 'static') prevEl.style.position = 'relative';
-      prevEl.appendChild(ov);
-      return ov;
-    }
-
-    const ov1 = clientiEl ? makeCoverOv(clientiEl, '#ffffff') : null;  /* clienti → magic  */
-    const ov2 = magicEl   ? makeCoverOv(magicEl,   '#DB005A') : null;  /* magic   → caffe  */
-
-    /* ── refs magic / caffe (identici a SMM) ──────────────────── */
-    const magicContent = magicEl ? magicEl.querySelector('.svc-magic__content') : null;
-    const magicCat     = magicEl ? magicEl.querySelector('.svc-magic__cat')     : null;
-    const magicLinks   = magicEl ? magicEl.querySelector('.svc-magic__links')   : null;
-    const magicTitle   = magicEl ? magicEl.querySelector('.svc-magic__title')   : null;
-
-    const caffeLeft  = caffeEl ? caffeEl.querySelector('.svc-caffe__left')  : null;
-    const caffeTitle = caffeEl ? caffeEl.querySelector('.svc-caffe__title') : null;
-    const caffeSub   = caffeEl ? caffeEl.querySelector('.svc-caffe__sub')   : null;
-    const caffeForm  = caffeEl ? caffeEl.querySelector('.svc-caffe__form')  : null;
-
-    function unlockContainer(el) {
-      if (!el) return;
-      el.style.cssText += ';opacity:1!important;transform:none!important;transition:none!important';
-    }
-    unlockContainer(magicContent);
-    unlockContainer(caffeLeft);
-
-    function initHide(el) {
-      if (!el) return;
-      Object.assign(el.style, {
-        opacity: '0', transform: 'translateY(20px)',
-        willChange: 'opacity, transform', transition: 'none',
-      });
-    }
-    initHide(magicCat);
-    initHide(magicLinks);
-    initHide(caffeSub);
-    initHide(caffeForm);
-
-    const magicLetters = splitLetters(magicTitle);
-    const caffeLetters = splitLetters(caffeTitle);
-
-    function revLetters(letters, p) {
-      letters.forEach((el, i) => {
-        const lP = ease(c01((p - i * 0.012) / 0.08));
-        el.style.opacity   = lP.toFixed(3);
-        el.style.transform = `translateY(${((1 - lP) * 0.8).toFixed(3)}em)`;
-      });
-    }
-
-    /* ── Caffè → footer: overlay fisso #0e0e0e (copia SMM/home) ── */
-    const caffeExitOv = document.createElement('div');
-    Object.assign(caffeExitOv.style, {
-      position: 'fixed', inset: '0',
-      background: '#0e0e0e', opacity: '0',
-      pointerEvents: 'none', zIndex: '200', transition: 'none',
-    });
-    document.body.appendChild(caffeExitOv);
-
-    /* ═══════════════════════════════════════════════════════════
-       RAF unico per tutte le transizioni di sfondo + nav theme
-    ═══════════════════════════════════════════════════════════ */
     const navEl = document.querySelector('.nav');
-    const C_DARK = [5, 5, 5], C_WHITE = [255, 255, 255], C_FUCHSIA = [219, 0, 90];
-    function luma(c) { return 0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]; }
-    function blend(a, b, t) { return [a[0]*(1-t)+b[0]*t, a[1]*(1-t)+b[1]*t, a[2]*(1-t)+b[2]*t]; }
-    function hexRgb(h) {
-      return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
-    }
+    if (!navEl) return;
     let prevDark = null;
-
-    function transitionTick() {
-      requestAnimationFrame(transitionTick);
-      const vh = window.innerHeight;
-
-      /* ── hero → stat ─────────────────────────────────────────── */
-      let heroOvOp = 0;
-      if (heroOv && nextSec) {
-        const r = nextSec.getBoundingClientRect();
-        heroOvOp = ease(c01((vh - r.top) / vh));
-        heroOv.style.opacity = heroOvOp.toFixed(3);
-      }
-
-      /* ── transizioni di sfondo generiche ─────────────────────── */
-      bgTransitions.forEach(t => {
-        const r = t.toEl.getBoundingClientRect();
-        const p = ease(c01((vh * 0.5 - r.top) / (vh * 0.4)));
-        t.ov.style.opacity = p.toFixed(3);
-        t.op = p;
+    function navTick() {
+      requestAnimationFrame(navTick);
+      const navMid = (navEl.getBoundingClientRect().height || 80) / 2;
+      /* la hero e' scura: e' il punto di partenza */
+      let dark = true;
+      document.querySelectorAll('main > section, footer.site-footer').forEach(sec => {
+        const r = sec.getBoundingClientRect();
+        if (r.top > navMid || r.bottom <= navMid) return;
+        dark = sec.dataset.navTheme === 'dark'
+            || sec.classList.contains('svc-bg-dark')
+            || sec.classList.contains('svc-caffe')
+            || sec.classList.contains('site-footer');
       });
-
-      /* ── clienti → magic (copia SMM) ─────────────────────────── */
-      let ov1Op = 0;
-      if (ov1 && magicEl) {
-        const mR = magicEl.getBoundingClientRect();
-        const p1 = ease(c01((vh - mR.top) / vh));
-        ov1Op = ease(c01((p1 - 0.25) / 0.75));
-        ov1.style.opacity = ov1Op.toFixed(3);
-
-        revLetters(magicLetters, ease(c01(p1 / 0.85)));
-
-        const catP = ease(c01((p1 - 0.05) / 0.80));
-        if (magicCat) {
-          magicCat.style.opacity   = catP.toFixed(3);
-          magicCat.style.transform = `translateY(${((1 - catP) * 24).toFixed(1)}px)`;
-        }
-        const linksP = ease(c01((p1 - 0.20) / 0.70));
-        if (magicLinks) {
-          magicLinks.style.opacity   = linksP.toFixed(3);
-          magicLinks.style.transform = `translateY(${((1 - linksP) * 20).toFixed(1)}px)`;
-        }
-      }
-
-      /* ── magic → caffe (copia SMM) ───────────────────────────── */
-      let ov2Op = 0;
-      if (ov2 && caffeEl) {
-        const cR = caffeEl.getBoundingClientRect();
-        const p2 = ease(c01((vh - cR.top) / vh));
-        ov2Op = ease(c01((p2 - 0.25) / 0.75));
-        ov2.style.opacity = ov2Op.toFixed(3);
-
-        revLetters(caffeLetters, ease(c01(p2 / 0.85)));
-
-        const subP = ease(c01((p2 - 0.10) / 0.75));
-        if (caffeSub) {
-          caffeSub.style.opacity   = subP.toFixed(3);
-          caffeSub.style.transform = `translateY(${((1 - subP) * 16).toFixed(1)}px)`;
-        }
-        const formP = ease(c01((p2 - 0.20) / 0.70));
-        if (caffeForm) {
-          caffeForm.style.opacity   = formP.toFixed(3);
-          caffeForm.style.transform = `translateY(${((1 - formP) * 20).toFixed(1)}px)`;
-        }
-      }
-
-      /* ── caffè → footer ──────────────────────────────────────── */
-      const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      const distanceToBottom = maxScroll - window.scrollY;
-      caffeExitOv.style.opacity = ease(c01(1 - distanceToBottom / 120)).toFixed(3);
-
-      /* ── nav theme: luminanza del colore effettivo sotto la nav ── */
-      if (navEl) {
-        const navMid = (navEl.getBoundingClientRect().height || 80) / 2;
-        /* default: colore della prima sezione (hero, scuro) — come SMM */
-        let base = flow.length ? hexRgb(flow[0].bg) : C_WHITE;
-
-        for (const s of flow) {
-          const r = s.el.getBoundingClientRect();
-          if (r.top <= navMid && r.bottom > navMid) base = hexRgb(s.bg);
-        }
-
-        /* panel stack IMK: trova il panel sticky attivo */
-        const imkStack = document.getElementById('imkPanelStack');
-        if (imkStack) {
-          const sR = imkStack.getBoundingClientRect();
-          if (sR.top <= navMid && sR.bottom > navMid) {
-            const imkPanels = [...imkStack.querySelectorAll('.smm-panel')];
-            for (let i = imkPanels.length - 1; i >= 0; i--) {
-              const r = imkPanels[i].getBoundingClientRect();
-              if (r.top <= navMid && r.bottom > navMid) {
-                base = imkPanels[i].classList.contains('smm-panel--dark') ? C_DARK : C_WHITE;
-                break;
-              }
-            }
-          }
-        }
-
-        /* mescola con gli overlay attivi sotto la nav */
-        if (heroEl && heroOvOp > 0) {
-          const r = heroEl.getBoundingClientRect();
-          if (r.top <= navMid && r.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp);
-        }
-        bgTransitions.forEach(t => {
-          if (!t.op) return;
-          const r = t.fromEl.getBoundingClientRect();
-          if (r.top <= navMid && r.bottom > navMid) base = blend(base, t.toRgb, t.op);
-        });
-        if (clientiEl && ov1Op > 0) {
-          const r = clientiEl.getBoundingClientRect();
-          if (r.top <= navMid && r.bottom > navMid) base = blend(C_DARK, C_WHITE, ov1Op);
-        }
-        if (magicEl && ov2Op > 0) {
-          const r = magicEl.getBoundingClientRect();
-          if (r.top <= navMid && r.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, ov2Op);
-        }
-
-        const isDark = luma(base) < 140;
-        if (isDark !== prevDark) {
-          prevDark = isDark;
-          navEl.classList.toggle('nav--on-dark', isDark);
-        }
+      if (dark !== prevDark) {
+        prevDark = dark;
+        navEl.classList.toggle('nav--on-dark', dark);
       }
     }
-    requestAnimationFrame(transitionTick);
+    requestAnimationFrame(navTick);
   })();
   </script>
   <script src="../js/main.js"></script>
@@ -1715,47 +1769,64 @@
     </div>
   </footer>
 
-  <script>
-  /* ── Galleria a fisarmonica dei servizi ───────────────────────
-     Una riga aperta alla volta. Il click è sul <button>, quindi la
-     tastiera funziona senza aggiungere nulla; aria-expanded tiene
-     allineati lettori di schermo e stato visivo. */
-  (function () {
-    const root = document.querySelector('.svc-acc__list');
-    if (!root) return;
-    const items = Array.from(root.querySelectorAll('.svc-acc__item'));
 
-    function setOpen(item, open) {
-      item.classList.toggle('is-open', open);
-      const btn = item.querySelector('.svc-acc__btn');
-      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  <script>
+  /* ── Schede orizzontali dei servizi ───────────────────────────
+     Una scheda alla volta. I <button> hanno role="tab" e il
+     pannello role="tabpanel": la tastiera funziona come in una
+     vera barra di schede — frecce per spostarsi, Home/Fine agli
+     estremi — e i lettori di schermo annunciano lo stato. */
+  /* Le barre di schede sulla pagina sono due — i servizi e i
+     talent — e questo controller ne prendeva solo la prima:
+     querySelector, non querySelectorAll. Ora ognuna ha il suo. */
+  document.querySelectorAll('.svc-tabs__strip').forEach(function (strip) {
+    const tabs = Array.from(strip.querySelectorAll('.svc-tabs__tab'));
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+
+    /* --n e --p: quante tappe ha la linea e fin dove e' percorsa.
+       Il tratto fucsia si ferma sul nodo scelto. */
+    strip.style.setProperty('--n', tabs.length);
+
+    function select(i, focus) {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.classList.toggle('is-active', on);
+        t.classList.toggle('is-done', k < i);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        const p = panels[k];
+        if (!p) return;
+        p.classList.toggle('is-active', on);
+        p.hidden = !on;
+      });
+      strip.style.setProperty('--p', tabs.length > 1 ? (i / (tabs.length - 1)).toFixed(4) : 0);
+      if (focus && tabs[i]) tabs[i].focus();
     }
 
-    root.addEventListener('click', function (e) {
-      const btn = e.target.closest('.svc-acc__btn');
-      if (!btn || !root.contains(btn)) return;
-      const item = btn.closest('.svc-acc__item');
-      const wasOpen = item.classList.contains('is-open');
-      items.forEach(function (it) { setOpen(it, false); });
-      /* ricliccando sulla riga aperta la si richiude: l'elenco
-         tutto chiuso è uno stato legittimo, non un vicolo cieco */
-      setOpen(item, !wasOpen);
+    /* stato iniziale coerente con la scheda gia' marcata attiva */
+    select(Math.max(0, tabs.findIndex(t => t.classList.contains('is-active'))), false);
+
+    strip.addEventListener('click', e => {
+      const t = e.target.closest('.svc-tabs__tab');
+      if (!t) return;
+      select(tabs.indexOf(t), false);
     });
 
-    /* Frecce su/giù fra le testate, come in un elenco */
-    root.addEventListener('keydown', function (e) {
-      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
-      const btn = e.target.closest('.svc-acc__btn');
-      if (!btn) return;
-      const btns = items.map(function (it) { return it.querySelector('.svc-acc__btn'); });
-      const i = btns.indexOf(btn);
+    strip.addEventListener('keydown', e => {
+      const i = tabs.indexOf(e.target.closest('.svc-tabs__tab'));
       if (i < 0) return;
+      let n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n === null) return;
       e.preventDefault();
-      const next = e.key === 'ArrowDown' ? (i + 1) % btns.length : (i - 1 + btns.length) % btns.length;
-      btns[next].focus();
+      select(n, true);
     });
-  }());
-  </script>  <script>
+  });
+  </script>
+  <script>
   /* ── Effetti condivisi delle pagine servizi ───────────────────
      Salita fra sezioni, acqua sui titoli, ingresso dei testi.
      Stesse funzioni delle altre pagine del sito. */
@@ -1803,7 +1874,12 @@
     // il titolo della hero e gia in vista al caricamento
     requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
     // gli altri titoli di sezione ondeggiano quando entrano
-    document.querySelectorAll('.svc-clients__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
+    document.querySelectorAll(
+      '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
+      '.page-faq__title, .svc-section-title, .svc-tools__title, ' +
+      '.svc-process__title, .svc-channels__title, ' +
+      '.imk-intro__title, .svc-talent-pronti__title, ' +
+      '.sf-ghost')
       .forEach(el => {
         const io = new IntersectionObserver(es => {
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
@@ -1814,7 +1890,10 @@
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
-    const RISE = ['.svc-acc', '.svc-clients', '.page-faq', '.svc-caffe', '.site-footer'];
+    /* Tutte le sezioni del corpo salgono su quella prima. La hero
+       e' la prima, quindi non sale; la fucsia e il footer salgono
+       come sulle altre pagine del sito. */
+    const RISE = ['main > section:not(.svc-hero)', '.site-footer'];
     const secs = [];
     RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
       el.classList.add('sx-rise');
@@ -1843,9 +1922,14 @@
 
     /* ── Ingresso dei testi ────────────────────────────────── */
     const bodyBits = document.querySelectorAll(
-      '.svc-acc__text, .svc-acc__points, .svc-acc__item, ' +
+      '.svc-tabs__text, .svc-tabs__points, .svc-tabs__tab, ' +
       '.svc-caffe__sub, .svc-caffe__form, .page-faq__item, ' +
-      '.svc-clients__logo'
+      '.smm-panel__statement-sub, .svc-clients__logo, ' +
+      '.service-detail__body p, .service-detail__item, ' +
+      '.svc-tools__item, .svc-process__card-text, ' +
+      '.imk-intro p, .svc-channels p, .svc-prod p, .pc-prod p, ' +
+      '.svc-stat-video__desc, .svc-settori__item, ' +
+      '.svc-talent-pronti__item, .svc-integrazione__pill'
     );
     if (RM) {
       bodyBits.forEach(el => el.classList.add('ab-in'));
@@ -1862,7 +1946,205 @@
     }
   }());
   </script>
+  <script>
+  /* ── Sezioni a piena schermata con blocco leggero ─────────────
+     Come in homepage: ogni sezione del corpo diventa una corsa poco
+     piu' alta della finestra, con dentro un pannello che resta
+     fermo per una schermata e poi lascia il posto.
+     Si decide qui e non nel CSS perche' la regola vale solo se il
+     contenuto ci sta davvero: se non ci sta, il pannello lo
+     taglierebbe, quindi la sezione resta libera. La verifica e'
+     fatta dopo il caricamento, quando immagini e font hanno gia'
+     la loro altezza definitiva. */
+  (function () {
+    const SKIP = ['svc-hero', 'svc-caffe', 'svc-path', 'svc-clients', 'page-faq'];
 
+    function wrap(sec) {
+      const panel = document.createElement('div');
+      panel.className = 'svc-generic-sticky';
+      while (sec.firstChild) panel.appendChild(sec.firstChild);
+      sec.appendChild(panel);
+      sec.classList.add('svc-generic-runway');
+      return panel;
+    }
+    function unwrap(sec, panel) {
+      sec.classList.remove('svc-generic-runway');
+      while (panel.firstChild) sec.insertBefore(panel.firstChild, panel);
+      panel.remove();
+    }
+
+    function pass() {
+      document.querySelectorAll('main > section').forEach(sec => {
+        if (SKIP.some(c => sec.classList.contains(c))) return;
+        if (sec.querySelector(':scope > .svc-generic-sticky')) return;
+        const panel = wrap(sec);
+        /* se il contenuto sfora il pannello si torna indietro:
+           meglio una sezione libera che una tagliata */
+        if (panel.scrollHeight > panel.clientHeight + 2) unwrap(sec, panel);
+      });
+    }
+
+    if (document.readyState === 'complete') pass();
+    else addEventListener('load', pass);
+
+    let t = null;
+    addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        document.querySelectorAll('main > section > .svc-generic-sticky').forEach(p => {
+          if (p.scrollHeight > p.clientHeight + 2) unwrap(p.parentElement, p);
+        });
+        pass();
+      }, 200);
+    }, { passive: true });
+  }());
+  </script>
+
+  <script>
+  /* ── Video di sfondo nella sezione clienti, come in homepage ──
+     Se la sezione non ce l'ha, glielo si mette: stessa sorgente,
+     stesso filtro che porta la forma sul fucsia di brand, stessa
+     sfumatura che chiude il bordo basso. Decorativo. */
+  (function () {
+    const sec = document.querySelector('.svc-clients');
+    if (!sec) return;
+    const host = sec.querySelector('.svc-clients__sticky') || sec;
+    if (host.querySelector('.amici-video')) return;
+    const box = document.createElement('div');
+    box.className = 'amici-video';
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML =
+      '<video class="amici-video__el" autoplay loop muted playsinline preload="metadata" ' +
+      'src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>' +
+      '<div class="amici-video__fade"></div>';
+    host.insertBefore(box, host.firstChild);
+  }());
+  </script>
+  <script>
+  /* ── Alternanza degli sfondi ──────────────────────────────────
+     La prima sezione dopo la hero e' chiara, poi si alterna. Due
+     sezioni hanno un colore fisso e non seguono il turno: i clienti
+     stanno sempre sul nero (il video dietro lo richiede) e le FAQ
+     sempre su carta bianca. L'alternanza riprende dal colore che
+     hanno, così non si accavallano due sezioni uguali di seguito.
+     Hero, sezione fucsia e footer restano quello che sono. */
+  (function () {
+    const SKIP = ['svc-hero', 'svc-caffe'];
+    /* Il ritmo chiaro-scuro e' dichiarato a mano, ma la regola resta
+       quella di sempre: la prima sezione dopo la hero e' bianca, poi
+       si alterna a ogni passaggio. Instagram chiara, collaborazioni
+       nera, servizi chiari, settori neri, talent chiari, clienti
+       neri, FAQ bianca. Ogni blocco e' disegnato per il fondo che
+       gli tocca. */
+    const PINNED = {
+      'imk-intro':         'light',
+      'svc-collab-grid':   'dark',
+      'svc-path':          'light',
+      'svc-settori':       'dark',
+      'svc-talent-pronti': 'light',
+      'svc-clients':       'dark',
+      'page-faq':          'light',
+    };
+    let light = true;
+    document.querySelectorAll('main > section').forEach(sec => {
+      if (SKIP.some(c => sec.classList.contains(c))) return;
+      let tone = null;
+      for (const cls in PINNED) if (sec.classList.contains(cls)) tone = PINNED[cls];
+      if (!tone) { tone = light ? 'light' : 'dark'; }
+      sec.classList.add('svc-bg-' + tone);
+      light = (tone !== 'light');
+    });
+  }());
+  </script>
+  <script>
+  /* ── La sezione fucsia occupa una schermata e si blocca ───────
+     Stessa meccanica delle altre sezioni: la sezione e' la corsa,
+     dentro c'e' un pannello alto almeno una schermata che resta
+     fermo e poi lascia il posto al footer. */
+  (function () {
+    const sec = document.querySelector('.svc-caffe');
+    if (!sec || sec.querySelector(':scope > .svc-generic-sticky')) return;
+
+    function pass() {
+      if (sec.querySelector(':scope > .svc-generic-sticky')) return;
+      const panel = document.createElement('div');
+      panel.className = 'svc-generic-sticky';
+      while (sec.firstChild) panel.appendChild(sec.firstChild);
+      sec.appendChild(panel);
+      /* Niente guardia sull'altezza: qui il pannello ha un minimo,
+         non un'altezza fissa, quindi un contenuto piu' alto lo fa
+         crescere invece di essere tagliato. */
+      sec.classList.add('svc-caffe-runway');
+    }
+    if (document.readyState === 'complete') pass();
+    else addEventListener('load', pass);
+  }());
+  </script>
+  <script>
+  /* ── Le immagini della sezione Instagram si inclinano ──────────
+     Il riquadro segue il puntatore su due assi: si calcola dove sta
+     il cursore dentro il riquadro, da -1 a 1, e lo si traduce in
+     una rotazione di pochi gradi piu' un sollevamento. La rotazione
+     e' volutamente piccola: oltre i 7-8 gradi la prospettiva si
+     nota piu' della foto. Uscendo, tutto torna a zero.
+     Con "riduci animazioni" attivo non si muove nulla. */
+  (function () {
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (matchMedia('(hover: none)').matches) return;
+    const els = document.querySelectorAll(
+      '#imkIntro .imk-intro__photo, #imkTalent .svc-talent-pronti__visual');
+    els.forEach(el => {
+      el.classList.add('tilt3d');
+      let raf = null, nx = 0, ny = 0;
+      const apply = () => {
+        raf = null;
+        el.style.setProperty('--tx', ny.toFixed(3));
+        el.style.setProperty('--ty', nx.toFixed(3));
+      };
+      el.addEventListener('pointermove', e => {
+        const r = el.getBoundingClientRect();
+        if (!r.width || !r.height) return;
+        nx = ((e.clientX - r.left) / r.width  - 0.5) * 2;
+        ny = ((e.clientY - r.top)  / r.height - 0.5) * 2;
+        if (!raf) raf = requestAnimationFrame(apply);
+      }, { passive: true });
+      el.addEventListener('pointerenter', () => el.classList.add('tilt-on'));
+      el.addEventListener('pointerleave', () => {
+        el.classList.remove('tilt-on');
+        nx = ny = 0;
+        if (!raf) raf = requestAnimationFrame(apply);
+      });
+    });
+  }());
+  </script>
+  <script>
+  /* ── Entrata delle card "Alcune Collaborazioni" ────────────────
+     Salgono una dopo l'altra e la foto si scopre dall'alto, con lo
+     scarto dato dall'indice della card. Succede una volta sola:
+     l'osservatore si stacca appena la sezione entra, quindi non
+     esiste una fase di uscita e le card non spariscono piu'
+     riscorrendo la pagina. */
+  (function () {
+    const items = [...document.querySelectorAll('#imkCollab .svc-collab-grid__item')];
+    if (!items.length) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      items.forEach(el => el.classList.add('cg-in'));
+      return;
+    }
+    items.forEach((el, i) => {
+      el.style.setProperty('--cg-i', i);
+      el.classList.add('cg-armed');
+    });
+    const io = new IntersectionObserver(es => {
+      es.forEach(e => {
+        if (!e.isIntersecting) return;
+        items.forEach(el => el.classList.add('cg-in'));
+        io.disconnect();
+      });
+    }, { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+    io.observe(items[0].closest('.svc-collab-grid__items') || items[0]);
+  }());
+  </script>
 </body>
 </html>
 

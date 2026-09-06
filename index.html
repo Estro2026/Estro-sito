@@ -1633,19 +1633,24 @@
       transform: none !important;
       opacity: 1 !important;
     }
+    /* Il pannello e' alto una schermata e il contenuto ci sta
+       centrato: con il respiro di prima il blocco sfondava e la
+       parola "Contatti" finiva sotto alla nav fissa. Sopra c'e'
+       almeno l'altezza della nav, il resto e' misurato in altezza
+       di schermo, non in larghezza. */
     .hc-inner {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: clamp(2rem, 4vw, 3.5rem);
-      padding-block: clamp(3rem, 6vw, 5rem);
+      gap: clamp(1.25rem, 2.4vh, 2rem);
+      padding-block: clamp(6.5rem, 11vh, 8rem) clamp(1.75rem, 3.5vh, 3rem);
       width: 100%;
     }
     .hc-header {
       text-align: center;
       display: flex;
       flex-direction: column;
-      gap: 0.75rem;
+      gap: 0.5rem;
     }
     .hc-title {
       font-family: var(--font-primary);
@@ -1669,20 +1674,20 @@
       max-width: 780px;
       display: flex;
       flex-direction: column;
-      gap: 0.875rem;
+      gap: 0.7rem;
     }
     .hc-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 0.875rem;
+      gap: 0.7rem;
     }
-    .hc-textarea { min-height: 130px; resize: vertical; }
+    .hc-textarea { min-height: 96px; resize: vertical; }
     /* Consensi: privacy (obbligatorio) e newsletter (facoltativo) */
     .hc-consents {
       display: flex;
       flex-direction: column;
-      gap: 0.7rem;
-      margin-top: 0.25rem;
+      gap: 0.5rem;
+      margin-top: 0.15rem;
     }
     .hc-consents .svc-caffe__privacy {
       display: flex;
@@ -3850,18 +3855,39 @@
         </div>
         <form class="hc-form" action="contatti.html" method="get" novalidate>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
-            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            <div class="f-field">
+              <label class="f-label" for="home-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="home-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="home-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="home-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+            </div>
           </div>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            <div class="f-field">
+              <label class="f-label" for="home-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="home-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="home-f-telefono">Telefono</label>
+              <input id="home-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+            </div>
           </div>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
-            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            <div class="f-field">
+              <label class="f-label" for="home-f-azienda">Azienda</label>
+              <input id="home-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="home-f-sito">Sito Web</label>
+              <input id="home-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+            </div>
           </div>
-          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+          <div class="f-field">
+            <label class="f-label" for="home-f-messaggio">Messaggio</label>
+            <textarea id="home-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+          </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="hc-privacy">
               <input type="checkbox" id="hc-privacy" name="privacy" required />
@@ -5665,6 +5691,35 @@
     </div>
   </footer>
 
+  <script>
+  /* ── La sezione fucsia occupa una schermata e si blocca ───────
+     Stessa meccanica delle altre sezioni: la sezione e' la corsa,
+     dentro c'e' un pannello alto almeno una schermata che resta
+     fermo e poi lascia il posto al footer. */
+  (function () {
+    /* In home la sezione contatti ha gia' il suo pin: .hc-section e'
+       la corsa nera e .hc-inner il pannello fucsia che sale con
+       .sx-rise. Il wrapper generico, passando di qui, infilava
+       .hc-inner dentro un secondo sticky: la salita spariva e sotto
+       al pannello restava scoperta la fucsia della corsa. */
+    const sec = document.querySelector('.svc-caffe:not(.hc-section)');
+    if (!sec || sec.querySelector(':scope > .svc-generic-sticky')) return;
+
+    function pass() {
+      if (sec.querySelector(':scope > .svc-generic-sticky')) return;
+      const panel = document.createElement('div');
+      panel.className = 'svc-generic-sticky';
+      while (sec.firstChild) panel.appendChild(sec.firstChild);
+      sec.appendChild(panel);
+      /* Niente guardia sull'altezza: qui il pannello ha un minimo,
+         non un'altezza fissa, quindi un contenuto piu' alto lo fa
+         crescere invece di essere tagliato. */
+      sec.classList.add('svc-caffe-runway');
+    }
+    if (document.readyState === 'complete') pass();
+    else addEventListener('load', pass);
+  }());
+  </script>
 </body>
 </html>
 

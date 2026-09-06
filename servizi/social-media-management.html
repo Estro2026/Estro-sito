@@ -191,7 +191,6 @@
       width: clamp(100px, 12vw, 180px) !important;
     }
     #smmClienti .svc-clients__logo img {
-      max-height: clamp(52px, 7vw, 90px) !important;
       width: auto !important;
       max-width: 100% !important;
       object-fit: contain !important;
@@ -344,16 +343,15 @@
     .nav__menu-label-close { font-size: max(16px, var(--text-min, 1rem)) !important; }
     a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
 
-    /* ── La hero copre cio' che sale ───────────────────────────
-       La sezione seguente entra salendo di 22px: quei 22px, con la
-       sezione bianca, si vedevano sotto la hero gia' a pagina
-       ferma. Alzando la hero di un piano restano nascosti dietro
-       di lei, e il raccordo arrotondato compare quando la sezione
-       si e' liberata — la transizione resta, la prima schermata
-       resta pulita. */
+    /* ── La hero non copre il raccordo ─────────────────────────
+       Avevo tenuto la hero sopra per non far vedere il bianco
+       della sezione seguente nella prima schermata: ma cosi' la
+       salita non si vedeva mai, perche' la sovrapposizione e'
+       costante. Vince la transizione: la hero sta sotto e il
+       raccordo arrotondato si vede da subito. */
     .svc-hero--videobg {
       position: relative;
-      z-index: 3;
+      z-index: 1;
     }
 
     /* ── Sfondo della hero: segnaposto dichiarato ──────────────
@@ -507,7 +505,10 @@
     .svc-path {
       background: #fff;
       color: #080808;
-      height: 135dvh;
+      /* corsa breve: quanto basta perche' il pannello si fermi un
+         attimo e poi lasci il posto. A 135dvh restava incollato
+         troppo a lungo mentre si scorreva. */
+      height: 112dvh;
       padding-block: 0;
     }
     .svc-path__sticky {
@@ -843,21 +844,45 @@
       z-index: 1;
     }
 
-    /* ── Clienti e FAQ a piena schermata ───────────────────────
-       Le due sezioni erano piu' basse della viewport (471 e 707px
-       su 900) e si vedevano a meta' con la successiva gia' dentro.
-       Ora ognuna occupa una schermata intera e centra il proprio
-       contenuto, come le altre sezioni della pagina. */
+    /* ── Clienti e FAQ: pannelli agganciati ────────────────────
+       Come in homepage: la sezione e' la corsa, il figlio dentro
+       resta fermo in alto per una schermata intera e poi lascia il
+       posto. Prima le due sezioni erano solo alte una schermata,
+       senza fermarsi. */
     #smmClienti,
     .page-faq {
-      min-height: 100dvh;
+      min-height: 0 !important;
+      height: 118dvh !important;
+      display: block !important;
+      /* La corsa non deve tagliare ne' avere padding: con overflow
+         hidden il pannello si ancorava a questa scatola invece che
+         alla finestra, e con i padding lo spazio interno restava
+         piu' basso del pannello, quindi non aveva dove fermarsi.
+         Il taglio e i respiri passano al pannello. */
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    #smmClienti .svc-clients__sticky,
+    .page-faq .page-faq__sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      overflow: hidden;
     }
-    /* il video di sfondo copre tutta la sezione, anche ora che e'
-       piu' alta del suo contenuto */
+    /* il video di sfondo sta dentro il pannello, quindi lo copre
+       per tutta la schermata */
+    #smmClienti .svc-clients__sticky { background: #050505; }
     #smmClienti .amici-video { height: 100%; }
+    .page-faq .page-faq__sticky {
+      background: var(--surface-dark, #0a0a0a);
+      padding-block: clamp(4rem, 8vh, 6rem);
+    }
+    /* la lista delle domande scorre dentro il pannello solo se
+       davvero non ci sta, non per difetto */
+    .page-faq .page-faq__inner { max-height: 100%; overflow: auto; }
 
     /* ── Sezione "Prendiamoci un caffè" ────────────────────────
        Corpo e CTA identici al form prima del footer in homepage:
@@ -935,6 +960,34 @@
       transform: translateY(-2px);
       box-shadow: 0 8px 24px rgba(0,0,0,0.20);
     }
+
+    /* ── FAQ su carta bianca ───────────────────────────────────
+       Era sul fondo scuro come clienti: due sezioni scure di fila
+       si leggevano come una sola. */
+    .page-faq .page-faq__sticky { background: #fff !important; }
+    .page-faq,
+    .page-faq .page-faq__title,
+    .page-faq .page-faq__question { color: #080808 !important; }
+    .page-faq .page-faq__answer-inner { color: rgba(0,0,0,0.66) !important; }
+    .page-faq .page-faq__item { border-color: rgba(0,0,0,0.10) !important; }
+    .page-faq .page-faq__q-icon,
+    .page-faq .page-faq__question::after { color: var(--primary, #DB005A) !important; }
+
+    /* ── Clienti: la sezione prende il colore del video ────────
+       Il video ha il fondo nero pieno e sul grigio scuro della
+       sezione se ne vedeva il bordo. Stesso nero, e il contorno
+       sparisce. */
+    .svc-clients__sticky { background: #000 !important; }
+    .amici-video__fade { background: linear-gradient(to bottom, transparent, #000) !important; }
+
+    /* ── Niente dissolvenza sul footer ─────────────────────────
+       Il footer entrava sfumando: era l'unica sezione a farlo e
+       stonava con la salita che usano tutte le altre. */
+    .site-footer,
+    .site-footer * {
+      animation: none !important;
+    }
+    html.js-reveal .site-footer { opacity: 1 !important; }
     /* ═══════════════════════════════════════════════════════════
        EFFETTI CONDIVISI DELLE PAGINE SERVIZI
        Gli stessi di news, tips&tricks e dei case study: la sezione
@@ -1095,22 +1148,49 @@
             <p class="svc-hero__form-card-label">Scrivici</p>
             <form class="svc-hero__form" action="../contatti.html" method="get" novalidate>
               <div class="svc-hero__form-row">
-                <input class="svc-hero__field" type="text" name="nome" placeholder="Nome*" required />
-                <input class="svc-hero__field" type="text" name="cognome" placeholder="Cognome*" required />
+                <div class="f-field">
+                  <label class="f-label" for="smm-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="smm-f-nome" class="svc-hero__field" type="text" name="nome" placeholder="Mario" required />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="smm-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="smm-f-cognome" class="svc-hero__field" type="text" name="cognome" placeholder="Rossi" required />
+                </div>
               </div>
               <div class="svc-hero__form-row">
-                <input class="svc-hero__field" type="email" name="email" placeholder="Email*" required />
-                <input class="svc-hero__field" type="tel" name="telefono" placeholder="Telefono" />
+                <div class="f-field">
+                  <label class="f-label" for="smm-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="smm-f-email" class="svc-hero__field" type="email" name="email" placeholder="mario@azienda.it" required />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="smm-f-telefono">Telefono</label>
+                  <input id="smm-f-telefono" class="svc-hero__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+                </div>
               </div>
               <div class="svc-hero__form-row">
-                <input class="svc-hero__field" type="text" name="azienda" placeholder="Azienda" />
-                <input class="svc-hero__field" type="url" name="sito" placeholder="Sito Web" />
+                <div class="f-field">
+                  <label class="f-label" for="smm-f-azienda">Azienda</label>
+                  <input id="smm-f-azienda" class="svc-hero__field" type="text" name="azienda" placeholder="Nome azienda" />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="smm-f-sito">Sito Web</label>
+                  <input id="smm-f-sito" class="svc-hero__field" type="url" name="sito" placeholder="www.acme.it" />
+                </div>
               </div>
-              <textarea class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="4"></textarea>
-              <label class="svc-hero__privacy">
-                <input type="checkbox" required />
-                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-              </label>
+              <div class="f-field">
+                <label class="f-label" for="smm-f-messaggio">Messaggio</label>
+                <textarea id="smm-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+              </div>
+              <div class="hc-consents">
+                <label class="svc-hero__privacy" for="smm-hero-privacy">
+                  <input type="checkbox" id="smm-hero-privacy" name="privacy" required />
+                  <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+                </label>
+                <label class="svc-hero__privacy" for="smm-hero-newsletter">
+                  <input type="checkbox" id="smm-hero-newsletter" name="newsletter" value="si" />
+                  <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+                </label>
+              </div>
               <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
             </form>
           </div>
@@ -1266,116 +1346,119 @@
 
     <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
     <section class="svc-clients" id="smmClienti" aria-label="I nostri clienti" data-nav-theme="dark">
-      <!-- Video di sfondo, come nella stessa sezione in homepage:
-           decorativo, senza audio ne comandi, non intercetta il
-           puntatore. La sfumatura in basso lo chiude sul nero. -->
-      <div class="amici-video" aria-hidden="true">
-        <video class="amici-video__el" autoplay loop muted playsinline preload="metadata"
-               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
-        <div class="amici-video__fade"></div>
-      </div>
-      <div class="container svc-clients__header">
-        <h2 class="svc-clients__title" id="smmClientiTitle">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
-      </div>
-      <div class="svc-clients__marquee-wrap">
-        <!-- FILA 1 — scorre a sinistra -->
-        <div class="svc-clients__track">
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
-          <!-- duplicati per loop continuo -->
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+      <!-- Pannello agganciato: la sezione e' la corsa, questo
+           figlio resta fermo in alto per una schermata. -->
+      <div class="svc-clients__sticky">
+        <!-- Video di sfondo, come nella stessa sezione in homepage:
+             decorativo, senza audio ne comandi, non intercetta il
+             puntatore. La sfumatura in basso lo chiude sul nero. -->
+        <div class="amici-video" aria-hidden="true">
+          <video class="amici-video__el" autoplay loop muted playsinline preload="metadata"
+                 src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+          <div class="amici-video__fade"></div>
         </div>
-        <!-- FILA 2 — scorre a destra -->
-        <div class="svc-clients__track svc-clients__track--rev">
-          <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
-          <!-- duplicati per loop continuo -->
-          <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
-          <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
-          <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
-          <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
-          <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+        <div class="container svc-clients__header">
+          <h2 class="svc-clients__title" id="smmClientiTitle">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
         </div>
-      </div>
+        <div class="svc-clients__marquee-wrap">
+          <!-- FILA 1 — scorre a sinistra -->
+          <div class="svc-clients__track">
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+            <!-- duplicati per loop continuo -->
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xxl"><img src="../Loghibrand/lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/langelica.webp" alt="L'Angelica" /></div>
+          </div>
+          <!-- FILA 2 — scorre a destra -->
+          <div class="svc-clients__track svc-clients__track--rev">
+            <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+            <!-- duplicati per loop continuo -->
+            <div class="svc-clients__logo"><img src="../Loghibrand/leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../Loghibrand/seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../Loghibrand/terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../Loghibrand/wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo"><img src="../Loghibrand/wudy.webp" alt="Wudy" /></div>
+          </div>
+        </div>
+      </div><!-- /.svc-clients__sticky -->
     </section>
-
-    
 
     <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
     
     <!-- FAQ -->
     <section class="page-faq">
-      <div class="page-faq__inner">
+      <div class="page-faq__sticky">
+        <div class="page-faq__inner">
         <h2 class="page-faq__title">FAQ</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
@@ -1404,6 +1487,7 @@
           </div>
         </dl>
       </div>
+      </div><!-- /.page-faq__sticky -->
     </section>
 
 <section class="svc-caffe svc-caffe--fuchsia" aria-label="Contattaci" id="smmCaffe" data-nav-theme="dark">
@@ -1414,18 +1498,39 @@
         </div>
         <form class="svc-caffe__form" action="../contatti.html" method="get" novalidate>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
-            <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            <div class="f-field">
+              <label class="f-label" for="smm2-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="smm2-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="smm2-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="smm2-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+            </div>
           </div>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-            <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            <div class="f-field">
+              <label class="f-label" for="smm2-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="smm2-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="smm2-f-telefono">Telefono</label>
+              <input id="smm2-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+            </div>
           </div>
           <div class="hc-row">
-            <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
-            <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            <div class="f-field">
+              <label class="f-label" for="smm2-f-azienda">Azienda</label>
+              <input id="smm2-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="smm2-f-sito">Sito Web</label>
+              <input id="smm2-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+            </div>
           </div>
-          <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+          <div class="f-field">
+            <label class="f-label" for="smm2-f-messaggio">Messaggio</label>
+            <textarea id="smm2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+          </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="smmCaffe-privacy">
               <input type="checkbox" id="smmCaffe-privacy" name="privacy" required />
@@ -1540,17 +1645,11 @@
       if (!clientiEl || !magicEl || !caffeEl) return;
 
       /* overlay position:absolute sulla sezione precedente, colorato come la successiva */
-      function makeTransOv(prevEl, nextBg) {
-        const ov = document.createElement('div');
-        Object.assign(ov.style, {
-          position: 'absolute', inset: '0',
-          background: nextBg, opacity: '0',
-          pointerEvents: 'none', zIndex: '5',
-        });
-        if (getComputedStyle(prevEl).position === 'static') prevEl.style.position = 'relative';
-        prevEl.appendChild(ov);
-        return ov;
-      }
+      /* Le dissolvenze fra sezioni sono state rimosse: il passaggio
+         lo fa la salita con il raccordo arrotondato, nessun contenuto
+         deve sparire per far entrare quello dopo. La funzione resta
+         come guscio inerte perche' il resto dello script la chiama. */
+      function makeTransOv() { return { style: { opacity: 0 } }; }
 
       /* clienti (#000) → magic (bianco)   */
       const ov1 = makeTransOv(clientiEl, '#ffffff');
@@ -1823,16 +1922,10 @@
       const caffeEl2 = document.getElementById('smmCaffe');
       if (!caffeEl2) return;
 
-      const caffeExitOv = document.createElement('div');
-      Object.assign(caffeExitOv.style, {
-        position: 'fixed', inset: '0',
-        background: '#0e0e0e',
-        opacity: '0',
-        pointerEvents: 'none',
-        zIndex: '200',
-        transition: 'none',
-      });
-      document.body.appendChild(caffeExitOv);
+      /* niente velatura a tutto schermo in uscita dalla sezione fucsia */
+
+
+      const caffeExitOv = { style: { opacity: 0 } };
 
       function caffeTick() {
         requestAnimationFrame(caffeTick);
@@ -2126,7 +2219,7 @@
     // il titolo della hero e gia in vista al caricamento
     requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
     // gli altri titoli di sezione ondeggiano quando entrano
-    document.querySelectorAll('.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
+    document.querySelectorAll('.smm-panel__big-title, .svc-clients__title, .svc-magic__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
       .forEach(el => {
         const io = new IntersectionObserver(es => {
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
@@ -2137,7 +2230,9 @@
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
-    const RISE = ['.svc-path', '.svc-clients', '.page-faq', '.svc-caffe', '.site-footer'];
+    /* Tutte le sezioni del corpo salgono su quella prima. La hero
+       e' la prima, quindi non sale. */
+    const RISE = ['main > section:not(.svc-hero)', '.site-footer'];
     const secs = [];
     RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
       el.classList.add('sx-rise');
@@ -2168,6 +2263,7 @@
     const bodyBits = document.querySelectorAll(
       '.svc-tabs__text, .svc-tabs__points, .svc-tabs__tab, ' +
       '.svc-caffe__sub, .svc-caffe__form, .page-faq__item, ' +
+      '.smm-panel__statement-sub, .svc-magic__pill, ' +
       '.svc-clients__logo'
     );
     if (RM) {
@@ -2183,6 +2279,53 @@
       }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
       bodyBits.forEach(el => io.observe(el));
     }
+  }());
+  </script>
+
+  <script>
+  /* ── Alternanza degli sfondi ──────────────────────────────────
+     La prima sezione dopo la hero e' chiara, poi si alterna. Due
+     sezioni hanno un colore fisso e non seguono il turno: i clienti
+     stanno sempre sul nero (il video dietro lo richiede) e le FAQ
+     sempre su carta bianca. L'alternanza riprende dal colore che
+     hanno, così non si accavallano due sezioni uguali di seguito.
+     Hero, sezione fucsia e footer restano quello che sono. */
+  (function () {
+    const SKIP = ['svc-hero', 'svc-caffe'];
+    const PINNED = { 'svc-clients': 'dark', 'page-faq': 'light' };
+    let light = true;
+    document.querySelectorAll('main > section').forEach(sec => {
+      if (SKIP.some(c => sec.classList.contains(c))) return;
+      let tone = null;
+      for (const cls in PINNED) if (sec.classList.contains(cls)) tone = PINNED[cls];
+      if (!tone) { tone = light ? 'light' : 'dark'; }
+      sec.classList.add('svc-bg-' + tone);
+      light = (tone !== 'light');
+    });
+  }());
+  </script>
+  <script>
+  /* ── La sezione fucsia occupa una schermata e si blocca ───────
+     Stessa meccanica delle altre sezioni: la sezione e' la corsa,
+     dentro c'e' un pannello alto almeno una schermata che resta
+     fermo e poi lascia il posto al footer. */
+  (function () {
+    const sec = document.querySelector('.svc-caffe');
+    if (!sec || sec.querySelector(':scope > .svc-generic-sticky')) return;
+
+    function pass() {
+      if (sec.querySelector(':scope > .svc-generic-sticky')) return;
+      const panel = document.createElement('div');
+      panel.className = 'svc-generic-sticky';
+      while (sec.firstChild) panel.appendChild(sec.firstChild);
+      sec.appendChild(panel);
+      /* La corsa e' alta una schermata piu' un tratto breve: il
+         pannello e' esattamente 100dvh, cosi' sotto al form non
+         resta fucsia vuota. */
+      sec.classList.add('svc-caffe-runway');
+    }
+    if (document.readyState === 'complete') pass();
+    else addEventListener('load', pass);
   }());
   </script>
 </body>

@@ -1610,18 +1610,39 @@
                misure e stessa riga dei consensi con la newsletter. -->
           <form class="hc-form" action="#" method="post" novalidate>
             <div class="hc-row">
-              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
-              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+              <div class="f-field">
+                <label class="f-label" for="cs-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="cs-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="cs-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="cs-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+              </div>
             </div>
             <div class="hc-row">
-              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+              <div class="f-field">
+                <label class="f-label" for="cs-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="cs-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="cs-f-telefono">Telefono</label>
+                <input id="cs-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+              </div>
             </div>
             <div class="hc-row">
-              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
-              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+              <div class="f-field">
+                <label class="f-label" for="cs-f-azienda">Azienda</label>
+                <input id="cs-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="cs-f-sito">Sito Web</label>
+                <input id="cs-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+              </div>
             </div>
-            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="f-field">
+              <label class="f-label" for="cs-f-messaggio">Messaggio</label>
+              <textarea id="cs-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            </div>
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="cs-privacy">
                 <input type="checkbox" id="cs-privacy" name="privacy" required />

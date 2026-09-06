@@ -622,6 +622,14 @@
     @media (prefers-reduced-motion: reduce) {
       html.js-reveal .sx-rise { transform: none; }
     }
+
+    /* ── L'header resta fino in fondo ──────────────────────────
+       Lo script condiviso nasconde la nav quando il footer entra
+       in vista e si sta scendendo. Su questa pagina il footer e'
+       in vista per quasi tutta la lettura, quindi la nav spariva
+       troppo presto: qui resta al suo posto. */
+    .nav.nav--footer-hidden { transform: none !important; }
+    .nav.nav--footer-hidden .nav__inner { opacity: 1 !important; }
   </style>
 </head>
 <body>
@@ -1339,18 +1347,39 @@
                consensi con la newsletter. -->
           <form class="hc-form" action="#" method="post" novalidate>
             <div class="hc-row">
-              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
-              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+              <div class="f-field">
+                <label class="f-label" for="faq-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="faq-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="faq-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="faq-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+              </div>
             </div>
             <div class="hc-row">
-              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
-              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+              <div class="f-field">
+                <label class="f-label" for="faq-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="faq-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="faq-f-telefono">Telefono</label>
+                <input id="faq-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+              </div>
             </div>
             <div class="hc-row">
-              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
-              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+              <div class="f-field">
+                <label class="f-label" for="faq-f-azienda">Azienda</label>
+                <input id="faq-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="faq-f-sito">Sito Web</label>
+                <input id="faq-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+              </div>
             </div>
-            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="f-field">
+              <label class="f-label" for="faq-f-messaggio">Messaggio</label>
+              <textarea id="faq-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            </div>
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="faq-privacy">
                 <input type="checkbox" id="faq-privacy" name="privacy" required />

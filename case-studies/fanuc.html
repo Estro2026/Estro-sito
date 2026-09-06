@@ -536,10 +536,11 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="../contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -743,22 +744,49 @@
       <h2 class="d24-contact__title reveal">Il tuo brand ha bisogno<br/>di una visione che convinca?</h2>
       <form class="contact-home__form reveal" action="#" method="post" novalidate>
         <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-          <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+          <div class="f-field">
+            <label class="f-label" for="fan-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+            <input id="fan-f-nome" class="contact-home__field" type="text" name="nome" placeholder="Mario" required />
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="fan-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+            <input id="fan-f-cognome" class="contact-home__field" type="text" name="cognome" placeholder="Rossi" required />
+          </div>
         </div>
         <div class="contact-home__row">
-          <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-          <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+          <div class="f-field">
+            <label class="f-label" for="fan-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+            <input id="fan-f-email" class="contact-home__field" type="email" name="email" placeholder="mario@azienda.it" required />
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="fan-f-telefono">Telefono</label>
+            <input id="fan-f-telefono" class="contact-home__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+          </div>
         </div>
         <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-          <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+          <div class="f-field">
+            <label class="f-label" for="fan-f-azienda">Azienda</label>
+            <input id="fan-f-azienda" class="contact-home__field" type="text" name="azienda" placeholder="Nome azienda" />
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="fan-f-sito">Sito Web</label>
+            <input id="fan-f-sito" class="contact-home__field" type="url" name="sito" placeholder="www.acme.it" />
+          </div>
         </div>
-        <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-        <label class="contact-home__privacy">
-          <input type="checkbox" required />
-          <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-        </label>
+        <div class="f-field">
+          <label class="f-label" for="fan-f-messaggio">Messaggio</label>
+          <textarea id="fan-f-messaggio" class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+        </div>
+        <div class="hc-consents">
+          <label class="contact-home__privacy" for="fan-privacy">
+            <input type="checkbox" id="fan-privacy" name="privacy" required />
+            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+          </label>
+          <label class="contact-home__privacy" for="fan-newsletter">
+            <input type="checkbox" id="fan-newsletter" name="newsletter" value="si" />
+            <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+          </label>
+        </div>
         <div class="contact-home__submit-wrap">
           <button class="btn btn--primary" type="submit">Invia</button>
         </div>

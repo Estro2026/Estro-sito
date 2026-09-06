@@ -6771,6 +6771,9 @@ body:has(.hero-video) .nav:not(.scrolled) {
   display: block;
   border-radius: 16px;
 }
+/* Niente scaleY: stirava il titolo del 18% in altezza senza che
+   il riquadro se ne accorgesse, quindi le lettere debordavano
+   sotto e finivano addosso alla prima riga dell'elenco. */
 .svc-talent-pronti__title {
   font-family: var(--font-primary);
   font-size: clamp(1.8rem, 3vw, 2.8rem);
@@ -6778,8 +6781,6 @@ body:has(.hero-video) .nav:not(.scrolled) {
   text-transform: uppercase;
   color: var(--primary);
   letter-spacing: 0.04em;
-  transform: scaleY(1.18);
-  transform-origin: left top;
   display: block;
   line-height: 1.05;
   margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
@@ -7156,16 +7157,6 @@ body:has(.hero-video) .nav:not(.scrolled) {
 
    Keep scaleY for display heading
    ── */
-.svc-talent-pronti__title {
-  font-family: var(--font-primary) !important;
-  font-size: clamp(2rem, 4vw, var(--text-6xl)) !important;
-  font-weight: 900 !important;
-  text-transform: uppercase !important;
-  letter-spacing: 0.04em !important;
-  line-height: 0.95 !important;
-  transform: scaleY(1.18) !important;
-  transform-origin: left top !important;
-}
 
 /* ── magic__title on light bg stays black ── */
 .svc-magic__title {
@@ -9811,17 +9802,14 @@ input[type="submit"], button[type="submit"] {
   border-radius: 999px !important;
 }
 
-/* ── "ALCUNI AMICI SODDISFATTI..." max 2 righe — tutte le pagine */
+/* "ALCUNI AMICI SODDISFATTI..." su due righe, tutte le pagine.
+   Il corpo lo fissa la misura condivisa dei titoli di sezione:
+   qui restavano tre font-size sovrapposti (1.4rem, 1.1rem, 55px)
+   che si annullavano a vicenda e non servivano piu' a nessuno. */
 .svc-clients__title {
-  font-size: clamp(0.9rem, 2vw, 1.4rem) !important;
   line-height: 1.3 !important;
   letter-spacing: 0.01em !important;
 }
-
-/* "ALCUNI AMICI SODDISFATTI..." — 2 righe tutte le pagine */
-.svc-clients__title { font-size: clamp(0.75rem, 1.4vw, 1.1rem) !important; }
-
-.svc-clients__title { font-size: 55px !important; }
 
 /* ── SMM statement: font size ridotta */
 .smm-hl--solid,
@@ -9865,10 +9853,6 @@ input[type="submit"], button[type="submit"] {
   line-height: 1.1 !important;
 }
 
-/* ── influencer: talent title — 3 righe */
-.svc-talent-pronti__title {
-  font-size: clamp(1.4rem, 2.5vw, 2.2rem) !important;
-}
 
 /* ── influencer: integrazione — 5px extra margin-top */
 .svc-integrazione {
@@ -10660,11 +10644,16 @@ input[type="submit"], button[type="submit"] {
   gap: 0;
   box-sizing: border-box;
   width: 100%;
-  /* piu largo e allineato a sinistra nella sua colonna: prima era
-     ancorato a destra e finiva schiacciato contro il bordo */
-  max-width: 520px;
+  /* Allineato a sinistra nella sua colonna e steso fino al bordo
+     destro: il lato sinistro resta dov'era, si allunga solo quello
+     destro. Il cappello fisso e' tolto perche' era lui a fermare
+     la crescita prima della fine della colonna. Il contenitore non
+     ha padding a destra, quindi la colonna arriva gia' al margine
+     della pagina: oltre non si puo' andare senza spostare anche il
+     bordo sinistro. */
+  max-width: none;
   margin-left: 0;
-  margin-right: auto;
+  margin-right: 0;
 }
 .svc-hero__form-card .svc-hero__form {
   display: flex;
@@ -10811,11 +10800,6 @@ input[type="submit"], button[type="submit"] {
   gap: clamp(1.25rem, 2vw, 2rem) clamp(0.75rem, 1.5vw, 1.25rem) !important;
 }
 
-/* ── influencer: talent title — forza 2 righe ── */
-.svc-talent-pronti__title {
-  font-size: clamp(1.1rem, 2vw, 1.8rem) !important;
-  white-space: nowrap !important;
-}
 
 /* ── influencer: stat desc — una frase per riga ── */
 .svc-stat-video__desc--nowrap span {
@@ -10895,3 +10879,1195 @@ input[type="submit"], button[type="submit"] {
   outline-color: rgba(255,255,255,0.80);
 }
 
+
+/* ═══════════════════════════════════════════════════════════════
+   REGOLE GLOBALI DEL SITO
+   Stavano nello <style> della homepage e valevano solo lì: ogni
+   altra pagina se le riscriveva o ne faceva a meno. Qui valgono
+   per tutte, così una modifica si fa in un posto solo.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── Footer: uguale ovunque ─────────────────────────────────────
+   Tutte le voci a 14px — è chiusura di pagina, non testo di
+   lettura. Resta fuori la scritta ESTRO di sfondo, che ha un corpo
+   suo. */
+html body .site-footer a,
+html body .site-footer p,
+html body .site-footer span,
+html body .site-footer li,
+html body .site-footer h3,
+html body .site-footer h4,
+html body .site-footer .sf-col__title,
+html body .site-footer .sf-contact__label,
+html body .site-footer .sf-legal__copy,
+html body .site-footer .sf-legal__sep { font-size: 14px !important; }
+html body .site-footer .sf-ghost { font-size: 22vw !important; color: rgba(255,255,255,0.10) !important; }
+/* la salita di sezione ha bisogno di vedere fuori dai bordi */
+footer.site-footer { overflow: visible; }
+
+/* ── Loghi dei clienti: misure della homepage ───────────────────
+   Le altre pagine usavano il fallback del componente (200px di
+   colonna, 100px di logo), più grande e disallineato. */
+html body .svc-clients__logo {
+  width: clamp(100px, 12vw, 180px) !important;
+}
+html body .svc-clients__logo img {
+  max-height: clamp(52px, 7vw, 90px) !important;
+  max-width: 100% !important;
+  width: auto !important;
+  opacity: 0.8;
+}
+html body .svc-clients__logo--seven img { max-height: clamp(32px, 4.5vw, 56px) !important; }
+html body .svc-clients__logo--big img   { max-height: clamp(80px, 11vw, 136px) !important; }
+html body .svc-clients__logo--xl img    { max-height: clamp(95px, 13.5vw, 166px) !important; }
+html body .svc-clients__logo--xxl img   { max-height: clamp(140px, 20vw, 250px) !important; }
+
+/* ── Corpi dei titoli di sezione ────────────────────────────────
+   Due misure per tutto il sito: 150px per i titoli grandi che
+   aprono una sezione, 60px per quelli secondari. Restano fuori il
+   testo della hero della homepage e il titolo Servizi, che hanno
+   una scala loro. */
+/* La specificita' alzata serve: quasi ogni pagina aveva la sua
+   regola !important su questi titoli, e a parita' di peso vinceva
+   quella locale perche' dichiarata dopo. Con html body davanti la
+   misura condivisa vince una volta per tutte. */
+/* Titoli grandi: aprono la pagina o una sezione portante. */
+html body .page-faq .page-faq__title,
+html body .hc-title,
+html body .svc-magic__title { font-size: min(150px, 26vw) !important; }
+
+/* Titoli di sezione: la misura di riferimento del sito. */
+html body .svc-clients .svc-clients__title,
+html body .svc-caffe .svc-caffe__title,
+html body .svc-section-title,
+html body .svc-tools__title,
+html body .smm-panel__big-title,
+html body .cs2-contact__title,
+html body .art-contact__title,
+html body .tt-contact__title,
+html body .svc-process__title,
+html body .svc-channels__title,
+html body .svc-ai-workflow__title { font-size: min(60px, 11vw) !important; }
+
+/* ── Niente dissolvenze come transizione fra sezioni ────────────
+   Le sezioni si passano il testimone con la salita e il raccordo
+   arrotondato; nessun contenuto deve sparire o diventare
+   trasparente per far entrare quello dopo. */
+.section-fade,
+.section-fade__overlay,
+.svc-fade-overlay { display: none !important; }
+
+/* ── .reveal nelle pagine servizi: mai invisibile ───────────────
+   Nelle pagine servizi l'ingresso dei testi lo fa il linguaggio
+   condiviso (ab-armed), non .reveal: quest'ultimo restava a
+   opacita' zero quando lo script che doveva sbloccarlo non
+   trovava piu' i suoi appigli. Qui si sblocca alla radice, solo
+   dentro le sezioni delle pagine servizi. */
+.svc-path .reveal,
+.svc-clients .reveal,
+.page-faq .reveal,
+.svc-caffe .reveal,
+.service-detail .reveal,
+.svc-tools .reveal,
+.svc-process .reveal,
+.svc-channels .reveal,
+.svc-integrazione .reveal,
+.imk-intro .reveal,
+.svc-ai-approccio .reveal,
+.svc-ai-workflow .reveal,
+.pc-prod .reveal,
+.svc-collab-grid .reveal,
+.svc-settori .reveal,
+.svc-talent-pronti .reveal,
+.svc-stat-video .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ── Pagine servizi: alternanza degli sfondi ────────────────────
+   La prima sezione dopo la hero e' sempre su carta bianca; da li'
+   in poi si alternano chiaro e scuro. La hero, la sezione fucsia e
+   il footer restano quello che sono. */
+main > section.svc-bg-light {
+  background: #fff !important;
+  color: #080808;
+}
+main > section.svc-bg-dark {
+  background: #050505 !important;
+  color: #fff;
+}
+main > section.svc-bg-light .svc-generic-sticky,
+main > section.svc-bg-light > .svc-path__sticky,
+main > section.svc-bg-light > .page-faq__sticky { background: #fff; }
+main > section.svc-bg-dark .svc-generic-sticky,
+main > section.svc-bg-dark > .svc-path__sticky,
+main > section.svc-bg-dark > .page-faq__sticky { background: #050505; }
+/* sul chiaro il testo va in nero, sullo scuro in bianco */
+main > section.svc-bg-light h2,
+main > section.svc-bg-light h3,
+main > section.svc-bg-light p,
+main > section.svc-bg-light li { color: inherit; }
+
+/* Il titolo FAQ e' fucsia in tutte le pagine servizi */
+html body .page-faq .page-faq__title { color: var(--primary, #DB005A) !important; }
+
+/* I tools sono tornati una sezione a se': il respiro lo da' la
+   sezione, al riquadro resta solo lo stacco sotto al titolo. */
+.svc-tools-section .svc-tools__title {
+  margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   LABEL DEI FORM
+   Struttura e comportamento del riferimento: una label visibile
+   sopra ogni campo, l'asterisco separato dal testo, il placeholder
+   che resta dov'era. Il testo della label e' quello che il campo
+   gia' aveva nel placeholder: nessuna parola nuova.
+   Un blocco solo per tutto il sito, così font, corpo, spaziatura e
+   posizione sono identici ovunque.
+   ═══════════════════════════════════════════════════════════════ */
+.f-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+html body .f-label {
+  font-family: var(--font-secondary);
+  /* 14px: e' il corpo del microcopy del sito. La regola generale
+     porterebbe ogni <label> a 16px, qui va tenuta piu' bassa
+     perche' e' la didascalia del campo, non testo di lettura. */
+  font-size: 14px !important;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  text-transform: none;
+  /* di base scura: i form su carta chiara sono il caso comune */
+  color: rgba(0,0,0,0.62);
+  margin: 0;
+}
+/* Sui fondi scuri la label passa al bianco: currentColor non
+   bastava perche' il riquadro del form non dichiara un colore
+   proprio e finiva per ereditare il nero. */
+html body .svc-hero__form-card .f-label,
+html body .svc-caffe .f-label,
+html body .hc-form .f-label,
+html body .cs2-contact .f-label,
+html body .art-contact .f-label,
+html body .tt-contact .f-label,
+html body .lcn-apply__form .f-label,
+html body .contact-home__form .f-label { color: rgba(255,255,255,0.72); }
+html body .f-label__req {
+  color: var(--primary, #DB005A);
+  opacity: 1;
+  font-weight: 700;
+  margin-left: 0.1em;
+}
+/* Sui fondi fucsia e scuri l'asterisco prende il colore della
+   propria etichetta: il fucsia di brand su fucsia sparisce e sul
+   nero resta un accento che urla piu' della label che accompagna. */
+html body .svc-hero__form-card .f-label .f-label__req,
+html body .svc-caffe .f-label .f-label__req,
+html body .hc-form .f-label .f-label__req,
+html body .cs2-contact .f-label .f-label__req,
+html body .art-contact .f-label .f-label__req,
+html body .tt-contact .f-label .f-label__req,
+html body .lcn-apply__form .f-label .f-label__req,
+html body .contact-home__form .f-label .f-label__req { color: inherit; }
+/* dentro le righe a due colonne ogni campo e' una colonna intera */
+.hc-row > .f-field,
+.svc-hero__form-row > .f-field { min-width: 0; }
+/* i campi non devono piu' portare il margine che avevano da soli:
+   la spaziatura la da' il gruppo */
+.f-field > input,
+.f-field > textarea,
+.f-field > select { margin: 0; }
+
+/* ── La salita si vede anche sulle sezioni agganciate ───────────
+   La sezione e' la corsa e riceve raccordo e ombra, ma quello che
+   si vede e' il pannello agganciato dentro, che con il suo fondo
+   pieno li copriva: la transizione c'era e non si vedeva. Il
+   pannello eredita gli stessi valori, quindi il raccordo compare
+   dove l'occhio guarda davvero. */
+html.js-reveal .sx-rise > .svc-generic-sticky,
+html.js-reveal .sx-rise > .svc-path__sticky,
+html.js-reveal .sx-rise > .svc-clients__sticky,
+html.js-reveal .sx-rise > .page-faq__sticky {
+  border-radius: inherit;
+  box-shadow: inherit;
+  overflow: hidden;
+}
+
+/* ── La timeline sul fondo scuro ────────────────────────────────
+   Quando l'alternanza porta la sezione dei servizi sul nero, tutto
+   il suo contenuto passa al chiaro: titolo, occhiello, tappe,
+   riquadro e testi. Prima restava tarato sul bianco e spariva. */
+main > section.svc-bg-dark .smm-panel__statement-sub { color: rgba(255,255,255,0.66); }
+main > section.svc-bg-dark .svc-tabs__strip::before { background: rgba(255,255,255,0.16); }
+main > section.svc-bg-dark .svc-tabs__num {
+  background: #0d0d0d;
+  border-color: rgba(255,255,255,0.22);
+  color: rgba(255,255,255,0.55);
+}
+main > section.svc-bg-dark .svc-tabs__tab.is-done .svc-tabs__num,
+main > section.svc-bg-dark .svc-tabs__tab:hover .svc-tabs__num { border-color: var(--primary, #DB005A); }
+main > section.svc-bg-dark .svc-tabs__tab.is-active .svc-tabs__num {
+  background: var(--primary, #DB005A);
+  border-color: var(--primary, #DB005A);
+  color: #fff;
+}
+main > section.svc-bg-dark .svc-tabs__tag { color: rgba(255,255,255,0.45); }
+main > section.svc-bg-dark .svc-tabs__title { color: rgba(255,255,255,0.62); }
+main > section.svc-bg-dark .svc-tabs__tab.is-active .svc-tabs__title { color: #fff; }
+main > section.svc-bg-dark .svc-tabs__panel {
+  background: #0d0d0d;
+  border-color: rgba(255,255,255,0.10);
+  box-shadow: 0 26px 64px rgba(0,0,0,0.45);
+}
+main > section.svc-bg-dark .svc-tabs__text { color: rgba(255,255,255,0.68); }
+main > section.svc-bg-dark .svc-tabs__points li { color: rgba(255,255,255,0.72); }
+main > section.svc-bg-dark .svc-tabs__media {
+  background: rgba(255,255,255,0.05);
+  border-color: rgba(255,255,255,0.12);
+}
+main > section.svc-bg-dark .svc-tabs__media-label { color: rgba(255,255,255,0.55); opacity: 1; }
+/* i testi generici delle altre sezioni scure */
+main > section.svc-bg-dark p,
+main > section.svc-bg-dark li,
+main > section.svc-bg-dark .service-detail__body { color: rgba(255,255,255,0.72); }
+main > section.svc-bg-dark h2,
+main > section.svc-bg-dark h3,
+main > section.svc-bg-dark strong { color: #fff; }
+
+/* ── I tools nella loro sezione ───────────────────────
+   Il fondo bianco e il filetto che .svc-tools porta da sola
+   disegnerebbero un riquadro chiaro dentro la sezione nera: qui
+   il colore lo da' la sezione, uno solo. */
+.svc-tools-section .svc-tools {
+  background: transparent !important;
+  border-top: 0 !important;
+  padding: 0 !important;
+}
+/* Sul fondo nero il titolo e le didascalie dei tool passano al
+   chiaro: erano nati per la carta bianca della vecchia sezione. */
+main > section.svc-bg-dark .svc-tools__title { color: #fff !important; }
+main > section.svc-bg-dark .svc-tools__item span { color: rgba(255,255,255,0.62) !important; }
+
+/* ── La sezione fucsia: una schermata piena e un blocco breve ───
+   Il pannello e' esattamente una schermata, come in tutte le altre
+   sezioni agganciate: con il minimo al posto dell'altezza fissa la
+   fucsia cresceva oltre la viewport e sotto al form restava una
+   fascia vuota. La corsa e' la schermata piu' un tratto breve:
+   quello e' il blocco che si sente scorrendo. Il contenuto ci sta
+   perche' i padding interni sono azzerati piu' sotto. */
+.svc-caffe-runway {
+  background: var(--primary, #DB005A) !important;
+  height: 116dvh !important;
+  min-height: 0 !important;
+  padding: 0 !important;
+  overflow: visible !important;
+}
+.svc-caffe-runway > .svc-generic-sticky {
+  background: var(--primary, #DB005A);
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: clamp(2rem, 4vh, 3.5rem);
+  overflow: hidden;
+}
+
+/* ── Corsa e pannello: definizione condivisa ────────────────────
+   Stavano solo nel blocco locale di alcune pagine servizi: qui
+   valgono per tutte, così una sezione agganciata si comporta allo
+   stesso modo ovunque. */
+.svc-generic-runway {
+  height: 118dvh;
+  min-height: 0;
+  display: block;
+  padding: 0;
+  overflow: visible;
+}
+.svc-generic-sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+  padding-block: clamp(4rem, 8vh, 6rem);
+}
+
+/* ── Dentro il pannello agganciato la fucsia non raddoppia i vuoti
+   .svc-caffe__inner porta un padding verticale suo — fino a 112px
+   sopra e altrettanti sotto — nato quando la sezione stava per
+   conto proprio. Dentro il pannello si sommava a quello del
+   pannello: 332px di aria prima di una riga di contenuto, ed era
+   questo a far sforare la schermata. Qui il respiro lo da' il
+   pannello, uno solo. */
+.svc-caffe-runway .svc-caffe__inner { padding-block: 0 !important; }
+/* l'area messaggio si accorcia quel tanto che basta a lasciare
+   margine anche sugli schermi piu' bassi */
+.svc-caffe-runway .hc-textarea,
+.svc-caffe-runway .svc-caffe__textarea { min-height: 104px !important; }
+
+/* ── FAQ: stessa resa della homepage ────────────────────────────
+   Tre cose separavano la FAQ delle pagine servizi da quella in
+   home. Il filetto sopra la lista: in home e' dichiarato nero su
+   fondo nero, quindi non si vede; sulla carta bianca delle pagine
+   servizi diventava una riga sotto al titolo che non c'entra con
+   il disegno. Lo stacco sotto "FAQ": in home il margine e' negativo
+   perche' toglie lo spazio che il font si porta dentro la riga su
+   un corpo di 150px, altrove restava il clamp del componente e la
+   prima domanda cadeva molto piu' in basso. E lo scorrimento
+   interno del pannello, che a lista lunga tirava fuori la barra:
+   e' quella la linea verticale che compare a destra scorrendo. */
+html body main > section.page-faq .page-faq__list { border-top: 0 !important; }
+html body main > section.page-faq .page-faq__title {
+  line-height: 1 !important;
+  margin-top: -0.26em !important;
+  margin-bottom: -0.14em !important;
+}
+html body main > section.page-faq .page-faq__inner,
+html body main > section.page-faq .page-faq__list,
+html body main > section.page-faq .page-faq__item {
+  max-height: none !important;
+  overflow: visible !important;
+}
+/* Senza scorrimento interno le otto voci devono starci davvero:
+   respiro delle righe e del pannello copiati dalla home, dove le
+   voci sono addirittura nove e il pannello e' lo stesso 100dvh. */
+html body main > section.page-faq .page-faq__question {
+  padding-block: clamp(0.7rem, 1.6vh, 1.1rem) !important;
+}
+html body main > section.page-faq > .page-faq__sticky {
+  padding-block: 92px 48px !important;
+}
+
+/* ── I titoli non ereditano il minimo del corpo ─────────────────
+   Otto pagine servizi portano in locale il minimo tipografico
+   scritto cosi': "main p, main li, main a, main span, ... { 16px
+   !important }". La parola "span" e' la trappola. Nel markup i
+   titoli hanno gli a-capo protetti da <span style="white-space:
+   nowrap">, e l'effetto acqua spezza ogni titolo in un <span
+   class="tl"> per lettera: quelle lettere sono span dentro main,
+   quindi prendevano 16px e i titoli si rimpicciolivano tutti
+   insieme, dalla hero al "Prendiamoci un caffe". Qui gli elementi
+   in linea dentro un titolo tornano a valere quanto il titolo che
+   li contiene: piu' specifico della regola locale, quindi vince
+   ovunque senza doverla riscrivere pagina per pagina. */
+html body main :is(h1, h2, h3, h4, h5, h6) :is(span, em, strong, b, i, a, small) {
+  font-size: inherit !important;
+}
+/* Corpo e peso delle domande e delle risposte nelle pagine
+   servizi. Le domande erano bloccate al minimo tipografico, 16px
+   fissi: ora sono 20px, cioe' la misura che in homepage la scala
+   fluida raggiunge sul desktop, ma senza rimpicciolirsi sotto.
+   Il peso e' 600 come in home. */
+html body main > section.page-faq .page-faq__question {
+  font-size: 20px !important;
+  font-weight: 600 !important;
+}
+html body main > section.page-faq .page-faq__answer-inner {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.75 !important;
+}
+
+/* ── Salita fra sezioni: definizione condivisa ──────────────────
+   Lo script che assegna .sx-rise e aggiorna --sxi sta in tutte e
+   dieci le pagine servizi, ma il disegno della salita era scritto
+   solo nel <style> di SMM e Google Ads: sulle altre otto la classe
+   veniva messa e non faceva niente, e le sezioni si passavano il
+   testimone di netto. Qui vale per tutte. Le due pagine che la
+   ridichiarano in locale portano gli stessi identici valori. */
+html.js-reveal .sx-rise {
+  position: relative;
+  z-index: 2;
+  transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+  border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+  box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+  will-change: transform;
+}
+/* la fascia che riempie i 22px lasciati scoperti dalla salita:
+   prende il fondo della sezione stessa, quindi non si vede il
+   colore di quella sotto */
+html.js-reveal .sx-rise::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; top: 100%;
+  height: calc((1 - var(--sxi, 1)) * 22px);
+  background: inherit;
+  pointer-events: none;
+  z-index: -1;
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js-reveal .sx-rise { transform: none; border-radius: 0; box-shadow: none; }
+  html.js-reveal .sx-rise::after { display: none; }
+}
+
+/* ── "IL NOSTRO APPROCCIO": leggibilita' sul fondo scuro ────────
+   La sezione e' disegnata per il grigio chiaro (#f7f7f7) che porta
+   da sola, ma nell'alternanza degli sfondi le tocca il turno
+   scuro: il fondo diventa #050505 e sopra restano i grigi nati per
+   la carta chiara — #444 nei paragrafi, black-75 negli step, un
+   filetto nero fra una riga e l'altra. Testo scuro su fondo scuro.
+   Qui i colori si ribaltano, come gia' succede per la timeline. */
+main > section.svc-bg-dark .svc-content-block__text,
+main > section.svc-bg-dark .svc-ai-step,
+main > section.svc-bg-dark .svc-ai-workflow__sub,
+main > section.svc-bg-dark .svc-ai-capacita__text {
+  color: rgba(255,255,255,0.72) !important;
+}
+main > section.svc-bg-dark .svc-ai-step,
+main > section.svc-bg-dark .svc-ai-step:first-child {
+  border-color: rgba(255,255,255,0.16) !important;
+}
+/* Il sopratitolo era a --text-xs, cioe' 11px: sotto il minimo dei
+   14px che valgono per tag, kicker e CTA in tutto il sito. E su
+   fondo scuro il fucsia pieno si stacca poco, quindi si schiarisce
+   quel tanto che basta senza uscire dal colore di brand. */
+.svc-ai-pill-kicker { font-size: 14px; }
+main > section.svc-bg-dark .svc-ai-pill-kicker { color: #FF4D8F !important; }
+
+/* Stacco fra "FAQ" e la prima domanda, pagine servizi.
+   Il margine negativo che serve in homepage toglie lo spazio che
+   il font si porta dentro la riga; qui, dentro il pannello, il
+   risultato si legge come nessuno stacco. Il taglio sopra resta —
+   e' quello che libera l'aria sotto la nav — e sotto al titolo
+   torna una distanza dichiarata. */
+html body main > section.page-faq > .page-faq__sticky .page-faq__title {
+  margin-bottom: clamp(1.5rem, 3vh, 2.25rem) !important;
+}
+
+/* ── Collaborazioni: le foto rispondono al passaggio del mouse ──
+   La sezione era solo tre ritratti fermi; l'unico movimento che
+   aveva era la comparsa e la scomparsa legate allo scroll, che ora
+   non ci sono piu'. */
+.svc-collab-grid__photo {
+  overflow: hidden;
+  border-radius: 18px;
+}
+.svc-collab-grid__photo img {
+  display: block;
+  width: 100%;
+  transition: transform 620ms cubic-bezier(0.22,1,0.36,1);
+}
+.svc-collab-grid__item:hover .svc-collab-grid__photo img { transform: scale(1.04); }
+.svc-collab-grid__name {
+  margin-top: 0.9rem;
+  font-family: var(--font-secondary);
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* ── Prima sezione dopo la hero: il dato e il video ─────────────
+   Restava il residuo di due disegni sovrapposti — uno per fondo
+   scuro, uno per fondo chiaro — e vinceva a meta': il filetto
+   fucsia spento, la didascalia sotto il minimo tipografico, il
+   video senza stacco dalla pagina bianca. Qui la sezione ha una
+   forma sola: il numero come protagonista, un filetto che lo lega
+   alla didascalia, il video incorniciato. */
+.svc-stat-video__inner { align-items: center; }
+.svc-stat-video__video {
+  border-radius: 20px !important;
+  box-shadow: 0 28px 70px rgba(0,0,0,0.16), 0 0 0 1px rgba(219,0,90,0.14) !important;
+}
+.svc-stat-video__stat { gap: clamp(1rem, 2vw, 1.5rem) !important; }
+.svc-stat-video__num {
+  transform: none !important;
+  letter-spacing: -0.04em !important;
+  line-height: 0.86 !important;
+}
+.svc-stat-video__pct { font-size: 0.42em !important; vertical-align: super; }
+/* niente filetto sopra al numero: il dato si regge da solo */
+.svc-stat-video .svc-stat-video__line { display: none !important; }
+.svc-stat-video__desc {
+  font-size: 16px !important;
+  line-height: 1.6 !important;
+  max-width: 42ch !important;
+  color: rgba(0,0,0,0.72) !important;
+}
+/* le quattro righe della frase restano righe: erano span in fila
+   e andavano a capo dove capitava */
+.svc-stat-video__desc span { display: block; }
+
+/* ═══════════════════════════════════════════════════════════════
+   INFLUENCER MARKETING — le sezioni del corpo
+   Ogni blocco e' disegnato per il fondo che gli tocca nel ritmo
+   chiaro-scuro della pagina, dichiarato a mano nello script di
+   alternanza. Le regole stanno qui e non nel <style> di pagina
+   perche' i componenti (.svc-settori, .svc-talent-pronti,
+   .svc-integrazione, .svc-stat-video) sono definiti qui.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Il dato: 87% ────────────────────────────────────────────
+   Il numero diventa la superficie, non solo un testo grande: si
+   riempie di una sfumatura fucsia e si appoggia a un blocco di
+   testo stretto, con l'etichetta del canale sopra. */
+.svc-stat-video__num {
+  background: linear-gradient(140deg, #FF3D86 0%, #DB005A 55%, #8C0039 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent !important;
+  -webkit-text-fill-color: transparent;
+}
+.svc-stat-video__stat { position: relative; }
+/* filo verticale a sinistra della frase: lega il dato al testo
+   senza tagliare la colonna in due */
+.svc-stat-video__desc {
+  border-left: 3px solid var(--primary, #DB005A);
+  padding-left: clamp(1rem, 1.6vw, 1.4rem);
+  text-transform: none !important;
+  letter-spacing: 0 !important;
+}
+.svc-stat-video__video { position: relative; }
+.svc-stat-video__video::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.35);
+  pointer-events: none;
+}
+
+/* ── 2. Mercato Instagram, su nero ──────────────────────────────
+   Era un testo scuro su bianco: sul nero l'occhiello resta fucsia,
+   il titolo va in bianco e la foto prende un alone caldo che la
+   stacca dal fondo invece di galleggiarci sopra. */
+main > section.svc-bg-dark.imk-intro {
+  background:
+    radial-gradient(ellipse 60% 70% at 12% 40%, rgba(219,0,90,0.20) 0%, transparent 62%),
+    radial-gradient(ellipse 45% 55% at 92% 80%, rgba(219,0,90,0.10) 0%, transparent 58%),
+    #060606 !important;
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__kicker {
+  color: var(--primary, #DB005A) !important;
+  font-size: 14px !important;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__title {
+  color: #fff !important;
+  font-size: clamp(3rem, 7vw, 96px) !important;
+  line-height: 0.92 !important;
+  letter-spacing: -0.03em;
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__text p {
+  color: rgba(255,255,255,0.74) !important;
+  font-size: 16px !important;
+  line-height: 1.85 !important;
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__text strong { color: #fff !important; }
+/* la coda resta del suo fucsia: invertirla la spegneva in un
+   grigio che sul nero non si leggeva come colore di brand */
+main > section.svc-bg-dark.imk-intro .imk-intro__tail {
+  filter: none !important;
+  opacity: 0.85 !important;
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__photo {
+  border-radius: 24px;
+  overflow: hidden;
+  box-shadow: 0 40px 90px rgba(0,0,0,0.6), 0 0 0 1px rgba(219,0,90,0.22);
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__photo img {
+  display: block;
+  width: 100%;
+  transition: transform 800ms cubic-bezier(0.22,1,0.36,1);
+}
+main > section.svc-bg-dark.imk-intro .imk-intro__photo:hover img { transform: scale(1.03); }
+
+/* ── 4. I settori, su bianco ────────────────────────────────────
+   Il blocco era nato per il nero: card scavate nel fondo e icone
+   fucsia su tessuto scuro. Sul bianco la stessa idea si rovescia —
+   carta, bordo sottile, e l'icona dentro una capsula fucsia
+   chiarissima che si accende al passaggio del mouse. */
+main > section.svc-bg-light.svc-settori {
+  background: #fff !important;
+  padding-block: clamp(5rem, 9vw, 8rem) !important;
+}
+main > section.svc-bg-light.svc-settori .svc-section-title { color: #080808 !important; }
+main > section.svc-bg-light.svc-settori .svc-settori__item {
+  background: #fff !important;
+  border: 1px solid rgba(0,0,0,0.09) !important;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03) !important;
+}
+main > section.svc-bg-light.svc-settori .svc-settori__item:hover {
+  background: #fff !important;
+  border-color: rgba(219,0,90,0.35) !important;
+  box-shadow: 0 18px 40px rgba(219,0,90,0.14) !important;
+  transform: translateY(-6px) !important;
+}
+main > section.svc-bg-light.svc-settori .svc-settori__item svg {
+  box-sizing: content-box;
+  padding: 14px;
+  border-radius: 50%;
+  background: rgba(219,0,90,0.08);
+  transition: background 300ms ease, transform 300ms ease;
+}
+main > section.svc-bg-light.svc-settori .svc-settori__item:hover svg {
+  background: rgba(219,0,90,0.16);
+  transform: scale(1.06);
+}
+main > section.svc-bg-light.svc-settori .svc-settori__item span {
+  color: rgba(0,0,0,0.72) !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+}
+
+/* ── 5. I talent, su nero ───────────────────────────────────────
+   L'elenco era su rosa chiarissimo con i filetti neri. Sul nero
+   diventa una lista incisa: filetti chiari, etichette fucsia,
+   e la riga si illumina appena quando ci passi sopra. */
+main > section.svc-bg-dark.svc-talent-pronti {
+  background:
+    radial-gradient(ellipse 50% 60% at 88% 20%, rgba(219,0,90,0.16) 0%, transparent 60%),
+    #060606 !important;
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__title {
+  color: #fff !important;
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__visual {
+  box-shadow: 0 40px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(219,0,90,0.22) !important;
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__item {
+  border-top-color: rgba(255,255,255,0.14) !important;
+  padding-inline: clamp(0.75rem, 1.4vw, 1.25rem) !important;
+  border-radius: 12px;
+  transition: background 300ms ease;
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__item:last-child {
+  border-bottom-color: rgba(255,255,255,0.14) !important;
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__item:hover {
+  background: rgba(255,255,255,0.035);
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__item p {
+  color: rgba(255,255,255,0.74) !important;
+  font-size: 16px !important;
+  line-height: 1.8 !important;
+}
+main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__item strong { color: #fff !important; }
+
+/* ── 6. Ad integrazione ─────────────────────────────────────────
+   Tre pill in fila su bianco, senza gerarchia. Diventano tre voci
+   con un peso loro: capsula piu' generosa, icona in un cerchio
+   fucsia, e in hover la capsula si riempie e si solleva. */
+.svc-integrazione__pills { flex-wrap: wrap; }
+.svc-integrazione__pill {
+  gap: 0.85rem !important;
+  padding: 1rem 1.9rem 1rem 1rem !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  transition: background 240ms ease, border-color 240ms ease,
+              color 240ms ease, transform 240ms ease, box-shadow 240ms ease !important;
+}
+.svc-integrazione__pill svg {
+  box-sizing: content-box;
+  padding: 10px;
+  border-radius: 50%;
+  background: rgba(219,0,90,0.09);
+  transition: background 240ms ease;
+}
+.svc-integrazione__pill:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 16px 34px rgba(219,0,90,0.22) !important;
+}
+.svc-integrazione__pill:hover svg { background: rgba(255,255,255,0.18); }
+
+/* ── 3. I servizi (timeline), su nero ───────────────────────────
+   Il pannello nero c'era gia' come adattamento; qui prende una
+   forma sua: il fondo non e' piatto ma acceso da un alone fucsia
+   sul lato del riquadro aperto, il titolo si schiarisce quel tanto
+   che serve a staccarsi dal nero, la striscia dei numeri corre su
+   un filo piu' leggibile e il riquadro aperto ha un bordo che
+   segue il fucsia invece del grigio. */
+main > section.svc-bg-dark.svc-path > .svc-path__sticky {
+  background:
+    radial-gradient(ellipse 55% 45% at 78% 68%, rgba(219,0,90,0.16) 0%, transparent 62%),
+    #060606 !important;
+}
+main > section.svc-bg-dark.svc-path .svc-path__head .smm-panel__big-title {
+  color: #FF3D86 !important;
+}
+main > section.svc-bg-dark.svc-path .svc-tabs__panel {
+  background: rgba(255,255,255,0.035) !important;
+  border: 1px solid rgba(255,255,255,0.09) !important;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.55) !important;
+  backdrop-filter: blur(6px);
+}
+main > section.svc-bg-dark.svc-path .svc-tabs__media {
+  background:
+    linear-gradient(150deg, rgba(219,0,90,0.22) 0%, rgba(219,0,90,0.04) 60%),
+    rgba(255,255,255,0.04) !important;
+  border-color: rgba(219,0,90,0.22) !important;
+}
+main > section.svc-bg-dark.svc-path .svc-tabs__tab.is-active .svc-tabs__num {
+  box-shadow: 0 0 0 6px rgba(219,0,90,0.18);
+}
+main > section.svc-bg-dark.svc-path .svc-tabs__points li::before {
+  background: #FF3D86;
+}
+
+/* ── La corsa dei servizi non stacca dal suo pannello ───────────
+   Il pannello agganciato ha un fondo acceso da un alone fucsia, la
+   sezione che gli fa da corsa e' alta 12dvh in piu' ed era rimasta
+   nera piatta: scorrendo, quella fascia di nero diverso spuntava
+   da sotto al pannello proprio mentre i settori salivano sopra, e
+   sembrava una sezione che usciva da dietro. Stesso fondo. */
+main > section.svc-bg-dark.svc-path {
+  background:
+    radial-gradient(ellipse 55% 45% at 78% 68%, rgba(219,0,90,0.16) 0%, transparent 62%),
+    #060606 !important;
+}
+
+/* ── Il dato e il video, dentro la sezione Instagram ────────────
+   Non sono piu' una sezione: sono la chiusa di quella sopra. Niente
+   fondo proprio, respiro ridotto a uno stacco interno, e i colori
+   che passano al nero su cui ora vivono. */
+main > section > .svc-stat-video {
+  background: none !important;
+  padding-block: 0 !important;
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+}
+main > section.svc-bg-dark .svc-stat-video__desc {
+  color: rgba(255,255,255,0.74) !important;
+}
+main > section.svc-bg-dark .svc-stat-video__video {
+  box-shadow: 0 40px 90px rgba(0,0,0,0.65), 0 0 0 1px rgba(219,0,90,0.22) !important;
+}
+main > section.svc-bg-dark .svc-stat-video__video::after {
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.10);
+}
+
+/* ── "Ad integrazione", dentro la sezione dei talent ────────────
+   Stessa storia: era una sezione di tre capsule in mezzo al vuoto,
+   ora e' la coda della lista dei talent. Le capsule diventano di
+   vetro, come si conviene al fondo nero. */
+main > section > .svc-integrazione {
+  background: none !important;
+  padding-block: 0 !important;
+  margin-top: clamp(3.5rem, 7vw, 6rem);
+  position: relative;
+  overflow: visible !important;
+}
+main > section > .svc-integrazione .svc-integrazione__deco { display: none !important; }
+main > section.svc-bg-dark .svc-integrazione__header .svc-section-title {
+  color: #fff !important;
+  font-size: clamp(1.75rem, 3.4vw, 40px) !important;
+}
+main > section.svc-bg-dark .svc-integrazione__header .svc-section-header__eyebrow {
+  font-size: 14px !important;
+}
+main > section.svc-bg-dark .svc-integrazione__pill {
+  background: rgba(255,255,255,0.05) !important;
+  border-color: rgba(255,255,255,0.14) !important;
+  color: #fff !important;
+}
+main > section.svc-bg-dark .svc-integrazione__pill svg {
+  background: rgba(219,0,90,0.22);
+  color: #FF3D86 !important;
+}
+main > section.svc-bg-dark .svc-integrazione__pill:hover {
+  background: var(--primary, #DB005A) !important;
+  border-color: var(--primary, #DB005A) !important;
+}
+main > section.svc-bg-dark .svc-integrazione__pill:hover svg {
+  background: rgba(255,255,255,0.22);
+  color: #fff !important;
+}
+
+/* ── "Ad integrazione" dentro i talent, su carta chiara ─────────
+   Il titolo del blocco fuso non deve competere con quello della
+   sezione che lo ospita: scende di corpo e resta il suo occhiello
+   fucsia a introdurlo. Le capsule restano quelle chiare del
+   disegno originale, solo piu' generose. */
+main > section.svc-bg-light > .svc-integrazione .svc-section-title {
+  font-size: clamp(1.75rem, 3.4vw, 40px) !important;
+}
+main > section.svc-bg-light > .svc-integrazione .svc-section-header__eyebrow {
+  font-size: 14px !important;
+}
+
+/* ── Alcune collaborazioni, su nero ─────────────────────────────
+   Nel giro dell'alternanza questa sezione prende il turno scuro: i
+   tre ritratti su fondo nero guadagnano contrasto, il titolo passa
+   al bianco e sotto ogni foto il nome resta leggibile. */
+main > section.svc-bg-dark.svc-collab-grid {
+  background:
+    radial-gradient(ellipse 60% 60% at 50% 0%, rgba(219,0,90,0.14) 0%, transparent 62%),
+    #060606 !important;
+}
+main > section.svc-bg-dark.svc-collab-grid .svc-section-title { color: #fff !important; }
+main > section.svc-bg-dark.svc-collab-grid .svc-collab-grid__photo {
+  box-shadow: 0 30px 70px rgba(0,0,0,0.6), 0 0 0 1px rgba(219,0,90,0.20);
+}
+main > section.svc-bg-dark.svc-collab-grid .svc-collab-grid__name {
+  color: rgba(255,255,255,0.82) !important;
+}
+
+/* ── I settori, su nero: una griglia, non due riquadri ──────────
+   Il blocco disegnato per il nero mette una card sotto ogni icona;
+   la sezione, con il suo respiro e il fondo pieno, ne disegnava un
+   secondo intorno e si leggevano come due contenitori annidati. La
+   griglia non porta piu' un fondo suo: restano le card, e basta. */
+main > section.svc-bg-dark.svc-settori .svc-settori__grid {
+  background: none !important;
+  border: 0 !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+}
+
+/* ── La corsa dei servizi, chiara come il suo pannello ──────────
+   Corsa e pannello devono avere lo stesso fondo esatto: la corsa e'
+   piu' alta di 12dvh e ogni differenza si vede come una seconda
+   scatola che spunta da sotto scorrendo. */
+main > section.svc-bg-light.svc-path,
+main > section.svc-bg-light.svc-path > .svc-path__sticky {
+  background: #fff !important;
+}
+
+/* I talent tengono il loro rosa chiarissimo anche dentro il turno
+   chiaro: e' il colore per cui la sezione e' disegnata e da' alla
+   pagina un terzo tono fra il bianco e il nero. */
+main > section.svc-bg-light.svc-talent-pronti { background: #f8f3f6 !important; }
+
+/* ── I talent: una schermata, per costruzione ───────────────────
+   Qui ho sbagliato approccio tre volte di fila, stringendo respiri
+   e altezze: il problema non era la spaziatura, era la quantita'
+   di testo visibile insieme. Tre paragrafi lunghi impilati, la
+   foto a fianco e la fascia in coda non entrano in una schermata
+   nemmeno azzerando tutto — e per farli entrare avrei dovuto
+   scendere sotto i 16px, che non si fa.
+   Il markup ora apre un paragrafo alla volta, come i servizi qui
+   sopra: l'altezza della sezione la decide il paragrafo piu' lungo
+   e non piu' la somma dei tre. Da li' ci sta con margine, senza
+   togliere una parola.
+   Conto su una finestra da 900px: ~80 di respiri + ~430 della riga
+   (foto e schede) + ~170 della fascia = 680. */
+main > section.svc-talent-pronti {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-content: safe center;
+  padding-block: clamp(2.5rem, 5vh, 4rem) !important;
+  overflow: visible !important;
+}
+main > section.svc-talent-pronti .svc-talent-pronti__inner {
+  grid-template-columns: 32fr 68fr !important;
+  gap: clamp(1.75rem, 3.5vw, 3.25rem) !important;
+  align-items: start !important;
+}
+main > section.svc-talent-pronti .svc-talent-pronti__visual {
+  aspect-ratio: 3 / 4 !important;
+  max-height: 46vh;
+}
+main > section.svc-talent-pronti .svc-talent-pronti__visual img {
+  max-height: 46vh;
+  min-height: 0;
+  object-fit: cover;
+  object-position: center 20% !important;
+}
+/* Il titolo, una regola sola. Ne aveva quattro sovrapposte, tutte
+   !important e in disaccordo: 4rem, 2.2rem, 1.8rem con nowrap, e
+   uno stiramento verticale del 18%. Il nowrap impediva a "I talent
+   pronti a comunicare" di andare a capo e allargava la colonna
+   oltre la griglia. Le altre tre sono state tolte. */
+main > section.svc-talent-pronti .svc-talent-pronti__title {
+  font-size: clamp(1.8rem, 2.8vw, 2.5rem) !important;
+  line-height: 1.02 !important;
+  margin-bottom: clamp(0.9rem, 1.8vh, 1.35rem) !important;
+  white-space: normal !important;
+  transform: none !important;
+  /* le parole non si spezzano mai a meta': vanno a capo intere */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+
+/* ── Le schede dei talent ───────────────────────────────────────
+   Stessa meccanica dei servizi, disegno piu' leggero: qui non c'e'
+   il riquadro immagine, solo il numero, l'etichetta e il testo. */
+.talent-tabs { display: flex; flex-direction: column; gap: clamp(1rem, 2vh, 1.5rem); }
+.talent-tabs .svc-tabs__strip {
+  display: grid !important;
+  grid-auto-flow: column !important;
+  grid-auto-columns: 1fr !important;
+  gap: clamp(0.5rem, 1.2vw, 1rem) !important;
+}
+.talent-tabs .svc-tabs__tab {
+  flex-direction: row !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  gap: 0.7rem !important;
+  text-align: left !important;
+  padding: 0.7rem 0.9rem !important;
+  border-radius: 14px !important;
+  border: 1px solid rgba(0,0,0,0.10) !important;
+  background: rgba(255,255,255,0.6) !important;
+  transition: border-color 240ms ease, background 240ms ease, transform 240ms ease !important;
+}
+.talent-tabs .svc-tabs__tab:hover { transform: translateY(-2px) !important; }
+.talent-tabs .svc-tabs__tab.is-active {
+  border-color: rgba(219,0,90,0.40) !important;
+  background: #fff !important;
+}
+.talent-tabs .svc-tabs__num {
+  width: 34px !important;
+  height: 34px !important;
+  font-size: 14px !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+.talent-tabs .svc-tabs__title {
+  font-family: var(--font-secondary) !important;
+  font-size: 14px !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  text-transform: uppercase !important;
+  color: rgba(0,0,0,0.55) !important;
+  line-height: 1.25 !important;
+  /* le parole non si spezzano mai a meta' */
+  word-break: keep-all;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+.talent-tabs .svc-tabs__tab.is-active .svc-tabs__title { color: var(--primary, #DB005A) !important; }
+/* il pannello e' solo testo: niente griglia a due colonne, niente
+   riquadro. Un filetto fucsia a sinistra lo lega alla scheda. */
+.talent-tabs .svc-tabs__panel {
+  display: block !important;
+  grid-template-columns: none !important;
+  background: none !important;
+  border: 0 !important;
+  border-left: 3px solid var(--primary, #DB005A) !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  padding: 0.25rem 0 0.25rem clamp(1rem, 1.6vw, 1.4rem) !important;
+  min-height: 0 !important;
+}
+.talent-tabs .svc-tabs__panel[hidden] { display: none !important; }
+.talent-tabs .svc-tabs__text {
+  font-size: 16px !important;
+  line-height: 1.65 !important;
+  margin: 0 !important;
+}
+
+/* ── "Facciamo anche questo": una fascia, non tre capsule ───────
+   Da capsule in fila potevano andare a capo dove capitava e finire
+   fuori vista. Come griglia a tre colonne ogni voce ha il suo
+   posto e la fascia occupa sempre una riga sola. Sotto i 720px
+   diventa una colonna. Nessuna parola cambiata. */
+main > section.svc-talent-pronti > .svc-integrazione {
+  margin-top: clamp(1.5rem, 3.5vh, 2.5rem) !important;
+  border-top: 1px solid rgba(0,0,0,0.10);
+  padding-top: clamp(1.25rem, 2.5vh, 1.75rem) !important;
+}
+main > section.svc-talent-pronti > .svc-integrazione .svc-integrazione__header {
+  margin-bottom: clamp(0.85rem, 1.8vh, 1.25rem) !important;
+}
+main > section.svc-talent-pronti > .svc-integrazione .svc-section-title {
+  font-size: clamp(1.4rem, 2.2vw, 1.9rem) !important;
+  margin: 0 !important;
+}
+main > section.svc-talent-pronti > .svc-integrazione .svc-section-header__eyebrow {
+  margin-bottom: 0.4rem !important;
+}
+main > section.svc-talent-pronti > .svc-integrazione .svc-integrazione__pills {
+  display: grid !important;
+  grid-template-columns: repeat(3, 1fr) !important;
+  gap: clamp(0.65rem, 1.2vw, 1rem) !important;
+}
+main > section.svc-talent-pronti > .svc-integrazione .svc-integrazione__pill {
+  justify-content: flex-start !important;
+  border-radius: 14px !important;
+  padding: 0.75rem 1rem !important;
+  gap: 0.7rem !important;
+  line-height: 1.3 !important;
+  text-align: left !important;
+}
+main > section.svc-talent-pronti > .svc-integrazione .svc-integrazione__pill svg {
+  padding: 7px;
+}
+@media (max-width: 900px) {
+  main > section.svc-talent-pronti { min-height: 0; }
+  main > section.svc-talent-pronti .svc-talent-pronti__inner {
+    grid-template-columns: 1fr !important;
+  }
+  .talent-tabs .svc-tabs__strip { grid-auto-flow: row !important; }
+  main > section.svc-talent-pronti > .svc-integrazione .svc-integrazione__pills {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Le foto si inclinano sotto il puntatore ────────────────────
+   La classe .tilt3d la mette lo script sui riquadri che partecipano
+   (la foto di Instagram e quella dei talent). La prospettiva sta sul
+   contenitore e la rotazione sull'immagine: cosi' il riquadro resta
+   al suo posto nel layout e a muoversi e' solo la superficie.
+   --tx e --ty arrivano dallo script: sono la posizione del cursore
+   dentro il riquadro, normalizzata fra -1 e 1. */
+.tilt3d {
+  perspective: 1100px;
+  transform-style: preserve-3d;
+}
+.tilt3d img {
+  transform:
+    rotateX(calc(var(--tx, 0) * -6deg))
+    rotateY(calc(var(--ty, 0) * 7deg))
+    translateZ(0);
+  transition: transform 520ms cubic-bezier(0.22,1,0.36,1), box-shadow 520ms ease;
+  will-change: transform;
+}
+/* mentre il puntatore e' dentro, la foto insegue subito: la stessa
+   transizione lenta dell'uscita la farebbe sembrare in ritardo */
+.tilt3d.tilt-on img {
+  transition: transform 120ms linear, box-shadow 520ms ease;
+  transform:
+    rotateX(calc(var(--tx, 0) * -6deg))
+    rotateY(calc(var(--ty, 0) * 7deg))
+    scale(1.02)
+    translateZ(0);
+}
+.imk-intro__photo.tilt-on img { box-shadow: 0 40px 80px rgba(0,0,0,0.22); }
+@media (prefers-reduced-motion: reduce) {
+  .tilt3d img { transform: none !important; transition: none !important; }
+}
+
+/* ── Entrata delle card "Alcune Collaborazioni" ─────────────────
+   Le card salgono con un ritardo crescente e la foto si scopre
+   dall'alto, come una tenda che si alza. Nessuno stato di uscita:
+   .cg-in viene messo una volta e non viene tolto, quindi
+   riscorrendo la pagina le card restano dove sono. */
+.svc-collab-grid__item.cg-armed {
+  opacity: 0;
+  transform: translateY(34px);
+}
+.svc-collab-grid__item.cg-armed .svc-collab-grid__photo img {
+  clip-path: inset(0 0 100% 0);
+  transform: scale(1.08);
+}
+.svc-collab-grid__item.cg-in {
+  opacity: 1;
+  transform: none;
+  transition:
+    opacity 700ms cubic-bezier(0.22,1,0.36,1) calc(var(--cg-i, 0) * 130ms),
+    transform 700ms cubic-bezier(0.22,1,0.36,1) calc(var(--cg-i, 0) * 130ms);
+}
+.svc-collab-grid__item.cg-in .svc-collab-grid__photo img {
+  clip-path: inset(0 0 0 0);
+  transform: scale(1);
+  transition:
+    clip-path 900ms cubic-bezier(0.22,1,0.36,1) calc(var(--cg-i, 0) * 130ms + 90ms),
+    transform 1100ms cubic-bezier(0.22,1,0.36,1) calc(var(--cg-i, 0) * 130ms + 90ms);
+}
+/* l'ingrandimento in hover riparte da fermo, senza litigare con
+   quello dell'entrata */
+.svc-collab-grid__item.cg-in:hover .svc-collab-grid__photo img {
+  transform: scale(1.04);
+  transition: transform 620ms cubic-bezier(0.22,1,0.36,1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .svc-collab-grid__item.cg-armed,
+  .svc-collab-grid__item.cg-in { opacity: 1; transform: none; }
+  .svc-collab-grid__item.cg-armed .svc-collab-grid__photo img,
+  .svc-collab-grid__item.cg-in .svc-collab-grid__photo img {
+    clip-path: none; transform: none;
+  }
+}
+
+/* ── Instagram: una schermata, layout rifatto ───────────────────
+   La sezione porta quattro cose — titolo e tre paragrafi, la foto,
+   il video e il dato — e impilate non ci stavano. Ora stanno su
+   una riga sola: a sinistra il discorso (testo piu' foto), a
+   destra la prova (video sopra, 87% sotto). Il corpo del testo non
+   si tocca: e' la larghezza a fare il lavoro, come nei talent.
+   Conto su una finestra da 900px: colonna destra ~250 di video +
+   ~240 fra numero e frase = 490, piu' ~80 di respiri = 570.
+   Sul centraggio vale la stessa nota della sezione talent:
+   "safe center" non puo' sbordare verso l'alto, e i browser che
+   non lo conoscono restano su flex-start. */
+main > section.imk-intro {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  justify-content: safe center;
+  padding-block: clamp(2.5rem, 5vh, 4rem) !important;
+  overflow: visible !important;
+}
+.imk-intro__grid {
+  display: grid;
+  grid-template-columns: 1.65fr 1fr;
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: center;
+  width: 100%;
+}
+/* dentro la meta' sinistra: il testo e la foto, affiancati */
+main > section.imk-intro .imk-intro__inner {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr !important;
+  gap: clamp(1.5rem, 3vw, 2.75rem) !important;
+  align-items: start !important;
+}
+main > section.imk-intro .imk-intro__text { gap: clamp(0.6rem, 1.4vh, 1rem) !important; }
+main > section.imk-intro .imk-intro__title {
+  font-size: clamp(2.25rem, 4.2vw, 3.75rem) !important;
+  line-height: 0.98 !important;
+  margin-bottom: 0.2rem !important;
+}
+main > section.imk-intro .imk-intro__kicker { font-size: 14px !important; }
+main > section.imk-intro .imk-intro__text p {
+  font-size: 16px !important;
+  line-height: 1.55 !important;
+}
+/* la foto smette di pretendere 520px di altezza minima */
+main > section.imk-intro .imk-intro__photo {
+  min-height: 0 !important;
+  aspect-ratio: 3 / 4;
+  max-height: 46vh;
+}
+main > section.imk-intro .imk-intro__photo img {
+  min-height: 0 !important;
+  height: 100% !important;
+  max-height: 46vh;
+  object-fit: cover;
+}
+/* la coda resta, ma in scala: a 800px di larghezza faceva sfondare
+   la colonna. Decorativa, quindi si accontenta di un angolo. */
+main > section.imk-intro .imk-intro__tail {
+  width: clamp(120px, 12vw, 200px) !important;
+  margin-left: 0 !important;
+  margin-top: clamp(0.5rem, 1.5vh, 1rem) !important;
+}
+/* la meta' destra: video sopra, dato sotto */
+main > section.imk-intro .svc-stat-video {
+  margin-top: 0 !important;
+}
+main > section.imk-intro .svc-stat-video__inner {
+  grid-template-columns: 1fr !important;
+  gap: clamp(1rem, 2.2vh, 1.75rem) !important;
+  align-items: start !important;
+}
+main > section.imk-intro .svc-stat-video__num {
+  font-size: clamp(4.5rem, 9vw, 9rem) !important;
+  line-height: 0.9 !important;
+}
+main > section.imk-intro .svc-stat-video__desc {
+  max-width: none !important;
+  font-size: 16px !important;
+  line-height: 1.5 !important;
+}
+@media (max-width: 1024px) {
+  main > section.imk-intro { min-height: 0; }
+  .imk-intro__grid { grid-template-columns: 1fr; }
+  main > section.imk-intro .imk-intro__inner { grid-template-columns: 1fr !important; }
+  main > section.imk-intro .imk-intro__photo { max-height: 52vh; }
+}
