@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="it">
 <head>
   <meta charset="UTF-8" />
@@ -383,6 +383,437 @@
     @media (max-width: 600px) {
       .nw-grid { grid-template-columns: 1fr; }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage (regole che in home stanno
+       nello <style> di pagina). Il markup ora è lo stesso.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__menu-icon span,
+    .nav--on-dark .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE FRA SEZIONI — stesso pattern della homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       INGRESSO DEI TESTI — stesso linguaggio di About
+       Il blocco si compone dietro al titolo, con ritardi crescenti.
+       Prima questi elementi avevano .reveal, che li teneva a
+       opacità 0 finché non arrivava .visible da main.js.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal [data-cascade] .nw-contact__label,
+    html.js-reveal [data-cascade] .nw-contact__sub,
+    html.js-reveal [data-cascade] .hc-form {
+      transform: translateY(16px) scale(0.94);
+      transform-origin: center;
+      opacity: 0.78;
+      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.5s ease;
+      transition-delay: var(--cs-delay, 0s);
+    }
+    html.js-reveal [data-cascade] .nw-contact__label { --cs-delay: 0.10s; }
+    html.js-reveal [data-cascade] .nw-contact__sub   { --cs-delay: 0.22s; }
+    html.js-reveal [data-cascade] .hc-form           { --cs-delay: 0.34s; }
+    html.js-reveal [data-cascade].cs-in .nw-contact__label,
+    html.js-reveal [data-cascade].cs-in .nw-contact__sub,
+    html.js-reveal [data-cascade].cs-in .hc-form {
+      transform: none;
+      opacity: 1;
+    }
+    /* Gli articoli avevano lo stesso problema: sei card con .reveal
+       che restavano a opacità 0 perché .visible non arrivava mai.
+       Entrano anche loro in cascata, a ritardi crescenti. */
+    html.js-reveal [data-cascade] .nw-featured,
+    html.js-reveal [data-cascade] .nw-card {
+      transform: translateY(16px) scale(0.96);
+      transform-origin: center;
+      opacity: 0.78;
+      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.5s ease;
+      transition-delay: var(--cs-delay, 0s);
+    }
+    html.js-reveal [data-cascade] .nw-featured            { --cs-delay: 0.06s; }
+    html.js-reveal [data-cascade] .nw-card:nth-child(1)   { --cs-delay: 0.18s; }
+    html.js-reveal [data-cascade] .nw-card:nth-child(2)   { --cs-delay: 0.26s; }
+    html.js-reveal [data-cascade] .nw-card:nth-child(3)   { --cs-delay: 0.34s; }
+    html.js-reveal [data-cascade] .nw-card:nth-child(4)   { --cs-delay: 0.42s; }
+    html.js-reveal [data-cascade] .nw-card:nth-child(5)   { --cs-delay: 0.50s; }
+    html.js-reveal [data-cascade].cs-in .nw-featured,
+    html.js-reveal [data-cascade].cs-in .nw-card {
+      transform: none;
+      opacity: 1;
+    }
+    /* .reveal non è più usata qui: se restasse, terrebbe tutto a 0 */
+    .nw-contact .reveal,
+    .nw-grid-wrap .reveal { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TITOLI — 60px sia in hero sia nella sezione contatti
+       ═══════════════════════════════════════════════════════════ */
+    .nw-hero__title,
+    .nw-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Hero: video di sfondo, watermark NEWS sopra ─────────── */
+    .nw-hero__video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      background: #000;
+    }
+    /* Il riquadro copriva già tutta la sezione, ma l'inquadratura
+       no: ingrandita 1.85 con origine al 74%/62% se ne vedeva un
+       frammento scuro con la parte luminosa tutta a destra, proprio
+       dietro la scritta NEWS — e si leggeva come un alone dietro le
+       lettere, non come uno sfondo. Ingrandimento ridotto e origine
+       al centro: la forma attraversa tutta la sezione. */
+    .nw-hero__video-el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.15);
+      transform-origin: 50% 50%;
+      filter: hue-rotate(-54deg) saturate(1.05) brightness(0.62);
+      opacity: 0.72;
+    }
+    .nw-hero__fade {
+      position: absolute;
+      left: 0; right: 0;
+      height: 200px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .nw-hero__fade--top    { top: 0;    background: linear-gradient(to bottom, #000, transparent); }
+    .nw-hero__fade--bottom { bottom: 0; background: linear-gradient(to top,    #000, transparent); }
+    /* Il watermark resta dov'era, ma passa sopra al video: sul nero
+       pieno bastava il 3% di bianco, sul video serve un po' più di
+       corpo perché la scritta continui a leggersi. */
+    .nw-hero__watermark { z-index: 1; }
+    /* Solo background-color, non la scorciatoia `background`: quella
+       azzera anche background-clip, e la scritta — che è trasparente
+       e si vede solo attraverso il ritaglio sul testo — tornava a
+       dipingere il suo rettangolo pieno sopra il video. */
+    .nw-hero__watermark-text { background-color: rgba(255,255,255,0.07) !important; }
+    .nw-hero__inner { z-index: 2; }
+
+    /* ── Form: stesse misure di quello in homepage ──────────── */
+    .nw-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .nw-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .nw-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .nw-contact .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .nw-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .nw-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .nw-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .nw-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .nw-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .nw-contact .hc-consents .svc-caffe__privacy span,
+    .nw-contact .hc-consents .svc-caffe__privacy a,
+    .nw-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .nw-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    /* CTA identica a quella della home */
+    .nw-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .nw-contact .hc-submit::before { display: none !important; }
+    .nw-contact .hc-submit:hover,
+    .nw-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .nw-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — minimo 16px
+       Fuori: header e footer (invariati); a 14px solo tagline e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button,
+    main .nw-featured__excerpt,
+    main .nw-card__excerpt { font-size: max(16px, 1rem); }
+    /* Tagline / kicker / categorie: 14px */
+    .nw-hero__kicker,
+    .nw-featured__cat,
+    .nw-card__cat,
+    .nw-card__meta,
+    .nw-featured__meta,
+    .nw-contact__label { font-size: 14px !important; }
+    /* CTA: 14px */
+    main a.btn, main button.btn, main .btn.btn,
+    .nw-featured__cta,
+    .nw-card__cta { font-size: 14px !important; }
+    /* I titoli restano alla loro scala */
+    .nw-featured__title,
+    .nw-card__title,
+    .nw-hero__sub { font-size: revert; }
+
+    /* ── Titoli delle card: niente grassetto finto ────────────
+       Special Gothic Expanded One esiste in un solo peso. Chiedendo
+       800 il browser lo ingrassa da sé, ispessendo i contorni per
+       approssimazione: da qui l'effetto sfocato. Al peso reale i
+       glifi tornano netti — e sono gli stessi dei titoli degli
+       articoli, quindi le due pagine parlano la stessa lingua. */
+    .nw-card__title,
+    .nw-featured__title {
+      font-weight: 400 !important;
+      font-synthesis-weight: none;
+      -webkit-font-smoothing: antialiased;
+    }
+
+
+
+
+    /* ═══════════════════════════════════════════════════════════
+       PROFONDITÀ DELLE CARD — misurata
+       Il foglio sfalsato e il balzo di 8px erano troppo: a otto
+       card sullo schermo diventava un effetto che si notava più
+       del contenuto. Qui la profondità resta ma smette di gridare:
+       due ombre morbide, una stretta di contatto e una larga di
+       distanza, e nient'altro.
+       Anche il movimento cambia natura: la card non salta più
+       verso l'alto. Resta dov'è e si "apre" — un filetto fucsia si
+       tira lungo il bordo basso, l'immagine si avvicina appena
+       dentro la sua cornice, l'ombra si allarga di poco. Il gesto
+       si legge, ma non sposta la pagina.
+       ═══════════════════════════════════════════════════════════ */
+    .nw-card,
+    .nw-featured__card {
+      position: relative;
+      border: 1px solid rgba(0,0,0,0.07) !important;
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.05),
+        0 8px 20px -10px rgba(0,0,0,0.16) !important;
+      transition: box-shadow 0.4s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  border-color 0.4s ease,
+                  transform 0.4s var(--ease-out, cubic-bezier(.16,1,.3,1)) !important;
+      transform: none !important;
+    }
+    .nw-card:hover,
+    .nw-featured__card:hover {
+      border-color: rgba(0,0,0,0.12) !important;
+      box-shadow:
+        0 2px 4px rgba(0,0,0,0.06),
+        0 16px 34px -14px rgba(0,0,0,0.24) !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       IL CONTORNO CHE GIRA INTORNO ALLA CARD
+       Il cono di colore non andava bene: ruota per ANGOLO attorno
+       al centro, quindi su un rettangolo largo il tratto corre
+       sui lati corti e si trascina su quelli lunghi — non è un
+       giro a velocità costante, ed è quello che si vedeva.
+       Qui il contorno è un tracciato vero: un rettangolo SVG con
+       gli stessi angoli della card, disegnato scoprendo il suo
+       tratteggio. Il percorso è il perimetro reale, quindi il
+       tratto avanza alla stessa velocità ovunque e gira sugli
+       angoli. Il rettangolo è rientrato di metà spessore, così la
+       linea sta tutta dentro il ritaglio della card e ci aderisce
+       senza sbordare.
+       ═══════════════════════════════════════════════════════════ */
+    .nw-trace {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      overflow: visible;
+    }
+    .nw-trace rect {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 3;
+      stroke-linecap: round;
+      /* la lunghezza la scrive lo script: è il perimetro vero */
+      stroke-dasharray: var(--nw-len, 0);
+      stroke-dashoffset: var(--nw-len, 0);
+      transition: stroke-dashoffset 0.55s cubic-bezier(.35,0,.25,1);
+    }
+    .nw-card:hover .nw-trace rect,
+    .nw-featured__card:hover .nw-trace rect { stroke-dashoffset: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .nw-trace rect { transition: opacity 0.2s ease; stroke-dashoffset: 0; opacity: 0; }
+      .nw-card:hover .nw-trace rect,
+      .nw-featured__card:hover .nw-trace rect { opacity: 1; }
+    }
+
+
+    /* L'immagine è incassata nella card, non appoggiata sopra */
+    .nw-card__thumb,
+    .nw-featured__thumb {
+      position: relative;
+      box-shadow: inset 0 1px 4px rgba(0,0,0,0.28);
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .nw-featured__thumb { border-bottom: 0; border-right: 1px solid rgba(0,0,0,0.07); }
+    @media (max-width: 900px) {
+      .nw-featured__thumb { border-right: 0; border-bottom: 1px solid rgba(0,0,0,0.07); }
+    }
+    /* Il soggetto si avvicina di poco: la cornice resta ferma */
+    .nw-card__thumb-icon,
+    .nw-featured__thumb-icon,
+    .nw-featured__thumb-label {
+      transition: transform 0.6s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  opacity 0.45s ease;
+    }
+    .nw-card:hover .nw-card__thumb-icon,
+    .nw-featured__card:hover .nw-featured__thumb-icon,
+    .nw-featured__card:hover .nw-featured__thumb-label {
+      transform: scale(1.04);
+      opacity: 0.3;
+    }
+
+    /* Il corpo testo è il piano più vicino */
+    .nw-card__body,
+    .nw-featured__body {
+      position: relative;
+      z-index: 1;
+      background: #fff;
+    }
+    .nw-card__cta,
+    .nw-featured__cta { transition: gap 0.35s var(--ease-out, cubic-bezier(.16,1,.3,1)); }
+    .nw-card:hover .nw-card__cta { gap: 0.9rem; }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nw-card::after, .nw-featured__card::after { transition: none; }
+      .nw-card:hover .nw-card__thumb-icon,
+      .nw-featured__card:hover .nw-featured__thumb-icon,
+      .nw-featured__card:hover .nw-featured__thumb-label { transform: none !important; }
+    }
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -397,10 +828,11 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -433,8 +865,10 @@
           <div class="nav__mega-panel nav__mega-panel--pink">
             <p class="nav__mega-label">Team</p>
             <div class="nav__mega-avatars">
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
               <span class="nav__avatar"></span>
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
@@ -453,19 +887,28 @@
   <main>
 
     <!-- ══ HERO ════════════════════════════════════════════════ -->
-    <section class="nw-hero">
+    <section class="nw-hero" data-nav-theme="dark">
+      <!-- Sfondo: stessa sorgente e stesso trattamento delle
+           sezioni scure della home. Sta prima del watermark, così
+           la scritta NEWS continua a leggersi sopra al video. -->
+      <div class="nw-hero__video" aria-hidden="true">
+        <video class="nw-hero__video-el" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        <div class="nw-hero__fade nw-hero__fade--top"></div>
+        <div class="nw-hero__fade nw-hero__fade--bottom"></div>
+      </div>
       <div class="nw-hero__watermark" aria-hidden="true">
         <span class="nw-hero__watermark-text">NEWS</span>
       </div>
       <div class="nw-hero__inner">
         <span class="nw-hero__kicker">News &amp; Insights</span>
-        <h1 class="nw-hero__title">Tutto quello che vuoi sapere sul marketing digitale</h1>
+        <h1 class="nw-hero__title" id="nwHeroTitle">Tutto quello che vuoi sapere sul marketing digitale</h1>
         <p class="nw-hero__sub">Guide pratiche, dati reali e risposte dirette — scritte per chi vuole capire, non solo per chi vuole comprare.</p>
       </div>
     </section>
 
     <!-- ══ GRIGLIA ARTICOLI ════════════════════════════════════ -->
-    <div class="nw-grid-wrap">
+    <div class="nw-grid-wrap" data-cascade>
 
       <!-- Articolo in evidenza -->
       <div class="nw-featured reveal">
@@ -593,35 +1036,41 @@
 
     <!-- ══ FORM CONTATTI ═════════════════════════════════════ -->
     <section class="nw-contact">
-      <div class="nw-contact__inner">
+      <div class="nw-contact__inner" data-cascade>
         <div class="nw-contact__left">
-          <span class="nw-contact__label reveal">Parliamoci</span>
-          <h2 class="nw-contact__title reveal">Pronto a costruire<br/>qualcosa<br/>di concreto?</h2>
-          <p class="nw-contact__sub reveal">Raccontaci il tuo progetto. Trasformiamo idee in brand che lasciano il segno.</p>
+          <span class="nw-contact__label">Parliamoci</span>
+          <h2 class="nw-contact__title" id="nwContactTitle">Pronto a costruire<br/>qualcosa<br/>di concreto?</h2>
+          <p class="nw-contact__sub">Raccontaci il tuo progetto. Trasformiamo idee in brand che lasciano il segno.</p>
         </div>
         <div class="nw-contact__right">
-      <form class="contact-home__form reveal reveal-delay-2" action="#" method="post" novalidate>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-          <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
-        </div>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-          <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
-        </div>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-          <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
-        </div>
-        <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-        <label class="contact-home__privacy">
-          <input type="checkbox" required />
-          <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
-        </label>
-        <div class="contact-home__submit-wrap">
-          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
-        </div>
-      </form>
+          <!-- Stesse classi del form in homepage (hc-*): stesse
+               misure e stessa riga dei consensi con la newsletter. -->
+          <form class="hc-form" action="#" method="post" novalidate>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            </div>
+            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="nw-privacy">
+                <input type="checkbox" id="nw-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+              </label>
+              <label class="svc-caffe__privacy" for="nw-newsletter">
+                <input type="checkbox" id="nw-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
+            </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+          </form>
         </div>
       </div>
     </section>
@@ -629,148 +1078,205 @@
 
   <script src="js/main.js"></script>
   <script>
-  (function () {
-    var navEl     = document.querySelector('.nav');
-    var heroEl    = document.querySelector('.nw-hero');
-    var gridEl    = document.querySelector('.nw-grid-wrap');
-    var contactEl = document.querySelector('.nw-contact');
-    if (!heroEl || !gridEl || !contactEl) return;
+  /* ═══════════════════════════════════════════════════════════
+     NEWS — stesso motore della homepage.
+     Al posto della vecchia regia (veli colorati sopra le sezioni,
+     tende a inizio e fine pagina, titoli scomposti lettera per
+     lettera) ci sono i tre pezzi del sito: acqua sui titoli,
+     salita fra sezioni scritta da un solo rAF, ingresso in
+     cascata dei blocchi di testo.
+     ═══════════════════════════════════════════════════════════ */
+  function newsBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
 
-    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-    /* ── Split letters ─────────────────────────────────────────── */
-    function splitLetters(el) {
-      if (!el) return [];
-      var raw = el.innerHTML, out = '', i = 0, inWord = false;
-      function closeWord() { if (inWord) { out += '</span>'; inWord = false; } }
-      function openWord()  { if (!inWord) { out += '<span style="display:inline-block;white-space:nowrap">'; inWord = true; } }
-      while (i < raw.length) {
-        if (raw[i] === '<') { var j = raw.indexOf('>', i); closeWord(); out += raw.slice(i, j+1); i = j+1; }
-        else if (raw[i] === ' ' || raw[i] === '\n') { closeWord(); out += raw[i]; i++; }
-        else { openWord(); out += '<span class="tl" style="display:inline-block;opacity:0;transform:translateY(0.7em)">' + raw[i] + '</span>'; i++; }
-      }
-      closeWord();
-      el.innerHTML = out; el.style.opacity = '1';
-      return Array.from(el.querySelectorAll('.tl'));
-    }
-    function revLetters(letters, p, base, dur) {
-      letters.forEach(function(l, i) {
-        var lp = ease(c01((p - (base||0) - i*(dur||0.04)) / 0.35));
-        l.style.opacity   = lp.toFixed(3);
-        l.style.transform = 'translateY(' + ((1-lp)*0.7).toFixed(3) + 'em)';
-      });
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
     }
 
-    /* ── Overlays ──────────────────────────────────────────────── */
-    function makeTransOv(el, bg) {
-      if (!el) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      el.appendChild(ov);
-      return ov;
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
     }
 
-    /* hero → bianco: 0 all'inizio scroll, 1 quando hero è uscita al 90% */
-    function pHeroExit() {
-      var r = heroEl.getBoundingClientRect();
-      return ease(c01(-r.top / (heroEl.offsetHeight * 0.9)));
-    }
-    /* completa il fade quando el è centrata nel viewport */
-    function pCentered(el) {
-      if (!el) return 0;
-      var top = el.getBoundingClientRect().top, vh = window.innerHeight;
-      return ease(c01((vh - top) / (vh / 2 + el.offsetHeight / 2)));
-    }
+    // il titolo della hero è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.getElementById('nwHeroTitle'), 1000));
 
-    var heroToGridOv    = makeTransOv(heroEl, '#f5f5f5');
-    var gridToContactOv = makeTransOv(gridEl, '#DB005A');
-
-    /* overlay fisso nero per uscita al footer */
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
-    document.body.appendChild(exitOv);
-
-    /* ── Hero: animazione titolo e testi ───────────────────────── */
-    var heroTitle   = heroEl.querySelector('.nw-hero__title');
-    var heroKicker  = heroEl.querySelector('.nw-hero__kicker');
-    var heroSub     = heroEl.querySelector('.nw-hero__sub');
-    var heroLetters = splitLetters(heroTitle);
-    if (heroKicker) heroKicker.style.opacity = '0';
-    if (heroSub)    heroSub.style.opacity    = '0';
-    var startTime = performance.now();
-
-    /* overlay nero di entrata pagina */
-    var entryOv = document.createElement('div');
-    Object.assign(entryOv.style, {
-      position:'fixed', inset:'0', background:'#000',
-      opacity:'1', pointerEvents:'none', zIndex:'200',
-      transition:'opacity 0.75s ease'
-    });
-    document.body.appendChild(entryOv);
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        entryOv.style.opacity = '0';
-        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
-      });
+    [['nwContactTitle', 950]].forEach(([id, ms]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
+      }, { threshold: 0.45 });
+      io.observe(el);
     });
 
-    /* ── Nav theme ─────────────────────────────────────────────── */
-    var C_DARK    = [5,   5,   5];
-    var C_WHITE   = [245, 245, 245];
-    var C_FUCHSIA = [219, 0,   90];
-    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-    var prevDark = null;
+    const ghost = document.querySelector('.sf-ghost');
+    if (ghost) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(ghost, 1000); io.disconnect(); } });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      io.observe(ghost);
+    }
 
-    function tick() {
-      /* overlays sezione */
-      if (heroToGridOv)    heroToGridOv.style.opacity    = pHeroExit().toFixed(3);
-      if (gridToContactOv) gridToContactOv.style.opacity = pCentered(contactEl).toFixed(3);
+    /* ── Salita fra sezioni ────────────────────────────────── */
+    const RISE = ['.nw-grid-wrap', '.nw-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
 
-      /* fade nero al footer */
-      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          // la corsa non può essere più lunga di quanto l'elemento
+          // riesca davvero a salire
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
 
-      /* animazione hero (time-based) */
-      var t = (performance.now() - startTime) / 1000;
-      if (heroLetters.length) {
-        var _p = ease(c01((t - 0.15) / 0.9));
-        var _dur = 0.55 / heroLetters.length; /* stagger che si adatta al numero di lettere */
-        revLetters(heroLetters, _p, 0, _dur);
-      }
-      if (heroKicker) heroKicker.style.opacity = ease(c01((t - 0.05) / 0.45)).toFixed(3);
-      if (heroSub)    heroSub.style.opacity    = ease(c01((t - 0.65) / 0.55)).toFixed(3);
+    /* ── Ingresso in cascata (linguaggio di About) ─────────── */
+    document.querySelectorAll('[data-cascade]').forEach(panel => {
+      if (RM) { panel.classList.add('cs-in'); return; }
+      const check = () => {
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.top > vh || r.bottom < 0) return false;
+        const vis = (Math.min(vh, r.bottom) - Math.max(0, r.top)) / Math.min(vh, r.height || vh);
+        if (vis >= 0.4 || r.top <= vh * 0.5) { panel.classList.add('cs-in'); return true; }
+        return false;
+      };
+      const io = new IntersectionObserver(() => { if (check()) io.disconnect(); },
+        { threshold: [0, 0.2, 0.4, 0.6] });
+      io.observe(panel);
+      requestAnimationFrame(check);
+    });
 
-      /* nav theme — blend continuo */
-      if (navEl) {
-        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
-        var effective = C_DARK;
-        [
-          { el: heroEl,    base: C_DARK,    ov: heroToGridOv,    ovC: C_WHITE   },
-          { el: gridEl,    base: C_WHITE,   ov: gridToContactOv, ovC: C_FUCHSIA },
-          { el: contactEl, base: C_FUCHSIA, ov: null,            ovC: null      },
-        ].forEach(function(s) {
-          if (!s.el) return;
-          var r = s.el.getBoundingClientRect();
-          if (r.top <= navMidY && r.bottom > navMidY) {
-            var alpha = ovOp(s.ov);
-            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
-          }
+    /* ── Il contorno che gira intorno alla card ──────────────
+       Un rettangolo SVG con gli stessi angoli della card, lungo
+       quanto il suo perimetro. Lo scopriamo scoprendo il
+       tratteggio: il tratto parte da metà del lato alto e fa il
+       giro. La lunghezza va misurata sull'elemento vero, perché
+       dipende da larghezza, altezza e raggio degli angoli, e va
+       rimisurata quando la card cambia dimensione. */
+    (function traceOutline() {
+      const cards = document.querySelectorAll('.nw-card, .nw-featured__card');
+      if (!cards.length) return;
+      const NS = 'http://www.w3.org/2000/svg';
+      cards.forEach(card => {
+        if (card.querySelector('.nw-trace')) return;
+        const svg = document.createElementNS(NS, 'svg');
+        svg.setAttribute('class', 'nw-trace');
+        svg.setAttribute('aria-hidden', 'true');
+        svg.setAttribute('preserveAspectRatio', 'none');
+        const rect = document.createElementNS(NS, 'rect');
+        svg.appendChild(rect);
+        card.appendChild(svg);
+
+        const fit = () => {
+          // Si misura il riquadro dell'SVG, non quello della card:
+          // l'SVG sta dentro il bordo, quindi è 2px più stretto, e
+          // con la misura sbagliata il tratto veniva riscalato e gli
+          // angoli non combaciavano con quelli della card.
+          const r = svg.getBoundingClientRect();
+          if (!r.width || !r.height) return;
+          const sw = 3;                       // spessore del tratto
+          const cs = getComputedStyle(card);
+          const bw = parseFloat(cs.borderTopWidth) || 0;
+          const rad = Math.max(0, (parseFloat(cs.borderTopLeftRadius) || 0) - bw);
+          svg.setAttribute('viewBox', '0 0 ' + r.width + ' ' + r.height);
+          rect.setAttribute('x', sw / 2);
+          rect.setAttribute('y', sw / 2);
+          rect.setAttribute('width', Math.max(0, r.width - sw));
+          rect.setAttribute('height', Math.max(0, r.height - sw));
+          rect.setAttribute('rx', Math.max(0, rad - sw / 2));
+          const len = rect.getTotalLength();
+          // il giro parte da metà del lato alto
+          rect.style.setProperty('--nw-len', len);
+          rect.style.strokeDashoffset = '';
+        };
+        fit();
+        if (window.ResizeObserver) new ResizeObserver(fit).observe(svg);
+        else addEventListener('resize', fit, { passive: true });
+      });
+    }());
+
+    /* ── Nav chiara/scura secondo il fondo sotto la pill ────── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const light = ['.nw-grid-wrap'];
+      const marks = [...document.querySelectorAll('[data-nav-theme]')];
+      let wasDark = null;
+      const sync = () => {
+        const probe = nav.getBoundingClientRect().bottom - 6;
+        let dark = true;   // hero, contatti e footer sono scuri
+        light.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top <= probe && r.bottom >= probe) dark = false;
+        }));
+        marks.forEach(m => {
+          const r = m.getBoundingClientRect();
+          if (r.top <= probe && r.bottom >= probe) dark = m.dataset.navTheme === 'dark';
         });
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
-
-      requestAnimationFrame(tick);
+        if (dark !== wasDark) { wasDark = dark; nav.classList.toggle('nav--on-dark', dark); }
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
     }
-    requestAnimationFrame(tick);
-  })();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', newsBoot);
+  } else { newsBoot(); }
   </script>
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
@@ -840,8 +1346,7 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-      </div>
-    </div>
+          </div>
         </div>
 
       </div>

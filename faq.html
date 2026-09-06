@@ -376,6 +376,12 @@
     .nav__menu-icon span {
       transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
     }
+    /* In home l'etichetta del mega menu è a 16px: qui stava a 11 e
+       il pannello risultava 8px più basso. */
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
 
     /* ═══════════════════════════════════════════════════════════
        TRANSIZIONE FRA SEZIONI — stesso pattern della homepage
@@ -447,7 +453,7 @@
        ═══════════════════════════════════════════════════════════ */
     html.js-reveal [data-cascade] .faq-contact__label,
     html.js-reveal [data-cascade] .faq-contact__title,
-    html.js-reveal [data-cascade] .contact-home__form {
+    html.js-reveal [data-cascade] .hc-form {
       transform: translateY(16px) scale(0.94);
       transform-origin: center;
       opacity: 0.78;
@@ -457,10 +463,10 @@
     }
     html.js-reveal [data-cascade] .faq-contact__label { --cs-delay: 0.10s; }
     html.js-reveal [data-cascade] .faq-contact__title { --cs-delay: 0.20s; }
-    html.js-reveal [data-cascade] .contact-home__form { --cs-delay: 0.34s; }
+    html.js-reveal [data-cascade] .hc-form { --cs-delay: 0.34s; }
     html.js-reveal [data-cascade].cs-in .faq-contact__label,
     html.js-reveal [data-cascade].cs-in .faq-contact__title,
-    html.js-reveal [data-cascade].cs-in .contact-home__form {
+    html.js-reveal [data-cascade].cs-in .hc-form {
       transform: none;
       opacity: 1;
     }
@@ -483,18 +489,135 @@
     main dt, main dd,
     main .faq-item__q,
     main .faq-item__a { font-size: max(16px, 1rem); }
+    /* Le voci della colonna delle categorie sono navigazione, non
+       etichette: stavano a 12px, vanno al minimo di lettura. */
+    .faq-nav__list a { font-size: 16px !important; }
     /* Tagline / kicker / etichette: 14px */
     .faq-hero__kicker,
     .faq-hero__stat-label,
     .faq-nav__label,
+    .faq-group__label,
     .faq-contact__label { font-size: 14px !important; }
     /* CTA: 14px */
     main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
-    /* I numeri della hero e i titoli restano alla loro scala */
-    .faq-hero__stat-num,
+    /* Titolo e numeri della hero: stesso corpo dei titoli di
+       sezione della home, 150px su desktop e in scala sotto. */
     .faq-hero__title,
-    .faq-contact__title,
-    .faq-hero__sub { font-size: revert; }
+    .faq-hero__stat-num { font-size: min(150px, 26vw) !important; }
+    .faq-contact__title { font-size: min(60px, 11vw) !important; }
+    /* Il sottotitolo sta sotto FAQ, non nella colonna a destra:
+       il margine sotto serviva a staccarlo dalle statistiche, che
+       ora non gli stanno più sotto. */
+    .faq-hero__sub {
+      font-size: revert;
+      margin-top: 1.25rem;
+      margin-bottom: 0;
+    }
+
+    /* ── Caselle del form: stesse della sezione fucsia in home ── */
+    .faq-contact .svc-caffe__field {
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      border-radius: 10px;
+      padding: 1rem 1.25rem;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      width: 100%;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .faq-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .faq-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    /* Il link della privacy era quasi illeggibile sul fucsia:
+       bianco pieno e sottolineato, come si legge un link. */
+    .faq-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .faq-contact .hc-consents a:hover { text-decoration-thickness: 2px; }
+
+    /* ── Form: stesse misure di quello in homepage ──────────── */
+    .faq-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .faq-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .faq-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .faq-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .faq-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .faq-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .faq-contact .hc-consents .svc-caffe__privacy span,
+    .faq-contact .hc-consents .svc-caffe__privacy a,
+    .faq-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    /* CTA identica a quella della home, stesso comportamento */
+    .faq-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .faq-contact .hc-submit::before { display: none !important; }
+    .faq-contact .hc-submit:hover,
+    .faq-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .faq-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
 
     @media (prefers-reduced-motion: reduce) {
       html.js-reveal .sx-rise { transform: none; }
@@ -586,9 +709,9 @@
       <div class="faq-hero__left">
         <span class="faq-hero__kicker">Domande frequenti</span>
         <h1 class="faq-hero__title" id="faqHeroTitle">FAQ</h1>
+        <p class="faq-hero__sub">Le domande che riceviamo più spesso<br>prima di iniziare a lavorare insieme.</p>
       </div>
       <div class="faq-hero__right">
-        <p class="faq-hero__sub">Le domande che riceviamo più spesso<br>prima di iniziare a lavorare insieme.</p>
         <div class="faq-hero__stat">
           <div class="faq-hero__stat-item">
             <span class="faq-hero__stat-num" data-count="60" data-suffix="+">60+</span>
@@ -1211,27 +1334,34 @@
           <h2 class="faq-contact__title" id="faqContactTitle">Scrivici.<br>Ti rispondiamo<br>entro 24 ore.</h2>
         </div>
         <div class="faq-contact__right">
-          <form class="contact-home__form" action="#" method="post" novalidate>
-            <div class="contact-home__row">
-              <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-              <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+          <!-- Stesse classi del form in homepage (hc-*): stesse
+               misure senza doverle ridichiarare, e stessa riga dei
+               consensi con la newsletter. -->
+          <form class="hc-form" action="#" method="post" novalidate>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
             </div>
-            <div class="contact-home__row">
-              <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-              <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
             </div>
-            <div class="contact-home__row">
-              <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-              <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
             </div>
-            <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-            <label class="contact-home__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
-            </label>
-            <div class="contact-home__submit-wrap">
-              <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
+            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="faq-privacy">
+                <input type="checkbox" id="faq-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+              </label>
+              <label class="svc-caffe__privacy" for="faq-newsletter">
+                <input type="checkbox" id="faq-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
             </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
           </form>
         </div>
       </div>
@@ -1263,6 +1393,128 @@
       }, { threshold: 0.3 });
       counters.forEach(c => io.observe(c));
     })();
+  </script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     FAQ — stesso motore della homepage: acqua sui titoli, salita
+     fra sezioni scritta da un solo rAF, ingresso in cascata.
+     Parte a documento pronto perché il footer sta più in basso di
+     questo script: senza attendere, la salita non lo troverebbe.
+     ═══════════════════════════════════════════════════════════ */
+  function faqBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+
+    // il titolo della hero è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.getElementById('faqHeroTitle'), 1000));
+
+    [['faqContactTitle', 950]].forEach(([id, ms]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
+      }, { threshold: 0.45 });
+      io.observe(el);
+    });
+
+    const ghost = document.querySelector('.sf-ghost');
+    if (ghost) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(ghost, 1000); io.disconnect(); } });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      io.observe(ghost);
+    }
+
+    /* ── Salita fra sezioni ────────────────────────────────── */
+    const RISE = ['.faq-body', '.faq-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          // la corsa non può essere più lunga di quanto l'elemento
+          // riesca davvero a salire
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso in cascata ───────────────────────────────── */
+    document.querySelectorAll('[data-cascade]').forEach(panel => {
+      if (RM) { panel.classList.add('cs-in'); return; }
+      const check = () => {
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.top > vh || r.bottom < 0) return false;
+        const vis = (Math.min(vh, r.bottom) - Math.max(0, r.top)) / Math.min(vh, r.height || vh);
+        if (vis >= 0.4 || r.top <= vh * 0.5) { panel.classList.add('cs-in'); return true; }
+        return false;
+      };
+      const io = new IntersectionObserver(() => { if (check()) io.disconnect(); },
+        { threshold: [0, 0.2, 0.4, 0.6] });
+      io.observe(panel);
+      requestAnimationFrame(check);
+    });
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', faqBoot);
+  } else { faqBoot(); }
   </script>
 
   <!-- â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
@@ -1356,102 +1608,37 @@
 
   <script src="js/main.js"></script>
   <script>
+  /* La vecchia transizione fra sezioni era fatta di veli colorati
+     che sfumavano sopra ciascuna sezione (bianco sulla hero, fucsia
+     sull'accordion) più due tende a inizio e fine pagina: un
+     linguaggio tutto suo, diverso da quello del sito. È stata
+     rimossa e sostituita dalla salita con angoli arrotondati usata
+     in homepage, che vive nel blocco più in basso. Qui resta solo
+     la sincronia della nav col fondo che le passa sotto. */
   (function () {
-    var navEl     = document.querySelector('.nav');
-    var heroEl    = document.querySelector('.faq-hero');
-    var bodyEl    = document.querySelector('.faq-body');
-    var contactEl = document.querySelector('.faq-contact');
-    if (!heroEl || !bodyEl || !contactEl) return;
-
-    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-    function makeTransOv(el, bg) {
-      if (!el) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      el.appendChild(ov);
-      return ov;
-    }
-    function pHeroExit() {
-      var r = heroEl.getBoundingClientRect();
-      return ease(c01(-r.top / (heroEl.offsetHeight * 0.9)));
-    }
-    function pCentered(el) {
-      if (!el) return 0;
-      var top = el.getBoundingClientRect().top, vh = window.innerHeight;
-      return ease(c01((vh - top) / (vh / 2 + el.offsetHeight / 2)));
-    }
-
-    var heroToBodyOv    = makeTransOv(heroEl, '#f7f7f7');
-    var bodyToContactOv = makeTransOv(bodyEl, '#DB005A');
-
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
-    document.body.appendChild(exitOv);
-
-    /* hero elements fade-in time-based */
-    var heroKicker = heroEl.querySelector('.faq-hero__kicker');
-    var heroTitle  = heroEl.querySelector('.faq-hero__title');
-    var heroRight  = heroEl.querySelector('.faq-hero__right');
-    if (heroKicker) heroKicker.style.opacity = '0';
-    if (heroTitle)  heroTitle.style.opacity  = '0';
-    if (heroRight)  heroRight.style.opacity  = '0';
-    var startTime = performance.now();
-
-    var entryOv = document.createElement('div');
-    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
-    document.body.appendChild(entryOv);
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        entryOv.style.opacity = '0';
-        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
+    const nav = document.querySelector('.nav');
+    if (!nav) return;
+    const marks = [...document.querySelectorAll('[data-nav-theme]')];
+    const light = ['.faq-body'];
+    let wasDark = null;
+    const sync = () => {
+      const probe = nav.getBoundingClientRect().bottom - 6;
+      // scuro di base: hero, contatti e footer lo sono
+      let dark = true;
+      light.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+        const r = el.getBoundingClientRect();
+        if (r.top <= probe && r.bottom >= probe) dark = false;
+      }));
+      marks.forEach(m => {
+        const r = m.getBoundingClientRect();
+        if (r.top <= probe && r.bottom >= probe) dark = m.dataset.navTheme === 'dark';
       });
-    });
-
-    var C_DARK    = [5,   5,   5];
-    var C_WHITE   = [247, 247, 247];
-    var C_FUCHSIA = [219, 0,   90];
-    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-    var prevDark = null;
-
-    function tick() {
-      if (heroToBodyOv)    heroToBodyOv.style.opacity    = pHeroExit().toFixed(3);
-      if (bodyToContactOv) bodyToContactOv.style.opacity = pCentered(contactEl).toFixed(3);
-
-      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
-
-      var t = (performance.now() - startTime) / 1000;
-      if (heroKicker) heroKicker.style.opacity = ease(c01((t - 0.05) / 0.45)).toFixed(3);
-      if (heroTitle)  heroTitle.style.opacity  = ease(c01((t - 0.15) / 0.75)).toFixed(3);
-      if (heroRight)  heroRight.style.opacity  = ease(c01((t - 0.55) / 0.6)).toFixed(3);
-
-      if (navEl) {
-        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
-        var effective = C_DARK;
-        [
-          { el: heroEl,    base: C_DARK,    ov: heroToBodyOv,    ovC: C_WHITE   },
-          { el: bodyEl,    base: C_WHITE,   ov: bodyToContactOv, ovC: C_FUCHSIA },
-          { el: contactEl, base: C_FUCHSIA, ov: null,            ovC: null      },
-        ].forEach(function(s) {
-          if (!s.el) return;
-          var r = s.el.getBoundingClientRect();
-          if (r.top <= navMidY && r.bottom > navMidY) {
-            var alpha = ovOp(s.ov);
-            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
-          }
-        });
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
-
-      requestAnimationFrame(tick);
-    }
-    requestAnimationFrame(tick);
+      if (dark !== wasDark) { wasDark = dark; nav.classList.toggle('nav--on-dark', dark); }
+      nav.classList.toggle('scrolled', scrollY > 8);
+    };
+    addEventListener('scroll', sync, { passive: true });
+    addEventListener('resize', sync, { passive: true });
+    sync();
   })();
   </script>
   <script>

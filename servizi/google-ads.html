@@ -19,8 +19,9 @@
     .svc-hero__inner { align-items: flex-start; padding-top: clamp(4.5rem, 9vh, 7rem); padding-bottom: clamp(1.5rem, 3vh, 3rem); }
     .svc-hero__left { max-width: min(54rem, 100%); }
     .svc-hero__title { font-size: clamp(2rem, 4.2vw, 3.8rem) !important; }
-    .svc-hero__form { gap: clamp(0.4rem, 0.8vh, 0.7rem); }
-    .svc-hero__field { padding-block: clamp(0.45rem, 0.9vh, 0.65rem) !important; }
+    /* Le due strette locali su gap e padding dei campi sono state
+       tolte: schiacciavano il form della hero rispetto a tutte le
+       altre pagine servizi, che usano le misure condivise. */
     .svc-hero__kicker,
     .svc-hero__title,
     .svc-hero__tagline,
@@ -204,6 +205,648 @@
       transition: color 180ms ease, background-color 180ms ease !important;
     }
     .nav__logo img { transition: filter 180ms ease !important; }
+
+
+    /* ── Corpi della nav, come in homepage ─────────────────────
+       La scritta MENU sta al minimo di lettura (16px), la CTA
+       "Contattaci" a 14px come tutte le CTA del sito. Qui non
+       c'erano e restavano ai valori di default del componente. */
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: max(16px, var(--text-min, 1rem)) !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ── La hero copre cio' che sale ───────────────────────────
+       La sezione seguente entra salendo di 22px: quei 22px, con la
+       sezione bianca, si vedevano sotto la hero gia' a pagina
+       ferma. Alzando la hero di un piano restano nascosti dietro
+       di lei, e il raccordo arrotondato compare quando la sezione
+       si e' liberata — la transizione resta, la prima schermata
+       resta pulita. */
+    .svc-hero--videobg {
+      position: relative;
+      z-index: 3;
+    }
+
+    /* ── Sfondo della hero: segnaposto dichiarato ──────────────
+       Il <video> di sfondo non ha ancora una sorgente, quindi la
+       hero restava nera senza che si capisse perche'. Qui il posto
+       si dichiara: trama diagonale, cornice tratteggiata e la
+       scritta che dice cos'e'. Appena si mette l'immagine (o il
+       video) basta togliere .svc-hero__ph dal markup. */
+    .svc-hero__ph {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(135deg,
+          rgba(255,255,255,0.045) 0 14px,
+          transparent 14px 28px),
+        #141014;
+    }
+    .svc-hero__ph::before {
+      content: '';
+      position: absolute;
+      inset: clamp(12px, 1.4vw, 22px);
+      border: 1px dashed rgba(255,255,255,0.22);
+      border-radius: 10px;
+    }
+    .svc-hero__ph-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+    }
+    .svc-hero__ph-label svg { width: 22px; height: 22px; flex-shrink: 0; }
+    @media (max-width: 700px) {
+      .svc-hero__ph-label { font-size: 12px; letter-spacing: 0.12em; }
+    }
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       Stesse regole del vetro della nav: chiaro sopra hero e
+       servizi, scuro sopra le sezioni scure, con il MENU che segue
+       il fondo invece di imporsi. Prima questa pagina aveva solo un
+       pezzo di quel sistema e sul dark il testo bianco finiva su
+       vetro bianco.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      /* solo una diffusione morbida verso il basso, nessun contorno */
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      /* Il vetro cambia formula uscendo dalla scena hero+servizi:
+         la transizione la copre insieme al colore del MENU, così il
+         passaggio non scatta. */
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    /* Sopra sezioni scure il vetro si scurisce: MENU resta chiaro */
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+
+    /* ── Sopra HERO e SERVIZI: vetro chiaro, tendente al bianco ──
+       Finché la scena hero+servizi è in viewport la nav non ha
+       .scrolled: è il segnale già usato dal progetto, quindi non
+       serve un secondo sistema.
+       Il vetro è davvero trasparente: la leggibilità non viene più
+       dalla densità del velo ma dal blur, che scioglie il fondo, e
+       dalla desaturazione, che gli toglie il rosa. Quello che non si
+       può tenere fisso è il colore del MENU: sotto la pill passa un
+       fondo chiaro sulla hero e nero sui Servizi, quindi il testo
+       segue il fondo invece di imporsi su entrambi. */
+    /* Hero: il vetro deve leggersi come vetro, non come un velo scuro.
+       La luce viene dal brightness sul fondo — il video dietro la pill
+       sta intorno a L 0.30 e viene portato in alto — più da un velo
+       bianco leggero. Così la pill resta traslucida e luminosa, con il
+       MENU nero largamente sopra soglia e il fucsia del logo a ~5:1. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    /* Sopra la hero il fondo è chiaro → MENU nero */
+    .nav:not(.scrolled) .nav__menu-btn {
+      color: #111 !important;
+      text-shadow: none !important;
+    }
+    /* ── Sopra i SERVIZI il fondo è nero ────────────────────────
+       Il vetro resta trasparente come richiesto, quindi sotto la pill
+       c'è il nero: il MENU passa a bianco, esattamente come fa già
+       sopra tutte le altre sezioni scure. Logo e simbolo invece non
+       cambiano: stesso fucsia pieno che hanno nel resto della pagina,
+       nessun filtro e nessun alone. */
+    .nav:not(.scrolled).nav--svc .nav__inner {
+      background: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+      -webkit-backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-btn {
+      color: #fff !important;
+      text-shadow: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__logo img {
+      filter: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    /* Logo e simbolo restano il fucsia di brand, pieno e senza
+       filtri: sul vetro chiaro è la combinazione più leggibile. */
+    .nav:not(.scrolled) .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    /* Il simbolo resta fucsia, solo reso più leggibile: nessun neon */
+    .nav--on-dark .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: drop-shadow(0 0 1.5px rgba(255,255,255,0.5));
+    }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    /* ═══════════════════════════════════════════════════════════
+       SERVIZI — TIMELINE ORIZZONTALE
+       I servizi sono un percorso, non un elenco: una linea con sei
+       tappe numerate, tutte visibili insieme. Si clicca una tappa e
+       sotto si apre il suo riquadro, uno alla volta. La linea si
+       riempie di fucsia fino alla tappa scelta.
+       ═══════════════════════════════════════════════════════════ */
+    /* La sezione e' la corsa; il pannello dentro resta agganciato
+       in alto e occupa una schermata intera, come le sezioni della
+       homepage. La corsa e' poco piu' alta della schermata: quanto
+       basta perche' il pannello si fermi e poi lasci il posto. */
+    .svc-path {
+      background: #fff;
+      color: #080808;
+      height: 135dvh;
+      padding-block: 0;
+    }
+    .svc-path__sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+      /* la nav e' fissa e alta circa 100px: senza questo spazio il
+         titolo le finiva sotto. Qui sopra c'e' aria vera, non il
+         minimo indispensabile. */
+      padding-top: clamp(8rem, 16vh, 11rem);
+      padding-bottom: clamp(2rem, 4vh, 3rem);
+    }
+    /* Dentro la schermata nulla scorre: il riquadro prende
+       l'altezza del suo contenuto e i respiri intorno sono tarati
+       perche' il caso piu' lungo — testo, quattro punti e la CTA —
+       ci stia comunque. Se scorresse, la CTA finirebbe fuori vista:
+       e' l'unica cosa che non puo' succedere. */
+    .svc-path__sticky > .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+      min-height: 0;
+    }
+    .svc-path__sticky .svc-path__head { margin-bottom: clamp(1.25rem, 2.8vh, 2rem); }
+    .svc-path__sticky .svc-tabs {
+      gap: clamp(1rem, 2.2vh, 1.6rem);
+      /* la timeline resta alta quanto serve, il riquadro si prende
+         lo spazio che avanza nella schermata: cosi' il fondo della
+         card non sfora mai il bordo basso */
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .svc-path__sticky .svc-tabs__panels { flex: 1 1 auto; min-height: 0; }
+    .svc-path__sticky .svc-tabs__panel {
+      height: 100%;
+      padding: clamp(1.1rem, 2.2vh, 1.6rem);
+      gap: clamp(1.25rem, 2.4vw, 2.25rem);
+    }
+    /* la foto riempie l'altezza del riquadro invece di imporgliela:
+       con un rapporto fisso era lei a farlo diventare troppo alto */
+    .svc-path__sticky .svc-tabs__media { aspect-ratio: auto; height: 100%; }
+    .svc-path__sticky .svc-tabs__copy {
+      overflow: visible;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .svc-path__sticky .svc-tabs__text { line-height: 1.6; }
+    .svc-path__sticky .svc-tabs__points { gap: 0.35rem; }
+
+    /* ── Testata della sezione ─────────────────────────────────
+       Titolo e occhiello aprono la sezione, sopra la timeline. */
+    .svc-path__head {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+    .svc-path__head .smm-panel__big-title {
+      font-size: min(60px, 9vw) !important;
+      line-height: 1.05;
+      color: var(--primary, #DB005A);
+      /* le parole non si spezzano mai: vanno a capo intere */
+      word-break: keep-all;
+      overflow-wrap: normal;
+      hyphens: none;
+      /* larghezza tarata perche' stia su due righe */
+      max-width: 19ch;
+      margin: 0 auto;
+    }
+    .svc-path__head .smm-panel__statement-sub {
+      color: rgba(0,0,0,0.62);
+      font-size: 16px;
+      margin-top: clamp(1.25rem, 2.5vw, 2rem);
+      line-height: 1.5;
+      /* su una riga sola */
+      max-width: none;
+      white-space: nowrap;
+      margin-inline: auto;
+    }
+    .svc-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2rem, 4vw, 3.25rem);
+    }
+    .svc-tabs__strip {
+      position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 0;
+      padding-top: 6px;
+      --p: 0;
+    }
+    .svc-tabs__strip::before,
+    .svc-tabs__strip::after {
+      content: '';
+      position: absolute;
+      top: 25px;
+      height: 2px;
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    .svc-tabs__strip::before {
+      left: calc(100% / var(--n, 6) / 2);
+      right: calc(100% / var(--n, 6) / 2);
+      background: rgba(0,0,0,0.10);
+    }
+    .svc-tabs__strip::after {
+      left: calc(100% / var(--n, 6) / 2);
+      width: calc((100% - 100% / var(--n, 6)) * var(--p));
+      background: var(--primary, #DB005A);
+      transition: width var(--dur-base, 460ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
+    }
+    .svc-tabs__tab {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0 0.6rem;
+      min-width: 0;
+      text-align: center;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+    }
+    .svc-tabs__tab:focus-visible {
+      outline: 2px solid var(--primary, #DB005A);
+      outline-offset: 6px;
+      border-radius: 10px;
+    }
+    .svc-tabs__num {
+      position: relative;
+      z-index: 1;
+      width: 40px; height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-family: var(--font-secondary);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(0,0,0,0.45);
+      background: #fff;
+      border: 2px solid rgba(0,0,0,0.12);
+      transition: transform var(--dur-base, 360ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1)),
+                  background var(--dur-base, 360ms) ease,
+                  border-color var(--dur-base, 360ms) ease,
+                  color var(--dur-base, 360ms) ease,
+                  box-shadow var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-done .svc-tabs__num {
+      border-color: var(--primary, #DB005A);
+      color: var(--primary, #DB005A);
+    }
+    .svc-tabs__tab:hover .svc-tabs__num {
+      border-color: var(--primary, #DB005A);
+      transform: translateY(-2px);
+    }
+    .svc-tabs__tab.is-active .svc-tabs__num {
+      background: var(--primary, #DB005A);
+      border-color: var(--primary, #DB005A);
+      color: #fff;
+      transform: scale(1.22);
+      box-shadow: 0 10px 26px rgba(219,0,90,0.32);
+    }
+    .svc-tabs__tag {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.38);
+      transition: color var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-active .svc-tabs__tag { color: var(--primary, #DB005A); }
+    .svc-tabs__title {
+      font-family: var(--font-primary);
+      font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+      line-height: 1.25;
+      font-weight: 400;
+      font-synthesis-weight: none;
+      color: rgba(0,0,0,0.55);
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: none;
+      transition: color var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-active .svc-tabs__title { color: #080808; }
+    .svc-tabs__panels { position: relative; }
+    .svc-tabs__panel[hidden] { display: none !important; }
+    .svc-tabs__panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.75rem, 3.5vw, 3.5rem);
+      align-items: stretch;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 22px;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      box-shadow: 0 26px 64px rgba(0,0,0,0.10);
+      animation: svcTabIn var(--dur-base, 420ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1)) both;
+    }
+    @keyframes svcTabIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .svc-tabs__media {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(219,0,90,0.06);
+      border: 1px solid rgba(219,0,90,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .svc-tabs__media-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .svc-tabs__media-label {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.35;
+      padding: 1rem;
+      text-align: center;
+    }
+    .svc-tabs__copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .svc-tabs__copy > :first-child { margin-top: 0; }
+    .svc-tabs__text {
+      font-size: max(16px, 1rem);
+      line-height: 1.75;
+      color: rgba(0,0,0,0.62);
+      margin: 0;
+    }
+    .svc-tabs__points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .svc-tabs__points li {
+      font-size: max(16px, 1rem);
+      line-height: 1.6;
+      color: rgba(0,0,0,0.68);
+      padding-left: 1.5em;
+      position: relative;
+    }
+    .svc-tabs__points li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.62em;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary, #DB005A);
+    }
+    .svc-tabs__cta {
+      font-size: 14px !important;
+      margin-top: 0.35rem;
+    }
+    @media (max-width: 1100px) {
+      .svc-tabs__strip {
+        grid-auto-columns: minmax(170px, 1fr);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+      }
+      .svc-tabs__tab { scroll-snap-align: center; }
+      .svc-tabs__strip::before,
+      .svc-tabs__strip::after { display: none; }
+    }
+    @media (max-width: 760px) {
+      .svc-tabs__panel { grid-template-columns: 1fr; }
+      .svc-tabs__media { order: 2; }
+      .svc-tabs__copy  { order: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .svc-tabs__num, .svc-tabs__strip::after { transition: none; }
+      .svc-tabs__panel { animation: none; }
+    }
+
+    /* ── Video dietro la sezione "amici" ───────────────────────
+       Stessa regione video della homepage: sta sotto al contenuto,
+       il fucsia del brand entra fra i colori della forma ruotando
+       la crominanza, e una sfumatura ne chiude il bordo basso. */
+    #gadsClienti { position: relative; isolation: isolate; }
+    .amici-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .amici-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center;
+      filter: hue-rotate(-54deg) saturate(1.08);
+    }
+    .amici-video__fade {
+      pointer-events: none;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8rem;
+      background: linear-gradient(to bottom, transparent, #0a0a0a);
+    }
+    /* il contenuto sta sopra al video */
+    #gadsClienti > .container,
+    #gadsClienti > .svc-clients__marquee-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Sezione "Prendiamoci un caffè" ────────────────────────
+       Corpo e CTA identici al form prima del footer in homepage:
+       campi a 16px, area messaggio 130px, form largo al massimo
+       780px, e il pulsante trasparente col bordo bianco da 2px che
+       si inverte all'hover — non piu il pulsante pieno a tutta
+       larghezza che aveva questa pagina. */
+    .svc-caffe .svc-caffe__form {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .svc-caffe .hc-row { gap: 0.875rem; }
+    .svc-caffe .svc-caffe__field {
+      font-size: 1rem !important;
+    }
+    .svc-caffe .svc-caffe__field::placeholder { font-size: 1rem; }
+    .svc-caffe .hc-textarea { min-height: 130px; resize: vertical; }
+    .svc-caffe .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    /* i due consensi vanno a 16px come il resto del form: la
+       regola generale del microcopy li teneva a 14 */
+    .svc-caffe .hc-consents .svc-caffe__privacy,
+    .svc-caffe .hc-consents .svc-caffe__privacy span,
+    .svc-caffe .hc-consents .svc-caffe__privacy a,
+    .svc-caffe .hc-consents .svc-caffe__privacy em {
+      font-size: 16px !important;
+      line-height: 1.5;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy em {
+      font-style: normal;
+      opacity: 0.65;
+    }
+    .svc-caffe .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      font-size: 0.875rem !important;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .svc-caffe .hc-submit::before { display: none !important; }
+    .svc-caffe .hc-submit:hover,
+    .svc-caffe .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ── Clienti e FAQ a piena schermata ───────────────────────
+       Le due sezioni erano piu' basse della viewport (471 e 707px
+       su 900) e si vedevano a meta' con la successiva gia' dentro.
+       Ora ognuna occupa una schermata intera e centra il proprio
+       contenuto, come le altre sezioni della pagina. */
+    #gadsClienti,
+    .page-faq {
+      min-height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    /* il video di sfondo copre tutta la sezione, anche ora che e'
+       piu' alta del suo contenuto */
+    #gadsClienti .amici-video { height: 100%; }
+
+    /* ═══════════════════════════════════════════════════════════
+       EFFETTI CONDIVISI DELLE PAGINE SERVIZI
+       Gli stessi di news, tips&tricks e dei case study: la sezione
+       che entra sale con gli angoli che si arrotondano, i titoli
+       ondeggiano una volta come acqua, i testi entrano dal basso
+       un blocco alla volta. Qui non c'erano affatto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+    /* negli angoli ritagliati dalla salita passava il bianco della
+       pagina: il fondo del documento va scuro come le sezioni */
+    html, body { background-color: #050505; }
+
+    /* Ingresso dei testi, linguaggio del corpo di About: nessuno
+       stato nascosto duraturo — opacita di partenza alta e
+       spostamento contenuto, un blocco alla volta. */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+
   </style>
 <script type="application/ld+json">
 {
@@ -232,10 +875,11 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="../contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -293,6 +937,12 @@
     <section class="svc-hero svc-hero--videobg" aria-labelledby="page-title" data-nav-theme="dark">
       <div id="gadsHeroOv" aria-hidden="true"></div>
       <video class="svc-hero__bgvideo" autoplay muted loop playsinline aria-hidden="true"></video>
+      <div class="svc-hero__ph" aria-hidden="true">
+        <span class="svc-hero__ph-label">
+          <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2.5" y="4" width="19" height="16" rx="2.5" stroke="currentColor" stroke-width="1.6"/><circle cx="8.5" cy="9.5" r="2" stroke="currentColor" stroke-width="1.6"/><path d="M3 17l5-5 3.5 3.5L15 11l6 6" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg>
+          Immagine hero — segnaposto
+        </span>
+      </div>
       <div class="svc-hero__bgvideo-overlay" aria-hidden="true"></div>
       <div class="container svc-hero__inner">
         <div class="svc-hero__left">
@@ -333,117 +983,133 @@
     </section>
 
     <!-- ══ STACKED SERVICE PANELS ════════════════════════════════ -->
-    <div class="smm-stack" id="gadsPanelStack">
-
-      <!-- 1 — Analisi & Strategia -->
-      <section class="smm-panel smm-panel--dark" aria-label="Analisi e Strategia">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Analisi & Strategia</span>
-            <h3 class="smm-panel__title" data-reveal>Analisi della situazione<br>&amp; Piano d'azione</h3>
-            <p class="smm-panel__text" data-reveal>Studiamo il tuo mercato d'interesse per capire il target di riferimento e i trend di ricerca necessari per realizzare un piano pubblicitario efficace.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Analisi tramite Google Analytics e Trends</li>
-              <li data-reveal>Studio dei competitors e della UX del sito</li>
-              <li data-reveal>Identificazione del target e delle keyword</li>
-              <li data-reveal>Piano d'azione su misura per il tuo business</li>
-            </ul>
-            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
+    <!-- ══ SERVIZI — galleria a fisarmonica ═══════════════════════ -->
+    <section class="svc-path" id="gadsPanelStack" aria-label="I servizi">
+      <!-- Pannello agganciato, come le sezioni della homepage. -->
+      <div class="svc-path__sticky">
+      <div class="container">
+        <div class="svc-path__head">
+          <h2 class="smm-panel__big-title" id="gadsPathTitle">COME PORTIAMO LA TUA ATTIVITÀ SU GOOGLE.</h2>
+          <p class="smm-panel__statement-sub">Cinque tappe, dalla prima analisi alle campagne che portano contatti veri.</p>
+        </div>
+        <div class="svc-tabs">
+          <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
+            <button class="svc-tabs__tab is-active" type="button" role="tab" id="gads-tab-1" aria-controls="gads-pan-1" aria-selected="true" tabindex="0">
+              <span class="svc-tabs__num" aria-hidden="true">01</span>
+              <span class="svc-tabs__tag">Analisi & Strategia</span>
+              <span class="svc-tabs__title">Analisi della situazione &amp; Piano d'azione</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="gads-tab-2" aria-controls="gads-pan-2" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">02</span>
+              <span class="svc-tabs__tag">Piano Pubblicitario</span>
+              <span class="svc-tabs__title">Piano Pubblicitario Google Ads</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="gads-tab-3" aria-controls="gads-pan-3" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">03</span>
+              <span class="svc-tabs__tag">Campagne Google</span>
+              <span class="svc-tabs__title">Search, Display Shopping &amp; YouTube</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="gads-tab-4" aria-controls="gads-pan-4" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">04</span>
+              <span class="svc-tabs__tag">Ottimizzazione</span>
+              <span class="svc-tabs__title">Ottimizzazione ROI &amp; Performance</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="gads-tab-5" aria-controls="gads-pan-5" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">05</span>
+              <span class="svc-tabs__tag">Report & Analytics</span>
+              <span class="svc-tabs__title">Report Chiari &amp; Risultati Misurabili</span>
+            </button>
           </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Analisi & Strategia</span>
+          <div class="svc-tabs__panels">
+            <div class="svc-tabs__panel is-active" role="tabpanel" id="gads-pan-1" aria-labelledby="gads-tab-1">
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Analisi & Strategia</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Studiamo il tuo mercato d'interesse per capire il target di riferimento e i trend di ricerca necessari per realizzare un piano pubblicitario efficace.</p>
+                <ul class="svc-tabs__points">
+                  <li>Analisi tramite Google Analytics e Trends</li>
+                  <li>Studio dei competitors e della UX del sito</li>
+                  <li>Identificazione del target e delle keyword</li>
+                  <li>Piano d'azione su misura per il tuo business</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="gads-pan-2" aria-labelledby="gads-tab-2" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Piano Pubblicitario</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Sulla base dell'analisi realizzata, forniamo un piano pubblicitario volto a raggiungere l'obiettivo del tuo business. Creiamo la struttura delle campagne e definiamo il budget ottimale.</p>
+                <ul class="svc-tabs__points">
+                  <li>Struttura delle campagne personalizzata</li>
+                  <li>Budget giornaliero consono al mercato</li>
+                  <li>Definizione degli obiettivi e dei KPI</li>
+                  <li>Configurazione dell'account Google Ads</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="gads-pan-3" aria-labelledby="gads-tab-3" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Campagne Google Ads</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Gestiamo ogni tipologia di campagna Google Ads, scegliendo il formato più adatto al tuo obiettivo: vendite, lead, brand awareness o traffico al sito.</p>
+                <ul class="svc-tabs__points">
+                  <li>Campagne di Ricerca e Discovery</li>
+                  <li>Campagne Display e YouTube</li>
+                  <li>Campagne Shopping e App</li>
+                  <li>Campagne Local e Performance Max</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="gads-pan-4" aria-labelledby="gads-tab-4" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Ottimizzazione</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Ogni settimana controlliamo l'andamento delle campagne per aumentare il ROI attraverso keyword, strategie di offerta e segmenti di pubblico mirati.</p>
+                <ul class="svc-tabs__points">
+                  <li>Monitoraggio settimanale delle campagne</li>
+                  <li>A/B test su annunci e landing page</li>
+                  <li>Strategie di offerta avanzate</li>
+                  <li>Audience targeting e remarketing</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="gads-pan-5" aria-labelledby="gads-tab-5" hidden>
+              <div class="svc-tabs__media">
+                <span class="svc-tabs__media-label">Report & Analytics</span>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">La trasparenza è fondamentale. Ti forniamo report periodici chiari e leggibili che mostrano esattamente dove vanno i tuoi investimenti e quali risultati stanno generando.</p>
+                <ul class="svc-tabs__points">
+                  <li>Report mensili con Google Data Studio</li>
+                  <li>Tracciamento conversioni con Tag Manager</li>
+                  <li>Analisi delle performance per campagna</li>
+                  <li>Riunioni periodiche di aggiornamento</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
-
-      <!-- 2 — Piano Pubblicitario -->
-      <section class="smm-panel smm-panel--light" aria-label="Piano Pubblicitario">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Piano Pubblicitario</span>
-            <h3 class="smm-panel__title" data-reveal>Piano Pubblicitario<br>Google Ads</h3>
-            <p class="smm-panel__text" data-reveal>Sulla base dell'analisi realizzata, forniamo un piano pubblicitario volto a raggiungere l'obiettivo del tuo business. Creiamo la struttura delle campagne e definiamo il budget ottimale.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Struttura delle campagne personalizzata</li>
-              <li data-reveal>Budget giornaliero consono al mercato</li>
-              <li data-reveal>Definizione degli obiettivi e dei KPI</li>
-              <li data-reveal>Configurazione dell'account Google Ads</li>
-            </ul>
-            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Piano Pubblicitario</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3 — Tipologie di Campagne -->
-      <section class="smm-panel smm-panel--dark" aria-label="Tipologie Campagne">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Campagne Google</span>
-            <h3 class="smm-panel__title" data-reveal>Search, Display<br>Shopping &amp; YouTube</h3>
-            <p class="smm-panel__text" data-reveal>Gestiamo ogni tipologia di campagna Google Ads, scegliendo il formato più adatto al tuo obiettivo: vendite, lead, brand awareness o traffico al sito.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Campagne di Ricerca e Discovery</li>
-              <li data-reveal>Campagne Display e YouTube</li>
-              <li data-reveal>Campagne Shopping e App</li>
-              <li data-reveal>Campagne Local e Performance Max</li>
-            </ul>
-            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Campagne Google Ads</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4 — Ottimizzazione -->
-      <section class="smm-panel smm-panel--light" aria-label="Ottimizzazione">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Ottimizzazione</span>
-            <h3 class="smm-panel__title" data-reveal>Ottimizzazione<br>ROI &amp; Performance</h3>
-            <p class="smm-panel__text" data-reveal>Ogni settimana controlliamo l'andamento delle campagne per aumentare il ROI attraverso keyword, strategie di offerta e segmenti di pubblico mirati.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Monitoraggio settimanale delle campagne</li>
-              <li data-reveal>A/B test su annunci e landing page</li>
-              <li data-reveal>Strategie di offerta avanzate</li>
-              <li data-reveal>Audience targeting e remarketing</li>
-            </ul>
-            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Ottimizzazione</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 — Report & Analytics -->
-      <section class="smm-panel smm-panel--dark" aria-label="Report e Analytics">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Report & Analytics</span>
-            <h3 class="smm-panel__title" data-reveal>Report Chiari<br>&amp; Risultati Misurabili</h3>
-            <p class="smm-panel__text" data-reveal>La trasparenza è fondamentale. Ti forniamo report periodici chiari e leggibili che mostrano esattamente dove vanno i tuoi investimenti e quali risultati stanno generando.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Report mensili con Google Data Studio</li>
-              <li data-reveal>Tracciamento conversioni con Tag Manager</li>
-              <li data-reveal>Analisi delle performance per campagna</li>
-              <li data-reveal>Riunioni periodiche di aggiornamento</li>
-            </ul>
-            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Report & Analytics</span>
-          </div>
-        </div>
-      </section>
-
-    </div><!-- /gadsPanelStack -->
+      </div>
+      </div><!-- /.svc-path__sticky -->
+    </section>
 
     <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
     <section class="svc-clients" id="gadsClienti" aria-label="I nostri clienti" data-nav-theme="dark">
+      <!-- Video di sfondo, come nella stessa sezione in homepage. -->
+      <div class="amici-video" aria-hidden="true">
+        <video class="amici-video__el" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        <div class="amici-video__fade"></div>
+      </div>
       <div class="container svc-clients__header">
         <h2 class="svc-clients__title" id="gadsClientiTitle">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
       </div>
@@ -595,11 +1261,17 @@
             <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
           </div>
           <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-          <label class="svc-caffe__privacy">
-            <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-          </label>
-          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="gadsCaffe-privacy">
+              <input type="checkbox" id="gadsCaffe-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+            </label>
+            <label class="svc-caffe__privacy" for="gadsCaffe-newsletter">
+              <input type="checkbox" id="gadsCaffe-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
+          </div>
+          <button class="btn btn--primary hc-submit" type="submit">Contattaci</button>
         </form>
       </div>
     </section>
@@ -937,6 +1609,8 @@
 
       const sectionColors = [
         { el: heroEl,    color: C_DARK    },
+        /* la sezione servizi ora e' bianca */
+        { el: document.querySelector('.svc-path'), color: C_WHITE },
         { el: clientiEl, color: C_DARK    },
         { el: magicEl,   color: C_WHITE   },
         { el: caffeEl,   color: C_FUCHSIA },
@@ -975,6 +1649,12 @@
         prevDark = isDark;
         navEl.classList.toggle('nav--on-dark', isDark);
       }
+
+      /* 4. .scrolled: come in homepage segna l'uscita dalla scena
+         della hero. Senza, restava sempre la formula del vetro
+         chiaro e il MENU nero anche sulle sezioni scure. */
+      const heroBottom = heroEl ? heroEl.getBoundingClientRect().bottom : 0;
+      navEl.classList.toggle('scrolled', heroBottom <= navMid);
     }
     requestAnimationFrame(navTick);
   })();
@@ -1069,5 +1749,168 @@
     </div>
   </footer>
 
+  <script>
+  /* ── Schede orizzontali dei servizi ───────────────────────────
+     Una scheda alla volta. I <button> hanno role="tab" e il
+     pannello role="tabpanel": la tastiera funziona come in una
+     vera barra di schede — frecce per spostarsi, Home/Fine agli
+     estremi — e i lettori di schermo annunciano lo stato. */
+  (function () {
+    const strip = document.querySelector('.svc-tabs__strip');
+    if (!strip) return;
+    const tabs = Array.from(strip.querySelectorAll('.svc-tabs__tab'));
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+
+    /* --n e --p: quante tappe ha la linea e fin dove e' percorsa.
+       Il tratto fucsia si ferma sul nodo scelto. */
+    strip.style.setProperty('--n', tabs.length);
+
+    function select(i, focus) {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.classList.toggle('is-active', on);
+        t.classList.toggle('is-done', k < i);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        const p = panels[k];
+        if (!p) return;
+        p.classList.toggle('is-active', on);
+        p.hidden = !on;
+      });
+      strip.style.setProperty('--p', tabs.length > 1 ? (i / (tabs.length - 1)).toFixed(4) : 0);
+      if (focus && tabs[i]) tabs[i].focus();
+    }
+
+    /* stato iniziale coerente con la scheda gia' marcata attiva */
+    select(Math.max(0, tabs.findIndex(t => t.classList.contains('is-active'))), false);
+
+    strip.addEventListener('click', e => {
+      const t = e.target.closest('.svc-tabs__tab');
+      if (!t) return;
+      select(tabs.indexOf(t), false);
+    });
+
+    strip.addEventListener('keydown', e => {
+      const i = tabs.indexOf(e.target.closest('.svc-tabs__tab'));
+      if (i < 0) return;
+      let n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n === null) return;
+      e.preventDefault();
+      select(n, true);
+    });
+  }());
+  </script>
+
+  <script>
+  /* ── Effetti condivisi delle pagine servizi ───────────────────
+     Salita fra sezioni, acqua sui titoli, ingresso dei testi.
+     Stesse funzioni delle altre pagine del sito. */
+  (function () {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFxSvc' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+    // il titolo della hero e gia in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    // gli altri titoli di sezione ondeggiano quando entrano
+    document.querySelectorAll('.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
+      .forEach(el => {
+        const io = new IntersectionObserver(es => {
+          es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+        }, el.classList.contains('sf-ghost')
+             ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+             : { threshold: 0.6 });
+        io.observe(el);
+      });
+
+    /* ── Salita delle sezioni ──────────────────────────────── */
+    const RISE = ['.svc-path', '.svc-clients', '.page-faq', '.svc-caffe', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso dei testi ────────────────────────────────── */
+    const bodyBits = document.querySelectorAll(
+      '.svc-tabs__text, .svc-tabs__points, .svc-tabs__tab, ' +
+      '.svc-caffe__sub, .svc-caffe__form, .page-faq__item, ' +
+      '.svc-clients__logo'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+  }());
+  </script>
 </body>
 </html>

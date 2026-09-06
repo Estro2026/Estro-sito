@@ -453,6 +453,684 @@
     .reveal.is-visible.stagger-2 { transition-delay: 0.2s; }
     .reveal.is-visible.stagger-3 { transition-delay: 0.3s; }
     .reveal.is-visible.stagger-4 { transition-delay: 0.4s; }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE FRA SEZIONI — stesso pattern della homepage
+       I colori alternati delle sezioni restano quelli di prima:
+       cambia solo il modo in cui una entra sopra l'altra.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       FIGURE RICERCATE — da nuvola di pillole a indice di ruoli
+       Otto pillole tutte uguali non dicevano niente di più di un
+       elenco di parole. Qui ogni figura è una riga con il suo
+       numero, il reparto e una freccia: si scorre come un indice,
+       e il clic porta al form già impostato su quel ruolo.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-roles {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .lcn-role { border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .lcn-role a {
+      display: grid;
+      grid-template-columns: 3.5rem 1fr auto 2.5rem;
+      align-items: center;
+      gap: clamp(1rem, 2vw, 2rem);
+      padding: clamp(0.9rem, 1.8vw, 1.35rem) 0;
+      text-decoration: none;
+      position: relative;
+      transition: padding-left 0.4s var(--ease-out, cubic-bezier(.16,1,.3,1));
+    }
+    /* Il fondo che scorre da sinistra al passaggio: è il segno che
+       la riga è viva, e non serve nessun riquadro per dirlo. */
+    .lcn-role a::before {
+      content: '';
+      position: absolute;
+      inset: 0 -1rem;
+      background: rgba(219,0,90,0.10);
+      transform: scaleX(0);
+      transform-origin: left center;
+      transition: transform 0.45s var(--ease-out, cubic-bezier(.16,1,.3,1));
+      z-index: -1;
+    }
+    .lcn-role a:hover::before { transform: scaleX(1); }
+    .lcn-role a:hover { padding-left: 1rem; }
+    .lcn-role__num {
+      font-family: var(--font-primary);
+      font-size: clamp(1rem, 1.4vw, 1.2rem);
+      color: rgba(255,255,255,0.28);
+      letter-spacing: -0.02em;
+      transition: color 0.35s ease;
+    }
+    .lcn-role a:hover .lcn-role__num { color: var(--primary); }
+    .lcn-role__name {
+      font-family: var(--font-primary);
+      font-size: clamp(1.15rem, 2.2vw, 1.75rem);
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      color: #fff;
+      line-height: 1.1;
+    }
+    .lcn-role__area {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap;
+      transition: color 0.35s ease;
+    }
+    .lcn-role a:hover .lcn-role__area { color: rgba(255,255,255,0.75); }
+    .lcn-role__go {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(255,255,255,0.22);
+      justify-self: end;
+      position: relative;
+      transition: background 0.35s ease, border-color 0.35s ease, transform 0.35s ease;
+    }
+    .lcn-role__go::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: currentColor;
+      color: rgba(255,255,255,0.6);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 17 17 8M9.5 8H17v7.5'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M8 17 17 8M9.5 8H17v7.5'/%3E%3C/svg%3E") center / 16px 16px no-repeat;
+      transition: color 0.35s ease;
+    }
+    .lcn-role a:hover .lcn-role__go {
+      background: var(--primary);
+      border-color: var(--primary);
+      transform: scale(1.08);
+    }
+    .lcn-role a:hover .lcn-role__go::before { color: #fff; }
+    @media (max-width: 700px) {
+      .lcn-role a { grid-template-columns: 2.5rem 1fr auto; }
+      .lcn-role__go { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       FORM — struttura come le altre sezioni: testo a sinistra,
+       campi a destra. Le caselle restano quelle di questa pagina.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-apply__layout {
+      max-width: 1440px !important;
+      margin-inline: auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 5vw, 5rem);
+      align-items: start;
+    }
+    .lcn-apply__left { align-self: center; }
+    .lcn-apply__title { font-size: min(60px, 11vw) !important; }
+    @media (max-width: 900px) {
+      .lcn-apply__layout { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CTA DEL FORM — identica a quelle degli altri form
+       Era un pulsante largo quanto il modulo con un'altra classe.
+       Ora è la stessa "Invia" del resto del sito: bordo bianco su
+       fondo vuoto che si riempie di bianco con il testo fucsia,
+       sollevandosi di 2px. Anche qui la tendina di .btn--primary
+       resta spenta, altrimenti il passaggio si legge diverso.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-apply__submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .lcn-apply__submit::before { display: none !important; }
+    .lcn-apply__submit:hover,
+    .lcn-apply__submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    .lcn-apply__form > div:last-of-type { display: flex; justify-content: center; }
+
+    /* ═══════════════════════════════════════════════════════════
+       SCALE DEI TITOLI
+       Hero e numeri al corpo dei titoli di sezione della home
+       (150px), titoli di sezione a 60px.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-hero__title,
+    .lcn-hero__stat-num { font-size: min(150px, 26vw) !important; }
+    .lcn-positions__heading,
+    .lcn-apply__title { font-size: min(60px, 11vw) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       FIGURE RICERCATE — la mappa dei ruoli
+       Una linea sola che attraversa la sezione e otto fermate, come
+       la mappa di una metropolitana: sopra e sotto alternate, per
+       stare in una fascia bassa invece che in otto righe. Ogni
+       fermata porta il nome del ruolo e il reparto, ed è un punto
+       vero — cliccandola si arriva al form con quella posizione
+       già scelta. La linea dice che i ruoli appartengono allo
+       stesso percorso, cosa che né le pillole né l'elenco
+       riuscivano a dire.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-roles {
+      list-style: none;
+      margin: clamp(2rem, 4vh, 3rem) 0 0;
+      padding: 0;
+      border: 0;
+      display: grid;
+      grid-auto-flow: column;
+      /* minmax(0, 1fr) e non 1fr: con 1fr ogni colonna non può
+         scendere sotto la parola più lunga del ruolo, e le otto
+         fermate sfondavano la sezione da entrambi i lati. */
+      grid-auto-columns: minmax(0, 1fr);
+      align-items: stretch;
+      position: relative;
+      min-height: 260px;
+    }
+    /* la linea */
+    .lcn-roles::before {
+      content: '';
+      position: absolute;
+      left: 0; right: 0;
+      top: 50%;
+      height: 2px;
+      background: linear-gradient(90deg,
+        rgba(219,0,90,0.15) 0%, var(--primary) 12%,
+        var(--primary) 88%, rgba(219,0,90,0.15) 100%);
+      transform: translateY(-1px);
+    }
+    .lcn-role { border: 0; display: block; position: relative; }
+    .lcn-role a {
+      display: grid;
+      /* La colonna interna deve poter scendere sotto la lunghezza
+         della parola: con justify-items: center le celle prendono
+         la loro larghezza naturale, e "DIGITAL STRATEGIST" da sola
+         sfondava la sezione di 200px. */
+      grid-template-columns: minmax(0, 1fr);
+      /* Tre fasce di altezza fissa — testo, fermata, testo — così
+         il punto cade sempre alla stessa quota anche quando i nomi
+         occupano una o tre righe. Senza, ogni fermata si allineava
+         al proprio testo e la linea sembrava spezzata. */
+      grid-template-rows: 1fr auto 1fr;
+      height: 100%;
+      justify-items: stretch;
+      gap: 0.6rem;
+      padding: 0;
+      text-decoration: none;
+      position: relative;
+      transition: none;
+    }
+    .lcn-role__name { align-self: end; }
+    .lcn-role__area { align-self: start; }
+    .lcn-role:nth-child(even) .lcn-role__name { align-self: start; }
+    .lcn-role:nth-child(even) .lcn-role__area { align-self: end; }
+    .lcn-role a::before { content: none; }
+    .lcn-role:not(:last-child)::after { content: none; }
+    /* la fermata */
+    .lcn-role__go {
+      display: block;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #080808;
+      border: 2px solid var(--primary);
+      justify-self: center;
+      order: 2;
+      transition: transform 0.35s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  background 0.35s ease, box-shadow 0.35s ease;
+    }
+    .lcn-role a:hover .lcn-role__go {
+      background: var(--primary);
+      transform: scale(1.5);
+      box-shadow: 0 0 0 6px rgba(219,0,90,0.18);
+    }
+    /* nome e reparto, sopra la fermata */
+    .lcn-role__name {
+      order: 1;
+      /* Non il carattere display: è espanso, e su una colonna da
+         158px "COPYWRITER" da solo ne chiedeva 298 sfondando la
+         sezione. Il carattere di testo ci sta a 16px, che è anche
+         il minimo di lettura. */
+      font-family: var(--font-secondary);
+      font-size: 16px !important;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.01em;
+      overflow-wrap: break-word;
+      line-height: 1.25;
+      text-align: center;
+      color: rgba(255,255,255,0.72);
+      max-width: 100%;
+      padding-inline: 0.35rem;
+      hyphens: auto;
+      transition: color 0.3s ease, transform 0.35s var(--ease-out, cubic-bezier(.16,1,.3,1));
+    }
+    .lcn-role__area {
+      order: 3;
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.32);
+      text-align: center;
+      transition: color 0.3s ease;
+    }
+    .lcn-role__num { display: none; }
+    /* Le fermate pari scendono sotto la linea: nome e reparto si
+       scambiano di posto, così l'alternanza è reale e non un
+       semplice spostamento. */
+    .lcn-role:nth-child(even) .lcn-role__name { order: 3; }
+    .lcn-role:nth-child(even) .lcn-role__area { order: 1; }
+    .lcn-role a:hover .lcn-role__name { color: #fff; transform: translateY(-2px); }
+    .lcn-role:nth-child(even) a:hover .lcn-role__name { transform: translateY(2px); }
+    .lcn-role a:hover .lcn-role__area { color: var(--primary); }
+
+    @media (max-width: 1024px) {
+      .lcn-roles {
+        grid-auto-flow: row;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.75rem 1rem;
+        min-height: 0;
+      }
+      .lcn-roles::before { content: none; }
+      .lcn-role a { justify-items: start; gap: 0.35rem; }
+      .lcn-role__name,
+      .lcn-role__area { text-align: left; max-width: none; }
+      .lcn-role__go { justify-self: start; }
+      .lcn-role:nth-child(even) .lcn-role__name { order: 1; }
+      .lcn-role:nth-child(even) .lcn-role__area { order: 3; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — minimo 16px, 14px per tagline e CTA
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main select,
+    main textarea,
+    main button { font-size: max(16px, 1rem); }
+    .lcn-hero__kicker,
+    .lcn-hero__stat-label,
+    .lcn-about__label,
+    .lcn-positions__kicker,
+    .lcn-apply__kicker,
+    .lcn-role__area { font-size: 14px !important; }
+    main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
+    /* i titoli restano alla loro scala, fissata più sopra */
+    .lcn-about__pill-num,
+    .lcn-role__name { font-size: revert !important; }
+    /* La hero occupa esattamente una schermata. Perché ci stia, i
+       corpi hanno anche un limite legato all'altezza della
+       finestra: su schermi alti restano i 150px chiesti, su quelli
+       bassi scendono quanto serve invece di far crescere la
+       sezione. */
+    .lcn-hero {
+      height: 100dvh;
+      min-height: 0 !important;
+      overflow: hidden;
+      padding-top: calc(var(--nav-h, 88px) + 1.5rem) !important;
+      padding-bottom: clamp(1.5rem, 3vh, 2.5rem) !important;
+    }
+    .lcn-hero__title {
+      font-size: min(150px, 26vw, 10.5vh) !important;
+      margin-bottom: clamp(1rem, 3vh, 2rem) !important;
+    }
+    .lcn-hero__stat-num { font-size: min(150px, 26vw, 6vh) !important; }
+    .lcn-hero__bottom { padding-top: clamp(1rem, 2.5vh, 2rem) !important; }
+    .lcn-hero__sub { margin-bottom: clamp(1rem, 2.5vh, 2rem) !important; }
+    /* Niente filetto sopra i numeri: separava due blocchi che si
+       leggono già come uno solo. */
+    .lcn-hero__stats {
+      border-top: 0 !important;
+      padding-top: clamp(1rem, 2.5vh, 2rem) !important;
+    }
+
+    /* Il testo sta su una fotografia: il velo di prima si apriva
+       al 45% in mezzo, proprio dove cade il titolo. Ora scurisce
+       di più al centro e un secondo velo, sfumato da sinistra,
+       copre la colonna dove sta il testo — l'immagine resta
+       leggibile a destra. */
+    .lcn-hero::before {
+      background:
+        linear-gradient(to right,
+          rgba(6,6,6,0.90) 0%,
+          rgba(6,6,6,0.72) 42%,
+          rgba(6,6,6,0.30) 78%,
+          rgba(6,6,6,0.30) 100%),
+        linear-gradient(to bottom,
+          rgba(6,6,6,0.80) 0%,
+          rgba(6,6,6,0.55) 45%,
+          rgba(6,6,6,0.85) 100%) !important;
+    }
+    .lcn-hero__title { text-shadow: 0 2px 24px rgba(0,0,0,0.45); }
+    .lcn-hero__sub { color: rgba(255,255,255,0.78) !important; }
+    .lcn-hero__stat-label { color: rgba(255,255,255,0.72) !important; }
+    .lcn-positions__heading,
+    .lcn-apply__title { font-size: min(60px, 11vw) !important; }
+    .lcn-role__name { font-size: 16px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       NOMI DEI RUOLI PIÙ LEGGIBILI E FERMATE PIÙ ESPRESSIVE
+       I nomi erano 16px al 72% di bianco: la mappa si leggeva a
+       fatica. Salgono a 18px in bianco pieno. Le fermate non sono
+       più pallini vuoti ma dischi fucsia con un cerchietto chiaro
+       dentro, come i punti di una mappa vera.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-role__name {
+      font-size: 18px !important;
+      color: #fff !important;
+      letter-spacing: 0.02em;
+    }
+    .lcn-role__area { color: rgba(255,255,255,0.5) !important; }
+    /* ── Le fermate: un'icona per mestiere ───────────────────
+       Non un pallino uguale per tutti, ma il segno del mestiere:
+       si capisce di che ruolo si tratta prima ancora di leggere.
+       Disco scuro con il glifo fucsia, che al passaggio si inverte
+       — disco pieno e glifo bianco. */
+    .lcn-role__go {
+      display: block !important;
+      width: 42px !important;
+      height: 42px !important;
+      border-radius: 50%;
+      background: #101012 !important;
+      border: 2px solid rgba(219,0,90,0.45) !important;
+      position: relative;
+      justify-self: center;
+      transition: background 0.35s ease, border-color 0.35s ease,
+                  transform 0.35s var(--ease-out, cubic-bezier(.16,1,.3,1));
+    }
+    /* ECCO LE ICONE SOVRAPPOSTE.
+       Dalla prima versione della lista era rimasto un ::before che
+       disegnava una freccia su OGNI disco: restava sotto e si
+       vedeva insieme al segno del mestiere. Spento. */
+    .lcn-role__go::before { content: none !important; }
+    .lcn-role__go::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      margin: auto;
+      width: 22px;
+      height: 22px;
+      background: var(--primary);
+      -webkit-mask-position: center; mask-position: center;
+      -webkit-mask-size: contain;   mask-size: contain;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      transition: background 0.35s ease;
+    }
+    .lcn-role a:hover .lcn-role__go {
+      background: var(--primary) !important;
+      border-color: var(--primary) !important;
+      transform: scale(1.12);
+    }
+    .lcn-role a:hover .lcn-role__go::after { background: #fff; }
+
+    /* pennino — graphic designer */
+    .lcn-role a[data-role="graphic-designer"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M20.7 3.3a3.1 3.1 0 0 0-4.4 0l-1 1 4.4 4.4 1-1a3.1 3.1 0 0 0 0-4.4ZM14 5.8 3.7 16.1a1 1 0 0 0-.27.48l-1.2 4.6a1 1 0 0 0 1.22 1.22l4.6-1.2a1 1 0 0 0 .48-.27L18.4 10.2 14 5.8Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M20.7 3.3a3.1 3.1 0 0 0-4.4 0l-1 1 4.4 4.4 1-1a3.1 3.1 0 0 0 0-4.4ZM14 5.8 3.7 16.1a1 1 0 0 0-.27.48l-1.2 4.6a1 1 0 0 0 1.22 1.22l4.6-1.2a1 1 0 0 0 .48-.27L18.4 10.2 14 5.8Z'/%3E%3C/svg%3E");
+    }
+    /* cuore che parla — social media manager */
+    .lcn-role a[data-role="social-media-manager"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.5c5.2 0 9.5 3.6 9.5 8.2 0 4.5-4.3 8.2-9.5 8.2-.9 0-1.8-.12-2.6-.33l-4.7 2.5a.8.8 0 0 1-1.15-.9l1-3.9C2.9 14.8 2.5 13 2.5 10.7c0-4.6 4.3-8.2 9.5-8.2Zm0 3.6c-1.6-1.5-4.3-.5-4.3 1.8 0 1.9 2.2 3.4 4.3 5 2.1-1.6 4.3-3.1 4.3-5 0-2.3-2.7-3.3-4.3-1.8Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 2.5c5.2 0 9.5 3.6 9.5 8.2 0 4.5-4.3 8.2-9.5 8.2-.9 0-1.8-.12-2.6-.33l-4.7 2.5a.8.8 0 0 1-1.15-.9l1-3.9C2.9 14.8 2.5 13 2.5 10.7c0-4.6 4.3-8.2 9.5-8.2Zm0 3.6c-1.6-1.5-4.3-.5-4.3 1.8 0 1.9 2.2 3.4 4.3 5 2.1-1.6 4.3-3.1 4.3-5 0-2.3-2.7-3.3-4.3-1.8Z'/%3E%3C/svg%3E");
+    }
+    /* virgolette — copywriter */
+    .lcn-role a[data-role="copywriter"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9.6 4.2c.6 0 1.1.5 1.1 1.1v6.4c0 4.3-2.5 7.1-6.2 8.1a1.1 1.1 0 0 1-.6-2.12c2.1-.6 3.5-1.9 3.9-3.88H4.7a1.6 1.6 0 0 1-1.6-1.6V5.8c0-.9.7-1.6 1.6-1.6Zm10 0c.6 0 1.1.5 1.1 1.1v6.4c0 4.3-2.5 7.1-6.2 8.1a1.1 1.1 0 0 1-.6-2.12c2.1-.6 3.5-1.9 3.9-3.88h-3.1a1.6 1.6 0 0 1-1.6-1.6V5.8c0-.9.7-1.6 1.6-1.6Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M9.6 4.2c.6 0 1.1.5 1.1 1.1v6.4c0 4.3-2.5 7.1-6.2 8.1a1.1 1.1 0 0 1-.6-2.12c2.1-.6 3.5-1.9 3.9-3.88H4.7a1.6 1.6 0 0 1-1.6-1.6V5.8c0-.9.7-1.6 1.6-1.6Zm10 0c.6 0 1.1.5 1.1 1.1v6.4c0 4.3-2.5 7.1-6.2 8.1a1.1 1.1 0 0 1-.6-2.12c2.1-.6 3.5-1.9 3.9-3.88h-3.1a1.6 1.6 0 0 1-1.6-1.6V5.8c0-.9.7-1.6 1.6-1.6Z'/%3E%3C/svg%3E");
+    }
+    /* bersaglio — advertiser */
+    .lcn-role a[data-role="advertiser"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm0 3.4a6.4 6.4 0 1 0 0 12.8 6.4 6.4 0 0 0 0-12.8Zm0 3.6a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm0 3.4a6.4 6.4 0 1 0 0 12.8 6.4 6.4 0 0 0 0-12.8Zm0 3.6a2.8 2.8 0 1 1 0 5.6 2.8 2.8 0 0 1 0-5.6Z'/%3E%3C/svg%3E");
+    }
+    /* macchina da presa — content creator */
+    .lcn-role a[data-role="content-creator"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2' y='5.6' width='13.6' height='12.8' rx='3'/%3E%3Cpath fill='black' d='m17.4 10.4 3.3-2.1a.9.9 0 0 1 1.4.76v5.9a.9.9 0 0 1-1.4.76l-3.3-2.1Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2' y='5.6' width='13.6' height='12.8' rx='3'/%3E%3Cpath fill='black' d='m17.4 10.4 3.3-2.1a.9.9 0 0 1 1.4.76v5.9a.9.9 0 0 1-1.4.76l-3.3-2.1Z'/%3E%3C/svg%3E");
+    }
+    /* parentesi angolari — web developer */
+    .lcn-role a[data-role="web-developer"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8.9 4.6a1.4 1.4 0 0 1 .1 2L4.8 11.9l4.2 5.3a1.4 1.4 0 1 1-2.2 1.75l-5-6.3a1.4 1.4 0 0 1 0-1.75l5-6.3a1.4 1.4 0 0 1 2.1-.05Zm6.2 0a1.4 1.4 0 0 1 2 .05l5 6.3a1.4 1.4 0 0 1 0 1.75l-5 6.3a1.4 1.4 0 1 1-2.2-1.75l4.2-5.3-4.2-5.3a1.4 1.4 0 0 1 .2-2.05Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M8.9 4.6a1.4 1.4 0 0 1 .1 2L4.8 11.9l4.2 5.3a1.4 1.4 0 1 1-2.2 1.75l-5-6.3a1.4 1.4 0 0 1 0-1.75l5-6.3a1.4 1.4 0 0 1 2.1-.05Zm6.2 0a1.4 1.4 0 0 1 2 .05l5 6.3a1.4 1.4 0 0 1 0 1.75l-5 6.3a1.4 1.4 0 1 1-2.2-1.75l4.2-5.3-4.2-5.3a1.4 1.4 0 0 1 .2-2.05Z'/%3E%3C/svg%3E");
+    }
+    /* Tabella di marcia — project manager.
+       In una maschera il bianco è opaco quanto il nero: le barre
+       interne disegnate in bianco non ritagliavano niente e il
+       disco restava un quadrato pieno. Ora sono le barre stesse a
+       formare l'icona, senza rettangolo di fondo. */
+    .lcn-role a[data-role="project-manager"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2.6' y='4.6' width='11' height='3.6' rx='1.8'/%3E%3Crect fill='black' x='7' y='10.2' width='14.4' height='3.6' rx='1.8'/%3E%3Crect fill='black' x='2.6' y='15.8' width='9' height='3.6' rx='1.8'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2.6' y='4.6' width='11' height='3.6' rx='1.8'/%3E%3Crect fill='black' x='7' y='10.2' width='14.4' height='3.6' rx='1.8'/%3E%3Crect fill='black' x='2.6' y='15.8' width='9' height='3.6' rx='1.8'/%3E%3C/svg%3E");
+    }
+    /* bussola — digital strategist */
+    .lcn-role a[data-role="digital-strategist"] .lcn-role__go::after {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm4.4 4.1-6.5 2.6a1.4 1.4 0 0 0-.78.78l-2.6 6.5a.7.7 0 0 0 .9.9l6.5-2.6a1.4 1.4 0 0 0 .78-.78l2.6-6.5a.7.7 0 0 0-.9-.9ZM12 10.4a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm4.4 4.1-6.5 2.6a1.4 1.4 0 0 0-.78.78l-2.6 6.5a.7.7 0 0 0 .9.9l6.5-2.6a1.4 1.4 0 0 0 .78-.78l2.6-6.5a.7.7 0 0 0-.9-.9ZM12 10.4a1.6 1.6 0 1 1 0 3.2 1.6 1.6 0 0 1 0-3.2Z'/%3E%3C/svg%3E");
+    }
+
+    /* ── Fermate tutte uguali, su tre file pulite ────────────
+       L'alternanza sopra/sotto faceva sì che in una colonna il
+       nome stesse in alto e nella successiva in basso: due file di
+       testo sfalsate che, con i dischi in mezzo, si leggevano come
+       icone sovrapposte. Ora ogni fermata ha lo stesso ordine —
+       nome, icona, reparto — e le tre file sono allineate. */
+    .lcn-role:nth-child(even) .lcn-role__name { order: 1 !important; align-self: end !important; }
+    .lcn-role:nth-child(even) .lcn-role__area { order: 3 !important; align-self: start !important; }
+    .lcn-role__name { margin-bottom: 0.35rem; }
+    .lcn-role__area { margin-top: 0.35rem; }
+
+    /* ── Gli a capo sono decisi, non subiti ──────────────────
+       I nomi su due parole hanno il loro <br> nel testo, così la
+       riga cade sempre nello stesso punto: prima l'andata a capo
+       la decideva la larghezza disponibile, e bastava un pixel in
+       meno perché un nome passasse da una riga a due, spostando
+       tutta la fila. Le righe non si spezzano da sole.
+       In hover cambia solo il colore: nessuno spostamento, quindi
+       nessun ricalcolo del testo. */
+    .lcn-role__name {
+      white-space: nowrap;
+      overflow-wrap: normal;
+      hyphens: none;
+    }
+    .lcn-role a:hover .lcn-role__name { transform: none !important; }
+    .lcn-role:nth-child(even) a:hover .lcn-role__name { transform: none !important; }
+
+    /* ── Placeholder "Chi siamo": movimento 3D in hover ──────── */
+    .lcn-about__right { perspective: 1000px; }
+    .lcn-about__photo {
+      transform-style: preserve-3d;
+      transform: rotateX(var(--ap-rx, 0deg)) rotateY(var(--ap-ry, 0deg))
+                 translate3d(0, 0, var(--ap-z, 0px));
+      transition: transform 0.6s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  box-shadow 0.6s var(--ease-out, cubic-bezier(.16,1,.3,1));
+    }
+    .lcn-about__photo.ap-live {
+      transition: transform 0.12s ease-out, box-shadow 0.3s ease;
+      box-shadow: 0 26px 60px rgba(0,0,0,0.45);
+    }
+    .lcn-about__photo-icon {
+      transition: transform 0.5s var(--ease-out, cubic-bezier(.16,1,.3,1));
+      transform: translateZ(var(--ap-iz, 0px));
+    }
+    @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+      .lcn-about__photo { transform: none !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       ICONE DI SEZIONE — piene, geometria semplice
+       Una per ogni occhiello, colorata per eredità. Fuori restano
+       header, prefooter e footer.
+       ═══════════════════════════════════════════════════════════ */
+    /* Icone solo su "Chi siamo" e "Figure ricercate": sulla hero e
+       sopra il form appesantivano due righe che sono gia' corte. */
+    .lcn-about__label::before,
+    .lcn-positions__kicker::before {
+      content: '';
+      display: inline-block;
+      vertical-align: -6px;
+      width: 24px;
+      height: 24px;
+      margin-right: 0.6rem;
+      background: currentColor;
+      -webkit-mask-position: center; mask-position: center;
+      -webkit-mask-size: contain;   mask-size: contain;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+    }
+    /* tre teste — "chi siamo" */
+    .lcn-about__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle fill='black' cx='9' cy='7.6' r='3.6'/%3E%3Ccircle fill='black' cx='17.6' cy='8.6' r='2.7'/%3E%3Cpath fill='black' d='M9 13c3.6 0 6.5 2.2 6.5 4.9v1.4a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V17.9C2.5 15.2 5.4 13 9 13Z'/%3E%3Cpath fill='black' d='M17.6 12.8c2.6 0 4.4 1.6 4.4 3.5v1.1a1 1 0 0 1-1 1h-3.3v-.5c0-1.9-.9-3.5-2.3-4.6a7.6 7.6 0 0 1 2.2-.5Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Ccircle fill='black' cx='9' cy='7.6' r='3.6'/%3E%3Ccircle fill='black' cx='17.6' cy='8.6' r='2.7'/%3E%3Cpath fill='black' d='M9 13c3.6 0 6.5 2.2 6.5 4.9v1.4a1 1 0 0 1-1 1H3.5a1 1 0 0 1-1-1V17.9C2.5 15.2 5.4 13 9 13Z'/%3E%3Cpath fill='black' d='M17.6 12.8c2.6 0 4.4 1.6 4.4 3.5v1.1a1 1 0 0 1-1 1h-3.3v-.5c0-1.9-.9-3.5-2.3-4.6a7.6 7.6 0 0 1 2.2-.5Z'/%3E%3C/svg%3E");
+    }
+    /* segnaposto sulla mappa — "figure ricercate" */
+    .lcn-positions__kicker::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 1.8a7.7 7.7 0 0 1 7.7 7.7c0 5.2-6.1 11.6-7 12.5a1 1 0 0 1-1.4 0c-.9-.9-7-7.3-7-12.5A7.7 7.7 0 0 1 12 1.8Zm0 5a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 1.8a7.7 7.7 0 0 1 7.7 7.7c0 5.2-6.1 11.6-7 12.5a1 1 0 0 1-1.4 0c-.9-.9-7-7.3-7-12.5A7.7 7.7 0 0 1 12 1.8Zm0 5a2.8 2.8 0 1 0 0 5.6 2.8 2.8 0 0 0 0-5.6Z'/%3E%3C/svg%3E");
+    }
+    /* "Chi siamo" in fucsia come gli altri occhielli */
+    .lcn-about__label { color: var(--primary) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       I DUE TITOLI — 60px fissi
+       Erano già a 60px sopra i 545px di larghezza, ma la misura
+       passava da min(60px, 11vw): sotto quella soglia scendeva da
+       sola. Qui il valore è fisso e in fondo al foglio, così non
+       può essere riscritto da nient'altro.
+       ═══════════════════════════════════════════════════════════ */
+    h2.lcn-positions__heading,
+    h2.lcn-apply__title { font-size: 60px !important; }
+    /* ECCO PERCHÉ SEMBRAVANO PICCOLI.
+       I titoli vengono spezzati in <span>, una per parola, da uno
+       script della pagina. La regola del minimo di lettura —
+       "main span { font-size: max(16px, 1rem) }" — colpiva anche
+       quelle: il contenitore restava a 60px, ma le parole dentro
+       venivano scritte a 16. Misurato: righe alte 15-21px dentro
+       un blocco da 78. Le parole ereditano di nuovo dal titolo. */
+    main h1 span, main h2 span, main h3 span,
+    main h1 a, main h2 a, main h3 a { font-size: inherit !important; }
+    /* Le due righe sotto i titoli: testo di lettura, quindi 16px.
+       La nota stava a 14.4 perché la sua regola, essendo su classe,
+       batteva il minimo scritto su "main p". */
+    p.lcn-positions__notice,
+    p.lcn-apply__sub { font-size: 16px !important; }
+    @media (max-width: 600px) {
+      h2.lcn-positions__heading,
+      h2.lcn-apply__title { font-size: 40px !important; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO — stessi contenuti, meno vuoto in mezzo
+       Il blocco di testo, la CTA e i numeri erano distanziati da
+       stacchi pensati per una pagina che scorreva: qui la sezione
+       è alta una schermata esatta e quello spazio si vedeva tutto.
+       ═══════════════════════════════════════════════════════════ */
+    .lcn-hero__title { margin-bottom: clamp(0.75rem, 1.5vh, 1.25rem) !important; }
+    .lcn-hero__bottom { padding-top: clamp(0.75rem, 1.5vh, 1.25rem) !important; }
+    .lcn-hero__sub { margin-bottom: clamp(0.75rem, 1.5vh, 1.25rem) !important; }
+    .lcn-hero__stats {
+      padding-top: clamp(0.75rem, 1.5vh, 1.25rem) !important;
+      gap: clamp(1.5rem, 3.5vw, 3.5rem) !important;
+    }
+    /* Testo e CTA restano un blocco; i numeri si staccano e vanno
+       a chiudere la sezione in basso. Lo spazio in mezzo è quello
+       che avanza, quindi la hero resta esattamente una schermata
+       qualunque sia l'altezza della finestra. */
+    .lcn-hero { justify-content: space-between !important; }
+    .lcn-hero__stat { gap: 0.15rem !important; }
+    /* Il blocco di testo scende un po' dal bordo alto, i numeri
+       risalgono dal fondo: lo spazio libero resta in mezzo e la
+       sezione non cambia altezza. */
+    .lcn-hero__top { margin-top: clamp(1.5rem, 5vh, 3.5rem); }
+    .lcn-hero__stats { margin-bottom: clamp(1.5rem, 5vh, 3.5rem) !important; }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -467,10 +1145,11 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -526,7 +1205,7 @@
 
     <!-- ══ HERO ══════════════════════════════════════════════ -->
     <section class="lcn-hero">
-      <div>
+      <div class="lcn-hero__top">
         <span class="lcn-hero__kicker">Unisciti al team</span>
         <h1 class="lcn-hero__title">La nostra ricerca<br>di nuovi talenti<br>non si ferma mai</h1>
         <div class="lcn-hero__bottom">
@@ -586,26 +1265,93 @@
         <span class="lcn-positions__kicker">Figure ricercate</span>
         <span class="lcn-positions__line"></span>
       </div>
-      <h2 class="lcn-positions__heading reveal" style="transition-delay:0.1s">Siamo sempre entusiasti<br>di conoscere nuovi talenti</h2>
+      <h2 class="lcn-positions__heading reveal" style="transition-delay:0.1s">Siamo sempre entusiasti di conoscere nuovi talenti</h2>
       <p class="lcn-positions__notice reveal" style="transition-delay:0.2s">Al momento non ci sono posizioni aperte, ma inviaci comunque il tuo CV.</p>
-      <div class="lcn-positions__tags reveal" style="transition-delay:0.3s">
-        <span class="lcn-pos-tag">Graphic Designer</span>
-        <span class="lcn-pos-tag">Social Media Manager</span>
-        <span class="lcn-pos-tag">Copywriter</span>
-        <span class="lcn-pos-tag">Advertiser</span>
-        <span class="lcn-pos-tag">Content Creator</span>
-        <span class="lcn-pos-tag">Web Developer</span>
-        <span class="lcn-pos-tag">Project Manager</span>
-        <span class="lcn-pos-tag">Digital Strategist</span>
-      </div>
+      <!-- Le figure non sono più otto pillole in fila ma un elenco
+           numerato: ognuna una riga, col suo numero, il reparto e
+           una freccia che porta al form già impostato su quel
+           ruolo. Si legge come un indice di posizioni, non come un
+           nuvola di parole. -->
+      <ul class="lcn-roles reveal" style="transition-delay:0.3s">
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="graphic-designer">
+            <span class="lcn-role__num">01</span>
+            <span class="lcn-role__name">Graphic<br>Designer</span>
+            <span class="lcn-role__area">Design</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="social-media-manager">
+            <span class="lcn-role__num">02</span>
+            <span class="lcn-role__name">Social Media<br>Manager</span>
+            <span class="lcn-role__area">Social</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="copywriter">
+            <span class="lcn-role__num">03</span>
+            <span class="lcn-role__name">Copywriter</span>
+            <span class="lcn-role__area">Contenuti</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="advertiser">
+            <span class="lcn-role__num">04</span>
+            <span class="lcn-role__name">Advertiser</span>
+            <span class="lcn-role__area">Performance</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="content-creator">
+            <span class="lcn-role__num">05</span>
+            <span class="lcn-role__name">Content<br>Creator</span>
+            <span class="lcn-role__area">Contenuti</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="web-developer">
+            <span class="lcn-role__num">06</span>
+            <span class="lcn-role__name">Web<br>Developer</span>
+            <span class="lcn-role__area">Digital</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="project-manager">
+            <span class="lcn-role__num">07</span>
+            <span class="lcn-role__name">Project<br>Manager</span>
+            <span class="lcn-role__area">Operations</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+        <li class="lcn-role">
+          <a href="#candidatura" data-role="digital-strategist">
+            <span class="lcn-role__num">08</span>
+            <span class="lcn-role__name">Digital<br>Strategist</span>
+            <span class="lcn-role__area">Strategia</span>
+            <span class="lcn-role__go" aria-hidden="true"></span>
+          </a>
+        </li>
+      </ul>
     </section>
 
     <!-- ══ FORM CANDIDATURA ══════════════════════════════════ -->
     <section class="lcn-apply" id="candidatura">
+      <!-- Struttura come le altre sezioni con un form: testo a
+           sinistra, campi a destra. Le caselle restano quelle di
+           questa pagina, cambia solo l'impaginazione. -->
       <div class="lcn-apply__layout">
-        <span class="lcn-apply__kicker reveal">Candidati ora</span>
-        <h2 class="lcn-apply__title reveal" style="transition-delay:0.1s">Inviaci il tuo curriculum</h2>
-        <p class="lcn-apply__sub reveal" style="transition-delay:0.2s">Iniziamo a conoscerci!</p>
+        <div class="lcn-apply__left">
+          <span class="lcn-apply__kicker reveal">Candidati ora</span>
+          <h2 class="lcn-apply__title reveal" style="transition-delay:0.1s" id="lcnApplyTitle">Inviaci il tuo curriculum</h2>
+          <p class="lcn-apply__sub reveal" style="transition-delay:0.2s">Iniziamo a conoscerci!</p>
+        </div>
+        <div class="lcn-apply__right">
         <form class="lcn-apply__form reveal" style="transition-delay:0.35s" action="#" method="post" enctype="multipart/form-data" novalidate>
 
           <div class="lcn-apply__row">
@@ -639,10 +1385,11 @@
           </label>
 
           <div>
-            <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
+            <button class="btn btn--primary lcn-apply__submit" type="submit">Invia</button>
           </div>
 
         </form>
+        </div>
       </div>
     </section>
 
@@ -650,13 +1397,13 @@
   </div>
 
   <!-- â•â• FOOTER â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â• -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
 
         <div class="sf-col">
-          <a class="nav__logo sf-logo" href="index.html" aria-label=”ESTRO — Homepage”>
+          <a class="nav__logo sf-logo" href="index.html" aria-label="ESTRO — Homepage">
             <img src="Logoestrofooter.webp" alt="ESTRO" />
           </a>
           <p class="sf-tagline">Idee che prendono forma.</p>
@@ -720,8 +1467,7 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-      </div>
-    </div>
+          </div>
         </div>
 
       </div>
@@ -741,144 +1487,160 @@
 
   <script src="js/main.js"></script>
   <script>
-  (function () {
-    var navEl      = document.querySelector('.nav');
-    var heroEl     = document.querySelector('.lcn-hero');
-    var aboutEl    = document.querySelector('.lcn-about');
-    var posEl      = document.querySelector('.lcn-positions');
-    var applyEl    = document.querySelector('.lcn-apply');
-    if (!heroEl) return;
+  /* ═══════════════════════════════════════════════════════════
+     LAVORA CON NOI — stesso motore delle altre pagine.
+     Al posto della vecchia regia a veli colorati: acqua sui
+     titoli, salita fra sezioni scritta da un solo rAF, e la nav
+     che segue il fondo che le passa sotto. I colori alternati
+     delle sezioni restano quelli di prima.
+     ═══════════════════════════════════════════════════════════ */
+  function lcnBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
 
-    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-    function makeTransOv(el, bg) {
-      if (!el) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      el.appendChild(ov);
-      return ov;
-    }
-    /* fade completo quando il 10% dell'altezza della sezione è ancora visibile */
-    function pSectionExit(el) {
-      if (!el) return 0;
-      var bottom    = el.getBoundingClientRect().bottom;
-      var h         = el.offsetHeight;
-      var fadeStart = h * 0.50;
-      var fadeEnd   = h * 0.10;
-      return ease(c01((fadeStart - bottom) / (fadeStart - fadeEnd)));
-    }
-
-    var heroToAboutOv  = makeTransOv(heroEl, '#fff');
-    if (heroToAboutOv) heroToAboutOv.style.bottom = '-8px'; /* elimina lo stacco hero/about */
-    var aboutToPosOv   = aboutEl ? makeTransOv(aboutEl, '#080808') : null;
-    var posToApplyOv   = posEl   ? makeTransOv(posEl,   '#DB005A') : null;
-
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
-    document.body.appendChild(exitOv);
-
-    function splitWordsHtml(el) {
-      if (!el) return [];
-      var parts = el.innerHTML.split(/<br\s*\/?>/i);
-      el.innerHTML = parts.map(function(seg) {
-        return seg.trim().split(/\s+/).filter(Boolean).map(function(w) {
-          var safe = w.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-          return '<span class="tw" style="display:inline-block;opacity:0;transform:translateY(0.65em)">' + safe + '</span>';
-        }).join(' ');
-      }).join('<br>');
-      el.style.opacity = '1';
-      return Array.from(el.querySelectorAll('.tw'));
-    }
-    function revWords(words, p, base, dur) {
-      words.forEach(function(w, i) {
-        var lp = ease(c01((p - (base||0) - i*(dur||0.12)) / 0.4));
-        w.style.opacity   = lp.toFixed(3);
-        w.style.transform = 'translateY(' + ((1-lp)*0.65).toFixed(3) + 'em)';
-      });
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
     }
 
-    var heroKicker = heroEl.querySelector('.lcn-hero__kicker');
-    var heroTitle  = heroEl.querySelector('.lcn-hero__title');
-    var heroBottom = heroEl.querySelector('.lcn-hero__bottom');
-    var heroStats  = heroEl.querySelector('.lcn-hero__stats');
-    if (heroKicker) { heroKicker.style.opacity = '0'; heroKicker.style.transform = 'translateY(10px)'; }
-    var heroWords = splitWordsHtml(heroTitle);
-    if (heroBottom) { heroBottom.style.opacity = '0'; heroBottom.style.transform = 'translateY(16px)'; }
-    if (heroStats)  { heroStats.style.opacity  = '0'; heroStats.style.transform  = 'translateY(16px)'; }
-    var startTime = performance.now();
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
 
-    var entryOv = document.createElement('div');
-    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
-    document.body.appendChild(entryOv);
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        entryOv.style.opacity = '0';
-        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
+    requestAnimationFrame(() => waterLetters(document.querySelector('.lcn-hero__title'), 1000));
+
+    document.querySelectorAll('.lcn-positions__heading, #lcnApplyTitle, .sf-ghost').forEach(el => {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+      }, el.classList.contains('sf-ghost')
+           ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+           : { threshold: 0.5 });
+      io.observe(el);
+    });
+
+    /* ── Salita fra sezioni ────────────────────────────────── */
+    const RISE = ['.lcn-about', '.lcn-positions', '.lcn-apply', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Le figure portano al form già impostato sul ruolo ─── */
+    const select = document.querySelector('.lcn-apply__select');
+    document.querySelectorAll('.lcn-role a[data-role]').forEach(a => {
+      a.addEventListener('click', () => {
+        if (select) select.value = a.dataset.role;
       });
     });
 
-    var C_DARK    = [5,   5,   5];
-    var C_WHITE   = [255, 255, 255];
-    var C_DARK2   = [8,   8,   8];
-    var C_FUCHSIA = [219, 0,   90];
-    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-    var prevDark = null;
-
-    function tick() {
-      if (heroToAboutOv)  heroToAboutOv.style.opacity  = pSectionExit(heroEl).toFixed(3);
-      if (aboutToPosOv)   aboutToPosOv.style.opacity   = pSectionExit(aboutEl).toFixed(3);
-      if (posToApplyOv)   posToApplyOv.style.opacity   = pSectionExit(posEl).toFixed(3);
-
-      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
-
-      var t = (performance.now() - startTime) / 1000;
-      if (heroKicker) {
-        var kp = ease(c01((t - 0.05) / 0.4));
-        heroKicker.style.opacity   = kp.toFixed(3);
-        heroKicker.style.transform = 'translateY(' + ((1-kp)*10).toFixed(1) + 'px)';
-      }
-      revWords(heroWords, t, 0.08, 0.14);
-      if (heroBottom) {
-        var bp = ease(c01((t - 0.55) / 0.55));
-        heroBottom.style.opacity   = bp.toFixed(3);
-        heroBottom.style.transform = 'translateY(' + ((1-bp)*16).toFixed(1) + 'px)';
-      }
-      if (heroStats) {
-        var sp = ease(c01((t - 0.75) / 0.55));
-        heroStats.style.opacity   = sp.toFixed(3);
-        heroStats.style.transform = 'translateY(' + ((1-sp)*16).toFixed(1) + 'px)';
-      }
-
-      if (navEl) {
-        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
-        var effective = C_DARK;
-        var sections = [
-          { el: heroEl,   base: C_DARK,    ov: heroToAboutOv, ovC: C_WHITE   },
-          { el: aboutEl,  base: C_WHITE,   ov: aboutToPosOv,  ovC: C_DARK2   },
-          { el: posEl,    base: C_DARK2,   ov: posToApplyOv,  ovC: C_FUCHSIA },
-          { el: applyEl,  base: C_FUCHSIA, ov: null,          ovC: null      },
-        ];
-        sections.forEach(function(s) {
-          if (!s.el) return;
-          var r = s.el.getBoundingClientRect();
-          if (r.top <= navMidY && r.bottom > navMidY) {
-            var alpha = ovOp(s.ov);
-            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
-          }
+    /* ── Placeholder "Chi siamo": inclinazione col puntatore ──
+       La cornice si muove nello spazio, l'icona dentro resta un
+       piano più avanti: è lo scarto fra i due a dare il volume. */
+    (function aboutTilt() {
+      if (matchMedia('(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)').matches) return;
+      const el = document.querySelector('.lcn-about__photo');
+      if (!el) return;
+      const ROT = 9, LIFT = 26, ICON = 34;
+      let raf = null;
+      const set = (k, v) => el.style.setProperty(k, v);
+      el.addEventListener('pointerenter', () => {
+        el.classList.add('ap-live');
+        set('--ap-z', LIFT + 'px');
+        set('--ap-iz', ICON + 'px');
+      });
+      el.addEventListener('pointermove', e => {
+        if (raf) return;
+        raf = requestAnimationFrame(() => {
+          raf = null;
+          const r = el.getBoundingClientRect();
+          const dx = (e.clientX - r.left) / r.width - 0.5;
+          const dy = (e.clientY - r.top) / r.height - 0.5;
+          set('--ap-ry', ( dx * 2 * ROT).toFixed(2) + 'deg');
+          set('--ap-rx', (-dy * 2 * ROT).toFixed(2) + 'deg');
         });
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
+      });
+      el.addEventListener('pointerleave', () => {
+        el.classList.remove('ap-live');
+        ['--ap-rx', '--ap-ry'].forEach(k => set(k, '0deg'));
+        ['--ap-z', '--ap-iz'].forEach(k => set(k, '0px'));
+      });
+    }());
 
-      requestAnimationFrame(tick);
+    /* ── Nav chiara/scura secondo il fondo sotto la pill ────── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const light = ['.lcn-about'];
+      let wasDark = null;
+      const sync = () => {
+        const probe = nav.getBoundingClientRect().bottom - 6;
+        let dark = true;   // hero, posizioni, form e footer sono scuri
+        light.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+          const r = el.getBoundingClientRect();
+          if (r.top <= probe && r.bottom >= probe) dark = false;
+        }));
+        if (dark !== wasDark) { wasDark = dark; nav.classList.toggle('nav--on-dark', dark); }
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
     }
-    requestAnimationFrame(tick);
-  })();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', lcnBoot);
+  } else { lcnBoot(); }
   </script>
   <script>
     (function() {

@@ -784,6 +784,1002 @@
     .art-callout.is-visible, .art-step.is-visible, .art-result-card.is-visible {
       opacity: 1; transform: none;
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__menu-icon span,
+    .nav--on-dark .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       UN SOLO COLORE — la pagina è un articolo, non una sequenza
+       di sezioni. Prima alternava nero, bianco, grigio chiaro e
+       fucsia pieno: cinque superfici che spezzavano la lettura in
+       blocchi. Ora la carta è una sola, scura, e il colore vive
+       dove serve — testi, tag, bordi delle card, numeri.
+       ═══════════════════════════════════════════════════════════ */
+    :root { --art-ink: #0a0a0a; --art-card: #141414; }
+    body { background: var(--art-ink) !important; }
+    .art-hero,
+    .art-answer,
+    .art-body,
+    .art-pricing,
+    .art-timeline,
+    .art-results,
+    .art-faq,
+    .art-back {
+      background: var(--art-ink) !important;
+    }
+    .art-hero__bg,
+    .art-hero__bg::after { background: transparent !important; background-image: none !important; }
+
+    /* Testi in negativo, con la stessa gerarchia di prima */
+    .art-h2 { color: #fff !important; }
+    .art-p,
+    .art-list li,
+    .art-callout,
+    .art-callout p { color: rgba(255,255,255,0.68) !important; }
+    .art-list { border-top-color: rgba(255,255,255,0.10) !important; }
+    .art-list li { border-bottom-color: rgba(255,255,255,0.10) !important; }
+    .art-callout {
+      background: var(--art-card) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+    }
+    /* Card e riquadri: superficie sollevata, filo di luce, e il
+       fucsia come unico accento */
+    .art-pricing__card,
+    .art-step,
+    .art-result-card,
+    .art-faq__item {
+      background: var(--art-card) !important;
+      border: 1px solid rgba(255,255,255,0.10) !important;
+      color: rgba(255,255,255,0.72);
+    }
+    .art-pricing__card:hover,
+    .art-result-card:hover { border-color: rgba(219,0,90,0.55) !important; }
+    .art-pricing__card *,
+    .art-step *,
+    .art-result-card *,
+    .art-faq__item * { border-color: rgba(255,255,255,0.10); }
+    .art-faq__q { color: #fff !important; }
+    .art-faq__a { color: rgba(255,255,255,0.68) !important; }
+    /* L'accento: tag, etichette, numeri, pallini, link */
+    .art-hero__cat,
+    .art-answer__label,
+    .art-pricing__label,
+    .art-timeline__label,
+    .art-results__label,
+    .art-faq__label,
+    .art-contact__label,
+    .art-step__num,
+    .art-result-card__num,
+    .art-pricing__price { color: var(--primary) !important; }
+    /* La "risposta diretta" non è più una banda fucsia piena: resta
+       il blocco più importante, ma marcato da un filetto, non da un
+       cambio di carta. */
+    .art-answer {
+      border-left: 3px solid var(--primary);
+      padding-left: calc(clamp(1.5rem, 5vw, 6rem) - 3px);
+    }
+    .art-answer__text { color: #fff !important; }
+    .art-back { border-top: 1px solid rgba(255,255,255,0.10); }
+    /* il colore della CTA lo fissa il blocco pulsanti più a valle:
+       qui restava un fucsia !important dal vecchio stile testuale */
+    .art-back__brand { color: rgba(255,255,255,0.10) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       COLONNA "ULTIME NEWS" — agganciata per tutta la pagina
+       ═══════════════════════════════════════════════════════════ */
+    .art-main { position: relative; }
+    .art-hero__inner { grid-template-columns: 1fr !important; }
+    @media (min-width: 1100px) {
+      .art-rail {
+        position: absolute;
+        top: 0;
+        right: clamp(1.5rem, 5vw, 6rem);
+        width: 320px;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .art-rail .art-hero__sidebar {
+        position: sticky;
+        top: calc(var(--nav-h, 88px) + 24px);
+        pointer-events: auto;
+        border-left: 1px solid rgba(255,255,255,0.10);
+        padding-left: 2rem;
+      }
+      /* il testo dell'articolo lascia la corsia libera */
+      .art-hero__inner,
+      .art-answer,
+      .art-body,
+      .art-pricing,
+      .art-timeline,
+      .art-results,
+      .art-faq { padding-right: calc(320px + clamp(1.5rem, 5vw, 6rem) + 3rem) !important; }
+    }
+    @media (max-width: 1099px) {
+      .art-rail { padding: 0 clamp(1.5rem, 5vw, 6rem) clamp(2rem, 4vw, 3rem); }
+      .art-rail .art-hero__sidebar { border-left: 0; padding-left: 0; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE — solo su form e footer, come in homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       INGRESSO DEI TESTI — linguaggio del body di About
+       Nessuno stato nascosto duraturo: opacità di partenza alta e
+       spostamento contenuto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+    /* .reveal non è più guidata: se restasse, terrebbe tutto a 0 */
+    .reveal { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TITOLI 60px
+       ═══════════════════════════════════════════════════════════ */
+    .art-hero__title,
+    .art-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Form: identico a quello della homepage ─────────────── */
+    .art-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .art-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .art-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .art-contact .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .art-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .art-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .art-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .art-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .art-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .art-contact .hc-consents .svc-caffe__privacy span,
+    .art-contact .hc-consents .svc-caffe__privacy a,
+    .art-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .art-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .art-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .art-contact .hc-submit::before { display: none !important; }
+    .art-contact .hc-submit:hover,
+    .art-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .art-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — corpo minimo 16px
+       Fuori: header e footer; a 14px solo tagline/etichette e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button,
+    main dt, main dd,
+    .art-p,
+    .art-list li,
+    .art-callout,
+    .art-hero__intro,
+    .art-answer__text,
+    .art-faq__q,
+    .art-faq__a,
+    .art-hero__sidebar-list a { font-size: max(16px, 1rem) !important; }
+    /* Tagline / etichette / date: 14px */
+    .art-hero__cat,
+    .art-hero__date,
+    .art-hero__sidebar-label,
+    .art-answer__label,
+    .art-pricing__label,
+    .art-timeline__label,
+    .art-results__label,
+    .art-faq__label,
+    .art-contact__label,
+    .art-pricing__tag,
+    .art-step__time,
+    .art-back__link { font-size: 14px !important; }
+    /* Nomi dei pacchetti e titoli degli step stavano a 10 e 15px:
+       sono testo di lettura, non etichette. */
+    .art-pkg__name,
+    .art-step__title { font-size: 16px !important; }
+    /* CTA: 14px */
+    main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
+    /* Titoli e numeri restano alla loro scala */
+    .art-h2,
+    .art-hero__title,
+    .art-contact__title,
+    .art-step__num,
+    .art-result-card__num,
+    .art-pricing__price,
+    .art-back__brand { font-size: revert !important; }
+    .art-hero__title,
+    .art-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TESTI RIMASTI NERI SU NERO
+       Il passaggio a superficie unica scura aveva coperto solo una
+       parte dei testi: titoli, intro e corpi delle sezioni
+       timeline, risultati, pacchetti e FAQ erano ancora tarati sul
+       fondo bianco di prima, quindi #080808 su #0a0a0a.
+       ═══════════════════════════════════════════════════════════ */
+    .art-timeline__title,
+    .art-results__title,
+    .art-pricing__title,
+    .art-faq__title,
+    .art-step__title,
+    .art-result-card__title,
+    .art-pkg__name,
+    .art-callout strong,
+    main strong { color: #fff !important; }
+    .art-timeline__intro,
+    .art-results__intro,
+    .art-pricing__intro,
+    .art-pricing__note,
+    .art-step__text,
+    .art-result-card__text,
+    .art-pkg__checklist li,
+    .art-hero__intro { color: rgba(255,255,255,0.68) !important; }
+    .art-hero__intro,
+    .art-pricing__intro,
+    .art-pricing__note,
+    .art-timeline__intro,
+    .art-results__intro,
+    .art-pkg__checklist,
+    .art-pkg__checklist li { border-color: rgba(255,255,255,0.10) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       VIA I RIQUADRI SENZA RAGIONE — linguaggio delle FAQ in home
+       Step, risultati, pacchetti e domande erano scatole con fondo
+       e bordo: su una pagina a colore unico creavano quattro tipi
+       di contenitore diversi senza che nessuno dicesse niente.
+       Restano solo filetti orizzontali, come nelle FAQ della
+       homepage. L'unico blocco che tiene un fondo è il callout,
+       perché è davvero un inciso.
+       ═══════════════════════════════════════════════════════════ */
+    .art-step,
+    .art-result-card,
+    .art-pkg,
+    .art-faq__item {
+      background: transparent !important;
+      border: 0 !important;
+      border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    .art-step:first-child,
+    .art-result-card:first-child,
+    .art-pkg:first-child,
+    .art-faq__item:first-child { border-top: 1px solid rgba(255,255,255,0.10) !important; }
+    .art-pricing__card:hover,
+    .art-result-card:hover { border-color: rgba(255,255,255,0.10) !important; }
+    .art-step__content { border: 0 !important; }
+
+    /* Occhio delle domande: lo stesso delle FAQ in homepage */
+    .art-faq__q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      cursor: pointer;
+      color: #fff !important;
+      padding-block: 1.4rem;
+    }
+    .art-faq__q-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(219,0,90,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      position: relative;
+      font-size: 0 !important;
+    }
+    .art-faq__item:hover .art-faq__q-icon { border-color: rgba(219,0,90,0.5); transform: scale(1.1); }
+    .art-faq__item.open .art-faq__q-icon { background: var(--primary); border-color: var(--primary); color: #fff; transform: scale(1.1); }
+    .art-faq__q-icon svg {
+      width: 22px; height: 22px;
+      position: absolute;
+      transition: opacity 0.2s ease, transform 0.25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .art-faq__q-icon .eye-open   { opacity: 0; transform: translateY(4px) scale(0.6); }
+    .art-faq__q-icon .eye-closed { opacity: 1; transform: translateY(0) scale(1); }
+    .art-faq__item.open .art-faq__q-icon .eye-open   { opacity: 1; transform: translateY(0) scale(1); }
+    .art-faq__item.open .art-faq__q-icon .eye-closed { opacity: 0; transform: translateY(-4px) scale(0.6); }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER SCURO GIÀ ALL'ATTERRAGGIO
+       Senza .scrolled la nav usa il vetro chiaro con il MENU nero,
+       tarato sulla hero luminosa della home. Qui sotto la pill c'è
+       nero da subito, quindi il vetro scuro e il MENU bianco
+       valgono fin dal primo fotogramma.
+       ═══════════════════════════════════════════════════════════ */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      backdrop-filter: blur(28px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(140%) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #fff !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       LEGGIBILITÀ — meno righe, più respiro, un po' di rilievo
+       La pagina era attraversata da filetti dappertutto: sopra
+       l'intro, sopra e sotto ogni voce di elenco, fra gli step,
+       fra le card. Righe che non separavano niente e spezzavano la
+       lettura. Restano solo dove dividono davvero: fra una domanda
+       e l'altra.
+       ═══════════════════════════════════════════════════════════ */
+    .art-hero__intro,
+    .art-pricing__intro,
+    .art-pricing__note,
+    .art-timeline__intro,
+    .art-results__intro,
+    .art-list,
+    .art-list li,
+    .art-pkg,
+    .art-pkg__checklist,
+    .art-pkg__checklist li,
+    .art-step,
+    .art-step:first-child,
+    .art-result-card,
+    .art-result-card:first-child {
+      border: 0 !important;
+    }
+    .art-hero__intro { padding-top: 0 !important; }
+    /* Elenchi: il pallino fucsia basta a segnare la voce */
+    .art-list { margin-block: 0.75rem 2rem !important; gap: 0.35rem; }
+    .art-list li { padding: 0.25rem 0 0.25rem 1.5rem !important; }
+    /* Ritmo di lettura più ampio fra i blocchi */
+    .art-p { margin-bottom: 1.75rem !important; max-width: 68ch; }
+    .art-h2 { margin-top: clamp(4rem, 7vw, 6rem) !important; }
+
+    /* Rilievo: le due superfici che valgono davvero — l'inciso e la
+       risposta diretta — si staccano dalla carta con un piano
+       leggermente più chiaro, un filo di luce in alto e un'ombra
+       morbida. Nient'altro sulla pagina ha un fondo. */
+    .art-callout,
+    .art-answer__inner {
+      background: linear-gradient(180deg, #17171a 0%, #121214 100%) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-left: 3px solid var(--primary) !important;
+      border-radius: 0 14px 14px 0 !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.2rem);
+    }
+    .art-answer { border-left: 0 !important; padding-left: clamp(1.5rem, 5vw, 6rem) !important; }
+
+    /* ── "L'onboarding": una linea sola, verticale ───────────
+       I filetti orizzontali fra uno step e l'altro suggerivano tre
+       blocchi separati, mentre è una sequenza. Ora c'è un'unica
+       guida verticale con i tre momenti segnati sopra. */
+    .art-steps {
+      position: relative;
+      padding-left: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2rem, 3.5vw, 2.75rem);
+    }
+    .art-steps::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary) 0%, rgba(219,0,90,0.15) 100%);
+      border-radius: 2px;
+    }
+    .art-step { position: relative; padding: 0 !important; display: block !important; }
+    .art-step::before {
+      content: '';
+      position: absolute;
+      left: -2.25rem;
+      top: 0.45em;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--art-ink);
+      border: 2px solid var(--primary);
+    }
+    .art-step__time { margin-bottom: 0.3rem; }
+    .art-step__content { padding: 0 !important; }
+
+    /* Risultati: quattro momenti in fila, separati dallo spazio e
+       dal numero fucsia, non da quattro riquadri */
+    .art-results__grid { gap: clamp(1.5rem, 3vw, 2.5rem) !important; }
+    .art-result-card { padding: 0 !important; }
+
+    /* Pacchetti: stessa logica, il prezzo fa da titolo */
+    .art-pricing__grid { gap: clamp(1.75rem, 3.5vw, 3rem) !important; }
+    .art-pkg { padding: 0 !important; }
+
+    /* ── Colonna "Ultime news": un pannello, non un elenco nudo ── */
+    .art-rail .art-hero__sidebar {
+      background: linear-gradient(180deg, #17171a 0%, #121214 100%);
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-radius: 16px;
+      padding: 1.5rem 1.4rem !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .art-hero__sidebar-label { color: var(--primary) !important; }
+    .art-hero__sidebar-list li { border-top-color: rgba(255,255,255,0.08) !important; }
+    .art-hero__sidebar-list li:first-child { border-top: 0 !important; }
+    .art-hero__sidebar-list li:last-child { border-bottom: 0 !important; }
+    .art-hero__sidebar-list a { color: rgba(255,255,255,0.62) !important; }
+    .art-hero__sidebar-list a:hover { color: #fff !important; }
+    .art-hero__sidebar-list li.active a { color: var(--primary) !important; font-style: normal; }
+
+    /* ── CTA di ritorno, subito dopo le domande ──────────────── */
+    .art-back {
+      border: 0 !important;
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0 0 !important;
+      display: flex;
+    }
+    /* Stesso comportamento delle altre CTA del sito (la "Invia" del
+       form qui sotto e quelle in homepage): bordo pieno su fondo
+       vuoto che si riempie di bianco con il testo fucsia,
+       sollevandosi di 2px. Stesse durate e stessa curva. */
+    /* la tendina nera di .btn--primary va spenta anche qui, come
+       sulla "Invia": era lei a far sembrare diverso il passaggio */
+    .art-back__link::before { display: none !important; }
+    .art-back__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem clamp(2rem, 5vw, 3.5rem);
+      border-radius: 999px;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .art-back__link:hover,
+    .art-back__link:active {
+      background: #fff !important;
+      color: var(--primary) !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CORREZIONI DI DETTAGLIO
+       ═══════════════════════════════════════════════════════════ */
+    /* 1 — I pallini erano due per step: quello nuovo sulla guida
+       verticale e quello vecchio di .art-step__content, rimasto
+       dall'impaginazione a due colonne. Resta solo il primo, ed è
+       centrato sulla linea (guida a x=7px, pallino da 14px che
+       parte a x=0). */
+    .art-step__content::before { content: none !important; }
+    .art-steps::before { left: 7px !important; }
+    .art-step::before {
+      left: calc(-2.25rem + 1px) !important;
+      top: 0.35em !important;
+    }
+    .art-step__time { text-align: left !important; padding: 0 !important; }
+
+    /* 2 — Tempi dei risultati: non quattro riquadri uguali ma una
+       progressione. Il periodo fa da titolo, una barra fucsia che
+       cresce dice a che punto della curva siamo. Niente icone
+       decorative. */
+    .art-results__grid { grid-template-columns: repeat(4, 1fr) !important; }
+    .art-result-card {
+      display: flex !important;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-top: 1.25rem !important;
+      position: relative;
+    }
+    .art-result-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--primary);
+      width: var(--rc-w, 25%);
+    }
+    .art-result-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.10);
+      z-index: -1;
+    }
+    .art-result-card:nth-child(1) { --rc-w: 25%; }
+    .art-result-card:nth-child(2) { --rc-w: 50%; }
+    .art-result-card:nth-child(3) { --rc-w: 75%; }
+    .art-result-card:nth-child(4) { --rc-w: 100%; }
+    .art-result-card__period {
+      font-family: var(--font-primary) !important;
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem) !important;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff !important;
+    }
+    .art-result-card__text { color: rgba(255,255,255,0.60) !important; }
+
+    /* 3 — Spazi fra le sezioni: erano fino a 7rem sopra e sotto,
+       quindi 14 fra una e l'altra. Dimezzati, il ritmo resta ampio
+       ma non si aprono vuoti. */
+    .art-body,
+    .art-pricing,
+    .art-timeline,
+    .art-results,
+    .art-faq {
+      padding-block: clamp(2.5rem, 4vw, 3.5rem) !important;
+    }
+    .art-answer { padding-block: clamp(1.5rem, 3vw, 2.5rem) !important; }
+    .art-body--tight { padding-block: clamp(1rem, 2vw, 1.5rem) !important; }
+
+    /* 4 — Pacchetti: card vere, non righe. Piano rialzato con un
+       alone fucsia in alto, prezzo in evidenza e sollevamento in
+       hover. */
+    .art-pricing__grid { gap: clamp(1rem, 1.8vw, 1.5rem) !important; }
+    .art-pkg {
+      position: relative;
+      padding: clamp(1.6rem, 2.6vw, 2.1rem) !important;
+      border-radius: 18px !important;
+      background:
+        radial-gradient(120% 70% at 50% -10%, rgba(219,0,90,0.22) 0%, transparent 60%),
+        linear-gradient(180deg, #191919 0%, #121212 100%) !important;
+      border: 1px solid rgba(255,255,255,0.09) !important;
+      box-shadow: 0 20px 44px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+      transition: transform 0.45s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  border-color 0.45s ease, box-shadow 0.45s ease;
+    }
+    .art-pkg:hover {
+      transform: translateY(-6px);
+      border-color: rgba(219,0,90,0.55) !important;
+      box-shadow: 0 28px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.10);
+    }
+    .art-pkg__name {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--primary) !important;
+      font-size: 14px !important;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .art-pkg__price {
+      font-family: var(--font-primary);
+      font-size: clamp(1.6rem, 2.4vw, 2.1rem) !important;
+      color: #fff !important;
+      line-height: 1;
+      margin-bottom: 1.1rem;
+    }
+    .art-pkg__price span { font-size: 14px !important; color: rgba(255,255,255,0.5) !important; }
+    .art-pkg__checklist { display: flex; flex-direction: column; gap: 0.55rem; }
+    .art-pkg__checklist li { padding: 0 0 0 1.4rem !important; position: relative; }
+    .art-pkg__checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.6em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* 5 — "Risposta diretta": un segno disegnato al posto
+       dell'emoji. */
+    .art-answer__label::before {
+      content: '' !important;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 12.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 12.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+
+    /* 6 — Lo sfondo della hero è un segnaposto: si deve capire.
+       Riquadro tratteggiato, icona immagine e didascalia. */
+    /* Il segnaposto occupa tutta la hero: è lì che andrà
+       l'immagine, quindi il riquadro deve avere la sua misura
+       vera, non una cornice rientrata. */
+    .art-hero__bg {
+      background: repeating-linear-gradient(135deg, rgba(255,255,255,0.022) 0 12px, transparent 12px 24px) !important;
+      border: 1px dashed rgba(255,255,255,0.14);
+      border-radius: 0;
+      inset: 0 !important;
+    }
+    .art-hero__bg::after { content: none !important; }
+    /* La targhetta del segnaposto sta in basso a destra, non al
+       centro: al centro finiva sotto il titolo e i due testi si
+       accavallavano. */
+    .art-hero__bg-icon {
+      opacity: 0.45 !important;
+      top: auto !important;
+      left: auto !important;
+      right: clamp(1rem, 2vw, 1.75rem) !important;
+      bottom: clamp(1rem, 2vw, 1.75rem) !important;
+      transform: none !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 0.6rem !important;
+    }
+    .art-hero__bg-icon svg { width: 22px !important; height: 22px !important; }
+    .art-hero__bg-icon::after {
+      content: 'Immagine di copertina — segnaposto';
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       1 — Stacco prima dei titoli di paragrafo
+       6rem sopra ogni h2, sommati al padding della sezione, davano
+       un vuoto di quasi due schermate fra un paragrafo e l'altro.
+       ═══════════════════════════════════════════════════════════ */
+    .art-h2 { margin-top: clamp(1.75rem, 3vw, 2.5rem) !important; }
+    .art-h2:first-child { margin-top: 0 !important; }
+    /* Quei tre titoli aprono la loro sezione, quindi lo stacco non
+       è il loro margine ma la somma dei due padding: 56px sotto la
+       sezione precedente più 56 sopra la nuova, 112px di vuoto.
+       Scendono a 40+40, e l'ultimo blocco di ogni sezione non
+       aggiunge il suo margine di coda. */
+    .art-body,
+    .art-pricing,
+    .art-timeline,
+    .art-results,
+    .art-faq { padding-block: 40px !important; }
+    .art-body--tight { padding-block: 20px !important; }
+    main > section > * > *:last-child,
+    main > section > *:last-child { margin-bottom: 0 !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       2 — Via i modi da "interfaccia generata"
+       Aloni radiali colorati sotto le card, riflessi di vetro sul
+       bordo alto, doppi gradienti e ombre esagerate: effetti che
+       non dicono niente e si assomigliano tutti. Restano superfici
+       piatte, un bordo netto e un segno di colore dove serve.
+       ═══════════════════════════════════════════════════════════ */
+    /* Il filetto fucsia in cima ce l'avevano tutte e tre: sembrava
+       una selezione, ma non selezionava niente. Ora le card sono
+       neutre e il colore marca una cosa sola — il pacchetto
+       consigliato — che lo dice anche a parole con la sua etichetta.
+       L'hover resta un semplice sollevamento. */
+    .art-pkg {
+      background: #141416 !important;
+      box-shadow: none !important;
+      border-radius: 14px !important;
+      border: 1px solid rgba(255,255,255,0.09) !important;
+    }
+    .art-pkg:hover {
+      transform: translateY(-4px);
+      background: #17171a !important;
+      box-shadow: none !important;
+      border-color: rgba(255,255,255,0.18) !important;
+    }
+    /* Un solo contorno: il fondo virato creava un secondo bordo
+       percepito appena dentro quello fucsia. Stessa carta delle
+       altre card, a marcarla è il bordo e l'etichetta. */
+    .art-pkg--pick {
+      border-color: var(--primary) !important;
+      background: #141416 !important;
+    }
+    .art-pkg--pick:hover { border-color: var(--primary) !important; }
+    /* La riga spezzata in cima al Full Stack era un vecchio accento:
+       una barretta fucsia alta 2px con raggio 18px, sovrapposta al
+       bordo della card che ora ne ha 14 — due curve diverse allo
+       stesso angolo, e la linea si interrompeva. Ora l'accento è il
+       bordo stesso, quindi la barretta non serve più. */
+    .art-pkg:last-child::before { content: none !important; }
+    .art-pkg:last-child { border-color: rgba(255,255,255,0.09); }
+    /* L'etichetta sta a cavallo del bordo alto, quindi la card non
+       può ritagliare (aveva overflow: hidden dallo stile vecchio),
+       e la griglia ha bisogno di un filo di spazio sopra per non
+       tagliarla contro il titolo. */
+    .art-pkg { overflow: visible !important; }
+    .art-pricing__grid { padding-top: 14px !important; }
+    .art-pkg__badge {
+      position: absolute;
+      top: -11px;
+      left: clamp(1.6rem, 2.6vw, 2.1rem);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .art-pkg__badge::before {
+      content: '';
+      width: 13px; height: 13px;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2.6l2.7 5.9 6.4.7-4.8 4.4 1.3 6.3L12 16.6 6.4 19.9l1.3-6.3L2.9 9.2l6.4-.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2.6l2.7 5.9 6.4.7-4.8 4.4 1.3 6.3L12 16.6 6.4 19.9l1.3-6.3L2.9 9.2l6.4-.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+
+    /* Nota "Importante": un segno di avviso davanti, così si
+       distingue dal testo corrente. */
+    /* L'icona si allinea alla prima riga del testo, non al bordo
+       alto del paragrafo: con line-height 1.7 il centro della riga
+       cade a 0.85em, e l'icona alta 18px va centrata lì. */
+    .art-pricing__note {
+      position: relative;
+      padding-left: 1.9rem !important;
+      padding-top: 2rem !important;
+      line-height: 1.7;
+    }
+    .art-pricing__note::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      /* il paragrafo ha 2rem di padding sopra: senza tenerne conto
+         l'icona finiva in quello spazio, staccata dal testo */
+      top: calc(2rem + 0.85em - 9px);
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.6l9 15.4H3z'/%3E%3Cpath d='M12 9.5v4'/%3E%3Cpath d='M12 16.4v.01'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.6l9 15.4H3z'/%3E%3Cpath d='M12 9.5v4'/%3E%3Cpath d='M12 16.4v.01'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .art-pricing__note strong { color: #fff !important; }
+    .art-callout,
+    .art-answer__inner,
+    .art-rail .art-hero__sidebar {
+      background: #141416 !important;
+      box-shadow: none !important;
+    }
+    .art-rail .art-hero__sidebar { border-radius: 14px; }
+
+    /* ═══════════════════════════════════════════════════════════
+       3 — Icone pop: forme piene, geometria semplice, angoli
+       morbidi. Le precedenti erano a filo sottile e a 17px si
+       chiudevano su sé stesse — sembravano quattro trattini uguali.
+       ═══════════════════════════════════════════════════════════ */
+    .art-pricing__label::before,
+    .art-timeline__label::before,
+    .art-results__label::before,
+    .art-faq__label::before,
+    .art-contact__label::before,
+    .art-hero__sidebar-label::before {
+      content: '';
+      display: inline-block;
+      vertical-align: -6px;
+      width: 24px;
+      height: 24px;
+      margin-right: 0.6rem;
+      background: currentColor;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+    /* cartellino del prezzo */
+    .art-pricing__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M11.2 2.6H19a2.4 2.4 0 0 1 2.4 2.4v7.8c0 .64-.25 1.25-.7 1.7l-6.8 6.8a2.4 2.4 0 0 1-3.4 0l-7.8-7.8a2.4 2.4 0 0 1 0-3.4l6.8-6.8c.45-.45 1.06-.7 1.7-.7Zm5.6 3.6a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M11.2 2.6H19a2.4 2.4 0 0 1 2.4 2.4v7.8c0 .64-.25 1.25-.7 1.7l-6.8 6.8a2.4 2.4 0 0 1-3.4 0l-7.8-7.8a2.4 2.4 0 0 1 0-3.4l6.8-6.8c.45-.45 1.06-.7 1.7-.7Zm5.6 3.6a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Z'/%3E%3C/svg%3E");
+    }
+    /* calendario pieno */
+    .art-timeline__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2a1.3 1.3 0 0 1 1.3 1.3V4h7.4v-.7a1.3 1.3 0 1 1 2.6 0V4H19a3 3 0 0 1 3 3v1.4H2V7a3 3 0 0 1 3-3h.7v-.7A1.3 1.3 0 0 1 7 2Z'/%3E%3Cpath fill='black' d='M2 10.6h20V19a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-8.4Zm5 3a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2a1.3 1.3 0 0 1 1.3 1.3V4h7.4v-.7a1.3 1.3 0 1 1 2.6 0V4H19a3 3 0 0 1 3 3v1.4H2V7a3 3 0 0 1 3-3h.7v-.7A1.3 1.3 0 0 1 7 2Z'/%3E%3Cpath fill='black' d='M2 10.6h20V19a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-8.4Zm5 3a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Z'/%3E%3C/svg%3E");
+    }
+    /* barre in crescita */
+    .art-results__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2.5' y='14' width='5' height='7.5' rx='2'/%3E%3Crect fill='black' x='9.5' y='9' width='5' height='12.5' rx='2'/%3E%3Crect fill='black' x='16.5' y='2.5' width='5' height='19' rx='2'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2.5' y='14' width='5' height='7.5' rx='2'/%3E%3Crect fill='black' x='9.5' y='9' width='5' height='12.5' rx='2'/%3E%3Crect fill='black' x='16.5' y='2.5' width='5' height='19' rx='2'/%3E%3C/svg%3E");
+    }
+    /* Due fumetti sovrapposti: dice "domande e risposte" meglio del
+       punto interrogativo, che a questa misura si chiudeva su sé
+       stesso e restava una macchia. Il "?" è ritagliato dentro la
+       bolla grande, quindi resta leggibile anche in piccolo. */
+    .art-faq__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M9.4 1.8h9.3A3.3 3.3 0 0 1 22 5.1v6.6a3.3 3.3 0 0 1-3.3 3.3h-.5v2.4a.8.8 0 0 1-1.3.62l-3.77-3.02H9.4a3.3 3.3 0 0 1-3.3-3.3V5.1a3.3 3.3 0 0 1 3.3-3.3Zm4.65 2.55a3.1 3.1 0 0 0-3.1 2.72 1.2 1.2 0 0 0 2.38.3.72.72 0 1 1 .92.82c-.85.32-1.4 1.14-1.4 2.06v.3a1.2 1.2 0 1 0 2.4 0 3.13 3.13 0 0 0-1.2-6.2Z'/%3E%3Cpath fill='black' d='M4.05 6.9v5.1a5.35 5.35 0 0 0 5.35 5.35h2.55l1.6 1.28H9.4a1.6 1.6 0 0 0-.35 0l-3.2 2.56a.8.8 0 0 1-1.3-.62v-2.42A3.55 3.55 0 0 1 2 14.6V9.9A3.3 3.3 0 0 1 4.05 6.9Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M9.4 1.8h9.3A3.3 3.3 0 0 1 22 5.1v6.6a3.3 3.3 0 0 1-3.3 3.3h-.5v2.4a.8.8 0 0 1-1.3.62l-3.77-3.02H9.4a3.3 3.3 0 0 1-3.3-3.3V5.1a3.3 3.3 0 0 1 3.3-3.3Zm4.65 2.55a3.1 3.1 0 0 0-3.1 2.72 1.2 1.2 0 0 0 2.38.3.72.72 0 1 1 .92.82c-.85.32-1.4 1.14-1.4 2.06v.3a1.2 1.2 0 1 0 2.4 0 3.13 3.13 0 0 0-1.2-6.2Z'/%3E%3Cpath fill='black' d='M4.05 6.9v5.1a5.35 5.35 0 0 0 5.35 5.35h2.55l1.6 1.28H9.4a1.6 1.6 0 0 0-.35 0l-3.2 2.56a.8.8 0 0 1-1.3-.62v-2.42A3.55 3.55 0 0 1 2 14.6V9.9A3.3 3.3 0 0 1 4.05 6.9Z'/%3E%3C/svg%3E");
+    }
+    /* busta piena */
+    .art-contact__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2.4 7.55 12 13.6l9.6-6.05V17a3 3 0 0 1-3 3H5.4a3 3 0 0 1-3-3V7.55Z'/%3E%3Cpath fill='black' d='M5.4 4h13.2a3 3 0 0 1 2.94 2.4L12 12.3 2.46 6.4A3 3 0 0 1 5.4 4Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2.4 7.55 12 13.6l9.6-6.05V17a3 3 0 0 1-3 3H5.4a3 3 0 0 1-3-3V7.55Z'/%3E%3Cpath fill='black' d='M5.4 4h13.2a3 3 0 0 1 2.94 2.4L12 12.3 2.46 6.4A3 3 0 0 1 5.4 4Z'/%3E%3C/svg%3E");
+    }
+    /* fogli sovrapposti */
+    .art-hero__sidebar-label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E");
+    }
+    /* spunta piena nella "risposta diretta" */
+    .art-answer__label::before {
+      content: '' !important;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm4.7 6.6a1.3 1.3 0 0 0-1.84.05l-4.06 4.4-1.68-1.6a1.3 1.3 0 0 0-1.79 1.88l2.64 2.5a1.3 1.3 0 0 0 1.85-.06l4.94-5.35a1.3 1.3 0 0 0-.06-1.82Z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm4.7 6.6a1.3 1.3 0 0 0-1.84.05l-4.06 4.4-1.68-1.6a1.3 1.3 0 0 0-1.79 1.88l2.64 2.5a1.3 1.3 0 0 0 1.85-.06l4.94-5.35a1.3 1.3 0 0 0-.06-1.82Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    /* triangolo pieno sull'avviso */
+    .art-pricing__note::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M10.3 3.3a2 2 0 0 1 3.4 0l8 13.6a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3l8-13.6ZM12 8.3a1.25 1.25 0 0 0-1.25 1.25v3.4a1.25 1.25 0 1 0 2.5 0v-3.4A1.25 1.25 0 0 0 12 8.3Zm0 7a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z'/%3E%3C/svg%3E") !important;
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M10.3 3.3a2 2 0 0 1 3.4 0l8 13.6a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3l8-13.6ZM12 8.3a1.25 1.25 0 0 0-1.25 1.25v3.4a1.25 1.25 0 1 0 2.5 0v-3.4A1.25 1.25 0 0 0 12 8.3Zm0 7a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z'/%3E%3C/svg%3E") !important;
+    }
+    /* Anche il triangolo dell'avviso cresce con le altre; il centro
+       resta agganciato alla prima riga (padding 2rem + mezza riga,
+       meno metà icona). */
+    .art-pricing__note::before {
+      width: 22px !important;
+      height: 22px !important;
+      top: calc(2rem + 0.85em - 11px) !important;
+    }
+    /* stella piena sull'etichetta del pacchetto */
+    .art-pkg__badge::before {
+      width: 17px; height: 17px;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 1.9c.4 0 .77.23.95.6l2.62 5.4 5.9.83a1.06 1.06 0 0 1 .58 1.82l-4.3 4.14 1.03 5.94a1.06 1.06 0 0 1-1.55 1.11L12 18.94l-5.23 2.8a1.06 1.06 0 0 1-1.55-1.11l1.03-5.94-4.3-4.14A1.06 1.06 0 0 1 2.53 8.73l5.9-.83 2.62-5.4c.18-.37.55-.6.95-.6Z'/%3E%3C/svg%3E") !important;
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 1.9c.4 0 .77.23.95.6l2.62 5.4 5.9.83a1.06 1.06 0 0 1 .58 1.82l-4.3 4.14 1.03 5.94a1.06 1.06 0 0 1-1.55 1.11L12 18.94l-5.23 2.8a1.06 1.06 0 0 1-1.55-1.11l1.03-5.94-4.3-4.14A1.06 1.06 0 0 1 2.53 8.73l5.9-.83 2.62-5.4c.18-.37.55-.6.95-.6Z'/%3E%3C/svg%3E") !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4 — Occhio delle domande tagliato a destra
+       .art-faq__item ritagliava, e in hover l'occhio cresce del
+       10% oltre il bordo. Il ritaglio serve solo alla risposta che
+       si apre, e ce l'ha già per conto suo.
+       ═══════════════════════════════════════════════════════════ */
+    .art-faq__item { overflow: visible !important; }
+    .art-faq__q { padding-right: 4px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -798,10 +1794,11 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="../contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -834,8 +1831,10 @@
           <div class="nav__mega-panel nav__mega-panel--pink">
             <p class="nav__mega-label">Team</p>
             <div class="nav__mega-avatars">
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
               <span class="nav__avatar"></span>
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
@@ -851,7 +1850,26 @@
   </header>
   <div class="nav__overlay" aria-hidden="true"></div>
 
-  <main>
+  <main class="art-main">
+
+    <!-- Colonna "Ultime news": sta qui, fuori dalla hero, perché
+         deve restare agganciata per tutta la lunghezza dell'articolo.
+         La corsia è alta quanto <main>; dentro, il riquadro è sticky
+         e si ferma sotto la nav. -->
+    <div class="art-rail" aria-label="Ultime news">
+      <aside class="art-hero__sidebar">
+        <span class="art-hero__sidebar-label">Ultime news</span>
+        <ul class="art-hero__sidebar-list">
+          <li class="active"><a href="#">Come funziona iniziare a lavorare con un'agenzia di comunicazione digitale</a></li>
+          <li><a href="#">Quanto costa un'agenzia di comunicazione digitale nel 2026</a></li>
+          <li><a href="#">GEO vs SEO: cosa cambia per i brand quando le AI rispondono al posto di Google</a></li>
+          <li><a href="#">Agenzia di comunicazione o team interno: cosa conviene davvero nel 2026</a></li>
+          <li><a href="#">Come scegliere un'agenzia di comunicazione: la guida definitiva</a></li>
+          <li><a href="#">Come costruire una strategia di advertising digitale integrata nel 2026</a></li>
+        </ul>
+      </aside>
+    </div>
+
 
     <!-- ══ HERO ══════════════════════════════════════════ -->
     <section class="art-hero">
@@ -874,17 +1892,6 @@
           <h1 class="art-hero__title">Come funziona iniziare a lavorare con un'agenzia di comunicazione digitale</h1>
           <p class="art-hero__intro">Hai deciso di affidarti a un'agenzia. Ma cosa succede dopo la prima call? Quante settimane prima di vedere i primi contenuti? Chi fa cosa? Questo articolo risponde a tutte le domande operative che nessun sito di agenzia si preoccupa di spiegare chiaramente.</p>
         </div>
-        <aside class="art-hero__sidebar">
-          <span class="art-hero__sidebar-label">Ultime news</span>
-          <ul class="art-hero__sidebar-list">
-            <li class="active"><a href="#">Come funziona iniziare a lavorare con un'agenzia di comunicazione digitale</a></li>
-            <li><a href="#">Quanto costa un'agenzia di comunicazione digitale nel 2026</a></li>
-            <li><a href="#">GEO vs SEO: cosa cambia per i brand quando le AI rispondono al posto di Google</a></li>
-            <li><a href="#">Agenzia di comunicazione o team interno: cosa conviene davvero nel 2026</a></li>
-            <li><a href="#">Come scegliere un'agenzia di comunicazione: la guida definitiva</a></li>
-            <li><a href="#">Come costruire una strategia di advertising digitale integrata nel 2026</a></li>
-          </ul>
-        </aside>
       </div>
     </section>
 
@@ -939,7 +1946,8 @@
             <li>A/B test</li>
           </ul>
         </div>
-        <div class="art-pkg">
+        <div class="art-pkg art-pkg--pick">
+          <span class="art-pkg__badge">Il più scelto</span>
           <div class="art-pkg__name">Full Stack</div>
           <div class="art-pkg__price">€3.100 <span>/ mese</span></div>
           <ul class="art-pkg__checklist">
@@ -1044,6 +2052,14 @@
           <div class="art-faq__a">I report mensili servono proprio a monitorare l'andamento e correggere la rotta. Non si aspetta che le cose non funzionino: si ottimizza in continuo.</div>
         </div>
       </div>
+      <!-- La CTA di ritorno chiude la lettura, subito dopo le
+           domande: prima stava in fondo alla pagina, dopo il form,
+           dove nessuno la cercava. -->
+      <div class="art-back">
+        <!-- stesse classi della CTA "Invia": così eredita le stesse
+             transizioni di base e non può comportarsi diversamente -->
+        <a href="../news.html" class="btn btn--primary art-back__link">← Tutti gli articoli</a>
+      </div>
     </section>
 
     <!-- ══ FORM CONTATTI ═════════════════════════════════ -->
@@ -1055,213 +2071,197 @@
           <p class="art-contact__sub reveal">Fissa una call conoscitiva gratuita. Nessun impegno fino alla firma del contratto.</p>
         </div>
         <div class="art-contact__right">
-      <form class="contact-home__form reveal" action="#" method="post" novalidate>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-          <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
-        </div>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-          <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
-        </div>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-          <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
-        </div>
-        <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-        <label class="contact-home__privacy">
-          <input type="checkbox" required />
-          <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-        </label>
-        <div class="contact-home__submit-wrap">
-          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
-        </div>
-      </form>
+          <!-- Stesse classi del form in homepage (hc-*): stesse
+               misure e stessa riga dei consensi con la newsletter. -->
+          <form class="hc-form" action="#" method="post" novalidate>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            </div>
+            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="art-privacy">
+                <input type="checkbox" id="art-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <label class="svc-caffe__privacy" for="art-newsletter">
+                <input type="checkbox" id="art-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
+            </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+          </form>
         </div>
       </div>
     </section>
 
     <!-- ══ BACK ══════════════════════════════════════════ -->
-    <div class="art-back">
-      <a href="../news.html" class="art-back__link">← Tutti gli articoli</a>
-      <span class="art-back__brand">ESTRO</span>
-    </div>
   </main>
 
   <script src="../js/main.js"></script>
   <script>
-  (function () {
-    var navEl       = document.querySelector('.nav');
-    var heroEl      = document.querySelector('.art-hero');
-    var answerEl    = document.querySelector('.art-answer');
-    var bodies      = document.querySelectorAll('.art-body');
-    var firstBodyEl = bodies[0];
-    var pricingEl   = document.querySelector('.art-pricing');
-    var timelineEl  = document.querySelector('.art-timeline');
-    var resultsEl   = document.querySelector('.art-results');
-    var faqEl       = document.querySelector('.art-faq');
-    var contactEl   = document.querySelector('.art-contact');
-    if (!heroEl || !faqEl || !contactEl) return;
+  /* ═══════════════════════════════════════════════════════════
+     ARTICOLO — motore della homepage, ridotto al necessario.
+     La vecchia regia (veli colorati sopra ogni sezione, tende a
+     inizio e fine pagina, titoli scomposti lettera per lettera, e
+     un blocco che chiamava un observer mai definito) è stata
+     rimossa: qui la pagina è un articolo, quindi le sezioni non
+     si annunciano una per una. Restano l'acqua sui titoli,
+     l'ingresso in cascata dei testi e la salita — solo sulle due
+     sezioni finali, form e footer.
+     ═══════════════════════════════════════════════════════════ */
+  function artBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
 
-    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-    function makeTransOv(el, bg) {
-      if (!el) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      el.appendChild(ov);
-      return ov;
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
     }
 
-    /* fade completo quando il 10% dell'altezza della sezione è ancora visibile */
-    function pSectionExit(el) {
-      if (!el) return 0;
-      var bottom    = el.getBoundingClientRect().bottom;
-      var h         = el.offsetHeight;
-      var fadeStart = h * 0.50;
-      var fadeEnd   = h * 0.10;
-      return ease(c01((fadeStart - bottom) / (fadeStart - fadeEnd)));
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
     }
 
-    /* un overlay per ogni transizione di colore tra sezioni */
-    var heroToAnswerOv    = makeTransOv(heroEl,      '#DB005A'); /* dark → fuchsia */
-    var answerToBodyOv    = makeTransOv(answerEl,    '#fff');    /* fuchsia → bianco */
-    var bodyToPricingOv   = makeTransOv(firstBodyEl, '#0a0a0a');/* bianco → dark */
-    var pricingToTimeOv   = makeTransOv(pricingEl,   '#fff');   /* dark → bianco */
-    var tightToResultsOv  = makeTransOv(bodies[1],   '#080808');/* bianco → dark */
-    var resultsToFaqOv    = makeTransOv(resultsEl,   '#fff');   /* dark → bianco */
-    var faqToContactOv    = makeTransOv(faqEl,       '#DB005A');/* bianco → fuchsia */
+    // il titolo dell'articolo è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.art-hero__title'), 1000));
 
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
-    document.body.appendChild(exitOv);
-
-    /* hero elements fade-in */
-    var heroTitle = heroEl.querySelector('.art-hero__title');
-    var heroMeta  = heroEl.querySelector('.art-hero__meta');
-    var heroIntro = heroEl.querySelector('.art-hero__intro');
-
-    function splitWords(el) {
-      if (!el) return [];
-      var words = el.textContent.trim().split(/\s+/);
-      el.innerHTML = words.map(function(w) {
-        var safe = w.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        return '<span class="tw" style="display:inline-block;opacity:0;transform:translateY(0.65em)">' + safe + '</span>';
-      }).join(' ');
-      el.style.opacity = '1';
-      return Array.from(el.querySelectorAll('.tw'));
-    }
-    function revWords(words, p, base, dur) {
-      words.forEach(function(w, i) {
-        var lp = ease(c01((p - (base||0) - i*(dur||0.1)) / 0.4));
-        w.style.opacity   = lp.toFixed(3);
-        w.style.transform = 'translateY(' + ((1-lp)*0.65).toFixed(3) + 'em)';
-      });
-    }
-    var heroWords = splitWords(heroTitle);
-
-    if (heroMeta)  { heroMeta.style.opacity  = '0'; heroMeta.style.transform  = 'translateY(10px)'; }
-    if (heroIntro) { heroIntro.style.opacity = '0'; heroIntro.style.transform = 'translateY(12px)'; }
-    var startTime = performance.now();
-
-    var entryOv = document.createElement('div');
-    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
-    document.body.appendChild(entryOv);
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        entryOv.style.opacity = '0';
-        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
-      });
+    // Gli h2 del corpo restano fuori dall'acqua: sono titoli di
+    // paragrafo, non di sezione, e interrompevano la lettura.
+    // Entrano con la cascata come il resto del testo.
+    document.querySelectorAll('.art-contact__title, .sf-ghost').forEach(el => {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+      }, el.classList.contains('sf-ghost')
+           ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+           : { threshold: 0.6 });
+      io.observe(el);
     });
 
-    var C_DARK    = [5,   5,   5];
-    var C_DARK2   = [10,  10,  10];
-    var C_DARK3   = [8,   8,   8];
-    var C_WHITE   = [255, 255, 255];
-    var C_FUCHSIA = [219, 0,   90];
-    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-    var prevDark = null;
+    /* ── Salita: solo form e footer ────────────────────────── */
+    const RISE = ['.art-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
 
-    var NAV_SECTIONS = [
-      { el: heroEl,      base: C_DARK,    ov: heroToAnswerOv,   ovC: C_FUCHSIA },
-      { el: answerEl,    base: C_FUCHSIA, ov: answerToBodyOv,   ovC: C_WHITE   },
-      { el: firstBodyEl, base: C_WHITE,   ov: bodyToPricingOv,  ovC: C_DARK2   },
-      { el: pricingEl,   base: C_DARK2,   ov: pricingToTimeOv,  ovC: C_WHITE   },
-      { el: timelineEl,  base: C_WHITE,   ov: null,             ovC: null      },
-      { el: bodies[1],   base: C_WHITE,   ov: tightToResultsOv, ovC: C_DARK3   },
-      { el: resultsEl,   base: C_DARK3,   ov: resultsToFaqOv,   ovC: C_WHITE   },
-      { el: faqEl,       base: C_WHITE,   ov: faqToContactOv,   ovC: C_FUCHSIA },
-      { el: contactEl,   base: C_FUCHSIA, ov: null,             ovC: null      },
-    ];
-
-    function tick() {
-      if (heroToAnswerOv)   heroToAnswerOv.style.opacity   = pSectionExit(heroEl).toFixed(3);
-      if (answerToBodyOv)   answerToBodyOv.style.opacity   = pSectionExit(answerEl).toFixed(3);
-      if (bodyToPricingOv)  bodyToPricingOv.style.opacity  = pSectionExit(firstBodyEl).toFixed(3);
-      if (pricingToTimeOv)  pricingToTimeOv.style.opacity  = pSectionExit(pricingEl).toFixed(3);
-      if (tightToResultsOv) tightToResultsOv.style.opacity = pSectionExit(bodies[1]).toFixed(3);
-      if (resultsToFaqOv)   resultsToFaqOv.style.opacity   = pSectionExit(resultsEl).toFixed(3);
-      if (faqToContactOv)   faqToContactOv.style.opacity   = pSectionExit(faqEl).toFixed(3);
-
-      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
-
-      var t = (performance.now() - startTime) / 1000;
-      if (heroMeta) {
-        var mp = ease(c01((t - 0.05) / 0.45));
-        heroMeta.style.opacity   = mp.toFixed(3);
-        heroMeta.style.transform = 'translateY(' + ((1-mp)*10).toFixed(1) + 'px)';
-      }
-      revWords(heroWords, t, 0.1, 0.09);
-      if (heroIntro) {
-        var ip = ease(c01((t - 0.65) / 0.55));
-        heroIntro.style.opacity   = ip.toFixed(3);
-        heroIntro.style.transform = 'translateY(' + ((1-ip)*12).toFixed(1) + 'px)';
-      }
-
-      if (navEl) {
-        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
-        var effective = C_DARK;
-        NAV_SECTIONS.forEach(function(s) {
-          if (!s.el) return;
-          var r = s.el.getBoundingClientRect();
-          if (r.top <= navMidY && r.bottom > navMidY) {
-            var alpha = ovOp(s.ov);
-            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
-          }
-        });
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
-
-      requestAnimationFrame(tick);
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
     }
-    requestAnimationFrame(tick);
-  })();
-  </script>
-  <script>
-    (function() {
-      /* stagger per card e step */
-      document.querySelectorAll('.art-results__grid .art-result-card').forEach(function(el, i) {
-        el.style.transitionDelay = (i * 0.1) + 's';
-      });
-      document.querySelectorAll('.art-steps .art-step').forEach(function(el, i) {
-        el.style.transitionDelay = (i * 0.15) + 's';
-      });
-      var io = new IntersectionObserver(function(entries) {
-        entries.forEach(function(e) {
-          if (e.isIntersecting) { e.target.classList.add('is-visible'); io.unobserve(e.target); }
+
+    /* ── Ingresso dei testi: linguaggio del body di About ───
+       Niente stati nascosti duraturi: opacità di partenza alta e
+       spostamento contenuto, un blocco alla volta mentre scorre. */
+    const bodyBits = document.querySelectorAll(
+      '.art-p, .art-list, .art-callout, .art-h2, .art-answer__inner, ' +
+      '.art-pricing__card, .art-step, .art-result-card, .art-faq__item, ' +
+      '.art-contact__label, .art-contact__sub, .hc-form'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
         });
-      }, { threshold: 0.08, rootMargin: '0px 0px -20px 0px' });
-      document.querySelectorAll('.reveal, .art-h2, .art-p, .art-list, .art-callout, .art-step, .art-result-card').forEach(function(el) {
-        /* skip hero elements già gestiti dal RAF */
-        if (!el.closest('.art-hero')) io.observe(el);
-      });
-    })();
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+
+    /* ── L'occhio delle FAQ, come in homepage ──────────────── */
+    const EYE_OPEN = '<svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    const EYE_CLOSED = '<svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    document.querySelectorAll('.art-faq__q-icon').forEach(icon => {
+      icon.textContent = '';                    // via il "+"
+      icon.innerHTML = EYE_OPEN + EYE_CLOSED;
+      icon.setAttribute('aria-hidden', 'true');
+    });
+
+    /* ── La colonna si ferma dove inizia il form ───────────── */
+    const rail = document.querySelector('.art-rail');
+    const contact = document.querySelector('.art-contact');
+    if (rail && contact) {
+      // la corsia si ferma 48px prima del form, così la lista non
+      // arriva mai a toccarlo
+      const fitRail = () => { rail.style.height = Math.max(0, contact.offsetTop - 48) + 'px'; };
+      fitRail();
+      addEventListener('resize', fitRail, { passive: true });
+      addEventListener('load', fitRail);
+    }
+
+    /* ── Nav chiara/scura ──────────────────────────────────── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const sync = () => {
+        nav.classList.add('nav--on-dark');   // l'articolo è tutto scuro
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', artBoot);
+  } else { artBoot(); }
   </script>
   <script>
     document.querySelectorAll('.art-faq__q').forEach(function(q) {
@@ -1274,7 +2274,7 @@
     });
   </script>
   <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
@@ -1344,8 +2344,7 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-      </div>
-    </div>
+          </div>
         </div>
 
       </div>

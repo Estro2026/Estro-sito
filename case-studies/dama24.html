@@ -10,9 +10,861 @@
   <link rel="stylesheet" href="../css/components.css" />
   <link rel="stylesheet" href="../css/hero.css" />
   <style>
-    /* ══ DAMA24 CASE STUDY ══════════════════════════════════ */
+    /* ══ TIPS & TRICKS ARTICLE ═══════════════════════════════ */
 
-    /* ── Hero ───────────────────────────────────────────── */
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+
+    .cs2-hero {
+      background: #000;
+      min-height: 72vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 120px;
+      padding-bottom: clamp(4rem, 7vw, 6rem);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Placeholder immagine hero */
+    .cs2-hero__img {
+      position: absolute;
+      inset: 0;
+      background: #111;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .cs2-hero__img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #060606 30%, rgba(6,6,6,0.6) 60%, rgba(6,6,6,0.3) 100%);
+    }
+    /* Icona placeholder centrata */
+    .cs2-hero__img-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      opacity: 0.12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .cs2-hero__img-icon svg { width: 72px; height: 72px; }
+    .cs2-hero__img-icon span {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .cs2-hero__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 clamp(1.5rem, 5vw, 6rem);
+    }
+    .cs2-hero__meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .cs2-hero__cat {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid rgba(219,0,90,0.4);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+    }
+    .cs2-hero__date {
+      font-family: var(--font-secondary);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+    .cs2-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 5vw, 60px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.75rem;
+    }
+    .cs2-hero__intro {
+      font-family: var(--font-secondary);
+      font-size: clamp(0.9rem, 1.3vw, 1rem);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.38);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+
+    /* Sidebar */
+    .cs2-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Search bar */
+    .cs2-sidebar__search {
+      position: relative;
+    }
+    .cs2-sidebar__search input {
+      width: 100%;
+      background: #f4f4f4;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 0.8rem 1rem 0.8rem 2.75rem;
+      font-family: var(--font-secondary);
+      font-size: 0.85rem;
+      color: #080808;
+      outline: none;
+      transition: border-color 200ms, background 200ms;
+      box-sizing: border-box;
+    }
+    .cs2-sidebar__search input::placeholder { color: rgba(0,0,0,0.35); }
+    .cs2-sidebar__search input:focus {
+      border-color: var(--primary);
+      background: rgba(219,0,90,0.04);
+    }
+    .cs2-sidebar__search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: rgba(0,0,0,0.3);
+    }
+    .cs2-sidebar__search-icon svg { width: 15px; height: 15px; display: block; }
+
+    .cs2-sidebar__label {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+      display: block;
+    }
+
+    /* Card lista articoli */
+    .cs2-sidebar__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .cs2-sidebar__item a {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 1rem;
+      align-items: center;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 0.6rem;
+      transition: background 200ms;
+    }
+    .cs2-sidebar__item a:hover { background: #f4f4f4; }
+    .cs2-sidebar__item.active a {
+      pointer-events: none;
+      background: rgba(219,0,90,0.06);
+    }
+    /* Il riquadro non è un segnaposto per una foto: ospita il logo
+       del cliente, quindi niente trama a griglia dietro — solo un
+       fondo neutro su cui il marchio si stacca. */
+    .cs2-sidebar__thumb {
+      aspect-ratio: 4/3;
+      border-radius: 8px;
+      background: #f2f2f3;
+      border: 1px solid rgba(0,0,0,0.07);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cs2-sidebar__item.active .cs2-sidebar__thumb {
+      outline: 2px solid rgba(219,0,90,0.35);
+    }
+    .cs2-sidebar__thumb svg { width: 22px; height: 22px; opacity: 0.18; }
+    .cs2-sidebar__title {
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: rgba(0,0,0,0.55);
+      font-weight: 500;
+    }
+    .cs2-sidebar__item.active .cs2-sidebar__title {
+      color: rgba(219,0,90,0.7);
+      font-weight: 600;
+    }
+    .cs2-sidebar__item a:hover .cs2-sidebar__title { color: #080808; }
+
+    /* ── Corpo articolo ─────────────────────────────────── */
+    .cs2-body {
+      background: #fff;
+      padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .cs2-body__layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: clamp(3rem, 5vw, 5rem);
+      align-items: start;
+    }
+    .cs2-body__inner { max-width: 700px; }
+
+    .cs2-p {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.6);
+      margin-bottom: 1.5rem;
+    }
+    .cs2-p:last-child { margin-bottom: 0; }
+    .cs2-p strong { color: #080808; font-weight: 700; }
+    .cs2-p em { font-style: italic; }
+
+    .cs2-h2 {
+      font-family: var(--font-primary);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      color: #080808;
+      margin-top: clamp(3rem, 5vw, 4rem);
+      margin-bottom: 1.25rem;
+    }
+    .cs2-h2:first-child { margin-top: 0; }
+
+    .cs2-callout {
+      background: #fafafa;
+      border: 1px solid rgba(0,0,0,0.07);
+      border-left: 3px solid var(--primary);
+      padding: 1.5rem 1.75rem;
+      border-radius: 0 12px 12px 0;
+      margin: 2rem 0;
+    }
+    .cs2-callout p {
+      font-family: var(--font-secondary);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.6);
+      margin: 0;
+    }
+    .cs2-callout p strong { color: #080808; font-weight: 700; }
+
+    .cs2-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 1.75rem;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .cs2-list li {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(0,0,0,0.58);
+      padding: 0.75rem 0 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      position: relative;
+    }
+    .cs2-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .cs2-list li strong { color: #080808; font-weight: 700; }
+
+    .cs2-cta-block {
+      background: var(--primary);
+      border-radius: 16px;
+      padding: 2rem 2.25rem;
+      margin-top: 3rem;
+    }
+    .cs2-cta-block p {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.85);
+      margin: 0;
+    }
+    .cs2-cta-block a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Form contatti ──────────────────────────────────── */
+    .cs2-contact {
+      background: var(--primary);
+      padding-inline: clamp(1.5rem, 5vw, 5rem);
+    }
+    .cs2-contact__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1440px;
+      width: 100%;
+      margin-inline: auto;
+      gap: clamp(3rem, 8vw, 8rem);
+      align-items: center;
+      padding-block: clamp(4rem, 8vw, 7rem);
+    }
+    .cs2-contact__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .cs2-contact__label {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: block;
+    }
+    .cs2-contact__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+    .cs2-contact .contact-home__form { width: 100%; display: flex; flex-direction: column; gap: var(--space-4); }
+    .cs2-contact .contact-home__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    .cs2-contact .contact-home__field {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      font-family: var(--font-secondary);
+      font-size: var(--text-base);
+      width: 100%;
+      outline: none;
+      transition: border-color 200ms, background 200ms;
+    }
+    .cs2-contact .contact-home__field::placeholder { color: rgba(255,255,255,0.45); }
+    .cs2-contact .contact-home__field:focus {
+      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.25);
+    }
+    .cs2-contact .contact-home__textarea { width: 100%; resize: vertical; min-height: 110px; }
+    .cs2-contact .contact-home__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-family: var(--font-secondary);
+      font-size: var(--text-xs);
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+    .cs2-contact .contact-home__privacy a { color: #fff; text-decoration: underline; }
+    .cs2-contact .contact-home__submit-wrap { display: flex; }
+    @media (max-width: 860px) {
+      .cs2-contact__inner { grid-template-columns: 1fr; }
+      .cs2-contact .contact-home__row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Back ───────────────────────────────────────────── */
+    .cs2-back {
+      background: var(--primary);
+      padding: 1.5rem clamp(1.5rem, 5vw, 6rem);
+      border-top: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cs2-back__link {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 200ms;
+    }
+    .cs2-back__link:hover { color: #fff; }
+    .cs2-back__brand {
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1024px) {
+      .cs2-hero__inner { grid-template-columns: 1fr; }
+      .cs2-body__layout { grid-template-columns: 1fr; }
+      .cs2-sidebar { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    /* La pagina è chiara fin dall'atterraggio: vetro chiaro e MENU
+       nero già senza .scrolled — l'opposto della pagina news. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.62) !important;
+      backdrop-filter: blur(28px) saturate(170%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(170%) !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.10) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       UN SOLO COLORE, INVERTITO — carta bianca
+       Stessa impostazione dell'articolo News (una superficie sola,
+       il colore solo su testi, tag e card) ma ribaltata: qui la
+       carta è chiara e l'inchiostro scuro.
+       ═══════════════════════════════════════════════════════════ */
+    :root { --cs2-paper: #ffffff; --cs2-card: #f6f6f7; --cs2-ink: #0b0b0c; }
+    body { background: var(--cs2-paper) !important; }
+    .cs2-hero,
+    .cs2-body,
+    .cs2-back { background: var(--cs2-paper) !important; }
+    .cs2-hero__img::after { content: none !important; }
+
+    /* Testi in positivo */
+    .cs2-hero__title,
+    .cs2-h2,
+    .cs2-p strong,
+    .cs2-sidebar__title { color: var(--cs2-ink) !important; }
+    .cs2-hero__intro,
+    .cs2-p,
+    .cs2-list li,
+    .cs2-cta-block p { color: rgba(0,0,0,0.66) !important; }
+    .cs2-hero__date { color: rgba(0,0,0,0.45) !important; }
+    /* Niente riga fra titolo e occhiello: il titolo e la frase che
+       lo segue sono un blocco unico, il filetto li separava e basta. */
+    .cs2-hero__intro {
+      border-top: 0 !important;
+      padding-top: 0 !important;
+      margin-top: 0.25rem;
+    }
+
+    /* Accento: uno solo, il fucsia */
+    .cs2-hero__cat,
+    .cs2-sidebar__label,
+    .cs2-back__link { color: var(--primary); }
+    .cs2-hero__cat { border-color: rgba(219,0,90,0.35) !important; }
+
+    /* ── Copertina della hero ──────────────────────────────────
+       Al posto del segnaposto tratteggiato c'è la copertina del
+       progetto, la stessa che compare nella card in elenco.
+       La pagina è su carta bianca e il titolo è in nero, quindi
+       sopra l'immagine scende una velatura chiara: piena dove
+       stanno le parole (il testo è allineato in basso) e quasi
+       assente in alto, dove la copertina si vede pulita. */
+    .cs2-hero__img {
+      inset: 0 !important;
+      border: 0 !important;
+      border-radius: 0;
+      background:
+        url("DAMA24.png") center / cover no-repeat !important;
+    }
+    .cs2-hero__img::after {
+      content: '' !important;
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        var(--cs2-paper) 0%,
+        rgba(255,255,255,0.94) 26%,
+        rgba(255,255,255,0.72) 48%,
+        rgba(255,255,255,0.34) 72%,
+        rgba(255,255,255,0.12) 100%
+      );
+    }
+    /* la hero cresce un po': serve aria sopra la velatura perché
+       la copertina si legga davvero */
+    .cs2-hero { min-height: min(86vh, 760px); }
+
+
+    /* ── Citazione ─────────────────────────────────────────────
+       Una sola in tutta la pagina: chiude il racconto prima dei
+       risultati, quindi si stacca dal corpo con il filetto fucsia
+       invece che con un riquadro pieno come il callout. */
+    /* Una sola citazione in tutta la pagina: chiude il racconto
+       prima dei risultati, quindi si stacca dal corpo con il
+       filetto fucsia invece che con un riquadro pieno. */
+    .cs2-quote {
+      margin: clamp(2rem, 4vw, 3rem) 0;
+      padding: 0.25rem 0 0.25rem clamp(1.25rem, 3vw, 2rem);
+      border-left: 3px solid var(--primary);
+    }
+    .cs2-quote p {
+      font-family: var(--font-primary);
+      font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+      line-height: 1.35;
+      color: var(--cs2-ink);
+      margin: 0;
+      font-weight: 400;
+      font-synthesis-weight: none;
+    }
+
+    /* ── I media dentro la lettura ─────────────────────────────
+       I due video che nella versione precedente stavano nella
+       intro e nella hero tornano qui, dentro il corpo: spezzano i
+       muri di testo e danno il ritmo che alla lettura mancava.
+       Sono decorativi, quindi non portano didascalia. */
+    .cs2-figure {
+      margin: clamp(2rem, 4vw, 3.25rem) 0;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0e0e0e;
+      box-shadow: 0 10px 34px rgba(0,0,0,0.10);
+    }
+    .cs2-figure video,
+    .cs2-figure img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16/9;
+    }
+    /* a piena larghezza della colonna di lettura, ma può sforare
+       un po' ai lati: è un respiro, non un'illustrazione */
+    .cs2-figure--wide {
+      margin-inline: calc(clamp(0px, 2vw, 28px) * -1);
+    }
+
+    /* ── Miniature della colonna: qui sono loghi, non foto ──────
+       I file hanno margini interni diversi, quindi stanno dentro
+       il riquadro con `contain` invece di riempirlo. */
+    .cs2-sidebar__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+      box-sizing: border-box;
+      display: block;
+      opacity: 0.85;
+    }
+    .cs2-sidebar__item.active .cs2-sidebar__thumb img,
+    .cs2-sidebar__item a:hover .cs2-sidebar__thumb img { opacity: 1; }
+
+    /* ── Meno righe, più respiro ─────────────────────────────── */
+    .cs2-list,
+    .cs2-list li { border: 0 !important; }
+    .cs2-list { margin-block: 0.75rem 2rem !important; gap: 0.35rem; }
+    .cs2-list li { padding: 0.25rem 0 0.25rem 1.5rem !important; position: relative; }
+    .cs2-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.75em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .cs2-p { margin-bottom: 1.75rem !important; max-width: 68ch; }
+    .cs2-h2 { margin-top: clamp(1.75rem, 3vw, 2.5rem) !important; }
+    .cs2-h2:first-child { margin-top: 0 !important; }
+    .cs2-body { padding-block: 40px !important; }
+
+    /* L'unico blocco con un fondo: l'inciso */
+    .cs2-cta-block {
+      background: var(--cs2-card) !important;
+      border: 1px solid rgba(0,0,0,0.08) !important;
+      border-left: 3px solid var(--primary) !important;
+      border-radius: 0 14px 14px 0 !important;
+      box-shadow: none !important;
+      padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.2rem);
+    }
+    .cs2-cta-block a { color: var(--primary) !important; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ── Colonna laterale: pannello, agganciato fino al form ──── */
+    .cs2-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h, 88px) + 24px);
+      background: var(--cs2-card);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 1.5rem 1.4rem;
+    }
+    .cs2-sidebar__label { color: var(--primary) !important; }
+    .cs2-sidebar__label::before {
+      content: '';
+      display: inline-block;
+      vertical-align: -4px;
+      width: 19px; height: 19px;
+      margin-right: 0.55rem;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .cs2-sidebar__item a:hover { background: rgba(0,0,0,0.04); }
+    .cs2-sidebar__item.active a { background: rgba(219,0,90,0.07); }
+    .cs2-sidebar__item.active .cs2-sidebar__title { color: var(--primary) !important; }
+
+    /* ── CTA di ritorno: come la "Invia" ─────────────────────── */
+    .cs2-back {
+      border: 0 !important;
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0 0 !important;
+      display: flex;
+    }
+    .cs2-back__link::before { display: none !important; }
+    .cs2-back__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem clamp(2rem, 5vw, 3.5rem);
+      border-radius: 999px;
+      background: transparent !important;
+      color: var(--cs2-ink) !important;
+      border: 2px solid var(--cs2-ink) !important;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .cs2-back__link:hover,
+    .cs2-back__link:active {
+      background: var(--cs2-ink) !important;
+      color: #fff !important;
+      border-color: var(--cs2-ink) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE — solo su form e footer, come in homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ── Ingresso dei testi: linguaggio del body di About ────── */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+    .reveal { opacity: 1; transform: none; }
+
+    /* ── Titoli 60px ─────────────────────────────────────────── */
+    .cs2-hero__title,
+    .cs2-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Form: identico a quello della homepage ──────────────── */
+    .cs2-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .cs2-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .cs2-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .cs2-contact .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .cs2-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .cs2-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .cs2-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .cs2-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .cs2-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .cs2-contact .hc-consents .svc-caffe__privacy span,
+    .cs2-contact .hc-consents .svc-caffe__privacy a,
+    .cs2-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .cs2-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cs2-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .cs2-contact .hc-submit::before { display: none !important; }
+    .cs2-contact .hc-submit:hover,
+    .cs2-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .cs2-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — corpo minimo 16px
+       Fuori: header e footer; a 14px solo tagline/etichette e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button,
+    .cs2-p,
+    .cs2-list li,
+    .cs2-hero__intro,
+    .cs2-cta-block p,
+    .cs2-sidebar__title { font-size: max(16px, 1rem) !important; }
+    /* La citazione non è testo corrente ma un manifesto: sta sopra
+       il minimo del corpo, altrimenti la regola qui sopra la
+       riportava a 16px come un paragrafo qualsiasi. */
+    .cs2-quote p { font-size: clamp(1.25rem, 2.4vw, 1.75rem) !important; }
+    .cs2-hero__cat,
+    .cs2-hero__date,
+    .cs2-sidebar__label,
+    .cs2-contact__label { font-size: 14px !important; }
+    main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
+    .cs2-h2,
+    .cs2-hero__title,
+    .cs2-contact__title { font-size: revert !important; }
+    .cs2-hero__title,
+    .cs2-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO ORIGINALE — video di sfondo, logo al posto del titolo e
+       la riga di attributi del progetto. Ripristinata identica a
+       com'era: il resto della pagina segue lo schema delle pagine
+       interne, la hero no.
+       ═══════════════════════════════════════════════════════════ */
     .d24-hero {
       background: #080808;
       min-height: 100svh;
@@ -34,17 +886,33 @@
       position: absolute;
       inset: 0;
       z-index: 0;
+      overflow: hidden;
     }
-    .d24-hero__video video {
+    /* Al posto del video di sfondo c'è la foto del progetto. È
+       quadrata e la hero è una fascia larga: riempiendola tutta
+       tagliava sopra e sotto. Contenuta invece si vede per
+       intera — niente dettagli persi — e sta a destra, così la
+       fascia scura che avanza cade a sinistra, dove ci sono logo e
+       testo. Il fondo è già quasi nero, quindi lo stacco non si
+       legge come un vuoto. */
+    /* La foto del catering è 16:9 come la hero: riempie la fascia
+       da bordo a bordo. Il soggetto — mano e vassoio — sta al
+       centro, quindi il poco che il ritaglio toglie ai lati è
+       tendaggio. */
+    .d24-hero__video img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      object-position: center;
       display: block;
     }
+    /* La velatura va SOPRA la foto, non sotto: è lei a tenere
+       leggibili logo e testo in basso a sinistra. */
     .d24-hero__video::after {
       content: '';
       position: absolute;
       inset: 0;
+      z-index: 2;
       background:
         linear-gradient(to top, #080808 0%, rgba(8,8,8,0.55) 45%, rgba(8,8,8,0.25) 100%),
         linear-gradient(to right, rgba(8,8,8,0.35) 0%, transparent 60%);
@@ -108,8 +976,10 @@
       display: flex;
       gap: clamp(2rem, 6vw, 6rem);
       flex-wrap: wrap;
-      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 6rem);
-      border-top: 1px solid rgba(255,255,255,0.08);
+      /* i 26px in più sotto tengono la riga degli attributi fuori
+         dai 22px che la sezione seguente si prende salendo */
+      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 6rem)
+               calc(clamp(1.5rem, 3vw, 2.5rem) + 26px);
     }
     .d24-hero__meta-item { display: flex; flex-direction: column; gap: 0.35rem; }
     .d24-hero__meta-label {
@@ -127,439 +997,12 @@
       color: rgba(255,255,255,0.75);
     }
 
-    /* ── Intro statement ────────────────────────────────── */
-    .d24-intro {
-      background: #fff;
-      padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 6rem);
-    }
-    .d24-intro__grid {
-      display: grid;
-      grid-template-columns: 1.8fr 0.7fr;
-      gap: clamp(2rem, 4vw, 4rem);
-      align-items: center;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .d24-intro__label {
-      font-family: var(--font-secondary);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 2rem;
-      display: block;
-    }
-    .d24-intro__body {
-      font-family: var(--font-secondary);
-      font-size: clamp(1rem, 1.7vw, 1.25rem);
-      line-height: 1.75;
-      color: rgba(0,0,0,0.65);
-    }
-    .d24-intro__body strong { color: #000; font-weight: 600; }
-    .d24-intro__video {
-      border-radius: 16px;
-      overflow: hidden;
-      aspect-ratio: 2/3;
-      max-height: 520px;
-    }
-    .d24-intro__video video {
-      width: 100%; height: 100%;
-      object-fit: cover; display: block;
-    }
-    @media (max-width: 860px) {
-      .d24-intro__grid { grid-template-columns: 1fr; }
-      .d24-intro__video { aspect-ratio: 16/9; }
-    }
-
-    /* ── Blocchi alternati ──────────────────────────────── */
-    .d24-block {
-      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 5vw, 6rem);
-    }
-    .d24-block--dark  { background: #080808; }
-    .d24-block--white { background: #fff; }
-    .d24-block--grey  { background: #f5f5f5; }
-
-    .d24-block__grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 7vw, 7rem);
-      align-items: center;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    /* alternanza: blocchi pari invertono l'ordine */
-    .d24-block--flip .d24-block__grid {
-      direction: rtl;
-    }
-    .d24-block--flip .d24-block__grid > * {
-      direction: ltr;
-    }
-
-    .d24-block__eyebrow {
-      font-family: var(--font-secondary);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 1.25rem;
-      display: block;
-    }
-    .d24-block__title {
-      font-family: var(--font-primary);
-      font-size: clamp(2rem, 4.5vw, 55px);
-      font-weight: 800;
-      text-transform: none;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.5rem;
-    }
-    .d24-block--dark .d24-block__title  { color: #fff; }
-    .d24-block--white .d24-block__title { color: #080808; }
-    .d24-block--grey .d24-block__title  { color: #080808; }
-
-    .d24-block__body {
-      font-family: var(--font-secondary);
-      font-size: 1rem;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
-    }
-    .d24-block--dark .d24-block__body  { color: rgba(255,255,255,0.5); }
-    .d24-block--white .d24-block__body { color: rgba(0,0,0,0.5); }
-    .d24-block--grey .d24-block__body  { color: rgba(0,0,0,0.5); }
-
-    /* feature list */
-    .d24-features { display: flex; flex-direction: column; gap: 1.75rem; }
-    .d24-feature { border-left: 2px solid var(--primary); padding-left: 1.4rem; }
-    .d24-feature__title {
-      font-family: var(--font-primary);
-      font-size: 0.85rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.04em;
-      margin-bottom: 0.45rem;
-    }
-    .d24-block--dark .d24-feature__title  { color: #fff; }
-    .d24-block--white .d24-feature__title { color: #080808; }
-    .d24-block--grey .d24-feature__title  { color: #080808; }
-    .d24-feature__text {
-      font-family: var(--font-secondary);
-      font-size: 0.88rem;
-      line-height: 1.72;
-    }
-    .d24-block--dark .d24-feature__text  { color: rgba(255,255,255,0.45); }
-    .d24-block--white .d24-feature__text { color: rgba(0,0,0,0.48); }
-    .d24-block--grey .d24-feature__text  { color: rgba(0,0,0,0.48); }
-
-    /* visual box */
-    .d24-visual {
-      border-radius: 20px;
-      overflow: hidden;
-      aspect-ratio: 4/5;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-    .d24-block--dark .d24-visual {
-      background: #141414;
-      border: 1px solid rgba(255,255,255,0.07);
-    }
-    .d24-block--white .d24-visual {
-      background: #f0f0f0;
-    }
-    .d24-block--grey .d24-visual {
-      background: #e8e8e8;
-    }
-    .d24-visual::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(219,0,90,0.18), transparent 70%);
-    }
-    .d24-visual__label {
-      font-family: var(--font-primary);
-      font-size: clamp(3rem, 7vw, 6rem);
-      text-transform: uppercase;
-      line-height: 0.9;
-      text-align: center;
-      letter-spacing: -0.03em;
-      position: relative;
-      z-index: 1;
-    }
-    .d24-block--dark .d24-visual__label  { color: rgba(255,255,255,0.05); }
-    .d24-block--white .d24-visual__label { color: rgba(0,0,0,0.05); }
-    .d24-block--grey .d24-visual__label  { color: rgba(0,0,0,0.05); }
-
-    /* ── Risultati ──────────────────────────────────────── */
-    .d24-results {
-      background: #fff;
-      padding: clamp(5rem, 9vw, 8rem) clamp(1.5rem, 5vw, 6rem);
-    }
-    .d24-results__inner {
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .d24-results__label {
-      font-family: var(--font-secondary);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      display: block;
-    }
-    .d24-results__title {
-      font-family: var(--font-primary);
-      font-size: clamp(2.5rem, 6vw, 55px);
-      font-weight: 800;
-      text-transform: uppercase;
-      color: #080808;
-      line-height: 1.0;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
-      max-width: 700px;
-    }
-    .d24-results__intro {
-      font-family: var(--font-secondary);
-      font-size: 1rem;
-      line-height: 1.75;
-      color: rgba(0,0,0,0.55);
-      max-width: 680px;
-      margin-bottom: clamp(3rem, 6vw, 5rem);
-    }
-    .d24-results__grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-    }
-    .d24-result {
-      background: var(--primary);
-      padding: clamp(1.75rem, 3vw, 2.5rem);
-      border-radius: 14px;
-    }
-    .d24-result__title {
-      font-family: var(--font-primary);
-      font-size: clamp(0.95rem, 1.6vw, 1.2rem);
-      font-weight: 800;
-      text-transform: uppercase;
-      color: #fff;
-      margin-bottom: 0.75rem;
-      line-height: 1.15;
-    }
-    .d24-result__text {
-      font-family: var(--font-secondary);
-      font-size: 0.88rem;
-      line-height: 1.65;
-      color: rgba(255,255,255,0.75);
-    }
-
-    /* ── Quote ──────────────────────────────────────────── */
-    .d24-quote {
-      background: #080808;
-      padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 6rem);
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-    .d24-quote__mark {
-      font-family: var(--font-primary);
-      font-size: clamp(6rem, 14vw, 11rem);
-      color: rgba(219,0,90,0.18);
-      line-height: 0.6;
-      display: block;
-      margin-bottom: -1.5rem;
-    }
-    .d24-quote__text {
-      font-family: var(--font-secondary);
-      font-size: clamp(1.3rem, 2.8vw, 2.2rem);
-      font-style: italic;
-      line-height: 1.5;
-      color: rgba(255,255,255,0.85);
-      max-width: 800px;
-      margin: 0 auto;
-    }
-    .d24-quote__cta { display: none; }
-
-    /* ── Form contatti / Parliamoci ─────────────────────── */
-    .d24-contact {
-      background: var(--primary);
-      padding: clamp(3.5rem, 6vw, 5rem) clamp(1.5rem, 5vw, 6rem);
-    }
-    .d24-contact__inner {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 6vw, 6rem);
-      align-items: stretch;
-      max-width: 1280px;
-      margin: 0 auto;
-    }
-    .d24-contact__left {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-start;
-    }
-    .d24-contact__title {
-      font-family: var(--font-primary);
-      font-size: 55px;
-      font-weight: 800;
-      text-transform: uppercase;
-      color: #fff;
-      line-height: 0.95;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.25rem;
-    }
-    .d24-contact__label {
-      font-family: var(--font-secondary);
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      margin-bottom: 1rem;
-      display: block;
-    }
-    .d24-contact__sub {
-      font-family: var(--font-secondary);
-      font-size: 0.95rem;
-      line-height: 1.7;
-      color: rgba(255,255,255,0.65);
-    }
-    .d24-contact .contact-home__form {
-      width: 100%;
-    }
-    .d24-contact .contact-home__row {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      margin-bottom: 10px;
-    }
-    .d24-contact .contact-home__field {
-      background: rgba(0,0,0,0.18);
-      border: 1px solid rgba(255,255,255,0.22);
-      color: #fff;
-      padding: 0.85rem 1.1rem;
-      border-radius: 8px;
-      font-family: var(--font-secondary);
-      font-size: 0.88rem;
-      width: 100%;
-      outline: none;
-      transition: border-color 200ms, background 200ms;
-    }
-    .d24-contact .contact-home__field::placeholder { color: rgba(255,255,255,0.45); }
-    .d24-contact .contact-home__field:focus {
-      border-color: rgba(255,255,255,0.7);
-      background: rgba(0,0,0,0.25);
-    }
-    .d24-contact .contact-home__textarea {
-      width: 100%;
-      margin-bottom: 10px;
-      resize: vertical;
-      min-height: 110px;
-    }
-    .d24-contact .contact-home__privacy {
-      display: flex;
-      align-items: flex-start;
-      gap: 0.75rem;
-      font-family: var(--font-secondary);
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.55);
-      margin-bottom: 1.5rem;
-    }
-    .d24-contact .contact-home__privacy a { color: #fff; text-decoration: underline; }
-    .d24-contact .contact-home__submit-wrap { display: flex; }
-    .d24-contact .btn--primary {
-      background: #fff !important;
-      color: var(--primary) !important;
-      border-color: #fff !important;
-    }
-    .d24-contact .btn--primary:hover {
-      background: #080808 !important;
-      color: #fff !important;
-      border-color: #080808 !important;
-    }
-    @media (max-width: 860px) {
-      .d24-contact__inner { grid-template-columns: 1fr; }
-      .d24-contact .contact-home__row { grid-template-columns: 1fr; }
-    }
-
-    /* ── Back ───────────────────────────────────────────── */
-    .d24-back {
-      background: var(--primary);
-      padding: 1.5rem clamp(1.5rem, 5vw, 6rem);
-      border-top: 1px solid rgba(255,255,255,0.15);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-    .d24-back__link {
-      font-family: var(--font-secondary);
-      font-size: 0.78rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.65);
-      text-decoration: none;
-      transition: color 200ms;
-    }
-    .d24-back__link:hover { color: #fff; }
-    .d24-back__brand {
-      font-family: var(--font-primary);
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    @media (max-width: 860px) {
-      .d24-block__grid { grid-template-columns: 1fr; }
-      .d24-block--flip .d24-block__grid { direction: ltr; }
-      .d24-visual { aspect-ratio: 16/9; }
-      .d24-results__grid { grid-template-columns: 1fr; gap: 12px; }
-    }
-
-    /* ── Hero reveal ── */
+    /* ── Ingresso della hero ── */
     .d24-hero__kicker, .d24-hero__logo, .d24-hero__sub, .d24-hero__meta { opacity: 0; transform: translateY(20px); }
     .d24-hero--revealed .d24-hero__kicker { opacity:1; transform:none; transition: opacity .55s .10s ease, transform .55s .10s ease; }
     .d24-hero--revealed .d24-hero__logo   { opacity:1; transform:none; transition: opacity .60s .22s ease, transform .60s .22s ease; }
     .d24-hero--revealed .d24-hero__sub    { opacity:1; transform:none; transition: opacity .55s .40s ease, transform .55s .40s ease; }
     .d24-hero--revealed .d24-hero__meta   { opacity:1; transform:none; transition: opacity .50s .55s ease, transform .50s .55s ease; }
-    /* Nav transitions */
-    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
-    .nav__logo img { transition: filter 180ms ease !important; }
-    /* Split-letter .tl spans */
-    .d24-results__title .tl, .d24-contact__title .tl { display: inline-block; opacity: 0; transform: translateY(0.8em); }
-
-    /* ── SMM sticky stack (3 panels = 300dvh) ── */
-    .d24-stack { position: relative; height: 300dvh; }
-    .d24-smm-panel {
-      position: sticky;
-      top: 0;
-      height: 100dvh;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .d24-smm-panel:nth-child(n+2) {
-      border-radius: 24px 24px 0 0;
-    }
-
-    /* ── Card reveal ── */
-    .d24-result {
-      opacity: 0;
-      transform: translateY(32px);
-    }
-    .d24-result.is-visible {
-      opacity: 1;
-      transform: none;
-      transition: opacity 0.55s ease, transform 0.55s ease;
-    }
-    .d24-result.is-visible.reveal-delay-1 { transition-delay: 0.12s; }
-    .d24-result.is-visible.reveal-delay-2 { transition-delay: 0.24s; }
   </style>
 </head>
 <body>
@@ -574,10 +1017,11 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="../contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -610,8 +1054,10 @@
           <div class="nav__mega-panel nav__mega-panel--pink">
             <p class="nav__mega-label">Team</p>
             <div class="nav__mega-avatars">
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
               <span class="nav__avatar"></span>
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
@@ -633,9 +1079,7 @@
     <section class="d24-hero" id="d24-hero">
       <div class="d24-hero__bg" aria-hidden="true"></div>
       <div class="d24-hero__video" aria-hidden="true">
-        <video autoplay muted loop playsinline>
-          <source src="../case-studies/videobanquetingecateringeventi.mp4" type="video/mp4">
-        </video>
+        <img src="../Dama/catering.webp" alt="" />
       </div>
       <div class="d24-hero__inner">
         <div class="d24-hero__kicker">
@@ -660,376 +1104,348 @@
       </div>
     </section>
 
-    <!-- ══ INTRO ══════════════════════════════════════════ -->
-    <section class="d24-intro reveal" id="d24-intro">
-      <div class="d24-intro__grid">
-        <div class="d24-intro__text">
-          <span class="d24-intro__label">Il progetto</span>
-          <p class="d24-intro__body">
-            Dama24 ci ha chiesto di elevare il proprio posizionamento nel mondo del banqueting di alta gamma, trasformando la percezione del brand <strong>da semplice servizio di catering a vera e propria «esperienza d'arte»</strong>. La sfida era ambiziosa: trasmettere l'eleganza, la cura dei dettagli e il savoir-faire italiano attraverso ogni punto di contatto, coordinando la presenza online con l'impatto scenografico degli eventi fisici.
-          </p>
-        </div>
-        <div class="d24-intro__video">
-          <video autoplay muted loop playsinline>
+    <!-- ══ CORPO ARTICOLO ════════════════════════════════ -->
+    <section class="cs2-body">
+      <div class="cs2-body__layout">
+      <div class="cs2-body__inner">
+
+        <h2 class="cs2-h2">Il progetto</h2>
+
+        <p class="cs2-p">Dama24 ci ha chiesto di elevare il proprio posizionamento nel mondo del banqueting di alta gamma, trasformando la percezione del brand <strong>da semplice servizio di catering a vera e propria «esperienza d'arte»</strong>. La sfida era ambiziosa: trasmettere l'eleganza, la cura dei dettagli e il savoir-faire italiano attraverso ogni punto di contatto, coordinando la presenza online con l'impatto scenografico degli eventi fisici.</p>
+
+        <figure class="cs2-figure cs2-figure--wide">
+          <video autoplay muted loop playsinline aria-hidden="true">
             <source src="../case-studies/GIFMINIBURGERS.mp4" type="video/mp4">
           </video>
-        </div>
-      </div>
-    </section>
+        </figure>
 
-    <div class="d24-stack" id="d24-stack">
-    <!-- ══ BLOCCO 1 — visual sx, testo dx ════════════════ -->
-    <section class="d24-block d24-block--dark d24-block--flip d24-smm-panel" id="d24-block1">
-      <div class="d24-block__grid reveal">
-        <div>
-          <span class="d24-block__eyebrow">01 — Digital Identity</span>
-          <h2 class="d24-block__title">Il sito web:<br/>un atelier digitale</h2>
-          <div class="d24-features">
-            <div class="d24-feature">
-              <div class="d24-feature__title">Design immersivo</div>
-              <div class="d24-feature__text">Un'interfaccia pulita, dove il bianco e gli spazi vuoti danno respiro alle immagini di alta qualità. Ogni pagina è pensata per far vivere all'utente l'atmosfera di un evento firmato Dama24 prima ancora di averlo prenotato.</div>
-            </div>
-            <div class="d24-feature">
-              <div class="d24-feature__title">Narrazione sensoriale</div>
-              <div class="d24-feature__text">I testi e i visual non descrivono solo i piatti, ma l'emozione dell'accoglienza. Abbiamo trasformato la navigazione in un percorso che riflette la «visione del mondo» del target: colta, raffinata e mai scontata.</div>
-            </div>
-          </div>
-        </div>
-        <div class="d24-visual">
-          <span class="d24-visual__label">Dama<br/>24</span>
-        </div>
-      </div>
-    </section>
+        <h2 class="cs2-h2">01 — Digital Identity: il sito web, un atelier digitale</h2>
 
-    <!-- ══ BLOCCO 2 — testo sx, visual dx ════════════════ -->
-    <section class="d24-block d24-block--white d24-smm-panel" id="d24-block2">
-      <div class="d24-block__grid reveal">
-        <div>
-          <span class="d24-block__eyebrow">02 — Social &amp; eventi</span>
-          <h2 class="d24-block__title">Il racconto<br/>dell'effimero</h2>
-          <div class="d24-features">
-            <div class="d24-feature">
-              <div class="d24-feature__title">Social storytelling</div>
-              <div class="d24-feature__text">Abbiamo trasformato Instagram nella vetrina del «dietro le quinte» del lusso. Non mostriamo solo il risultato finale, ma la cura meticolosa nella scelta delle materie prime, la precisione dei gesti e l'arte del banqueting in movimento.</div>
-            </div>
-            <div class="d24-feature">
-              <div class="d24-feature__title">L'evento come contenuto</div>
-              <div class="d24-feature__text">Ogni evento fisico diventa un generatore di contenuti organici. Abbiamo coordinato la copertura visiva per catturare l'autenticità dei momenti, trasformando l'esperienza degli ospiti in una testimonianza di valore per il brand.</div>
-            </div>
-          </div>
-        </div>
-        <div class="d24-visual">
-          <span class="d24-visual__label">Social<br/>Events</span>
-        </div>
-      </div>
-    </section>
+        <ul class="cs2-list">
+          <li><strong>Design immersivo:</strong> un'interfaccia pulita, dove il bianco e gli spazi vuoti danno respiro alle immagini di alta qualità. Ogni pagina è pensata per far vivere all'utente l'atmosfera di un evento firmato Dama24 prima ancora di averlo prenotato.</li>
+          <li><strong>Narrazione sensoriale:</strong> i testi e i visual non descrivono solo i piatti, ma l'emozione dell'accoglienza. Abbiamo trasformato la navigazione in un percorso che riflette la «visione del mondo» del target: colta, raffinata e mai scontata.</li>
+        </ul>
 
-    <!-- ══ BLOCCO 3 — visual sx, testo dx ════════════════ -->
-    <section class="d24-block d24-block--dark d24-block--flip d24-smm-panel" id="d24-block3">
-      <div class="d24-block__grid reveal">
-        <div>
-          <span class="d24-block__eyebrow">03 — Advertising di precisione</span>
-          <h2 class="d24-block__title">Intercettare<br/>l'eccellenza</h2>
-          <p class="d24-block__body">Per un brand di lusso, la massa è il nemico. Abbiamo progettato una strategia di Advertising &amp; Performance chirurgica:</p>
-          <div class="d24-features">
-            <div class="d24-feature">
-              <div class="d24-feature__title">Google Ads</div>
-              <div class="d24-feature__text">Abbiamo intercettato la domanda attiva di chi cerca servizi di banqueting premium, presidiando le chiavi di ricerca legate al lusso e agli eventi corporate di alto livello.</div>
-            </div>
-            <div class="d24-feature">
-              <div class="d24-feature__title">Meta Ads ispirazionali</div>
-              <div class="d24-feature__text">Campagne video mirate a un target ultra-profilato, lavorando sulla «domanda latente» attraverso contenuti emozionali che stimolano il desiderio e la distinzione.</div>
-            </div>
-          </div>
-        </div>
-        <div class="d24-visual">
-          <span class="d24-visual__label">Ads<br/>Perf.</span>
-        </div>
-      </div>
-    </section>
+        <h2 class="cs2-h2">02 — Social &amp; eventi: il racconto dell'effimero</h2>
 
-    </div><!-- /d24-stack -->
+        <ul class="cs2-list">
+          <li><strong>Social storytelling:</strong> abbiamo trasformato Instagram nella vetrina del «dietro le quinte» del lusso. Non mostriamo solo il risultato finale, ma la cura meticolosa nella scelta delle materie prime, la precisione dei gesti e l'arte del banqueting in movimento.</li>
+          <li><strong>L'evento come contenuto:</strong> ogni evento fisico diventa un generatore di contenuti organici. Abbiamo coordinato la copertura visiva per catturare l'autenticità dei momenti, trasformando l'esperienza degli ospiti in una testimonianza di valore per il brand.</li>
+        </ul>
 
-    <!-- ══ RISULTATI ═══════════════════════════════════════ -->
-    <section class="d24-results" id="d24-results">
-      <div class="d24-results__inner">
-        <span class="d24-results__label reveal">Il risultato</span>
-        <h2 class="d24-results__title reveal" id="d24-results-title">Un codice di stile<br/>inconfondibile</h2>
-        <p class="d24-results__intro reveal">La collaborazione con Dama24 ha prodotto un ecosistema di comunicazione dove la forma è sostanza. Abbiamo dimostrato che l'accoglienza di lusso si può comunicare con efficacia solo se si parla la stessa lingua del cliente:</p>
-        <div class="d24-results__grid">
-          <div class="d24-result reveal">
-            <div class="d24-result__title">Posizionamento</div>
-            <div class="d24-result__text">Il brand è oggi riconosciuto come un punto di riferimento per chi cerca un'esperienza sartoriale tra fisico e digitale.</div>
-          </div>
-          <div class="d24-result reveal reveal-delay-1">
-            <div class="d24-result__title">Coerenza omnichannel</div>
-            <div class="d24-result__text">Dal primo click sul sito all'ultimo brindisi dell'evento, l'identità Dama24 rimane forte, chiara e inconfondibile.</div>
-          </div>
-          <div class="d24-result reveal reveal-delay-2">
-            <div class="d24-result__title">Qualità dei lead</div>
-            <div class="d24-result__text">Abbiamo spostato l'ago della bilancia verso contatti più profilati e in linea con l'esclusività del servizio offerto.</div>
-          </div>
+        <figure class="cs2-figure cs2-figure--wide">
+          <video autoplay muted loop playsinline aria-hidden="true">
+            <source src="../case-studies/videobanquetingecateringeventi.mp4" type="video/mp4">
+          </video>
+        </figure>
+
+        <h2 class="cs2-h2">03 — Advertising di precisione: intercettare l'eccellenza</h2>
+
+        <p class="cs2-p">Per un brand di lusso, la massa è il nemico. Abbiamo progettato una strategia di Advertising &amp; Performance chirurgica:</p>
+
+        <ul class="cs2-list">
+          <li><strong>Google Ads:</strong> abbiamo intercettato la domanda attiva di chi cerca servizi di banqueting premium, presidiando le chiavi di ricerca legate al lusso e agli eventi corporate di alto livello.</li>
+          <li><strong>Meta Ads ispirazionali:</strong> campagne video mirate a un target ultra-profilato, lavorando sulla «domanda latente» attraverso contenuti emozionali che stimolano il desiderio e la distinzione.</li>
+        </ul>
+
+        <h2 class="cs2-h2">Il risultato: un codice di stile inconfondibile</h2>
+
+        <p class="cs2-p">La collaborazione con Dama24 ha prodotto un ecosistema di comunicazione dove la forma è sostanza. Abbiamo dimostrato che l'accoglienza di lusso si può comunicare con efficacia solo se si parla la stessa lingua del cliente:</p>
+
+        <ul class="cs2-list">
+          <li><strong>Posizionamento:</strong> il brand è oggi riconosciuto come un punto di riferimento per chi cerca un'esperienza sartoriale tra fisico e digitale.</li>
+          <li><strong>Coerenza omnichannel:</strong> dal primo click sul sito all'ultimo brindisi dell'evento, l'identità Dama24 rimane forte, chiara e inconfondibile.</li>
+          <li><strong>Qualità dei lead:</strong> abbiamo spostato l'ago della bilancia verso contatti più profilati e in linea con l'esclusività del servizio offerto.</li>
+        </ul>
+
+        <blockquote class="cs2-quote">
+          <p>Trasformare l'eccellenza in una storia indimenticabile è l'unico modo per distinguersi davvero.</p>
+        </blockquote>
+
+        <div class="cs2-cta-block">
+          <p><a href="../contatti.html">Il tuo brand ha bisogno di un'identità che lasci il segno?</a></p>
         </div>
-      </div>
-    </section>
 
-    <!-- ══ QUOTE ══════════════════════════════════════════ -->
-    <section class="d24-quote" id="d24-quote">
-      <span class="d24-quote__mark" aria-hidden="true">"</span>
-      <p class="d24-quote__text reveal">
-        Trasformare l'eccellenza in una storia indimenticabile è l'unico modo per distinguersi davvero.
-      </p>
-      <a href="../contatti.html" class="d24-quote__cta reveal">Il tuo brand ha bisogno di un'identità che lasci il segno?</a>
+        <!-- La CTA di ritorno chiude la lettura, in fondo
+             alla pagina e non dopo il form. -->
+        <div class="cs2-back">
+          <a href="../case-studies.html" class="btn btn--primary cs2-back__link">← Tutti i case study</a>
+        </div>
+
+      </div><!-- /.cs2-body__inner -->
+
+      <aside class="cs2-sidebar">
+
+        <div class="cs2-sidebar__search">
+          <span class="cs2-sidebar__search-icon">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10.5 10.5 L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="search" placeholder="Cerca case study…" />
+        </div>
+
+        <span class="cs2-sidebar__label">Altri case study</span>
+
+        <ul class="cs2-sidebar__list">
+          <li class="cs2-sidebar__item active">
+            <a href="dama24.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/DAMA24.png" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Dama24 — L'estetica dell'accoglienza tra fisico e digitale</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="fanuc.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/FANUC.png" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Fanuc — Strategia e contenuti per l'automazione industriale</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="../case-studies.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/HUMANITAS.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Humanitas — Comunicazione istituzionale e divulgazione</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="../case-studies.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/CUPRA.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Cupra — Brand experience e contenuti per il lancio</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="../case-studies.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/WOODOO.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Woodoo Fest — Content &amp; video per il festival</span>
+            </a>
+          </li>
+        </ul>
+
+      </aside>
+
+      </div><!-- /.cs2-body__layout -->
     </section>
 
     <!-- ══ FORM CONTATTI ═════════════════════════════════ -->
-    <section class="d24-contact" id="d24-contact">
-      <div class="d24-contact__inner">
-        <div class="d24-contact__left">
-          <span class="d24-contact__label reveal">Parliamoci</span>
-          <h2 class="d24-contact__title reveal" id="d24-contact-title">Il tuo brand<br/>ha bisogno di un'identità<br/>che lasci il segno?</h2>
-          <p class="d24-contact__sub reveal">Raccontaci il tuo progetto. Trasformiamo idee in brand che lasciano il segno.</p>
+    <section class="cs2-contact">
+      <div class="cs2-contact__inner">
+        <div class="cs2-contact__left">
+          <span class="cs2-contact__label reveal">Parliamoci</span>
+          <h2 class="cs2-contact__title reveal">Il tuo brand<br/>ha bisogno di un'identità<br/>che lasci il segno?</h2>
         </div>
-        <div class="d24-contact__right">
-      <form class="contact-home__form reveal" action="#" method="post" novalidate>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-          <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
-        </div>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-          <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
-        </div>
-        <div class="contact-home__row">
-          <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-          <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
-        </div>
-        <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-        <label class="contact-home__privacy">
-          <input type="checkbox" required />
-          <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-        </label>
-        <div class="contact-home__submit-wrap">
-          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
-        </div>
-      </form>
+        <div class="cs2-contact__right">
+          <!-- Stesse classi del form in homepage (hc-*) -->
+          <form class="hc-form" action="#" method="post" novalidate>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            </div>
+            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="cs2-privacy">
+                <input type="checkbox" id="cs2-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <label class="svc-caffe__privacy" for="cs2-newsletter">
+                <input type="checkbox" id="cs2-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
+            </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+          </form>
         </div>
       </div>
     </section>
 
-    <!-- ══ BACK ══════════════════════════════════════════ -->
-    <div class="d24-back">
-      <a href="../case-studies.html" class="d24-back__link">← Tutti i case studies</a>
-      <span class="d24-back__brand">ESTRO</span>
-    </div>
   </main>
 
   <script src="../js/main.js"></script>
   <script>
-  /* ── Dama24: hero reveal ── */
-  (function () {
-    var h = document.querySelector('.d24-hero');
-    if (!h) return;
-    requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('d24-hero--revealed'); }); });
-  })();
-  </script>
-  <script>
-  /* ── Dama24: scroll-driven overlays + splitLetters + nav ── */
-  (function () {
-    'use strict';
-    function c01(v) { return Math.max(0, Math.min(1, v)); }
-    function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
+  /* ═══════════════════════════════════════════════════════════
+     ARTICOLO TIPS — motore della homepage, ridotto al necessario.
+     La vecchia regia (veli colorati sopra ogni sezione, tende a
+     inizio e fine pagina, titoli scomposti lettera per lettera, e
+     un blocco che chiamava un observer mai definito) è stata
+     rimossa: qui la pagina è un articolo, quindi le sezioni non
+     si annunciano una per una. Restano l'acqua sui titoli,
+     l'ingresso in cascata dei testi e la salita — solo sulle due
+     sezioni finali, form e footer.
+     ═══════════════════════════════════════════════════════════ */
+  function cs2Boot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
 
-    var navEl      = document.querySelector('.nav');
-    var heroEl     = document.getElementById('d24-hero');
-    var introEl    = document.getElementById('d24-intro');
-    var block1El   = document.getElementById('d24-block1');
-    var block2El   = document.getElementById('d24-block2');
-    var block3El   = document.getElementById('d24-block3');
-    var resultsEl  = document.getElementById('d24-results');
-    var quoteEl    = document.getElementById('d24-quote');
-    var contactEl  = document.getElementById('d24-contact');
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFxCs2' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
 
-    function splitLetters(el) {
-      if (!el) return [];
-      var raw = el.innerHTML, out = '', i = 0, inWord = false;
-      function closeWord() { if (inWord) { out += '</span>'; inWord = false; } }
-      function openWord() { if (!inWord) { out += '<span style="display:inline-block;white-space:nowrap">'; inWord = true; } }
-      while (i < raw.length) {
-        if (raw[i] === '<') {
-          var j = raw.indexOf('>', i); closeWord(); out += raw.slice(i, j + 1); i = j + 1;
-        } else if (raw[i] === '&') {
-          var k = raw.indexOf(';', i); openWord(); out += '<span class="tl">' + raw.slice(i, k + 1) + '</span>'; i = k + 1;
-        } else if (raw[i] === ' ' || raw[i] === '\n' || raw[i] === '\t') {
-          closeWord(); out += raw[i]; i++;
-        } else {
-          openWord(); out += '<span class="tl">' + raw[i] + '</span>'; i++;
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+
+    // il titolo dell'articolo è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.cs2-hero__title'), 1000));
+
+    // Gli h2 del corpo restano fuori dall'acqua: sono titoli di
+    // paragrafo, non di sezione, e interrompevano la lettura.
+    // Entrano con la cascata come il resto del testo.
+    document.querySelectorAll('.cs2-contact__title, .sf-ghost').forEach(el => {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+      }, el.classList.contains('sf-ghost')
+           ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+           : { threshold: 0.6 });
+      io.observe(el);
+    });
+
+    /* ── Salita: solo form e footer ────────────────────────── */
+    /* La lettura sale sopra la hero, poi il form sale sopra la
+       lettura e il footer sopra il form: la transizione c'è a ogni
+       cambio di sezione, non solo in fondo. */
+    const RISE = ['.cs2-body', '.cs2-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
         }
-      }
-      closeWord();
-      el.innerHTML = out;
-      el.style.opacity = '1'; el.style.transform = 'none';
-      return Array.from(el.querySelectorAll('.tl'));
-    }
-    function revLetters(letters, p) {
-      letters.forEach(function (el, i) {
-        var lP = ease(c01((p - i * 0.012) / 0.08));
-        el.style.opacity = lP.toFixed(3);
-        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
-      });
-    }
-    function makeTransOv(el, bg) {
-      if (!el) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      el.appendChild(ov);
-      return ov;
-    }
-    function p_enter(el) {
-      if (!el) return 0;
-      return ease(c01((window.innerHeight - el.getBoundingClientRect().top) / window.innerHeight));
-    }
-    function p_enter_fast(el) {
-      if (!el) return 0;
-      return ease(c01((window.innerHeight - el.getBoundingClientRect().top) / (window.innerHeight * 0.55)));
-    }
-    /* 0 quando fromEl è centrato, 1 quando toEl è centrato
-       earlyVh: frazione di vh per anticipare l'inizio (0 = dal centro, 0.4 = 40% prima) */
-    function p_between(fromEl, toEl, earlyVh) {
-      if (!fromEl || !toEl) return 0;
-      var scrollY = window.scrollY;
-      var vpCenter = window.innerHeight / 2;
-      var fromTop = fromEl.getBoundingClientRect().top + scrollY;
-      var toTop   = toEl.getBoundingClientRect().top   + scrollY;
-      var s0 = fromTop + fromEl.offsetHeight / 2 - vpCenter - ((earlyVh || 0) * window.innerHeight);
-      var s1 = toTop   + toEl.offsetHeight   / 2 - vpCenter;
-      return ease(c01((scrollY - s0) / (s1 - s0)));
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
     }
 
-    /* overlays */
-    var heroToWhiteOv  = makeTransOv(heroEl,   '#fff');
-    var introToBlackOv = makeTransOv(introEl,  '#0a0a0a');
-    var block3ToWhiteOv= makeTransOv(block3El, '#fff');
-    var resultsToBlackOv = makeTransOv(resultsEl, '#0a0a0a');
-    var quoteToCtaOv   = makeTransOv(quoteEl,  '#DB005A');
-    if (quoteToCtaOv) quoteToCtaOv.style.zIndex = '10';
-
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, { position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'200' });
-    document.body.appendChild(exitOv);
-
-    /* splitLetters on result + contact titles */
-    var resultsLetters = splitLetters(document.getElementById('d24-results-title'));
-    var contactLetters = splitLetters(document.getElementById('d24-contact-title'));
-
-    var C_DARK = [8,8,8], C_WHITE = [255,255,255], C_FUCHSIA = [219,0,90];
-    function luma(c) { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov) { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-    var prevDark = null;
-
-    function tick() {
-      requestAnimationFrame(tick);
-      var vh = window.innerHeight;
-
-      /* hero → white: completa quando intro è centrata */
-      if (heroToWhiteOv && introEl) {
-        var _ivh = window.innerHeight, _it = introEl.getBoundingClientRect().top;
-        heroToWhiteOv.style.opacity = ease(c01((_ivh - _it) / (_ivh / 2 + introEl.offsetHeight / 2))).toFixed(3);
-      }
-
-      /* intro → black: completa quando block1 è centrata */
-      if (introToBlackOv && block1El) {
-        var _b1vh = window.innerHeight, _b1t = block1El.getBoundingClientRect().top;
-        introToBlackOv.style.opacity = ease(c01((_b1vh - _b1t) / (_b1vh / 2 + block1El.offsetHeight / 2))).toFixed(3);
-      }
-
-      /* block3 → white: 0 quando results entra dal basso, 1 quando results è centrata */
-      if (block3ToWhiteOv && resultsEl) {
-        var _vh = window.innerHeight;
-        var _rt = resultsEl.getBoundingClientRect().top;
-        block3ToWhiteOv.style.opacity = ease(c01((_vh - _rt) / (_vh / 2 + resultsEl.offsetHeight / 2))).toFixed(3);
-      }
-
-      /* results → black: 0 quando quote entra, 1 quando quote è centrata */
-      if (resultsToBlackOv && quoteEl) {
-        var _qvh = window.innerHeight;
-        var _qt = quoteEl.getBoundingClientRect().top;
-        resultsToBlackOv.style.opacity = ease(c01((_qvh - _qt) / (_qvh / 2 + quoteEl.offsetHeight / 2))).toFixed(3);
-      }
-
-      /* quote → fuchsia: parte solo quando contact è al 40% del viewport, completa quando centrata */
-      if (quoteToCtaOv && contactEl) {
-        var _cvh = window.innerHeight;
-        var _ct = contactEl.getBoundingClientRect().top;
-        var _cStart = _cvh * 0.6; /* inizia quando contact è al 40% dall'alto */
-        quoteToCtaOv.style.opacity = ease(c01((_cStart - _ct) / (_cStart - (_cvh / 2 - contactEl.offsetHeight / 2)))).toFixed(3);
-      }
-
-      /* footer exit overlay */
-      var maxS = Math.max(1, document.documentElement.scrollHeight - vh);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 120)).toFixed(3);
-
-      /* results title letters — completato quando results è centrata */
-      if (resultsLetters.length && resultsEl) {
-        var pRes = ease(c01((vh/2 - resultsEl.getBoundingClientRect().top - resultsEl.offsetHeight/4) / (vh * 0.35)));
-        revLetters(resultsLetters, pRes);
-      }
-
-      /* contact title letters — rivela mentre la sezione si avvicina al centro */
-      if (contactLetters.length && contactEl) {
-        revLetters(contactLetters, p_between(quoteEl, contactEl));
-      }
-
-      /* nav theme — blend continuo, con gestione separata dei pannelli sticky */
-      if (navEl) {
-        var navMidY = (navEl.getBoundingClientRect().height || 72) / 2;
-        var effective = C_WHITE;
-
-        /* sezioni normali (non sticky stack) */
-        var plainSections = [
-          { el: heroEl,    base: C_DARK,    ov: heroToWhiteOv,    ovC: C_WHITE   },
-          { el: introEl,   base: C_WHITE,   ov: introToBlackOv,   ovC: C_DARK    },
-          { el: resultsEl, base: C_WHITE,   ov: resultsToBlackOv, ovC: C_DARK    },
-          { el: quoteEl,   base: C_DARK,    ov: quoteToCtaOv,     ovC: C_FUCHSIA },
-          { el: contactEl, base: C_FUCHSIA, ov: null,             ovC: null      },
-        ];
-        plainSections.forEach(function(s) {
-          if (!s.el) return;
-          var r = s.el.getBoundingClientRect();
-          if (r.top <= navMidY && r.bottom > navMidY) {
-            var alpha = ovOp(s.ov);
-            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
-          }
+    /* ── Ingresso dei testi: linguaggio del body di About ───
+       Niente stati nascosti duraturi: opacità di partenza alta e
+       spostamento contenuto, un blocco alla volta mentre scorre. */
+    const bodyBits = document.querySelectorAll(
+      '.cs2-p, .cs2-list, .cs2-callout, .cs2-h2, .cs2-answer__inner, ' +
+      '.cs2-list, .cs2-quote, .cs2-sidebar__item, ' +
+      '.cs2-contact__label, .cs2-contact__sub, .hc-form'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
         });
-
-        /* pannelli sticky: usa il progresso di scroll nella d24-stack */
-        var stackNavEl = document.getElementById('d24-stack');
-        if (stackNavEl) {
-          var sNR = stackNavEl.getBoundingClientRect();
-          if (sNR.top <= navMidY && sNR.bottom > navMidY) {
-            var sNavP = -sNR.top / window.innerHeight; /* 0-1 block1, 1-2 block2, 2-3 block3 */
-            if (sNavP < 1) {
-              effective = C_DARK;                       /* block1: sfondo scuro */
-            } else if (sNavP < 2) {
-              effective = C_WHITE;                      /* block2: sfondo chiaro */
-            } else {
-              var b3a = ovOp(block3ToWhiteOv);
-              effective = b3a > 0 ? blend(C_DARK, C_WHITE, b3a) : C_DARK; /* block3: scuro→bianco */
-            }
-          }
-        }
-
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
     }
-    requestAnimationFrame(tick);
-  })();
+
+    /* ── L'occhio delle FAQ, come in homepage ──────────────── */
+    const EYE_OPEN = '<svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    const EYE_CLOSED = '<svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    document.querySelectorAll('.cs2-faq__q-icon').forEach(icon => {
+      icon.textContent = '';                    // via il "+"
+      icon.innerHTML = EYE_OPEN + EYE_CLOSED;
+      icon.setAttribute('aria-hidden', 'true');
+    });
+
+    /* ── La colonna si ferma dove inizia il form ───────────── */
+    const rail = document.querySelector('.cs2-rail');
+    const contact = document.querySelector('.cs2-contact');
+    if (rail && contact) {
+      // la corsia si ferma 48px prima del form, così la lista non
+      // arriva mai a toccarlo
+      const fitRail = () => { rail.style.height = Math.max(0, contact.offsetTop - 48) + 'px'; };
+      fitRail();
+      addEventListener('resize', fitRail, { passive: true });
+      addEventListener('load', fitRail);
+    }
+
+    /* ── Nav chiara/scura ────────────────────────────────────
+       Qui, a differenza degli articoli, la pagina non è tutta
+       chiara: la hero è scura e il resto è su carta bianca. La nav
+       cambia quindi in base a dove si trova. */
+    const nav = document.querySelector('.nav');
+    const heroDark = document.querySelector('.d24-hero');
+    if (nav) {
+      const sync = () => {
+        const onDark = heroDark ? (heroDark.getBoundingClientRect().bottom > 64) : true;
+        nav.classList.toggle('nav--on-dark', onDark);
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cs2Boot);
+  } else { cs2Boot(); }
   </script>
+
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
@@ -1099,8 +1515,7 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-      </div>
-    </div>
+          </div>
         </div>
 
       </div>
@@ -1117,8 +1532,20 @@
     </div>
   </footer>
 
+
+  <script>
+  /* ── Ingresso della hero: kicker, logo, sottotitolo e attributi
+     entrano in cascata al caricamento (come nella versione
+     originale della pagina) ─────────────────────────────────── */
+  (function () {
+    const h = document.getElementById('d24-hero');
+    if (!h) return;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { h.classList.add('d24-hero--revealed'); });
+    });
+  }());
+  </script>
 </body>
 </html>
-
 
 

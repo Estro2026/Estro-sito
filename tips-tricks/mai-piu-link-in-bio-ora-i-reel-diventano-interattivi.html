@@ -431,6 +431,366 @@
       .tt-body__layout { grid-template-columns: 1fr; }
       .tt-sidebar { display: none; }
     }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    /* La pagina è chiara fin dall'atterraggio: vetro chiaro e MENU
+       nero già senza .scrolled — l'opposto della pagina news. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.62) !important;
+      backdrop-filter: blur(28px) saturate(170%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(170%) !important;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.10) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       UN SOLO COLORE, INVERTITO — carta bianca
+       Stessa impostazione dell'articolo News (una superficie sola,
+       il colore solo su testi, tag e card) ma ribaltata: qui la
+       carta è chiara e l'inchiostro scuro.
+       ═══════════════════════════════════════════════════════════ */
+    :root { --tt-paper: #ffffff; --tt-card: #f6f6f7; --tt-ink: #0b0b0c; }
+    body { background: var(--tt-paper) !important; }
+    .tt-hero,
+    .tt-body,
+    .tt-back { background: var(--tt-paper) !important; }
+    .tt-hero__img::after { content: none !important; }
+
+    /* Testi in positivo */
+    .tt-hero__title,
+    .tt-h2,
+    .tt-p strong,
+    .tt-sidebar__title { color: var(--tt-ink) !important; }
+    .tt-hero__intro,
+    .tt-p,
+    .tt-list li,
+    .tt-cta-block p { color: rgba(0,0,0,0.66) !important; }
+    .tt-hero__date { color: rgba(0,0,0,0.45) !important; }
+    /* Niente riga fra titolo e occhiello: il titolo e la frase che
+       lo segue sono un blocco unico, il filetto li separava e basta. */
+    .tt-hero__intro {
+      border-top: 0 !important;
+      padding-top: 0 !important;
+      margin-top: 0.25rem;
+    }
+
+    /* Accento: uno solo, il fucsia */
+    .tt-hero__cat,
+    .tt-sidebar__label,
+    .tt-back__link { color: var(--primary); }
+    .tt-hero__cat { border-color: rgba(219,0,90,0.35) !important; }
+
+    /* ── Copertina della hero ──────────────────────────────────
+       Al posto del segnaposto tratteggiato c'è la copertina vera,
+       la stessa che fa da anteprima nell'elenco tips&tricks.
+       La pagina è su carta bianca e il titolo è in nero, quindi
+       sopra l'immagine scende una velatura chiara: piena dove
+       stanno le parole (il testo è allineato in basso) e quasi
+       assente in alto, dove la copertina si vede pulita. */
+    .tt-hero__img {
+      inset: 0 !important;
+      border: 0 !important;
+      border-radius: 0;
+      background:
+        url("../Foto%20tips%20and%20tricks/cover-tips-%E2%80%93-interactive-reels.webp")
+        center / cover no-repeat !important;
+    }
+    .tt-hero__img::after {
+      content: '' !important;
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        var(--tt-paper) 0%,
+        rgba(255,255,255,0.94) 26%,
+        rgba(255,255,255,0.72) 48%,
+        rgba(255,255,255,0.34) 72%,
+        rgba(255,255,255,0.12) 100%
+      );
+    }
+    /* la hero cresce un po': serve aria sopra la velatura perché
+       la copertina si legga davvero */
+    .tt-hero { min-height: min(86vh, 760px); }
+
+    /* ── Meno righe, più respiro ─────────────────────────────── */
+    .tt-list,
+    .tt-list li { border: 0 !important; }
+    .tt-list { margin-block: 0.75rem 2rem !important; gap: 0.35rem; }
+    .tt-list li { padding: 0.25rem 0 0.25rem 1.5rem !important; position: relative; }
+    .tt-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.75em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .tt-p { margin-bottom: 1.75rem !important; max-width: 68ch; }
+    .tt-h2 { margin-top: clamp(1.75rem, 3vw, 2.5rem) !important; }
+    .tt-h2:first-child { margin-top: 0 !important; }
+    .tt-body { padding-block: 40px !important; }
+
+    /* L'unico blocco con un fondo: l'inciso */
+    .tt-cta-block {
+      background: var(--tt-card) !important;
+      border: 1px solid rgba(0,0,0,0.08) !important;
+      border-left: 3px solid var(--primary) !important;
+      border-radius: 0 14px 14px 0 !important;
+      box-shadow: none !important;
+      padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.2rem);
+    }
+    .tt-cta-block a { color: var(--primary) !important; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ── Colonna laterale: pannello, agganciato fino al form ──── */
+    .tt-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h, 88px) + 24px);
+      background: var(--tt-card);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 1.5rem 1.4rem;
+    }
+    .tt-sidebar__label { color: var(--primary) !important; }
+    .tt-sidebar__label::before {
+      content: '';
+      display: inline-block;
+      vertical-align: -4px;
+      width: 19px; height: 19px;
+      margin-right: 0.55rem;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .tt-sidebar__item a:hover { background: rgba(0,0,0,0.04); }
+    .tt-sidebar__item.active a { background: rgba(219,0,90,0.07); }
+    .tt-sidebar__item.active .tt-sidebar__title { color: var(--primary) !important; }
+
+    /* ── CTA di ritorno: come la "Invia" ─────────────────────── */
+    .tt-back {
+      border: 0 !important;
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0 0 !important;
+      display: flex;
+    }
+    .tt-back__link::before { display: none !important; }
+    .tt-back__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem clamp(2rem, 5vw, 3.5rem);
+      border-radius: 999px;
+      background: transparent !important;
+      color: var(--tt-ink) !important;
+      border: 2px solid var(--tt-ink) !important;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .tt-back__link:hover,
+    .tt-back__link:active {
+      background: var(--tt-ink) !important;
+      color: #fff !important;
+      border-color: var(--tt-ink) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE — solo su form e footer, come in homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ── Ingresso dei testi: linguaggio del body di About ────── */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+    .reveal { opacity: 1; transform: none; }
+
+    /* ── Titoli 60px ─────────────────────────────────────────── */
+    .tt-hero__title,
+    .tt-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Form: identico a quello della homepage ──────────────── */
+    .tt-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .tt-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .tt-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .tt-contact .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .tt-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .tt-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .tt-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .tt-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .tt-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .tt-contact .hc-consents .svc-caffe__privacy span,
+    .tt-contact .hc-consents .svc-caffe__privacy a,
+    .tt-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .tt-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .tt-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .tt-contact .hc-submit::before { display: none !important; }
+    .tt-contact .hc-submit:hover,
+    .tt-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .tt-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — corpo minimo 16px
+       Fuori: header e footer; a 14px solo tagline/etichette e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button,
+    .tt-p,
+    .tt-list li,
+    .tt-hero__intro,
+    .tt-cta-block p,
+    .tt-sidebar__title { font-size: max(16px, 1rem) !important; }
+    .tt-hero__cat,
+    .tt-hero__date,
+    .tt-sidebar__label,
+    .tt-contact__label { font-size: 14px !important; }
+    main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
+    .tt-h2,
+    .tt-hero__title,
+    .tt-contact__title { font-size: revert !important; }
+    .tt-hero__title,
+    .tt-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
   </style>
 </head>
 <body>
@@ -445,10 +805,11 @@
       <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
         <img src="../Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="../contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -481,8 +842,10 @@
           <div class="nav__mega-panel nav__mega-panel--pink">
             <p class="nav__mega-label">Team</p>
             <div class="nav__mega-avatars">
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
               <span class="nav__avatar"></span>
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
@@ -502,16 +865,7 @@
 
     <!-- ══ HERO ══════════════════════════════════════════ -->
     <section class="tt-hero">
-      <div class="tt-hero__img" aria-hidden="true">
-        <div class="tt-hero__img-icon">
-          <svg viewBox="0 0 72 72" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect x="6" y="6" width="60" height="60" rx="6" stroke="white" stroke-width="2.5"/>
-            <circle cx="25" cy="27" r="8" stroke="white" stroke-width="2.5"/>
-            <path d="M6 52 L20 36 L32 48 L45 32 L66 58" stroke="white" stroke-width="2.5" stroke-linejoin="round"/>
-          </svg>
-          <span>Immagine articolo</span>
-        </div>
-      </div>
+      <div class="tt-hero__img" aria-hidden="true"></div>
       <div class="tt-hero__inner">
         <div class="tt-hero__meta">
           <span class="tt-hero__cat">Social &amp; Video</span>
@@ -562,6 +916,12 @@
 
         <div class="tt-cta-block">
           <p>Il Reel non intrattiene soltanto: guida, collega, accompagna. Vuoi capire come integrare queste novità nel tuo piano editoriale? <a href="../contatti.html">Scrivici:</a> trasformiamo i tuoi video in conversioni.</p>
+        </div>
+
+        <!-- La CTA di ritorno chiude la lettura, in fondo
+             all'articolo e non dopo il form. -->
+        <div class="tt-back">
+          <a href="../tips-tricks.html" class="btn btn--primary tt-back__link">← Tutti i Tips &amp; Tricks</a>
         </div>
 
       </div><!-- /.tt-body__inner -->
@@ -644,197 +1004,199 @@
           <h2 class="tt-contact__title reveal">Vuoi risultati concreti?<br/>Scrivici.</h2>
         </div>
         <div class="tt-contact__right">
-          <form class="contact-home__form reveal" action="#" method="post" novalidate>
-            <div class="contact-home__row">
-              <input class="contact-home__field" type="text" name="nome" placeholder="Nome*" required />
-              <input class="contact-home__field" type="text" name="cognome" placeholder="Cognome*" required />
+          <!-- Stesse classi del form in homepage (hc-*) -->
+          <form class="hc-form" action="#" method="post" novalidate>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
             </div>
-            <div class="contact-home__row">
-              <input class="contact-home__field" type="email" name="email" placeholder="Email*" required />
-              <input class="contact-home__field" type="tel" name="telefono" placeholder="Telefono" />
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
             </div>
-            <div class="contact-home__row">
-              <input class="contact-home__field" type="text" name="azienda" placeholder="Azienda" />
-              <input class="contact-home__field" type="url" name="sito" placeholder="Sito Web" />
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
             </div>
-            <textarea class="contact-home__field contact-home__textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-            <label class="contact-home__privacy">
-              <input type="checkbox" required />
-              <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-            </label>
-            <div class="contact-home__submit-wrap">
-              <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;text-align:center;justify-content:center;">Invia</button>
+            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="tta-privacy">
+                <input type="checkbox" id="tta-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+              </label>
+              <label class="svc-caffe__privacy" for="tta-newsletter">
+                <input type="checkbox" id="tta-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
             </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
           </form>
         </div>
       </div>
     </section>
 
-    <!-- ══ BACK ══════════════════════════════════════════ -->
-    <div class="tt-back">
-      <a href="../tips-tricks.html" class="tt-back__link">← Tutti i Tips &amp; Tricks</a>
-      <span class="tt-back__brand">ESTRO</span>
-    </div>
   </main>
 
   <script src="../js/main.js"></script>
   <script>
-  (function () {
-    var navEl     = document.querySelector('.nav');
-    var heroEl    = document.querySelector('.tt-hero');
-    var bodyEl    = document.querySelector('.tt-body');
-    var contactEl = document.querySelector('.tt-contact');
-    if (!heroEl || !bodyEl || !contactEl) return;
+  /* ═══════════════════════════════════════════════════════════
+     ARTICOLO TIPS — motore della homepage, ridotto al necessario.
+     La vecchia regia (veli colorati sopra ogni sezione, tende a
+     inizio e fine pagina, titoli scomposti lettera per lettera, e
+     un blocco che chiamava un observer mai definito) è stata
+     rimossa: qui la pagina è un articolo, quindi le sezioni non
+     si annunciano una per una. Restano l'acqua sui titoli,
+     l'ingresso in cascata dei testi e la salita — solo sulle due
+     sezioni finali, form e footer.
+     ═══════════════════════════════════════════════════════════ */
+  function ttBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
 
-    function ease(t) { return t < 0.5 ? 2*t*t : -1+(4-2*t)*t; }
-    function c01(v)  { return v < 0 ? 0 : v > 1 ? 1 : v; }
-
-    function splitLetters(el) {
-      if (!el) return [];
-      var raw = el.innerHTML, out = '', i = 0, inWord = false;
-      function closeWord() { if (inWord) { out += '</span>'; inWord = false; } }
-      function openWord()  { if (!inWord) { out += '<span style="display:inline-block;white-space:nowrap">'; inWord = true; } }
-      while (i < raw.length) {
-        if (raw[i] === '<') { var j = raw.indexOf('>', i); closeWord(); out += raw.slice(i, j+1); i = j+1; }
-        else if (raw[i] === ' ' || raw[i] === '\n') { closeWord(); out += raw[i]; i++; }
-        else { openWord(); out += '<span class="tl" style="display:inline-block;opacity:0;transform:translateY(0.7em)">' + raw[i] + '</span>'; i++; }
-      }
-      closeWord();
-      el.innerHTML = out; el.style.opacity = '1';
-      return Array.from(el.querySelectorAll('.tl'));
-    }
-    function revLetters(letters, p, base, dur) {
-      letters.forEach(function(l, i) {
-        var lp = ease(c01((p - (base||0) - i*(dur||0.04)) / 0.35));
-        l.style.opacity   = lp.toFixed(3);
-        l.style.transform = 'translateY(' + ((1-lp)*0.7).toFixed(3) + 'em)';
-      });
-    }
-
-    function makeTransOv(el, bg) {
-      if (!el) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:bg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(el).position === 'static') el.style.position = 'relative';
-      el.appendChild(ov);
-      return ov;
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
     }
 
-    function pHeroExit() {
-      var r = heroEl.getBoundingClientRect();
-      return ease(c01(-r.top / (heroEl.offsetHeight * 0.9)));
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
     }
-    function pCentered(el) {
-      if (!el) return 0;
-      var top = el.getBoundingClientRect().top, vh = window.innerHeight;
-      return ease(c01((vh - top) / (vh / 2 + el.offsetHeight / 2)));
-    }
 
-    var heroToBodyOv    = makeTransOv(heroEl, '#fff');
-    var bodyToContactOv = makeTransOv(bodyEl, '#DB005A');
+    // il titolo dell'articolo è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.tt-hero__title'), 1000));
 
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, {position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'150'});
-    document.body.appendChild(exitOv);
-
-    var heroTitle   = heroEl.querySelector('.tt-hero__title');
-    var heroMeta    = heroEl.querySelector('.tt-hero__meta');
-    var heroIntro   = heroEl.querySelector('.tt-hero__intro');
-    var heroLetters = splitLetters(heroTitle);
-    if (heroMeta)  heroMeta.style.opacity  = '0';
-    if (heroIntro) heroIntro.style.opacity = '0';
-    var startTime = performance.now();
-
-    var entryOv = document.createElement('div');
-    Object.assign(entryOv.style, {position:'fixed', inset:'0', background:'#000', opacity:'1', pointerEvents:'none', zIndex:'200', transition:'opacity 0.75s ease'});
-    document.body.appendChild(entryOv);
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        entryOv.style.opacity = '0';
-        setTimeout(function() { if (entryOv.parentNode) entryOv.parentNode.removeChild(entryOv); }, 800);
-      });
+    // Gli h2 del corpo restano fuori dall'acqua: sono titoli di
+    // paragrafo, non di sezione, e interrompevano la lettura.
+    // Entrano con la cascata come il resto del testo.
+    document.querySelectorAll('.tt-contact__title, .sf-ghost').forEach(el => {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+      }, el.classList.contains('sf-ghost')
+           ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+           : { threshold: 0.6 });
+      io.observe(el);
     });
 
-    var C_DARK    = [5,   5,   5];
-    var C_WHITE   = [255, 255, 255];
-    var C_FUCHSIA = [219, 0,   90];
-    function luma(c)        { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov)       { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-    var prevDark = null;
+    /* ── Salita: solo form e footer ────────────────────────── */
+    const RISE = ['.tt-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
 
-    function tick() {
-      if (heroToBodyOv)    heroToBodyOv.style.opacity    = pHeroExit().toFixed(3);
-      if (bodyToContactOv) bodyToContactOv.style.opacity = pCentered(contactEl).toFixed(3);
-
-      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 220)).toFixed(3);
-
-      var t = (performance.now() - startTime) / 1000;
-      if (heroLetters.length) {
-        var _p = ease(c01((t - 0.15) / 0.9));
-        var _dur = 0.55 / heroLetters.length;
-        revLetters(heroLetters, _p, 0, _dur);
-      }
-      if (heroMeta)  heroMeta.style.opacity  = ease(c01((t - 0.05) / 0.45)).toFixed(3);
-      if (heroIntro) heroIntro.style.opacity = ease(c01((t - 0.65) / 0.55)).toFixed(3);
-
-      if (navEl) {
-        var navMidY   = (navEl.getBoundingClientRect().height || 72) / 2;
-        var effective = C_DARK;
-        [
-          { el: heroEl,    base: C_DARK,    ov: heroToBodyOv,    ovC: C_WHITE   },
-          { el: bodyEl,    base: C_WHITE,   ov: bodyToContactOv, ovC: C_FUCHSIA },
-          { el: contactEl, base: C_FUCHSIA, ov: null,            ovC: null      },
-        ].forEach(function(s) {
-          if (!s.el) return;
-          var r = s.el.getBoundingClientRect();
-          if (r.top <= navMidY && r.bottom > navMidY) {
-            var alpha = ovOp(s.ov);
-            effective = (alpha > 0 && s.ovC) ? blend(s.base, s.ovC, alpha) : s.base;
-          }
-        });
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
-
-      requestAnimationFrame(tick);
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
     }
-    requestAnimationFrame(tick);
-  })();
-  </script>
-  <script>
-  (function() {
-    var titleEl = document.querySelector('.tt-contact__title');
-    if (!titleEl) return;
-    titleEl.classList.remove('reveal');
 
-    /* split parole preservando <br> */
-    var parts = titleEl.innerHTML.split(/<br\s*\/?>/i);
-    titleEl.innerHTML = parts.map(function(seg) {
-      return seg.trim().split(/\s+/).filter(Boolean).map(function(w) {
-        var safe = w.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-        return '<span class="rw" style="display:inline-block;opacity:0;transform:translateY(0.6em);transition:opacity 0.5s ease,transform 0.5s cubic-bezier(.25,.46,.45,.94)">' + safe + '</span>';
-      }).join(' ');
-    }).join('<br>');
-    titleEl.style.opacity = '1';
+    /* ── Ingresso dei testi: linguaggio del body di About ───
+       Niente stati nascosti duraturi: opacità di partenza alta e
+       spostamento contenuto, un blocco alla volta mentre scorre. */
+    const bodyBits = document.querySelectorAll(
+      '.tt-p, .tt-list, .tt-callout, .tt-h2, .tt-answer__inner, ' +
+      '.tt-list, .tt-quote, .tt-sidebar__item, ' +
+      '.tt-contact__label, .tt-contact__sub, .hc-form'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
 
-    var words = Array.from(titleEl.querySelectorAll('.rw'));
-    var io = new IntersectionObserver(function(entries) {
-      if (!entries[0].isIntersecting) return;
-      words.forEach(function(w, i) {
-        w.style.transitionDelay = (i * 0.1) + 's';
-        w.style.opacity         = '1';
-        w.style.transform       = 'none';
-      });
-      io.unobserve(titleEl);
-    }, { threshold: 0.2 });
-    io.observe(titleEl);
-  })();
+    /* ── L'occhio delle FAQ, come in homepage ──────────────── */
+    const EYE_OPEN = '<svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    const EYE_CLOSED = '<svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    document.querySelectorAll('.tt-faq__q-icon').forEach(icon => {
+      icon.textContent = '';                    // via il "+"
+      icon.innerHTML = EYE_OPEN + EYE_CLOSED;
+      icon.setAttribute('aria-hidden', 'true');
+    });
+
+    /* ── La colonna si ferma dove inizia il form ───────────── */
+    const rail = document.querySelector('.tt-rail');
+    const contact = document.querySelector('.tt-contact');
+    if (rail && contact) {
+      // la corsia si ferma 48px prima del form, così la lista non
+      // arriva mai a toccarlo
+      const fitRail = () => { rail.style.height = Math.max(0, contact.offsetTop - 48) + 'px'; };
+      fitRail();
+      addEventListener('resize', fitRail, { passive: true });
+      addEventListener('load', fitRail);
+    }
+
+    /* ── Nav chiara/scura ──────────────────────────────────── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const sync = () => {
+        nav.classList.add('nav--on-dark');   // l'articolo è tutto scuro
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ttBoot);
+  } else { ttBoot(); }
   </script>
 
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
@@ -904,8 +1266,7 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-      </div>
-    </div>
+          </div>
         </div>
 
       </div>

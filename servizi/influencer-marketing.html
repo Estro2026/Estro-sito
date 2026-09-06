@@ -221,6 +221,252 @@
 
     /* ── CTA: stesse metriche dei pannelli SMM ────────────────── */
     .smm-row .btn, .svc-caffe .btn { text-align: center; justify-content: center; }
+
+    /* ═══════════════════════════════════════════════════════════
+       SERVIZI — GALLERIA A FISARMONICA
+       Prima ogni servizio era un pannello a tutta pagina, uno sotto
+       l'altro: per sapere quanti fossero bisognava scorrerli tutti.
+       Ora stanno tutti nella stessa sezione, uno per riga e tutti
+       visibili insieme; si apre quello che interessa e dentro ci
+       sono la foto e il testo. Una riga aperta alla volta, così
+       l'elenco resta leggibile a colpo d'occhio.
+       ═══════════════════════════════════════════════════════════ */
+    .svc-acc {
+      background: #f9f9f9;
+      color: #080808;
+      padding-block: clamp(3.5rem, 7vw, 6rem);
+    }
+    .svc-acc__list {
+      border-top: 1px solid rgba(0,0,0,0.10);
+    }
+    .svc-acc__item {
+      border-bottom: 1px solid rgba(0,0,0,0.10);
+    }
+    .svc-acc__head { margin: 0; }
+    .svc-acc__btn {
+      width: 100%;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: center;
+      gap: clamp(1rem, 3vw, 2.25rem);
+      padding: clamp(1.1rem, 2.2vw, 1.75rem) 0;
+      background: none;
+      border: 0;
+      text-align: left;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+      transition: opacity var(--dur-fast, 180ms) ease;
+    }
+    .svc-acc__btn:hover { opacity: 0.72; }
+    .svc-acc__btn:focus-visible {
+      outline: 2px solid var(--primary, #DB005A);
+      outline-offset: 4px;
+      border-radius: 6px;
+    }
+    .svc-acc__num {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--primary, #DB005A);
+    }
+    .svc-acc__heading {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      min-width: 0;
+    }
+    .svc-acc__tag {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.42);
+    }
+    .svc-acc__title {
+      font-family: var(--font-primary);
+      font-size: clamp(1.5rem, 3.4vw, 2.9rem);
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      font-weight: 400;
+      font-synthesis-weight: none;
+      /* le parole non si spezzano mai: se non ci stanno vanno a capo */
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: none;
+    }
+    /* Il segno di apertura: una croce che diventa meno */
+    .svc-acc__mark {
+      position: relative;
+      width: 22px; height: 22px;
+      flex-shrink: 0;
+    }
+    .svc-acc__mark::before,
+    .svc-acc__mark::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 0;
+      width: 100%; height: 2px;
+      margin-top: -1px;
+      background: var(--primary, #DB005A);
+      transition: transform var(--dur-base, 320ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
+    }
+    .svc-acc__mark::after { transform: rotate(90deg); }
+    .svc-acc__item.is-open .svc-acc__mark::after { transform: rotate(0deg); }
+
+    /* L'apertura: la riga cresce da 0fr a 1fr, quindi l'altezza si
+       anima da sola qualunque sia la lunghezza del contenuto — con
+       max-height servirebbe indovinarla a mano. */
+    .svc-acc__panel {
+      display: grid;
+      grid-template-rows: 0fr;
+      transition: grid-template-rows var(--dur-base, 380ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
+    }
+    .svc-acc__item.is-open .svc-acc__panel { grid-template-rows: 1fr; }
+    .svc-acc__panel-inner {
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      align-items: start;
+      opacity: 0;
+      transition: opacity var(--dur-base, 320ms) ease;
+    }
+    .svc-acc__item.is-open .svc-acc__panel-inner {
+      opacity: 1;
+      transition-delay: 0.08s;
+    }
+    /* il padding sta dentro il figlio, non sul pannello: se stesse
+       sul pannello resterebbe visibile anche da chiuso */
+    .svc-acc__panel-inner > * { padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem); }
+
+    /* Il riquadro della foto. Oggi ospita l'etichetta del servizio;
+       basta aggiungerci un <img class="svc-acc__media-img"> perché
+       diventi la foto vera, senza toccare nient'altro. */
+    .svc-acc__media {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 14px;
+      overflow: hidden;
+      background: rgba(219,0,90,0.06);
+      border: 1px solid rgba(219,0,90,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .svc-acc__media-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .svc-acc__media-label {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.35;
+      padding: 1rem;
+      text-align: center;
+    }
+    .svc-acc__copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 1.1rem;
+    }
+    .svc-acc__text {
+      font-size: max(16px, 1rem);
+      line-height: 1.75;
+      color: rgba(0,0,0,0.62);
+      margin: 0;
+    }
+    .svc-acc__points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+    .svc-acc__points li {
+      font-size: max(16px, 1rem);
+      line-height: 1.6;
+      color: rgba(0,0,0,0.68);
+      padding-left: 1.4em;
+      position: relative;
+    }
+    .svc-acc__points li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary, #DB005A);
+      font-weight: 700;
+    }
+    .svc-acc__cta {
+      font-size: 14px !important;
+      text-align: center;
+      justify-content: center;
+    }
+    @media (max-width: 860px) {
+      .svc-acc__panel-inner { grid-template-columns: 1fr; }
+      /* su mobile la foto viene dopo il testo: la riga aperta deve
+         mostrare per prima la cosa che si è chiesto di leggere */
+      .svc-acc__media { order: 2; }
+      .svc-acc__copy  { order: 1; }
+      .svc-acc__panel-inner > * { padding-bottom: 1.25rem; }
+      .svc-acc__panel-inner > :last-child { padding-bottom: clamp(1.75rem, 3.5vw, 2.75rem); }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .svc-acc__panel,
+      .svc-acc__panel-inner,
+      .svc-acc__mark::before,
+      .svc-acc__mark::after { transition: none; }
+    }
+    /* ═══════════════════════════════════════════════════════════
+       EFFETTI CONDIVISI DELLE PAGINE SERVIZI
+       Gli stessi di news, tips&tricks e dei case study: la sezione
+       che entra sale con gli angoli che si arrotondano, i titoli
+       ondeggiano una volta come acqua, i testi entrano dal basso
+       un blocco alla volta. Qui non c'erano affatto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+    /* negli angoli ritagliati dalla salita passava il bianco della
+       pagina: il fondo del documento va scuro come le sezioni */
+    html, body { background-color: #050505; }
+
+    /* Ingresso dei testi, linguaggio del corpo di About: nessuno
+       stato nascosto duraturo — opacita di partenza alta e
+       spostamento contenuto, un blocco alla volta. */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+
   </style>
 <script type="application/ld+json">
 {
@@ -399,102 +645,146 @@
     </section>
 
     <!-- ══ RITAGLIAMO → I REPORT: smm-stack identico a SMM ════════ -->
-    <div class="smm-stack" id="imkPanelStack">
-
-      <!-- 1 — Tailor Made: CHIARO -->
-      <section class="smm-panel smm-panel--light" aria-label="Tailor Made">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Tailor Made</span>
-            <h3 class="smm-panel__title" data-reveal>Ritagliamo su misura<br>la soluzione migliore</h3>
-            <p class="smm-panel__text" data-reveal>Per trovare la giusta strategia ci vuole fiuto, e noi siamo specializzati per farlo. I tuoi obiettivi sono importanti e noi li prendiamo a cuore.</p>
-            <p class="smm-panel__text" data-reveal>La nostra squadra di <strong>Strategist, Creativi, Talent &amp; Account Manager</strong> è pronta ad accogliere ogni sfida. <strong>Siamo qui per affiancarti in ogni fase del progetto</strong>, dalla pianificazione e gestione delle campagne, alla misurazione e <strong>ottimizzazione dei risultati</strong>.</p>
-            <a class="btn btn--primary" href="../contatti.html" data-reveal>Inizia ora</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Influencer Marketing</span>
-          </div>
+    <!-- ══ SERVIZI — galleria a fisarmonica ═══════════════════════ -->
+    <section class="svc-acc" id="imkPanelStack" aria-label="I servizi">
+      <div class="container">
+        <div class="svc-acc__list">
+          <article class="svc-acc__item is-open" aria-label="Tailor Made">
+            <h3 class="svc-acc__head">
+              <button class="svc-acc__btn" type="button" id="imk-acc-1-h" aria-controls="imk-acc-1" aria-expanded="true">
+                <span class="svc-acc__num" aria-hidden="true">01</span>
+                <span class="svc-acc__heading">
+                  <span class="svc-acc__tag">Tailor Made</span>
+                  <span class="svc-acc__title">Ritagliamo su misura la soluzione migliore</span>
+                </span>
+                <span class="svc-acc__mark" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="svc-acc__panel" id="imk-acc-1" role="region" aria-labelledby="imk-acc-1-h">
+              <div class="svc-acc__panel-inner">
+                <div class="svc-acc__media">
+                  <span class="svc-acc__media-label">Influencer Marketing</span>
+                </div>
+                <div class="svc-acc__copy">
+                  <p class="svc-acc__text">Per trovare la giusta strategia ci vuole fiuto, e noi siamo specializzati per farlo. I tuoi obiettivi sono importanti e noi li prendiamo a cuore.</p>
+                  <p class="svc-acc__text">La nostra squadra di <strong>Strategist, Creativi, Talent &amp; Account Manager</strong> è pronta ad accogliere ogni sfida. <strong>Siamo qui per affiancarti in ogni fase del progetto</strong>, dalla pianificazione e gestione delle campagne, alla misurazione e <strong>ottimizzazione dei risultati</strong>.</p>
+                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Inizia ora</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="svc-acc__item" aria-label="Campagne">
+            <h3 class="svc-acc__head">
+              <button class="svc-acc__btn" type="button" id="imk-acc-2-h" aria-controls="imk-acc-2" aria-expanded="false">
+                <span class="svc-acc__num" aria-hidden="true">02</span>
+                <span class="svc-acc__heading">
+                  <span class="svc-acc__tag">Campagne</span>
+                  <span class="svc-acc__title">Campagne di Influencer Marketing</span>
+                </span>
+                <span class="svc-acc__mark" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="svc-acc__panel" id="imk-acc-2" role="region" aria-labelledby="imk-acc-2-h">
+              <div class="svc-acc__panel-inner">
+                <div class="svc-acc__media">
+                  <span class="svc-acc__media-label">Campagne</span>
+                </div>
+                <div class="svc-acc__copy">
+                  <p class="svc-acc__text">Creatività e competenza vanno a braccetto. <strong>Strategist</strong> e <strong>Creativi</strong> analizzano lo scenario di riferimento del tuo brand, valutano tutte le opportunità e la tecnologia necessaria, per poi <strong>sviluppare un piano su misura per te</strong>, capace di portarti a raggiungere i tuoi obiettivi.</p>
+                  <ul class="svc-acc__points">
+                    <li>Analisi scenario competitivo</li>
+                    <li>Strategia creativa</li>
+                    <li>Allocazione budget</li>
+                  </ul>
+                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="svc-acc__item" aria-label="Talent Scouting">
+            <h3 class="svc-acc__head">
+              <button class="svc-acc__btn" type="button" id="imk-acc-3-h" aria-controls="imk-acc-3" aria-expanded="false">
+                <span class="svc-acc__num" aria-hidden="true">03</span>
+                <span class="svc-acc__heading">
+                  <span class="svc-acc__tag">Talent Scouting</span>
+                  <span class="svc-acc__title">Trovare il talent giusto per te</span>
+                </span>
+                <span class="svc-acc__mark" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="svc-acc__panel" id="imk-acc-3" role="region" aria-labelledby="imk-acc-3-h">
+              <div class="svc-acc__panel-inner">
+                <div class="svc-acc__media">
+                  <span class="svc-acc__media-label">Talent</span>
+                </div>
+                <div class="svc-acc__copy">
+                  <p class="svc-acc__text">Trovare i talent giusti non è facile, <strong>il nostro team</strong> è in grado di analizzare i dati e <strong>prevedere le performance di un'attivazione</strong>, creando liste di influencer autentici e accuratamente selezionati.</p>
+                  <ul class="svc-acc__points">
+                    <li>Scouting e selezione creator basata su dati</li>
+                    <li>Brief creativo e approvazione contenuti</li>
+                    <li>Gestione contratti e fee</li>
+                    <li>Coordinamento attivazioni e product seeding</li>
+                    <li>Reportistica e analisi ROI</li>
+                  </ul>
+                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="svc-acc__item" aria-label="Performance">
+            <h3 class="svc-acc__head">
+              <button class="svc-acc__btn" type="button" id="imk-acc-4-h" aria-controls="imk-acc-4" aria-expanded="false">
+                <span class="svc-acc__num" aria-hidden="true">04</span>
+                <span class="svc-acc__heading">
+                  <span class="svc-acc__tag">Performance</span>
+                  <span class="svc-acc__title">Monitoriamo, ottimizziamo e gestiamo</span>
+                </span>
+                <span class="svc-acc__mark" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="svc-acc__panel" id="imk-acc-4" role="region" aria-labelledby="imk-acc-4-h">
+              <div class="svc-acc__panel-inner">
+                <div class="svc-acc__media">
+                  <span class="svc-acc__media-label">Performance</span>
+                </div>
+                <div class="svc-acc__copy">
+                  <p class="svc-acc__text">Dal primo <strong>brief</strong> fino alla <strong>misurazione delle performance</strong>: i numeri ci piacciono e li sappiamo leggere, sappiamo capire quando le performance possono dirsi soddisfacenti e quando invece bisogna repentinamente cambiare strategia.</p>
+                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="svc-acc__item" aria-label="Report">
+            <h3 class="svc-acc__head">
+              <button class="svc-acc__btn" type="button" id="imk-acc-5-h" aria-controls="imk-acc-5" aria-expanded="false">
+                <span class="svc-acc__num" aria-hidden="true">05</span>
+                <span class="svc-acc__heading">
+                  <span class="svc-acc__tag">Reportistica</span>
+                  <span class="svc-acc__title">I report sono una cosa seria</span>
+                </span>
+                <span class="svc-acc__mark" aria-hidden="true"></span>
+              </button>
+            </h3>
+            <div class="svc-acc__panel" id="imk-acc-5" role="region" aria-labelledby="imk-acc-5-h">
+              <div class="svc-acc__panel-inner">
+                <div class="svc-acc__media">
+                  <span class="svc-acc__media-label">Report</span>
+                </div>
+                <div class="svc-acc__copy">
+                  <p class="svc-acc__text">E noi lo sappiamo bene: non solo <strong>monitoriamo con attenzione le performance dei contenuti</strong> degli ambassador selezionati, ma alla fine di ogni campagna forniamo un <strong>report dettagliato</strong> e completo per capire quali obiettivi sono stati raggiunti.</p>
+                  <ul class="svc-acc__points">
+                    <li>Controllo contenuti</li>
+                    <li>Gestione progetto</li>
+                    <li>Report in tempo reale</li>
+                  </ul>
+                  <a class="btn btn--primary svc-acc__cta" href="../contatti.html">Scopri di più</a>
+                </div>
+              </div>
+            </div>
+          </article>
         </div>
-      </section>
-
-      <!-- 2 — Campagne: SCURO -->
-      <section class="smm-panel smm-panel--dark" aria-label="Campagne">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Campagne</span>
-            <h3 class="smm-panel__title" data-reveal>Campagne di<br>Influencer Marketing</h3>
-            <p class="smm-panel__text" data-reveal>Creatività e competenza vanno a braccetto. <strong>Strategist</strong> e <strong>Creativi</strong> analizzano lo scenario di riferimento del tuo brand, valutano tutte le opportunità e la tecnologia necessaria, per poi <strong>sviluppare un piano su misura per te</strong>, capace di portarti a raggiungere i tuoi obiettivi.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Analisi scenario competitivo</li>
-              <li data-reveal>Strategia creativa</li>
-              <li data-reveal>Allocazione budget</li>
-            </ul>
-            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Campagne</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 3 — Talent Scouting: CHIARO -->
-      <section class="smm-panel smm-panel--light" aria-label="Talent Scouting">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Talent Scouting</span>
-            <h3 class="smm-panel__title" data-reveal>Trovare il talent<br>giusto per te</h3>
-            <p class="smm-panel__text" data-reveal>Trovare i talent giusti non è facile, <strong>il nostro team</strong> è in grado di analizzare i dati e <strong>prevedere le performance di un'attivazione</strong>, creando liste di influencer autentici e accuratamente selezionati.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Scouting e selezione creator basata su dati</li>
-              <li data-reveal>Brief creativo e approvazione contenuti</li>
-              <li data-reveal>Gestione contratti e fee</li>
-              <li data-reveal>Coordinamento attivazioni e product seeding</li>
-              <li data-reveal>Reportistica e analisi ROI</li>
-            </ul>
-            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Talent</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 4 — Performance: SCURO -->
-      <section class="smm-panel smm-panel--dark" aria-label="Performance">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Performance</span>
-            <h3 class="smm-panel__title" data-reveal>Monitoriamo,<br>ottimizziamo e gestiamo</h3>
-            <p class="smm-panel__text" data-reveal>Dal primo <strong>brief</strong> fino alla <strong>misurazione delle performance</strong>: i numeri ci piacciono e li sappiamo leggere, sappiamo capire quando le performance possono dirsi soddisfacenti e quando invece bisogna repentinamente cambiare strategia.</p>
-            <a class="btn btn--outline-white" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Performance</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- 5 — Report: CHIARO -->
-      <section class="smm-panel smm-panel--light" aria-label="Report">
-        <div class="container smm-panel__inner">
-          <div class="smm-panel__copy">
-            <span class="smm-panel__tag" data-reveal>Reportistica</span>
-            <h3 class="smm-panel__title" data-reveal>I report sono<br>una cosa seria</h3>
-            <p class="smm-panel__text" data-reveal>E noi lo sappiamo bene: non solo <strong>monitoriamo con attenzione le performance dei contenuti</strong> degli ambassador selezionati, ma alla fine di ogni campagna forniamo un <strong>report dettagliato</strong> e completo per capire quali obiettivi sono stati raggiunti.</p>
-            <ul class="smm-panel__list">
-              <li data-reveal>Controllo contenuti</li>
-              <li data-reveal>Gestione progetto</li>
-              <li data-reveal>Report in tempo reale</li>
-            </ul>
-            <a class="btn btn--primary" href="../contatti.html" data-reveal>Scopri di più</a>
-          </div>
-          <div class="smm-panel__visual" aria-hidden="true">
-            <span class="smm-panel__visual-label">Report</span>
-          </div>
-        </div>
-      </section>
-
-    </div><!-- /imkPanelStack -->
+      </div>
+    </section>
 
     <!-- ══ I SETTORI ════════════════════════════════════════════════ -->
     <section class="section svc-settori" id="imkSettori">
@@ -757,11 +1047,17 @@
             <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
           </div>
           <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-          <label class="svc-caffe__privacy">
-            <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-          </label>
-          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="imkCaffe-privacy">
+              <input type="checkbox" id="imkCaffe-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+            </label>
+            <label class="svc-caffe__privacy" for="imkCaffe-newsletter">
+              <input type="checkbox" id="imkCaffe-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
+          </div>
+          <button class="btn btn--primary hc-submit" type="submit">Contattaci</button>
         </form>
       </div>
     </section>
@@ -1418,6 +1714,154 @@
 
     </div>
   </footer>
+
+  <script>
+  /* ── Galleria a fisarmonica dei servizi ───────────────────────
+     Una riga aperta alla volta. Il click è sul <button>, quindi la
+     tastiera funziona senza aggiungere nulla; aria-expanded tiene
+     allineati lettori di schermo e stato visivo. */
+  (function () {
+    const root = document.querySelector('.svc-acc__list');
+    if (!root) return;
+    const items = Array.from(root.querySelectorAll('.svc-acc__item'));
+
+    function setOpen(item, open) {
+      item.classList.toggle('is-open', open);
+      const btn = item.querySelector('.svc-acc__btn');
+      if (btn) btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    }
+
+    root.addEventListener('click', function (e) {
+      const btn = e.target.closest('.svc-acc__btn');
+      if (!btn || !root.contains(btn)) return;
+      const item = btn.closest('.svc-acc__item');
+      const wasOpen = item.classList.contains('is-open');
+      items.forEach(function (it) { setOpen(it, false); });
+      /* ricliccando sulla riga aperta la si richiude: l'elenco
+         tutto chiuso è uno stato legittimo, non un vicolo cieco */
+      setOpen(item, !wasOpen);
+    });
+
+    /* Frecce su/giù fra le testate, come in un elenco */
+    root.addEventListener('keydown', function (e) {
+      if (e.key !== 'ArrowDown' && e.key !== 'ArrowUp') return;
+      const btn = e.target.closest('.svc-acc__btn');
+      if (!btn) return;
+      const btns = items.map(function (it) { return it.querySelector('.svc-acc__btn'); });
+      const i = btns.indexOf(btn);
+      if (i < 0) return;
+      e.preventDefault();
+      const next = e.key === 'ArrowDown' ? (i + 1) % btns.length : (i - 1 + btns.length) % btns.length;
+      btns[next].focus();
+    });
+  }());
+  </script>  <script>
+  /* ── Effetti condivisi delle pagine servizi ───────────────────
+     Salita fra sezioni, acqua sui titoli, ingresso dei testi.
+     Stesse funzioni delle altre pagine del sito. */
+  (function () {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFxSvc' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+    // il titolo della hero e gia in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    // gli altri titoli di sezione ondeggiano quando entrano
+    document.querySelectorAll('.svc-clients__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
+      .forEach(el => {
+        const io = new IntersectionObserver(es => {
+          es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+        }, el.classList.contains('sf-ghost')
+             ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+             : { threshold: 0.6 });
+        io.observe(el);
+      });
+
+    /* ── Salita delle sezioni ──────────────────────────────── */
+    const RISE = ['.svc-acc', '.svc-clients', '.page-faq', '.svc-caffe', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso dei testi ────────────────────────────────── */
+    const bodyBits = document.querySelectorAll(
+      '.svc-acc__text, .svc-acc__points, .svc-acc__item, ' +
+      '.svc-caffe__sub, .svc-caffe__form, .page-faq__item, ' +
+      '.svc-clients__logo'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+  }());
+  </script>
 
 </body>
 </html>

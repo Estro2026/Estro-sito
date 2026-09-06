@@ -124,6 +124,46 @@
     .svc-caffe__title .caffe-nowrap { white-space: nowrap; display: inline-block; }
 
     /* ── Vantaggi card: tilt 3D ── */
+    /* ═══════════════════════════════════════════════════════════
+       EFFETTI CONDIVISI DELLE PAGINE SERVIZI
+       Gli stessi di news, tips&tricks e dei case study: la sezione
+       che entra sale con gli angoli che si arrotondano, i titoli
+       ondeggiano una volta come acqua, i testi entrano dal basso
+       un blocco alla volta. Qui non c'erano affatto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+    /* negli angoli ritagliati dalla salita passava il bianco della
+       pagina: il fondo del documento va scuro come le sezioni */
+    html, body { background-color: #050505; }
+
+    /* Ingresso dei testi, linguaggio del corpo di About: nessuno
+       stato nascosto duraturo — opacita di partenza alta e
+       spostamento contenuto, un blocco alla volta. */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+
   </style>
 <script type="application/ld+json">
 {
@@ -579,11 +619,17 @@
             <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
           </div>
           <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
-          <label class="svc-caffe__privacy">
-            <input type="checkbox" required />
-            <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
-          </label>
-          <button class="btn btn--outline-white" type="submit" style="width:100%;padding-block:1rem;">Contattaci</button>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="ads-privacy">
+              <input type="checkbox" id="ads-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a></span>
+            </label>
+            <label class="svc-caffe__privacy" for="ads-newsletter">
+              <input type="checkbox" id="ads-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
+          </div>
+          <button class="btn btn--primary hc-submit" type="submit">Contattaci</button>
         </form>
       </div>
     </section>
@@ -982,7 +1028,114 @@
       </div>
 
     </div>
-  </footer>
+  </footer>  <script>
+  /* ── Effetti condivisi delle pagine servizi ───────────────────
+     Salita fra sezioni, acqua sui titoli, ingresso dei testi.
+     Stesse funzioni delle altre pagine del sito. */
+  (function () {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFxSvc' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+    // il titolo della hero e gia in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    // gli altri titoli di sezione ondeggiano quando entrano
+    document.querySelectorAll('.svc-clients__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
+      .forEach(el => {
+        const io = new IntersectionObserver(es => {
+          es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+        }, el.classList.contains('sf-ghost')
+             ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+             : { threshold: 0.6 });
+        io.observe(el);
+      });
+
+    /* ── Salita delle sezioni ──────────────────────────────── */
+    const RISE = ['.svc-acc', '.svc-clients', '.page-faq', '.svc-caffe', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso dei testi ────────────────────────────────── */
+    const bodyBits = document.querySelectorAll(
+      '.svc-acc__text, .svc-acc__points, .svc-acc__item, ' +
+      '.svc-caffe__sub, .svc-caffe__form, .page-faq__item, ' +
+      '.svc-clients__logo'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+  }());
+  </script>
+
 
 
 </body>

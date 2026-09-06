@@ -15,12 +15,23 @@
 
     /* ── Hero ───────────────────────────────────────────────── */
     .cs-hero {
-      /* hero + ticker = 100svh; ticker ~72px; navbar fixed 80px + 30px gap = 110px padding-top */
-      height: calc(100svh - 72px);
+      /* La hero occupa il 100% della viewport: prima era alta quanto
+         la viewport meno il ticker, perché le due strisce insieme
+         facevano 100svh e la hero restava tagliata sotto. Ora il
+         ticker sta dentro, ancorato al bordo basso. */
+      height: 100dvh;
+      min-height: 100dvh;
+      /* i 110px sopra e i 30px sotto stanno DENTRO l'altezza:
+         senza questo la hero diventava viewport + 140px */
+      box-sizing: border-box;
       display: flex;
       align-items: stretch;
-      padding-top: 110px;
-      padding-bottom: 30px;
+      /* su schermi bassi la hero si compatta un po' invece di
+         stringere la banda contro il testo */
+      padding-top: clamp(92px, 12vh, 110px);
+      /* sotto c'è la barra fucsia, a filo del bordo della hero:
+         il contenuto le lascia il suo posto invece di finirci sotto */
+      padding-bottom: calc(var(--cs-ticker-h, 84px) + 30px);
       position: relative;
       overflow: hidden;
       isolation: isolate;
@@ -58,7 +69,7 @@
       display: flex;
       flex-direction: column;
       justify-content: center;
-      gap: clamp(1rem, 2vw, 1.5rem);
+      gap: clamp(0.7rem, 1.6vh, 1.5rem);
     }
     /* video showreel: 30% larghezza, 30px padding su tutti i lati */
     .cs-hero__reel {
@@ -82,7 +93,7 @@
       letter-spacing: 0.28em;
       text-transform: uppercase;
       color: var(--primary);
-      margin-bottom: 1.5rem;
+      margin-bottom: clamp(0.8rem, 1.8vh, 1.5rem);
       display: flex;
       align-items: center;
       gap: 0.75rem;
@@ -139,7 +150,29 @@
       text-align: left;
     }
 
-    /* ── Brand ticker ───────────────────────────────────────── */
+    /* ── Barra fucsia dei brand ─────────────────────────────
+       Stava sotto la hero, e da quando la hero prende tutta la
+       viewport finiva sotto la piega: non si vedeva più senza
+       scorrere. Ora sta dentro la prima schermata, a filo del bordo
+       basso, con i nomi centrati nella sua altezza: i padding
+       asimmetrici che aveva da pagina intera li tenevano alti. */
+    /* la banda è un po' più alta del necessario: la sezione che
+       segue si alza di 22px entrando, e quei 22px devono cadere sul
+       fucsia senza arrivare ai nomi dei brand */
+    .cs-hero { --cs-ticker-h: 96px; }
+    .cs-hero > .cs-ticker {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      z-index: 2;
+      height: var(--cs-ticker-h);
+      box-sizing: border-box;
+      /* i nomi stanno un filo sopra la mezzeria: il padding basso
+         sposta in su il centro senza toccare l'altezza del fucsia */
+      padding: 0 0 12px;
+      display: flex;
+      align-items: center;
+    }
+    .cs-hero > .cs-ticker .cs-ticker__track { flex: 0 0 auto; }
     .cs-ticker {
       background: var(--primary);
       overflow: hidden;
@@ -169,46 +202,6 @@
     @keyframes csTicker {
       from { transform: translateX(0); }
       to   { transform: translateX(-50%); }
-    }
-
-    /* ── Filter bar ─────────────────────────────────────────── */
-    .cs-filter {
-      background: #0a0a0a;
-      border-bottom: 1px solid rgba(255,255,255,0.06);
-      padding-top: clamp(2rem, 4vw, 3.5rem);
-      padding-bottom: 0.9rem;
-    }
-    .cs-filter__inner {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .cs-filter__inner::-webkit-scrollbar { display: none; }
-    .cs-filter__btn {
-      font-family: var(--font-secondary);
-      font-size: 0.68rem;
-      font-weight: 600;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      white-space: nowrap;
-      padding: 0.4rem 1rem;
-      border-radius: 100px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: transparent;
-      color: rgba(255,255,255,0.35);
-      cursor: pointer;
-      transition: all 180ms;
-    }
-    .cs-filter__btn:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-    .cs-filter__btn.active {
-      background: var(--primary);
-      border-color: var(--primary);
-      color: #fff;
     }
 
     /* ── Portfolio grid ─────────────────────────────────────── */
@@ -611,56 +604,623 @@
     /* Split-letter .tl spans */
     .cs-cta__title .tl { display: inline-block; opacity: 0; transform: translateY(0.8em); }
 
-    /* ── CTA ────────────────────────────────────────────────── */
+    /* ── CTA + FORM ─────────────────────────────────────────
+       Stesso impianto della sezione contatti di news, faq e
+       tips&tricks: titolo a sinistra, form a destra, su fondo
+       fucsia. Prima qui c'era solo un pulsante centrato che
+       mandava altrove; ora si scrive da qui.
+       ═══════════════════════════════════════════════════════ */
     .cs-cta {
       background: var(--primary);
-      padding-block: clamp(3rem, 6vw, 5rem);
-      display: flex;
+      padding-inline: clamp(1.5rem, 5vw, 5rem);
+    }
+    .cs-cta__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1440px;
+      width: 100%;
+      margin-inline: auto;
+      gap: clamp(3rem, 8vw, 8rem);
       align-items: center;
-      justify-content: center;
-      text-align: center;
+      padding-block: clamp(4rem, 8vw, 7rem);
+    }
+    .cs-cta__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4, 1rem);
+    }
+    .cs-cta__label {
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: block;
     }
     .cs-cta__title {
       font-family: var(--font-primary);
-      font-size: clamp(2rem, 5vw, 55px);
-      color: #fff;
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
       text-transform: uppercase;
-      line-height: 1.05;
-      margin-bottom: 1.5rem;
-      text-align: center;
-      width: 100%;
-    }
-    .cs-cta > .container {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding-inline-end: var(--gutter);
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+      margin: 0;
     }
     .cs-cta__sub {
       font-family: var(--font-secondary);
-      font-size: clamp(0.9rem, 1.3vw, 1.05rem);
-      color: rgba(255,255,255,0.75);
-      margin-bottom: 2.5rem;
-      max-width: 48ch;
-      text-align: center;
-      opacity: 0; transform: translateY(16px);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+      margin: 0;
     }
-    .cs-cta .btn--cta {
-      background: #fff;
+
+    /* Form: stesse misure di quello in homepage */
+    .cs-cta .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .cs-cta .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .cs-cta .hc-textarea { min-height: 130px; resize: vertical; }
+    .cs-cta .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast, 0.2s), background var(--dur-fast, 0.2s);
+    }
+    .cs-cta .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .cs-cta .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .cs-cta .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .cs-cta .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .cs-cta .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .cs-cta .hc-consents .svc-caffe__privacy span,
+    .cs-cta .hc-consents .svc-caffe__privacy a,
+    .cs-cta .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .cs-cta .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    /* CTA identica a quella della home */
+    .cs-cta .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base, 0.32s) var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  color var(--dur-base, 0.32s) var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  transform var(--dur-base, 0.32s) var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  box-shadow var(--dur-base, 0.32s) var(--ease-out, cubic-bezier(.16,1,.3,1));
+    }
+    .cs-cta .hc-submit::before { display: none !important; }
+    .cs-cta .hc-submit:hover,
+    .cs-cta .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 900px) {
+      .cs-cta__inner { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 700px) {
+      .cs-cta .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       LAVORI — anello di card e griglia
+       Le vecchie orbit-card giravano su un cerchio piatto con
+       scala e opacità simulate. Qui c'è un cilindro vero: la
+       prospettiva sta sul palco, le card sono ruotate e spinte
+       fuori del raggio, e la profondità la calcola il browser.
+       ═══════════════════════════════════════════════════════════ */
+    .cs-works {
+      background: #0a0a0a;
+      padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 4vw, 3rem) clamp(3.5rem, 7vw, 6rem);
+    }
+    .cs-works__head {
+      max-width: 1400px;
+      margin: 0 auto clamp(1.5rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .cs-works__kicker {
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
       color: var(--primary);
+      margin: 0 0 0.5rem;
+    }
+    .cs-works__title {
       font-family: var(--font-primary);
-      font-size: 0.85rem;
+      font-size: clamp(2.4rem, 6vw, 60px);
+      line-height: 1;
+      color: #fff;
+      text-transform: uppercase;
+      margin: 0;
+    }
+
+    /* il pulsante che regola la visualizzazione — stessa CTA del sito */
+    .cs-view {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-primary);
+      font-size: 14px !important;
       letter-spacing: 0.08em;
       text-transform: uppercase;
-      padding: 1rem 2.5rem;
-      border-radius: 6px;
-      display: inline-block;
-      transition: opacity 200ms;
-      opacity: 0; transform: translateY(14px);
+      color: #fff;
+      background: transparent;
+      border: 2px solid #fff;
+      border-radius: 100px;
+      padding: 0.85rem 1.6rem;
+      cursor: pointer;
+      transition: background var(--dur-base, 0.32s) ease,
+                  color var(--dur-base, 0.32s) ease,
+                  transform var(--dur-base, 0.32s) ease,
+                  box-shadow var(--dur-base, 0.32s) ease;
     }
-    .cs-cta .btn--cta:hover { opacity: 0.88; }
+    .cs-view:hover,
+    .cs-view:focus-visible {
+      background: #fff;
+      color: var(--primary);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    /* l'icona dice dove si sta andando: quadretti = griglia, cerchio = anello */
+    .cs-view__icon {
+      width: 15px; height: 15px;
+      flex-shrink: 0;
+      background: currentColor;
+      -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
+      -webkit-mask-position: center;  mask-position: center;
+      -webkit-mask-size: contain;     mask-size: contain;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='1' width='6' height='6' rx='1.4'/%3E%3Crect x='9' y='1' width='6' height='6' rx='1.4'/%3E%3Crect x='1' y='9' width='6' height='6' rx='1.4'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1.4'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Crect x='1' y='1' width='6' height='6' rx='1.4'/%3E%3Crect x='9' y='1' width='6' height='6' rx='1.4'/%3E%3Crect x='1' y='9' width='6' height='6' rx='1.4'/%3E%3Crect x='9' y='9' width='6' height='6' rx='1.4'/%3E%3C/svg%3E");
+    }
+    .cs-view[data-view="grid"] .cs-view__icon {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.4a6.6 6.6 0 1 0 0 13.2A6.6 6.6 0 0 0 8 1.4Zm0 1.9a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Z'/%3E%3Ccircle cx='8' cy='2.4' r='2'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M8 1.4a6.6 6.6 0 1 0 0 13.2A6.6 6.6 0 0 0 8 1.4Zm0 1.9a4.7 4.7 0 1 1 0 9.4 4.7 4.7 0 0 1 0-9.4Z'/%3E%3Ccircle cx='8' cy='2.4' r='2'/%3E%3C/svg%3E");
+    }
+
+    /* ── Il palco: qui vive la prospettiva ─────────────────── */
+    /* Il passaggio anello -> griglia era uno scatto secco. Ora le
+       due viste si scambiano con una dissolvenza breve, come le
+       transizioni del resto del sito. */
+    .cs-ring-section, .cs-grid-section {
+      position: relative;
+      transition: opacity 0.34s ease, transform 0.34s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .cs-ring-section[data-swap="out"], .cs-grid-section[data-swap="out"] {
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+      pointer-events: none;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-ring-section, .cs-grid-section { transition: none; }
+    }
+    .cs-ring-stage {
+      position: relative;
+      height: clamp(540px, 64vh, 640px);
+      perspective: 1500px;
+      perspective-origin: 50% 46%;
+      cursor: grab;
+      touch-action: pan-y;
+      /* i lati sfumano: l'anello continua oltre il bordo dello schermo */
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+              mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+    }
+    .cs-ring-stage.is-dragging { cursor: grabbing; }
+    .cs-ring {
+      position: absolute;
+      top: 50%; left: 50%;
+      width: 0; height: 0;
+      transform-style: preserve-3d;
+      will-change: transform;
+    }
+    .cs-ring__cell {
+      position: absolute;
+      top: 0; left: 0;
+      /* più larghe: dentro ci stanno il logo e la fila dei tag
+         su una riga sola, senza che vadano a capo */
+      width: 360px;
+      transform-style: preserve-3d;
+      backface-visibility: hidden;
+    }
+    /* le immagini non devono avviare il trascinamento nativo del
+       browser: rubava il puntatore e l'anello non girava */
+    .cs-ring-stage img,
+    .cs-ring-stage a { -webkit-user-drag: none; user-select: none; }
+    .cs-ring-stage img { pointer-events: none; }
+    .cs-ring__hint {
+      text-align: center;
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.34);
+      margin: 1.2rem 0 0;
+    }
+
+    /* ── I tag: dentro la card, sotto il logo ───────────────
+       Stavano sopra la card, sospesi sul fondo della sezione:
+       si leggevano come un'etichetta della griglia, non come una
+       proprietà del progetto. Ora stanno nella stessa barra del
+       logo, quindi appartengono visibilmente a quella card. */
+    .cs-tags {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+    .cs-tag {
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1;
+      padding: 0.36rem 0.62rem;
+      border-radius: 100px;
+      white-space: nowrap;
+      color: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.14);
+      background: rgba(255,255,255,0.03);
+    }
+    /* il primo tag è quello portante: prende il colore del progetto */
+    .cs-tag[style] {
+      color: var(--tag-accent, #DB005A);
+      border-color: color-mix(in srgb, var(--tag-accent, #DB005A) 55%, transparent);
+      background: color-mix(in srgb, var(--tag-accent, #DB005A) 12%, transparent);
+    }
+
+    /* ── La card ───────────────────────────────────────────── */
+    .cs-cardv {
+      position: relative;
+      display: block;
+      border-radius: 16px;
+      overflow: hidden;
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.08);
+      text-decoration: none;
+      /* profondità misurata, come su news e tips&tricks:
+         una di contatto e una di distanza, nient'altro */
+      box-shadow:
+        0 1px 2px rgba(0,0,0,0.5),
+        0 18px 42px -18px rgba(0,0,0,0.85);
+      transition: box-shadow 0.4s cubic-bezier(.16,1,.3,1),
+                  border-color 0.4s ease;
+    }
+    .cs-cardv:hover {
+      border-color: rgba(255,255,255,0.16);
+      box-shadow:
+        0 2px 5px rgba(0,0,0,0.55),
+        0 28px 64px -22px rgba(0,0,0,0.95);
+    }
+    .cs-cardv__visual {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      overflow: hidden;
+      background: #0c0c0c;
+    }
+    .cs-cardv__cover {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(.16,1,.3,1);
+    }
+    .cs-cardv:hover .cs-cardv__cover { transform: scale(1.04); }
+    .cs-cardv__bar {
+      padding: 1rem 0.85rem 1.1rem;
+      background: #101010;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    /* Riquadro UNICO per tutti i marchi: la fila del logo è alta
+       sempre 64px, quindi tutte le barre — e quindi tutte le card —
+       vengono della stessa misura. Prima ogni marchio aveva il suo
+       riquadro e le card risultavano di altezze diverse. */
+    .cs-cardv__logo {
+      width: 100%;
+      max-width: 250px;
+      height: 64px;
+      object-fit: contain;
+      filter: brightness(0) invert(1);
+      opacity: 0.9;
+      transition: opacity 0.25s ease;
+    }
+    .cs-cardv:hover .cs-cardv__logo { opacity: 1; }
+    /* Elmec è l'unico file davvero problematico: una scritta
+       orizzontale persa dentro un quadrato di bianco. Dentro il
+       riquadro comune verrebbe minuscola, quindi qui si ritaglia la
+       fascia centrale invece di ingrandire il riquadro — la card
+       resta della stessa misura di tutte le altre. */
+    .cs-cardv__logo[src*="ELMEC"] {
+      width: 210px;
+      object-fit: cover;
+      object-position: center;
+    }
+    /* Ritocco per singolo marchio: la fila del logo resta alta 64px
+       per tutti — quindi le card restano identiche — e la taratura
+       si fa con una scala, che non occupa spazio nel layout. */
+    .cs-cardv__logo[src*="ARTIGLI"],
+    .cs-cardv__logo[src*="CYBERGON"],
+    .cs-cardv__logo[src*="COSEACASA"] {
+      transform: scale(0.82);
+    }
+    .cs-cardv__logo[src*="SQUARELIFE"],
+    .cs-cardv__logo[src*="PYREX"],
+    .cs-cardv__logo[src*="FRAGI"],
+    .cs-cardv__logo[src*="KASANOVA"],
+    .cs-cardv__logo[src*="ARISTON"] {
+      transform: scale(0.68);
+    }
+    .cs-cardv__logo[src*="CUPRA"] {
+      transform: scale(1.35);
+    }
+    .cs-cardv__client {
+      font-family: var(--font-primary);
+      font-size: max(16px, 0.95rem);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+      text-align: center;
+      font-weight: 400;
+      font-synthesis-weight: none;
+    }
+
+    /* il contorno che gira: perimetro vero, velocità costante */
+    .cs-trace {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      overflow: visible;
+    }
+    .cs-trace rect {
+      fill: none;
+      stroke: var(--primary);
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-dasharray: var(--cs-len, 0);
+      stroke-dashoffset: var(--cs-len, 0);
+      transition: stroke-dashoffset 0.55s cubic-bezier(.35,0,.25,1);
+    }
+    .cs-cardv:hover .cs-trace rect { stroke-dashoffset: 0; }
+    @media (prefers-reduced-motion: reduce) {
+      .cs-trace rect { transition: opacity 0.2s ease; stroke-dashoffset: 0; opacity: 0; }
+      .cs-cardv:hover .cs-trace rect { opacity: 1; }
+    }
+
+    /* ── La griglia ────────────────────────────────────────── */
+    .cs-grid-all {
+      max-width: 1400px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+      gap: clamp(1.25rem, 2.4vw, 2rem);
+    }
+    /* I tag ora stanno dentro la card: la griglia non ha più
+       bisogno della banda che li allineava fra una card e l'altra.
+       Le card restano allineate perché sono tutte alte uguali. */
+    .cs-gitem { min-width: 0; display: flex; }
+    .cs-gitem .cs-cardv { width: 100%; }
+
+    @media (max-width: 640px) {
+      .cs-ring-stage { height: 460px; perspective: 900px; }
+      .cs-works__head { align-items: flex-start; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage (regole che in home stanno
+       nello <style> di pagina). Il markup ora è lo stesso.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__menu-icon span,
+    .nav--on-dark .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: 14px !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE FRA SEZIONI — stesso pattern della homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       COSA SI VEDE DIETRO GLI ANGOLI ARROTONDATI
+       Il raccordo della salita ritaglia i due angoli alti della
+       sezione, e lì si vedeva il fondo della pagina: bianco.
+       Il fondo del documento diventa scuro come le sezioni, così
+       nessun seam lascia passare il bianco...
+       ═══════════════════════════════════════════════════════════ */
+    html, body { background-color: #0a0a0a; }
+    /* Non serve nessuna striscia fucsia aggiunta: la sezione entra
+       sovrapponendosi alla banda, quindi negli angoli ritagliati si
+       vede la banda stessa. La striscia che avevo messo qui non
+       finiva dietro al fondo della sezione — .sx-rise crea un
+       contesto di impilamento, e lì un figlio a z-index negativo
+       disegna SOPRA lo sfondo del padre, non sotto — e si vedeva
+       come una seconda fascia fucsia sotto la banda. */
+
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       INGRESSO DEI TESTI — stesso linguaggio di About
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal [data-cascade] > * {
+      transform: translateY(16px) scale(0.96);
+      transform-origin: center;
+      opacity: 0.78;
+      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.5s ease;
+      transition-delay: var(--cs-delay, 0s);
+    }
+    html.js-reveal [data-cascade] > *:nth-child(1) { --cs-delay: 0.06s; }
+    html.js-reveal [data-cascade] > *:nth-child(2) { --cs-delay: 0.16s; }
+    html.js-reveal [data-cascade] > *:nth-child(3) { --cs-delay: 0.26s; }
+    html.js-reveal [data-cascade].cs-in > * { transform: none; opacity: 1; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — minimo 16px
+       Fuori: header e footer (invariati); a 14px solo tagline e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button { font-size: max(16px, 1rem); }
+    /* i titoli restano alla loro scala anche quando sono spezzati */
+    main h1 span, main h2 span, main h3 span,
+    main h1 a,   main h2 a,   main h3 a,
+    main h1 em,  main h2 em,  main h3 em { font-size: inherit !important; }
+    /* Tagline / kicker / tag: 14px */
+    .cs-hero__kicker,
+    .cs-works__kicker,
+    .cs-tag,
+    .cs-ring__hint,
+    .cs-hero__stat-label,
+    .cs-ticker span { font-size: 14px !important; }
+    /* CTA: 14px */
+    main a.btn, main button.btn, main .btn.btn,
+    .cs-cta .btn--cta,
+    .cs-view { font-size: 14px !important; }
+    /* Niente grassetto finto: il display font ha un peso solo */
+    .cs-works__title,
+    .cs-cardv__client,
+    .cs-cta__title { font-weight: 400 !important; font-synthesis-weight: none; -webkit-font-smoothing: antialiased; }
+
+    /* CTA finale — stesso comportamento delle altre CTA del sito */
+    .cs-cta .btn--cta {
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff;
+      border-radius: 100px;
+      transition: background var(--dur-base, 0.32s) ease,
+                  color var(--dur-base, 0.32s) ease,
+                  transform var(--dur-base, 0.32s) ease,
+                  box-shadow var(--dur-base, 0.32s) ease;
+    }
+    .cs-cta .btn--cta:hover,
+    .cs-cta .btn--cta:focus-visible {
+      background: #fff !important;
+      color: var(--primary) !important;
+      opacity: 1;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    .cs-cta .btn--cta::before { content: none !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       La vecchia regia (veli colorati sulle sezioni, tende a fine
+       pagina, titolo scomposto lettera per lettera) non c'è più:
+       al suo posto ci sono acqua sui titoli, salita fra sezioni e
+       ingresso in cascata, come in homepage. Questi elementi
+       stavano a opacità 0 in attesa di quello script.
+       ═══════════════════════════════════════════════════════════ */
+    .cs-cta__sub,
+    .cs-cta .btn--cta { opacity: 1 !important; transform: none; }
+    .cs-cta__title .tl { opacity: 1; transform: none; }
   </style>
 </head>
 <body>
@@ -675,10 +1235,11 @@
       <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
         <img src="Logoestrofooter.webp" alt="ESTRO" />
       </a>
-            <div class="nav__right">
+      <div class="nav__right">
         <a class="nav__joinus" href="contatti.html">
-        Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      </a>
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
     </div>
     <div class="nav__mega-wrapper" aria-hidden="true">
       <div class="nav__mega">
@@ -711,8 +1272,10 @@
           <div class="nav__mega-panel nav__mega-panel--pink">
             <p class="nav__mega-label">Team</p>
             <div class="nav__mega-avatars">
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
-              <span class="nav__avatar"></span><span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
               <span class="nav__avatar"></span>
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
@@ -731,7 +1294,7 @@
   <main>
 
     <!-- ══ HERO ══════════════════════════════════════════════ -->
-    <section class="cs-hero">
+    <section class="cs-hero" data-nav-theme="dark">
       <div class="container cs-hero__inner">
         <!-- colonna sinistra: testo centrato verticalmente -->
         <div class="cs-hero__left">
@@ -762,8 +1325,6 @@
           </video>
         </div>
       </div>
-    </section>
-
     <!-- ══ TICKER ═════════════════════════════════════════════ -->
     <div class="cs-ticker" aria-hidden="true">
       <div class="cs-ticker__track">
@@ -810,20 +1371,7 @@
         <span>Kasanova</span><span class="cs-ticker__sep">·</span>
       </div>
     </div>
-
-    <!-- ══ FILTER ═════════════════════════════════════════════ -->
-    <nav class="cs-filter" aria-label="Filtra per categoria">
-      <div class="container cs-filter__inner">
-        <button class="cs-filter__btn active" data-filter="all">Tutti</button>
-        <button class="cs-filter__btn" data-filter="social">Social Media</button>
-        <button class="cs-filter__btn" data-filter="influencer">Influencer</button>
-        <button class="cs-filter__btn" data-filter="brand">Brand &amp; Design</button>
-        <button class="cs-filter__btn" data-filter="ecommerce">E-commerce</button>
-        <button class="cs-filter__btn" data-filter="content">Content &amp; Video</button>
-        <button class="cs-filter__btn" data-filter="strategia">Strategia</button>
-        <button class="cs-filter__btn" data-filter="ai">AI</button>
-      </div>
-    </nav>
+    </section>
 
     <!-- ══ CARD POOL (sorgente, nascosta) ══════════════════════ -->
     <div id="cs-pool" style="display:none" aria-hidden="true">
@@ -1025,24 +1573,68 @@
       </div>
     </div>
 
-    <!-- ══ ORBIT CAROUSEL ════════════════════════════════════ -->
-    <section class="cs-orbit-section" id="cs-orbit-section">
-      <div class="cs-orbit-stage">
-        <div class="cs-orbit-ring" id="cs-orbit-ring"></div>
+    <!-- ══ LAVORI — anello 3D / griglia ═══════════════════════ -->
+    <div class="cs-works" id="cs-works" data-nav-theme="dark">
+      <div class="cs-works__head" data-cascade>
+        <div>
+          <p class="cs-works__kicker">I lavori</p>
+          <h2 class="cs-works__title" id="csWorksTitle">Progetti</h2>
+        </div>
+        <button type="button" class="cs-view" id="cs-view-toggle" data-view="ring" aria-pressed="false">
+          <span class="cs-view__icon" aria-hidden="true"></span>
+          <span class="cs-view__label">Vedi a griglia</span>
+        </button>
       </div>
-    </section>
 
-    <!-- ══ FILTRO ATTIVO → GRIGLIA ════════════════════════════ -->
-    <section class="cs-filtered-section" id="cs-filtered-section">
-      <div class="cs-grid" id="cs-filtered-grid"></div>
-    </section>
+      <section class="cs-ring-section" id="cs-ring-section" aria-label="Anello dei case studies">
+        <div class="cs-ring-stage" id="cs-ring-stage">
+          <div class="cs-ring" id="cs-ring"></div>
+        </div>
+        <p class="cs-ring__hint">Trascina per girare l&rsquo;anello</p>
+      </section>
 
-    <!-- ══ CTA ════════════════════════════════════════════════ -->
-    <section class="cs-cta">
-      <div class="container">
-        <h2 class="cs-cta__title">Il prossimo caso<br/>di successo è il tuo</h2>
-        <p class="cs-cta__sub">Raccontaci il tuo progetto.<br/>Troveremo insieme la strategia giusta per farlo crescere.</p>
-        <a href="contatti.html" class="btn--cta">Parliamoci</a>
+      <section class="cs-grid-section" id="cs-grid-section" aria-label="Tutti i case studies" hidden>
+        <div class="cs-grid-all" id="cs-grid-all"></div>
+      </section>
+    </div>
+    <!-- ══ CTA + FORM ═════════════════════════════════════════ -->
+    <section class="cs-cta" data-nav-theme="dark">
+      <div class="cs-cta__inner" data-cascade>
+        <div class="cs-cta__left">
+          <span class="cs-cta__label">Parliamoci</span>
+          <h2 class="cs-cta__title">Il prossimo caso<br/>di successo è il tuo</h2>
+          <p class="cs-cta__sub">Raccontaci il tuo progetto.<br/>Troveremo insieme la strategia giusta per farlo crescere.</p>
+        </div>
+        <div class="cs-cta__right">
+          <!-- Stesse classi del form in homepage (hc-*): stesse
+               misure e stessa riga dei consensi con la newsletter. -->
+          <form class="hc-form" action="#" method="post" novalidate>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="nome" placeholder="Nome*" required />
+              <input class="svc-caffe__field" type="text" name="cognome" placeholder="Cognome*" required />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="email" name="email" placeholder="Email*" required />
+              <input class="svc-caffe__field" type="tel" name="telefono" placeholder="Telefono" />
+            </div>
+            <div class="hc-row">
+              <input class="svc-caffe__field" type="text" name="azienda" placeholder="Azienda" />
+              <input class="svc-caffe__field" type="url" name="sito" placeholder="Sito Web" />
+            </div>
+            <textarea class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Scrivi pure qui" rows="5"></textarea>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="cs-privacy">
+                <input type="checkbox" id="cs-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+              </label>
+              <label class="svc-caffe__privacy" for="cs-newsletter">
+                <input type="checkbox" id="cs-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
+            </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+          </form>
+        </div>
       </div>
     </section>
       </main>
@@ -1083,295 +1675,390 @@
   (function () { var h = document.querySelector('.cs-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('cs-hero--revealed'); }); }); })();
   </script>
   <script>
-  /* ── case-studies: scroll-driven overlays + CTA animation ── */
-  (function () {
-    'use strict';
-    function c01(v) { return Math.max(0, Math.min(1, v)); }
-    function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
-
-    var navEl    = document.querySelector('.nav');
-    var heroEl   = document.querySelector('.cs-hero');
-    var tickerEl = document.querySelector('.cs-ticker');
-    var filterEl = document.querySelector('.cs-filter');
-    var orbitEl  = document.getElementById('cs-orbit-section');
-    var ctaEl    = document.querySelector('.cs-cta');
-    var ctaSub   = ctaEl && ctaEl.querySelector('.cs-cta__sub');
-    var ctaBtn   = ctaEl && ctaEl.querySelector('.btn--cta');
-
-    /* splitLetters */
-    function splitLetters(el) {
-      if (!el) return [];
-      var raw = el.innerHTML, out = '', i = 0;
-      while (i < raw.length) {
-        if (raw[i] === '<') { var j = raw.indexOf('>', i); out += raw.slice(i, j + 1); i = j + 1; }
-        else if (raw[i] === '&') { var k = raw.indexOf(';', i); out += '<span class="tl">' + raw.slice(i, k + 1) + '</span>'; i = k + 1; }
-        else if (raw[i] === ' ') { out += ' '; i++; }
-        else { out += '<span class="tl">' + raw[i] + '</span>'; i++; }
-      }
-      el.innerHTML = out;
-      el.style.opacity = '1'; el.style.transform = 'none';
-      return Array.from(el.querySelectorAll('.tl'));
-    }
-    function revLetters(letters, p) {
-      letters.forEach(function (el, i) {
-        var lP = ease(c01((p - i * 0.012) / 0.08));
-        el.style.opacity = lP.toFixed(3);
-        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
-      });
-    }
-
-    function makeTransOv(prevEl, nextBg) {
-      if (!prevEl) return null;
-      var ov = document.createElement('div');
-      Object.assign(ov.style, { position:'absolute', inset:'0', background:nextBg, opacity:'0', pointerEvents:'none', zIndex:'5' });
-      if (getComputedStyle(prevEl).position === 'static') prevEl.style.position = 'relative';
-      prevEl.appendChild(ov);
-      return ov;
-    }
-
-    /* 1. hero + ticker → black, triggered as orbit/filter enters */
-    var heroToBlackOv   = makeTransOv(heroEl,   '#0a0a0a');
-    var tickerToBlackOv = makeTransOv(tickerEl, '#0a0a0a');
-
-    /* 2. orbit → fuchsia, triggered as CTA enters */
-    var orbitToCtaOv = makeTransOv(orbitEl, '#DB005A');
-    if (orbitToCtaOv) orbitToCtaOv.style.zIndex = '200';
-
-    /* 3. CTA → black fixed overlay (footer entrance) */
-    var exitOv = document.createElement('div');
-    Object.assign(exitOv.style, { position:'fixed', inset:'0', background:'#0e0e0e', opacity:'0', pointerEvents:'none', zIndex:'200' });
-    document.body.appendChild(exitOv);
-
-    var ctaLetters = splitLetters(ctaEl && ctaEl.querySelector('.cs-cta__title'));
-
-    var C_DARK = [5,5,5], C_FUCHSIA = [219,0,90];
-    function luma(c) { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
-    var prevDark = null;
-
-    function p_enter(el) {
-      if (!el) return 0;
-      return ease(c01((window.innerHeight - el.getBoundingClientRect().top) / window.innerHeight));
-    }
-    /* 0 quando fromEl è centrato, 1 quando toEl è centrato */
-    function p_between(fromEl, toEl) {
-      if (!fromEl || !toEl) return 0;
-      var scrollY = window.scrollY;
-      var vpCenter = window.innerHeight / 2;
-      var fromTop = fromEl.getBoundingClientRect().top + scrollY;
-      var toTop   = toEl.getBoundingClientRect().top   + scrollY;
-      var s0 = fromTop + fromEl.offsetHeight / 2 - vpCenter;
-      var s1 = toTop   + toEl.offsetHeight   / 2 - vpCenter;
-      return ease(c01((scrollY - s0) / (s1 - s0)));
-    }
-    function blend(a, b, t) { return [a[0]+(b[0]-a[0])*t, a[1]+(b[1]-a[1])*t, a[2]+(b[2]-a[2])*t]; }
-    function ovOp(ov) { return ov ? (parseFloat(ov.style.opacity) || 0) : 0; }
-
-    function tick() {
-      requestAnimationFrame(tick);
-      var vh = window.innerHeight;
-
-      /* 1. hero + ticker → black (driven by filter bar entering) */
-      var blackP = p_enter(filterEl);
-      if (heroToBlackOv)   heroToBlackOv.style.opacity   = blackP.toFixed(3);
-      if (tickerToBlackOv) tickerToBlackOv.style.opacity = blackP.toFixed(3);
-
-      /* 2. orbit → fuchsia: 0 quando orbit è centrata, 1 quando CTA è centrata */
-      var orbitP = p_between(orbitEl, ctaEl);
-      if (orbitToCtaOv) orbitToCtaOv.style.opacity = orbitP.toFixed(3);
-
-      /* 3. exit overlay → black (footer) */
-      var maxS = Math.max(1, document.documentElement.scrollHeight - vh);
-      exitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 120)).toFixed(3);
-
-      /* CTA text animations — guidate da p_between orbit→CTA */
-      if (ctaEl) {
-        revLetters(ctaLetters, ease(c01(orbitP / 0.85)));
-        var sP = ease(c01((orbitP - 0.20) / 0.70));
-        if (ctaSub) { ctaSub.style.opacity = sP.toFixed(3); ctaSub.style.transform = 'translateY(' + ((1-sP)*16).toFixed(1) + 'px)'; }
-        var bP = ease(c01((orbitP - 0.32) / 0.65));
-        if (ctaBtn) { ctaBtn.style.opacity = bP.toFixed(3); ctaBtn.style.transform = 'translateY(' + ((1-bP)*14).toFixed(1) + 'px)'; }
-      }
-
-      /* nav theme — blend continuo tra sezioni e overlay */
-      if (navEl) {
-        var navMid = (navEl.getBoundingClientRect().height || 80) / 2;
-        var C_WHITE = [255,255,255];
-        var effective = C_DARK;
-        /* orbit section: dark base, fuchsia overlay */
-        if (orbitEl) {
-          var oR = orbitEl.getBoundingClientRect();
-          if (oR.top <= navMid && oR.bottom > navMid) {
-            effective = blend(C_DARK, C_FUCHSIA, ovOp(orbitToCtaOv));
-          }
-        }
-        /* CTA section: fuchsia */
-        if (ctaEl) {
-          var cR = ctaEl.getBoundingClientRect();
-          if (cR.top <= navMid && cR.bottom > navMid) effective = C_FUCHSIA;
-        }
-        var isDark = luma(effective) < 140;
-        if (isDark !== prevDark) { prevDark = isDark; navEl.classList.toggle('nav--on-dark', isDark); }
-      }
-    }
-    requestAnimationFrame(tick);
-  })();
-  </script>
-  <script>
+  /* ═══════════════════════════════════════════════════════════
+     CASE STUDIES — anello di card e vista a griglia
+     Prima le card giravano su un cerchio piatto: coordinate seno
+     e coseno, scala e opacità finte per suggerire la profondità.
+     Qui l'anello è vero: le card stanno su un cilindro in 3D,
+     ognuna ruotata del suo angolo e spinta fuori del raggio. La
+     prospettiva la fa il browser, quindi le card lontane
+     rimpiccioliscono da sole e girano su sé stesse come farebbero
+     nello spazio. Un pulsante spegne l'anello e apre la griglia,
+     dove ci sono tutti i lavori con i loro tag.
+     ═══════════════════════════════════════════════════════════ */
   (function() {
-    var pool = Array.from(document.querySelectorAll('#cs-pool .cs-card'));
-    var ring = document.getElementById('cs-orbit-ring');
-    var orbitSection = document.getElementById('cs-orbit-section');
-    var filteredSection = document.getElementById('cs-filtered-section');
-    var filteredGrid = document.getElementById('cs-filtered-grid');
+    var ring    = document.getElementById('cs-ring');
+    var stage   = document.getElementById('cs-ring-stage');
+    var ringSec = document.getElementById('cs-ring-section');
+    var gridSec = document.getElementById('cs-grid-section');
+    var grid    = document.getElementById('cs-grid-all');
+    var toggle  = document.getElementById('cs-view-toggle');
+    if (!ring || !grid) return;
+
+    var RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
     var accentMap = {
       'social': '#e84393', 'influencer': '#a855f7', 'brand': '#f97316',
       'ecommerce': '#22c55e', 'content': '#ca8a04', 'strategia': '#06b6d4', 'ai': '#DB005A'
     };
-    var catLabel = {
-      'social': 'Social Media', 'influencer': 'Influencer', 'brand': 'Brand & Design',
-      'ecommerce': 'E-commerce', 'content': 'Content & Video', 'strategia': 'Strategia', 'ai': 'AI'
-    };
 
-    // 20 curated cards for the orbit — cover: foto editoriale, logo: brand mark
-    var orbitData = [
-      { cat:'brand',     client:'Artigli',           cover:'case-studies/ARTIGLI.png',                    logo:'case-studies/loghicasestudy/ARTIGLI.png' },
-      { cat:'content',   client:'Red Bull',           cover:'case-studies/REDBULLOPENSEAREPUBLIC.jpeg',    logo:'case-studies/loghicasestudy/REDBULLOPENSEAREPUBLIC.png' },
-      { cat:'brand',     client:'Cybergon',           cover:'case-studies/CYBERGON.png',                   logo:'case-studies/loghicasestudy/CYBERGON.png' },
-      { cat:'brand',     client:'Dresso',             cover:'case-studies/DRESSO.jpg',                     logo:'case-studies/loghicasestudy/DRESSO.png' },
-      { cat:'ecommerce', client:'Cose a Casa',        cover:'case-studies/COSEACASA.png',                  logo:'case-studies/loghicasestudy/COSEACASA.webp' },
-      { cat:'content',   client:'Disclaimer',         cover:'case-studies/DISCLAIMER.webp',                logo:'case-studies/loghicasestudy/DISCLAIMER.png' },
-      { cat:'brand',     client:'Squarelife',         cover:'case-studies/SQUARELIFE.jpg',                 logo:'case-studies/loghicasestudy/SQUARELIFE.png' },
-      { cat:'content',   client:'Pyrex',              cover:'case-studies/PYREX.jpg',                      logo:'case-studies/loghicasestudy/PYREX.png' },
-      { cat:'content',   client:'Fragi',              cover:'case-studies/FRAGI.jpg',                      logo:'case-studies/loghicasestudy/FRAGI.png' },
-      { cat:'content',   client:'Woodoo Fest',        cover:'case-studies/WOODOOFEST.png',                 logo:'case-studies/loghicasestudy/WOODOO.webp' },
-      { cat:'social',    client:'Come in una Favola', cover:'case-studies/COMEINUNAFAVOLA.webp',           logo:'foto case study/logo-come-in-una-favola-v5-1.webp' },
-      { cat:'brand',     client:'ABC Tools',          cover:'case-studies/ABC TOOLS.png',                  logo:'case-studies/loghicasestudy/ABCTOOLS.png' },
-      { cat:'social',    client:'Dama24',             cover:'case-studies/DAMA24.png',                     logo:'case-studies/loghicasestudy/DAMA24.png',    url:'case-studies/dama24.html' },
-      { cat:'strategia', client:'Fanuc',              cover:'case-studies/FANUC.png',                      logo:'case-studies/loghicasestudy/FANUC.png',     url:'case-studies/fanuc.html' },
-      { cat:'ai',        client:'Elmec',              cover:'case-studies/ELMEC.webp',                     logo:'case-studies/loghicasestudy/ELMEC.webp' },
-      { cat:'strategia', client:'Humanitas',          cover:'case-studies/HUMANITAS.webp',                 logo:'case-studies/loghicasestudy/HUMANITAS.webp' },
-      { cat:'social',    client:'Leolandia',          cover:'case-studies/LEOLANDIA.png',                  logo:'case-studies/loghicasestudy/LEOLANDIA.webp' },
-      { cat:'social',    client:'Cupra',              cover:'case-studies/CUPRA.webp',                     logo:'case-studies/loghicasestudy/CUPRA.webp' },
-      { cat:'influencer',client:'Kasanova',           cover:'case-studies/KASANOVA.png',                   logo:'case-studies/loghicasestudy/KASANOVA.webp' },
-      { cat:'strategia', client:'Ariston',            cover:'case-studies/ARISTON.webp',                   logo:'case-studies/loghicasestudy/ARISTON.png' }
+    /* I tag dei lavori svolti su ogni progetto: quello che il
+       vecchio filtro nascondeva dentro una categoria sola. */
+    var data = [
+      { cat:'brand',     client:'Artigli',           tags:['Brand & Design','Art Direction'],   cover:'case-studies/ARTIGLI.png',                 logo:'case-studies/loghicasestudy/ARTIGLI.png' },
+      { cat:'content',   client:'Red Bull',          tags:['Content & Video','Social Media'],   cover:'case-studies/REDBULLOPENSEAREPUBLIC.jpeg', logo:'case-studies/loghicasestudy/REDBULLOPENSEAREPUBLIC.png' },
+      { cat:'brand',     client:'Cybergon',          tags:['Web Design','Brand & Design'],      cover:'case-studies/CYBERGON.png',                logo:'case-studies/loghicasestudy/CYBERGON.png' },
+      { cat:'brand',     client:'Dresso',            tags:['Brand & Design','E-commerce'],      cover:'case-studies/DRESSO.jpg',                  logo:'case-studies/loghicasestudy/DRESSO.png' },
+      { cat:'ecommerce', client:'Cose a Casa',       tags:['E-commerce','Social Ads'],          cover:'case-studies/COSEACASA.png',               logo:'case-studies/loghicasestudy/COSEACASA.webp' },
+      { cat:'content',   client:'Disclaimer',        tags:['Content & Video','Social Media'],   cover:'case-studies/DISCLAIMER.webp',             logo:'case-studies/loghicasestudy/DISCLAIMER.png' },
+      { cat:'brand',     client:'Squarelife',        tags:['Web Design','Strategia'],           cover:'case-studies/SQUARELIFE.jpg',              logo:'case-studies/loghicasestudy/SQUARELIFE.png' },
+      { cat:'content',   client:'Pyrex',             tags:['Content & Video','Influencer'],     cover:'case-studies/PYREX.jpg',                   logo:'case-studies/loghicasestudy/PYREX.png' },
+      { cat:'content',   client:'Fragi',             tags:['Content & Video','Graphic Design'], cover:'case-studies/FRAGI.jpg',                   logo:'case-studies/loghicasestudy/FRAGI.png' },
+      { cat:'content',   client:'Woodoo Fest',       tags:['Content & Video','Social Media'],   cover:'case-studies/WOODOOFEST.png',              logo:'case-studies/loghicasestudy/WOODOO.webp' },
+      { cat:'social',    client:'Come in una Favola',tags:['Social Media','Content & Video'],   cover:'case-studies/COMEINUNAFAVOLA.webp',        logo:'foto case study/logo-come-in-una-favola-v5-1.webp' },
+      { cat:'brand',     client:'ABC Tools',         tags:['Brand & Design','Web Design'],      cover:'case-studies/ABC TOOLS.png',               logo:'case-studies/loghicasestudy/ABCTOOLS.png' },
+      { cat:'social',    client:'Dama24',            tags:['Social Media','Social Ads'],        cover:'case-studies/DAMA24.png',                  logo:'case-studies/loghicasestudy/DAMA24.png',    url:'case-studies/dama24.html' },
+      { cat:'strategia', client:'Fanuc',             tags:['Strategia','Content & Video'],      cover:'case-studies/FANUC.png',                   logo:'case-studies/loghicasestudy/FANUC.png',     url:'case-studies/fanuc.html' },
+      { cat:'ai',        client:'Elmec',             tags:['AI','Strategia'],                   cover:'case-studies/ELMEC.webp',                  logo:'case-studies/loghicasestudy/ELMEC.webp' },
+      { cat:'strategia', client:'Humanitas',         tags:['Strategia','Content & Video'],      cover:'case-studies/HUMANITAS.webp',              logo:'case-studies/loghicasestudy/HUMANITAS.webp' },
+      { cat:'social',    client:'Leolandia',         tags:['Social Media','Influencer'],        cover:'case-studies/LEOLANDIA.png',               logo:'Loghibrand/leolandia.webp' },
+      { cat:'social',    client:'Cupra',             tags:['Social Media','Content & Video'],   cover:'case-studies/CUPRA.webp',                  logo:'case-studies/loghicasestudy/CUPRA.webp' },
+      { cat:'influencer',client:'Kasanova',          tags:['Influencer','Social Media'],        cover:'case-studies/KASANOVA.png',                logo:'case-studies/loghicasestudy/KASANOVA.webp' },
+      { cat:'strategia', client:'Ariston',           tags:['Strategia','Social Ads'],           cover:'case-studies/ARISTON.webp',                logo:'case-studies/loghicasestudy/ARISTON.png' }
     ];
 
-    var n = orbitData.length;
-    var orbitSec = document.getElementById('cs-orbit-section');
-    // raggio: max card_half_height(188) + 30px top margin = 218px clearance
-    // cap a 380 per desktop, limitato anche dalla viewport width per non sforare lateralmente
-    var cardHalfH = 188; // (280+62)/2 * scale_max
-    var radius = Math.min(
-      Math.round(window.innerWidth * 0.38),
-      orbitSec.offsetHeight - cardHalfH - 30,
-      380
-    );
-    var slots = [];
-
-    orbitData.forEach(function(d, i) {
-      var accent = accentMap[d.cat] || '#DB005A';
-      var slot = document.createElement('div');
-      slot.className = 'cs-ocard-slot';
-      slot.dataset.cat = d.cat;
-
-      var coverHtml = d.cover
-        ? '<img class="cs-ocard-cover" src="' + d.cover + '" alt="' + d.client + '">'
-        : '';
-      var logoInBar = d.logo
-        ? '<img class="cs-ocard-logo" src="' + d.logo + '" alt="' + d.client + '">'
-        : '<span class="cs-ocard-client">' + d.client + '</span>';
-
-      slot.innerHTML =
-        '<div class="cs-ocard-wrap">' +
-          '<div class="cs-ocard-visual">' + coverHtml + '</div>' +
-          '<div class="cs-ocard-info">' +
-            logoInBar +
-            '<span class="cs-ocard-badge" style="color:' + accent + '">' + catLabel[d.cat] + '</span>' +
-          '</div>' +
-        '</div>';
-
-      if (d.url) {
-        slot.querySelector('.cs-ocard-wrap').style.cursor = 'pointer';
-        slot.querySelector('.cs-ocard-wrap').addEventListener('click', function() {
-          window.location.href = d.url;
-        });
-      }
-
-      ring.appendChild(slot);
-      slots.push({ el: slot, offset: (i / n) * Math.PI * 2 });
-    });
-
-    // rAF orbit: cards positioned by circle math, always upright
-    var startTime = null;
-    var PERIOD = 65000; // ms per full revolution
-
-    function animateOrbit(ts) {
-      if (!startTime) startTime = ts;
-      var elapsed = ts - startTime;
-      var progress = (elapsed % PERIOD) / PERIOD; // 0..1
-      var baseAngle = progress * Math.PI * 2;
-
-      slots.forEach(function(s) {
-        var a = baseAngle + s.offset;
-        var x = radius * Math.sin(a);
-        var y = -radius * Math.cos(a); // -radius at top
-        // perspective scale: cards at bottom (high y) appear larger
-        // t: 1 = top of arc (featured, biggest), 0 = sides (smaller, dimmer)
-        var t = Math.max(0, Math.min(1, -y / radius));
-        var scale = 0.58 + 0.52 * t;
-        var opacity = 0.38 + 0.62 * t;
-        var zi = Math.round(50 + t * 100);
-        s.el.style.zIndex = zi;
-        s.el.style.opacity = opacity;
-        s.el.style.transform = 'translate(' + x.toFixed(1) + 'px,' + y.toFixed(1) + 'px) scale(' + scale.toFixed(3) + ')';
-      });
-
-      orbitRafId = requestAnimationFrame(animateOrbit);
+    function esc(s) {
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/"/g, '&quot;');
+    }
+    /* I tag stanno dentro la card, nella stessa barra del logo:
+       prima galleggiavano sopra, staccati dal progetto a cui si
+       riferivano. */
+    function tagRow(d) {
+      var acc = accentMap[d.cat] || '#DB005A';
+      return '<div class="cs-tags">' + d.tags.map(function(t, i) {
+        return '<span class="cs-tag"' + (i === 0 ? ' style="--tag-accent:' + acc + '"' : '') + '>' + esc(t) + '</span>';
+      }).join('') + '</div>';
+    }
+    function cardInner(d) {
+      var cover = d.cover ? '<img class="cs-cardv__cover" src="' + esc(d.cover) + '" alt="' + esc(d.client) + '" loading="lazy">' : '';
+      var mark  = d.logo
+        ? '<img class="cs-cardv__logo" src="' + esc(d.logo) + '" alt="' + esc(d.client) + '" loading="lazy">'
+        : '<span class="cs-cardv__client">' + esc(d.client) + '</span>';
+      return '<div class="cs-cardv__visual">' + cover + '</div>' +
+             '<div class="cs-cardv__bar">' + mark + tagRow(d) + '</div>';
     }
 
-    var orbitRafId = requestAnimationFrame(animateOrbit);
+    /* ── L'anello ──────────────────────────────────────────── */
+    var n = data.length;
+    var CARD_W = 360;
+    var GAP    = 40;
+    /* raggio del cilindro: la circonferenza deve contenere tutte
+       le card affiancate, altrimenti si compenetrano */
+    var radius = Math.round((CARD_W + GAP) / (2 * Math.tan(Math.PI / n)));
+    var step   = 360 / n;
 
-    var btns = document.querySelectorAll('.cs-filter__btn');
-    btns.forEach(function(btn) {
-      btn.addEventListener('click', function() {
-        btns.forEach(function(b) { b.classList.remove('active'); });
-        btn.classList.add('active');
-        var f = btn.dataset.filter;
-        if (f === 'all') {
-          orbitSection.style.display = '';
-          filteredSection.style.display = 'none';
-          if (!orbitRafId) orbitRafId = requestAnimationFrame(animateOrbit);
-        } else {
-          cancelAnimationFrame(orbitRafId); orbitRafId = null;
-          orbitSection.style.display = 'none';
-          filteredSection.style.display = 'block';
-          filteredGrid.innerHTML = orbitData
-            .filter(function(d) { return d.cat === f; })
-            .map(function(d) {
-              var acc = accentMap[d.cat] || '#DB005A';
-              var coverHtml = d.cover
-                ? '<img class="cs-ocard-cover" src="' + d.cover + '" alt="' + d.client + '">'
-                : '';
-              var logoInBar = d.logo
-                ? '<img class="cs-ocard-logo" src="' + d.logo + '" alt="' + d.client + '">'
-                : '<span class="cs-ocard-client">' + d.client + '</span>';
-              var onclick = d.url ? ' onclick="window.location.href=\'' + d.url + '\'" style="cursor:pointer"' : '';
-              return '<div class="cs-grid-card"' + onclick + '>' +
-                '<div class="cs-ocard-visual">' + coverHtml + '</div>' +
-                '<div class="cs-ocard-info">' +
-                  logoInBar +
-                  '<span class="cs-ocard-badge" style="color:' + acc + '">' + catLabel[d.cat] + '</span>' +
-                '</div>' +
-              '</div>';
-            }).join('');
-        }
-      });
+    data.forEach(function(d, i) {
+      var cell = document.createElement('div');
+      cell.className = 'cs-ring__cell';
+      /* il translate finale agisce nel piano della card, già
+         ruotata: la centra sul suo punto qualunque sia la misura */
+      cell.style.transform = 'rotateY(' + (i * step) + 'deg) translateZ(' + radius + 'px) translate(-50%, -50%)';
+      cell.dataset.angle = i * step;
+      cell.innerHTML =
+        '<' + (d.url ? 'a href="' + esc(d.url) + '"' : 'div') + ' class="cs-cardv">' +
+          cardInner(d) +
+        '</' + (d.url ? 'a' : 'div') + '>';
+      ring.appendChild(cell);
     });
+    var cells = Array.prototype.slice.call(ring.children);
+    stage.style.setProperty('--cs-radius', radius + 'px');
+
+    /* rotazione: un solo rAF, con trascinamento e pausa in hover */
+    var angle = 0, vel = 0.0055, paused = false, raf = null, last = null;
+    var dragging = false, dragX = 0, dragStartAngle = 0, moved = 0;
+
+    function place() {
+      ring.style.transform = 'translateZ(-' + radius + 'px) rotateY(' + angle.toFixed(3) + 'deg)';
+      /* le card dietro non devono rubare i clic né distrarre:
+         opacità e clic seguono quanto sono girate via */
+      cells.forEach(function(c) {
+        var a = ((+c.dataset.angle + angle) % 360 + 360) % 360;
+        var facing = Math.cos(a * Math.PI / 180);       // 1 = davanti
+        var t = (facing + 1) / 2;                       // 0..1
+        c.style.opacity = (0.10 + 0.90 * Math.pow(t, 2.4)).toFixed(3);
+        c.style.pointerEvents = facing > 0.25 ? 'auto' : 'none';
+        c.classList.toggle('is-front', facing > 0.86);
+      });
+    }
+
+    function tick(ts) {
+      if (last === null) last = ts;
+      var dt = Math.min(48, ts - last); last = ts;
+      if (!paused && !dragging) angle += vel * dt;
+      place();
+      raf = requestAnimationFrame(tick);
+    }
+    function start() { if (!raf && !RM) { last = null; raf = requestAnimationFrame(tick); } }
+    function stop()  { if (raf) { cancelAnimationFrame(raf); raf = null; } }
+
+    place();
+    start();
+
+    stage.addEventListener('pointerenter', function() { paused = true; });
+    stage.addEventListener('pointerleave', function() { paused = false; });
+
+    /* il trascinamento nativo di immagini e link portava via il
+       puntatore a metà gesto: l'anello si fermava dopo un pixel */
+    stage.addEventListener('dragstart', function(e) { e.preventDefault(); });
+    stage.addEventListener('pointerdown', function(e) {
+      e.preventDefault();
+      dragging = true; moved = 0;
+      dragX = e.clientX; dragStartAngle = angle;
+      stage.classList.add('is-dragging');
+      if (stage.setPointerCapture) { try { stage.setPointerCapture(e.pointerId); } catch (err) {} }
+    });
+    stage.addEventListener('pointermove', function(e) {
+      if (!dragging) return;
+      var dx = e.clientX - dragX;
+      moved = Math.max(moved, Math.abs(dx));
+      angle = dragStartAngle + dx * 0.22;
+      if (RM) place();
+    });
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      stage.classList.remove('is-dragging');
+    }
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+    /* un trascinamento non deve aprire il case study */
+    stage.addEventListener('click', function(e) {
+      if (moved > 6) { e.preventDefault(); e.stopPropagation(); }
+    }, true);
+
+    /* ── La griglia: tutti i lavori, con i loro tag ─────────── */
+    grid.innerHTML = data.map(function(d) {
+      return '<div class="cs-gitem">' +
+        '<' + (d.url ? 'a href="' + esc(d.url) + '"' : 'div') + ' class="cs-cardv cs-cardv--grid">' +
+          cardInner(d) +
+        '</' + (d.url ? 'a' : 'div') + '>' +
+      '</div>';
+    }).join('');
+
+    /* ── Il pulsante che regola la visualizzazione ──────────── */
+    var isGrid = false;
+    var label  = toggle.querySelector('.cs-view__label');
+    /* La vista che esce sfuma prima di sparire: 'hidden' da solo
+       era uno scatto secco. Chi ha ridotto le animazioni salta
+       l'attesa e passa subito. */
+    function setView(g, instant) {
+      isGrid = g;
+      var out = g ? ringSec : gridSec;
+      var into = g ? gridSec : ringSec;
+      toggle.setAttribute('aria-pressed', g ? 'true' : 'false');
+      toggle.dataset.view = g ? 'grid' : 'ring';
+      if (label) label.textContent = g ? 'Vedi ad anello' : 'Vedi a griglia';
+
+      var show = function() {
+        out.hidden = true;
+        into.hidden = false;
+        into.dataset.swap = 'out';
+        requestAnimationFrame(function() {
+          requestAnimationFrame(function() {
+            delete into.dataset.swap;
+            if (g) fitTraces();
+          });
+        });
+      };
+
+      if (instant || RM) { out.dataset.swap = 'out'; show(); }
+      else {
+        out.dataset.swap = 'out';
+        setTimeout(show, 260);
+      }
+      if (g) stop(); else start();
+    }
+    toggle.addEventListener('click', function() { setView(!isGrid); });
+    setView(false, true);
+
+    /* ── Il contorno che gira intorno alla card ─────────────
+       Stesso tracciato di news e tips&tricks: un rettangolo SVG
+       con gli angoli della card, scoperto lungo il perimetro
+       vero, così il tratto avanza alla stessa velocità ovunque. */
+    var NS = 'http://www.w3.org/2000/svg';
+    var fits = [];
+    function addTrace(card) {
+      if (card.querySelector('.cs-trace')) return;
+      var svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('class', 'cs-trace');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.setAttribute('preserveAspectRatio', 'none');
+      var rect = document.createElementNS(NS, 'rect');
+      svg.appendChild(rect); card.appendChild(svg);
+      var fit = function() {
+        /* Nell'anello le card stanno su un cilindro in 3D: il
+           riquadro misurato dal browser è la loro PROIEZIONE, che
+           cambia a ogni giro. Con quella misura il viewBox non
+           corrispondeva al box vero, quindi il tratto veniva
+           riscalato — troppo spesso — e il rettangolo risultava
+           più piccolo della card. offsetWidth/Height danno la
+           misura di layout, che le trasformazioni non toccano.
+           Si misura la card: l'SVG è inset:0 dentro di lei, quindi
+           il suo box è esattamente il box interno della card. */
+        var r = { width: card.clientWidth, height: card.clientHeight };
+        if (!r.width || !r.height) return;
+        var sw = 3;
+        var cs = getComputedStyle(card);
+        var bw = parseFloat(cs.borderTopWidth) || 0;
+        var rad = Math.max(0, (parseFloat(cs.borderTopLeftRadius) || 0) - bw);
+        svg.setAttribute('viewBox', '0 0 ' + r.width + ' ' + r.height);
+        rect.setAttribute('x', sw / 2); rect.setAttribute('y', sw / 2);
+        rect.setAttribute('width',  Math.max(0, r.width  - sw));
+        rect.setAttribute('height', Math.max(0, r.height - sw));
+        rect.setAttribute('rx', Math.max(0, rad - sw / 2));
+        rect.style.setProperty('--cs-len', rect.getTotalLength());
+      };
+      fits.push(fit); fit();
+      if (window.ResizeObserver) new ResizeObserver(fit).observe(card);
+    }
+    function fitTraces() { fits.forEach(function(f) { f(); }); }
+    document.querySelectorAll('.cs-cardv').forEach(addTrace);
+    addEventListener('resize', fitTraces, { passive: true });
   })();
   </script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     CASE STUDIES — stesso motore della homepage: acqua sui
+     titoli, salita fra sezioni scritta da un solo rAF, ingresso
+     in cascata dei blocchi di testo.
+     ═══════════════════════════════════════════════════════════ */
+  function csBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      const fx = wlMakeFilter();
+      el.style.filter = 'url(#' + fx.id + ')';
+      const dur = ms || 900;
+      const t0 = performance.now();
+      (function frame() {
+        const q = Math.min(1, (performance.now() - t0) / dur);
+        const wave = Math.sin(q * Math.PI);
+        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
+        fx.turb.setAttribute('baseFrequency',
+          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
+        if (q < 1) { requestAnimationFrame(frame); return; }
+        fx.disp.setAttribute('scale', '0');
+        el.style.removeProperty('filter');
+      }());
+    }
+
+    // il titolo della hero è già in vista al caricamento
+    requestAnimationFrame(() => waterLetters(document.querySelector('.cs-hero__title'), 1000));
+
+    [['.cs-works__title', 950], ['.cs-cta__title', 950], ['.sf-ghost', 1000]].forEach(([sel, ms]) => {
+      const el = document.querySelector(sel);
+      if (!el) return;
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      io.observe(el);
+    });
+
+    /* ── Salita fra sezioni ────────────────────────────────── */
+    const RISE = ['.cs-works', '.cs-cta', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso in cascata (linguaggio di About) ─────────── */
+    document.querySelectorAll('[data-cascade]').forEach(panel => {
+      if (RM) { panel.classList.add('cs-in'); return; }
+      const check = () => {
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.top > vh || r.bottom < 0) return false;
+        const vis = (Math.min(vh, r.bottom) - Math.max(0, r.top)) / Math.min(vh, r.height || vh);
+        if (vis >= 0.4 || r.top <= vh * 0.5) { panel.classList.add('cs-in'); return true; }
+        return false;
+      };
+      const io = new IntersectionObserver(() => { if (check()) io.disconnect(); },
+        { threshold: [0, 0.2, 0.4, 0.6] });
+      io.observe(panel);
+      requestAnimationFrame(check);
+    });
+
+    /* ── Nav chiara/scura secondo il fondo sotto la pill ────── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const marks = [...document.querySelectorAll('[data-nav-theme]')];
+      let wasDark = null;
+      const sync = () => {
+        const probe = nav.getBoundingClientRect().bottom - 6;
+        let dark = true;   // hero, lavori, CTA e footer sono tutti scuri o fucsia
+        marks.forEach(m => {
+          const r = m.getBoundingClientRect();
+          if (r.top <= probe && r.bottom >= probe) dark = m.dataset.navTheme === 'dark';
+        });
+        if (dark !== wasDark) { wasDark = dark; nav.classList.toggle('nav--on-dark', dark); }
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', csBoot);
+  } else { csBoot(); }
+  </script>
   <!-- ══ FOOTER ══════════════════════════════════════════ -->
-  <footer class="site-footer" role="contentinfo">
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
     <div class="sf-ghost" aria-hidden="true">ESTRO</div>
     <div class="sf-inner">
       <div class="sf-cols">
@@ -1441,8 +2128,7 @@
             <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
             </a>
-      </div>
-    </div>
+          </div>
         </div>
 
       </div>

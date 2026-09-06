@@ -4390,9 +4390,38 @@
       const mine = PLACEHOLDER.filter((_, i) => i % COLS === c);
       // due copie: l'animazione scorre di metà traccia e riparte
       for (let copy = 0; copy < 2; copy++) mine.forEach(t => track.appendChild(card(t)));
+      track.dataset.set = String(mine.length);
       col.appendChild(track);
       host.appendChild(col);
     }
+
+    // ── Continuità delle colonne ─────────────────────────────
+    // L'animazione scorre di metà traccia e riparte, quindi la metà
+    // deve coprire da sola tutta l'altezza della colonna: con tre
+    // sole recensioni per colonna la mezza traccia misurava meno
+    // della colonna e, arrivata in fondo, l'elenco si interrompeva
+    // lasciando un vuoto. Qui si aggiungono coppie di copie finché
+    // la metà non basta — sempre a coppie, altrimenti il punto di
+    // ripartenza non coincide più.
+    const topUp = () => {
+      host.querySelectorAll('.wall__col').forEach(col => {
+        const track = col.querySelector('.wall__track');
+        // finché la colonna non è impaginata la sua altezza è 0 e
+        // il confronto direbbe sempre "basta così": si riprova dopo
+        if (!track || !col.clientHeight) return;
+        const set = [...track.children].slice(0, +track.dataset.set || 0);
+        if (!set.length) return;
+        let guard = 0;
+        while (track.scrollHeight / 2 < col.clientHeight + 80 && guard++ < 6) {
+          for (let copy = 0; copy < 2; copy++) {
+            set.forEach(node => track.appendChild(node.cloneNode(true)));
+          }
+        }
+      });
+    };
+    requestAnimationFrame(() => requestAnimationFrame(topUp));
+    addEventListener('load', topUp);
+    addEventListener('resize', topUp, { passive: true });
 
     // ── Trascinamento: ogni colonna per conto suo ────────────
     // Tre liste autonome, non un muro solo: il gesto vive sulla
