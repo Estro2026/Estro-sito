@@ -3268,6 +3268,68 @@
        può più ritagliare. La scritta ESTRO gigante resta contenuta:
        il ritaglio ce l'ha .sf-ghost per conto suo. */
     footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       SCROLL LIBERO (revisione): niente più sezioni agganciate.
+       Ogni sezione è alta quanto il suo pannello sticky, quindi la
+       corsa del pin è zero e la pagina scorre senza fermarsi. La
+       hero conserva uno zoom breve (55dvh invece di 145dvh).
+       ═══════════════════════════════════════════════════════════ */
+    .ht-pin--hero { --hero-zoom-run: 55dvh; }
+    @media (min-width: 769px) {
+      .about-section,
+      #amici-section,
+      #case-studies,
+      .tips-section,
+      .wall,
+      .page-faq,
+      .hc-section { height: 100dvh !important; }
+    }
+
+    /* Servizi: titolo mai tagliato (scala anche sull'altezza) e più
+       aria fra griglia e banda "I nostri partner". */
+    .svc-title { font-size: min(150px, 13vw, 12dvh); line-height: 1.1; }
+    .svc-inner { padding-top: calc(var(--nav-h, 4rem) + clamp(0.5rem, 1.4vh, 1.6rem)); }
+    .svc-header { padding-top: 0.15em; }
+    .svc-inner { padding-bottom: clamp(190px, 24vh, 240px); }
+    .partner-loader { bottom: clamp(20px, 3vh, 36px); }
+    @media (max-height: 820px) {
+      .svc-title { font-size: min(46px, 7vw); }
+      .svc-inner {
+        padding-top: calc(var(--nav-h, 4rem) + 1.7rem);
+        padding-bottom: 104px;
+      }
+      .partner-loader { bottom: 10px; }
+      .partner-loader .logo-ticker { transform: scale(0.72); transform-origin: left center; width: 139%; }
+      .svc-card__desc { --svc-desc-lh: 1.25; }
+    }
+
+    /* Più aria fra la CTA di Case Studies e Tips, e fra la CTA di
+       Tips e Passaparola: il pannello non è più alto esattamente una
+       schermata, cresce col contenuto e aggiunge respiro in fondo. */
+    @media (min-width: 769px) {
+      #case-studies,
+      .tips-section { height: auto !important; }
+      .cs2-sticky,
+      .tips-sticky {
+        position: relative !important;
+        height: auto !important;
+        min-height: 100dvh;
+      }
+      .cs2-sticky,
+      .tips-sticky { padding-bottom: clamp(120px, 16vh, 180px) !important; }
+    }
+
+    /* Hero: il claim sotto al titolo era bianco al 50% e sul video
+       si perdeva. Bianco pieno, con un'ombra leggera per staccarlo. */
+    .sr-content .vhero__sub {
+      color: #fff !important;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.55);
+    }
+
+    /* About: interlinea del body più compatta e leggibile */
+    .about-section__body { gap: 0.9rem; }
+    .about-section__body p { line-height: 1.6 !important; }
   </style>
 <script type="application/ld+json">
 {
@@ -3481,12 +3543,12 @@
                 SIAMO CURIOSI, AGILI E PRONTI A <em>COLPIRE!</em>
               </h2>
               <div class="about-section__body">
-                <p>Il nostro obiettivo è offrirti <strong>soluzioni innovative</strong> per raggiungere i <strong>tuoi obiettivi</strong>. Siamo specializzati nella <strong>creazione di campagne</strong> di vario tipo: devi aumentare l'<strong>awareness del tuo brand</strong>, creare <strong>strategie cross-channel innovative</strong> per vendere i tuoi prodotti, <strong>ingaggiare nuovi ambassador ed influencer</strong>?</p>
+                <p>Trasformiamo i brand in storie che le persone vogliono seguire. <strong>Strategia, contenuti e campagne cross-channel</strong> con un solo obiettivo: <strong>risultati concreti e misurabili</strong>.</p>
                 <p class="about-section__pull">Mettici alla prova!</p>
-                <p>Creiamo <strong>connessioni reali</strong> con i tuoi nuovi clienti attraverso progetti che lasciano il segno ottenendo <strong>risultati concreti e quantificabili</strong>, divertendoci nel farlo. Ogni nostro contenuto, che sia una foto, un video o una stories di 15 secondi nasce per <strong>coinvolgere le persone</strong>. Qui troverai innovazione, <strong>visione strategica, competenze progettuali e operative</strong>.</p>
+                <p>Awareness, vendite, influencer: qualunque sia la sfida, creiamo <strong>connessioni reali</strong> con i tuoi clienti. E ci divertiamo nel farlo.</p>
               </div>
               <div class="about-section__cta">
-                <a class="btn btn--primary" href="ESTRO_Visual identity_Corporate_V01 (5).pdf" target="_blank" rel="noopener">SCARICA LA BROCHURE</a>
+                <a class="btn btn--primary" href="Estro-offical-brochure-2023.pdf" download="Estro-offical-brochure-2023.pdf" target="_blank" rel="noopener">SCARICA LA BROCHURE</a>
               </div>
             </div>
 
@@ -4317,7 +4379,7 @@
       // Lo zoom occupa la prima parte della corsa; il resto è una
        // pausa a scena ferma, con testo e video già a destinazione.
       // Solo dopo la hero si sgancia e comincia a uscire.
-      const ZOOM_END = 0.58;
+      const ZOOM_END = 0.9;
       const zoom = clamp(pZoom / ZOOM_END, 0, 1);
       video.style.transform = `scale(${(SCALE_START - (SCALE_START - SCALE_END) * zoom).toFixed(4)})`;
       if (hint) hint.style.opacity = (1 - phase(zoom, 0.25, 0.75)).toFixed(3);
@@ -4413,7 +4475,9 @@
         : 0;
       window._partnerAccum = pL;
 
-      const BAR_MAX_H = Math.round(clamp(window.innerHeight * 0.115, 86, 108));
+      const BAR_MAX_H = window.innerHeight <= 820
+        ? 72
+        : Math.round(clamp(window.innerHeight * 0.115, 86, 108));
 
       // Pill sempre alla sua altezza finale — nessuna animazione di crescita
       pLoader.style.height = `${BAR_MAX_H}px`;
