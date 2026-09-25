@@ -72,11 +72,17 @@
       gap: clamp(0.7rem, 1.6vh, 1.5rem);
     }
     /* video showreel: 30% larghezza, 30px padding su tutti i lati */
+    /* Formato quadrato: in verticale il video restava stretto in una
+       colonna del 30%. Ora il lato è l'altezza disponibile, con un
+       tetto alla larghezza perché il testo a sinistra resti comodo. */
     .cs-hero__reel {
-      flex: 0 0 30%;
+      flex: 0 0 auto;
       padding: 0 30px 0 0;
       height: 100%;
+      aspect-ratio: 1 / 1;
+      max-width: 48%;
       box-sizing: border-box;
+      align-self: center;
     }
     .cs-hero__reel video {
       width: 100%;

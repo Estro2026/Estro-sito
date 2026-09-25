@@ -3304,6 +3304,29 @@
       .svc-card__desc { --svc-desc-lh: 1.25; }
     }
 
+    /* Più aria fra la CTA di Case Studies e Tips, e fra la CTA di
+       Tips e Passaparola: il pannello non è più alto esattamente una
+       schermata, cresce col contenuto e aggiunge respiro in fondo. */
+    @media (min-width: 769px) {
+      #case-studies,
+      .tips-section { height: auto !important; }
+      .cs2-sticky,
+      .tips-sticky {
+        position: relative !important;
+        height: auto !important;
+        min-height: 100dvh;
+      }
+      .cs2-sticky,
+      .tips-sticky { padding-bottom: clamp(120px, 16vh, 180px) !important; }
+    }
+
+    /* Hero: il claim sotto al titolo era bianco al 50% e sul video
+       si perdeva. Bianco pieno, con un'ombra leggera per staccarlo. */
+    .sr-content .vhero__sub {
+      color: #fff !important;
+      text-shadow: 0 1px 12px rgba(0,0,0,0.55);
+    }
+
     /* About: interlinea del body più compatta e leggibile */
     .about-section__body { gap: 0.9rem; }
     .about-section__body p { line-height: 1.6 !important; }
@@ -3520,12 +3543,12 @@
                 SIAMO CURIOSI, AGILI E PRONTI A <em>COLPIRE!</em>
               </h2>
               <div class="about-section__body">
-                <p>Il nostro obiettivo è offrirti <strong>soluzioni innovative</strong> per raggiungere i <strong>tuoi obiettivi</strong>. Siamo specializzati nella <strong>creazione di campagne</strong> di vario tipo: devi aumentare l'<strong>awareness del tuo brand</strong>, creare <strong>strategie cross-channel innovative</strong> per vendere i tuoi prodotti, <strong>ingaggiare nuovi ambassador ed influencer</strong>?</p>
+                <p>Trasformiamo i brand in storie che le persone vogliono seguire. <strong>Strategia, contenuti e campagne cross-channel</strong> con un solo obiettivo: <strong>risultati concreti e misurabili</strong>.</p>
                 <p class="about-section__pull">Mettici alla prova!</p>
-                <p>Creiamo <strong>connessioni reali</strong> con i tuoi nuovi clienti attraverso progetti che lasciano il segno ottenendo <strong>risultati concreti e quantificabili</strong>, divertendoci nel farlo. Ogni nostro contenuto, che sia una foto, un video o una stories di 15 secondi nasce per <strong>coinvolgere le persone</strong>. Qui troverai innovazione, <strong>visione strategica, competenze progettuali e operative</strong>.</p>
+                <p>Awareness, vendite, influencer: qualunque sia la sfida, creiamo <strong>connessioni reali</strong> con i tuoi clienti. E ci divertiamo nel farlo.</p>
               </div>
               <div class="about-section__cta">
-                <a class="btn btn--primary" href="brochure-estro.pdf" download="ESTRO-brochure.pdf" target="_blank" rel="noopener">SCARICA LA BROCHURE</a>
+                <a class="btn btn--primary" href="Estro-offical-brochure-2023.pdf" download="Estro-offical-brochure-2023.pdf" target="_blank" rel="noopener">SCARICA LA BROCHURE</a>
               </div>
             </div>
 
