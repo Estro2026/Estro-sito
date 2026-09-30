@@ -1,0 +1,245 @@
+/* ═══════════════════════════════════════════════════════════════
+   ESTRO — CORREZIONI RESPONSIVE (tutto il sito)
+   Caricato per ultimo su ogni pagina, dopo gli stili inline: qui
+   stanno solo le regole che servono perché nulla venga tagliato o
+   esca dallo schermo, a qualsiasi larghezza e zoom del browser.
+   Le regole sono per componente, quindi valgono su tutte le pagine
+   che lo usano.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ── 1. Le colonne non si allargano oltre lo schermo ────────────
+   Di default una colonna di griglia (o un figlio flex) non si
+   stringe sotto la sua parola più lunga: con i titoli a 90-150px la
+   colonna diventava più larga dello schermo e trascinava fuori
+   anche testi e form. Con min-width: 0 la colonna resta larga
+   quanto il suo spazio; i titoli li adatta js/responsive.js. */
+main :is(section, .container, [class*="__inner"], [class*="__grid"],
+         [class*="__header"], [class*="__head"], [class*="__content"],
+         [class*="__text"], [class*="__left"], [class*="__right"],
+         [class*="-sticky"], [class*="__sticky"]) > * {
+  min-width: 0;
+}
+main img, main video, main iframe { max-width: 100%; }
+
+/* ── 2. Testi lunghi: vanno a capo tra le parole, mai dentro ─────
+   Nessuna sillabazione e nessuna parola spezzata: se una parola non
+   entra, è il corpo del titolo a ridursi (js/responsive.js). */
+main :is(h1, h2, h3, h4, p, li, a, label) {
+  overflow-wrap: normal;
+  word-break: normal;
+  hyphens: manual;
+}
+
+/* ── 3. Tablet e smartphone ─────────────────────────────────── */
+@media (max-width: 900px) {
+  /* Sottotitoli delle timeline: erano forzati su una riga sola e
+     uscivano dallo schermo */
+  .smm-panel__statement-sub,
+  .svc-stat-video__desc--nowrap {
+    white-space: normal !important;
+  }
+
+  /* "Prendiamoci un caffè" (pagine Servizi): titolo sopra, form
+     sotto, a tutta larghezza */
+  .svc-caffe .container,
+  .svc-caffe .svc-generic-sticky > .container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: clamp(1.5rem, 6vw, 2.5rem) !important;
+  }
+  .svc-caffe__form {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Timeline a tappe: la barra scorre in orizzontale e non taglia
+     più in verticale le etichette delle tappe */
+  .svc-tabs__strip {
+    flex: 0 0 auto !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow-y: visible !important;
+    padding-bottom: 0.75rem !important;
+  }
+  .svc-tabs { min-height: 0 !important; }
+}
+
+/* ── 4. Griglie che su smartphone non passavano a una colonna ───
+   Influencer: "I talent pronti", statistica con video, nomi delle
+   collaborazioni; News: card dei risultati. */
+@media (max-width: 900px) {
+  .art-results__grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}
+@media (max-width: 700px) {
+  .svc-talent-pronti .container,
+  .svc-talent-pronti .svc-generic-sticky > .container {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+  .svc-stat-video__stat {
+    grid-template-columns: minmax(0, 1fr) !important;
+    row-gap: 0.5rem !important;
+  }
+  .svc-collab-grid__items { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+  .svc-collab-grid__name { white-space: normal !important; font-size: min(17.6px, 4.3vw) !important; }
+  .art-results__grid { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* ── 5. Case Studies: hero su smartphone ────────────────────────
+   Testo e video quadrato affiancati non stanno sotto i 760px: la
+   statistica finiva sotto il video. Qui testo sopra e video sotto,
+   a tutta larghezza; la hero cresce quanto serve. */
+@media (max-width: 760px) {
+  html body main > section.cs-hero {
+    height: auto !important;
+    min-height: 100svh !important;
+  }
+  html body main > section.cs-hero > .container.cs-hero__inner {
+    grid-template-columns: minmax(0, 1fr) !important;
+    row-gap: clamp(1.5rem, 6vw, 2.25rem) !important;
+    align-items: start !important;
+  }
+  .cs-hero__reel {
+    justify-self: stretch !important;
+    width: 100% !important;
+    max-width: 520px;
+    margin-inline: auto !important;
+  }
+  .cs-hero__stats { flex-wrap: wrap; row-gap: 1rem; }
+}
+
+/* ── 6. Home: i pannelli crescono col contenuto ─────────────────
+   About, Amici, FAQ e Contatti erano alti esattamente
+   una schermata e ritagliavano: su finestre basse o con lo zoom il
+   fondo del contenuto (paragrafi, CTA) veniva tagliato. Ora che
+   nessuna di queste sezioni blocca lo scroll, la schermata resta la
+   misura minima ma il pannello può crescere. Il Passaparola resta
+   escluso: le sue colonne scorrono e prendono l'altezza dal
+   pannello, che deve restare di una schermata. */
+html body .about-sticky,
+html body .amici-sticky,
+html body .page-faq__inner,
+html body .hc-inner {
+  height: auto !important;
+  min-height: 100dvh;
+}
+html body .about-sticky > .container,
+html body .about-sticky .about-section__grid {
+  height: auto !important;
+  min-height: 0 !important;
+}
+html body .about-sticky > .container {
+  min-height: 100dvh !important;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+  padding-block: calc(var(--nav-h, 88px) + 1rem) clamp(2rem, 5vh, 3.5rem) !important;
+}
+
+/* Passaparola: sotto i 640px di altezza il pannello perdeva
+   l'altezza fissa e le colonne che scorrono lo allungavano a
+   decine di migliaia di pixel. Resta di una schermata (con un
+   minimo), e le colonne scorrono dentro. */
+html body .wall-sticky {
+  height: max(100dvh, 560px) !important;
+  overflow: hidden !important;
+}
+
+/* ── 7. Home, Servizi su tablet e smartphone ────────────────────
+   Le 10 card restavano su 5 colonne anche a 375px: testi tagliati e
+   numeri sovrapposti. Qui 2 colonne (1 sotto i 420px), la scena
+   scorre come una sezione normale e, visto che sul touch non c'è
+   hover, categoria, titolo e descrizione sono subito visibili; la
+   card intera resta il link al servizio. */
+@media (max-width: 768px) {
+  .ht-pin--svc { height: auto !important; }
+  .ht-services {
+    position: relative !important;
+    height: auto !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+  }
+  .svc-inner {
+    padding-top: calc(var(--nav-h, 80px) + 1.5rem) !important;
+    padding-bottom: calc(clamp(86px, 11.5vh, 108px) + 2.5rem) !important;
+  }
+  .svc-cards-wrap { padding-inline: var(--gutter, 1.5rem) !important; }
+  .svc-cards-track {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.75rem !important;
+  }
+  .svc-card {
+    height: auto !important;
+    min-height: 0 !important;
+    border: 1px solid rgba(255,255,255,0.12) !important;
+    border-radius: 14px !important;
+    align-items: stretch !important;
+  }
+  .svc-card::before, .svc-card::after { display: none !important; }
+  .svc-card__inner {
+    transform: none !important;
+    padding: 2.6rem 0.95rem 1rem !important;
+  }
+  .svc-card__num { font-size: 1.6rem !important; top: 0.6rem !important; right: 0.7rem !important; }
+  .svc-card__tag { padding-right: 0 !important; }
+  .svc-card__title { height: auto !important; max-width: none !important; margin-bottom: 0.4rem !important; }
+  .svc-card__desc,
+  .svc-fx-real .svc-card__desc {
+    opacity: 1 !important;
+    height: auto !important;
+    font-size: 15px !important;
+    line-height: 1.45 !important;
+  }
+  .svc-card__go { display: none !important; }
+}
+@media (max-width: 420px) {
+  .svc-cards-track { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* ── 8. Home, Tips & Tricks su una colonna ──────────────────────
+   La card grande restava impostata su due righe della griglia
+   desktop e, in colonna singola, si riduceva a 12px. */
+@media (max-width: 900px) {
+  .tips-grid {
+    grid-template-rows: none !important;
+    grid-auto-rows: auto !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+  .tips-grid .tip-card--feature {
+    grid-row: auto !important;
+    grid-column: auto !important;
+    min-height: clamp(260px, 70vw, 420px) !important;
+  }
+  .tips-grid .tip-card { min-height: clamp(185px, 50vw, 300px); }
+}
+
+/* ── 9. FAQ: il testo sta sempre sopra il video di sfondo ───────
+   Su tablet e smartphone il pannello delle domande tornava
+   "static": il suo z-index non valeva più e il video nero di
+   sfondo (assoluto) gli veniva disegnato sopra, nascondendo titolo
+   e domande. */
+html body .page-faq__inner {
+  position: relative !important;
+  z-index: 3;
+}
+
+/* ── 10. FAQ: statistiche della hero ────────────────────────────
+   Tre numeri a 97px su una riga: su smartphone il terzo usciva
+   dallo schermo. Vanno a capo e il corpo scala con la larghezza. */
+@media (max-width: 700px) {
+  .faq-hero__stat { flex-wrap: wrap !important; row-gap: 1.25rem !important; }
+  .faq-hero__stat-num { font-size: min(97.5px, 17vw) !important; }
+}
+
+/* ── 11. Influencer, "I settori": griglia su smartphone ─────────
+   Sei colonne da 55px con etichette a 11px: i nomi lunghi
+   ("Elettronica di consumo") uscivano dallo schermo. */
+@media (max-width: 700px) {
+  .svc-settori__grid { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; row-gap: 1.25rem !important; }
+  .svc-settori__item span { white-space: normal !important; text-align: center; font-size: 12.5px !important; }
+}
+@media (max-width: 420px) {
+  .svc-settori__grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
+}

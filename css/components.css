@@ -14404,3 +14404,261 @@ html body main > section.lcn-hero .lcn-hero__stat {
 html body main > section.lcn-hero .lcn-hero__stat-num {
   font-size: min(150px, 26vw, 7.5vh) !important;
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   PAGINE SERVIZI — la timeline a tappe respira
+   Revisione cliente: il blocco tappe + riquadro era troppo
+   compatto, soprattutto in basso a destra, dove testo, elenco e CTA
+   si stringevano contro il bordo del riquadro — e il riquadro
+   stesso arrivava a filo del bordo destro della finestra, perche'
+   .container non ha padding a destra. Sotto, la sezione successiva
+   saliva a 36px dal fondo del riquadro.
+   Il pannello non e' piu' chiuso in una schermata fissa: cresce
+   quanto serve, quindi i respiri nuovi non possono mai spingere la
+   CTA fuori vista, e la sezione e' alta quanto il suo pannello —
+   nessuna corsa in cui lo scroll resta fermo.
+   ═══════════════════════════════════════════════════════════════ */
+html body main > section.svc-path,
+html body main > section.svc-hero + section.svc-path {
+  height: auto !important;
+}
+html body main > section.svc-path > .svc-path__sticky,
+html body main > section.svc-hero + section.svc-path > .svc-path__sticky {
+  height: auto !important;
+  min-height: 100dvh;
+  padding-bottom: clamp(5.5rem, 13vh, 9rem) !important;
+}
+html body main > section.svc-path > .svc-path__sticky > .container {
+  height: auto;
+  flex: 1 0 auto;
+  padding-inline-end: var(--gutter);
+}
+html body main > section.svc-path .svc-tabs__panel {
+  padding: clamp(1.5rem, 3vh, 2.5rem) !important;
+  gap: clamp(1.75rem, 3.2vw, 3.25rem) !important;
+}
+html body main > section.svc-path .svc-tabs__media {
+  min-height: clamp(260px, 36vh, 420px);
+}
+html body main > section.svc-path .svc-tabs__copy {
+  gap: clamp(1rem, 2vh, 1.5rem) !important;
+  padding: clamp(0.5rem, 1.5vh, 1.25rem) clamp(0.5rem, 2vw, 2rem) clamp(0.5rem, 1.5vh, 1.25rem) 0;
+}
+html body main > section.svc-path .svc-tabs__points {
+  gap: 0.65rem !important;
+}
+html body main > section.svc-path .svc-tabs__cta {
+  margin-top: clamp(0.5rem, 1.4vh, 1rem) !important;
+}
+/* Web design ha un pannello suo (#wd-stack): stessa regola, e la
+   corsa minima di 118dvh che lo teneva agganciato va via. */
+html body main > section#wd-stack {
+  min-height: 0 !important;
+}
+html body main > section#wd-stack > .svc-path__sticky {
+  padding-bottom: clamp(5.5rem, 13vh, 9rem) !important;
+}
+@media (max-width: 900px) {
+  html body main > section.svc-path > .svc-path__sticky,
+  html body main > section.svc-hero + section.svc-path > .svc-path__sticky,
+  html body main > section#wd-stack > .svc-path__sticky {
+    padding-bottom: clamp(3.5rem, 12vw, 5rem) !important;
+  }
+}
+
+/* Seconda passata (revisione cliente): la card resta ancora
+   compatta, soprattutto la colonna di testo a destra. Più margine
+   interno alla card, colonna testo staccata dalla foto e dal bordo,
+   misura di riga contenuta, respiri veri fra paragrafo, elenco e
+   CTA; e molto più stacco dalla sezione che segue. */
+html body main > section.svc-path .svc-tabs__panel,
+html body #wd-stack .svc-tabs__panel.wd-pan {
+  padding: clamp(1.75rem, 3.2vw, 3.25rem) !important;
+  gap: clamp(2.25rem, 4.5vw, 4.5rem) !important;
+}
+html body main > section.svc-path .svc-tabs__copy {
+  justify-content: center !important;
+  gap: clamp(1.25rem, 2.6vh, 2rem) !important;
+  padding: clamp(1rem, 2.4vh, 2rem) clamp(1rem, 3vw, 3rem) clamp(1rem, 2.4vh, 2rem) 0 !important;
+}
+html body main > section.svc-path .svc-tabs__text {
+  max-width: 48ch;
+  line-height: 1.7 !important;
+}
+html body main > section.svc-path .svc-tabs__points {
+  gap: 0.85rem !important;
+}
+html body main > section.svc-path .svc-tabs__cta {
+  margin-top: clamp(0.75rem, 2vh, 1.5rem) !important;
+}
+html body main > section.svc-path > .svc-path__sticky,
+html body main > section.svc-hero + section.svc-path > .svc-path__sticky,
+html body main > section#wd-stack > .svc-path__sticky {
+  padding-bottom: clamp(7rem, 17vh, 11rem) !important;
+}
+@media (max-width: 900px) {
+  html body main > section.svc-path .svc-tabs__copy {
+    padding: 0.5rem 0 0 !important;
+  }
+  html body main > section.svc-path > .svc-path__sticky,
+  html body main > section.svc-hero + section.svc-path > .svc-path__sticky,
+  html body main > section#wd-stack > .svc-path__sticky {
+    padding-bottom: clamp(4rem, 14vw, 6rem) !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════
+   TIMELINE A TAPPE — di nuovo in una schermata (revisione cliente)
+   La sezione deve stare tutta nella viewport, e dentro la card lo
+   spazio va dato il più possibile al testo a destra. Quindi:
+   · pannello alto esattamente una schermata, sezione alta quanto
+     lui (nessuna corsa: lo scroll non si ferma mai);
+   · respiri verticali tarati in vh, così si stringono con la
+     finestra invece di spingere la card fuori;
+   · la foto cede larghezza (40/60) e riempie in altezza quello
+     che resta; il testo prende la colonna larga, senza tetto di
+     misura, con margini laterali veri.
+   Queste regole sostituiscono le due passate precedenti qui sopra.
+   Sotto i 700px di altezza (o su schermi stretti) una schermata
+   non basta: il pannello torna a crescere col contenuto.
+   ═══════════════════════════════════════════════════════════════ */
+@media (min-width: 901px) and (min-height: 700px) {
+  html body main > section.svc-path > .svc-path__sticky,
+  html body main > section.svc-hero + section.svc-path > .svc-path__sticky,
+  html body main > section#wd-stack > .svc-path__sticky {
+    height: 100dvh !important;
+    min-height: 0 !important;
+    overflow: hidden !important;
+    padding-top: calc(var(--nav-h, 88px) + clamp(0.75rem, 2.4vh, 2rem)) !important;
+    padding-bottom: clamp(1.75rem, 5vh, 3.5rem) !important;
+  }
+  html body main > section.svc-path > .svc-path__sticky > .container,
+  html body main > section#wd-stack > .svc-path__sticky > .container {
+    height: 100% !important;
+    min-height: 0 !important;
+    flex: 1 1 auto !important;
+    display: flex;
+    flex-direction: column;
+  }
+  html body main > section.svc-path .svc-path__head {
+    margin-bottom: clamp(0.75rem, 2.2vh, 1.75rem) !important;
+  }
+  html body main > section.svc-path .svc-path__head .smm-panel__big-title {
+    font-size: min(60px, 9vw, 6.4vh) !important;
+  }
+  html body main > section.svc-path .svc-tabs {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 2vh, 1.5rem) !important;
+  }
+  html body main > section.svc-path .svc-tabs__panels {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+  }
+  html body main > section.svc-path .svc-tabs__panel,
+  html body #wd-stack .svc-tabs__panel.wd-pan {
+    height: 100% !important;
+    min-height: 0 !important;
+    grid-template-columns: minmax(0, 2fr) minmax(0, 3fr) !important;
+    padding: clamp(0.9rem, 2.2vh, 1.75rem) !important;
+    gap: clamp(1.5rem, 3vw, 3rem) !important;
+  }
+  html body main > section.svc-path .svc-tabs__media {
+    min-height: 0 !important;
+    height: 100% !important;
+    aspect-ratio: auto !important;
+  }
+  html body main > section.svc-path .svc-tabs__copy {
+    min-height: 0;
+    justify-content: center !important;
+    gap: clamp(0.6rem, 1.6vh, 1.25rem) !important;
+    padding: clamp(0.25rem, 1vh, 0.75rem) clamp(1rem, 2.5vw, 2.75rem) clamp(0.25rem, 1vh, 0.75rem) 0 !important;
+  }
+  html body main > section.svc-path .svc-tabs__text {
+    max-width: none !important;
+    line-height: 1.6 !important;
+  }
+  html body main > section.svc-path .svc-tabs__points {
+    gap: clamp(0.3rem, 0.9vh, 0.7rem) !important;
+  }
+  html body main > section.svc-path .svc-tabs__cta {
+    margin-top: clamp(0.25rem, 1vh, 0.75rem) !important;
+  }
+}
+@media (min-width: 901px) and (min-height: 700px) {
+  /* più spazio al testo: la foto scende a un terzo della card */
+  html body main > section.svc-path .svc-tabs__panel,
+  html body #wd-stack .svc-tabs__panel.wd-pan {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 2fr) !important;
+  }
+  html body main > section.svc-path .svc-path__head .smm-panel__big-title {
+    font-size: min(60px, 9vw, 5.6vh) !important;
+  }
+  html body main > section.svc-path .svc-tabs__tab {
+    gap: clamp(0.4rem, 1.1vh, 0.85rem) !important;
+  }
+}
+/* Rete di sicurezza: se in una sezione anche una sola card non sta
+   nella schermata (lo misura js/main.js e aggiunge la classe), quella
+   sezione torna a crescere col contenuto invece di tagliare il testo
+   o la CTA. Oggi succede solo con finestre basse su Web design, che
+   ha un paragrafo in più nelle card. */
+html body main > section.svc-path.svc-path--grow > .svc-path__sticky {
+  height: auto !important;
+  min-height: 100dvh !important;
+  overflow: visible !important;
+}
+html body main > section.svc-path.svc-path--grow .svc-tabs__panel,
+html body main > section.svc-path.svc-path--grow .svc-tabs__panel.wd-pan {
+  height: auto !important;
+}
+html body main > section.svc-path.svc-path--grow .svc-tabs__media {
+  min-height: clamp(240px, 34vh, 380px) !important;
+}
+html body main > section#wd-stack.svc-path--grow > .svc-path__sticky {
+  height: auto !important;
+  min-height: 100dvh !important;
+  overflow: visible !important;
+}
+html body main > section#wd-stack.svc-path--grow > .svc-path__sticky > .container {
+  height: auto !important;
+}
+html body #wd-stack.svc-path--grow .svc-tabs__panel.wd-pan {
+  height: auto !important;
+}
+/* Web design: le card hanno un paragrafo in più. L'elenco — sei
+   voci brevi — passa a tre colonne e torna al suo interlinea
+   stretto, così la card sta in una schermata anche a 900px. */
+@media (min-width: 1100px) and (min-height: 700px) {
+  html body main > section#wd-stack .wd-tabs__list.svc-tabs__points {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    row-gap: 0.3rem !important;
+    column-gap: clamp(0.9rem, 1.6vw, 1.5rem) !important;
+  }
+  html body main > section#wd-stack .wd-tabs__copy {
+    gap: clamp(0.5rem, 1.2vh, 0.9rem) !important;
+  }
+}
+html body main > section.svc-path.svc-path--grow .svc-tabs__panel {
+  min-height: var(--svc-panel-min, 0) !important;
+}
+html body #wd-stack.svc-path--grow .svc-tabs__panel.wd-pan {
+  min-height: var(--svc-panel-min, 0) !important;
+}
+/* la barra delle tappe non cede altezza: è la card sotto a stringersi */
+html body main > section.svc-path .svc-tabs__strip {
+  flex: 0 0 auto !important;
+  overflow-y: hidden !important;
+}
+/* la variante "dopo la hero" ha un selettore più specifico: la
+   crescita deve valere anche lì */
+html body main > section.svc-hero + section.svc-path.svc-path--grow > .svc-path__sticky {
+  height: auto !important;
+  min-height: 100dvh !important;
+  overflow: visible !important;
+}
+html body main > section.svc-hero + section.svc-path.svc-path--grow > .svc-path__sticky > .container {
+  height: auto !important;
+}

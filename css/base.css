@@ -100,6 +100,13 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  /* Su mobile il ritaglio messo solo sul body non basta: il browser
+     lo sposta sulla finestra e allarga comunque la pagina fino alla
+     fine dei nastri che scorrono (loghi, ticker), rimpicciolendo
+     tutto. Con html a hidden e body a clip la pagina resta larga
+     quanto lo schermo, e la finestra resta l'unico scroll: le
+     sezioni agganciate (sticky) continuano a funzionare. */
+  overflow-x: hidden;
 }
 
 body {
@@ -108,7 +115,7 @@ body {
   font-family: var(--font-secondary);
   font-size: var(--text-base);
   line-height: 1.6;
-  overflow-x: hidden;
+  overflow-x: clip;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 

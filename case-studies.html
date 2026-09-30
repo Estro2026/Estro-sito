@@ -72,12 +72,37 @@
       gap: clamp(0.7rem, 1.6vh, 1.5rem);
     }
     /* video showreel: 30% larghezza, 30px padding su tutti i lati */
+    /* Formato quadrato: in verticale la colonna era stretta e il
+       reel ne usciva sacrificato. Il lato è il più piccolo fra il
+       46% della riga e l'altezza utile della hero (viewport meno
+       respiro sopra e banda fucsia sotto), così il quadrato non
+       sfora mai e non schiaccia la colonna del testo. Il video è
+       9:16: object-fit cover lo ritaglia al centro senza deformarlo. */
     .cs-hero__reel {
-      flex: 0 0 30%;
-      padding: 0 30px 0 0;
-      height: 100%;
+      align-self: center;
+      justify-self: end;
+      width: min(46vw, 640px, calc(100dvh - clamp(92px, 12vh, 110px) - var(--cs-ticker-h, 96px) - 30px));
+      aspect-ratio: 1 / 1;
+      height: auto;
+      margin: 0;
       box-sizing: border-box;
     }
+    /* Griglia a due colonne invece del flex: il testo ha la sua
+       colonna e il quadrato la sua, separate da uno stacco fisso,
+       quindi nessuno dei due può più finire sopra l'altro. Il
+       quadrato chiude a filo del bordo destro della colonna da
+       1400px, lo stesso filo del contenuto sotto la hero, ed è
+       centrato in verticale sul blocco di testo. */
+    html body main > section.cs-hero > .container.cs-hero__inner {
+      display: grid !important;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      column-gap: clamp(2rem, 4vw, 4.5rem);
+    }
+    /* Il titolo scala con la colonna, non con la finestra intera: a
+       10rem "STUDIES" usciva dalla sua colonna sugli schermi larghi
+       e passava sotto il video. */
+    .cs-hero .cs-hero__title { font-size: clamp(3.4rem, 7.2vw, 8.5rem); }
     .cs-hero__reel video {
       width: 100%;
       height: 100%;
@@ -1221,6 +1246,7 @@
     .cs-cta .btn--cta { opacity: 1 !important; transform: none; }
     .cs-cta__title .tl { opacity: 1; transform: none; }
   </style>
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
 
@@ -2178,6 +2204,7 @@
     </div>
   </footer>
 
+  <script src="js/responsive.js"></script>
 </body>
 </html>
 

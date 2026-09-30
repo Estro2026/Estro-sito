@@ -571,3 +571,53 @@ if (!window.__STATIC_CAPTURE__ &&
   });
 }());
 
+
+/* ── Timeline a tappe (pagine Servizi): la card sta in una schermata?
+   Il CSS tiene la sezione alta esattamente una viewport. Qui si
+   controllano TUTTE le card della sezione, non solo quella aperta:
+   se anche una sola ha il testo che sfora, la sezione passa a
+   .svc-path--grow e cresce col contenuto, così cambiando tappa
+   l'altezza non salta e nulla viene tagliato. */
+(function () {
+  const secs = document.querySelectorAll('main > section.svc-path');
+  if (!secs.length) return;
+  function check() {
+    secs.forEach(function (s) {
+      s.classList.remove('svc-path--grow');
+      const panels = s.querySelectorAll('.svc-tabs__panel');
+      let over = false;
+      panels.forEach(function (p) {
+        if (over) return;
+        const was = p.hidden;
+        p.hidden = false;
+        const c = p.querySelector('.svc-tabs__copy');
+        if (c && c.scrollHeight - c.clientHeight > 2) over = true;
+        // anche la sezione intera: titolo + tappe + card devono stare
+        // nella schermata, altrimenti la CTA in fondo viene tagliata
+        const st = s.querySelector('.svc-path__sticky');
+        if (st && st.scrollHeight - st.clientHeight > 2) over = true;
+        p.hidden = was;
+      });
+      s.classList.toggle('svc-path--grow', over);
+      // In crescita le card si pareggiano sulla più alta: cambiando
+      // tappa la sezione non si allunga e non si accorcia.
+      s.style.removeProperty('--svc-panel-min');
+      if (over) {
+        let max = 0;
+        panels.forEach(function (p) {
+          const was = p.hidden;
+          p.hidden = false;
+          max = Math.max(max, p.getBoundingClientRect().height);
+          p.hidden = was;
+        });
+        s.style.setProperty('--svc-panel-min', Math.ceil(max) + 'px');
+      }
+    });
+  }
+  let t = 0;
+  const later = function () { clearTimeout(t); t = setTimeout(check, 150); };
+  if (document.readyState === 'complete') check();
+  else addEventListener('load', check);
+  addEventListener('resize', later, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
+}());
