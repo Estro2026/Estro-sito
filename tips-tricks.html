@@ -812,9 +812,32 @@
     @media (prefers-reduced-motion: reduce) {
       html.js-reveal .sx-rise { transform: none; }
     }
+  
+/* ═══════════════════════════════════════════════════════════
+   TITOLI: niente effetto acqua, solo un fade/reveal standard.
+   Spegne filtri di rifrazione e maschere scritti dagli script
+   delle pagine; il reveal lo gestisce lo script "Titoli" in fondo alla pagina.
+   ═══════════════════════════════════════════════════════════ */
+.tr-title,
+.tr-title .svc-letter {
+  filter: none !important;
+  -webkit-mask-image: none !important;
+          mask-image: none !important;
+}
+.tr-title.tr-hide {
+  opacity: 0 !important;
+  translate: 0 24px;
+}
+.tr-title.tr-ready {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              translate 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tr-title.tr-hide { opacity: 1 !important; translate: none; }
+}
+.static-capture .tr-title.tr-hide { opacity: 1 !important; translate: none; }
   </style>
   <link rel="stylesheet" href="css/responsive.css" />
-  <link rel="stylesheet" href="css/titoli-reveal.css" />
 </head>
 <body>
 
@@ -1425,6 +1448,47 @@
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', tipsBoot);
   } else { tipsBoot(); }
+  
+// ── Titoli: fade/reveal standard al posto dell'effetto acqua ──
+// I titoli che prima "ondeggiavano" ora entrano con una semplice
+// dissolvenza dal basso quando arrivano in vista.
+(function run() {
+  if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', run); return; }
+  var SEL = [
+    '.vhero__title', '#svcHeader .svc-title', '.about-section__big', '[data-rv="title"]',
+    '#amici-title', '#cs2-title', '#tipsTitle', '#wall-title', '#faqTitle', '#contattiTitle',
+    '.svc-hero__title', '.smm-panel__big-title', '.svc-clients__title', '.svc-magic__title',
+    '.svc-caffe__title', '.page-faq__title', '.svc-section-title', '.svc-tools__title',
+    '.svc-channels__title', '.svc-process__title', '.svc-ai-approccio__title',
+    '.svc-ai-workflow__title', '.svc-talent-pronti__title', '.imk-intro__title',
+    '.cs-hero__title', '.cs-works__title', '.cs-cta__title', '.cs2-hero__title',
+    '.cs2-contact__title', '.art-hero__title', '.art-contact__title', '.tt-hero__title',
+    '.tt-contact__title', '.lcn-hero__title', '.lcn-positions__heading', '#lcnApplyTitle',
+    '#ctTitle', '#ctHubTitle', '#faqHeroTitle', '#faqContactTitle', '#nwHeroTitle',
+    '#nwContactTitle', '.sf-ghost'
+  ].join(',');
+  var els = document.querySelectorAll(SEL);
+  if (!els.length) return;
+  var still = window.__STATIC_CAPTURE__ || !('IntersectionObserver' in window);
+  els.forEach(function (el) {
+    el.classList.add('tr-title');
+    if (!still) el.classList.add('tr-hide');
+  });
+  if (still) return;
+  // la transizione si accende dopo il primo frame, così lo stato
+  // nascosto iniziale non viene animato
+  requestAnimationFrame(function () {
+    els.forEach(function (el) { el.classList.add('tr-ready'); });
+    var io = new IntersectionObserver(function (es) {
+      es.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        e.target.classList.remove('tr-hide');
+        io.unobserve(e.target);
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -8% 0px' });
+    els.forEach(function (el) { io.observe(el); });
+  });
+}());
   </script>
       <!-- ══ FOOTER ══════════════════════════════════════════ -->
   <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
@@ -1515,7 +1579,6 @@
   </footer>
 
   <script src="js/responsive.js"></script>
-  <script src="js/titoli-reveal.js"></script>
 </body>
 </html>
 
