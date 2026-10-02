@@ -324,7 +324,8 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      /* cover: il video riempie la sezione come nelle altre sezioni nere */
+      object-fit: cover;
       object-position: center;
       /* Il fucsia ESTRO entra fra i colori della forma: la banda
          calda del video viene portata sulla tinta di brand (#DB005A,
@@ -835,7 +836,7 @@
     /* Riempimento grigio pieno */
     .svc-letter {
       display: inline-block;
-      color: rgba(255,255,255,0.16);
+      color: rgba(255,255,255,0.32);
       -webkit-text-stroke: 0;
     }
     /* Correzione di crenatura solo fra la V e la I: la diagonale
@@ -1245,7 +1246,7 @@
       font-size: clamp(2.05rem, 2.333vw + 0.3rem, 2.4rem);
       font-weight: 900;
       line-height: 1;
-      color: rgba(255,255,255,0.45);
+      color: rgba(255,255,255,0.32);
       font-family: var(--font-primary,'Helvetica Neue',sans-serif);
       z-index: 2;
       user-select: none;
@@ -3387,6 +3388,15 @@
       width: 100%; height: 100%;
       object-fit: cover;
     }
+    /* leggero coloring rosa Estro sulle foto dell'anello */
+    .sr-reel__card::before {
+      content: '';
+      position: absolute; inset: 0;
+      z-index: 1;
+      background: rgba(219,0,90,0.18);
+      mix-blend-mode: color;
+      pointer-events: none;
+    }
     /* Il retro delle foto (la metà lontana dell'anello) resta
        visibile ma velato: si legge la profondità dell'anello. */
     .sr-reel__card::after {
@@ -3456,7 +3466,7 @@
       padding-bottom: calc(clamp(86px, 11.5vh, 108px) + clamp(12px, 1.6vh, 20px)
                            + clamp(4.5rem, 13vh, 8rem)) !important;
     }
-    .partner-loader { bottom: clamp(12px, 1.6vh, 20px) !important; }
+    .partner-loader { bottom: clamp(32px, 6.5vh, 70px) !important; }
     /* ── Servizi in una schermata, con aria sopra la banda ───────
        Scena alta esattamente una viewport, senza corsa (lo scroll
        non si ferma). Lo spazio per lo stacco dalla banda partner
@@ -3468,7 +3478,7 @@
     .ht-pin--svc { height: 100dvh !important; }
     @media (min-width: 769px) {
       .svc-card {
-        height: var(--svc-card-h, clamp(158px, 22.5vh, 205px)) !important;
+        height: var(--svc-card-h, 120px) !important;
         min-height: 0 !important;
         overflow: hidden !important;
       }
@@ -3489,7 +3499,15 @@
         padding-right: clamp(0.85rem, 1.2vw, 1.2rem) !important;
       }
       .svc-card .svc-card__tag { padding-right: clamp(2.9rem, 3.2vw + 0.6rem, 3.8rem) !important; }
-      .svc-card:hover .svc-card__inner { padding-top: 0.55rem !important; }
+      .svc-card:hover .svc-card__inner { padding-top: 0.95rem !important; }
+      /* Card compatte: il testo sta in alto, allineato al numero a
+         riposo e alla freccia in hover; la card è alta quanto il
+         contenuto dell'hover (vedi "Altezza card"). */
+      .svc-card { align-items: flex-start !important; }
+      .svc-card .svc-card__inner {
+        transform: none !important;
+        padding-top: 0.95rem !important;
+      }
       .svc-card .svc-card__title { margin-bottom: 0.2rem !important; }
       .svc-card .svc-card__num { transition: opacity 0.3s ease, transform 0.45s cubic-bezier(0.16,1,0.3,1) !important; }
       .svc-card:hover .svc-card__num,
@@ -3570,7 +3588,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Che tipo di agenzia e ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
+    { "@type": "Question", "name": "Che tipo di agenzia è ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
     { "@type": "Question", "name": "Quali servizi offre ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI." } },
     { "@type": "Question", "name": "Con che tipo di clienti lavora ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro." } },
     { "@type": "Question", "name": "Come si inizia a lavorare con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta piu adatta." } },
@@ -3580,6 +3598,7 @@
 }
 </script>
   <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/titoli-reveal.css" />
 </head>
 <body>
 <!-- Filtro SVG per rimuovere lo sfondo bianco dal video gatto -->
@@ -3822,8 +3841,8 @@
 
             <div class="about-section__video-col">
               <video class="about-section__cat" autoplay loop muted playsinline preload="auto" aria-hidden="true">
-                <source src="foto%20home/Asto1.webm" type="video/webm" />
-                <source src="foto%20home/Astro.mp4" type="video/mp4" />
+                <source src="foto%20home/gattoabout.webm" type="video/webm" />
+                <source src="foto%20home/gattoabout.mp4" type="video/mp4" />
               </video>
             </div>
 
@@ -4187,7 +4206,7 @@
         <h2 class="page-faq__title" id="faqTitle">FAQ</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia e ESTRO?</button>
+            <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia è ESTRO?</button>
             <div class="page-faq__answer"><div class="page-faq__answer-inner">ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online.</div></div>
           </div>
           <div class="page-faq__item">
@@ -5066,7 +5085,7 @@
           const d = inn.querySelector('.svc-card__desc');
           const cs = getComputedStyle(inn);
           d.style.height = 'auto';
-          let n = 8.8 + parseFloat(cs.paddingBottom);          // padding alto in hover: 0.55rem
+          let n = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);
           [...inn.children].forEach(k => {
             if (k.classList.contains('svc-fx-ghost')) return;
             const src = k.classList.contains('svc-fx-real') ? [...k.children] : [k];
@@ -6429,6 +6448,7 @@
   }());
   </script>
   <script src="js/responsive.js"></script>
+  <script src="js/titoli-reveal.js"></script>
 </body>
 </html>
 

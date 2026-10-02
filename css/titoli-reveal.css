@@ -1,0 +1,23 @@
+/* ═══════════════════════════════════════════════════════════
+   TITOLI: niente effetto acqua, solo un fade/reveal standard.
+   Spegne filtri di rifrazione e maschere scritti dagli script
+   delle pagine; il reveal lo gestisce js/titoli-reveal.js.
+   ═══════════════════════════════════════════════════════════ */
+.tr-title,
+.tr-title .svc-letter {
+  filter: none !important;
+  -webkit-mask-image: none !important;
+          mask-image: none !important;
+}
+.tr-title.tr-hide {
+  opacity: 0 !important;
+  translate: 0 24px;
+}
+.tr-title.tr-ready {
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+              translate 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (prefers-reduced-motion: reduce) {
+  .tr-title.tr-hide { opacity: 1 !important; translate: none; }
+}
+.static-capture .tr-title.tr-hide { opacity: 1 !important; translate: none; }
