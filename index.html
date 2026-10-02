@@ -19,6 +19,8 @@
        blocco (display=block) resta impercettibile. Stessa URL
        dell'@import: una sola richiesta. -->
   <link href="https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=block" rel="stylesheet">
+  <!-- font futuristici per il cambio font di FORMA nella hero (solo i glifi FORMA) -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&family=Audiowide&family=Michroma&family=Syncopate:wght@700&family=Tektur:wght@900&family=Exo+2:wght@900&text=FORMA&display=block" rel="stylesheet">
   <script>
     /* Modalità static/capture: ?static=1 (o ?capture=1).
        Va applicata prima del CSS e prima di qualunque animazione,
@@ -324,8 +326,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6);
       /* Il fucsia ESTRO entra fra i colori della forma: la banda
          calda del video viene portata sulla tinta di brand (#DB005A,
          hue ~336°) ruotando la crominanza di -54°. Il filtro agisce
@@ -664,6 +667,13 @@
       padding: 0 clamp(1.5rem, 5vw, 5rem);
       box-sizing: border-box; z-index: 2;
     }
+    /* schermi bassi / zoomati: il titolo resta staccato dal menu */
+    @media (max-height: 820px) {
+      .sr-content {
+        padding-top: calc(var(--nav-h, 5.5rem) + clamp(1.5rem, 6vh, 3rem));
+        padding-bottom: clamp(1rem, 4vh, 2rem);
+      }
+    }
     .sr-scroll-hint {
       position: absolute; bottom: 2.5rem; left: 50%;
       transform: translateX(-50%); z-index: 3;
@@ -854,13 +864,41 @@
               mask-image: var(--tt-mask, none);
       -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     }
-    .svc-header.tt-run .svc-title { filter: url(#svcTitleFx); }
+    .svc-header.tt-run .svc-title { filter: none; }
     /* Uscita del titolo hero: stessa coppia maschera + rifrazione
        dell'ingresso, con il fronte che dissolve invece di comporre.
        Filtro separato da quello d'ingresso perché i due hanno scale
        indipendenti. Il titolo SERVIZI non ha uscita: una volta
        composto resta in scena. */
-    html.js-reveal .vhero__title.ttl-out { filter: url(#ttlOutFx); }
+    html.js-reveal .vhero__title.ttl-out { filter: none; }
+    /* ── Titoli: fade/reveal standard al posto dell'acqua ─────────
+       Nascosti finché non entrano in scena, poi salgono e compaiono
+       con la stessa curva del reveal [data-rv]. Nessun lampo: lo
+       stato iniziale c'è già dal primo paint. */
+    html.js-reveal :is(#vhero-title, #amici-title, #cs2-title, #tipsTitle,
+      #wall-title, #faqTitle, #contattiTitle, [data-rv="title"], .sf-ghost) {
+      opacity: 0;
+    }
+    html.js-reveal :is(#vhero-title, #amici-title, #cs2-title, #tipsTitle,
+      #wall-title, #faqTitle, #contattiTitle, [data-rv="title"], .sf-ghost).ttl-in {
+      opacity: 1;
+      animation: ttlIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+    /* components.css forza opacity:1 !important sul titolo amici */
+    html.js-reveal #amici-title { opacity: 0 !important; transition: opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+    html.js-reveal #amici-title.ttl-in,
+    html.static-capture #amici-title { opacity: 1 !important; }
+    @media (prefers-reduced-motion: reduce) { html.js-reveal #amici-title { opacity: 1 !important; } }
+    @keyframes ttlIn {
+      from { opacity: 0; translate: 0 24px; }
+      to   { opacity: 1; translate: 0 0; }
+    }
+    .static-capture :is(#vhero-title, #amici-title, #cs2-title, #tipsTitle,
+      #wall-title, #faqTitle, #contattiTitle, [data-rv="title"], .sf-ghost) { opacity: 1 !important; }
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal :is(#vhero-title, #amici-title, #cs2-title, #tipsTitle,
+        #wall-title, #faqTitle, #contattiTitle, [data-rv="title"], .sf-ghost) { opacity: 1; animation: none; }
+    }
     /* Nessun transform sulle lettere: l'unico effetto sul titolo è la
        rifrazione del filtro. Il vecchio assestamento per lettera
        (spostamento + scala) è stato rimosso perché si sommava
@@ -1217,7 +1255,7 @@
     /* Distorsione liquida applicata solo mentre il fronte passa */
     .svc-card.fx-run .svc-card__inner,
     .svc-card.fx-run .svc-card__num {
-      filter: url(#svcWaterFx) blur(var(--fx-b, 0px));
+      filter: none; /* niente acqua: solo il fronte che rivela il fucsia */
     }
     .svc-card.fx-run .svc-fx-real,
     .svc-card.fx-run .svc-fx-ghost {
@@ -2389,6 +2427,20 @@
       text-transform: uppercase;
     }
     .wall__name { font-weight: 700; color: #0b0b0b; }
+    /* nome e ruolo non si spezzano: se non c'è spazio il ruolo
+       scende intero alla riga sotto */
+    .wall__by { flex-wrap: wrap; row-gap: 0.15rem; }
+    .wall__name, .wall__role { white-space: nowrap; }
+    /* punto fucsia ESTRO prima del nome */
+    .wall__name::before {
+      content: '';
+      display: inline-block;
+      width: 0.5em; height: 0.5em;
+      margin-right: 0.5em;
+      border-radius: 50%;
+      background: #DB005A;
+      vertical-align: 0.08em;
+    }
     .wall__role { color: rgba(0,0,0,0.45); }
     @media (max-width: 900px) {
       .wall__cols { grid-template-columns: repeat(2, 1fr); }
@@ -2693,7 +2745,7 @@
       -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat;
     }
     html.js-reveal [data-rv="title"].ttl-run,
-    html.js-reveal [data-rv-hero].ttl-run { filter: url(#ttlWaterFx); }
+    html.js-reveal [data-rv-hero].ttl-run { filter: none; }
     /* Titolo hero: stesso trattamento, senza stato iniziale in CSS */
     html.js-reveal [data-rv-hero] {
       -webkit-mask-image: var(--ttl-mask, none);
@@ -3382,6 +3434,14 @@
         0 0 24px rgba(219,0,90,0.35);
       background: #1a0516;
     }
+    /* leggero coloring rosa ESTRO sulle card dell'anello */
+    .sr-reel__card::before {
+      content: '';
+      position: absolute; inset: 0;
+      z-index: 1;
+      background: rgba(219,0,90,0.2);
+      pointer-events: none;
+    }
     .sr-reel__card img {
       display: block;
       width: 100%; height: 100%;
@@ -3451,6 +3511,7 @@
     .svc-cards-wrap { margin-top: clamp(0.4rem, 1.4vh, 1.6rem) !important; }
     .svc-card { min-height: clamp(118px, 19dvh, 205px) !important; }
     .svc-inner {
+      justify-content: flex-start !important; /* fallback Safari: "safe" non supportato */
       justify-content: safe flex-start !important;
       padding-top: calc(var(--nav-h, 4rem) + clamp(0.4rem, 2vh, 2.4rem)) !important;
       padding-bottom: calc(clamp(86px, 11.5vh, 108px) + clamp(12px, 1.6vh, 20px)
@@ -3515,15 +3576,102 @@
       .svc-card:focus-visible .svc-card__go { opacity: 1; transform: none; }
       .svc-card:focus-visible { outline: 2px solid var(--primary, #DB005A); outline-offset: -2px; }
       .svc-inner {
+        justify-content: center !important; /* fallback Safari: "safe" non supportato */
         justify-content: safe center !important;
       }
+    }
+    /* ── Servizi: card compatte ──────────────────────────────────
+       A riposo il testo sta in alto, allineato al numero; in hover
+       resta in alto allineato alla freccia. L'altezza è solo quella
+       che serve al testo in hover. La banda loghi sale di conseguenza. */
+    @media (min-width: 769px) {
+      /* a riposo alta quanto tag + titolo; in hover si espande per la
+         descrizione e spinge giù la riga sotto (nessuna sovrapposizione) */
+      .svc-card { height: auto !important; min-height: 0 !important; }
+      /* testo sempre in alto: se la riga cambia altezza non si muove */
+      .svc-card { align-items: flex-start !important; position: relative; }
+      /* la card in hover cresce dentro lo stacco fra le righe: il
+         margine negativo pari alla crescita tiene ferma la griglia,
+         le altre card non si spostano */
+      .svc-card:hover,
+      .svc-card:focus-visible { margin-bottom: calc(-1 * var(--grow, 0px)); z-index: 5; }
+      /* respiro fra le due file + spazio per l'espansione */
+      .svc-cards-track { row-gap: calc(var(--svc-extra, 0px) + 1.5rem) !important; }
+      /* schermi bassi/zoomati: file vicine, in hover la fila sotto scende */
+      .svc-cards-track.svc-push { row-gap: 1.5rem !important; }
+      .svc-cards-track.svc-push .svc-card:hover,
+      .svc-cards-track.svc-push .svc-card:focus-visible { margin-bottom: 0; }
+      /* il titolo prende le righe che servono (niente altezza fissa a
+         2 righe che, a colonne strette, nascondeva il resto) */
+      .svc-card .svc-card__title { height: auto !important; }
+      /* il titolo non va sotto il numero */
+      .svc-card .svc-card__title { padding-right: clamp(2.9rem, 3.2vw + 0.6rem, 3.8rem) !important; }
+      /* blocco in alto (sotto la nav): la banda loghi può salire */
+      .svc-inner { justify-content: flex-start !important; justify-content: safe flex-start !important; }
+      .svc-card .svc-card__desc { height: 0 !important; overflow: hidden !important; }
+      .svc-card:hover .svc-card__desc,
+      .svc-card:focus-visible .svc-card__desc { height: auto !important; }
+      .svc-card .svc-card__inner,
+      .svc-card:hover .svc-card__inner { transform: none !important; }
+      /* tag centrato sulla riga del numero; in hover stessa posizione */
+      .svc-card .svc-card__inner,
+      .svc-card:hover .svc-card__inner {
+        padding-top: calc(0.4rem + 0.47 * clamp(2.05rem, 2.333vw + 0.3rem, 2.4rem) - 20px) !important;
+      }
+      .svc-card:hover .svc-card__num,
+      .svc-card:focus-visible .svc-card__num { transform: none !important; }
+      /* ritmo verticale: stesso stacco titolo→card e card→banda */
+      .svc-cards-wrap { margin-top: var(--space-12, 3rem) !important; }
+      .partner-loader { bottom: var(--space-16, 4rem) !important; }
+      .svc-inner {
+        padding-bottom: calc(clamp(86px, 11.5vh, 108px) + var(--space-16, 4rem)
+                             + var(--space-12, 3rem)) !important;
+      }
+    }
+    /* colonne strette (finestre piccole / zoom): spaziatura del tag
+       ridotta, così non arriva sotto il numero */
+    @media (min-width: 769px) and (max-width: 1280px) {
+      .svc-card .svc-card__tag {
+        letter-spacing: 0.08em !important;
+        /* il tag occupa la fascia del numero: il titolo parte sotto
+           il numero e usa tutta la larghezza della card */
+        display: block;
+        min-height: calc(0.53 * clamp(2.05rem, 2.333vw + 0.3rem, 2.4rem) + 24px);
+      }
+      .svc-card .svc-card__title { padding-right: 0 !important; }
+    }
+    /* Titolo SERVIZI e numeri: colore originale, alleggeriti solo
+       con l'opacità */
+    .svc-letter { opacity: 0.75; }
+    .svc-card__num { opacity: 0.75; }
+    /* ── About: video senza riquadro ─────────────────────────────
+       Video WebM con canale alfa: fondo trasparente vero,
+       il soggetto non viene tagliato e la colonna non copre la T. */
+    .about-sticky .about-section__video-col {
+      overflow: visible !important;
+      border-radius: 0 !important;
+      background: transparent !important;
+      height: clamp(330px, 72vh, 750px) !important;
+      mix-blend-mode: normal !important;
+    }
+    .about-sticky .about-section__cat {
+      object-fit: contain !important;
+      object-position: center !important;
+      mix-blend-mode: normal !important;
+      background: transparent !important;
+      /* la colonna sborda a destra di quanto vale il gap (4vw):
+         il video resta dentro lo schermo, soggetto intero */
+      right: auto !important;
+      width: calc(100% - 4vw) !important;
+      scale: 1.18; /* un po' più grande */
     }
     /* Quando le card, alte quanto serve al testo in hover, non
        lascerebbero almeno 64px sopra la banda (lo decide lo script
        "Altezza card"), la scena scorre invece di stare in una
        schermata, con lo stacco pieno riservato dal padding. */
     @media (min-width: 769px) {
-      .ht-pin--svc:has(.svc-flow) { height: auto !important; }
+      .ht-pin--svc:has(.svc-flow),
+      .ht-pin--svc.svc-flow-pin { height: auto !important; } /* classe: fallback senza :has() */
       .ht-services.svc-flow {
         position: relative !important;
         height: auto !important;
@@ -3541,7 +3689,7 @@
         height: auto !important;
         min-height: 100dvh;
       }
-      .svc-card { height: 190px !important; }
+      .svc-card { height: auto !important; }
     }
 
     /* ── About: interlinea del body ──────────────────────────────
@@ -3570,7 +3718,7 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Che tipo di agenzia e ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
+    { "@type": "Question", "name": "Che tipo di agenzia è ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
     { "@type": "Question", "name": "Quali servizi offre ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI." } },
     { "@type": "Question", "name": "Con che tipo di clienti lavora ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro." } },
     { "@type": "Question", "name": "Come si inizia a lavorare con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta piu adatta." } },
@@ -3716,7 +3864,7 @@
           <!-- Coda nera: chiude la hero sul nero pieno dei Servizi -->
           <div class="sr-fade" aria-hidden="true"></div>
           <div class="sr-content" aria-labelledby="vhero-title">
-            <h1 class="vhero__title" id="vhero-title">
+            <h1 class="vhero__title" id="vhero-title" data-rv-hero="1">
               <span>LE IDEE</span>
               <span>PRENDONO</span>
               <span>FORMA</span>
@@ -3822,8 +3970,7 @@
 
             <div class="about-section__video-col">
               <video class="about-section__cat" autoplay loop muted playsinline preload="auto" aria-hidden="true">
-                <source src="foto%20home/Asto1.webm" type="video/webm" />
-                <source src="foto%20home/Astro.mp4" type="video/mp4" />
+                <source src="gattoabout.webm" type="video/webm" />
               </video>
             </div>
 
@@ -4187,7 +4334,7 @@
         <h2 class="page-faq__title" id="faqTitle">FAQ</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia e ESTRO?</button>
+            <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia è ESTRO?</button>
             <div class="page-faq__answer"><div class="page-faq__answer-inner">ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online.</div></div>
           </div>
           <div class="page-faq__item">
@@ -4220,7 +4367,7 @@
           <h2 class="hc-title" id="contattiTitle">Contatti</h2>
           <p class="hc-sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
         </div>
-        <form class="hc-form" action="contatti.html" method="get" novalidate>
+        <form class="hc-form" action="contatti.html" method="get">
           <div class="hc-row">
             <div class="f-field">
               <label class="f-label" for="home-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
@@ -4258,7 +4405,7 @@
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="hc-privacy">
               <input type="checkbox" id="hc-privacy" name="privacy" required />
-              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
             </label>
             <label class="svc-caffe__privacy" for="hc-newsletter">
               <input type="checkbox" id="hc-newsletter" name="newsletter" value="si" />
@@ -4495,6 +4642,8 @@
       // la rifrazione del filtro.
       if (q >= 0.99) {
         if (ttDisp) ttDisp.setAttribute('scale', '0');
+        svcTitle.style.removeProperty('opacity');
+        svcTitle.style.removeProperty('transform');
         return;
       }
 
@@ -4509,7 +4658,11 @@
       // all'inizio, così si legge come acqua che si calma e non
       // come un interruttore. Ampiezza contenuta: oltre i ~14px le
       // lettere si sfaldano e l'effetto non legge più come acqua.
-      const wave = Math.pow(1 - clamp(q, 0, 1), 0.65);
+      // fade/reveal standard: opacità + leggera salita, nessuna acqua
+      svcTitle.style.removeProperty('--tt-mask');
+      svcTitle.style.opacity = (0.15 + 0.85 * clamp(q, 0, 1)).toFixed(3);
+      svcTitle.style.transform = 'translateY(' + ((1 - clamp(q, 0, 1)) * 24).toFixed(1) + 'px)';
+      const wave = 0;
       if (ttDisp) {
         ttDisp.setAttribute('scale', (wave * 14).toFixed(2));
         ttTurb.setAttribute('baseFrequency',
@@ -4591,11 +4744,12 @@
       if (e <= 0.002) {
         heroTitleEl.classList.remove('ttl-out');
         heroTitleEl.style.removeProperty('--ttl-mask');
+        heroTitleEl.style.removeProperty('opacity');
         return;
       }
-      if (!heroOutGeom) heroOutGeom = outGeom(heroTitleEl, 0.44, 0.52);
-      heroTitleEl.classList.add('ttl-out');
-      disperse(heroTitleEl, heroOutGeom, '--ttl-mask', e, 200, 11);
+      // uscita: semplice dissolvenza guidata dallo scroll (niente acqua)
+      heroTitleEl.style.removeProperty('--ttl-mask');
+      heroTitleEl.style.opacity = Math.max(0, 1 - e).toFixed(3);
     }
 
     addEventListener('resize', () => { heroOutGeom = null; }, { passive: true });
@@ -5011,7 +5165,7 @@
       { num:'04', tag:'Social',      name:'Social Media Management',     desc:'Costruisci la tua identità digitale e la tua community con noi al tuo fianco.',                  href:'servizi/social-media-management.html' },
       { num:'05', tag:'Influencer',  name:'Influencer Marketing',        desc:'Selezioniamo i migliori storytellers digitali per amplificare il tuo messaggio.',                href:'servizi/influencer-marketing.html' },
       { num:'06', tag:'Design',      name:'Graphic Design & Motion',     desc:'Anima i tuoi contenuti e crea esperienze visive che lasciano il segno.',                         href:'servizi/graphic-design.html' },
-      { num:'07', tag:'Digital',     name:'Web Design & E-Commerce',     desc:'Rivoluzionamo il tuo modo di vendere costruendo la tua vetrina digitale su misura.',             href:'servizi/web-design.html' },
+      { num:'07', tag:'Digital',     name:'Web Design & E‑Commerce',     desc:'Rivoluzionamo il tuo modo di vendere costruendo la tua vetrina digitale su misura.',             href:'servizi/web-design.html' },
       { num:'08', tag:'Contenuti',   name:'Produzione Contenuti',        desc:'Foto, video, copy e tutto il multimediale di cui il tuo brand ha bisogno.',                      href:'servizi/produzione-contenuti.html' },
       { num:'09', tag:'3D',          name:'Modellazione & Render 3D',    desc:'Esperienze coinvolgenti che trasformano le visualizzazioni in vendite reali.',                    href:'servizi/modellazione-3d.html' },
       { num:'10', tag:'AI',          name:'Servizi AI per il Marketing', desc:"L'intelligenza artificiale al servizio della creatività e della crescita del tuo brand.",        href:'servizi/servizio-ai.html' },
@@ -5057,30 +5211,69 @@
       if (!svc || !cards.length || innerWidth <= 768) return;
       function fit() {
         svc.classList.remove('svc-flow');
+        // schermi bassi o zoomati: la fila sotto scende in hover
+        track.classList.toggle('svc-push', innerHeight <= 820);
+        svc.parentElement.classList.remove('svc-flow-pin');
+        const innerEl = svc.querySelector('.svc-inner');
+        if (innerEl) innerEl.style.removeProperty('padding-bottom');
+        band.style.removeProperty('bottom'); band.style.removeProperty('top');
         document.documentElement.style.removeProperty('--svc-card-h');
         if (innerWidth <= 768) return;
-        const base = cards[0].getBoundingClientRect().height;
+        const base = 0;
         let need = 0;
         cards.forEach(c => {
           const inn = c.querySelector('.svc-card__inner');
           const d = inn.querySelector('.svc-card__desc');
           const cs = getComputedStyle(inn);
-          d.style.height = 'auto';
-          let n = 8.8 + parseFloat(cs.paddingBottom);          // padding alto in hover: 0.55rem
+          const defH = c.getBoundingClientRect().height;
+          d.style.setProperty('height', 'auto', 'important');
+          let n = parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom);          // padding alto in hover: 0.55rem
           [...inn.children].forEach(k => {
             if (k.classList.contains('svc-fx-ghost')) return;
             const src = k.classList.contains('svc-fx-real') ? [...k.children] : [k];
             src.forEach(e => { const s = getComputedStyle(e); n += e.getBoundingClientRect().height + parseFloat(s.marginTop) + parseFloat(s.marginBottom); });
           });
-          d.style.height = '';
+          d.style.removeProperty('height');
+          // quanto cresce QUESTA card in hover: il margine negativo
+          // uguale tiene ferma la riga, la crescita va nello stacco
+          c.style.setProperty('--grow', Math.max(0, Math.ceil(n + 4 - defH)) + 'px');
           need = Math.max(need, n);
         });
         const h = Math.ceil(Math.max(base, need + 4));
+        track.style.setProperty('--svc-extra', Math.max(0, h - Math.max(...cards.map(c => c.getBoundingClientRect().height))) + 'px');
         document.documentElement.style.setProperty('--svc-card-h', h + 'px');
         requestAnimationFrame(() => {
+          // a riposo la card è compatta; in hover si espande di "extra"
+          // e spinge giù la riga sotto: lo spazio deve bastare
           const bottom = Math.max(...cards.map(c => c.getBoundingClientRect().bottom));
+          const extra = Math.max(0, h - Math.max(...cards.map(c => c.getBoundingClientRect().height)));
           const gap = band.getBoundingClientRect().top - bottom;
-          if (gap < 64) svc.classList.add('svc-flow');
+          if (gap - extra < 24) { svc.classList.add('svc-flow'); svc.parentElement.classList.add('svc-flow-pin'); }
+          // banda il più in alto possibile: subito sotto le card espanse
+          // (anche in modalità a scorrimento, a layout aggiornato)
+          requestAnimationFrame(() => {
+            const bt = Math.max(...cards.map(c => c.getBoundingClientRect().bottom));
+            const br = band.getBoundingClientRect();
+            // La banda sta sotto le card a riposo + lo spazio dell'hover
+            // (extra) + lo stacco AIR, ancorata dall'ALTO del suo
+            // contenitore: se in hover la sezione si allunga (prima fila
+            // che spinge giù la seconda) la banda non si muove.
+            const push = track.classList.contains('svc-push');
+            const AIR = push ? 40 : 56;
+            const host = band.offsetParent || svc;
+            const inner = svc.querySelector('.svc-inner');
+            const topRel = bt + extra + AIR - host.getBoundingClientRect().top;
+            band.style.setProperty('top', Math.round(topRel) + 'px', 'important');
+            band.style.setProperty('bottom', 'auto', 'important');
+            // la sezione deve contenere la banda (più un piccolo margine)
+            requestAnimationFrame(() => {
+              const short = band.getBoundingClientRect().bottom + 24 - svc.getBoundingClientRect().bottom;
+              if (short > 0 && inner) {
+                svc.classList.add('svc-flow'); svc.parentElement.classList.add('svc-flow-pin');
+                inner.style.setProperty('padding-bottom', Math.ceil(parseFloat(getComputedStyle(inner).paddingBottom) + short) + 'px', 'important');
+              }
+            });
+          });
         });
       }
       let t = 0;
@@ -5164,11 +5357,11 @@
     const SWEEP   = 0.47;  // s — il fronte attraversa la card
     const SETTLE  = 0.21;  // s — assestamento dopo il fronte
     const LEAVE   = 0.28;  // s — riassorbimento all'uscita
-    const GAP     = 46;    // px — quanto il fronte fucsia resta indietro
+    const GAP     = 0;     // px — quanto il fronte fucsia resta indietro
     const SOFT    = 26;    // px — morbidezza del bordo del fronte
-    const DISP    = 22;    // scala massima della distorsione
-    const BLUR    = 0.8;   // px
-    const DRAG    = 3;     // px di trascinamento
+    const DISP    = 0;     // scala massima della distorsione
+    const BLUR    = 0;     // px
+    const DRAG    = 0;     // px di trascinamento
 
     const easeOut = t => 1 - Math.pow(1 - t, 2.4);
     let raf = null;
@@ -5513,6 +5706,7 @@
     }
 
     function waterTitleOut(el) {
+      return; // uscita ad acqua disattivata: il titolo resta intero
       if ([...ttlOut].some(i => i.el === el)) return;
       const r = el.getBoundingClientRect();
       if (!r.width) return;
@@ -5542,12 +5736,10 @@
       // rientrando, il titolo riparte intero
       el.style.removeProperty('--ttl-mask');
       if (el.dataset.ttlDone === '1') return;
-      const c = ttlConfig(el, fast);
-      if (!c.w) return;
+      if (!el.getBoundingClientRect().width) return;
       el.dataset.ttlDone = '1';
-      el.classList.add('ttl-run');
-      ttlActive.add({ el, c, t0: performance.now() });
-      if (!ttlRaf) ttlRaf = requestAnimationFrame(ttlFrame);
+      // fade/reveal standard: lo stato iniziale è in CSS (.ttl-in)
+      el.classList.add('ttl-in');
     }
 
     // ── Acqua sui titoli tipografici (linguaggio SERVIZI) ───────
@@ -5594,25 +5786,8 @@
       const r = el.getBoundingClientRect();
       if (!r.width) return;
       el.dataset.wlDone = '1';
-      const fx = wlMakeFilter();
-      // il filtro va inline: l'id cambia per titolo, quindi non può
-      // stare in una regola CSS
-      el.style.filter = 'url(#' + fx.id + ')';
-      const dur = ms || 900;
-      const t0 = performance.now();
-      (function frame() {
-        const q = Math.min(1, (performance.now() - t0) / dur);
-        // rifrazione a campana: nasce, monta, si spegne. È l'unica
-        // cosa che varia: il titolo non si muove e non cambia scala.
-        const wave = Math.sin(q * Math.PI);
-        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
-        fx.turb.setAttribute('baseFrequency',
-          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
-        if (q < 1) { requestAnimationFrame(frame); return; }
-        // assestato: nessun filtro residuo
-        fx.disp.setAttribute('scale', '0');
-        el.style.removeProperty('filter');
-      }());
+      // fade/reveal standard: lo stato iniziale è in CSS (.ttl-in)
+      el.classList.add('ttl-in');
     }
 
     // ── Titoli di sezione con l'acqua ───────────────────────────
@@ -5626,14 +5801,18 @@
        ['contattiTitle', 900]].forEach(([id, ms]) => {
         const t = document.getElementById(id);
         if (!t) return;
-        const ob = new IntersectionObserver(es => {
-          es.forEach(e => {
-            if (!e.isIntersecting) return;
-            waterLetters(t, ms);
-            ob.disconnect();
-          });
-        }, { threshold: 0.45 });
-        ob.observe(t);
+        // controllo sul rettangolo reale: i titoli dentro pannelli
+        // agganciati o clippati non sempre notificano l'observer, e
+        // il titolo restava fermo invisibile
+        function check() {
+          const r = t.getBoundingClientRect();
+          if (!r.width || r.top > innerHeight * 0.88 || r.bottom < 0) return;
+          waterLetters(t, ms);
+          if (t.classList.contains('ttl-in')) removeEventListener('scroll', check);
+        }
+        addEventListener('scroll', check, { passive: true });
+        addEventListener('load', check);
+        check();
       });
     }());
 
@@ -6429,6 +6608,61 @@
   }());
   </script>
   <script src="js/responsive.js"></script>
+  <script>
+  // ── Hero: all'atterraggio "FORMA" cambia font e poi si ripristina ──
+  (function () {
+    if (window.__STATIC_CAPTURE__) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const w = document.querySelector('.sr-content .vhero__title span:nth-child(3)');
+    if (!w) return;
+    const fonts = ["'Orbitron'", "'Audiowide'", "'Michroma'",
+                   "'Syncopate'", "'Tektur'", "'Exo 2'"];
+    let played = false;
+    function play() {
+      if (played) return;
+      played = true;
+      // i font (caricati in <head>) devono essere pronti: max 600ms
+      Promise.race([
+        Promise.all(fonts.map(f => document.fonts.load('900 1em ' + f, 'FORMA'))),
+        new Promise(r => setTimeout(r, 600))
+      ]).then(run);
+    }
+    function run() {
+      let i = 0;
+      const t = setInterval(() => {
+        if (i < fonts.length) { w.style.fontFamily = fonts[i++] + ', sans-serif'; return; }
+        clearInterval(t);
+        w.style.removeProperty('font-family');
+      }, 150);
+    }
+    // parte quando il titolo compare per la prima volta (.ttl-in)
+    const h = w.closest('.vhero__title');
+    if (h.classList.contains('ttl-in')) play();
+    else new MutationObserver((m, o) => {
+      if (h.classList.contains('ttl-in')) { o.disconnect(); play(); }
+    }).observe(h, { attributes: true, attributeFilter: ['class'] });
+  })();
+  </script>
+  <script>
+  // ── About: Safari/iOS non mostrano la trasparenza dei WebM VP9 ──
+  // Lì il gatto passa alla versione WebP animata (con alfa), stessa
+  // classe e quindi stesse misure del video.
+  (function () {
+    const v = document.querySelector('.about-section__cat');
+    if (!v) return;
+    const ua = navigator.userAgent;
+    const safari = /Safari\//.test(ua) && !/(Chrome|Chromium|CriOS|FxiOS|EdgiOS|Android)/.test(ua);
+    const ios = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    if (!safari && !ios) return;
+    const img = new Image();
+    img.className = v.className;
+    img.src = 'gattoabout.webp';
+    img.alt = '';
+    img.setAttribute('aria-hidden', 'true');
+    img.decoding = 'async';
+    v.replaceWith(img);
+  })();
+  </script>
 </body>
 </html>
 

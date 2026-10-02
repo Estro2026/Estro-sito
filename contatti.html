@@ -495,7 +495,7 @@
           <h2 class="hc-title" id="ctTitle">Contatti</h2>
           <p class="hc-sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
         </div>
-        <form class="hc-form" action="#" method="post" novalidate>
+        <form class="hc-form" action="#" method="post">
           <div class="hc-row">
             <div class="f-field">
               <label class="f-label" for="cnt-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
@@ -533,7 +533,7 @@
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="ct-privacy">
               <input type="checkbox" id="ct-privacy" name="privacy" required />
-              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
             </label>
             <label class="svc-caffe__privacy" for="ct-newsletter">
               <input type="checkbox" id="ct-newsletter" name="newsletter" value="si" />
@@ -653,20 +653,9 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      const fx = wlMakeFilter();
-      el.style.filter = 'url(#' + fx.id + ')';
-      const dur = ms || 900;
-      const t0 = performance.now();
-      (function frame() {
-        const q = Math.min(1, (performance.now() - t0) / dur);
-        const wave = Math.sin(q * Math.PI);
-        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
-        fx.turb.setAttribute('baseFrequency',
-          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
-        if (q < 1) { requestAnimationFrame(frame); return; }
-        fx.disp.setAttribute('scale', '0');
-        el.style.removeProperty('filter');
-      }());
+      // fade/reveal standard (effetto acqua rimosso)
+      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
+        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
     }
 
     // l'introduzione NON prende l'acqua: è testo corrente, entra

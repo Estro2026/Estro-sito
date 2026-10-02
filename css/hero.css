@@ -300,6 +300,7 @@ body:has(.vhero--fullscreen) {
   cursor: pointer;
   z-index: 10;
   transition: background 250ms ease, transform 250ms ease, border-color 250ms ease;
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
 .svc-grid__close:hover {

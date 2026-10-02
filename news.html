@@ -1046,7 +1046,7 @@
         <div class="nw-contact__right">
           <!-- Stesse classi del form in homepage (hc-*): stesse
                misure e stessa riga dei consensi con la newsletter. -->
-          <form class="hc-form" action="#" method="post" novalidate>
+          <form class="hc-form" action="#" method="post">
             <div class="hc-row">
               <div class="f-field">
                 <label class="f-label" for="nw-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
@@ -1084,7 +1084,7 @@
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="nw-privacy">
                 <input type="checkbox" id="nw-privacy" name="privacy" required />
-                <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a></span>
+                <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
               </label>
               <label class="svc-caffe__privacy" for="nw-newsletter">
                 <input type="checkbox" id="nw-newsletter" name="newsletter" value="si" />
@@ -1135,20 +1135,9 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      const fx = wlMakeFilter();
-      el.style.filter = 'url(#' + fx.id + ')';
-      const dur = ms || 900;
-      const t0 = performance.now();
-      (function frame() {
-        const q = Math.min(1, (performance.now() - t0) / dur);
-        const wave = Math.sin(q * Math.PI);
-        fx.disp.setAttribute('scale', (wave * 14).toFixed(2));
-        fx.turb.setAttribute('baseFrequency',
-          (0.010 + wave * 0.008).toFixed(4) + ' ' + (0.030 + wave * 0.014).toFixed(4));
-        if (q < 1) { requestAnimationFrame(frame); return; }
-        fx.disp.setAttribute('scale', '0');
-        el.style.removeProperty('filter');
-      }());
+      // fade/reveal standard (effetto acqua rimosso)
+      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
+        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
     }
 
     // il titolo della hero è già in vista al caricamento

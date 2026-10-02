@@ -1,0 +1,134 @@
+/* ═══════════════════════════════════════════════════════════════
+   ESTRO — stile form GoHighLevel
+   Da incollare in GHL: Sites → Forms → (form) → Styles → Custom CSS.
+   Riproduce il form "Contatti" del sito: campi traslucidi su fondo
+   scuro, label DM Sans, pulsante a pillola, checkbox fucsia.
+   Selettori standard del form builder GHL (#_builder-form).
+   Nel form GHL: campo "Terms & Conditions"/checkbox privacy
+   impostato come OBBLIGATORIO.
+   ═══════════════════════════════════════════════════════════════ */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+#_builder-form,
+#_builder-form .form-builder--wrap,
+.form-builder--wrap {
+  background: transparent !important;
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  color: #fff !important;
+  max-width: 1240px;
+  margin: 0 auto;
+}
+
+/* spaziatura fra i campi: 0.7rem come sul sito */
+#_builder-form .form-builder--item,
+#_builder-form .form-field-wrapper { margin-bottom: 0.7rem !important; padding: 0 !important; }
+
+/* label */
+#_builder-form label,
+#_builder-form .label-alignment,
+#_builder-form .field-label {
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  color: rgba(255,255,255,0.72) !important;
+  letter-spacing: 0.02em !important;
+  margin-bottom: 0.35rem !important;
+}
+
+/* campi */
+#_builder-form input[type="text"],
+#_builder-form input[type="email"],
+#_builder-form input[type="tel"],
+#_builder-form input[type="url"],
+#_builder-form input[type="number"],
+#_builder-form select,
+#_builder-form textarea,
+#_builder-form .form-control {
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 16px !important;
+  color: #fff !important;
+  background: rgba(255,255,255,0.15) !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  border-radius: 10px !important;
+  padding: 16px 20px !important;
+  min-height: 54px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+#_builder-form textarea { min-height: 140px !important; resize: vertical; }
+#_builder-form input::placeholder,
+#_builder-form textarea::placeholder { color: rgba(255,255,255,0.5) !important; }
+#_builder-form input:focus,
+#_builder-form select:focus,
+#_builder-form textarea:focus,
+#_builder-form .form-control:focus {
+  border-color: #DB005A !important;
+  background: rgba(255,255,255,0.2) !important;
+}
+
+/* checkbox privacy / newsletter */
+#_builder-form input[type="checkbox"] {
+  -webkit-appearance: none; appearance: none;
+  width: 18px !important; height: 18px !important;
+  min-height: 0 !important;
+  border: 1.5px solid rgba(255,255,255,0.6) !important;
+  border-radius: 4px !important;
+  background: transparent !important;
+  vertical-align: -3px;
+  margin-right: 0.6rem !important;
+  cursor: pointer;
+  position: relative;
+}
+#_builder-form input[type="checkbox"]:checked {
+  background: #DB005A !important;
+  border-color: #DB005A !important;
+}
+#_builder-form input[type="checkbox"]:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px; top: 1px;
+  width: 5px; height: 10px;
+  border: solid #fff;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+#_builder-form .terms-and-conditions,
+#_builder-form .option label,
+#_builder-form .checkbox-container label {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  color: rgba(255,255,255,0.85) !important;
+}
+#_builder-form a { color: #fff !important; text-decoration: underline !important; }
+
+/* errori di validazione */
+#_builder-form .error,
+#_builder-form .text-danger,
+#_builder-form .field-error { color: #ff7aa8 !important; font-size: 14px !important; }
+
+/* pulsante invio: pillola bianca come .hc-submit */
+#_builder-form button[type="submit"],
+#_builder-form .btn,
+#_builder-form .button-element {
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  letter-spacing: 0.12em !important;
+  text-transform: uppercase !important;
+  color: #fff !important;
+  background: transparent !important;
+  border: 2px solid #fff !important;
+  border-radius: 999px !important;
+  padding: 14px 56px !important;
+  width: auto !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: background-color .25s ease, color .25s ease;
+}
+#_builder-form button[type="submit"]:hover,
+#_builder-form .btn:hover,
+#_builder-form .button-element:hover {
+  background: #fff !important;
+  color: #DB005A !important;
+}
