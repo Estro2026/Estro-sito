@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Dama24 — L'estetica dell'accoglienza tra fisico e digitale. Un caso studio ESTRO." />
   <title>Dama24 — Case Study · ESTRO</title>
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* ══ TIPS & TRICKS ARTICLE ═══════════════════════════════ */
 
@@ -1010,7 +1010,7 @@
     .d24-hero--revealed .d24-hero__sub    { opacity:1; transform:none; transition: opacity .55s .40s ease, transform .55s .40s ease; }
     .d24-hero--revealed .d24-hero__meta   { opacity:1; transform:none; transition: opacity .50s .55s ease, transform .50s .55s ease; }
   </style>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -1092,6 +1092,7 @@
         <div class="d24-hero__kicker">
           <span>Case Study &nbsp;&nbsp;&nbsp;&nbsp; Social Media</span>
         </div>
+        <h1 class="visually-hidden">Dama24 — Case study</h1>
         <img class="d24-hero__logo" src="../case-studies/loghicasestudy/DAMA24.png" alt="Dama24">
         <p class="d24-hero__sub">L'estetica dell'accoglienza tra fisico e digitale</p>
       </div>
@@ -1199,7 +1200,7 @@
           <li class="cs2-sidebar__item active">
             <a href="dama24.html">
               <div class="cs2-sidebar__thumb">
-                <img src="loghicasestudy/DAMA24.png" alt="" loading="lazy" />
+                <img src="loghicasestudy/DAMA24_fucsia.webp" alt="" loading="lazy" />
               </div>
               <span class="cs2-sidebar__title">Dama24 — L'estetica dell'accoglienza tra fisico e digitale</span>
             </a>
@@ -1207,7 +1208,7 @@
           <li class="cs2-sidebar__item">
             <a href="fanuc.html">
               <div class="cs2-sidebar__thumb">
-                <img src="loghicasestudy/FANUC.png" alt="" loading="lazy" />
+                <img src="loghicasestudy/FANUC_fucsia.webp" alt="" loading="lazy" />
               </div>
               <span class="cs2-sidebar__title">Fanuc — Strategia e contenuti per l'automazione industriale</span>
             </a>
@@ -1215,7 +1216,7 @@
           <li class="cs2-sidebar__item">
             <a href="../case-studies.html">
               <div class="cs2-sidebar__thumb">
-                <img src="loghicasestudy/HUMANITAS.webp" alt="" loading="lazy" />
+                <img src="loghicasestudy/HUMANITAS_fucsia.webp" alt="" loading="lazy" />
               </div>
               <span class="cs2-sidebar__title">Humanitas — Comunicazione istituzionale e divulgazione</span>
             </a>
@@ -1223,7 +1224,7 @@
           <li class="cs2-sidebar__item">
             <a href="../case-studies.html">
               <div class="cs2-sidebar__thumb">
-                <img src="loghicasestudy/CUPRA.webp" alt="" loading="lazy" />
+                <img src="loghicasestudy/CUPRA_fucsia.webp" alt="" loading="lazy" />
               </div>
               <span class="cs2-sidebar__title">Cupra — Brand experience e contenuti per il lancio</span>
             </a>
@@ -1285,7 +1286,7 @@
             </div>
             <div class="f-field">
               <label class="f-label" for="d24-f-messaggio">Messaggio</label>
-              <textarea id="d24-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+              <textarea id="d24-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
             </div>
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="cs2-privacy">
@@ -1305,7 +1306,7 @@
 
   </main>
 
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
   <script>
   /* ═══════════════════════════════════════════════════════════
      ARTICOLO TIPS — motore della homepage, ridotto al necessario.
@@ -1344,13 +1345,12 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
 
     // il titolo dell'articolo è già in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.cs2-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.cs2-hero__title'));
 
     // Gli h2 del corpo restano fuori dall'acqua: sono titoli di
     // paragrafo, non di sezione, e interrompevano la lettura.
@@ -1360,8 +1360,8 @@
         es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
       }, el.classList.contains('sf-ghost')
            ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-           : { threshold: 0.6 });
-      io.observe(el);
+           : { threshold: 0.15 });
+      el.classList.add('wl-wait'); io.observe(el);
     });
 
     /* ── Salita: solo form e footer ────────────────────────── */
@@ -1565,7 +1565,7 @@
     });
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

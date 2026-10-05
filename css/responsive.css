@@ -243,3 +243,1037 @@ html body .page-faq__inner {
 @media (max-width: 420px) {
   .svc-settori__grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
 }
+
+/* ── FAQ delle pagine servizi: spazi ────────────────────────────
+   Qui il pannello è .page-faq__sticky (alto una schermata) e
+   .page-faq__inner sta dentro: il minimo di una schermata della
+   regola 6 (pensata per la home) lo faceva sbordare, il centraggio
+   saltava e il titolo finiva sotto il menu. Ora l'interno è alto
+   quanto il contenuto, il blocco è centrato nello spazio libero
+   sotto il menu e il titolo non ha più margini negativi. */
+html body main > section.page-faq > .page-faq__sticky .page-faq__inner {
+  min-height: 0 !important;
+  height: auto !important;
+}
+html body main > section.page-faq > .page-faq__sticky {
+  padding-block: calc(5.5rem + clamp(1.5rem, 4vh, 3rem)) clamp(2rem, 5vh, 3.5rem) !important;
+  justify-content: center;
+  justify-content: safe center;
+}
+html body main > section.page-faq > .page-faq__sticky .page-faq__title {
+  margin-top: 0 !important;
+  margin-bottom: clamp(1.5rem, 3.5vh, 2.5rem) !important;
+}
+
+/* ══ ARROTONDAMENTI UNIFORMI — riferimento: la nav ═══════════════
+   La nav è una pillola (alta 72px, raggio pieno). Tutto il sito
+   segue la stessa forma:
+   · --r-pill: CTA, pulsanti, tab, etichette, campi su una riga
+   · --r-box:  card, pannelli, immagini, video, aree di testo e
+               angoli delle sezioni che salgono → 36px, metà
+               dell'altezza della nav
+   Prima convivevano 6, 8, 9, 10, 12, 14, 16, 18, 20, 22, 28, 32 e
+   41px. */
+:root { --r-pill: 999px; --r-box: 36px; }
+
+/* CTA, pulsanti, etichette */
+html body :is(.btn, .d24-quote__cta, .contact-hub__pill, .cst-tab,
+  .lcn-apply__file-label, .cs-view, .cs-tag, .svc-integrazione__pill,
+  .svc-talent-pronti__label, button[type="submit"]) {
+  border-radius: var(--r-pill) !important;
+}
+
+/* card, pannelli, media */
+html body :is(.wall__card, .tip-card, .cst-img, .cst-info, .sr-reel__card,
+  .svc-tabs__panel, .svc-tabs__media, .wd-deep__p, .wd-shot__ph-block,
+  .svc-hero__form-card, .svc-ai-workflow__card, .svc-ai-workflow__icon-wrap,
+  .svc-collab-grid__photo, .svc-settori__item, .svc-talent-pronti__visual,
+  .imk-intro__photo, .lcn-about__photo, .nw-card, .nw-featured__card,
+  .cs-cardv, .cs2-figure, .cs2-sidebar, .cs2-sidebar__thumb, .cs2-cta-block,
+  .d24-numbers__col, .d24-result, .d24-visual, .contact-hub__col,
+  .faq-item) {
+  border-radius: var(--r-box) !important;
+}
+
+/* campi dei form: su una riga a pillola, aree di testo a 36px */
+html body :is(.svc-caffe__field, .svc-hero__field, .contact-home__field,
+  .lcn-apply__input, .lcn-apply__select,
+  .hc-form input:not([type="checkbox"]), .hc-form select) {
+  border-radius: var(--r-pill) !important;
+}
+html body :is(textarea.svc-caffe__field, textarea.svc-hero__field,
+  textarea.contact-home__field, textarea.lcn-apply__input, .hc-form textarea) {
+  border-radius: var(--r-box) !important;
+}
+
+/* griglia servizi in homepage: angoli esterni */
+html body .svc-card:nth-child(1)  { border-top-left-radius: var(--r-box) !important; }
+html body .svc-card:nth-child(5)  { border-top-right-radius: var(--r-box) !important; }
+html body .svc-card:nth-child(6)  { border-bottom-left-radius: var(--r-box) !important; }
+html body .svc-card:nth-child(10) { border-bottom-right-radius: var(--r-box) !important; }
+
+/* sezioni che salgono: stessi 36px in tutte le pagine (prima 32–41) */
+html.js-reveal body .sx-rise {
+  border-radius: calc((1 - var(--sxi, 1)) * 36px) calc((1 - var(--sxi, 1)) * 36px) 0 0 !important;
+}
+/* regole locali più specifiche da allineare */
+html body .tips-grid .tip-card { border-radius: var(--r-box) !important; }
+html body .sf-social a { border-radius: var(--r-pill) !important; }
+/* aree di testo: la regola a pillola dei campi (che contiene
+   .hc-form input, più specifica) le prendeva per errore → raggio
+   36px e un filo più di spazio interno, così il placeholder non
+   finisce dentro la curva degli angoli */
+html body textarea:is(.svc-caffe__field, .svc-hero__field, .contact-home__field, .lcn-apply__input).hc-textarea,
+html body .hc-form textarea.svc-caffe__field,
+html body .hc-form textarea,
+html body textarea.svc-caffe__field,
+html body textarea.svc-hero__field,
+html body textarea.contact-home__field {
+  border-radius: var(--r-box) !important;
+  padding: 18px 24px !important;
+}
+
+/* ══ RITMO VERTICALE — titoli di sezione ═══════════════════════════
+   Due sole misure in tutto il sito (prima da 8 a 146px):
+   · titolo → sottotitolo / testo introduttivo: --gap-lead 16px
+   · titolo → contenuto (griglie, liste, loghi, card): --gap-block 48px
+   L'elemento che segue perde il proprio margine alto, così lo
+   stacco è solo quello del titolo. */
+:root { --gap-lead: 16px; --gap-block: 48px; --gap-items: 24px; }
+
+html body :is(.hc-title, .svc-caffe__title, .smm-panel__big-title,
+  .imk-intro__title, .svc-talent-pronti__title, .svc-ai-workflow__title,
+  .pc-prod__title) {
+  margin-bottom: var(--gap-lead) !important;
+}
+html body :is(.hc-title, .svc-caffe__title, .smm-panel__big-title,
+  .imk-intro__title, .svc-talent-pronti__title, .svc-ai-workflow__title,
+  .pc-prod__title) + * {
+  margin-top: 0 !important;
+}
+
+html body :is(.svc-clients__title, .cs2__title, .tips-section__heading,
+  .page-faq__title, .svc-section-title, .svc-tools__title,
+  .svc-process__title, .contact-hub__claim) {
+  margin-bottom: var(--gap-block) !important;
+}
+html body :is(.svc-clients__title, .cs2__title, .tips-section__heading,
+  .page-faq__title, .svc-section-title, .svc-tools__title,
+  .svc-process__title, .contact-hub__claim) + * {
+  margin-top: 0 !important;
+}
+
+/* ── Ritmo verticale: casi particolari ─────────────────────────────
+   :not(#_) alza la specificità quanto un id: alcune regole locali
+   (FAQ, Social Ads, Web Design) battevano quelle sopra. */
+
+/* titolo → contenuto 48px dove il titolo ha regole locali più forti */
+html body :is(.page-faq__title, .svc-process__title, .wall__title,
+  .svc-tools__title, .tips-section__heading):not(#_) {
+  margin-bottom: var(--gap-block) !important;
+}
+html body :is(.page-faq__title, .svc-process__title, .wall__title,
+  .svc-tools__title, .tips-section__heading):not(#_) + * {
+  margin-top: 0 !important;
+}
+/* titolo → sottotitolo 16px */
+html body .smm-panel__big-title:not(#_) { margin-bottom: var(--gap-lead) !important; }
+/* il genitore ha già uno spazio fra gli elementi: il margine del
+   titolo completa fino a 16px invece di sommarsi */
+html body .svc-caffe__title:not(#_) { margin-bottom: 0 !important; }   /* gap 16 del genitore */
+html body .hc-title:not(#_)         { margin-bottom: 8px !important; } /* + gap 8 = 16 */
+
+/* titolo ultimo elemento della sua intestazione: lo stacco lo dà
+   l'intestazione, il titolo non aggiunge niente */
+html body :is(.svc-clients__title, .cs2__title, .svc-section-title):last-child:not(#_) {
+  margin-bottom: 0 !important;
+}
+html body :has(> :is(.svc-clients__title, .cs2__title):last-child),
+html body .wd-deep__aside,
+html body .svc-path__head,
+html body .svc-integrazione__header {
+  margin-bottom: var(--gap-block) !important;
+}
+/* regole locali ancora più forti (selettori con id nelle pagine) */
+html body :has(> :is(.svc-clients__title, .cs2__title):last-child):not(#_):not(#_),
+html body .svc-integrazione__header:not(#_):not(#_) {
+  margin-bottom: var(--gap-block) !important;
+}
+html body .smm-panel__big-title:not(#_):not(#_) { margin-bottom: var(--gap-lead) !important; }
+html body .svc-integrazione__header > .svc-section-title:not(#_):not(#_) { margin-bottom: 0 !important; }
+/* Contatti: l'intestazione aveva un'altezza fissa che distribuiva
+   spazio extra fra titolo e sottotitolo */
+html body .hc-header:not(#_) { height: auto !important; min-height: 0 !important; justify-content: flex-start !important; }
+
+/* ── Ritmo verticale: spazi fra elementi ripetuti ──────────────────
+   Griglie di card ed elementi in serie: un solo gap, 24px (prima
+   17, 20, 23, 32, 40, 46 e 61px). I campi dei form: 16px (prima
+   11 in home e 14 nelle pagine servizi). Le colonne affiancate
+   (testo/immagine) restano come sono. */
+html body :is(.cst-grid, .nw-grid, .tips-grid, .svc-collab-grid__items,
+  .svc-process__grid, .svc-settori__grid, .svc-ai-workflow__grid,
+  .svc-tools__grid, .contact-hub__grid, .wd-deep__lead, .svc-tabs,
+  .svc-stat-video__stat):not(#_) {
+  gap: var(--gap-items) !important;
+}
+html body :is(.hc-form, .hc-row, .svc-caffe__form, .svc-hero__form-row):not(#_) {
+  gap: 16px !important;
+}
+
+/* ── Ritmo verticale: sezioni a scorrimento normale ───────────────
+   Stesso spazio sopra e sotto (--section-py) dove era sbilanciato:
+   "Un sito cucito su misura" aveva 40px sotto, gli strumenti di
+   Google Ads e i talenti di Influencer valori irregolari. */
+html body :is(.wd-deep, .svc-tools-section, .svc-talent-pronti):not(#_) {
+  padding-block: var(--section-py) !important;
+}
+/* strumenti Google Ads: lo spazio lo dà la sezione, il blocco interno niente */
+html body .svc-tools-section:not(#_) { min-height: 0 !important; }
+html body .svc-tools-section > .svc-tools:not(#_) { padding-block: 0 !important; margin-block: 0 !important; }
+
+/* ── Anello della hero: arrotondamento originale ──────────────────
+   Con 36px le card larghe ~107px diventavano quasi ovali e
+   sembravano più distanziate: tornano ai 12px di prima. */
+html body .sr-reel__card:not(#_) { border-radius: 12px !important; }
+
+/* ══ RITMO VERTICALE — contenuto → CTA ═════════════════════════════
+   Riferimento: Tips & Tricks in homepage, fra le card e la CTA
+   (--cards-cta-gap: clamp(2rem, 3.5vw, 3rem), 48px a 1536px).
+   Prima: 8–24px nei form, ~20px nelle tab, 40/118px su Google Ads,
+   45px sotto i case studies. Nei form il pulsante sta in un
+   contenitore che ha già 16px fra gli elementi: si aggiunge la
+   differenza. */
+:root { --cta-gap: clamp(2rem, 3.5vw, 3rem); }
+html body :is(.cs2__footer, .tips-section__cta, .service-detail__cta-box,
+  .service-detail__body + div, .about-section__cta,
+  div:has(> .lcn-apply__submit)):not(#_) {
+  margin-top: var(--cta-gap) !important;
+}
+html body .svc-tabs__copy .btn:not(#_) { margin-top: var(--cta-gap) !important; }
+html body :is(.hc-form, .svc-caffe__form) > :is(.btn, button[type="submit"]):not(#_) {
+  margin-top: calc(var(--cta-gap) - 16px) !important;
+}
+/* compensazioni: spazi già presenti nei contenitori */
+html body .hc-consents:not(#_) { height: auto !important; min-height: 0 !important; }
+html body .svc-tabs__copy .btn:not(#_) { margin-top: calc(var(--cta-gap) - 10px) !important; }   /* gap 10 del contenitore */
+html body div:has(> .lcn-apply__submit):not(#_) { margin-top: calc(var(--cta-gap) - 14px) !important; } /* gap 14 del form */
+/* homepage: la seconda riga dei consensi sborda di 18px sotto il suo
+   contenitore; case studies: 28px fra griglia e pulsante vengono
+   dalla struttura del contenitore */
+html body #contatti .hc-form > .hc-submit:not(#_) { margin-top: calc(var(--cta-gap) - 16px) !important; }
+html body .cs2__footer:not(#_):not(#_) { margin-top: var(--cta-gap) !important; }
+
+/* ══ RITMO VERTICALE — stesso spazio sopra e sotto il contenuto ═════
+   I pannelli delle sezioni avevano margini interni diversi sopra e
+   sotto (Contatti 104/30px: "Invia" quasi attaccato al bordo; Case
+   Studies e Tips 101/112; FAQ 92/48). Ora --section-py sopra e
+   sotto. */
+html body :is(.hc-inner, .cs2-sticky, #tipsStickyEl, #faq .page-faq__inner):not(#_) {
+  padding-top: var(--section-py) !important;
+  padding-bottom: var(--section-py) !important;
+}
+/* Case Studies e Tips: la CTA sborda di 28px dal suo contenitore,
+   dentro il margine inferiore → il margine sotto la compensa */
+/* Contatti in homepage: sopra, il titolo ha ~27px di spazio vuoto
+   sopra le lettere (85px visibili); sotto, il footer sale di ~13px
+   sulla sezione. Il margine sotto scende di 14px così lo spazio
+   visibile sotto "Invia" è uguale a quello sopra il titolo. */
+html body #contatti .hc-inner:not(#_):not(#_) { padding-bottom: calc(var(--section-py) - 14px) !important; }
+
+/* ══ FORM GHL — solo il contenitore ═══════════════════════════════
+   I form sono di GoHighLevel e il loro aspetto (campi, label,
+   pulsante) è nel CSS del form, dentro GHL: da qui non si può
+   toccare, sta in un iframe. Vedi css/ghl-form*.css e
+   css/ghl-form.README.md.
+   La pagina decide solo dove sta il form: larghezza, centratura,
+   niente bordo né fondo dell'iframe. L'altezza la imposta lo script
+   di GHL (form_embed.js), quindi qui non si fissa. */
+html body :is(iframe[src*="leadconnectorhq.com"], iframe[src*="msgsndr.com"],
+  iframe[src*="gohighlevel"], iframe[id^="inline-"]):not(#_) {
+  display: block !important;
+  width: 100% !important;
+  max-width: 1240px !important;
+  margin-inline: auto !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color-scheme: normal;
+}
+
+/* ══ TITOLI — stessa scala della homepage ═════════════════════════
+   Le pagine servizi avevano ognuna la propria misura (48, 50, 59,
+   60, 65px, pesi 700/800/900). Ora usano le tre misure della
+   homepage (definite in tokens.css), per ruolo:
+     · titolo lungo / frase (intestazioni di sezione, "Alcuni amici")
+                                   → --t-sub, come "Alcuni amici" in home
+     · titolo breve (una parola: FAQ, Contatti) → --t-xl, solo in home
+       ("Domande Frequenti" è una frase: --t-sub)
+     · "Prendiamoci un caffè": sta nella colonna di sinistra accanto al
+       form, dove 144px non entrano: usa --t-sub e la colonna cede spazio
+   Peso 900, crenatura e altezza di riga uguali a quelli della home.
+   Il fit di js/responsive.js interviene solo se una parola non entra. */
+html body :is(.svc-section-title, .svc-tools__title,
+  .imk-intro__title, .svc-talent-pronti__title, .svc-ai-approccio__title,
+  .svc-ai-workflow__title, .svc-process__title, .smm-panel__big-title,
+  .pc-prod__title, .svc-caffe__title, .page-faq__title):not(#_):not(#_) {
+  font-size: var(--t-sub) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1 !important;
+}
+
+/* "Prendiamoci un caffè": col corpo --t-sub la parola più lunga chiede
+   ~8,3em; la colonna di sinistra cresce un po' (il form resta a due
+   colonne di campi). Sotto i 769px il blocco è già a colonna singola. */
+@media (min-width: 769px) {
+  html body .svc-caffe .svc-caffe__inner:not(#_):not(#_) {
+    grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr);
+  }
+}
+
+/* H1 della testata: più grande di ogni altro titolo della pagina
+   (--t-h1 = 6,2vw, contro il 5,2vw di --t-sub). Frasi brevi su righe
+   fisse: la riga più larga ("Produzione") entra nella colonna di sinistra. */
+html body .svc-hero__title:not(#_):not(#_) {
+  font-size: var(--t-h1) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1 !important;
+}
+
+/* "Un approccio trasparente": col corpo --t-sub la parola più lunga
+   chiede 8,5em, 4px più della colonna di sinistra (50/50). La colonna
+   cresce quel tanto che basta; sotto il breakpoint di colonna singola
+   la regola non vale. */
+@media (min-width: 1025px) {
+  html body .svc-ai-approccio__inner:not(#_):not(#_) {
+    grid-template-columns: minmax(0, 1.08fr) minmax(0, 0.92fr);
+  }
+}
+@media (max-width: 1024px) {
+  html body .svc-ai-approccio__inner:not(#_):not(#_) { grid-template-columns: 1fr; gap: 2.5rem; }
+}
+
+/* ══ SPAZI — pannelli delle pagine servizi come in homepage ═══════
+   In home i pannelli (Case studies, Tips, FAQ, Contatti) hanno
+   --section-py sopra e sotto. Qui erano 72/72, 104/45, 124/45 e
+   36/36 a seconda del tipo di sezione. Ora tutti uguali; sopra mai
+   sotto la nav che passa sopra il pannello. Il pannello "Come portiamo
+   la tua attività" (.svc-path__sticky, 104/45) resta com'è: ha tanto
+   contenuto che con 112/112 supera lo schermo; stessa cosa per il pannello
+   del form "Prendiamoci un caffè" (36/36, tarato per farci stare il form) e
+   per "I sei vantaggi" di Social ADS (tarato a parte). */
+html body :is(.svc-generic-sticky, .page-faq__sticky):not(#ads-vantaggi > *):not(.svc-caffe-runway > *):not(#_) {
+  /* sopra e sotto lo stesso valore: sotto i 1100px --section-py (8vw)
+     scende sotto la distanza dalla nav, e prima il vuoto sotto restava
+     più piccolo di quello sopra */
+  padding-block: max(var(--section-py), calc(var(--nav-h, 88px) + 0.75rem)) !important;
+}
+/* "I sei vantaggi" (Social ADS): era 117/45 */
+html body #ads-vantaggi > .svc-generic-sticky:not(#_) {
+  padding-block: calc(var(--nav-h, 88px) + 0.75rem) !important;
+}
+
+/* ══ "LA TUA IMMAGINE SOCIAL COSTRUITA CON NOI." e analoghe ═══════
+   Il pannello delle pagine servizi (.svc-path__sticky) aveva 104px
+   sopra e 45px sotto: il vuoto sotto era meno della metà di quello
+   sopra. Ora sopra e sotto sono uguali: lo stesso valore (quanto
+   serve per stare sotto la nav) e il contenuto centrato nell'altezza
+   dello schermo, così su schermi alti lo spazio in più si divide a
+   metà e su schermi bassi il pannello cresce senza tagliare. */
+html body .svc-path__sticky:not(#_):not(#_) {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  height: auto !important;
+  min-height: 100dvh !important;
+  padding-block: calc(var(--nav-h, 88px) + 0.75rem) !important;
+}
+
+/* ══ FORM DELLA HERO — casella messaggio senza scroll ═════════════
+   La textarea era alta 58px con scroll interno (overflow auto): con
+   zoom e schermi stretti il segnaposto va a capo e compariva la barra.
+   Ora ha un'altezza minima di tre righe, niente scroll, e js/
+   responsive.js la fa crescere mentre si scrive. */
+html body .svc-hero__form textarea:not(#_):not(#_) {
+  overflow: hidden !important;
+  resize: none !important;
+  min-height: 96px !important;
+  height: 96px;
+  border-radius: 28px !important;
+  line-height: 1.4 !important;
+}
+
+/* ══ MARGINE DESTRO — pagine servizi ══════════════════════════════
+   .container ha il margine solo a sinistra (padding-inline-end: 0 in
+   base.css): sotto i 1440px di larghezza testi, titoli e card
+   arrivavano a filo del bordo destro dello schermo mentre a sinistra
+   c'erano 24–72px. Qui il margine destro è uguale al sinistro. */
+html body main:has(> .svc-hero) .container:not(#_):not(#_) {
+  padding-inline-end: var(--gutter) !important;
+}
+
+/* ══ "I SEI VANTAGGI" — titolo scheda e cifra ═════════════════════
+   Con titoli lunghi ("AUMENTIAMO I PROFITTI") la parola più lunga
+   toccava la cifra (01–06, in alto a destra) o spingeva la colonna
+   fuori dalla scheda. La cifra scala con lo schermo e la riserva del
+   titolo è calcolata sulla cifra, non più fissa a 40px. */
+html body main > section.svc-process .svc-process__card:not(#_):not(#_)::after {
+  font-size: clamp(1.1rem, 1.6vw, 1.75rem) !important;
+  right: clamp(0.8rem, 1.4vw, 1.8rem) !important;
+}
+html body main > section.svc-process .svc-process__card-title:not(#_):not(#_) {
+  padding-right: clamp(1.5rem, 2.6vw, 3.4rem) !important;
+}
+
+/* ══ MENU (mega-menu) — solo schermi zoomati / stretti ════════════
+   Sopra i 1400px il menu è quello di prima, senza regole qui.
+   Tra 769 e 1400px (zoom del browser) le tre colonne uguali non
+   bastavano: Servizi e Esplora hanno link su una riga e la colonna
+   Team, a destra, veniva tagliata. Qui Servizi e Esplora prendono la
+   larghezza che serve ai loro link (restano su una riga, come sopra)
+   e Team il resto, con margini interni più corti. Sotto i 960px il
+   resto non basta per la card Team: resta il menu a due colonne. */
+html body .nav__mega-inner:not(#_):not(#_) {
+  max-height: calc(100dvh - var(--nav-h, 88px) - 16px);
+  overflow-y: auto;
+}
+@media (min-width: 769px) and (max-width: 1400px) {
+  html body .nav__mega-inner:not(#_):not(#_) {
+    grid-template-columns: max-content max-content minmax(0, 1fr);
+  }
+  html body .nav__mega-panel:not(#_):not(#_) { padding: 1.25rem !important; min-width: 0; }
+  html body .nav__mega-panel--dark:first-child:not(#_):not(#_) { padding-right: 1.25rem !important; }
+  html body .nav__mega-links--2col:not(#_):not(#_) { column-gap: 1rem; }
+  html body .nav__mega-headline:not(#_):not(#_),
+  html body .nav__mega-headline strong:not(#_):not(#_) { white-space: normal !important; font-size: 1.2rem !important; }
+  html body .nav__mega-avatars .nav__avatar:not(#_):not(#_) { width: 40px; height: 40px; }
+  html body .nav__mega-avatars .nav__avatar + .nav__avatar:not(#_):not(#_) { margin-left: -12px; }
+}
+@media (min-width: 769px) and (max-width: 960px) {
+  html body .nav__mega-inner:not(#_):not(#_) { grid-template-columns: minmax(0, 1fr) max-content; }
+  html body .nav__mega-panel--pink:not(#_):not(#_) { display: none; }
+}
+/* telefono: una colonna, link a capo nella propria colonna */
+@media (max-width: 768px) {
+  html body .nav__mega-inner:not(#_):not(#_) { grid-template-columns: minmax(0, 1fr); }
+  html body .nav__mega-panel:not(#_):not(#_) { min-width: 0; }
+  html body .nav__mega-links--2col:not(#_):not(#_) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 1rem;
+  }
+  html body .nav__mega-panel--dark:first-child:not(#_):not(#_) { padding-right: 1.5rem; }
+  html body .nav__mega-links a:not(#_):not(#_),
+  html body .nav__mega-headline:not(#_):not(#_) { white-space: normal !important; }
+}
+
+/* "Alcuni amici soddisfatti…": fucsia in tutte le pagine (in Social ADS
+   era bianco per una regola locale) */
+html body main .svc-clients .svc-clients__title:not(#_):not(#_) { color: var(--primary, #DB005A) !important; }
+
+/* ══ SPAZI DOPPI — "I talent pronti" (Influencer) ═════════════════
+   La sezione aveva 112px di padding suo e dentro il pannello ne
+   aveva altri 94: 206px sopra il contenuto. E il blocco "Ad
+   integrazione possiamo occuparci di" chiudeva con altri 86px sotto
+   le pillole, prima del 94 del pannello: ~180px di fondo rosa vuoto.
+   Il respiro lo dà il pannello, uno solo. */
+html body section.svc-talent-pronti:not(#_):not(#_) { padding-block: 0 !important; }
+html body .svc-talent-pronti .svc-integrazione:not(#_):not(#_) { padding-bottom: 0 !important; }
+
+/* ══ "Costruiamo il tuo sito, pezzo per pezzo." (Web design) ══════
+   Fra titolo e tab c'erano 14px; nelle altre pagine (Social media,
+   Influencer, AI…) sono 48, come ovunque fra titolo e contenuto. */
+html body .svc-path__head:not(#_):not(#_) { margin-bottom: var(--gap-block, 48px) !important; }
+/* "I talent pronti" ha più contenuto di uno schermo (talent + blocco
+   integrazione): non va agganciato a 100dvh, o la parte che non entra
+   viene tagliata. Scorre normalmente, con il padding del pannello. */
+html body section.svc-talent-pronti:not(#_):not(#_) { height: auto !important; min-height: 0 !important; }
+html body section.svc-talent-pronti > .svc-generic-sticky:not(#_):not(#_) {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+/* "Estro è il tuo compagno ideale…" (Social ADS): la sezione aveva un
+   suo padding (56–76px) più i 94 del pannello: 150–170px sopra e sotto.
+   Resta solo quello del pannello, uguale sopra e sotto. */
+html body main > section.svc-process:not(#_):not(#_) { padding-block: 0 !important; }
+/* Su schermi alti il pannello era agganciato con una corsa di scroll in
+   più: sotto le schede restavano 150–250px di fucsia vuoto. Senza
+   aggancio: sopra e sotto lo stesso padding, a qualsiasi altezza. */
+html body main > section#ads-vantaggi:not(#_):not(#_) { height: auto !important; min-height: 0 !important; }
+html body main > section#ads-vantaggi > .svc-generic-sticky:not(#_):not(#_) {
+  position: relative !important;
+  height: auto !important;
+  min-height: 0 !important;
+  overflow: visible !important;
+}
+
+/* "ALCUNI AMICI SODDISFATTI / CHE CI HANNO DATO FIDUCIA": due righe in
+   tutte le pagine e a qualsiasi larghezza (come in homepage). Il corpo
+   scala con lo schermo (--t-amici) così ogni riga entra intera. */
+html body .svc-clients__title:not(#_):not(#_) {
+  font-size: var(--t-amici) !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 1 !important;
+  white-space: nowrap !important;
+}
+
+/* ── Case study Dama24: ritmo e titolo contatti ───────────── */
+html body .cs2-body:not(#_):not(#_) { padding-block: clamp(3rem, 6vw, 5rem) !important; }
+html body .cs2-contact .cs2-contact__title:not(#_):not(#_) {
+  font-size: clamp(2rem, 4.4vw, 3.75rem) !important;
+  line-height: 1 !important;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+html body .cs2-contact .cs2-contact__inner:not(#_):not(#_) {
+  padding-block: var(--section-py);
+  gap: clamp(2rem, 5vw, 6rem);
+}
+@media (max-width: 1024px) {
+  html body .cs2-contact .cs2-contact__inner:not(#_):not(#_) { grid-template-columns: 1fr; }
+}
+
+/* ── Case studies: hero sub leggibile, CTA come nelle altre pagine ── */
+html body .cs-hero .cs-hero__sub:not(#_):not(#_) {
+  font-size: clamp(1rem, 1.15vw, 1.1rem) !important;
+  color: rgba(255,255,255,.65) !important;
+  max-width: 44ch;
+}
+html body .cs-cta .cs-cta__title:not(#_):not(#_) {
+  font-size: clamp(2rem, 4.4vw, 3.75rem) !important;
+  line-height: 1 !important;
+}
+html body .cs-cta .cs-cta__inner:not(#_):not(#_) {
+  padding-block: var(--section-py);
+  gap: clamp(2rem, 5vw, 6rem);
+}
+@media (max-width: 1024px) {
+  html body .cs-cta .cs-cta__inner:not(#_):not(#_) { grid-template-columns: 1fr; }
+}
+
+/* ── Arrotondamenti: elementi rimasti fuori dalla regola (case studies, Dama24, servizi) ── */
+html body :is(.cs-hero__reel video, .cs-card, .cs-ocard-wrap, .cs-grid-card,
+  .smm-panel__visual, .svc-hero__video-wrap, .svc-hero__img-wrap,
+  .svc-process__card, .svc-advantages__item, .svc-features__visual,
+  .svc-features__placeholder, .svc-content-block__visual, .cs2__tile,
+  .svc-magic__cat .svc-magic__placeholder, .svc-tabs__media) {
+  border-radius: var(--r-box) !important;
+}
+html body :is(.svc-hero__img-wrap img, .svc-content-block__visual img) { border-radius: inherit !important; }
+html body :is(.cs2-sidebar__search input, .cs2-sidebar__item a, .cst-tab, .cst-stat,
+  .cs-trust-tab, .cs-trust-stat, .svc-tabs__tab:focus-visible, .contact-home__submit) {
+  border-radius: var(--r-pill) !important;
+}
+html body :is(.cs-cta, .cs2-contact) :is(.svc-caffe__field, .contact-home__field):not(textarea) {
+  border-radius: var(--r-pill) !important;
+}
+html body :is(.cs-cta, .cs2-contact) textarea { border-radius: var(--r-box) !important; }
+html body :is(.cs-trust-img, .cs-trust-info) { border-radius: var(--r-box) !important; }
+/* pannelli che salgono nei servizi: 36px come le sezioni */
+html body .smm-panel:is(:nth-child(n+2)) { border-radius: var(--r-box) var(--r-box) 0 0 !important; }
+
+
+/* ── Case study Dama: corpo con lo spazio standard ───────────────
+   Era 80px sopra e sotto; ora --section-py come le altre sezioni. */
+html body .cs2-body:not(#_) { padding-top: var(--section-py) !important; padding-bottom: var(--section-py) !important; }
+
+/* ══ CASE STUDY DAMA — colonna "altri case studies" con lo zoom ════
+   Sotto i 1024px di larghezza (cioè con lo zoom del browser) la
+   colonna veniva nascosta. Resta a fianco del testo, più stretta,
+   agganciata durante lo scroll; solo sul telefono va sotto. */
+@media (min-width: 769px) and (max-width: 1024px) {
+  html body .cs2-body__layout:not(#_) {
+    grid-template-columns: minmax(0, 1fr) 300px !important;
+    gap: clamp(1.5rem, 3vw, 2.5rem) !important;
+  }
+  html body .cs2-sidebar:not(#_) { display: flex !important; }
+}
+/* colonna compatta su schermi bassi o stretti: miniatura piccola e
+   titolo su tutta la larghezza, così le 5 voci stanno nella
+   schermata mentre la colonna è agganciata */
+@media (min-width: 769px) and (max-width: 1024px), (min-width: 769px) and (max-height: 1000px) {
+  html body .cs2-sidebar:not(#_) { padding: 16px !important; gap: 10px !important; }
+  html body .cs2-sidebar__list:not(#_) { gap: 4px !important; }
+  html body .cs2-sidebar__item a:not(#_) { padding: 6px !important; gap: 12px !important; align-items: center !important; grid-template-columns: 64px minmax(0, 1fr) !important; }
+  html body .cs2-sidebar__thumb:not(#_) { width: 64px !important; height: 48px !important; flex: 0 0 64px !important; }
+  html body .cs2-sidebar__title:not(#_) { font-size: 14px !important; line-height: 1.3 !important; }
+}
+@media (min-width: 769px) and (max-height: 700px) {
+  html body .cs2-sidebar__search:not(#_) { display: none !important; }
+}
+/* rete di sicurezza: mai oltre lo schermo (scorre al suo interno) */
+@media (min-width: 769px) {
+  html body .cs2-sidebar:not(#_) {
+    max-height: calc(100dvh - var(--nav-h, 88px) - 40px) !important;
+    overflow-y: auto !important;
+  }
+}
+/* hero di Dama: esattamente una schermata. Su schermi bassi o
+   zoomati il logo (195px) la allungava oltre lo schermo: il logo si
+   adatta allo spazio che resta (max 195px come prima), i testi no. */
+html body .d24-hero:not(#_) { height: 100dvh !important; min-height: 0 !important; }
+html body .d24-hero__logo:not(#_) {
+  height: clamp(70px, calc(100dvh - 450px), 195px) !important;
+  width: auto !important;
+  max-width: 100% !important;
+}
+/* logo della hero di Dama: una regola più forte lo allargava a tutta
+   la colonna mentre l'altezza si riduceva → deformato. Larghezza
+   automatica e proporzioni sempre salve. */
+html body .d24-hero__logo:not(#_):not(#_) {
+  width: auto !important;
+  max-width: 100% !important;
+  object-fit: contain !important;
+  justify-self: start !important;
+  align-self: start !important;
+}
+
+/* ── Dama: loghi della colonna dentro un cerchio ─────────────────
+   Fondo fucsia appena accennato, logo centrato con margine interno
+   (i loghi sono larghi: dentro un cerchio vanno ridotti). */
+html body .cs2-sidebar__thumb:not(#_):not(#_) {
+  width: 96px !important;
+  height: 96px !important;
+  flex: 0 0 96px !important;
+  border-radius: 50% !important;
+  background: rgba(219, 0, 90, 0.07) !important;
+  border: 1px solid rgba(219, 0, 90, 0.18) !important;
+  overflow: hidden !important;
+  display: grid !important;
+  place-items: center !important;
+}
+html body .cs2-sidebar__thumb img:not(#_):not(#_) {
+  width: 70% !important;
+  height: 70% !important;
+  padding: 0 !important;
+  object-fit: contain !important;
+}
+html body .cs2-sidebar__item a:not(#_):not(#_) { grid-template-columns: 96px minmax(0, 1fr) !important; }
+@media (min-width: 769px) and (max-width: 1024px), (min-width: 769px) and (max-height: 1000px) {
+  html body .cs2-sidebar__thumb:not(#_):not(#_) { width: 56px !important; height: 56px !important; flex: 0 0 56px !important; }
+  html body .cs2-sidebar__item a:not(#_):not(#_) { grid-template-columns: 56px minmax(0, 1fr) !important; }
+}
+@media (min-width: 769px) and (max-height: 600px) {
+  html body .cs2-sidebar:not(#_):not(#_) { padding: 12px !important; gap: 8px !important; }
+  html body .cs2-sidebar__thumb:not(#_):not(#_) { width: 48px !important; height: 48px !important; flex: 0 0 48px !important; }
+  html body .cs2-sidebar__item a:not(#_):not(#_) { grid-template-columns: 48px minmax(0, 1fr) !important; padding: 4px !important; }
+}
+
+
+/* ══ CASE STUDIES — Progetti: solo lo spazio sopra e sotto ══════════
+   Testata, scena dell'anello e griglia restano come erano. Lo spazio
+   sopra resta quello originale (7rem = 112px, che tiene "I lavori"
+   sotto il menu anche con lo zoom) e sotto ha lo stesso valore, come
+   le sezioni delle altre pagine. Il pannello cresce con il contenuto:
+   con lo zoom non viene più tagliato, la pagina scorre. */
+html body main #cs-works > .cs-works__sticky:not(#_):not(#_) {
+  height: auto !important;
+  min-height: 0 !important;
+  padding-top: max(var(--section-py), 7rem) !important;
+  padding-bottom: max(var(--section-py), 7rem) !important;
+}
+/* loghi nei cerchi più grandi (con lo zoom erano troppo piccoli) */
+html body .cs2-sidebar__thumb img:not(#_):not(#_) { width: 80% !important; height: 80% !important; }
+@media (min-width: 769px) and (max-width: 1024px), (min-width: 769px) and (max-height: 1000px) {
+  html body .cs2-sidebar__thumb:not(#_):not(#_):not(#_) { width: 72px !important; height: 72px !important; flex: 0 0 72px !important; }
+  html body .cs2-sidebar__item a:not(#_):not(#_):not(#_) { grid-template-columns: 72px minmax(0, 1fr) !important; }
+}
+@media (min-width: 769px) and (max-height: 600px) {
+  html body .cs2-sidebar__thumb:not(#_):not(#_):not(#_) { width: 58px !important; height: 58px !important; flex: 0 0 58px !important; }
+  html body .cs2-sidebar__item a:not(#_):not(#_):not(#_) { grid-template-columns: 58px minmax(0, 1fr) !important; }
+}
+/* la scena dell'anello torna al minimo originale della pagina (540px):
+   con 320px le card (alte ~520px a grandezza piena) uscivano dalla
+   scena e coprivano testata e scritta "Trascina…". */
+html body main #cs-works > .cs-works__sticky .cs-ring-stage:not(#_):not(#_) {
+  height: clamp(540px, 56dvh, 640px) !important;
+}
+
+/* ══ FAQ e LAVORA CON NOI — hero a tutta schermata ══════════════════
+   Una regola generale ("height: auto !important") faceva crescere le
+   hero col contenuto: erano più basse dello schermo (si vedeva già la
+   sezione dopo) o, con lo zoom, più alte. Ora occupano la schermata. */
+html body main > section.lcn-hero:not(#_) {
+  height: 100dvh !important;
+  min-height: 0 !important;
+}
+/* FAQ: i tre numeri (60+ / 13 / 24h) a 150px non stavano nella
+   colonna destra e uscivano dallo schermo. Si dimensionano sulla
+   larghezza della colonna, sempre con il massimo di 150px. */
+html body .faq-hero__right:not(#_) { container-type: inline-size; min-width: 0; }
+html body .faq-hero__stat:not(#_) { gap: 4cqw !important; flex-wrap: nowrap !important; }
+html body .faq-hero__stat-num:not(#_):not(#_) { font-size: min(150px, 14cqw) !important; }
+/* Lavora con noi su schermi bassi/zoomati: il blocco (titolo, testo,
+   CTA, numeri) non stava nella schermata e saliva sotto il menu.
+   Via i margini extra sopra e sotto, titolo un filo più piccolo in
+   base all'altezza. */
+@media (max-height: 700px) and (min-width: 769px) {
+  html body .lcn-hero__top:not(#_) { margin-top: 0 !important; }
+  html body .lcn-hero__stats:not(#_) { margin-bottom: 0 !important; }
+  html body .lcn-hero__title:not(#_):not(#_) { font-size: min(150px, 26vw, 9vh) !important; }
+}
+html body main > section.lcn-hero:not(#_):not(#_) { padding-top: max(104px, calc(var(--nav-h, 88px) + 1.5rem)) !important; }
+@media (max-height: 600px) and (min-width: 769px) {
+  html body .lcn-hero__title:not(#_):not(#_):not(#_) { font-size: min(150px, 26vw, 8vh) !important; }
+}
+@media (max-height: 600px) and (min-width: 769px) {
+  html body .lcn-hero__title:not(#_):not(#_) { margin-bottom: 0.5rem !important; }
+  html body .lcn-hero__bottom:not(#_):not(#_) { padding-top: 0.5rem !important; }
+  html body .lcn-hero__sub:not(#_):not(#_) { margin-bottom: 0.75rem !important; }
+  html body .lcn-hero__stats:not(#_):not(#_) { padding-top: 0.75rem !important; }
+  html body .lcn-hero__stat-num:not(#_):not(#_) { font-size: min(150px, 26vw, 5.5vh) !important; }
+}
+
+/* ── FAQ e Lavora con noi: spazio standard sopra e sotto ─────────── */
+html body :is(.faq-body, .lcn-about, .lcn-positions, .lcn-apply):not(#_) {
+  padding-top: var(--section-py) !important;
+  padding-bottom: var(--section-py) !important;
+}
+/* FAQ: la colonna delle categorie (agganciata) su schermi bassi o
+   zoomati usciva dal fondo. Voci più compatte (stesso corpo 16px). */
+@media (min-width: 769px) and (max-height: 700px) {
+  html body .faq-nav__list a:not(#_) { padding-top: 3px !important; padding-bottom: 3px !important; line-height: 1.35 !important; }
+  html body .faq-nav__label:not(#_) { margin-bottom: 10px !important; }
+}
+/* Lavora con noi: il titolo della hero (H1) era fermato a 60px da una
+   regola generale, quanto i titoli di sezione (H2): nessuna
+   gerarchia. Torna la misura della pagina (10.5% dell'altezza, max
+   150px → ~90px a 1536×864, come le hero dei servizi). Sotto i 700px
+   di altezza valgono le riduzioni qui sopra. */
+@media (min-height: 701px) {
+  html body main .lcn-hero__title:not(#_) { font-size: min(150px, 26vw, 10.5vh) !important; }
+}
+
+/* ── Pagina FAQ: domande a righe, come le FAQ di homepage e servizi ──
+   Niente riquadro bianco arrotondato: righe separate da una linea
+   sottile, testo allineato al bordo sinistro. */
+html body .faq-item:not(#_):not(#_) {
+  background: transparent !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1) !important;
+  margin-bottom: 0 !important;
+}
+html body .faq-item__q:not(#_) { padding-left: 0 !important; padding-right: 0 !important; }
+html body .faq-item__a:not(#_) { padding-left: 0 !important; padding-right: 0 !important; }
+/* FAQ: troppe linee. Resta solo il separatore fra le domande (come
+   nelle FAQ di homepage e servizi); via la linea accanto al titolo
+   di ogni categoria, quella sopra la risposta aperta e quella sotto
+   la hero. */
+html body .faq-group__line:not(#_) { display: none !important; }
+html body .faq-item__a:not(#_):not(#_) { border-top: 0 !important; }
+html body .faq-hero:not(#_) { border-bottom: 0 !important; }
+/* FAQ: con lo zoom (larghezza ≤ 1024px) la sezione "Scrivici" passava
+   a 24px di margine laterale e non era più allineata a hero,
+   categorie e footer (6vw). Stesso margine del resto della pagina. */
+@media (min-width: 769px) {
+  html body main > section.faq-contact:not(#_) {
+    padding-left: clamp(1.5rem, 6vw, 7rem) !important;
+    padding-right: clamp(1.5rem, 6vw, 7rem) !important;
+  }
+}
+
+/* Icona dell'occhio nelle FAQ: le ciglia arrivano al bordo del
+   riquadro dell'SVG e le estremità tonde dei tratti venivano
+   tagliate. Il disegno può uscire dal riquadro. */
+html body svg:is(.eye-open, .eye-closed) { overflow: visible !important; }
+
+/* ── "Parliamoci" allineata al resto della pagina ────────────────────
+   Case Studies: hero e Progetti hanno margine clamp(1.25rem, 4vw, 3rem)
+   e contenuto max 1400px centrato; Dama: hero e corpo clamp(1.5rem,
+   5vw, 6rem). Le sezioni "Parliamoci" usavano 6vw (24px con lo zoom)
+   e non erano allineate a niente. */
+@media (min-width: 769px) {
+  html body main > section.cs-cta:not(#_) {
+    padding-left: clamp(1.25rem, 4vw, 3rem) !important;
+    padding-right: clamp(1.25rem, 4vw, 3rem) !important;
+  }
+  html body main > section.cs-cta > .cs-cta__inner:not(#_) {
+    max-width: 1400px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  html body main > section.cs2-contact:not(#_) {
+    padding-left: clamp(1.5rem, 5vw, 6rem) !important;
+    padding-right: clamp(1.5rem, 5vw, 6rem) !important;
+  }
+}
+
+/* FAQ: l'icona occhio toccava il bordo destro di .faq-item (overflow:hidden) e veniva tagliata */
+html body .faq-item:not(#_) { padding-right: 12px !important; overflow: clip !important; overflow-clip-margin: 8px; }
+html body .faq-item__icon:not(#_) { flex-shrink: 0 !important; }
+
+/* Form hero servizi: colore pieno, niente blur/trasparenza; radius di sistema */
+html body .svc-hero__form-card:not(#_) {
+  background: #141414 !important;
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+  border: 1px solid #2a2a2a !important;
+  border-radius: var(--r-box, 36px) !important;
+}
+html body .svc-hero__form-card .svc-hero__field:not(#_) { background: #232323 !important; }
+
+/* Sezioni pre-footer (Parliamoci / Candidati ora / Scrivici…): stesso margine
+   sinistro del resto della pagina (--gutter) a qualsiasi zoom */
+html body :is(.svc-caffe:not(.hc-section), .cs-cta):not(#_) {
+  padding-left: var(--gutter) !important;
+  padding-right: var(--gutter) !important;
+}
+html body .svc-caffe:not(.hc-section) > .container:not(#_) { padding-left: 0 !important; padding-right: 0 !important; }
+html body .svc-caffe:not(.hc-section) > .container > .hc-header:not(#_) { padding-left: 0 !important; margin-left: 0 !important; }
+html body .cs-cta__inner:not(#_) { margin-left: 0 !important; }
+/* News, Tips e articoli: il contenuto sta a clamp(1.5rem, 5vw, 6rem) */
+html body :is(.nw-contact, .art-contact, .tt-contact):not(#_) {
+  padding-left: clamp(1.5rem, 5vw, 6rem) !important;
+  padding-right: clamp(1.5rem, 5vw, 6rem) !important;
+}
+
+/* Radius di sistema: pill per campi a una riga, 36px per box/media/textarea */
+html body :is(.contact-hub .container, .art-hero__sidebar, .art-pkg, .tt-sidebar, .tt-sidebar__item, .tt-sidebar__thumb, .imk-intro__photo img, .svc-hero__textarea):not(#_) { border-radius: var(--r-box, 36px) !important; }
+html body .tt-sidebar__search input:not(#_) { border-radius: 999px !important; }
+html body .tt-sidebar__thumb:not(#_) { overflow: hidden; }
+html body .tt-sidebar__item > a:not(#_) { border-radius: var(--r-box, 36px) !important; }
+html body .svc-hero__form-card textarea.svc-hero__field:not(#_):not(#__) { border-radius: var(--r-box, 36px) !important; }
+
+/* News, Tips e articoli: H1 come le hero dei servizi (gerarchia: H1 > H2 pre-footer) */
+html body :is(.nw-hero__title, .art-hero__title, .tt-hero__title):not(#_) {
+  font-size: clamp(2.5rem, 6.2vw, 5.6rem) !important;
+  line-height: 0.95 !important;
+  overflow-wrap: normal !important; word-break: normal !important; hyphens: manual !important;
+}
+/* Articoli: ritmo verticale di sistema tra inizio/fine articolo e blocchi scuri */
+html body :is(.tt-body, .art-pricing):not(#_) { padding-top: var(--section-py) !important; padding-bottom: var(--section-py) !important; }
+html body .art-answer:not(#_) { padding-top: var(--section-py) !important; }
+html body .art-faq:not(#_) { padding-bottom: var(--section-py) !important; }
+html body .art-hero__title:not(#_) { font-size: min(clamp(2.5rem, 6.2vw, 5.6rem), 8.5vh) !important; }
+
+/* News / Tips hero: la scritta NEWS/TIPS non deve essere coperta dal titolo.
+   Watermark in flusso, sopra il titolo, allineato a destra. */
+html body .nw-hero:not(#_) { flex-direction: column !important; justify-content: flex-end !important; align-items: stretch !important; min-height: 100dvh !important; }
+html body .nw-hero__watermark:not(#_) {
+  position: relative !important; inset: auto !important; z-index: 1 !important;
+  justify-content: flex-end !important; overflow: visible !important; margin-bottom: clamp(1rem, 3vh, 2.5rem);
+}
+html body .nw-hero__watermark-text:not(#_) { font-size: min(20vw, 22vh) !important; line-height: .8 !important; padding-right: 0 !important; }
+html body .nw-hero__watermark:not(#_) { padding-right: clamp(1.5rem, 5vw, 6rem) !important; }
+html body .nw-hero__title:not(#_) { font-size: min(clamp(2.5rem, 6.2vw, 5.6rem), 9vh) !important; }
+
+/* ── Allineamento verticale unico per News, Tips, Case Studies, Dama e articoli:
+      bordo sinistro/destro dei contenuti = clamp(1.5rem, 5vw, 6rem) a ogni schermo ── */
+:root { --page-x: clamp(1.5rem, 5vw, 6rem); }
+html body :is(.cs-hero, .cs-works__sticky, .cs-cta, .art-faq):not(#_):not(#__) {
+  padding-left: var(--page-x) !important; padding-right: var(--page-x) !important;
+}
+html body :is(.cs-hero__inner, .cs-works__head, .cs-cta__inner):not(#_):not(#__) {
+  max-width: none !important; margin-left: 0 !important; margin-right: 0 !important;
+}
+html body .art-faq__label:not(#_) { margin-left: 0 !important; }
+html body .cs2-figure--wide:not(#_) { margin-left: 0 !important; margin-right: 0 !important; }
+html body .art-faq > *:not(#_):not(#__) { margin-left: 0 !important; margin-right: 0 !important; }
+
+/* ── Pagina News senza foto: layout editoriale ──────────────────────────
+   In evidenza: card scura a tutta larghezza. Elenco: righe con divisori
+   (stesso linguaggio delle FAQ), categoria | titolo + estratto | freccia. */
+html body .nw-grid-wrap:not(:has(img)) .nw-featured:not(#_) { max-width: none !important; margin: 0 0 var(--gap-block, 48px) !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card:not(#_) {
+  display: block !important; background: #0a0a0a !important; color: #fff !important;
+  border: 0 !important; border-radius: var(--r-box, 36px) !important; box-shadow: none !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card:not(#_)::before { display: none !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__body:not(#_) {
+  padding: clamp(2rem, 5vw, 5rem) !important; max-width: 1100px;
+  display: flex !important; flex-direction: column; align-items: flex-start; gap: 16px;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__title:not(#_) {
+  color: #fff !important; font-size: clamp(1.9rem, 3.6vw, 3.5rem) !important; line-height: 1.02 !important; margin: 0 !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__excerpt:not(#_) { color: rgba(255,255,255,.7) !important; font-size: 1.05rem !important; margin: 0 !important; max-width: 640px; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card .nw-card__date:not(#_) { color: rgba(255,255,255,.55) !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__cta:not(#_) {
+  margin-top: calc(var(--cta-gap, 2.5rem) - 16px) !important; background: var(--primary, #DB005A); color: #fff !important;
+  border-radius: 999px; padding: 14px 26px; letter-spacing: .08em; transition: background .25s;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card:hover .nw-featured__cta:not(#_) { background: #b8004b; }
+
+html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#_) { display: block !important; border-top: 1px solid rgba(0,0,0,.1); }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:not(#_) {
+  display: block !important; background: transparent !important; box-shadow: none !important; border-radius: 0 !important;
+  border-bottom: 1px solid rgba(0,0,0,.1) !important; transform: none !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__body:not(#_) {
+  display: grid !important; grid-template-columns: minmax(160px, 22%) 1fr auto; grid-template-areas: "cat title cta" "cat ex cta";
+  column-gap: clamp(1.5rem, 4vw, 4rem); row-gap: 10px; align-items: start; padding: clamp(1.75rem, 3vw, 2.5rem) 0 !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cat:not(#_) { grid-area: cat; margin: .45em 0 0 !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__title:not(#_) {
+  grid-area: title; margin: 0 !important; font-size: clamp(1.25rem, 2vw, 1.9rem) !important; line-height: 1.12 !important; transition: color .25s;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__excerpt:not(#_) { grid-area: ex; margin: 0 !important; max-width: 640px; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#_) {
+  grid-area: cta; align-self: center; margin: 0 !important; width: 56px; height: 56px; border-radius: 999px;
+  border: 1px solid rgba(0,0,0,.15); display: inline-flex !important; align-items: center; justify-content: center;
+  font-size: 0 !important; color: var(--primary, #DB005A); transition: background .25s, color .25s, border-color .25s;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#_)::after { content: '→'; font-size: 20px; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover .nw-card__title:not(#_) { color: var(--primary, #DB005A) !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover .nw-card__cta:not(#_) { background: var(--primary, #DB005A); border-color: var(--primary, #DB005A); color: #fff; }
+@media (max-width: 700px) {
+  html body .nw-grid-wrap:not(:has(img)) .nw-card__body:not(#_) { grid-template-columns: 1fr auto; grid-template-areas: "cat cta" "title cta" "ex ex"; }
+}
+html body .nw-grid-wrap:not(:has(img)) :is(.nw-featured__body, .nw-card__body):not(#_) { background: transparent !important; }
+html body .nw-grid-wrap:not(:has(img)) :is(.nw-featured__card, .nw-featured__body, .nw-card):not(#_)::before,
+html body .nw-grid-wrap:not(:has(img)) :is(.nw-featured__card, .nw-featured__body, .nw-card):not(#_)::after { display: none !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:not(#_) { border-left: 0 !important; border-right: 0 !important; border-top: 0 !important; }
+
+/* Contatti: form con box di sfondo pieno e campi grigi pieni (niente trasparenze),
+   stesso schema del form nelle hero servizi */
+html body .ct-inner .hc-form:not(#_) {
+  background: #141414 !important; border: 1px solid #2a2a2a !important;
+  border-radius: var(--r-box, 36px) !important; padding: clamp(1.5rem, 3vw, 2.5rem) !important;
+}
+html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__) {
+  background: #262626 !important; border: 1px solid #333 !important;
+  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+}
+html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):focus { background: #303030 !important; border-color: #fff !important; }
+
+/* ── Margine laterale UNICO di sito (pagine + footer): clamp(1.5rem, 5vw, 6rem) ── */
+:root:not(#_) { --gutter: clamp(1.5rem, 5vw, 6rem) !important; --page-x: var(--gutter); }
+html body .site-footer:not(#_) { padding-left: var(--gutter) !important; padding-right: var(--gutter) !important; }
+html body :is(.faq-hero, .faq-body, .faq-contact, .lcn-hero, .lcn-about, .lcn-positions, .lcn-apply):not(#_):not(#__) {
+  padding-left: var(--gutter) !important; padding-right: var(--gutter) !important;
+}
+html body .about-section__right:not(#_) { padding-left: 0 !important; }
+/* Il .container centrato (max 1440) spostava i contenuti verso il centro sugli
+   schermi larghi: ora parte sempre dal margine di sito, come il footer */
+html body .container:not(#_) { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+html body .site-footer .sf-inner:not(#_):not(#__) { padding-left: 0 !important; padding-right: 0 !important; max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+/* Footer: colonne con spazi uguali tra loro, dal margine sinistro al destro */
+@media (min-width: 1025px) {
+  html body .site-footer .sf-cols:not(#_) { grid-template-columns: repeat(4, auto) !important; justify-content: center !important; column-gap: clamp(4rem, 9vw, 10rem) !important; }
+}
+/* Footer: la scritta ESTRO di sfondo va da margine a margine dei contenuti
+   (stessi bordi della riga Privacy / © ). 3.923 = larghezza di "ESTRO" in em. */
+html body .site-footer:not(#_) { container-type: inline-size; }
+html body .site-footer .sf-ghost:not(#_) {
+  justify-content: flex-start !important; padding-left: calc(var(--gutter) - 0.0462em) !important;
+  font-size: calc(100cqw / 3.886) !important;
+}
+html body .svc-hero .svc-hero__right:not(#_):not(#__) { padding-right: 0 !important; margin-right: 0 !important; }
+html body .page-faq__title:not(#_):not(#__) { white-space: nowrap !important; width: max-content !important; max-width: 100% !important; margin-left: auto !important; margin-right: auto !important; }
+
+/* ── Pagine servizi: gerarchia titoli ──────────────────────────────────
+   H1 hero = il più grande possibile senza spezzare la parola più lunga
+   ("INFLUENCER" = 7.18em nella colonna del 46%) → 6.3vw.
+   Tutti gli H2 di sezione = una sola misura, maiuscolo, ~3/4 della hero. */
+html body .svc-hero .svc-hero__title:not(#_):not(#__) { font-size: min(6.3vw, 14vh) !important; }
+@media (max-width: 768px) { html body .svc-hero .svc-hero__title:not(#_):not(#__) { font-size: min(11vw, 4rem) !important; } }
+html body:has(.svc-hero) :is(main, section) h2:not(footer *):not(#_):not(#__) {
+  font-size: clamp(1.9rem, 4.6vw, 5.5rem) !important;
+  text-transform: uppercase !important;
+}
+@media (max-width: 600px) {
+  html body:has(.svc-hero) :is(main, section) h2:not(footer *):not(#_):not(#__) { font-size: 24px !important; }
+  html body:has(.svc-hero) .svc-clients__title:not(#_):not(#__),
+  html body:has(.svc-hero) .svc-clients__title *:not(#_) { white-space: normal !important; }
+}
+/* "Prendiamoci un caffè!": le lettere hanno già la loro salita legata allo
+   scroll; la comparsa .wl-wait/.wl-in del titolo intero si sommava e lo
+   faceva saltare su e giù. Resta solo l'animazione delle lettere. */
+/* "Prendiamoci un caffè!": stessa comparsa degli altri titoli (.wl-wait → .wl-in).
+   Le singole lettere non seguono più lo scroll (si sommava alla comparsa e
+   faceva saltare il titolo su e giù). */
+html body .svc-caffe__title .tl:not(#_) { opacity: 1 !important; transform: none !important; }
+html.js-reveal body .svc-caffe__title.wl-wait:not(.wl-in):not(#_) { opacity: 0 !important; }
+
+/* Case Studies: stesse misure dei titoli delle pagine servizi
+   (H1 hero = come .svc-hero__title, H2 di sezione = come gli H2 servizi) */
+html body .cs-hero__title:not(#_):not(#__) { font-size: min(6.3vw, 14vh) !important; }
+html body main :is(.cs-works, .cs-cta) :is(.cs-works__title, .cs-cta__title):not(#_):not(#__) { font-size: clamp(1.9rem, 4.6vw, 5.5rem) !important; }
+@media (max-width: 768px) { html body .cs-hero__title:not(#_):not(#__) { font-size: min(11vw, 4rem) !important; } }
+@media (max-width: 600px) { html body main :is(.cs-works, .cs-cta) :is(.cs-works__title, .cs-cta__title):not(#_):not(#__) { font-size: 24px !important; } }
+html body .page-faq__title:not(#_):not(#__):not(#___) { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; position: relative; left: 50%; transform: translateX(-50%); }
+
+/* ── Tips & Tricks (pagina con le foto) ─────────────────────────────── */
+/* Titoli come le pagine servizi */
+html body:has(.nw-card__img) .nw-hero__title:not(#_):not(#__):not(#___) { font-size: min(6.3vw, 14vh) !important; }
+html body:has(.nw-card__img) .nw-contact__title:not(#_):not(#__):not(#___) { font-size: clamp(1.9rem, 4.6vw, 5.5rem) !important; }
+@media (max-width: 768px) { html body:has(.nw-card__img) .nw-hero__title:not(#_):not(#__):not(#___) { font-size: min(11vw, 4rem) !important; } }
+@media (max-width: 600px) { html body:has(.nw-card__img) .nw-contact__title:not(#_):not(#__):not(#___) { font-size: 24px !important; } }
+/* Hero più corta: non più a tutto schermo */
+html body:has(.nw-card__img) .nw-hero:not(#_):not(#__) { min-height: 0 !important; }
+/* Card come quelle di Case Studies: 360×498 → foto quadrata + fascia 138 */
+html body .nw-grid:has(.nw-card__img):not(#_) {
+  grid-template-columns: repeat(auto-fill, minmax(min(320px, 100%), 1fr)) !important; gap: 24px !important;
+}
+html body .nw-grid .nw-card:has(.nw-card__img):not(#_) {
+  aspect-ratio: 360 / 498; height: auto !important; display: flex !important; flex-direction: column; overflow: hidden;
+}
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__thumb:not(#_) { aspect-ratio: 1 / 1 !important; flex: none; }
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__body:not(#_) {
+  flex: 1; min-height: 0; padding: 18px 20px !important; display: flex !important; flex-direction: column; gap: 8px; justify-content: center;
+}
+html body .nw-grid .nw-card:has(.nw-card__img) :is(.nw-card__excerpt, .nw-card__cta, .nw-card__date):not(#_) { display: none !important; }
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__cat:not(#_) { margin: 0 !important; }
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__title:not(#_) {
+  margin: 0 !important; font-size: 17px !important; line-height: 1.2 !important;
+  display: block !important;
+}
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__title:not(#_):not(#__) {
+  font-size: 15px !important; line-height: 1.2 !important;
+  display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 3 !important;
+  overflow: hidden !important; max-height: 3.6em !important;
+}
+/* Tips: 4 card per riga (2 sotto i 1024px, 1 sotto i 600px); titoli bold, non maiuscoli */
+html body .nw-grid:has(.nw-card__img):not(#_):not(#__) { grid-template-columns: repeat(4, minmax(0, 1fr)) !important; }
+@media (max-width: 1024px) { html body .nw-grid:has(.nw-card__img):not(#_):not(#__) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+@media (max-width: 600px)  { html body .nw-grid:has(.nw-card__img):not(#_):not(#__) { grid-template-columns: 1fr !important; } }
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__title:not(#_):not(#__):not(#___) {
+  text-transform: none !important; font-weight: 700 !important; letter-spacing: 0 !important; font-size: 16px !important;
+}
+@media (min-width: 1025px) and (max-width: 1439px) { html body .nw-grid:has(.nw-card__img):not(#_):not(#__) { grid-template-columns: repeat(3, minmax(0, 1fr)) !important; } }
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__body:not(#_):not(#__) { padding: 14px 18px !important; gap: 6px !important; }
+/* Tips: card in evidenza — titolo come le card (bold, non maiuscolo) e
+   elementi più leggibili */
+html body .nw-featured__card:has(.nw-featured__img) .nw-featured__body:not(#_) { display: flex !important; flex-direction: column; align-items: flex-start; gap: 14px; }
+html body .nw-featured__card:has(.nw-featured__img) .nw-featured__title:not(#_):not(#__) {
+  text-transform: none !important; font-weight: 700 !important; letter-spacing: -0.01em !important;
+  font-size: clamp(1.5rem, 2.3vw, 2.5rem) !important; line-height: 1.15 !important; color: #080808 !important; margin: 0 !important;
+}
+html body .nw-featured__card:has(.nw-featured__img) .nw-card__date:not(#_):not(#__) { color: rgba(0,0,0,.7) !important; font-size: 15px !important; margin: 0 !important; }
+html body .nw-featured__card:has(.nw-featured__img) .nw-featured__excerpt:not(#_):not(#__) { color: rgba(0,0,0,.78) !important; font-size: 17px !important; line-height: 1.55 !important; margin: 0 !important; max-width: 60ch; }
+html body .nw-featured__card:has(.nw-featured__img) .nw-featured__cat:not(#_):not(#__) { font-size: 14px !important; margin: 0 !important; }
+html body .nw-featured__card:has(.nw-featured__img) .nw-featured__cta:not(#_):not(#__) {
+  margin-top: calc(var(--cta-gap, 2.5rem) - 14px) !important; background: var(--primary, #DB005A); color: #fff !important;
+  border-radius: 999px; padding: 14px 26px; transition: background .25s;
+}
+html body .nw-featured__card:has(.nw-featured__img):hover .nw-featured__cta:not(#_):not(#__) { background: #b8004b; }
+
+/* ── Articolo Tips: sidebar "Altri articoli" fissa e tutta visibile ── */
+html body .tt-sidebar:not(#_) {
+  position: sticky !important; top: 96px !important;
+  max-height: calc(100dvh - 96px - 24px) !important; overflow: hidden !important;
+  gap: 12px !important; padding: 18px 18px !important;
+}
+html body .tt-sidebar__list:not(#_) { gap: 4px !important; }
+html body .tt-sidebar__item > a:not(#_):not(#__) {
+  display: grid !important; grid-template-columns: auto 1fr; align-items: center; gap: 12px !important; padding: 6px !important;
+}
+html body .tt-sidebar__thumb:not(#_):not(#__) {
+  width: clamp(44px, 7.6dvh, 80px) !important; height: clamp(44px, 7.6dvh, 80px) !important;
+  aspect-ratio: 1 / 1; border-radius: 16px !important; flex: none;
+}
+html body .tt-sidebar__title:not(#_):not(#__) {
+  font-size: 14px !important; line-height: 1.3 !important;
+  display: -webkit-box !important; -webkit-box-orient: vertical !important; -webkit-line-clamp: 3 !important; overflow: hidden !important;
+}
+/* Articoli: titoli come nelle pagine servizi */
+html body .tt-hero__title:not(#_):not(#__):not(#___) { font-size: min(6.3vw, 14vh) !important; }
+html body .tt-contact__title:not(#_):not(#__):not(#___) { font-size: clamp(1.9rem, 4.6vw, 5.5rem) !important; }
+@media (max-width: 768px) { html body .tt-hero__title:not(#_):not(#__):not(#___) { font-size: min(11vw, 4rem) !important; } }
+@media (max-width: 600px) { html body .tt-contact__title:not(#_):not(#__):not(#___) { font-size: 24px !important; } }
+html body .tt-body__inner:not(#_):not(#__) { max-width: none !important; }

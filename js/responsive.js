@@ -33,10 +33,31 @@
   }
   function overflows(el) {
     if (!el.clientWidth) return false;
-    return el.scrollWidth > room(el) + 1;
+    // Sfora davvero solo se il testo e piu largo della sua scatola, o
+    // se la scatola esce dallo schermo. Confrontare scrollWidth con
+    // room() faceva scattare i titoli a tutta larghezza (scrollWidth
+    // == clientWidth) per via del margine di 8px, riducendoli senza
+    // motivo e rendendo diversi corpi che dovevano essere uguali.
+    const r = el.getBoundingClientRect();
+    const vw = document.documentElement.clientWidth;
+    return el.scrollWidth > el.clientWidth + 1 || r.left + el.scrollWidth > vw + 1;
+  }
+
+  // dentro uno scorrimento orizzontale (le tab delle pagine servizi) gli
+  // elementi fuori schermo sono fuori di proposito: ridurli li lasciava a
+  // 7px, illeggibili
+  function inScroller(el) {
+    for (let a = el.parentElement; a && a !== document.body; a = a.parentElement) {
+      const ox = getComputedStyle(a).overflowX;
+      if (ox === 'auto' || ox === 'scroll') return true;
+    }
+    return false;
   }
 
   function fit() {
+    // pagina caricata con viewport nullo (scheda nascosta): non c'è
+    // nulla da misurare, e ridurre i titoli qui li lascerebbe piccoli
+    if (document.documentElement.clientWidth < 200) return;
     const list = candidates();
     // 1) si torna al corpo del CSS
     list.forEach(el => { if (el.dataset.fitDone) { el.style.removeProperty('font-size'); delete el.dataset.fitDone; } });
@@ -44,6 +65,7 @@
     list.forEach(el => {
       const cs = getComputedStyle(el);
       if (cs.display === 'none' || cs.visibility === 'hidden') return;
+      if (inScroller(el)) return;
       if (!overflows(el)) return;
       const base = parseFloat(cs.fontSize);
       let size = base;
@@ -66,4 +88,34 @@
   addEventListener('load', fit);
   if (document.readyState !== 'loading') fit();
   else document.addEventListener('DOMContentLoaded', fit);
+}());
+
+/* ═══════════════════════════════════════════════════════════════
+   CASELLA MESSAGGIO DEL FORM NELLA HERO — niente scroll
+   La textarea cresce con quello che si scrive (e al cambio di
+   larghezza/zoom, quando il testo va a capo in modo diverso).
+   ═══════════════════════════════════════════════════════════════ */
+(function () {
+  function grow(el) {
+    el.style.height = 'auto';
+    // scrollHeight non conta il bordo: con border-box va aggiunto, altrimenti
+    // restano un paio di pixel di testo tagliati in fondo
+    const border = el.offsetHeight - el.clientHeight;
+    el.style.height = Math.max(el.scrollHeight + border, 96) + 'px';
+  }
+  function init() {
+    const list = [...document.querySelectorAll('.svc-hero__form textarea')];
+    list.forEach(el => {
+      grow(el);
+      el.addEventListener('input', () => grow(el));
+    });
+    if (!list.length) return;
+    let t = 0;
+    const later = () => { clearTimeout(t); t = setTimeout(() => list.forEach(grow), 120); };
+    addEventListener('resize', later, { passive: true });
+    if (window.visualViewport) visualViewport.addEventListener('resize', later, { passive: true });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+  }
+  if (document.readyState !== 'loading') init();
+  else document.addEventListener('DOMContentLoaded', init);
 }());

@@ -6,10 +6,10 @@
   <meta name="description" content="ESTRO — Tips &amp; Tricks: consigli pratici, guide operative e casi reali sul marketing digitale." />
   <meta name="theme-color" content="#000000" />
   <title>Tips &amp; Tricks — ESTRO</title>
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="css/hero.css?v=20261006w" />
   <style>
     /* ══ TIPS & TRICKS PAGE — riusa classi .nw-* di news.html ══ */
 
@@ -233,6 +233,8 @@
         linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
       background-size: 28px 28px;
     }
+    .nw-card__thumb:has(.nw-card__img) { aspect-ratio: 1/1; }
+    .nw-card__img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:1; }
     .nw-card__thumb-icon {
       position: relative;
       z-index: 1;
@@ -813,7 +815,7 @@
       html.js-reveal .sx-rise { transform: none; }
     }
   </style>
-  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -931,7 +933,7 @@
       <div class="nw-grid">
 
         <a class="nw-card reveal reveal-delay-1" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-02.webp" alt="Il Copywriter crea il messaggio, il Social Media Manager lo guida" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Copywriting &amp; Social</span>
             <h3 class="nw-card__title">Il Copywriter crea il messaggio, il Social Media Manager lo guida</h3>
@@ -941,47 +943,47 @@
         </a>
 
         <a class="nw-card reveal reveal-delay-2" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-03.webp" alt="Core Web Vitals nel 2024: cosa cambia e come ottimizzare il tuo sito" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">SEO &amp; Web</span>
-            <h3 class="nw-card__title">Core Web Vitals nel 2024: Cosa Cambia e Come Ottimizzare il Tuo Sito</h3>
+            <h3 class="nw-card__title">Core Web Vitals nel 2024: cosa cambia e come ottimizzare il tuo sito</h3>
             <p class="nw-card__excerpt">Le metriche che Google usa per valutare l'esperienza utente e come migliorarle concretamente.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-04.webp" alt="Threads: la ricetta del nuovo social" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Social Media</span>
-            <h3 class="nw-card__title">Threads: La ricetta al nuovo social</h3>
+            <h3 class="nw-card__title">Threads: la ricetta del nuovo social</h3>
             <p class="nw-card__excerpt">Come funziona Threads, l'app rivale di X</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-05.webp" alt="Contenuti social first: 3 consigli per crearli" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Contenuti</span>
-            <h3 class="nw-card__title">CONTENUTI SOCIAL FIRST: 3 CONSIGLI PER CREARLI</h3>
+            <h3 class="nw-card__title">Contenuti social first: 3 consigli per crearli</h3>
             <p class="nw-card__excerpt">Bella la comunicazione perfetta e patinata... ma un bel video con l'iPhone?</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-06.png" alt="Brand identity: come si crea e perché (sicuramente) ti serve" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Brand</span>
-            <h3 class="nw-card__title">Brand Identity come si crea e perchè (sicuramente) ti serve</h3>
-            <p class="nw-card__excerpt">Chi non la ha, la desidera. Chi la ha, ci tiene a mostrarla a tutti.</p>
+            <h3 class="nw-card__title">Brand identity: come si crea e perché (sicuramente) ti serve</h3>
+            <p class="nw-card__excerpt">Chi non ce l'ha, la desidera. Chi ce l'ha, ci tiene a mostrarla a tutti.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-07.png" alt="Mediashopping goes to MEDIASHOCKING" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Case Study</span>
             <h3 class="nw-card__title">Mediashopping goes to MEDIASHOCKING</h3>
@@ -991,27 +993,27 @@
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-08.png" alt="SIAE vs Instagram: soluzioni per gli audio" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Social Media</span>
-            <h3 class="nw-card__title">SIAE vs INSTAGRAM soluzioni per gli audio</h3>
+            <h3 class="nw-card__title">SIAE vs Instagram: soluzioni per gli audio</h3>
             <p class="nw-card__excerpt">La ricca libreria audio di canzoni che prima Instagram metteva normalmente a disposizione oggi non esiste più.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-09.png" alt="Content strategy: cos'è e come possiamo crearla per il tuo business" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Strategia</span>
-            <h3 class="nw-card__title">Content strategy: cos'è e come la possiamo crearla per il tuo business</h3>
+            <h3 class="nw-card__title">Content strategy: cos'è e come possiamo crearla per il tuo business</h3>
             <p class="nw-card__excerpt">La content strategy si occupa degli aspetti di pianificazione della gestione del contenuto durante tutto il suo ciclo di vita.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-10.jpg" alt="Come abbiamo aumentato l'engagement rate di un account di abbigliamento sfruttando Sanremo" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Case Study</span>
             <h3 class="nw-card__title">Come abbiamo aumentato l'engagement rate di un account di abbigliamento sfruttando Sanremo</h3>
@@ -1021,7 +1023,7 @@
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-11.jpg" alt="Come abbiamo raccolto 754 nuovi lead giocando al Fantasanremo" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Case Study</span>
             <h3 class="nw-card__title">Come abbiamo raccolto 754 nuovi lead giocando al Fantasanremo</h3>
@@ -1031,7 +1033,7 @@
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-12.webp" alt="Come scrivere l'oggetto di una Newsletter? Scopri 8 idee per lasciare il segno" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Email Marketing</span>
             <h3 class="nw-card__title">Come scrivere l'oggetto di una Newsletter? Scopri 8 idee per lasciare il segno</h3>
@@ -1041,7 +1043,7 @@
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-13.png" alt="Come ti svoltiamo la Newsletter di fine anno" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Email Marketing</span>
             <h3 class="nw-card__title">Come ti svoltiamo la Newsletter di fine anno</h3>
@@ -1051,17 +1053,17 @@
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-14.jpg" alt="La ricetta dell'Analisi di Mercato: il caso NBS e come renderla il meno noiosa possibile" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Strategia</span>
-            <h3 class="nw-card__title">La ricetta dell'Analisi di Mercato: il caso NBS e come renderle il meno noiose possibili</h3>
+            <h3 class="nw-card__title">La ricetta dell'Analisi di Mercato: il caso NBS e come renderla il meno noiosa possibile</h3>
             <p class="nw-card__excerpt">Le analisi di mercato, strumento preziosissimo, servono per raggiungere risultati ad un business che voglia funzionare nel tempo.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-15.png" alt="Follow Unfollow, tecnica dell'età della pietra o evergreen?" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Social Media</span>
             <h3 class="nw-card__title">Follow Unfollow, tecnica dell'età della pietra o evergreen?</h3>
@@ -1071,90 +1073,90 @@
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-16.jpg" alt="TikTok &amp; marketing: la Silent Disco e il suo slancio" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">TikTok</span>
-            <h3 class="nw-card__title">Tiktok&amp;Marketing: Silent Disco e il suo slancio</h3>
+            <h3 class="nw-card__title">TikTok &amp; marketing: la Silent Disco e il suo slancio</h3>
             <p class="nw-card__excerpt">Una piattaforma che conta ormai più di un miliardo di persone comprese dai 18 ai 34 anni, con un rapido tasso di engagement tra i suoi utenti.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-17.webp" alt="Influencer marketing: perché? Chi? Come? Quanto?" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Influencer Marketing</span>
-            <h3 class="nw-card__title">INFLUENCER MARKETING: PERCHÈ? CHI? COME? QUANTO?</h3>
+            <h3 class="nw-card__title">Influencer marketing: perché? Chi? Come? Quanto?</h3>
             <p class="nw-card__excerpt">Scopri la strategia ideale per far crescere il tuo brand</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-18.webp" alt="Come preparare una newsletter di inizio anno" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Email Marketing</span>
-            <h3 class="nw-card__title">COME PREPARARE UNA NEWSLETTER DI INIZIO ANNO</h3>
+            <h3 class="nw-card__title">Come preparare una newsletter di inizio anno</h3>
             <p class="nw-card__excerpt">La guida pratica per iniziare l'anno con il piede giusto e una comunicazione che funziona.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-19.webp" alt="Perché la tua azienda ha bisogno di uno storyteller" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Contenuti</span>
-            <h3 class="nw-card__title">PERCHÈ LA TUA AZIENDA HA BISOGNO DI UNO STORYTELLER</h3>
+            <h3 class="nw-card__title">Perché la tua azienda ha bisogno di uno storyteller</h3>
             <p class="nw-card__excerpt">Le belle storie piacciono a tutti, se raccontate nel modo giusto.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-20.jpg" alt="Come crescere su LinkedIn in 3 semplici mosse" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">LinkedIn</span>
-            <h3 class="nw-card__title">COME CRESCERE SU LINKEDIN IN 3 SEMPLICI MOSSE</h3>
+            <h3 class="nw-card__title">Come crescere su LinkedIn in 3 semplici mosse</h3>
             <p class="nw-card__excerpt">Una rapida guida per comunicare sul più importante social B2B</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-21.webp" alt="Vuoi tante prenotazioni ma hai poco budget?" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Ristorazione</span>
-            <h3 class="nw-card__title">VUOI TANTE PRENOTAZIONI MA HAI POCO BUDGET?</h3>
+            <h3 class="nw-card__title">Vuoi tante prenotazioni ma hai poco budget?</h3>
             <p class="nw-card__excerpt">Un grande classico della ristorazione. Ecco come abbiamo fatto.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-22.webp" alt="Come spiegare i social a quel boomer del mio CEO" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Social Media</span>
-            <h3 class="nw-card__title">COME SPIEGARE I SOCIAL A QUEL BOOMER DEL MIO CEO</h3>
+            <h3 class="nw-card__title">Come spiegare i social a quel boomer del mio CEO</h3>
             <p class="nw-card__excerpt">Armati di pazienza e di questi preziosi consigli per fargli comprendere l'importanza dei social.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-23.webp" alt="Hashtag: conosciamoli e usiamoli al meglio" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Social Media</span>
-            <h3 class="nw-card__title">HASHTAG: CONOSCIAMOLI E USIAMOLI AL MEGLIO</h3>
+            <h3 class="nw-card__title">Hashtag: conosciamoli e usiamoli al meglio</h3>
             <p class="nw-card__excerpt">Sfrutta gli hashtag per far crescere i tuoi canali social seguendo i trend</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
         </a>
 
         <a class="nw-card reveal" href="#">
-          <div class="nw-card__thumb"><div class="nw-card__thumb-icon"><svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="4" y="4" width="40" height="40" rx="4" stroke="white" stroke-width="2"/><circle cx="17" cy="18" r="5" stroke="white" stroke-width="2"/><path d="M4 34 L14 24 L22 32 L30 22 L44 38" stroke="white" stroke-width="2" stroke-linejoin="round"/></svg></div></div>
+          <div class="nw-card__thumb"><img class="nw-card__img" src="Foto%20tips%20and%20tricks/tt-24.webp" alt="Le 5 leggi (neanche troppo) segrete del successo stratosferico" loading="lazy" /></div>
           <div class="nw-card__body">
             <span class="nw-card__cat">Strategia</span>
-            <h3 class="nw-card__title">LE 5 LEGGI (NEANCHE TROPPO) SEGRETE DEL SUCCESSO STRATOSFERICO</h3>
+            <h3 class="nw-card__title">Le 5 leggi (neanche troppo) segrete del successo stratosferico</h3>
             <p class="nw-card__excerpt">No, non è un articolo da clickbait.</p>
             <span class="nw-card__cta">Leggi →</span>
           </div>
@@ -1207,7 +1209,7 @@
             </div>
             <div class="f-field">
               <label class="f-label" for="tt-f-messaggio">Messaggio</label>
-              <textarea id="tt-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+              <textarea id="tt-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
             </div>
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="tt-privacy">
@@ -1226,7 +1228,7 @@
     </section>
       </main>
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261006w"></script>
   <script>
   /* ═══════════════════════════════════════════════════════════
      TIPS & TRICKS — stesso motore della homepage.
@@ -1263,21 +1265,20 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
 
     // il titolo della hero è già in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.getElementById('nwHeroTitle'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.getElementById('nwHeroTitle'));
 
     [['nwContactTitle', 950]].forEach(([id, ms]) => {
       const el = document.getElementById(id);
       if (!el) return;
       const io = new IntersectionObserver(es => {
         es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
-      }, { threshold: 0.45 });
-      io.observe(el);
+      }, { threshold: 0.15 });
+      el.classList.add('wl-wait'); io.observe(el);
     });
 
     const ghost = document.querySelector('.sf-ghost');
@@ -1285,7 +1286,7 @@
       const io = new IntersectionObserver(es => {
         es.forEach(e => { if (e.isIntersecting) { waterLetters(ghost, 1000); io.disconnect(); } });
       }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
-      io.observe(ghost);
+      ghost.classList.add('wl-wait'); io.observe(ghost);
     }
 
     /* ── Salita fra sezioni ────────────────────────────────── */
@@ -1502,7 +1503,7 @@
     </div>
   </footer>
 
-  <script src="js/responsive.js"></script>
+  <script src="js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

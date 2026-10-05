@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* Hero: esattamente 100dvh */
     .svc-hero--videobg {
@@ -618,8 +618,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6); /* come in homepage */
       filter: hue-rotate(-54deg) saturate(1.08);
     }
     .amici-video__fade {
@@ -851,16 +852,16 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Cos'e una strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "E un piano strutturato che definisce obiettivi, canali, messaggi e azioni da intraprendere per raggiungere i tuoi traguardi di business attraverso il marketing digitale." } },
-    { "@type": "Question", "name": "Perche e importante avere una strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "Senza una strategia si rischia di investire tempo e denaro in attivita slegate tra loro, senza direzione. Una strategia coerente massimizza il ROI e garantisce che ogni azione contribuisca agli obiettivi aziendali." } },
+    { "@type": "Question", "name": "Cos'è una strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "È un piano strutturato che definisce obiettivi, canali, messaggi e azioni da intraprendere per raggiungere i tuoi traguardi di business attraverso il marketing digitale." } },
+    { "@type": "Question", "name": "Perché è importante avere una strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "Senza una strategia si rischia di investire tempo e denaro in attività slegate tra loro, senza direzione. Una strategia coerente massimizza il ROI e garantisce che ogni azione contribuisca agli obiettivi aziendali." } },
     { "@type": "Question", "name": "Come si sviluppa una strategia digitale con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Partiamo dall'analisi del tuo brand, del mercato e dei competitor. Definiamo insieme gli obiettivi, i KPI e i canali prioritari, poi costruiamo un piano d'azione dettagliato e misurabile." } },
-    { "@type": "Question", "name": "Quanto dura un progetto di strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "La fase di analisi e definizione strategica richiede generalmente 2-4 settimane. L'implementazione e poi un processo continuativo, con revisioni periodiche per adattare la strategia ai risultati." } },
-    { "@type": "Question", "name": "La strategia digitale include anche i social media?", "acceptedAnswer": { "@type": "Answer", "text": "Si, la strategia digitale e trasversale e comprende social media, advertising, contenuti, SEO, email marketing e qualsiasi altro canale rilevante per i tuoi obiettivi." } },
+    { "@type": "Question", "name": "Quanto dura un progetto di strategia digitale?", "acceptedAnswer": { "@type": "Answer", "text": "La fase di analisi e definizione strategica richiede generalmente 2-4 settimane. L'implementazione è poi un processo continuativo, con revisioni periodiche per adattare la strategia ai risultati." } },
+    { "@type": "Question", "name": "La strategia digitale include anche i social media?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, la strategia digitale è trasversale e comprende social media, advertising, contenuti, SEO, email marketing e qualsiasi altro canale rilevante per i tuoi obiettivi." } },
     { "@type": "Question", "name": "Come viene misurata l'efficacia della strategia?", "acceptedAnswer": { "@type": "Answer", "text": "Definiamo KPI specifici per ogni obiettivo (traffico, lead, vendite, awareness) e li monitoriamo con report regolari. La strategia viene aggiornata in base ai dati raccolti." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -946,7 +947,7 @@
 
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">Strategia Digitale</p>
-          <h1 class="svc-hero__title" id="page-title"><span style="white-space:nowrap">La tua</span><br/><span style="white-space:nowrap">Strategia</span><br/><em style="white-space:nowrap">Digitale</em><br/><span style="white-space:nowrap">su misura</span></h1>
+          <h1 class="svc-hero__title" id="page-title">La tua<br/><em>Strategia</em><br/><em>Digitale</em></h1>
           <p class="svc-hero__sub">Qualsiasi sia il tuo traguardo è più vicino di quanto pensi. Elaboriamo rapidamente il piano migliore per lanciare in orbita il tuo brand.</p>
           <p class="svc-hero__tagline" style="color:var(--primary);font-weight:600;">Mettiti comodo e preparati a vedere meraviglie</p>
         </div>
@@ -986,7 +987,7 @@
               </div>
               <div class="f-field">
                 <label class="f-label" for="sd-f-messaggio">Messaggio</label>
-                <textarea id="sd-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+                <textarea id="sd-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
               </div>
               <div class="hc-consents">
                 <label class="svc-hero__privacy" for="sd-hero-privacy">
@@ -1020,27 +1021,27 @@
           <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
             <button class="svc-tabs__tab is-active" type="button" role="tab" id="sd-tab-1" aria-controls="sd-pan-1" aria-selected="true" tabindex="0">
               <span class="svc-tabs__num" aria-hidden="true">01</span>
-              <span class="svc-tabs__tag">Analisi di Mercato</span>
+              <span class="svc-tabs__tag">Ricerca</span>
               <span class="svc-tabs__title">Analisi di Mercato</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="sd-tab-2" aria-controls="sd-pan-2" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">02</span>
-              <span class="svc-tabs__tag">Brand Identity</span>
+              <span class="svc-tabs__tag">Posizionamento</span>
               <span class="svc-tabs__title">Brand Identity</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="sd-tab-3" aria-controls="sd-pan-3" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">03</span>
-              <span class="svc-tabs__tag">Marketing Strategy</span>
+              <span class="svc-tabs__tag">Pianificazione</span>
               <span class="svc-tabs__title">Marketing Strategy</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="sd-tab-4" aria-controls="sd-pan-4" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">04</span>
-              <span class="svc-tabs__tag">Brand Vision</span>
+              <span class="svc-tabs__tag">Visione</span>
               <span class="svc-tabs__title">Brand Vision</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="sd-tab-5" aria-controls="sd-pan-5" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">05</span>
-              <span class="svc-tabs__tag">Business Plan</span>
+              <span class="svc-tabs__tag">Sostenibilità</span>
               <span class="svc-tabs__title">Business Plan</span>
             </button>
           </div>
@@ -1314,12 +1315,12 @@
         <h2 class="page-faq__title">Domande Frequenti</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Cos'e una strategia digitale?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">E un piano strutturato che definisce obiettivi, canali, messaggi e azioni da intraprendere per raggiungere i tuoi traguardi di business attraverso il marketing digitale.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Cos'è una strategia digitale?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">È un piano strutturato che definisce obiettivi, canali, messaggi e azioni da intraprendere per raggiungere i tuoi traguardi di business attraverso il marketing digitale.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Perche e importante avere una strategia digitale?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Senza una strategia si rischia di investire tempo e denaro in attivita slegate tra loro, senza direzione. Una strategia coerente massimizza il ROI e garantisce che ogni azione contribuisca agli obiettivi aziendali.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Perché è importante avere una strategia digitale?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Senza una strategia si rischia di investire tempo e denaro in attività slegate tra loro, senza direzione. Una strategia coerente massimizza il ROI e garantisce che ogni azione contribuisca agli obiettivi aziendali.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Come si sviluppa una strategia digitale con ESTRO?</button>
@@ -1327,11 +1328,11 @@
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quanto dura un progetto di strategia digitale?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">La fase di analisi e definizione strategica richiede generalmente 2-4 settimane. L'implementazione e poi un processo continuativo, con revisioni periodiche per adattare la strategia ai risultati.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">La fase di analisi e definizione strategica richiede generalmente 2-4 settimane. L'implementazione è poi un processo continuativo, con revisioni periodiche per adattare la strategia ai risultati.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">La strategia digitale include anche i social media?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, la strategia digitale e trasversale e comprende social media, advertising, contenuti, SEO, email marketing e qualsiasi altro canale rilevante per i tuoi obiettivi.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, la strategia digitale è trasversale e comprende social media, advertising, contenuti, SEO, email marketing e qualsiasi altro canale rilevante per i tuoi obiettivi.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Come viene misurata l'efficacia della strategia?</button>
@@ -1381,7 +1382,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="sd2-f-messaggio">Messaggio</label>
-            <textarea id="sd2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="sd2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="sd-privacy">
@@ -1402,7 +1403,7 @@
   <script>
   (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
   </script>
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
   <script>
   /* ── Strategia Digitale: scroll-driven motion — parametri identici a SMM/Social-ADS ── */
   (function () {
@@ -1854,12 +1855,11 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
     // il titolo della hero e gia in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
     // gli altri titoli di sezione ondeggiano quando entrano
     document.querySelectorAll(
       '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
@@ -1870,8 +1870,8 @@
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
         }, el.classList.contains('sf-ghost')
              ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-             : { threshold: 0.6 });
-        io.observe(el);
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
@@ -2060,7 +2060,7 @@
     else addEventListener('load', pass);
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

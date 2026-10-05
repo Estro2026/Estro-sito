@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* ── SMM STACKED PANELS ─────────────────────────────────── */
     /* 6 panels × 100dvh → stack is 600dvh tall so each panel gets ~100dvh of scroll */
@@ -834,8 +834,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6); /* come in homepage */
       filter: hue-rotate(-54deg) saturate(1.08);
     }
     .amici-video__fade {
@@ -1042,16 +1043,16 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Cos'e il social media management?", "acceptedAnswer": { "@type": "Answer", "text": "E la gestione professionale dei profili social di un'azienda: creazione di contenuti, pianificazione editoriale, pubblicazione, monitoraggio e risposta alla community. L'obiettivo e costruire una presenza coerente e riconoscibile online." } },
+    { "@type": "Question", "name": "Cos'è il social media management?", "acceptedAnswer": { "@type": "Answer", "text": "È la gestione professionale dei profili social di un'azienda: creazione di contenuti, pianificazione editoriale, pubblicazione, monitoraggio e risposta alla community. L'obiettivo è costruire una presenza coerente e riconoscibile online." } },
     { "@type": "Question", "name": "Quali social network gestisce ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Gestiamo tutti i principali canali: Instagram, Facebook, TikTok, LinkedIn, YouTube e Spotify. La scelta delle piattaforme dipende dal tuo pubblico e dai tuoi obiettivi di business." } },
-    { "@type": "Question", "name": "Con quale frequenza vengono pubblicati i contenuti?", "acceptedAnswer": { "@type": "Answer", "text": "La frequenza e concordata insieme durante la fase di strategia. In genere lavoriamo con un piano editoriale mensile, con una cadenza ottimale per ogni piattaforma." } },
-    { "@type": "Question", "name": "Come misurate i risultati del social media management?", "acceptedAnswer": { "@type": "Answer", "text": "Monitoriamo KPI come crescita dei follower, reach, engagement rate, impression e clic. Forniamo report periodici per rendere trasparente l'andamento delle attivita." } },
-    { "@type": "Question", "name": "Quanto tempo ci vuole per vedere risultati sui social?", "acceptedAnswer": { "@type": "Answer", "text": "I risultati organici richiedono in media 3-6 mesi di attivita costante. Combinando gestione organica e paid advertising i tempi si accorciano sensibilmente." } },
-    { "@type": "Question", "name": "Producete anche i contenuti visivi (foto e video)?", "acceptedAnswer": { "@type": "Answer", "text": "Si, offriamo anche la produzione completa di contenuti fotografici e video. Gestiamo tutto internamente, dalla ripresa al montaggio e alla post-produzione." } }
+    { "@type": "Question", "name": "Con quale frequenza vengono pubblicati i contenuti?", "acceptedAnswer": { "@type": "Answer", "text": "La frequenza è concordata insieme durante la fase di strategia. In genere lavoriamo con un piano editoriale mensile, con una cadenza ottimale per ogni piattaforma." } },
+    { "@type": "Question", "name": "Come misurate i risultati del social media management?", "acceptedAnswer": { "@type": "Answer", "text": "Monitoriamo KPI come crescita dei follower, reach, engagement rate, impression e clic. Forniamo report periodici per rendere trasparente l'andamento delle attività." } },
+    { "@type": "Question", "name": "Quanto tempo ci vuole per vedere risultati sui social?", "acceptedAnswer": { "@type": "Answer", "text": "I risultati organici richiedono in media 3-6 mesi di attività costante. Combinando gestione organica e paid advertising i tempi si accorciano sensibilmente." } },
+    { "@type": "Question", "name": "Producete anche i contenuti visivi (foto e video)?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, offriamo anche la produzione completa di contenuti fotografici e video. Gestiamo tutto internamente, dalla ripresa al montaggio e alla post-produzione." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -1137,11 +1138,9 @@
 
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">Social Media Management</p>
-          <h1 class="svc-hero__title" id="page-title">
-            Costruisci<br/>
-            la tua presenza<br/>
-            sui <em>social</em>.
-          </h1>
+          <h1 class="svc-hero__title" id="page-title">La tua<br/>
+            presenza<br/>
+            sui <em>social</em>.</h1>
           <div class="svc-hero__platforms">
             <a href="https://www.facebook.com" target="_blank" rel="noopener" aria-label="Facebook"><img src="../Social%20ads/estro-facebook.svg" alt="Facebook" width="40" height="40" /></a>
             <a href="https://www.instagram.com" target="_blank" rel="noopener" aria-label="Instagram"><img src="../Social%20ads/estro-instagram.svg" alt="Instagram" width="40" height="40" /></a>
@@ -1189,7 +1188,7 @@
               </div>
               <div class="f-field">
                 <label class="f-label" for="smm-f-messaggio">Messaggio</label>
-                <textarea id="smm-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+                <textarea id="smm-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
               </div>
               <div class="hc-consents">
                 <label class="svc-hero__privacy" for="smm-hero-privacy">
@@ -1228,32 +1227,32 @@
           <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
             <button class="svc-tabs__tab is-active" type="button" role="tab" id="smm-tab-1" aria-controls="smm-pan-1" aria-selected="true" tabindex="0">
               <span class="svc-tabs__num" aria-hidden="true">01</span>
-              <span class="svc-tabs__tag">Piano Editoriale</span>
-              <span class="svc-tabs__title">Piani Editoriale &amp; Storytelling</span>
+              <span class="svc-tabs__tag">Pianificazione</span>
+              <span class="svc-tabs__title">Piano Editoriale &amp; Storytelling</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="smm-tab-2" aria-controls="smm-pan-2" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">02</span>
-              <span class="svc-tabs__tag">Brand Identity</span>
+              <span class="svc-tabs__tag">Riconoscibilità</span>
               <span class="svc-tabs__title">Social Media Identity</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="smm-tab-3" aria-controls="smm-pan-3" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">03</span>
-              <span class="svc-tabs__tag">Contenuti</span>
+              <span class="svc-tabs__tag">Produzione</span>
               <span class="svc-tabs__title">Gestione Contenuti Post · Foto · Video</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="smm-tab-4" aria-controls="smm-pan-4" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">04</span>
-              <span class="svc-tabs__tag">Community</span>
+              <span class="svc-tabs__tag">Relazione</span>
               <span class="svc-tabs__title">Community Management</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="smm-tab-5" aria-controls="smm-pan-5" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">05</span>
-              <span class="svc-tabs__tag">Content Marketing</span>
+              <span class="svc-tabs__tag">Valore</span>
               <span class="svc-tabs__title">Content Marketing</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="smm-tab-6" aria-controls="smm-pan-6" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">06</span>
-              <span class="svc-tabs__tag">Face Filters AR</span>
+              <span class="svc-tabs__tag">Realtà aumentata</span>
               <span class="svc-tabs__title">Face Filters Personalizzati</span>
             </button>
           </div>
@@ -1472,8 +1471,8 @@
         <h2 class="page-faq__title">Domande Frequenti</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Cos'e il social media management?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">E la gestione professionale dei profili social di un'azienda: creazione di contenuti, pianificazione editoriale, pubblicazione, monitoraggio e risposta alla community. L'obiettivo e costruire una presenza coerente e riconoscibile online.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Cos'è il social media management?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">È la gestione professionale dei profili social di un'azienda: creazione di contenuti, pianificazione editoriale, pubblicazione, monitoraggio e risposta alla community. L'obiettivo è costruire una presenza coerente e riconoscibile online.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quali social network gestisce ESTRO?</button>
@@ -1481,19 +1480,19 @@
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Con quale frequenza vengono pubblicati i contenuti?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">La frequenza e concordata insieme durante la fase di strategia. In genere lavoriamo con un piano editoriale mensile, con una cadenza ottimale per ogni piattaforma.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">La frequenza è concordata insieme durante la fase di strategia. In genere lavoriamo con un piano editoriale mensile, con una cadenza ottimale per ogni piattaforma.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Come misurate i risultati del social media management?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Monitoriamo KPI come crescita dei follower, reach, engagement rate, impression e clic. Forniamo report periodici per rendere trasparente l'andamento delle attivita.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Monitoriamo KPI come crescita dei follower, reach, engagement rate, impression e clic. Forniamo report periodici per rendere trasparente l'andamento delle attività.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quanto tempo ci vuole per vedere risultati sui social?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">I risultati organici richiedono in media 3-6 mesi di attivita costante. Combinando gestione organica e paid advertising i tempi si accorciano sensibilmente.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">I risultati organici richiedono in media 3-6 mesi di attività costante. Combinando gestione organica e paid advertising i tempi si accorciano sensibilmente.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Producete anche i contenuti visivi (foto e video)?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, offriamo anche la produzione completa di contenuti fotografici e video. Gestiamo tutto internamente, dalla ripresa al montaggio e alla post-produzione.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, offriamo anche la produzione completa di contenuti fotografici e video. Gestiamo tutto internamente, dalla ripresa al montaggio e alla post-produzione.</div></div>
           </div>
         </dl>
       </div>
@@ -1539,7 +1538,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="smm2-f-messaggio">Messaggio</label>
-            <textarea id="smm2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="smm2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="smmCaffe-privacy">
@@ -1929,7 +1928,7 @@
 
   })();
   </script>
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
 
   <!-- ── Nav theme RAF: luminanza del colore effettivo sotto la nav ── -->
   <script>
@@ -2189,12 +2188,11 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
     // il titolo della hero e gia in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
     // gli altri titoli di sezione ondeggiano quando entrano
     document.querySelectorAll('.smm-panel__big-title, .svc-clients__title, .svc-magic__title, .svc-caffe__title, .page-faq__title, .sf-ghost')
       .forEach(el => {
@@ -2202,8 +2200,8 @@
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
         }, el.classList.contains('sf-ghost')
              ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-             : { threshold: 0.6 });
-        io.observe(el);
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
@@ -2316,7 +2314,7 @@
     else addEventListener('load', pass);
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

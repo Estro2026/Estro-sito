@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* Hero: esattamente 100dvh */
     .svc-hero--videobg {
@@ -785,8 +785,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6); /* come in homepage */
       filter: hue-rotate(-54deg) saturate(1.08);
     }
     .amici-video__fade {
@@ -1019,15 +1020,15 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Che tipo di contenuti produce ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Produciamo video (spot, reel, branded content, tutorial, interviste), foto (product photography, ritratti, reportage aziendale) e contenuti grafici ottimizzati per ogni piattaforma digitale." } },
-    { "@type": "Question", "name": "ESTRO dispone di attrezzatura professionale?", "acceptedAnswer": { "@type": "Answer", "text": "Si, lavoriamo con attrezzatura professionale: telecamere cinema, droni, luci e audio professionali. Disponiamo anche di uno studio interno per riprese in ambiente controllato." } },
-    { "@type": "Question", "name": "I contenuti sono ottimizzati per i social media?", "acceptedAnswer": { "@type": "Answer", "text": "Si, ogni contenuto e prodotto tenendo conto delle specifiche tecniche e delle best practice di ogni piattaforma (formato verticale per Reel/TikTok, orizzontale per YouTube, ecc.)." } },
-    { "@type": "Question", "name": "Quanto tempo ci vuole per produrre un video?", "acceptedAnswer": { "@type": "Answer", "text": "Dipende dalla complessita: un reel semplice puo essere pronto in pochi giorni, mentre uno spot piu elaborato richiede 2-4 settimane tra pre-produzione, riprese e post-produzione." } },
-    { "@type": "Question", "name": "E possibile richiedere contenuti in serie continuativa?", "acceptedAnswer": { "@type": "Answer", "text": "Si, offriamo pacchetti mensili di produzione continuativa, ideali per aziende che necessitano di un flusso costante di contenuti per i canali social e digitali." } },
-    { "@type": "Question", "name": "ESTRO si occupa anche della sceneggiatura e dello storytelling?", "acceptedAnswer": { "@type": "Answer", "text": "Si, il nostro team creativo si occupa di tutto: concept, sceneggiatura, storyboard, regia e post-produzione. Puoi affidarti a noi per l'intero processo creativo." } }
+    { "@type": "Question", "name": "ESTRO dispone di attrezzatura professionale?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, lavoriamo con attrezzatura professionale: telecamere cinema, droni, luci e audio professionali. Disponiamo anche di uno studio interno per riprese in ambiente controllato." } },
+    { "@type": "Question", "name": "I contenuti sono ottimizzati per i social media?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, ogni contenuto è prodotto tenendo conto delle specifiche tecniche e delle best practice di ogni piattaforma (formato verticale per Reel/TikTok, orizzontale per YouTube, ecc.)." } },
+    { "@type": "Question", "name": "Quanto tempo ci vuole per produrre un video?", "acceptedAnswer": { "@type": "Answer", "text": "Dipende dalla complessità: un reel semplice può essere pronto in pochi giorni, mentre uno spot più elaborato richiede 2-4 settimane tra pre-produzione, riprese e post-produzione." } },
+    { "@type": "Question", "name": "È possibile richiedere contenuti in serie continuativa?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, offriamo pacchetti mensili di produzione continuativa, ideali per aziende che necessitano di un flusso costante di contenuti per i canali social e digitali." } },
+    { "@type": "Question", "name": "ESTRO si occupa anche della sceneggiatura e dello storytelling?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, il nostro team creativo si occupa di tutto: concept, sceneggiatura, storyboard, regia e post-produzione. Puoi affidarti a noi per l'intero processo creativo." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -1113,7 +1114,7 @@
 
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">Produzione Contenuti</p>
-          <h1 class="svc-hero__title" id="page-title">Produzione<br/><em>Contenuti</em></h1>
+          <h1 class="svc-hero__title" id="page-title"><em>Contenuti</em><br/>che<br/>vendono.</h1>
           <p class="svc-hero__sub">Uno spot pubblicitario o uno shooting fotografico devono essere realizzati con cura, sfruttando tutti gli strumenti tecnici e creativi necessari.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
         </div>
@@ -1153,7 +1154,7 @@
               </div>
               <div class="f-field">
                 <label class="f-label" for="pc-f-messaggio">Messaggio</label>
-                <textarea id="pc-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+                <textarea id="pc-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
               </div>
               <div class="hc-consents">
                 <label class="svc-hero__privacy" for="pc-hero-privacy">
@@ -1186,42 +1187,42 @@
           <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
             <button class="svc-tabs__tab is-active" type="button" role="tab" id="pc-tab-1" aria-controls="pc-pan-1" aria-selected="true" tabindex="0">
               <span class="svc-tabs__num" aria-hidden="true">01</span>
-              <span class="svc-tabs__tag">Moodboard</span>
+              <span class="svc-tabs__tag">Concept</span>
               <span class="svc-tabs__title">Moodboard</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-2" aria-controls="pc-pan-2" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">02</span>
-              <span class="svc-tabs__tag">Casting</span>
+              <span class="svc-tabs__tag">Talenti</span>
               <span class="svc-tabs__title">Casting attori e modelli</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-3" aria-controls="pc-pan-3" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">03</span>
-              <span class="svc-tabs__tag">Location scouting</span>
+              <span class="svc-tabs__tag">Luoghi</span>
               <span class="svc-tabs__title">Location scouting</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-4" aria-controls="pc-pan-4" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">04</span>
-              <span class="svc-tabs__tag">Set design</span>
+              <span class="svc-tabs__tag">Scenografia</span>
               <span class="svc-tabs__title">Set design</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-5" aria-controls="pc-pan-5" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">05</span>
-              <span class="svc-tabs__tag">Lighting design</span>
+              <span class="svc-tabs__tag">Luce</span>
               <span class="svc-tabs__title">Lighting design</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-6" aria-controls="pc-pan-6" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">06</span>
-              <span class="svc-tabs__tag">Stylist</span>
+              <span class="svc-tabs__tag">Look</span>
               <span class="svc-tabs__title">Stylist</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-7" aria-controls="pc-pan-7" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">07</span>
-              <span class="svc-tabs__tag">Makeup artist</span>
+              <span class="svc-tabs__tag">Trucco</span>
               <span class="svc-tabs__title">Makeup artist</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="pc-tab-8" aria-controls="pc-pan-8" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">08</span>
-              <span class="svc-tabs__tag">Regia</span>
+              <span class="svc-tabs__tag">Direzione</span>
               <span class="svc-tabs__title">Regia</span>
             </button>
           </div>
@@ -1273,7 +1274,7 @@
                 <span class="svc-tabs__media-label">Set design</span>
               </div>
               <div class="svc-tabs__copy">
-                <p class="svc-tabs__text">I nostri set sono studiati da <strong>scenografi e designers professionisti</strong>, che doneranno al tuo video un tocco di pura magia. Non c'è <strong>oggetto di scena</strong> che non siamo in grado di trovare o realizzare.</p>
+                <p class="svc-tabs__text">I nostri set sono studiati da <strong>scenografi e designer professionisti</strong>, che doneranno al tuo video un tocco di pura magia. Non c'è <strong>oggetto di scena</strong> che non siamo in grado di trovare o realizzare.</p>
                 <ul class="svc-tabs__points">
                   <li>I dettagli fanno la differenza</li>
                   <li>Scenografi e designer professionisti</li>
@@ -1807,23 +1808,23 @@
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">ESTRO dispone di attrezzatura professionale?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, lavoriamo con attrezzatura professionale: telecamere cinema, droni, luci e audio professionali. Disponiamo anche di uno studio interno per riprese in ambiente controllato.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, lavoriamo con attrezzatura professionale: telecamere cinema, droni, luci e audio professionali. Disponiamo anche di uno studio interno per riprese in ambiente controllato.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">I contenuti sono ottimizzati per i social media?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, ogni contenuto e prodotto tenendo conto delle specifiche tecniche e delle best practice di ogni piattaforma (formato verticale per Reel/TikTok, orizzontale per YouTube, ecc.).</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, ogni contenuto è prodotto tenendo conto delle specifiche tecniche e delle best practice di ogni piattaforma (formato verticale per Reel/TikTok, orizzontale per YouTube, ecc.).</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quanto tempo ci vuole per produrre un video?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Dipende dalla complessita: un reel semplice puo essere pronto in pochi giorni, mentre uno spot piu elaborato richiede 2-4 settimane tra pre-produzione, riprese e post-produzione.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Dipende dalla complessità: un reel semplice può essere pronto in pochi giorni, mentre uno spot più elaborato richiede 2-4 settimane tra pre-produzione, riprese e post-produzione.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">E possibile richiedere contenuti in serie continuativa?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, offriamo pacchetti mensili di produzione continuativa, ideali per aziende che necessitano di un flusso costante di contenuti per i canali social e digitali.</div></div>
+            <button class="page-faq__question" aria-expanded="false">È possibile richiedere contenuti in serie continuativa?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, offriamo pacchetti mensili di produzione continuativa, ideali per aziende che necessitano di un flusso costante di contenuti per i canali social e digitali.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">ESTRO si occupa anche della sceneggiatura e dello storytelling?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, il nostro team creativo si occupa di tutto: concept, sceneggiatura, storyboard, regia e post-produzione. Puoi affidarti a noi per l'intero processo creativo.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, il nostro team creativo si occupa di tutto: concept, sceneggiatura, storyboard, regia e post-produzione. Puoi affidarti a noi per l'intero processo creativo.</div></div>
           </div>
         </dl>
       </div>
@@ -1869,7 +1870,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="pc2-f-messaggio">Messaggio</label>
-            <textarea id="pc2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="pc2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="pc-privacy">
@@ -1890,7 +1891,7 @@
   <script>
   (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
   </script>
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
   <script>
   /* ── Produzione Contenuti: scroll-driven motion ── */
   (function () {
@@ -2428,12 +2429,11 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
     // il titolo della hero e gia in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
     // gli altri titoli di sezione ondeggiano quando entrano
     document.querySelectorAll(
       '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
@@ -2444,8 +2444,8 @@
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
         }, el.classList.contains('sf-ghost')
              ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-             : { threshold: 0.6 });
-        io.observe(el);
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
@@ -2634,7 +2634,7 @@
     else addEventListener('load', pass);
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

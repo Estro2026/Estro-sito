@@ -82,10 +82,10 @@
       window.addEventListener('resize', check, { passive: true });
     }());
   </script>
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/components.css" />
-  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="css/hero.css?v=20261006w" />
   <style>
     body { background: #000; }
     .about-section { border-top: none !important; }
@@ -1962,6 +1962,70 @@
       color: rgba(26,8,16,0.42);
       pointer-events: none;
     }
+    /* ── Case study con fotografia ───────────────────────────────
+       Arrivate le foto, il riquadro smette di essere un segnaposto:
+       niente bordo tratteggiato, righe ed etichetta. La foto riempie
+       il riquadro (ritagliata, non deformata), con l'arrotondamento
+       degli altri elementi. */
+    .cs2-sticky .cst-img.cst-img--photo {
+      padding: 0 !important;
+      border: 0 !important;
+      background: #1a0516 !important;
+      overflow: hidden !important;
+      border-radius: var(--r-box, 36px) !important;
+    }
+    .cs2-sticky .cst-img.cst-img--photo::after { content: none !important; display: none !important; }
+    /* Foto quadrate: il riquadro è quadrato (lato --cst-s) e la card di
+       testo ha almeno la sua altezza; coppia centrata, così i vuoti ai
+       lati si bilanciano. Il lato segue la larghezza dello schermo, e
+       solo dove il pannello è agganciato (schermi alti) segue l'altezza
+       libera: così con zoom del browser alto o schermi bassi nulla
+       esce dalla schermata. */
+    @media (min-width: 1101px) {
+      .cs2-sticky .cst-grid {
+        --cst-s: clamp(340px, 30vw, 440px);
+        grid-template-columns: var(--cst-s) minmax(0, 1fr) !important;
+        gap: clamp(1rem, 1.8vw, 1.75rem) !important;
+        justify-content: center !important;
+        align-items: stretch !important;
+        max-width: calc(var(--cst-s) * 2.7) !important;
+        margin-inline: auto !important;
+      }
+      .cs2-sticky .cst-right { min-height: var(--cst-s); }
+      .cs2-sticky .cst-img.cst-img--photo {
+        width: var(--cst-s) !important;
+        height: auto !important;
+        min-height: var(--cst-s) !important;
+        aspect-ratio: auto !important;
+        align-self: stretch !important;
+      }
+    }
+    @media (min-width: 1101px) and (min-height: 980px) {
+      .cs2-sticky .cst-grid { --cst-s: clamp(380px, calc(100dvh - 600px), 480px); }
+    }
+    /* Colonna singola: foto quadrata centrata, non a tutta larghezza */
+    @media (max-width: 1100px) {
+      .cs2-sticky .cst-img.cst-img--photo {
+        width: min(100%, 440px) !important;
+        height: auto !important;
+        aspect-ratio: 1 / 1 !important;
+        margin-inline: auto !important;
+      }
+    }
+    .cs2-sticky .cst-img.cst-img--photo img {
+      position: absolute !important;
+      inset: 0 !important;
+      width: 100% !important;
+      height: 100% !important;
+      max-width: none !important;
+      max-height: none !important;
+      object-fit: contain !important;
+      object-position: center !important;
+      filter: none !important;
+    }
+    /* Le foto sono quadrate e il riquadro no: con "cover" venivano
+       ingrandite e ritagliate (loghi e testi sui bordi persi).
+       "contain" le mostra intere, senza zoom. */
     /* La card di testo prende volume dal colore, non dai bordi: il
        fondo della sezione scende su un rosato più deciso, e la card
        resta il bianco più pulito che ci sia — su un campo tinto il
@@ -2051,6 +2115,22 @@
       transform: scale(1.24);
       transform-origin: left center;
     }
+    /* Case study in homepage: i loghi quadrati hanno molto margine
+       interno (marchio largo ~76px nel riquadro) e Bravo, orizzontale
+       e ritagliato stretto, ne misura ~163. Tutti portati a ~115px
+       di marchio visibile, via di mezzo fra i due. */
+    .cs2-sticky .cst-info__brand img[src*="prada"]      { transform: scale(1.5); }
+    .cs2-sticky .cst-info__brand img[src*="miumiu"]     { transform: scale(1.47); }
+    .cs2-sticky .cst-info__brand img[src*="fanuc"]      { transform: scale(1.5); }
+    .cs2-sticky .cst-info__brand img[src*="aristonlogo"]{ transform: scale(1.4); }
+    .cs2-sticky .cst-info__brand img[src*="biorepair"]  { transform: scale(1.5); }
+    .cs2-sticky .cst-info__brand img[src*="bravo"]      { transform: scale(0.7); }
+    .cs2-sticky .cst-info__brand img[src*="prada"],
+    .cs2-sticky .cst-info__brand img[src*="miumiu"],
+    .cs2-sticky .cst-info__brand img[src*="fanuc"],
+    .cs2-sticky .cst-info__brand img[src*="aristonlogo"],
+    .cs2-sticky .cst-info__brand img[src*="biorepair"],
+    .cs2-sticky .cst-info__brand img[src*="bravo"] { transform-origin: left center; }
     /* Leolandia è un marchio orizzontale: alla stessa altezza di
        riquadro risultava largo 214px contro gli 88-109 degli altri,
        quindi pesava molto di più. La scala lo riporta in linea. */
@@ -2067,7 +2147,7 @@
        colonna singola e le tab vanno su due righe: lì la sezione ha
        bisogno di più di 100dvh, e bloccarla significherebbe tagliarla.
        Stessa logica per le viewport basse. */
-    @media (min-width: 1100px) and (min-height: 760px) {
+    @media (min-width: 1101px) and (min-height: 980px) {
       #case-studies { height: 145dvh !important; }
       .cs2-sticky {
         position: sticky !important;
@@ -3268,11 +3348,14 @@
       transform: rotateX(var(--ci-rx, 0deg)) rotateY(var(--ci-ry, 0deg))
                  translate3d(var(--ci-tx, 0px), var(--ci-ty, 0px), var(--ci-z, 0px));
       transform-style: preserve-3d;
-      transition: transform 0.6s var(--rv-ease);
+      transition: transform 0.6s var(--rv-ease), scale 0.6s var(--rv-ease);
       will-change: transform;
     }
-    /* Mentre il puntatore è sopra, la risposta dev'essere immediata */
-    .cs2-sticky .cst-img.ci-live img { transition: transform 0.12s ease-out; }
+    /* Mentre il puntatore è sopra, la risposta dev'essere immediata.
+       La foto cresce un filo (scale) così, inclinandosi, i suoi bordi
+       restano oltre quelli del riquadro: senza, con certi movimenti
+       compariva lo sfondo nero. */
+    .cs2-sticky .cst-img.ci-live img { transition: transform 0.12s ease-out, scale 0.12s ease-out; scale: 1.12; }
     @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
       .cs2-sticky .cst-img img { transform: none !important; }
     }
@@ -3447,6 +3530,10 @@
       width: 100%; height: 100%;
       object-fit: cover;
     }
+    /* Le immagini dei case study sono quadrate e la card è 4:5:
+       "cover" ne tagliava i bordi. Qui restano intere, su un fondo
+       sfumato dai colori dei loro bordi. */
+    .sr-reel__card--case img { object-fit: contain; }
     /* Il retro delle foto (la metà lontana dell'anello) resta
        visibile ma velato: si legge la profondità dell'anello. */
     .sr-reel__card::after {
@@ -3718,16 +3805,86 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Che tipo di agenzia è ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
-    { "@type": "Question", "name": "Quali servizi offre ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI." } },
-    { "@type": "Question", "name": "Con che tipo di clienti lavora ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro." } },
-    { "@type": "Question", "name": "Come si inizia a lavorare con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta piu adatta." } },
-    { "@type": "Question", "name": "Quanto costa un progetto con ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "I costi variano in base al servizio e alla complessita del progetto. Offriamo soluzioni su misura per ogni budget: contattaci per ricevere un preventivo personalizzato e senza impegno." } },
-    { "@type": "Question", "name": "ESTRO lavora anche con aziende fuori dalla propria area geografica?", "acceptedAnswer": { "@type": "Answer", "text": "Si, operiamo con clienti in tutta Italia e anche all'estero. Grazie agli strumenti digitali, gestiamo i progetti da remoto senza alcuna limitazione geografica." } }
+    { "@type": "Question", "name": "Che tipo di agenzia è ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "ESTRO è un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online." } },
+    { "@type": "Question", "name": "Quali servizi offrite?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI." } },
+    { "@type": "Question", "name": "Con che tipo di clienti lavorate?", "acceptedAnswer": { "@type": "Answer", "text": "Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro." } },
+    { "@type": "Question", "name": "Come si inizia a lavorare insieme?", "acceptedAnswer": { "@type": "Answer", "text": "Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta più adatta." } },
+    { "@type": "Question", "name": "Quanto costa un progetto?", "acceptedAnswer": { "@type": "Answer", "text": "I costi variano in base al servizio e alla complessità del progetto. Offriamo soluzioni su misura per ogni budget: contattaci per ricevere un preventivo personalizzato e senza impegno." } },
+    { "@type": "Question", "name": "Lavorate anche con aziende fuori Milano?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, operiamo con clienti in tutta Italia e anche all'estero. Grazie agli strumenti digitali, gestiamo i progetti da remoto senza alcuna limitazione geografica." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/responsive.css?v=20261006w" />
+  <style>
+    /* ═══════════════════════════════════════════════════════════
+       REGOLA DEI TITOLI (homepage) — tre corpi, non uno per sezione
+         · Hero ........ riferimento, resta com'è (7vw)
+         · Servizi e "Alcuni amici" .... stesso corpo, un po' più
+                         piccolo della hero (--t-sub)
+         · tutti gli altri titoli di sezione .... il corpo di
+                         "Case studies" (--t-xl)
+       Sta dopo responsive.css e alza la specificità, perché i
+       corpi delle singole sezioni erano fissati ognuno per conto
+       suo con !important. Il fit di js/responsive.js resta attivo:
+       riduce un titolo solo se una parola non entra nello schermo.
+       ═══════════════════════════════════════════════════════════ */
+    /* i corpi (--t-hero, --t-svc, --t-sub, --t-xl) sono in css/tokens.css */
+    html body .svc-title:not(#_):not(#_),
+    html body .svc-clients__title:not(#_):not(#_) {
+      font-size: var(--t-amici) !important;
+      line-height: 1 !important;
+      /* stessa grafia di "Servizi", non solo lo stesso corpo: peso e
+         crenatura diversi facevano sembrare i due titoli di misura
+         diversa */
+      font-weight: 900 !important;
+      letter-spacing: -0.03em !important;
+    }
+    /* Servizi: più grande di Alcuni amici (a pari corpo sembrava piccolo:
+       è una parola sola, in grigio tenue). Resta sotto la hero. */
+    html body .svc-title:not(#_):not(#_) { font-size: var(--t-svc) !important; }
+    /* "Alcuni amici" sempre su due righe (quelle del br): il corpo
+       scala con la larghezza, quindi ogni riga entra a qualsiasi
+       schermo e a qualsiasi zoom senza andare a capo da sola. */
+    html body .svc-clients__title:not(#_):not(#_) { white-space: nowrap !important; }
+    html body .cs2__title:not(#_):not(#_),
+    html body .tips-section__heading:not(#_):not(#_),
+    html body .page-faq__title:not(#_):not(#_),
+    html body .wall__title:not(#_):not(#_),
+    html body .hc-title:not(#_):not(#_) {
+      font-size: var(--t-xl) !important;
+      /* stessa altezza di riga per tutti: il vuoto sopra e sotto le
+         lettere, e quindi lo stacco visibile dal contenuto, torna
+         uguale da una sezione all'altra */
+      line-height: 1 !important;
+    }
+    /* Passaparola: stesso spazio sopra delle altre sezioni (--section-py),
+       ma mai sotto la nav che gli passa sopra. Prima 100px contro i 112
+       di Case studies, Tips e Contatti. */
+    html body .wall-sticky:not(#_):not(#_) {
+      padding-top: max(var(--section-py), calc(var(--nav-h, 88px) + 0.75rem)) !important;
+    }
+
+    /* ── Angoli arrotondati delle sezioni che salgono ───────────
+       Il raggio (36px) è più profondo della salita (22px): sotto il
+       bordo della sezione precedente restano ~14px di angolo scoperto,
+       dove si vedeva il nero della pagina invece del colore della
+       sezione che sta sotto (es. il footer sul fucsia di Contatti).
+       Ogni sezione che viene coperta prolunga il proprio colore di
+       40px sotto il bordo: sta dietro a quella che sale (z-index 2) e
+       compare solo negli angoli. */
+    html.js-reveal :is(#case-studies, #muro, #contatti):not(#_) { position: relative; }
+    html.js-reveal :is(#case-studies, #muro, #contatti):not(#_)::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: 40px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    html.js-reveal #case-studies:not(#_)::after { background: #fff; }
+    html.js-reveal #muro:not(#_)::after         { background: #fff; }
+    html.js-reveal #contatti:not(#_)::after     { background: var(--primary, #DB005A); }
+  </style>
 </head>
 <body>
 <!-- Filtro SVG per rimuovere lo sfondo bianco dal video gatto -->
@@ -3837,25 +3994,25 @@
               <!-- orizzonte del pianeta: sotto l'anello, mai sopra -->
               <div class="sr-reel__horizon"></div>
               <div class="sr-reel__ring"><div class="sr-reel__plane"><div class="sr-reel__spin">
-                <div class="sr-reel__card" style="--i:0"><img src="assets/reel/reel-01.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:1"><img src="assets/reel/reel-08.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:0;background:linear-gradient(#908678,#8c7c66)"><img src="assets/reel/case-ariston.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:1;background:linear-gradient(#17161b,#252428)"><img src="assets/reel/case-prada.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:2"><img src="assets/reel/reel-15.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:3"><img src="assets/reel/reel-02.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:4"><img src="assets/reel/reel-09.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:5"><img src="assets/reel/reel-16.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:6"><img src="assets/reel/reel-03.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:5;background:linear-gradient(#484018,#161616)"><img src="assets/reel/case-fanuc.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card" style="--i:6"><img src="assets/reel/case-blanx.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:7"><img src="assets/reel/reel-10.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:8"><img src="assets/reel/reel-17.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:9"><img src="assets/reel/reel-04.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:10"><img src="assets/reel/reel-11.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:8;background:linear-gradient(#958e80,#3577cc)"><img src="assets/reel/case-biorepair.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card" style="--i:9"><img src="assets/reel/case-thefamily.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:10;background:linear-gradient(#d2d3ce,#d2d5d2)"><img src="assets/reel/case-fantabody.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:11"><img src="assets/reel/reel-18.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:12"><img src="assets/reel/reel-05.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card" style="--i:12"><img src="assets/reel/case-bustomotor.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:13"><img src="assets/reel/reel-12.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:14"><img src="assets/reel/reel-19.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:14;background:linear-gradient(#85a9d3,#acb083)"><img src="assets/reel/reel-19.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:15"><img src="assets/reel/reel-06.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:16"><img src="assets/reel/reel-13.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:16;background:linear-gradient(#766a5d,#99696e)"><img src="assets/reel/case-miumiu.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:17"><img src="assets/reel/reel-20.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:18"><img src="assets/reel/reel-07.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:18;background:linear-gradient(#cdd3d5,#746d60)"><img src="assets/reel/case-bravo.webp" alt="" decoding="async"></div>
                 <div class="sr-reel__card" style="--i:19"><img src="assets/reel/reel-14.webp" alt="" decoding="async"></div>
               </div></div></div>
             </div>
@@ -4107,65 +4264,65 @@
       <div class="container">
 
         <div class="cst-tabs" role="tablist">
-          <button class="cst-tab on" data-cst="fanuc"     role="tab" aria-selected="true">FANUC</button>
-          <button class="cst-tab"    data-cst="redbull"   role="tab" aria-selected="false">Red Bull</button>
-          <button class="cst-tab"    data-cst="leolandia" role="tab" aria-selected="false">Leolandia</button>
+          <button class="cst-tab on" data-cst="prada"     role="tab" aria-selected="true">Prada</button>
+          <button class="cst-tab"    data-cst="miumiu"    role="tab" aria-selected="false">Miu Miu</button>
+          <button class="cst-tab"    data-cst="fanuc"     role="tab" aria-selected="false">FANUC</button>
           <button class="cst-tab"    data-cst="ariston"   role="tab" aria-selected="false">Ariston</button>
-          <button class="cst-tab"    data-cst="humanitas" role="tab" aria-selected="false">Humanitas</button>
-          <button class="cst-tab"    data-cst="cupra"     role="tab" aria-selected="false">Cupra</button>
+          <button class="cst-tab"    data-cst="biorepair" role="tab" aria-selected="false">Biorepair</button>
+          <button class="cst-tab"    data-cst="bravo"     role="tab" aria-selected="false">Bravo</button>
         </div>
 
         <div class="cst-panels">
 
-          <!-- FANUC -->
-          <div class="cst-panel on" data-cst-panel="fanuc" role="tabpanel">
+          <!-- Prada -->
+          <div class="cst-panel on" data-cst-panel="prada" role="tabpanel">
             <div class="cst-grid">
-              <div class="cst-img">
-                <img src="Loghibrand/fanuc.webp" alt="FANUC">
+              <div class="cst-img cst-img--photo">
+                <img src="case-studies/home/prada-case.webp" alt="Prada — controllo creativo sul prodotto con l&apos;AI" loading="lazy">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__brand"><img src="Loghibrand/prada.webp" alt="Prada" loading="lazy"></div>
+                  <div class="cst-info__sector">AI Product Control &middot; Luxury Visual &middot; Product Precision</div>
+                  <div class="cst-info__title">Controllo creativo sul prodotto, senza perdere identit&agrave;</div>
+                  <div class="cst-info__text">Varianti visive su borse e accessori, lavorando su materiali, cromie e dettagli con un alto livello di precisione per preservare proporzioni, riconoscibilit&agrave; e qualit&agrave; percepita del prodotto.</div>
+                  <div class="cst-info__tags"><span>Luxury AI</span><span>Product control</span><span>Material variation</span><span>Visual precision</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Miu Miu -->
+          <div class="cst-panel" data-cst-panel="miumiu" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img cst-img--photo">
+                <img src="case-studies/home/miumiu-case.webp" alt="Miu Miu — contenuti prodotto tra immagine, AI e movimento" loading="lazy">
+              </div>
+              <div class="cst-right">
+                <div class="cst-info">
+                  <div class="cst-info__brand"><img src="case-studies/home/miumiu-logo.webp" alt="Miu Miu" loading="lazy"></div>
+                  <div class="cst-info__sector">AI Product Control &middot; Motion Content &middot; Social Reel</div>
+                  <div class="cst-info__title">Contenuti prodotto evoluti tra immagine, AI e movimento</div>
+                  <div class="cst-info__text">Controllo creativo su varianti di borse e accessori, mantenendo intatti proporzioni, materiali e riconoscibilit&agrave; del prodotto. Il lavoro si &egrave; esteso alla produzione di brevi video per i reel, unendo post-produzione, AI e motion per dare continuit&agrave; al contenuto statico e dinamico.</div>
+                  <div class="cst-info__tags"><span>Product control</span><span>Motion content</span><span>AI workflow</span><span>Social reel</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- FANUC -->
+          <div class="cst-panel" data-cst-panel="fanuc" role="tabpanel">
+            <div class="cst-grid">
+              <div class="cst-img cst-img--photo">
+                <img src="case-studies/home/fanuc-case.webp" alt="FANUC — performance e creatività per il B2B industriale" loading="lazy">
               </div>
               <div class="cst-right">
                 <div class="cst-info">
                   <div class="cst-info__brand"><img src="Loghibrand/fanuc.webp" alt="FANUC" loading="lazy"></div>
-                  <div class="cst-info__sector">Strategia Digitale &middot; B2B Industrial &middot; Lead Generation</div>
-                  <div class="cst-info__title">Da leader industriale a voce dell&apos;Industria 5.0</div>
-                  <div class="cst-info__text">Per FANUC, leader mondiale nella robotica e automazione, abbiamo progettato una strategia di comunicazione digitale capace di trasformare un brand tecnico in punto di riferimento culturale. Dal CRX Roadshow alle campagne ADV su Google e LinkedIn, ogni touchpoint ottimizzato per generare lead qualificati.</div>
-                  <div class="cst-info__tags"><span>Google Ads</span><span>LinkedIn ADV</span><span>Strategia</span><span>B2B</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Red Bull -->
-          <div class="cst-panel" data-cst-panel="redbull" role="tabpanel">
-            <div class="cst-grid">
-              <div class="cst-img">
-                <img src="Loghibrand/redbull.webp" alt="Red Bull">
-              </div>
-              <div class="cst-right">
-                <div class="cst-info">
-                  <div class="cst-info__brand"><img src="Loghibrand/redbull.webp" alt="Red Bull" loading="lazy"></div>
-                  <div class="cst-info__sector">Content &amp; Video &middot; Events &middot; Social Media</div>
-                  <div class="cst-info__title">Content ad alta energia per il brand pi&ugrave; iconico del mondo</div>
-                  <div class="cst-info__text">Per Red Bull abbiamo prodotto contenuti video e fotografici per eventi e attivazioni in Italia, catturando l&apos;essenza del brand &mdash; adrenalina, sport estremo, cultura underground &mdash; e trasformandola in asset social ad alto impatto.</div>
-                  <div class="cst-info__tags"><span>Video</span><span>Fotografia</span><span>Events</span><span>Social</span></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Leolandia -->
-          <div class="cst-panel" data-cst-panel="leolandia" role="tabpanel">
-            <div class="cst-grid">
-              <div class="cst-img">
-                <img src="Loghibrand/leolandia.webp" alt="Leolandia">
-              </div>
-              <div class="cst-right">
-                <div class="cst-info">
-                  <div class="cst-info__brand"><img src="Loghibrand/leolandia.webp" alt="Leolandia" loading="lazy"></div>
-                  <div class="cst-info__sector">Social Media &middot; Community &middot; ADV</div>
-                  <div class="cst-info__title">Il parco divertimenti pi&ugrave; amato d&apos;Italia vive anche online</div>
-                  <div class="cst-info__text">Gestione social media e campagne ADV per Leolandia, principale parco divertimenti per famiglie in Italia. Comunicazione emotiva e stagionale per raggiungere i genitori con messaggi autentici e generare acquisti di biglietti e abbonamenti.</div>
-                  <div class="cst-info__tags"><span>Social Media</span><span>Meta ADV</span><span>Community</span></div>
+                  <div class="cst-info__sector">B2B Industriale &middot; Omnichannel &middot; Performance</div>
+                  <div class="cst-info__title">Performance e creativit&agrave; per il B2B industriale</div>
+                  <div class="cst-info__text">Da una gara nazionale a un ecosistema omnichannel: roadshow, landing page, advertising e contenuti social coordinati per rendere l&apos;automazione pi&ugrave; distintiva e pi&ugrave; vicina alle persone.</div>
+                  <div class="cst-info__tags"><span>Industrial B2B</span><span>Omnichannel</span><span>Roadshow</span><span>Performance</span></div>
                 </div>
               </div>
             </div>
@@ -4174,52 +4331,52 @@
           <!-- Ariston -->
           <div class="cst-panel" data-cst-panel="ariston" role="tabpanel">
             <div class="cst-grid">
-              <div class="cst-img">
-                <img src="Loghibrand/aristonlogo.webp" alt="Ariston">
+              <div class="cst-img cst-img--photo">
+                <img src="case-studies/home/ariston-case.webp" alt="Ariston — una strategia globale pronta per i mercati locali" loading="lazy">
               </div>
               <div class="cst-right">
                 <div class="cst-info">
                   <div class="cst-info__brand"><img src="Loghibrand/aristonlogo.webp" alt="Ariston" loading="lazy"></div>
-                  <div class="cst-info__sector">Strategia Digitale &middot; Home &amp; Living &middot; Brand Awareness</div>
-                  <div class="cst-info__title">Comunicazione di prodotto che scalda il brand</div>
-                  <div class="cst-info__text">Con Ariston abbiamo sviluppato una strategia digitale integrata per valorizzare la gamma prodotti e rafforzare il posizionamento premium nel settore della climatizzazione e riscaldamento, raggiungendo nuove audience con contenuti di alta qualit&agrave;.</div>
-                  <div class="cst-info__tags"><span>Strategia</span><span>Content</span><span>Brand Awareness</span></div>
+                  <div class="cst-info__sector">Strategia Globale &middot; Adattamento Locale &middot; Content System</div>
+                  <div class="cst-info__title">Una strategia globale, pronta per i mercati locali</div>
+                  <div class="cst-info__text">Un sistema di contenuti che tiene insieme visione internazionale e adattabilit&agrave; locale: un linguaggio comune, abbastanza flessibile da funzionare su mercati, target e priorit&agrave; diversi.</div>
+                  <div class="cst-info__tags"><span>Global strategy</span><span>Local adaptation</span><span>Content system</span></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Humanitas -->
-          <div class="cst-panel" data-cst-panel="humanitas" role="tabpanel">
+          <!-- Biorepair -->
+          <div class="cst-panel" data-cst-panel="biorepair" role="tabpanel">
             <div class="cst-grid">
-              <div class="cst-img">
-                <img src="Loghibrand/humanitas.webp" alt="Humanitas">
+              <div class="cst-img cst-img--photo">
+                <img src="case-studies/home/biorepair-case.webp" alt="Biorepair — contenuti Amazon per i mercati internazionali" loading="lazy">
               </div>
               <div class="cst-right">
                 <div class="cst-info">
-                  <div class="cst-info__brand"><img src="Loghibrand/humanitas.webp" alt="Humanitas" loading="lazy"></div>
-                  <div class="cst-info__sector">Strategia Digitale &middot; Healthcare &middot; Lead Generation</div>
-                  <div class="cst-info__title">Comunicazione sanitaria che mette le persone al centro</div>
-                  <div class="cst-info__text">Per Humanitas abbiamo sviluppato una strategia nel settore healthcare, tra i pi&ugrave; delicati e regolamentati. Campagne ADV e contenuti mirati per raggiungere pazienti e professionisti con messaggi chiari, autorevoli e rassicuranti.</div>
-                  <div class="cst-info__tags"><span>Strategia</span><span>Google Ads</span><span>Healthcare</span></div>
+                  <div class="cst-info__brand"><img src="Loghibrand/biorepair.webp" alt="Biorepair" loading="lazy"></div>
+                  <div class="cst-info__sector">Amazon Strategy &middot; Multimercato &middot; Contenuti A+</div>
+                  <div class="cst-info__title">Comunicare la scienza a target diversi</div>
+                  <div class="cst-info__text">Abbiamo portato i dentifrici Biorepair su Amazon in Italia, USA e UK mantenendo intatta l&apos;autorevolezza scientifica: contenuti A+ e Store Brand che cambiano tono e design in base alla cultura di ogni mercato, dalle linee kids a quelle premium.</div>
+                  <div class="cst-info__tags"><span>Amazon</span><span>Multimercato</span><span>Contenuti A+</span><span>Render 3D</span></div>
                 </div>
               </div>
             </div>
           </div>
 
-          <!-- Cupra -->
-          <div class="cst-panel" data-cst-panel="cupra" role="tabpanel">
+          <!-- Bravo -->
+          <div class="cst-panel" data-cst-panel="bravo" role="tabpanel">
             <div class="cst-grid">
-              <div class="cst-img">
-                <img src="Loghibrand/cupra.webp" alt="Cupra">
+              <div class="cst-img cst-img--photo">
+                <img src="case-studies/home/bravo-case.webp" alt="Bravo — campagna Nonna Certified generata con l&apos;AI" loading="lazy">
               </div>
               <div class="cst-right">
                 <div class="cst-info">
-                  <div class="cst-info__brand"><img src="Loghibrand/cupra.webp" alt="Cupra" loading="lazy"></div>
-                  <div class="cst-info__sector">Social Media &middot; Automotive &middot; Brand Lifestyle</div>
-                  <div class="cst-info__title">Il brand automobilistico che rompe gli schemi</div>
-                  <div class="cst-info__text">Contenuti social che traducono il DNA ribelle e performante di Cupra in storie digitali coinvolgenti. Comunicazione visiva aggressiva e aspirazionale per raggiungere una community giovane e appassionata di automotive e lifestyle.</div>
-                  <div class="cst-info__tags"><span>Social Media</span><span>Visual Content</span><span>Automotive</span></div>
+                  <div class="cst-info__brand"><img src="case-studies/home/bravo-logo.webp" alt="Bravo" loading="lazy"></div>
+                  <div class="cst-info__sector">AI Branding &middot; Amazon Store &middot; Organic Growth</div>
+                  <div class="cst-info__title">Dal nulla al brand: l&apos;AI d&agrave; colore al mondo del pulito</div>
+                  <div class="cst-info__text">Senza un archivio fotografico abbiamo lanciato Bravo online fondendo i prodotti reali con scenari generati dall&apos;AI: colori saturi, banner Amazon che bucano lo schermo e una community Instagram cresciuta solo in organico.</div>
+                  <div class="cst-info__tags"><span>AI branding</span><span>Amazon</span><span>Instagram</span><span>Organic growth</span></div>
                 </div>
               </div>
             </div>
@@ -4335,27 +4492,27 @@
         <dl class="page-faq__list">
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Che tipo di agenzia è ESTRO?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">ESTRO e un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">ESTRO è un'agenzia di comunicazione digitale a 360 gradi: gestiamo social media, campagne pubblicitarie, grafica, web design, produzione di contenuti, influencer marketing, modellazione 3D e soluzioni AI per aiutare brand e aziende a crescere online.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Quali servizi offre ESTRO?</button>
+            <button class="page-faq__question" aria-expanded="false">Quali servizi offrite?</button>
             <div class="page-faq__answer"><div class="page-faq__answer-inner">Offriamo social media management, influencer marketing, Google Ads, social ads, strategia digitale, graphic design, web design, produzione di contenuti video e foto, modellazione e renderizzazione 3D e servizi AI.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Con che tipo di clienti lavora ESTRO?</button>
+            <button class="page-faq__question" aria-expanded="false">Con che tipo di clienti lavorate?</button>
             <div class="page-faq__answer"><div class="page-faq__answer-inner">Lavoriamo con PMI, startup, professionisti e grandi brand in tutti i settori: retail, food, moda, arredamento, tecnologia, hospitality e molto altro.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Come si inizia a lavorare con ESTRO?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta piu adatta.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Come si inizia a lavorare insieme?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Basta compilare il form di contatto o scriverci direttamente. Fissiamo un primo incontro conoscitivo gratuito per capire le tue esigenze e presentarti la proposta più adatta.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Quanto costa un progetto con ESTRO?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">I costi variano in base al servizio e alla complessita del progetto. Offriamo soluzioni su misura per ogni budget: contattaci per ricevere un preventivo personalizzato e senza impegno.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Quanto costa un progetto?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">I costi variano in base al servizio e alla complessità del progetto. Offriamo soluzioni su misura per ogni budget: contattaci per ricevere un preventivo personalizzato e senza impegno.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">ESTRO lavora anche con aziende fuori dalla propria area geografica?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, operiamo con clienti in tutta Italia e anche all'estero. Grazie agli strumenti digitali, gestiamo i progetti da remoto senza alcuna limitazione geografica.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Lavorate anche con aziende fuori Milano?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, operiamo con clienti in tutta Italia e anche all'estero. Grazie agli strumenti digitali, gestiamo i progetti da remoto senza alcuna limitazione geografica.</div></div>
           </div>
         </dl>
       </div>
@@ -4400,7 +4557,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="home-f-messaggio">Messaggio</label>
-            <textarea id="home-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="home-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="hc-privacy">
@@ -4420,7 +4577,7 @@
   </main>
 
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261006w"></script>
   <script>
   // ── TRANSIZIONE HERO → SERVICES + LOADING BAR PARTNER ───────────
   // Wrapper: 650dvh → scroll totale 550dvh (transizione + orizzontale + banda + HOLD ~75dvh)
@@ -4848,7 +5005,7 @@
       // di lettura resta titolo → card.
       // Finestra d'attacco più larga: la corsa comincia prima e si
       // distende, così l'acqua dura leggermente di più.
-      const TITLE_IN = phase(pIn, 0.50, 1);
+      const TITLE_IN = phase(pIn, 0.15, 0.60);   // anticipato: prima arrivava troppo tardi
       const GRID_IN  = phase(pIn, 0.72, 1);
 
       // Lo zoom lo guida l'intro a tempo, non lo scroll. Non si scrive
@@ -5163,7 +5320,7 @@
       { num:'02', tag:'Advertising', name:'Google Ads',                  desc:'Campagne search e display ad alto rendimento per raggiungere chi sta cercando te.',               href:'servizi/google-ads.html' },
       { num:'03', tag:'Social ADV',  name:'Meta & TikTok ADV',           desc:'Trova nuovi clienti grazie a campagne pubblicitarie su Facebook, Instagram e TikTok.',            href:'servizi/social-ads.html' },
       { num:'04', tag:'Social',      name:'Social Media Management',     desc:'Costruisci la tua identità digitale e la tua community con noi al tuo fianco.',                  href:'servizi/social-media-management.html' },
-      { num:'05', tag:'Influencer',  name:'Influencer Marketing',        desc:'Selezioniamo i migliori storytellers digitali per amplificare il tuo messaggio.',                href:'servizi/influencer-marketing.html' },
+      { num:'05', tag:'Influencer',  name:'Influencer Marketing',        desc:'Selezioniamo i migliori storyteller digitali per amplificare il tuo messaggio.',                href:'servizi/influencer-marketing.html' },
       { num:'06', tag:'Design',      name:'Graphic Design & Motion',     desc:'Anima i tuoi contenuti e crea esperienze visive che lasciano il segno.',                         href:'servizi/graphic-design.html' },
       { num:'07', tag:'Digital',     name:'Web Design & E‑Commerce',     desc:'Rivoluzionamo il tuo modo di vendere costruendo la tua vetrina digitale su misura.',             href:'servizi/web-design.html' },
       { num:'08', tag:'Contenuti',   name:'Produzione Contenuti',        desc:'Foto, video, copy e tutto il multimediale di cui il tuo brand ha bisogno.',                      href:'servizi/produzione-contenuti.html' },
@@ -6138,9 +6295,9 @@
 
     // Il 3D resta all'immagine; la card nera usa il suo segno
     // editoriale (filetto + rientro), non un'inclinazione.
-    const IMG_ROT   = 11;  // gradi — immagine
-    const IMG_SHIFT = 12;  // px — scorrimento immagine
-    const IMG_LIFT  = 46;  // px — avvicinamento immagine
+    const IMG_ROT   = 7;   // gradi — immagine
+    const IMG_SHIFT = 8;   // px — scorrimento immagine
+    const IMG_LIFT  = 28;  // px — avvicinamento immagine
 
     grids.forEach(grid => {
       const frame = grid.querySelector('.cst-img');
@@ -6462,7 +6619,7 @@
      movimento, in su o in giu', riprende.
 
      Mentre si scorre il video non viene toccato: gira alla sua
-     velocita' naturale. La pausa non arriva mai durante lo
+     velocità' naturale. La pausa non arriva mai durante lo
      scorrimento, e questo era il difetto delle versioni prima —
      scattava al primo frame in cui la sezione superava la soglia,
      cioe' con lo scroll ancora in corso, e l'evento successivo la
@@ -6607,7 +6764,7 @@
     hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); }, { passive: true });
   }());
   </script>
-  <script src="js/responsive.js"></script>
+  <script src="js/responsive.js?v=20261006w"></script>
   <script>
   // ── Hero: all'atterraggio "FORMA" cambia font e poi si ripristina ──
   (function () {

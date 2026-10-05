@@ -50,6 +50,22 @@
   --text-9xl:  clamp(6rem, 16vw, 13rem);
   --text-hero: clamp(3rem, 8vw, 7rem);              /* hero title */
 
+  /* Corpi dei titoli — un solo sistema per tutto il sito (homepage e
+     pagine servizi), tre misure:
+       --t-hero  titolo della hero
+       --t-svc   "Servizi" (una parola sola, può stare più grande)
+       --t-sub   titoli lunghi / frasi: "Alcuni amici...", intestazioni
+                 di sezione delle pagine servizi
+       --t-h1    H1 delle pagine servizi (frase su righe fisse, colonna stretta)
+       --t-xl    titoli brevi di sezione: Case studies, Tips, FAQ,
+                 Contatti... (il riferimento è Case studies) */
+  --t-hero: clamp(3rem, 7vw, 9rem);
+  --t-svc:  clamp(1.75rem, 6.2vw, 7.4rem);
+  --t-sub:  clamp(1.75rem, 5.2vw, 5.1rem);
+  --t-xl:   min(150px, 10vw);
+  --t-amici: clamp(1rem, 5.2vw, 5.1rem);       /* "Alcuni amici soddisfatti / che ci hanno dato fiducia": sempre su due righe, quindi scende fino a 16px su telefono */
+  --t-h1:   clamp(2.2rem, 6.2vw, 5.6rem);          /* H1 delle pagine servizi: più grande dei titoli di sezione (--t-sub), frasi brevi su righe fisse nella colonna sinistra */
+
   /* Section spacing */
   --section-py: clamp(4rem, 8vw, 7rem);
   --section-px: clamp(1.5rem, 6vw, 7rem);
@@ -133,3 +149,7 @@
   --shadow-md: 0 8px 24px rgba(0,0,0,0.50), 0 2px 6px rgba(0,0,0,0.20);
   --shadow-lg: 0 20px 48px rgba(0,0,0,0.60), 0 4px 12px rgba(0,0,0,0.20);
 }
+
+/* Telefono: i titoli brevi scendono per entrare nello schermo senza
+   spezzare le parole */
+@media (max-width: 600px) { :root { --t-xl: min(150px, 9.6vw); } }

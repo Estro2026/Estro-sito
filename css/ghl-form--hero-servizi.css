@@ -1,0 +1,213 @@
+/* ═══════════════════════════════════════════════════════════════
+   ESTRO — stile form GoHighLevel · C · HERO SERVIZI (compatto, bottone fucsia pieno)
+   QUESTO FILE NON È CARICATO DAL SITO: i form sono di GHL e il loro
+   CSS vive in GHL (un foglio di stile della pagina non arriva dentro
+   il form, che sta in un iframe).
+   Uso: GHL → Sites → Forms → (form) → Styles → Custom CSS → incolla
+   TUTTO questo file. Un file per form, mai due insieme.
+   Nel form GHL: sfondo trasparente, checkbox privacy OBBLIGATORIO,
+   campi su due colonne dove il sito li ha su due colonne.
+   Istruzioni complete: css/ghl-form.README.md
+   ═══════════════════════════════════════════════════════════════ */
+/* ───────────────────────────────────────────────────────────────
+   1) BASE — da incollare sempre
+   Tutto in px: il form sta in un iframe, dove rem/vw dipendono dalla
+   larghezza dell'iframe e non dalla pagina. Con lo zoom del browser
+   l'iframe si restringe: per questo niente larghezze fisse, tutto
+   può andare a capo, e sotto i 600px le colonne diventano una.
+   ─────────────────────────────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap');
+
+#_builder-form,
+#_builder-form *,
+.form-builder--wrap,
+.form-builder--wrap * { box-sizing: border-box !important; }
+
+html, body { background: transparent !important; }
+
+#_builder-form,
+#_builder-form .form-builder--wrap,
+.form-builder--wrap {
+  background: transparent !important;
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  width: 100% !important;
+  max-width: 1240px !important;
+  margin: 0 auto !important;
+  padding: 0 !important;
+}
+
+/* un solo ritmo: 16px fra le righe di campi */
+#_builder-form .form-builder--item,
+#_builder-form .form-field-wrapper,
+#_builder-form .form-builder--row { margin: 0 0 16px 0 !important; padding: 0 !important; }
+#_builder-form .form-builder--row { gap: 16px !important; }
+
+/* label e campo: 6px fra loro */
+#_builder-form label,
+#_builder-form .label-alignment,
+#_builder-form .field-label {
+  display: block !important;
+  margin: 0 0 6px 0 !important;
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 16px !important;
+  font-weight: 500 !important;
+  line-height: 1.2 !important;
+  letter-spacing: 0.02em !important;
+  overflow-wrap: break-word;
+}
+
+#_builder-form input[type="text"],
+#_builder-form input[type="email"],
+#_builder-form input[type="tel"],
+#_builder-form input[type="url"],
+#_builder-form input[type="number"],
+#_builder-form select,
+#_builder-form textarea,
+#_builder-form .form-control {
+  width: 100% !important;
+  max-width: 100% !important;
+  min-width: 0 !important;
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 16px !important;     /* mai sotto 16px: iOS zooma il campo */
+  font-weight: 400 !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  outline: none !important;
+  transition: border-color .2s ease, background-color .2s ease;
+}
+#_builder-form input[type="text"],
+#_builder-form input[type="email"],
+#_builder-form input[type="tel"],
+#_builder-form input[type="url"],
+#_builder-form input[type="number"],
+#_builder-form select,
+#_builder-form .form-control { height: 55px !important; min-height: 55px !important; padding: 16px 20px !important; }
+#_builder-form textarea {
+  height: auto !important;
+  min-height: 140px !important;
+  padding: 18px 24px !important;
+  border-radius: 36px !important;
+  resize: vertical;
+}
+
+/* telefono con prefisso (intl-tel-input): il prefisso resta dentro la pillola */
+#_builder-form .iti { width: 100% !important; }
+#_builder-form .iti input[type="tel"] { padding-left: 52px !important; }
+
+/* consensi: checkbox 16px, testo 16px, 8px fra una riga e l'altra */
+#_builder-form .terms-and-conditions,
+#_builder-form .option,
+#_builder-form .checkbox-container { margin: 0 0 8px 0 !important; }
+#_builder-form .terms-and-conditions,
+#_builder-form .option label,
+#_builder-form .checkbox-container label {
+  font-size: 16px !important;
+  font-weight: 400 !important;
+  line-height: 1.5 !important;
+  letter-spacing: 0 !important;
+  margin: 0 !important;
+}
+#_builder-form input[type="checkbox"] {
+  width: 16px !important; height: 16px !important; min-height: 0 !important;
+  margin: 3px 10px 0 0 !important;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+#_builder-form a { text-decoration: underline !important; }
+
+/* pulsante: pillola, centrato, 14px maiuscolo spaziato */
+#_builder-form .button-element-wrapper,
+#_builder-form .form-builder--submit { text-align: center !important; margin-top: 16px !important; }
+#_builder-form button[type="submit"],
+#_builder-form .btn,
+#_builder-form .button-element {
+  width: auto !important;
+  max-width: 100% !important;
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  border-radius: 999px !important;
+  box-shadow: none !important;
+  cursor: pointer;
+  transition: background-color .25s ease, color .25s ease, border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+#_builder-form button[type="submit"]:hover,
+#_builder-form .btn:hover,
+#_builder-form .button-element:hover { transform: translateY(-2px); }
+
+/* errori di validazione */
+#_builder-form .error,
+#_builder-form .text-danger,
+#_builder-form .field-error {
+  margin: 6px 0 0 0 !important;
+  font-size: 14px !important;
+  line-height: 1.3 !important;
+}
+
+/* schermi stretti o con zoom alto: una colonna, bottone a tutta larghezza */
+@media (max-width: 600px) {
+  #_builder-form .form-builder--row { display: block !important; }
+  #_builder-form .form-builder--row > * { width: 100% !important; max-width: 100% !important; }
+  #_builder-form button[type="submit"],
+  #_builder-form .btn,
+  #_builder-form .button-element { width: 100% !important; padding-inline: 24px !important; }
+}
+
+/* VARIANTE C */
+
+#_builder-form, .form-builder--wrap { color: #fff !important; }
+#_builder-form .form-builder--item,
+#_builder-form .form-field-wrapper,
+#_builder-form .form-builder--row { margin-bottom: 10px !important; }
+#_builder-form label,
+#_builder-form .label-alignment,
+#_builder-form .field-label { color: rgba(255,255,255,0.72) !important; font-size: 14px !important; letter-spacing: 0.02em !important; }
+#_builder-form input[type="text"],
+#_builder-form input[type="email"],
+#_builder-form input[type="tel"],
+#_builder-form input[type="url"],
+#_builder-form select,
+#_builder-form .form-control {
+  height: 46px !important; min-height: 46px !important;
+  padding: 12px 14px !important;
+  color: #fff !important;
+  background: #262626 !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+}
+#_builder-form textarea {
+  color: #fff !important;
+  background: #262626 !important;
+  border: 1px solid rgba(255,255,255,0.35) !important;
+  min-height: 58px !important;
+  border-radius: 29px !important;
+}
+#_builder-form input::placeholder,
+#_builder-form textarea::placeholder { color: rgba(255,255,255,0.72) !important; font-size: 14px !important; }
+#_builder-form input:focus,
+#_builder-form select:focus,
+#_builder-form textarea:focus { border-color: #fff !important; background: #303030 !important; }
+#_builder-form .terms-and-conditions,
+#_builder-form .option label,
+#_builder-form .checkbox-container label { color: rgba(255,255,255,0.85) !important; font-size: 14px !important; }
+#_builder-form input[type="checkbox"] { accent-color: #DB005A; }
+#_builder-form a { color: #fff !important; }
+#_builder-form .error,
+#_builder-form .text-danger,
+#_builder-form .field-error { color: #ffd1e3 !important; }
+#_builder-form button[type="submit"],
+#_builder-form .btn,
+#_builder-form .button-element {
+  color: #fff !important;
+  background: #DB005A !important;
+  border: 0 !important;
+  letter-spacing: 0.06em !important;
+  padding: 14px 24px !important;
+  width: 100% !important;
+}
+#_builder-form button[type="submit"]:hover,
+#_builder-form .btn:hover,
+#_builder-form .button-element:hover {
+  background: #b8004b !important;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25) !important;
+}

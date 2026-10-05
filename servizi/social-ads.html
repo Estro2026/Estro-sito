@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* ── Hero: esattamente 100dvh ── */
     /* La hero era inchiodata a una schermata esatta — height e
@@ -636,8 +636,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6); /* come in homepage */
       filter: hue-rotate(-54deg) saturate(1.08);
     }
     .amici-video__fade {
@@ -870,15 +871,15 @@
   "@type": "FAQPage",
   "mainEntity": [
     { "@type": "Question", "name": "Cosa sono i Social Ads?", "acceptedAnswer": { "@type": "Answer", "text": "I Social Ads sono campagne pubblicitarie a pagamento sui social media (Meta, TikTok, LinkedIn, ecc.) che permettono di raggiungere un pubblico molto preciso in base a interessi, comportamenti e dati demografici." } },
-    { "@type": "Question", "name": "Su quali piattaforme gestisce le campagne ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Gestiamo campagne su Meta (Facebook e Instagram), TikTok Ads, LinkedIn Ads e Pinterest Ads, scegliendo le piattaforme piu efficaci in base al tuo target e settore." } },
-    { "@type": "Question", "name": "Come si definisce il target di una campagna social?", "acceptedAnswer": { "@type": "Answer", "text": "Analizziamo il tuo cliente ideale e costruiamo audience personalizzate basate su interessi, eta, posizione geografica, comportamenti online e lookalike audience derivate dai tuoi clienti esistenti." } },
-    { "@type": "Question", "name": "Quanto budget serve per iniziare con i Social Ads?", "acceptedAnswer": { "@type": "Answer", "text": "E possibile iniziare anche con budget contenuti. Ti consigliamo un investimento minimo mensile che permetta di raccogliere dati significativi. La cifra esatta dipende dal settore e dagli obiettivi." } },
-    { "@type": "Question", "name": "Come vengono ottimizzate le campagne nel tempo?", "acceptedAnswer": { "@type": "Answer", "text": "Monitoriamo quotidianamente le performance e ottimizziamo creativita, audience, offerte e budget. Il test A/B continuo permette di migliorare progressivamente i risultati." } },
+    { "@type": "Question", "name": "Su quali piattaforme gestisce le campagne ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Gestiamo campagne su Meta (Facebook e Instagram), TikTok Ads, LinkedIn Ads e Pinterest Ads, scegliendo le piattaforme più efficaci in base al tuo target e settore." } },
+    { "@type": "Question", "name": "Come si definisce il target di una campagna social?", "acceptedAnswer": { "@type": "Answer", "text": "Analizziamo il tuo cliente ideale e costruiamo audience personalizzate basate su interessi, età, posizione geografica, comportamenti online e lookalike audience derivate dai tuoi clienti esistenti." } },
+    { "@type": "Question", "name": "Quanto budget serve per iniziare con i Social Ads?", "acceptedAnswer": { "@type": "Answer", "text": "È possibile iniziare anche con budget contenuti. Ti consigliamo un investimento minimo mensile che permetta di raccogliere dati significativi. La cifra esatta dipende dal settore e dagli obiettivi." } },
+    { "@type": "Question", "name": "Come vengono ottimizzate le campagne nel tempo?", "acceptedAnswer": { "@type": "Answer", "text": "Monitoriamo quotidianamente le performance e ottimizziamo creatività, audience, offerte e budget. Il test A/B continuo permette di migliorare progressivamente i risultati." } },
     { "@type": "Question", "name": "Le campagne social possono integrarsi con Google Ads?", "acceptedAnswer": { "@type": "Answer", "text": "Assolutamente. Una strategia omnicanale che combina Social Ads e Google Ads copre l'intero percorso d'acquisto dell'utente, aumentando l'efficacia complessiva degli investimenti." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -964,11 +965,9 @@
 
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">Social ADS</p>
-          <h1 class="svc-hero__title" id="page-title">
-            Trova nuovi clienti<br/>
-            con le campagne<br/>
-            <em>Social ADS</em>.
-          </h1>
+          <h1 class="svc-hero__title" id="page-title">Trova<br/>
+            clienti con<br/>
+            <em>Social ADS</em>.</h1>
           <div class="svc-hero__platforms">
             <a href="https://www.facebook.com/estroagency" target="_blank" rel="noopener" aria-label="Facebook"><img src="../Social%20ads/estro-facebook.svg" alt="Facebook" width="40" height="40" /></a>
             <a href="https://www.instagram.com/estro.agency" target="_blank" rel="noopener" aria-label="Instagram"><img src="../Social%20ads/estro-instagram.svg" alt="Instagram" width="40" height="40" /></a>
@@ -1017,7 +1016,7 @@
               </div>
               <div class="f-field">
                 <label class="f-label" for="ads-f-messaggio">Messaggio</label>
-                <textarea id="ads-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+                <textarea id="ads-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
               </div>
               <div class="hc-consents">
                 <label class="svc-hero__privacy" for="ads-hero-privacy">
@@ -1098,7 +1097,7 @@
               <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M2.8 7.4 7.2 10.8 12 3.8l4.8 7 4.4-3.4-1.9 10.8H4.7z"/><path d="M4.7 21.2h14.6"/></svg>
             </div>
             <h3 class="svc-process__card-title">Diventa un leader</h3>
-            <p class="svc-process__card-text">Avere una forte <strong>identità social</strong> per una azienda è importantissimo. <strong>Fatti vedere da migliaia di utenti</strong> e posizionati come uno dei <strong>brand di riferimento</strong>.</p>
+            <p class="svc-process__card-text">Avere una forte <strong>identità social</strong> per un'azienda è importantissimo. <strong>Fatti vedere da migliaia di utenti</strong> e posizionati come uno dei <strong>brand di riferimento</strong>.</p>
           </div>
 
           <div class="svc-process__card reveal reveal-delay-1">
@@ -1255,19 +1254,19 @@
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Su quali piattaforme gestisce le campagne ESTRO?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Gestiamo campagne su Meta (Facebook e Instagram), TikTok Ads, LinkedIn Ads e Pinterest Ads, scegliendo le piattaforme piu efficaci in base al tuo target e settore.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Gestiamo campagne su Meta (Facebook e Instagram), TikTok Ads, LinkedIn Ads e Pinterest Ads, scegliendo le piattaforme più efficaci in base al tuo target e settore.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Come si definisce il target di una campagna social?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Analizziamo il tuo cliente ideale e costruiamo audience personalizzate basate su interessi, eta, posizione geografica, comportamenti online e lookalike audience derivate dai tuoi clienti esistenti.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Analizziamo il tuo cliente ideale e costruiamo audience personalizzate basate su interessi, età, posizione geografica, comportamenti online e lookalike audience derivate dai tuoi clienti esistenti.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quanto budget serve per iniziare con i Social Ads?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">E possibile iniziare anche con budget contenuti. Ti consigliamo un investimento minimo mensile che permetta di raccogliere dati significativi. La cifra esatta dipende dal settore e dagli obiettivi.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">È possibile iniziare anche con budget contenuti. Ti consigliamo un investimento minimo mensile che permetta di raccogliere dati significativi. La cifra esatta dipende dal settore e dagli obiettivi.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Come vengono ottimizzate le campagne nel tempo?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Monitoriamo quotidianamente le performance e ottimizziamo creativita, audience, offerte e budget. Il test A/B continuo permette di migliorare progressivamente i risultati.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Monitoriamo quotidianamente le performance e ottimizziamo creatività, audience, offerte e budget. Il test A/B continuo permette di migliorare progressivamente i risultati.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Le campagne social possono integrarsi con Google Ads?</button>
@@ -1317,7 +1316,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="ads2-f-messaggio">Messaggio</label>
-            <textarea id="ads2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="ads2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="ads-privacy">
@@ -1343,7 +1342,7 @@
     requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); });
   })();
   </script>
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
   <script>
   /* ── Tema della nav ────────────────────────────────────────────
      Qui c'era l'impianto di effetti vecchio: i titoli scritti
@@ -1553,12 +1552,11 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
     // il titolo della hero e gia in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
     // gli altri titoli di sezione ondeggiano quando entrano
     document.querySelectorAll(
       '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
@@ -1569,8 +1567,8 @@
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
         }, el.classList.contains('sf-ghost')
              ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-             : { threshold: 0.6 });
-        io.observe(el);
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
@@ -1770,7 +1768,7 @@
     else addEventListener('load', pass);
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

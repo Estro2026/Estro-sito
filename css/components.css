@@ -11363,6 +11363,10 @@ html.js-reveal .sx-rise::after {
   pointer-events: none;
   z-index: -1;
 }
+/* due sezioni scure consecutive: la giunzione cadeva su mezzo pixel
+   e lasciava passare il bianco della pagina come una linea sottile.
+   La sezione che sale si sovrappone di 2px a quella sopra. */
+main > section.svc-bg-dark + section.svc-bg-dark { margin-top: -2px; }
 @media (prefers-reduced-motion: reduce) {
   html.js-reveal .sx-rise { transform: none; border-radius: 0; box-shadow: none; }
   html.js-reveal .sx-rise::after { display: none; }
@@ -14663,3 +14667,19 @@ html body main > section.svc-hero + section.svc-path.svc-path--grow > .svc-path_
 html body main > section.svc-hero + section.svc-path.svc-path--grow > .svc-path__sticky > .container {
   height: auto !important;
 }
+
+/* ── Titoli: fade/reveal al posto dell'effetto acqua ────────────
+   Lo script delle pagine mette .wl-wait sui titoli che osserva
+   (nascosti finché non entrano in scena) e .wl-in quando entrano:
+   salgono e compaiono, senza il lampo di prima (titolo visibile →
+   sparisce → ricompare). */
+html.js-reveal .wl-wait:not(.wl-in) { opacity: 0; }
+html.js-reveal .wl-wait.wl-in { animation: wlIn 0.9s cubic-bezier(0.22, 1, 0.36, 1) backwards; }
+@keyframes wlIn {
+  from { opacity: 0; translate: 0 24px; }
+  to   { opacity: 1; translate: 0 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html.js-reveal .wl-wait { opacity: 1 !important; animation: none !important; }
+}
+.static-capture .wl-wait { opacity: 1 !important; animation: none !important; }

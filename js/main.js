@@ -106,9 +106,75 @@ document.addEventListener('DOMContentLoaded', function () {
   const darkNow = new Set();
   let obs = null;
 
-  function updateNav() {
-    navEl.classList.toggle('nav--on-dark', darkNow.size > 0);
+  /* Il tema non si decide più dall'elenco delle sezioni scure, che
+     mancava i pannelli agganciati, le scene che cambiano fondo con
+     lo scroll e i video: si legge il colore reale dietro "Menu"
+     (sfondi, velature semitrasparenti, immagini e video, che
+     contano come scuri) e si sceglie fra bianco e fucsia quello
+     che contrasta di più. darkNow resta solo come ripiego. */
+  const menuBtn = navEl.querySelector('.nav__menu-btn') || navEl;
+  function rgba(str) {
+    const m = (str || '').match(/rgba?\(([^)]+)\)/);
+    if (!m) return null;
+    const p = m[1].split(',').map(parseFloat);
+    return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 };
   }
+  function lum(c) {
+    const f = v => { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); };
+    return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b);
+  }
+  function behindMenu() {
+    const r = menuBtn.getBoundingClientRect();
+    if (!r.width) return null;
+    const x = r.left + r.width / 2, y = r.top + r.height / 2;
+    const acc = { r: 0, g: 0, b: 0 }; let a = 0;
+    const add = (c, alpha) => {
+      const k = (1 - a) * alpha;
+      acc.r += c.r * k; acc.g += c.g * k; acc.b += c.b * k; a += k;
+    };
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (navEl.contains(el)) continue;
+      const cs = getComputedStyle(el);
+      if (cs.visibility === 'hidden') continue;
+      const op = parseFloat(cs.opacity);
+      if (op === 0) continue;
+      if (/^(VIDEO|IMG|CANVAS|PICTURE|IFRAME)$/.test(el.tagName)) {
+        add({ r: 30, g: 30, b: 30 }, op);
+      } else {
+        const bg = rgba(cs.backgroundColor);
+        if (bg && bg.a > 0) add(bg, bg.a * op);
+        /* sezione dichiarata scura ma trasparente: sotto c'è uno
+           sfondo (video, strato fisso) che non si vede da qui */
+        else if (el.getAttribute('data-nav-theme') === 'dark') add({ r: 20, g: 20, b: 20 }, 1);
+        else if (cs.backgroundImage && cs.backgroundImage !== 'none') {
+          const g = rgba(cs.backgroundImage);          // primo colore del gradiente
+          if (g && g.a > 0) add(g, g.a * op * 0.8);
+        }
+      }
+      if (a > 0.97) break;
+    }
+    if (a < 0.97) add(rgba(getComputedStyle(document.body).backgroundColor) || { r: 255, g: 255, b: 255 }, 1);
+    return acc;
+  }
+  const FUCSIA = lum({ r: 219, g: 0, b: 90 });
+  function updateNav() {
+    let dark = darkNow.size > 0;
+    const bg = behindMenu();
+    if (bg) {
+      const L = lum(bg);
+      const cWhite = 1.05 / (L + 0.05);
+      const cFucsia = (Math.max(L, FUCSIA) + 0.05) / (Math.min(L, FUCSIA) + 0.05);
+      dark = cWhite > cFucsia;
+    }
+    navEl.classList.toggle('nav--on-dark', dark);
+  }
+  let navQueued = false;
+  function scheduleNav() {
+    if (navQueued) return;
+    navQueued = true;
+    requestAnimationFrame(() => { navQueued = false; updateNav(); });
+  }
+  window.addEventListener('scroll', scheduleNav, { passive: true });
 
   function makeObserver() {
     const navH = navEl.getBoundingClientRect().height || 80;
@@ -621,3 +687,43 @@ if (!window.__STATIC_CAPTURE__ &&
   addEventListener('resize', later, { passive: true });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(check);
 }());
+
+// ─── Angoli delle sezioni che salgono ─────────────────────────────
+/* Una sezione .sx-rise sale con gli angoli alti arrotondati: negli
+   angoli si vedeva lo sfondo della pagina (bianco, o nero su Case
+   Studies) invece della sezione sopra. Durante lo scroll lo sfondo
+   della pagina prende il colore reale che sta appena sopra la
+   sezione in salita, così gli angoli mostrano la sezione precedente. */
+(function () {
+  const html = document.documentElement;
+  const rgba = s => { const m = (s || '').match(/rgba?\(([^)]+)\)/); if (!m) return null; const p = m[1].split(',').map(parseFloat); return { r: p[0], g: p[1], b: p[2], a: p.length > 3 ? p[3] : 1 }; };
+  function colorAt(x, y, skip) {
+    for (const el of document.elementsFromPoint(x, y)) {
+      if (skip && skip.contains(el)) continue;
+      if (el.closest && el.closest('.nav')) continue;
+      if (el === html || el === document.body) break;
+      const cs = getComputedStyle(el);
+      if (/^(VIDEO|IMG|CANVAS)$/.test(el.tagName)) return 'rgb(10,10,10)';
+      const bg = rgba(cs.backgroundColor);
+      if (bg && bg.a > 0.6) return cs.backgroundColor;
+    }
+    return null;
+  }
+  let queued = false;
+  function update() {
+    queued = false;
+    const vh = innerHeight;
+    let target = null;
+    for (const el of document.querySelectorAll('.sx-rise')) {
+      const t = el.getBoundingClientRect().top;
+      if (t > 1 && t < vh) { if (!target || t > target.t) target = { el, t }; }
+    }
+    const set = c => [html, document.body].forEach(e => c ? e.style.setProperty('background-color', c, 'important') : e.style.removeProperty('background-color'));
+    if (!target) { set(null); return; }
+    set(colorAt(Math.min(40, innerWidth / 2), target.t - 4, target.el));
+  }
+  const sched = () => { if (!queued) { queued = true; requestAnimationFrame(update); } };
+  addEventListener('scroll', sched, { passive: true });
+  addEventListener('resize', sched, { passive: true });
+  addEventListener('load', sched);
+})();

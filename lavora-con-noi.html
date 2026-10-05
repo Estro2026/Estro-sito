@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="ESTRO — Lavora con noi. Entra in un team giovane e dinamico." />
   <title>Lavora con noi — ESTRO</title>
-  <link rel="stylesheet" href="css/tokens.css" />
-  <link rel="stylesheet" href="css/base.css" />
-  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="css/components.css?v=20261006w" />
   <style>
 
     body { background: #000 !important; }
@@ -1131,7 +1131,7 @@
       html.js-reveal .sx-rise { transform: none; }
     }
   </style>
-  <link rel="stylesheet" href="css/responsive.css" />
+  <link rel="stylesheet" href="css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -1239,9 +1239,9 @@
         <span class="lcn-about__label reveal">Chi siamo</span>
         <div class="lcn-about__text">
           <p class="reveal">Estro è un collettivo di professionisti dove il lavoro viene affrontato con <strong>creatività e passione</strong>.</p>
-          <p class="reveal" style="transition-delay:0.12s">Un collettivo dove sono <strong>le persone e le loro idee a fare la differenza</strong> e dove anche chi ha poca esperienza può mettersi in gioco e dove la sua <strong>passione può essere trasformato in una professione</strong>.</p>
-          <p class="reveal" style="transition-delay:0.24s">Se sei creativo, hai <strong>passione per il mondo del marketing o del digitale</strong>, che tu sia un esordiente o un professionista affermato in estro c'è sempre bisogno di nuove idee.</p>
-          <p class="reveal" style="transition-delay:0.36s">Qui sotto trovi le figure che stiamo cercando ma se non vedi una categoria a te affine non disperare, <strong>mandaci comunque il tuo CV</strong> specificando per che posizione ti stai candidando e saremo felici di valutarlo.</p>
+          <p class="reveal" style="transition-delay:0.12s">Un collettivo dove sono <strong>le persone e le loro idee a fare la differenza</strong> e dove anche chi ha poca esperienza può mettersi in gioco e dove la sua <strong>passione può essere trasformata in una professione</strong>.</p>
+          <p class="reveal" style="transition-delay:0.24s">Se sei creativo, hai <strong>passione per il mondo del marketing o del digitale</strong>, che tu sia un esordiente o un professionista affermato, in Estro c'è sempre bisogno di nuove idee.</p>
+          <p class="reveal" style="transition-delay:0.36s">Qui sotto trovi le figure che stiamo cercando, ma se non vedi una categoria a te affine non disperare: <strong>mandaci comunque il tuo CV</strong> specificando per quale posizione ti stai candidando e saremo felici di valutarlo.</p>
         </div>
       </div>
       <div class="lcn-about__right reveal">
@@ -1388,7 +1388,7 @@
 
             <div class="lcn-apply__file-wrap">
               <label class="lcn-apply__file-label" for="cv-upload">
-              <span id="cv-filename">Mandaci il tuo CV (PDF max 2MB)</span>
+              <span id="cv-filename">Mandaci il tuo CV (PDF, max 2 MB)</span>
               <strong>Sfoglia</strong>
             </label>
             <input class="lcn-apply__file-input" type="file" id="cv-upload" name="cv" accept=".pdf" required />
@@ -1500,7 +1500,7 @@
   </footer>
 
 
-  <script src="js/main.js"></script>
+  <script src="js/main.js?v=20261006w"></script>
   <script>
   /* ═══════════════════════════════════════════════════════════
      LAVORA CON NOI — stesso motore delle altre pagine.
@@ -1536,20 +1536,19 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
 
-    requestAnimationFrame(() => waterLetters(document.querySelector('.lcn-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.lcn-hero__title'));
 
     document.querySelectorAll('.lcn-positions__heading, #lcnApplyTitle, .sf-ghost').forEach(el => {
       const io = new IntersectionObserver(es => {
         es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
       }, el.classList.contains('sf-ghost')
            ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-           : { threshold: 0.5 });
-      io.observe(el);
+           : { threshold: 0.15 });
+      el.classList.add('wl-wait'); io.observe(el);
     });
 
     /* ── Salita fra sezioni ────────────────────────────────── */
@@ -1724,11 +1723,11 @@
     const label = document.getElementById('cv-filename');
     if (input && label) {
       input.addEventListener('change', () => {
-        label.textContent = input.files[0] ? input.files[0].name : 'Mandaci il tuo CV* (PDF max 2MB)';
+        label.textContent = input.files[0] ? input.files[0].name : 'Mandaci il tuo CV* (PDF, max 2 MB)';
       });
     }
   </script>
-  <script src="js/responsive.js"></script>
+  <script src="js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 

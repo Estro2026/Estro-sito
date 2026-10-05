@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* Hero: esattamente 100dvh */
     .svc-hero--videobg {
@@ -604,8 +604,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6); /* come in homepage */
       filter: hue-rotate(-54deg) saturate(1.08);
     }
     .amici-video__fade {
@@ -837,16 +838,16 @@
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Cos'e la modellazione e renderizzazione 3D?", "acceptedAnswer": { "@type": "Answer", "text": "E il processo di creazione di oggetti, ambienti o prodotti in tre dimensioni tramite software specializzati, con il risultato finale di render fotorealistici o animazioni 3D." } },
+    { "@type": "Question", "name": "Cos'è la modellazione e renderizzazione 3D?", "acceptedAnswer": { "@type": "Answer", "text": "È il processo di creazione di oggetti, ambienti o prodotti in tre dimensioni tramite software specializzati, con il risultato finale di render fotorealistici o animazioni 3D." } },
     { "@type": "Question", "name": "In quali settori viene utilizzata la modellazione 3D?", "acceptedAnswer": { "@type": "Answer", "text": "La usiamo in architettura e interior design (render di spazi), industria (visualizzazione prodotto), e-commerce (foto prodotto 3D), advertising e molto altro." } },
-    { "@type": "Question", "name": "Quanto tempo richiede un progetto di modellazione 3D?", "acceptedAnswer": { "@type": "Answer", "text": "Dipende dalla complessita del soggetto. Un render di prodotto semplice puo richiedere 3-5 giorni, mentre un progetto architettonico completo puo richiedere 2-4 settimane." } },
+    { "@type": "Question", "name": "Quanto tempo richiede un progetto di modellazione 3D?", "acceptedAnswer": { "@type": "Answer", "text": "Dipende dalla complessità del soggetto. Un render di prodotto semplice può richiedere 3-5 giorni, mentre un progetto architettonico completo può richiedere 2-4 settimane." } },
     { "@type": "Question", "name": "Che formati di file consegna ESTRO al termine del progetto?", "acceptedAnswer": { "@type": "Answer", "text": "Consegniamo immagini ad alta risoluzione (PNG, TIFF, JPEG), file video (MP4) per le animazioni e, su richiesta, i file 3D sorgente nei formati principali (OBJ, FBX, Blender, ecc.)." } },
-    { "@type": "Question", "name": "La modellazione 3D puo essere utilizzata per l'e-commerce?", "acceptedAnswer": { "@type": "Answer", "text": "Si, le foto prodotto 3D sono sempre piu utilizzate nell'e-commerce perche consentono di mostrare il prodotto in ogni angolazione, in varianti di colore e in ambienti personalizzati." } },
-    { "@type": "Question", "name": "E possibile creare animazioni 3D per video e advertising?", "acceptedAnswer": { "@type": "Answer", "text": "Assolutamente. Realizziamo animazioni 3D per spot pubblicitari, video esplicativi, presentazioni di prodotto e contenuti per social media." } }
+    { "@type": "Question", "name": "La modellazione 3D può essere utilizzata per l'e-commerce?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, le foto prodotto 3D sono sempre più utilizzate nell'e-commerce perché consentono di mostrare il prodotto in ogni angolazione, in varianti di colore e in ambienti personalizzati." } },
+    { "@type": "Question", "name": "È possibile creare animazioni 3D per video e advertising?", "acceptedAnswer": { "@type": "Answer", "text": "Assolutamente. Realizziamo animazioni 3D per spot pubblicitari, video esplicativi, presentazioni di prodotto e contenuti per social media." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -933,7 +934,7 @@
       <div class="container svc-hero__inner">
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">Modellazione 3D</p>
-          <h1 class="svc-hero__title" id="page-title"><span style="white-space:nowrap">Dai vita</span><br/><span style="white-space:nowrap">ai tuoi prodotti</span><br/><span style="white-space:nowrap">con il <em>3D Design</em>.</span></h1>
+          <h1 class="svc-hero__title" id="page-title">Dai vita<br/>ai prodotti<br/>con il <em>3D</em>.</h1>
           <p class="svc-hero__sub">Crea esperienze coinvolgenti che <strong>trasformano le visualizzazioni in vendite</strong>, perfette sia per <strong>e-commerce</strong> che per <strong>trattative commerciali</strong>.</p>
           <p class="svc-hero__tagline"><strong>Scopri cosa possiamo fare insieme, richiedi una consulenza.</strong></p>
         </div>
@@ -973,7 +974,7 @@
               </div>
               <div class="f-field">
                 <label class="f-label" for="md-f-messaggio">Messaggio</label>
-                <textarea id="md-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+                <textarea id="md-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
               </div>
               <div class="hc-consents">
                 <label class="svc-hero__privacy" for="md-hero-privacy">
@@ -1005,27 +1006,27 @@
           <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
             <button class="svc-tabs__tab is-active" type="button" role="tab" id="md-tab-1" aria-controls="md-pan-1" aria-selected="true" tabindex="0">
               <span class="svc-tabs__num" aria-hidden="true">01</span>
-              <span class="svc-tabs__tag">Video Prodotto</span>
+              <span class="svc-tabs__tag">Presentazione</span>
               <span class="svc-tabs__title">Video Prodotto</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="md-tab-2" aria-controls="md-pan-2" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">02</span>
-              <span class="svc-tabs__tag">Il Tuo Prodotto in 3D</span>
+              <span class="svc-tabs__tag">Modellazione</span>
               <span class="svc-tabs__title">Il Tuo Prodotto in 3D</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="md-tab-3" aria-controls="md-pan-3" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">03</span>
-              <span class="svc-tabs__tag">Virtual Reality</span>
+              <span class="svc-tabs__tag">Esperienza immersiva</span>
               <span class="svc-tabs__title">Virtual Reality</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="md-tab-4" aria-controls="md-pan-4" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">04</span>
-              <span class="svc-tabs__tag">Contenuti Pubblicitari</span>
+              <span class="svc-tabs__tag">Advertising</span>
               <span class="svc-tabs__title">Contenuti Pubblicitari</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="md-tab-5" aria-controls="md-pan-5" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">05</span>
-              <span class="svc-tabs__tag">Animazione 3D</span>
+              <span class="svc-tabs__tag">Movimento</span>
               <span class="svc-tabs__title">Animazione 3D</span>
             </button>
           </div>
@@ -1304,8 +1305,8 @@
         <h2 class="page-faq__title">Domande Frequenti</h2>
         <dl class="page-faq__list">
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">Cos'e la modellazione e renderizzazione 3D?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">E il processo di creazione di oggetti, ambienti o prodotti in tre dimensioni tramite software specializzati, con il risultato finale di render fotorealistici o animazioni 3D.</div></div>
+            <button class="page-faq__question" aria-expanded="false">Cos'è la modellazione e renderizzazione 3D?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">È il processo di creazione di oggetti, ambienti o prodotti in tre dimensioni tramite software specializzati, con il risultato finale di render fotorealistici o animazioni 3D.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">In quali settori viene utilizzata la modellazione 3D?</button>
@@ -1313,18 +1314,18 @@
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quanto tempo richiede un progetto di modellazione 3D?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Dipende dalla complessita del soggetto. Un render di prodotto semplice puo richiedere 3-5 giorni, mentre un progetto architettonico completo puo richiedere 2-4 settimane.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Dipende dalla complessità del soggetto. Un render di prodotto semplice può richiedere 3-5 giorni, mentre un progetto architettonico completo può richiedere 2-4 settimane.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Che formati di file consegna ESTRO al termine del progetto?</button>
             <div class="page-faq__answer"><div class="page-faq__answer-inner">Consegniamo immagini ad alta risoluzione (PNG, TIFF, JPEG), file video (MP4) per le animazioni e, su richiesta, i file 3D sorgente nei formati principali (OBJ, FBX, Blender, ecc.).</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">La modellazione 3D puo essere utilizzata per l'e-commerce?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, le foto prodotto 3D sono sempre piu utilizzate nell'e-commerce perche consentono di mostrare il prodotto in ogni angolazione, in varianti di colore e in ambienti personalizzati.</div></div>
+            <button class="page-faq__question" aria-expanded="false">La modellazione 3D può essere utilizzata per l'e-commerce?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, le foto prodotto 3D sono sempre più utilizzate nell'e-commerce perché consentono di mostrare il prodotto in ogni angolazione, in varianti di colore e in ambienti personalizzati.</div></div>
           </div>
           <div class="page-faq__item">
-            <button class="page-faq__question" aria-expanded="false">E possibile creare animazioni 3D per video e advertising?</button>
+            <button class="page-faq__question" aria-expanded="false">È possibile creare animazioni 3D per video e advertising?</button>
             <div class="page-faq__answer"><div class="page-faq__answer-inner">Assolutamente. Realizziamo animazioni 3D per spot pubblicitari, video esplicativi, presentazioni di prodotto e contenuti per social media.</div></div>
           </div>
         </dl>
@@ -1371,7 +1372,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="md2-f-messaggio">Messaggio</label>
-            <textarea id="md2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="md2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="md-privacy">
@@ -1392,7 +1393,7 @@
   <script>
   (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
   </script>
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
   <script>
   /* ── Modellazione 3D: scroll-driven motion ── */
   (function () {
@@ -1773,12 +1774,11 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
     // il titolo della hero e gia in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
     // gli altri titoli di sezione ondeggiano quando entrano
     document.querySelectorAll(
       '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
@@ -1789,8 +1789,8 @@
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
         }, el.classList.contains('sf-ghost')
              ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-             : { threshold: 0.6 });
-        io.observe(el);
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
@@ -1979,6 +1979,6 @@
     else addEventListener('load', pass);
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>

@@ -9,10 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/tokens.css" />
-  <link rel="stylesheet" href="../css/base.css" />
-  <link rel="stylesheet" href="../css/components.css" />
-  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
   <style>
     /* Hero: esattamente 100dvh */
     .svc-hero--videobg {
@@ -578,8 +578,9 @@
       display: block;
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
       object-position: center;
+      transform: scale(1.6); /* come in homepage */
       filter: hue-rotate(-54deg) saturate(1.08);
     }
     .amici-video__fade {
@@ -805,22 +806,41 @@
        ma una sbordava di 22px. clip taglia senza creare un
        contenitore di scorrimento, quindi non tocca le sticky. */
     .svc-process { overflow-x: clip; }
+
+    /* ── Un unico video dietro "Un sito cucito su misura" e i clienti ──
+       Lo strato è fisso a tutto schermo e lo script lo ritaglia
+       sull'area delle due sezioni; le sezioni diventano trasparenti
+       così il video si vede continuo sotto entrambe. */
+    html.wd-shared-video .wd-shared-video__layer {
+      position: fixed !important;
+      inset: 0 !important;
+      height: 100vh !important;
+      z-index: 1;
+      pointer-events: none;
+      background: #000;
+    }
+    html.wd-shared-video #wd-deep,
+    html.wd-shared-video #wd-clienti,
+    html.wd-shared-video #wd-clienti .svc-clients__sticky {
+      background: transparent !important;
+      box-shadow: none !important;
+    }
   </style>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
   "mainEntity": [
-    { "@type": "Question", "name": "Che tipo di siti web realizza ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Realizziamo siti vetrina, blog, landing page, e-commerce e portali web. Utilizziamo tecnologie come WordPress, Elementor e soluzioni custom, scegliendo la piu adatta agli obiettivi del cliente." } },
-    { "@type": "Question", "name": "Quanto tempo ci vuole per realizzare un sito web?", "acceptedAnswer": { "@type": "Answer", "text": "Un sito vetrina richiede mediamente 4-8 settimane dalla firma del preventivo. Un e-commerce o un sito piu complesso puo richiedere 8-16 settimane. I tempi dipendono anche dalla disponibilita dei contenuti." } },
-    { "@type": "Question", "name": "I siti realizzati sono ottimizzati per i motori di ricerca (SEO)?", "acceptedAnswer": { "@type": "Answer", "text": "Si, curiamo l'ottimizzazione SEO on-page di ogni sito: struttura URL, meta tag, velocita di caricamento, accessibilita e markup semantico. Offriamo anche servizi SEO avanzati su richiesta." } },
-    { "@type": "Question", "name": "I siti sono responsive e ottimizzati per mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Assolutamente. Ogni sito che realizziamo e responsive by design, ottimizzato per smartphone, tablet e desktop. Testiamo la compatibilita su tutti i principali dispositivi e browser." } },
-    { "@type": "Question", "name": "ESTRO offre assistenza post-lancio?", "acceptedAnswer": { "@type": "Answer", "text": "Si, offriamo pacchetti di manutenzione e assistenza post-lancio che includono aggiornamenti, backup, monitoraggio e interventi tecnici. Puoi anche gestire il sito in autonomia se preferisci." } },
-    { "@type": "Question", "name": "Posso aggiornare il sito in autonomia dopo la consegna?", "acceptedAnswer": { "@type": "Answer", "text": "Si, realizziamo siti con CMS semplici da usare (come WordPress) e forniamo una sessione di formazione per permetterti di gestire i contenuti in piena autonomia." } }
+    { "@type": "Question", "name": "Che tipo di siti web realizza ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Realizziamo siti vetrina, blog, landing page, e-commerce e portali web. Utilizziamo tecnologie come WordPress, Elementor e soluzioni custom, scegliendo la più adatta agli obiettivi del cliente." } },
+    { "@type": "Question", "name": "Quanto tempo ci vuole per realizzare un sito web?", "acceptedAnswer": { "@type": "Answer", "text": "Un sito vetrina richiede mediamente 4-8 settimane dalla firma del preventivo. Un e-commerce o un sito più complesso può richiedere 8-16 settimane. I tempi dipendono anche dalla disponibilità dei contenuti." } },
+    { "@type": "Question", "name": "I siti realizzati sono ottimizzati per i motori di ricerca (SEO)?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, curiamo l'ottimizzazione SEO on-page di ogni sito: struttura URL, meta tag, velocità di caricamento, accessibilità e markup semantico. Offriamo anche servizi SEO avanzati su richiesta." } },
+    { "@type": "Question", "name": "I siti sono responsive e ottimizzati per mobile?", "acceptedAnswer": { "@type": "Answer", "text": "Assolutamente. Ogni sito che realizziamo è responsive by design, ottimizzato per smartphone, tablet e desktop. Testiamo la compatibilità su tutti i principali dispositivi e browser." } },
+    { "@type": "Question", "name": "ESTRO offre assistenza post-lancio?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, offriamo pacchetti di manutenzione e assistenza post-lancio che includono aggiornamenti, backup, monitoraggio e interventi tecnici. Puoi anche gestire il sito in autonomia se preferisci." } },
+    { "@type": "Question", "name": "Posso aggiornare il sito in autonomia dopo la consegna?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, realizziamo siti con CMS semplici da usare (come WordPress) e forniamo una sessione di formazione per permetterti di gestire i contenuti in piena autonomia." } }
   ]
 }
 </script>
-  <link rel="stylesheet" href="../css/responsive.css" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
 </head>
 <body>
 
@@ -906,11 +926,8 @@
 
         <div class="svc-hero__left">
           <p class="svc-hero__kicker">Web Design</p>
-          <h1 class="svc-hero__title" id="page-title">
-            <span style="white-space:nowrap">Vuoi realizzare</span><br/>
-            <span style="white-space:nowrap">il tuo sito</span><br/>
-            <em style="white-space:nowrap">web?</em>
-          </h1>
+          <h1 class="svc-hero__title" id="page-title">Vuoi un<br/>
+            sito <em>web</em>?</h1>
           <p class="svc-hero__sub">Siamo specializzati nella creazione di siti web belli, semplici e funzionali, che si caricano velocemente e sono facili da gestire.</p>
           <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
         </div>
@@ -950,7 +967,7 @@
               </div>
               <div class="f-field">
                 <label class="f-label" for="wd-f-messaggio">Messaggio</label>
-                <textarea id="wd-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="4"></textarea>
+                <textarea id="wd-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
               </div>
               <div class="hc-consents">
                 <label class="svc-hero__privacy" for="wd-hero-privacy">
@@ -988,17 +1005,17 @@
           <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
             <button class="svc-tabs__tab is-active" type="button" role="tab" id="wd-tab-1" aria-controls="wd-pan-1" aria-selected="true" tabindex="0">
               <span class="svc-tabs__num" aria-hidden="true">01</span>
-              <span class="svc-tabs__tag">Web Design</span>
+              <span class="svc-tabs__tag">Progettazione</span>
               <span class="svc-tabs__title">Sviluppo Siti Web</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="wd-tab-2" aria-controls="wd-pan-2" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">02</span>
-              <span class="svc-tabs__tag">SEO</span>
+              <span class="svc-tabs__tag">Visibilità</span>
               <span class="svc-tabs__title">Ottimizzazione SEO</span>
             </button>
             <button class="svc-tabs__tab" type="button" role="tab" id="wd-tab-3" aria-controls="wd-pan-3" aria-selected="false" tabindex="-1">
               <span class="svc-tabs__num" aria-hidden="true">03</span>
-              <span class="svc-tabs__tag">E-Commerce</span>
+              <span class="svc-tabs__tag">Vendita online</span>
               <span class="svc-tabs__title">Siti E-Commerce</span>
             </button>
           </div>
@@ -1047,7 +1064,7 @@
                 <div class="wd-tabs__prose">
                   <p>Quando qualcuno fa una ricerca su Google o altri motori di ricerca, l'algoritmo passa al setaccio il web, cercando le informazioni che risultano più importanti e pertinenti.</p>
                   <p>Ottimizzare un sito significa renderlo, nella forma e nei contenuti, più chiaro, e ciò aiuta i motori di ricerca a capire cosa c'è sul tuo sito web, il valore della tua attività e quali sono le <strong>keywords</strong> che la identificano.</p>
-                  <p>Per rafforzare la tua <strong>strategia di marketing digitale</strong> è fondamentale partire dalla basi, indirizzando e <strong>aumentando il traffico organico</strong> al tuo sito web, e mantenendo una strategia di ottimizzazione sostenibile capace di adattarsi alla continua evoluzione degli algoritmi e strategie dei motori di ricerca.</p>
+                  <p>Per rafforzare la tua <strong>strategia di marketing digitale</strong> è fondamentale partire dalle basi, indirizzando e <strong>aumentando il traffico organico</strong> al tuo sito web, e mantenendo una strategia di ottimizzazione sostenibile capace di adattarsi alla continua evoluzione degli algoritmi e strategie dei motori di ricerca.</p>
                 </div>
                 <ul class="svc-tabs__points wd-tabs__list">
                   <li>Analisi e strategia</li>
@@ -1076,14 +1093,14 @@
                 <div class="wd-tabs__prose">
                   <p>Non si tratta del commercio del futuro, ma di una realtà concreta e presente.</p>
                   <p>E noi creiamo la tua <strong>vetrina online</strong>, che ti permetta di esporre i tuoi prodotti e raggiungere il più alto numero di clienti possibile, per <strong>rafforzare le vendite</strong> ed espandere le operazioni commerciali, acquisendo un'autorità significativa nel mercato.</p>
-                  <p>Un e-commerce ti permette di comunicare direttamente con i tuoi clienti, ascoltare i loro feedback e migliorando la loro soddisfazione finale, ti consente di fornire informazioni sui prodotti e fare pubblicità.</p>
+                  <p>Un e-commerce ti permette di comunicare direttamente con i tuoi clienti, ascoltare i loro feedback e migliorare la loro soddisfazione finale, ti consente di fornire informazioni sui prodotti e fare pubblicità.</p>
                   <p>E tutto questo risparmiando tempo ed energia!</p>
                 </div>
                 <ul class="svc-tabs__points wd-tabs__list">
                   <li>Supera i limiti geografici</li>
                   <li>Acquisisci nuovi clienti</li>
-                  <li>Individuare il prodotto più rapidamente</li>
-                  <li>Fornire informazioni dettagliate</li>
+                  <li>Individua il prodotto più rapidamente</li>
+                  <li>Fornisci informazioni dettagliate</li>
                   <li>Rimani sempre aperto</li>
                   <li>Crea mercati per prodotti di nicchia</li>
                 </ul>
@@ -1101,7 +1118,7 @@
          Chiude la timeline, su fondo nero. I tre passaggi hanno lo
          stesso peso: nessuno e' in evidenza, sono tre schede sfalsate
          con il numero in trasparenza. Testo del sito, nemmeno una
-         parola cambiata — svista "racconare" inclusa. -->
+         parola cambiata — svista "raccontare" inclusa. -->
     <section class="wd-deep" id="wd-deep" aria-labelledby="wd-deep-title">
       <div class="wd-deep__glow" aria-hidden="true"></div>
       <div class="container wd-deep__grid">
@@ -1114,7 +1131,7 @@
         <div class="wd-deep__lead">
           <p class="wd-deep__p"><span class="wd-deep__idx" aria-hidden="true">01</span>Nel nostro lavoro creatività e praticità vanno a braccetto, creiamo per te un sito web cucito su misura, in grado di raccontare il tuo brand e raggiungere gli obiettivi prefissati: aumentare i profitti, fornire supporto, vendere prodotti.</p>
           <p class="wd-deep__p"><span class="wd-deep__idx" aria-hidden="true">02</span>Con noi puoi star certo che ogni parola, foto o video sarà scelto con cura, per trovare i giusti elementi in grado di trasmettere chi sei e il valore aggiunto del tuo marchio.</p>
-          <p class="wd-deep__p"><span class="wd-deep__idx" aria-hidden="true">03</span>Un sito deve saper racconare l'anima del tuo brand..caricandosi velocemente. La user experience è la chiave di volta del nostro lavoro. Ma un sito deve anche essere in grado di raggiungere il maggior numero di utenti possibile, ed è qui che entra in gioco l'ottimizzazione SEO.</p>
+          <p class="wd-deep__p"><span class="wd-deep__idx" aria-hidden="true">03</span>Un sito deve saper raccontare l'anima del tuo brand, caricandosi velocemente. La user experience è la chiave di volta del nostro lavoro. Ma un sito deve anche essere in grado di raggiungere il maggior numero di utenti possibile, ed è qui che entra in gioco l'ottimizzazione SEO.</p>
         </div>
 
       </div>
@@ -1309,27 +1326,27 @@
         <dl class="page-faq__list">
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Che tipo di siti web realizza ESTRO?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Realizziamo siti vetrina, blog, landing page, e-commerce e portali web. Utilizziamo tecnologie come WordPress, Elementor e soluzioni custom, scegliendo la piu adatta agli obiettivi del cliente.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Realizziamo siti vetrina, blog, landing page, e-commerce e portali web. Utilizziamo tecnologie come WordPress, Elementor e soluzioni custom, scegliendo la più adatta agli obiettivi del cliente.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Quanto tempo ci vuole per realizzare un sito web?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Un sito vetrina richiede mediamente 4-8 settimane dalla firma del preventivo. Un e-commerce o un sito piu complesso puo richiedere 8-16 settimane. I tempi dipendono anche dalla disponibilita dei contenuti.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Un sito vetrina richiede mediamente 4-8 settimane dalla firma del preventivo. Un e-commerce o un sito più complesso può richiedere 8-16 settimane. I tempi dipendono anche dalla disponibilità dei contenuti.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">I siti realizzati sono ottimizzati per i motori di ricerca (SEO)?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, curiamo l'ottimizzazione SEO on-page di ogni sito: struttura URL, meta tag, velocita di caricamento, accessibilita e markup semantico. Offriamo anche servizi SEO avanzati su richiesta.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, curiamo l'ottimizzazione SEO on-page di ogni sito: struttura URL, meta tag, velocità di caricamento, accessibilità e markup semantico. Offriamo anche servizi SEO avanzati su richiesta.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">I siti sono responsive e ottimizzati per mobile?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Assolutamente. Ogni sito che realizziamo e responsive by design, ottimizzato per smartphone, tablet e desktop. Testiamo la compatibilita su tutti i principali dispositivi e browser.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Assolutamente. Ogni sito che realizziamo è responsive by design, ottimizzato per smartphone, tablet e desktop. Testiamo la compatibilità su tutti i principali dispositivi e browser.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">ESTRO offre assistenza post-lancio?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, offriamo pacchetti di manutenzione e assistenza post-lancio che includono aggiornamenti, backup, monitoraggio e interventi tecnici. Puoi anche gestire il sito in autonomia se preferisci.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, offriamo pacchetti di manutenzione e assistenza post-lancio che includono aggiornamenti, backup, monitoraggio e interventi tecnici. Puoi anche gestire il sito in autonomia se preferisci.</div></div>
           </div>
           <div class="page-faq__item">
             <button class="page-faq__question" aria-expanded="false">Posso aggiornare il sito in autonomia dopo la consegna?</button>
-            <div class="page-faq__answer"><div class="page-faq__answer-inner">Si, realizziamo siti con CMS semplici da usare (come WordPress) e forniamo una sessione di formazione per permetterti di gestire i contenuti in piena autonomia.</div></div>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, realizziamo siti con CMS semplici da usare (come WordPress) e forniamo una sessione di formazione per permetterti di gestire i contenuti in piena autonomia.</div></div>
           </div>
         </dl>
       </div>
@@ -1375,7 +1392,7 @@
           </div>
           <div class="f-field">
             <label class="f-label" for="wd2-f-messaggio">Messaggio</label>
-            <textarea id="wd2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorreste risolvere." rows="5"></textarea>
+            <textarea id="wd2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
           </div>
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="wd-privacy">
@@ -1396,7 +1413,7 @@
   <script>
   (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
   </script>
-  <script src="../js/main.js"></script>
+  <script src="../js/main.js?v=20261006w"></script>
   <script>
   /* ── Web Design: scroll-driven motion ── */
   (function () {
@@ -1834,12 +1851,11 @@
       if (!r.width) return;
       el.dataset.wlDone = '1';
       if (RM) return;
-      // fade/reveal standard (effetto acqua rimosso)
-      el.animate([{ opacity: 0, transform: 'translateY(24px)' }, { opacity: 1, transform: 'none' }],
-        { duration: ms || 900, easing: 'cubic-bezier(.22,1,.36,1)' });
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
     }
     // il titolo della hero e gia in vista al caricamento
-    requestAnimationFrame(() => waterLetters(document.querySelector('.svc-hero__title'), 1000));
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
     // gli altri titoli di sezione ondeggiano quando entrano
     document.querySelectorAll(
       '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
@@ -1850,8 +1866,8 @@
           es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
         }, el.classList.contains('sf-ghost')
              ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
-             : { threshold: 0.6 });
-        io.observe(el);
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
       });
 
     /* ── Salita delle sezioni ──────────────────────────────── */
@@ -1982,7 +1998,43 @@
      Se la sezione non ce l'ha, glielo si mette: stessa sorgente,
      stesso filtro che porta la forma sul fucsia di brand, stessa
      sfumatura che chiude il bordo basso. Decorativo. */
+  /* Web Design: un unico video dietro "Un sito cucito su misura" e
+     i clienti. Uno strato fisso a tutto schermo, ritagliato a ogni
+     scroll sull'area che le due sezioni occupano nella finestra:
+     il video è uno solo e scorre continuo da una sezione all'altra.
+     Le due sezioni hanno lo sfondo trasparente (vedi <style>). */
   (function () {
+    const deep = document.getElementById('wd-deep');
+    const cli  = document.getElementById('wd-clienti');
+    if (!deep || !cli) return;
+    document.documentElement.classList.add('wd-shared-video');
+    deep.setAttribute('data-nav-theme', 'dark');   // per il contrasto di MENU
+    const box = document.createElement('div');
+    box.className = 'amici-video wd-shared-video__layer';
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML =
+      '<video class="amici-video__el" autoplay loop muted playsinline preload="metadata" ' +
+      'src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>';
+    deep.parentNode.insertBefore(box, deep);
+    let q = false;
+    const clip = () => {
+      q = false;
+      const vh = innerHeight;
+      const top = Math.max(0, deep.getBoundingClientRect().top);
+      const bot = Math.min(vh, cli.getBoundingClientRect().bottom);
+      const vid = box.firstElementChild;
+      if (bot <= top) { box.style.visibility = 'hidden'; if (!vid.paused) vid.pause(); return; }
+      box.style.visibility = 'visible';
+      if (vid.paused) vid.play().catch(() => {});
+      box.style.clipPath = 'inset(' + top.toFixed(1) + 'px 0 ' + (vh - bot).toFixed(1) + 'px 0)';
+    };
+    const sched = () => { if (!q) { q = true; requestAnimationFrame(clip); } };
+    addEventListener('scroll', sched, { passive: true });
+    addEventListener('resize', sched, { passive: true });
+    clip();
+  }());
+  (function () {
+    if (document.documentElement.classList.contains('wd-shared-video')) return;
     const sec = document.querySelector('.svc-clients');
     if (!sec) return;
     const host = sec.querySelector('.svc-clients__sticky') || sec;
@@ -2048,7 +2100,7 @@
     else addEventListener('load', pass);
   }());
   </script>
-  <script src="../js/responsive.js"></script>
+  <script src="../js/responsive.js?v=20261006w"></script>
 </body>
 </html>
 
