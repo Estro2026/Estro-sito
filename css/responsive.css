@@ -134,7 +134,7 @@ html body .about-sticky > .container {
   display: flex !important;
   flex-direction: column;
   justify-content: center;
-  padding-block: calc(var(--nav-h, 88px) + 1rem) clamp(2rem, 5vh, 3.5rem) !important;
+  padding-block: calc(var(--nav-h) + 1rem) clamp(2rem, 5vh, 3.5rem) !important;
 }
 
 /* Passaparola: sotto i 640px di altezza il pannello perdeva
@@ -161,7 +161,7 @@ html body .wall-sticky {
     overflow: hidden !important;
   }
   .svc-inner {
-    padding-top: calc(var(--nav-h, 80px) + 1.5rem) !important;
+    padding-top: calc(var(--nav-h) + 1.5rem) !important;
     padding-bottom: calc(clamp(86px, 11.5vh, 108px) + 2.5rem) !important;
   }
   .svc-cards-wrap { padding-inline: var(--gutter, 1.5rem) !important; }
@@ -567,11 +567,11 @@ html body :is(.svc-generic-sticky, .page-faq__sticky):not(#ads-vantaggi > *):not
   /* sopra e sotto lo stesso valore: sotto i 1100px --section-py (8vw)
      scende sotto la distanza dalla nav, e prima il vuoto sotto restava
      più piccolo di quello sopra */
-  padding-block: max(var(--section-py), calc(var(--nav-h, 88px) + 0.75rem)) !important;
+  padding-block: max(var(--section-py), calc(var(--nav-h) + 0.75rem)) !important;
 }
 /* "I sei vantaggi" (Social ADS): era 117/45 */
 html body #ads-vantaggi > .svc-generic-sticky:not(#_) {
-  padding-block: calc(var(--nav-h, 88px) + 0.75rem) !important;
+  padding-block: calc(var(--nav-h) + 0.75rem) !important;
 }
 
 /* ══ "LA TUA IMMAGINE SOCIAL COSTRUITA CON NOI." e analoghe ═══════
@@ -587,7 +587,7 @@ html body .svc-path__sticky:not(#_):not(#_) {
   justify-content: center !important;
   height: auto !important;
   min-height: 100dvh !important;
-  padding-block: calc(var(--nav-h, 88px) + 0.75rem) !important;
+  padding-block: calc(var(--nav-h) + 0.75rem) !important;
 }
 
 /* ══ FORM DELLA HERO — casella messaggio senza scroll ═════════════
@@ -635,7 +635,7 @@ html body main > section.svc-process .svc-process__card-title:not(#_):not(#_) {
    e Team il resto, con margini interni più corti. Sotto i 960px il
    resto non basta per la card Team: resta il menu a due colonne. */
 html body .nav__mega-inner:not(#_):not(#_) {
-  max-height: calc(100dvh - var(--nav-h, 88px) - 16px);
+  max-height: calc(100dvh - var(--nav-h) - 16px);
   overflow-y: auto;
 }
 @media (min-width: 769px) and (max-width: 1400px) {
@@ -808,7 +808,7 @@ html body .cs2-body:not(#_) { padding-top: var(--section-py) !important; padding
 /* rete di sicurezza: mai oltre lo schermo (scorre al suo interno) */
 @media (min-width: 769px) {
   html body .cs2-sidebar:not(#_) {
-    max-height: calc(100dvh - var(--nav-h, 88px) - 40px) !important;
+    max-height: calc(100dvh - var(--nav-h) - 40px) !important;
     overflow-y: auto !important;
   }
 }
@@ -916,7 +916,7 @@ html body .faq-hero__stat-num:not(#_):not(#_) { font-size: min(150px, 14cqw) !im
   html body .lcn-hero__stats:not(#_) { margin-bottom: 0 !important; }
   html body .lcn-hero__title:not(#_):not(#_) { font-size: min(150px, 26vw, 9vh) !important; }
 }
-html body main > section.lcn-hero:not(#_):not(#_) { padding-top: max(104px, calc(var(--nav-h, 88px) + 1.5rem)) !important; }
+html body main > section.lcn-hero:not(#_):not(#_) { padding-top: max(104px, calc(var(--nav-h) + 1.5rem)) !important; }
 @media (max-height: 600px) and (min-width: 769px) {
   html body .lcn-hero__title:not(#_):not(#_):not(#_) { font-size: min(150px, 26vw, 8vh) !important; }
 }
@@ -1131,15 +1131,6 @@ html body .nw-grid-wrap:not(:has(img)) .nw-card:not(#_) { border-left: 0 !import
 
 /* Contatti: form con box di sfondo pieno e campi grigi pieni (niente trasparenze),
    stesso schema del form nelle hero servizi */
-html body .ct-inner .hc-form:not(#_) {
-  background: #141414 !important; border: 1px solid #2a2a2a !important;
-  border-radius: var(--r-box, 36px) !important; padding: clamp(1.5rem, 3vw, 2.5rem) !important;
-}
-html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__) {
-  background: #262626 !important; border: 1px solid #333 !important;
-  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
-}
-html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):focus { background: #303030 !important; border-color: #fff !important; }
 
 /* ── Margine laterale UNICO di sito (pagine + footer): clamp(1.5rem, 5vw, 6rem) ── */
 :root:not(#_) { --gutter: clamp(1.5rem, 5vw, 6rem) !important; --page-x: var(--gutter); }
@@ -1277,3 +1268,883 @@ html body .tt-contact__title:not(#_):not(#__):not(#___) { font-size: clamp(1.9re
 @media (max-width: 768px) { html body .tt-hero__title:not(#_):not(#__):not(#___) { font-size: min(11vw, 4rem) !important; } }
 @media (max-width: 600px) { html body .tt-contact__title:not(#_):not(#__):not(#___) { font-size: 24px !important; } }
 html body .tt-body__inner:not(#_):not(#__) { max-width: none !important; }
+
+/* ── Hero di news e tips & tricks = altezza della hero FAQ (la FAQ resta com'è) ──
+   stessa altezza minima, stesso spazio sotto la nav e sotto il testo,
+   stessi margini laterali; contenuto ancorato in basso come nella FAQ */
+:root { --hero-min: max(34rem, 72dvh); }
+html body :is(.faq-hero, .nw-hero):not(#_):not(#__):not(#___) {
+  min-height: 34rem !important;
+  min-height: max(34rem, 72vh) !important;
+  min-height: var(--hero-min) !important;
+  padding-top: max(140px, calc(var(--nav-h) + 3rem)) !important;
+  padding-bottom: clamp(5rem, 9vw, 8rem) !important;
+}
+html body .nw-hero:not(#_):not(#__):not(#___) .nw-hero__inner {
+  padding-left: var(--gutter) !important; padding-right: var(--gutter) !important;
+}
+
+/* ── Contatti: form largo quanto il titolo, fondo fucsia ──
+   .ct-col prende la larghezza dal titolo "Contatti"; sottotitolo e form
+   non contano nella misura (width:0 + min-width:100%) e la riempiono. */
+html body .ct-inner .ct-col:not(#_):not(#__) {
+  display: flex; flex-direction: column; align-items: stretch;
+  width: fit-content; max-width: 100%; margin-inline: auto;
+}
+html body .ct-inner .ct-col .hc-header:not(#_):not(#__) { width: 100%; }
+html body .ct-inner .ct-col :is(.hc-sub, .hc-form):not(#_):not(#__) {
+  width: 0 !important; min-width: 100% !important; max-width: none !important;
+}
+
+/* ── Titoli FAQ e Lavora con noi: stessa scala delle altre pagine ──
+   una parola (FAQ) → --t-xl · frasi di testata → --t-h1 ·
+   titoli di sezione e dei form → --t-sub */
+html body .lcn-hero__title:not(#_):not(#__):not(#___):not(#____) { font-size: var(--t-h1) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important; }
+html body :is(.faq-contact__title, .lcn-positions__heading, .lcn-apply__title):not(#_):not(#__):not(#___):not(#____) {
+  font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
+}
+
+/* ── Contatti: form nero, celle più calde, tutto dentro la viewport ──
+   Il pannello è alto una schermata (100dvh): titolo, spazi e campi si
+   misurano su dvh così hero + form restano visibili senza tagli. */
+html body .ct-inner:not(#_):not(#__) { padding-top: calc(var(--nav-h) + .5rem) !important; padding-bottom: 1rem !important; }
+html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___) { font-size: min(150px, 26vw, 13dvh) !important; margin-bottom: 8px !important; }
+html body .ct-inner .ct-col .hc-header:not(#_):not(#__) { margin-bottom: clamp(16px, 3dvh, 32px) !important; gap: 0 !important; }
+html body .ct-inner .hc-form:not(#_):not(#__) {
+  background: #0b0b0d !important; border: 1px solid #2c2c33 !important;
+  border-radius: var(--r-box, 36px) !important;
+  padding: clamp(1rem, 2.4dvh, 2rem) clamp(1.25rem, 2.4vw, 2rem) !important;
+  gap: clamp(8px, 1.4dvh, 14px) !important;
+}
+html body .ct-inner .hc-form :is(.hc-row):not(#_):not(#__) { gap: clamp(8px, 1.4dvh, 14px) !important; }
+html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):not(#___) {
+  background: #1b1a22 !important; border: 1px solid #3a3946 !important; color: #fff !important;
+}
+html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___) { height: clamp(40px, 5.4dvh, 55px) !important; min-height: 0 !important; padding-block: 0 !important; }
+html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___) { min-height: clamp(56px, 9dvh, 96px) !important; padding: 12px 20px !important; }
+html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):not(#___):focus { background: #24222e !important; border-color: #fff !important; }
+html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__)::placeholder { color: rgba(255,255,255,.55) !important; }
+html body .ct-inner .hc-form .f-label:not(#_):not(#__) { margin-bottom: 4px !important; }
+
+/* ── Articolo news: titoli sulla scala del sito ──
+   testata (titolo lungo di articolo) → tra --t-sub e --t-h1, senza
+   spezzare le parole · titoli di sezione e del form → --t-sub ·
+   sottotitoli del corpo → come negli articoli tips & tricks */
+html body .art-hero__title:not(#_):not(#__):not(#___) { font-size: min(var(--t-h1), 4.4vw) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1.02 !important; }
+@media (max-width: 768px) { html body .art-hero__title:not(#_):not(#__):not(#___) { font-size: min(11vw, 3rem) !important; } }
+html body :is(.art-pricing__title, .art-timeline__title, .art-results__title, .art-faq__title, .art-contact__title):not(#_):not(#__):not(#___) {
+  font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
+}
+html body .art-h2:not(#_):not(#__):not(#___) { font-size: clamp(1.4rem, 3vw, 2rem) !important; line-height: 1.02 !important; }
+
+/* ── Pagina News: ordine finale (le regole sopra si sovrapponevano) ──
+   titolo di testata come le hero dei servizi, titolo del form come gli
+   altri form, sezioni con lo stesso respiro del resto del sito. */
+html body .nw-hero__title:not(#_):not(#__):not(#___):not(#____) {
+  font-size: min(var(--t-h1), 9vh) !important; font-weight: 900 !important;
+  letter-spacing: -0.03em !important; line-height: 1 !important; max-width: 16ch;
+}
+html body .nw-hero__sub:not(#_):not(#__):not(#___) { max-width: 52ch; font-size: clamp(1rem, 1.3vw, 1.15rem) !important; line-height: 1.6 !important; }
+html body .nw-contact__title:not(#_):not(#__):not(#___):not(#____) { font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important; }
+html body .nw-grid-wrap:not(#_):not(#__) { padding-block: var(--section-py) !important; padding-inline: var(--gutter) !important; }
+
+/* ── Contatti: spazi prima e dopo le sezioni ──
+   pannello hero: sotto la nav → titolo → form → fine schermata;
+   pannello sedi/social: stesso respiro di sezione del resto del sito
+   (scala con l'altezza della finestra: i pannelli sono alti 100dvh). */
+html body .ct-inner:not(#_):not(#__):not(#___) { padding-bottom: clamp(1rem, 4dvh, 2.5rem) !important; }
+
+/* ── News: regole visive del sito applicate alla pagina ──
+   superficie bianca come le altre pagine, 36px sulle card, pillola sulle
+   CTA, testi mai sotto 14px (etichette) / 16px (corpo), stacchi 16/24/48,
+   contorno visibile da tastiera. */
+html body .nw-grid-wrap:not(#_):not(#__):not(#___) { background: #fff !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#_):not(#__) { border-top-color: rgba(0,0,0,.12) !important; }
+html body .nw-grid-wrap:not(:has(img)) :is(.nw-card__cat, .nw-featured__cat):not(#_):not(#__) {
+  font-size: 14px !important; letter-spacing: .14em !important; font-weight: 700 !important; color: var(--primary) !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__date:not(#_):not(#__) { font-size: 14px !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__excerpt:not(#_):not(#__) { font-size: 16px !important; line-height: 1.6 !important; color: rgba(0,0,0,.65) !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__title:not(#_):not(#__):not(#___) { font-weight: 900 !important; letter-spacing: -.02em !important; color: #080808; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__body:not(#_):not(#__) { gap: var(--gap-items, 24px) !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__title:not(#_):not(#__):not(#___) { font-size: min(var(--t-sub), 4.2vw) !important; font-weight: 900 !important; letter-spacing: -.03em !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__cta:not(#_):not(#__) { font-size: 14px !important; font-weight: 600 !important; text-transform: uppercase; }
+html body .nw-hero__kicker:not(#_):not(#__):not(#___) { font-size: 14px !important; }
+html body .nw-card:focus-visible, html body .nw-featured__card:focus-visible { outline: 3px solid var(--primary); outline-offset: 4px; }
+
+/* ── Articolo News ───────────────────────────────────────────────────
+   Il titolo della hero è lungo: resta alla misura massima che entra
+   (min(6.2vw…, 8.5vh)); i titoli di sezione stanno sempre a ~3/4 */
+html body :is(.art-pricing__title, .art-timeline__title, .art-results__title, .art-faq__title, .art-contact__title):not(#_):not(#__):not(#___) {
+  font-size: min(clamp(1.9rem, 4.65vw, 4.2rem), 6.4vh) !important;
+}
+/* FAQ allineate al margine come le altre sezioni (prima centrate in 1440px) */
+html body .art-faq:not(#_):not(#__) { align-items: stretch !important; }
+html body .art-faq > *:not(#_):not(#__):not(#___) { max-width: none !important; margin-left: 0 !important; margin-right: 0 !important; }
+@media (max-width: 600px) { html body :is(.art-pricing__title, .art-timeline__title, .art-results__title, .art-faq__title, .art-contact__title):not(#_):not(#__):not(#___) { font-size: 24px !important; } }
+
+/* ── Pagina News (senza foto): stesse regole di Tips & Tricks / servizi ── */
+html body:has(.nw-grid-wrap):not(:has(.nw-card__img)) .nw-hero__title:not(#_):not(#__):not(#___) { font-size: min(6.3vw, 14vh) !important; }
+html body:has(.nw-grid-wrap):not(:has(.nw-card__img)) .nw-hero:not(#_):not(#__) { min-height: 0 !important; }
+html body:has(.nw-grid-wrap):not(:has(.nw-card__img)) .nw-contact__title:not(#_):not(#__):not(#___) { font-size: clamp(1.9rem, 4.6vw, 5.5rem) !important; }
+@media (max-width: 768px) { html body:has(.nw-grid-wrap):not(:has(.nw-card__img)) .nw-hero__title:not(#_):not(#__):not(#___) { font-size: min(11vw, 4rem) !important; } }
+@media (max-width: 600px) { html body:has(.nw-grid-wrap):not(:has(.nw-card__img)) .nw-contact__title:not(#_):not(#__):not(#___) { font-size: 24px !important; } }
+/* titoli degli articoli: bold, non maiuscoli, sotto i titoli di sezione */
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__title:not(#_):not(#__) {
+  text-transform: none !important; font-weight: 700 !important; letter-spacing: -0.01em !important;
+  font-size: clamp(1.5rem, 2.3vw, 2.5rem) !important; line-height: 1.15 !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__title:not(#_):not(#__) {
+  text-transform: none !important; font-weight: 700 !important; letter-spacing: -0.01em !important;
+  font-size: clamp(1.15rem, 1.45vw, 1.5rem) !important; line-height: 1.25 !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__excerpt:not(#_):not(#__) { font-size: 17px !important; color: rgba(255,255,255,.78) !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__excerpt:not(#_):not(#__) { font-size: 16px !important; color: rgba(0,0,0,.7) !important; }
+
+/* ══ NEWS (senza foto) — layout definitivo ════════════════════════════
+   In evidenza: card scura compatta. Altre news: griglia di card
+   (3 / 2 / 1 per riga) con radius 36, padding 32, freccia a pillola. */
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__body:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  padding: clamp(1.75rem, 3.5vw, 3rem) !important; gap: 14px !important; max-width: 900px !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__title:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  font-size: clamp(1.5rem, 2.3vw, 2.5rem) !important; font-weight: 700 !important; text-transform: none !important;
+  letter-spacing: -0.01em !important; line-height: 1.15 !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__cta:not(#a):not(#b):not(#c):not(#d):not(#e) { margin-top: 10px !important; }
+
+html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 24px !important; border-top: 0 !important;
+}
+@media (max-width: 1024px) { html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#a):not(#b):not(#c):not(#d):not(#e) { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; } }
+@media (max-width: 600px)  { html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#a):not(#b):not(#c):not(#d):not(#e) { grid-template-columns: 1fr !important; } }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  display: flex !important; background: #f4f4f4 !important; border: 0 !important; border-radius: var(--r-box, 36px) !important;
+  box-shadow: none !important; position: relative; overflow: hidden; transition: background .25s;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover:not(#a):not(#b):not(#c):not(#d):not(#e) { background: #ececec !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__body:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  display: flex !important; flex-direction: column !important; align-items: flex-start; gap: 12px !important;
+  padding: 32px !important; width: 100%; grid-template-columns: none !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cat:not(#a):not(#b):not(#c):not(#d):not(#e) { margin: 0 !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__title:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  margin: 0 !important; font-size: clamp(1.2rem, 1.5vw, 1.5rem) !important; font-weight: 700 !important;
+  text-transform: none !important; letter-spacing: -0.01em !important; line-height: 1.2 !important; color: #080808 !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__excerpt:not(#a):not(#b):not(#c):not(#d):not(#e) { margin: 0 !important; max-width: none !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e) {
+  margin-top: auto !important; padding-top: 0; width: 48px !important; height: 48px !important; border-radius: 999px !important;
+  border: 1px solid rgba(0,0,0,.15) !important; display: inline-flex !important; align-items: center; justify-content: center;
+  font-size: 0 !important; color: var(--primary, #DB005A) !important; background: #fff; flex: none;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e)::after { content: '→' !important; font-size: 20px !important; line-height: 1 !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e) { background: var(--primary, #DB005A) !important; border-color: var(--primary, #DB005A) !important; color: #fff !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__body > .nw-card__excerpt + .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e) { margin-top: auto !important; }
+/* cornice animata: stessi angoli della card */
+html body .nw-grid-wrap .nw-trace rect:not(#a) { rx: 34.5px; ry: 34.5px; }
+html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f) { grid-auto-rows: 1fr !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f) { align-self: flex-start !important; margin-left: 0 !important; margin-right: 0 !important; }
+/* News: freccia della card disegnata (SVG) e centrata nel cerchio */
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after {
+  content: '' !important; display: block !important; width: 18px !important; height: 18px !important; font-size: 0 !important;
+  background: currentColor !important; margin: 0 !important;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f) { padding: 0 !important; line-height: 0 !important; text-indent: 0 !important; gap: 0 !important; }
+/* News: card in evidenza con il video della hero in sfondo (niente nero pieno) */
+html body .nw-featured__card:has(.nw-featured__video):not(#a):not(#b):not(#c):not(#d):not(#e) { position: relative !important; overflow: hidden !important; isolation: isolate; }
+html body .nw-featured__video:not(#a) {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; pointer-events: none;
+  transform: scale(1.15); filter: hue-rotate(-54deg) saturate(1.05) brightness(0.62); opacity: .85;
+}
+html body .nw-featured__card:has(.nw-featured__video):not(#a):not(#b):not(#c):not(#d):not(#e)::after {
+  content: '' !important; display: block !important; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgba(0,0,0,.82) 0%, rgba(0,0,0,.55) 45%, rgba(0,0,0,.1) 100%) !important;
+}
+html body .nw-featured__card:has(.nw-featured__video) .nw-featured__body:not(#a):not(#b):not(#c):not(#d):not(#e) { position: relative; z-index: 1; background: transparent !important; }
+/* News: card in evidenza con grafica statica nel mood del sito
+   (bagliori fucsia come le sezioni scure + griglia sottile), niente video */
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f) {
+  position: relative !important; overflow: hidden !important; isolation: isolate;
+  background:
+    radial-gradient(60% 90% at 92% 20%, rgba(219,0,90,.55) 0%, rgba(219,0,90,0) 60%),
+    radial-gradient(45% 70% at 70% 110%, rgba(120,0,90,.45) 0%, rgba(120,0,90,0) 65%),
+    radial-gradient(35% 50% at 100% 100%, rgba(255,60,140,.25) 0%, rgba(255,60,140,0) 70%),
+    #0a0a0a !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after {
+  content: '' !important; display: block !important; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.045) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.045) 1px, transparent 1px) !important;
+  background-size: 48px 48px !important;
+  -webkit-mask-image: linear-gradient(90deg, transparent 25%, #000 75%); mask-image: linear-gradient(90deg, transparent 25%, #000 75%);
+}
+
+/* ══ CTA con freccia: un solo sistema in tutto il sito ═══════════════
+   (esclusa la CTA "Contattaci" della nav). Stesse misure di .btn:
+   14px / 600 / maiuscolo / 1.68px · padding 16×32 · alt. 54 · pillola ·
+   gap 12. Freccia = stessa icona SVG 16px; --back la gira a sinistra. */
+:root { --cta-arrow-svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E"); }
+html body .cta-arrow:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f) {
+  display: inline-flex !important; align-items: center !important; justify-content: center !important; gap: 12px !important;
+  padding: 16px 32px !important; min-height: 54px !important; height: auto !important; box-sizing: border-box !important;
+  font-family: var(--font-secondary, "DM Sans", sans-serif) !important; font-size: 14px !important; font-weight: 600 !important;
+  letter-spacing: 1.68px !important; text-transform: uppercase !important; line-height: 22.4px !important;
+  border-radius: 999px !important; white-space: nowrap; text-decoration: none !important;
+}
+html body .cta-arrow:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after {
+  content: '' !important; display: block !important; position: static !important; flex: none !important;
+  width: 16px !important; height: 16px !important; background: currentColor !important; transform: none;
+  -webkit-mask: var(--cta-arrow-svg) center / contain no-repeat; mask: var(--cta-arrow-svg) center / contain no-repeat;
+  transition: transform .25s ease;
+}
+html body .cta-arrow--back:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after { order: -1; transform: scaleX(-1); }
+html body .cta-arrow:hover:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after { transform: translateX(3px); }
+html body .cta-arrow--back:hover:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after { transform: scaleX(-1) translateX(3px); }
+html body a:hover .cta-arrow:not(.cta-arrow--back):not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after { transform: translateX(3px); }
+/* "Leggi l'articolo" è uno span dentro la card: stesso aspetto di .btn--primary */
+html body .nw-featured__cta.cta-arrow:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f) { background: var(--primary, #DB005A) !important; color: #fff !important; margin-top: 10px !important; }
+/* freccia nel cerchio delle card News: stessa icona */
+html body .nw-grid-wrap:not(:has(img)) .nw-card__cta:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f)::after {
+  -webkit-mask: var(--cta-arrow-svg) center / contain no-repeat !important; mask: var(--cta-arrow-svg) center / contain no-repeat !important;
+}
+/* "Tutti i …": stesso stile a contorno ovunque, alto 54 come gli altri
+   (il contorno è un'ombra interna, non aggiunge altezza) */
+html body .cta-arrow--back:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g) {
+  background: transparent !important; border: 0 !important; box-shadow: inset 0 0 0 2px currentColor !important; color: #0b0b0c !important;
+}
+html body .cta-arrow--back:hover:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g) { background: #0b0b0c !important; color: #fff !important; box-shadow: inset 0 0 0 2px #0b0b0c !important; }
+html body [data-nav-theme="dark"] .cta-arrow--back:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g) { color: #fff !important; }
+html body [data-nav-theme="dark"] .cta-arrow--back:hover:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g) { background: #fff !important; color: #0b0b0c !important; box-shadow: inset 0 0 0 2px #fff !important; }
+html body .cta-arrow--back:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g)::before { display: none !important; }
+html body .d24-back__link.cta-arrow--back:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g):not(#h) { color: #fff !important; }
+html body .d24-back__link.cta-arrow--back:hover:not(#a):not(#b):not(#c):not(#d):not(#e):not(#f):not(#g):not(#h) { background: #fff !important; color: #0b0b0c !important; box-shadow: inset 0 0 0 2px #fff !important; }
+
+/* Homepage, About: testo leggibile (era nero al 60%, peso 400 → grigio chiaro
+   e sottile). Grigio molto scuro, peso 500, 17px, interlinea 1.65 */
+html body .about-section__body p:not(.about-section__pull):not(#a):not(#b):not(#c) {
+  color: #222 !important; font-weight: 500 !important; font-size: 17px !important; line-height: 1.65 !important;
+}
+html body .about-section__body p strong:not(#a):not(#b):not(#c) { color: #080808 !important; font-weight: 700 !important; }
+
+/* ── Leggibilità del body: stessa base del body About della home ──
+   16px, interlinea 1.6; su bianco nero al 60% (valore dell'About),
+   su nero bianco al 72% (valore già usato nelle sezioni scure). */
+html body :is(.faq-item__a, .faq-item__a p, .faq-item__body, .faq-item__body p,
+  .lcn-about__text p, .cs2-p, .cs2-list li):not(#_):not(#__) {
+  color: var(--ink-body) !important; font-size: var(--text-body, 1rem) !important; line-height: 1.6 !important; font-weight: 400 !important;
+}
+html body :is(.faq-hero__sub, .d24-hero__sub, .lcn-positions__notice,
+  .svc-caffe__sub):not(#_):not(#__) {
+  color: var(--ink-body-dark) !important;
+}
+html body :is(.faq-item__a, .faq-item__body, .lcn-about__text, .cs2-p) strong:not(#_):not(#__) { color: #000 !important; }
+
+/* ── Home · Case studies: card apribile + loghi un filo più grandi ──
+   La card di testo è un link al case study. La freccia riprende quella
+   delle card Servizi (cerchio fucsia, compare in hover/focus) ed è
+   assoluta: non sposta nulla. Su touch resta visibile e discreta. */
+html body .cs2-sticky a.cst-info:not(#_):not(#__) {
+  position: relative; display: flex; flex-direction: column;
+  color: inherit; text-decoration: none; cursor: pointer;
+  transition: border-color .3s ease, box-shadow .3s ease;
+}
+html body .cs2-sticky a.cst-info:not(#_):not(#__):hover,
+html body .cs2-sticky a.cst-info:not(#_):not(#__):focus-visible { border-color: var(--primary, #DB005A) !important; }
+html body .cs2-sticky a.cst-info:not(#_):not(#__):focus-visible { outline: 2px solid var(--primary, #DB005A); outline-offset: 3px; }
+.cst-info__go {
+  position: absolute; top:  1rem; right: 1rem; z-index: 3;
+  width: 46px; height: 46px; display: grid; place-items: center;
+  border-radius: 50%; background: var(--primary, #DB005A); color: #fff;
+  opacity: 0; transform: scale(.6) rotate(-45deg);
+  transition: opacity .3s ease, transform .45s cubic-bezier(.34,1.56,.64,1);
+  pointer-events: none;
+}
+.cst-info__go svg { width: 22px; height: 22px; }
+a.cst-info:hover .cst-info__go, a.cst-info:focus-visible .cst-info__go { opacity: 1; transform: none; }
+@media (hover: none) { .cst-info__go { opacity: .9; transform: none; } }
+html body .cs2-sticky .cst-info__brand img[src*="prada"]:not(#_)     { transform: scale(1.65); }
+html body .cs2-sticky .cst-info__brand img[src*="miumiu"]:not(#_)    { transform: scale(1.62); }
+html body .cs2-sticky .cst-info__brand img[src*="fanuc"]:not(#_)     { transform: scale(1.65); }
+html body .cs2-sticky .cst-info__brand img[src*="aristonlogo"]:not(#_){ transform: scale(1.54); }
+html body .cs2-sticky .cst-info__brand img[src*="biorepair"]:not(#_) { transform: scale(1.65); }
+html body .cs2-sticky .cst-info__brand img[src*="bravo"]:not(#_)     { transform: scale(.77); }
+
+/* ── Home · Tips & Tricks: stesso hover della pagina Tips & Tricks ──
+   Card intera cliccabile (<a>). Hover = bordo + ombra che si alzano e
+   contorno fucsia che gira intorno alla card (.nw-trace, tracciato da
+   js/responsive.js). Via parallasse, tilt e deriva dell'immagine. */
+html body a.tip-card:not(#_):not(#__) {
+  position: relative; display: flex; flex-direction: column; text-decoration: none; color: inherit; cursor: pointer;
+  border: 1px solid rgba(0,0,0,.07) !important; border-radius: var(--r-box, 36px) !important; overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 20px -10px rgba(0,0,0,.16) !important;
+  transition: box-shadow .4s var(--ease-out, cubic-bezier(.16,1,.3,1)), border-color .4s ease, transform .6s var(--rv-ease, ease) !important;
+  --tc-rx: 0deg !important; --tc-ry: 0deg !important; --tc-ix: 0px !important; --tc-iy: 0px !important;
+  --tc-tx: 0px !important; --tc-sx: 0px !important; --tc-sy: 0px !important; --tc-is: 1 !important;
+  --tc-z-img: 0px !important; --tc-z-tit: 0px !important; --tc-z-date: 0px !important;
+}
+html body a.tip-card:not(#_):not(#__):hover {
+  border-color: rgba(0,0,0,.12) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 16px 34px -14px rgba(0,0,0,.24) !important;
+}
+html body a.tip-card:not(#_):not(#__):focus-visible { outline: 3px solid var(--primary, #DB005A); outline-offset: 4px; }
+html body a.tip-card:not(#_):not(#__):hover .tip-card__img img { animation: none !important; transform: none !important; }
+html body a.tip-card:not(#_):not(#__) .tip-card__img::after { display: none !important; }
+.tip-card .nw-trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible; }
+.tip-card .nw-trace rect {
+  fill: none; stroke: var(--primary, #DB005A); stroke-width: 3; stroke-linecap: round;
+  stroke-dasharray: var(--nw-len, 0); stroke-dashoffset: var(--nw-len, 0);
+  transition: stroke-dashoffset .55s cubic-bezier(.35,0,.25,1);
+}
+.tip-card:hover .nw-trace rect, .tip-card:focus-visible .nw-trace rect { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .tip-card .nw-trace rect { transition: opacity .2s ease; stroke-dashoffset: 0; opacity: 0; }
+  .tip-card:hover .nw-trace rect { opacity: 1; }
+}
+
+/* ── CTA e card: stesso comportamento per componenti con la stessa funzione ──
+   Riferimento: .btn--primary (fucsia a riposo, nero in hover, sollevamento
+   di 2px, durata e curva di sistema). Le CTA delle card News/Tips seguono
+   lo stesso schema invece di un fucsia più scuro; le card si alzano con la
+   stessa ombra. */
+html body :is(.nw-featured__cta, .nw-card__cta, .cs-view, .cst-info__go):not(#_):not(#__) {
+  transition: background-color var(--dur-base, .3s) var(--ease-out, ease), color var(--dur-base, .3s) var(--ease-out, ease),
+              border-color var(--dur-base, .3s) var(--ease-out, ease), transform var(--dur-base, .3s) var(--ease-out, ease),
+              opacity var(--dur-base, .3s) ease, gap .35s var(--ease-out, ease);
+}
+html body .nw-featured__card:hover .nw-featured__cta:not(#_):not(#__):not(#___),
+html body .nw-grid-wrap:not(:has(img)) .nw-featured__card:hover .nw-featured__cta:not(#_):not(#__):not(#___) { background: #000 !important; color: #fff !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover .nw-card__cta:not(#_):not(#__):not(#___):not(#____) {
+  background: var(--primary, #DB005A) !important; border-color: var(--primary, #DB005A) !important; color: #fff !important;
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   PASSATA FINALE: leggibilità, CTA/card, componenti nuovi
+   Token: --ink-body (nero 70%) e --ink-body-dark (bianco 80%) in tokens.css.
+   Gerarchia: titoli/domande 800-900, body 400 a 16px, strong pieno.
+   ════════════════════════════════════════════════════════════════════ */
+
+/* ── Leggibilità: body su fondo chiaro ── */
+html body :is(.service-detail__body, .service-detail__body p, .svc-tabs__text,
+  .svc-tabs__points li, .imk-intro__text, .imk-intro__text p,
+  .svc-talent-pronti__item p, .smm-panel__statement-sub,
+  .svc-path__head .smm-panel__statement-sub, .lcn-about__text p):not(#_):not(#__):not(#___) {
+  color: var(--ink-body) !important; font-size: var(--text-body, 1rem) !important;
+  font-weight: 400 !important; line-height: 1.6 !important; opacity: 1 !important;
+}
+html body :is(.service-detail__body, .svc-tabs__text, .imk-intro__text, .svc-talent-pronti__item p, .lcn-about__text) strong:not(#_):not(#__):not(#___) { color: #000 !important; font-weight: 700 !important; }
+html body .svc-path__head .smm-panel__statement-sub:not(#_):not(#__):not(#___) { font-weight: 500 !important; white-space: normal !important; }
+/* …e su fondo scuro (sezioni .svc-bg-dark) */
+html body main > section.svc-bg-dark :is(.service-detail__body, .service-detail__body p, .svc-tabs__text,
+  .svc-tabs__points li, .imk-intro__text, .imk-intro__text p, .svc-talent-pronti__item p, .smm-panel__statement-sub):not(#_):not(#__):not(#___) {
+  color: var(--ink-body-dark) !important;
+}
+html body main > section.svc-bg-dark :is(.service-detail__body, .svc-tabs__text, .imk-intro__text, .svc-talent-pronti__item p) strong:not(#_):not(#__):not(#___) { color: #fff !important; }
+
+/* ── FAQ (tutte): risposta più leggibile ma sempre sotto la domanda ── */
+html body :is(.faq-item__a, .faq-item__a p, .page-faq__answer-inner):not(#_):not(#__):not(#___) {
+  color: var(--ink-body) !important; font-size: var(--text-body, 1rem) !important; font-weight: 400 !important; line-height: 1.65 !important;
+}
+html body :is(.faq-item__a, .page-faq__answer-inner) strong:not(#_):not(#__):not(#___) { color: #000 !important; font-weight: 700 !important; }
+html body :is(.page-faq--dark, main > section.svc-bg-dark) .page-faq__answer-inner:not(#_):not(#__):not(#___) { color: var(--ink-body-dark) !important; }
+html body :is(.faq-item__q-text, .page-faq__question):not(#_):not(#__):not(#___) { font-weight: 800; }
+
+/* ── Influencer: stesso fondo da "I talent" a "Ad integrazione" fino alla sezione nera ── */
+html body main > section#imkTalent:not(#_):not(#__),
+html body main > section#imkTalent > .svc-integrazione:not(#_):not(#__),
+html body main > section#imkTalent > .svc-integrazione > .container:not(#_):not(#__) {
+  background: #f8f3f6 !important; border: 0 !important; box-shadow: none !important;
+}
+html body main > section#imkTalent .svc-integrazione::before,
+html body main > section#imkTalent .svc-integrazione::after,
+html body main > section#imkTalent::before,
+html body main > section#imkTalent::after { content: none !important; display: none !important; }
+html body main > section#imkTalent > .svc-integrazione:not(#_):not(#__) {
+  margin-bottom: 0 !important; padding-bottom: clamp(2rem, 4.5vw, 3.25rem) !important;
+}
+
+/* ── Dama: colonna "Altri case study" più grande, dentro la viewport senza tagli ── */
+@media (min-width: 1025px) { html body .cs2-body__layout:not(#_):not(#__) { grid-template-columns: minmax(0, 1fr) clamp(400px, 31vw, 480px) !important; } }
+@media (max-width: 1024px) { html body .cs2-body__layout:not(#_):not(#__) { grid-template-columns: minmax(0, 1fr) !important; } }
+html body .cs2-sidebar:not(#_):not(#__):not(#___) {
+  top: calc(var(--nav-h) + 16px) !important;
+  padding: clamp(1rem, 2.4dvh, 1.6rem) clamp(1rem, 1.6vw, 1.4rem) !important;
+  gap: clamp(.6rem, 1.6dvh, 1.1rem) !important;
+  max-height: none !important; overflow: visible !important;
+}
+html body .cs2-sidebar__item > a:not(#_):not(#__):not(#___) {
+  grid-template-columns: clamp(60px, 10dvh, 96px) minmax(0, 1fr) !important; gap: 14px !important; padding: 6px !important; align-items: center !important;
+}
+html body .cs2-sidebar__thumb:not(#_):not(#__):not(#___):not(#____) {
+  width: clamp(60px, 10dvh, 96px) !important; height: clamp(60px, 10dvh, 96px) !important; flex: 0 0 auto !important; aspect-ratio: 1 / 1;
+}
+html body .cs2-sidebar__thumb img:not(#_):not(#__):not(#___) { width: 84% !important; height: 84% !important; object-fit: contain !important; }
+html body .cs2-sidebar__title:not(#_):not(#__):not(#___) {
+  font-size: clamp(14px, 1.05vw, 16px) !important; line-height: 1.35 !important; color: var(--ink-body) !important; font-weight: 500 !important;
+}
+html body .cs2-sidebar__item.active .cs2-sidebar__title:not(#_):not(#__):not(#___) { color: var(--primary) !important; font-weight: 600 !important; }
+@media (min-width: 769px) and (max-height: 640px) { html body .cs2-sidebar__search:not(#_):not(#__) { display: none !important; } }
+
+/* ── Allegati dei case study (componente riusabile) ──
+   <section class="cs-attach"> con <a class="cs-attach__item"> per PDF, presentazioni, documenti.
+   Hover come le card Tips: bordo e ombra che si alzano, freccia fucsia. */
+.cs-attach { margin-top: clamp(2.5rem, 5vw, 4rem); }
+.cs-attach__list { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); margin: 0; padding: 0; list-style: none; }
+.cs-attach__item {
+  position: relative; display: grid; grid-template-columns: 48px minmax(0, 1fr) auto; align-items: center; gap: 14px;
+  padding: 16px 18px; background: #fff; color: inherit; text-decoration: none; cursor: pointer;
+  border: 1px solid rgba(0,0,0,.07); border-radius: var(--r-box, 36px);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 20px -10px rgba(0,0,0,.16);
+  transition: box-shadow .4s var(--ease-out, ease), border-color .4s ease;
+}
+.cs-attach__item:hover, .cs-attach__item:focus-visible {
+  border-color: rgba(219,0,90,.45); box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 16px 34px -14px rgba(0,0,0,.24);
+}
+.cs-attach__item:focus-visible { outline: 3px solid var(--primary, #DB005A); outline-offset: 4px; }
+.cs-attach__icon {
+  width: 48px; height: 48px; border-radius: 50%; display: grid; place-items: center;
+  background: rgba(219,0,90,.08); color: var(--primary, #DB005A); font: 700 12px/1 var(--font-secondary); letter-spacing: .06em; text-transform: uppercase;
+}
+.cs-attach__title { display: block; font: 700 16px/1.3 var(--font-secondary); color: #080808; }
+.cs-attach__meta { display: block; margin-top: 2px; font: 400 14px/1.3 var(--font-secondary); color: var(--ink-body); }
+.cs-attach__go {
+  width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--primary, #DB005A); color: #fff;
+  transition: transform var(--dur-base, .3s) var(--ease-out, ease);
+}
+.cs-attach__go svg { width: 18px; height: 18px; }
+.cs-attach__item:hover .cs-attach__go { transform: translate(2px, -2px); }
+
+/* ── News: CTA "Leggi l'articolo" come le altre CTA (pillola fucsia, hover invertito) ── */
+html body .nw-featured__cta:not(#_):not(#__):not(#___) {
+  display: inline-flex !important; align-items: center; gap: .6rem; width: fit-content;
+  background: var(--primary, #DB005A) !important; color: #fff !important; border: 2px solid var(--primary, #DB005A) !important;
+  border-radius: var(--r-pill, 999px) !important; padding: 14px 26px !important;
+  font: 600 14px/1 var(--font-secondary) !important; letter-spacing: .12em !important; text-transform: uppercase !important;
+}
+html body .nw-featured__card:hover .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+  background: #fff !important; color: var(--primary, #DB005A) !important; border-color: #fff !important;
+}
+html body .nw-grid-wrap:has(.nw-card__img) .nw-featured__card:hover .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+  background: #000 !important; color: #fff !important; border-color: #000 !important;
+}
+
+/* ── News: card staccate dallo sfondo (profondità molto discreta) ── */
+html body .nw-grid-wrap:not(:has(img)):not(#_):not(#__) { background: #f5f5f5 !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-grid:not(#_):not(#__):not(#___) { border-top: 0 !important; display: grid !important; gap: 16px; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:not(#_):not(#__):not(#___):not(#____) {
+  background: #fff !important; border: 1px solid rgba(0,0,0,.07) !important; border-radius: var(--r-box, 36px) !important;
+  padding-inline: clamp(1.25rem, 3vw, 2.5rem); overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 20px -10px rgba(0,0,0,.16) !important;
+  transition: box-shadow .4s var(--ease-out, ease), border-color .4s ease !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+  background: #fff !important; border-color: rgba(0,0,0,.12) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 16px 34px -14px rgba(0,0,0,.24) !important;
+}
+html body .nw-grid-wrap:has(img) .nw-card:not(#_):not(#__):not(#___) { border: 1px solid rgba(0,0,0,.08) !important; }
+
+/* ── Articolo News: FAQ sullo stesso margine dei risultati, titolo form come gli altri form ── */
+html body :is(.art-faq, .art-results):not(#_):not(#__):not(#___) { padding-left: var(--gutter) !important; }
+@media (max-width: 1099px) { html body :is(.art-faq, .art-results):not(#_):not(#__):not(#___) { padding-right: var(--gutter) !important; } }
+html body :is(.art-contact__title, .tt-contact__title):not(#_):not(#__):not(#___):not(#____) {
+  font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
+}
+@media (max-width: 600px) { html body :is(.art-contact__title, .tt-contact__title):not(#_):not(#__):not(#___):not(#____) { font-size: 24px !important; } }
+
+/* ── Tips: hero con la stessa misura delle altre hero di lista; data sulle card ── */
+html body .nw-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+  font-size: min(var(--t-h1), 9vh) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
+}
+@media (max-width: 768px) { html body .nw-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____) { font-size: min(11vw, 3rem) !important; } }
+html body .nw-grid .nw-card:has(.nw-card__img) .nw-card__date:not(#_):not(#__):not(#___) {
+  display: block !important; font: 500 14px/1.3 var(--font-secondary) !important; color: var(--ink-body) !important; letter-spacing: .02em; margin: 0 !important;
+}
+
+/* ── Tips articolo: data leggibile, parola in evidenza (stessa logica degli <em> dei titoli) ── */
+html body .tt-hero__date:not(#_):not(#__):not(#___) { font-size: 14px !important; font-weight: 500 !important; color: var(--ink-body) !important; letter-spacing: .02em !important; }
+html body .tt-hero__title em:not(#_):not(#__) { font-style: normal; color: var(--primary, #DB005A) !important; }
+
+/* ── FAQ pagina: voce attiva della colonna Categorie (aggiornata da JS) ── */
+html body .faq-nav__list a.is-active:not(#_):not(#__):not(#___) {
+  color: #080808 !important; font-weight: 700 !important; border-left-color: var(--primary, #DB005A) !important; background: rgba(219,0,90,.07);
+}
+
+/* ── Contatti: social, card con l'hover delle Tips, ritmo verticale ── */
+/* Card sedi/social/chiamaci: stesso hover delle card Tips (bordo e ombra neutra, contorno fucsia che gira), nessun movimento */
+html body .contact-hub__col:not(#_):not(#__) { position: relative; transition: box-shadow .4s var(--ease-out, ease), border-color .4s ease !important; }
+html body .contact-hub__col:not(#_):not(#__):hover {
+  transform: none !important; border-color: rgba(0,0,0,.12) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 16px 34px -14px rgba(0,0,0,.24) !important;
+}
+html body .contact-hub__col:hover .contact-hub__cat:not(#_):not(#__) { transform: none !important; }
+.contact-hub__col .nw-trace { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 5; overflow: visible; }
+.contact-hub__col .nw-trace rect {
+  fill: none; stroke: var(--primary, #DB005A); stroke-width: 3; stroke-linecap: round;
+  stroke-dasharray: var(--nw-len, 0); stroke-dashoffset: var(--nw-len, 0);
+  transition: stroke-dashoffset .55s cubic-bezier(.35,0,.25,1);
+}
+.contact-hub__col:hover .nw-trace rect { stroke-dashoffset: 0; }
+@media (prefers-reduced-motion: reduce) {
+  .contact-hub__col .nw-trace rect { transition: opacity .2s ease; stroke-dashoffset: 0; opacity: 0; }
+  .contact-hub__col:hover .nw-trace rect { opacity: 1; }
+}
+/* i quattro social su più righe: le pillole vanno a capo, mai tagliate */
+html body .contact-hub__pills:not(#_):not(#__) { flex-wrap: wrap !important; }
+
+/* ── Join Us: immagini ── */
+.lcn-about__photo > .lcn-about__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+html body .lcn-about__photo:not(#_):not(#__) { min-height: clamp(260px, 38vw, 520px); background-image: none; border-radius: var(--r-box, 36px); overflow: hidden; }
+
+/* ── Hero FAQ / News / Tips: altezza identica (non solo minima) ──
+   Il contenuto di News e Tips è più alto della FAQ: titolo largo e sottotitolo
+   su due righe lo fanno stare dentro la stessa altezza. */
+html body :is(.faq-hero, .nw-hero):not(#_):not(#__):not(#___):not(#____) {
+  height: var(--hero-min) !important; min-height: var(--hero-min) !important; box-sizing: border-box;
+}
+html body .nw-hero .nw-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { max-width: 22ch; margin-bottom: 12px !important; }
+html body .nw-hero .nw-hero__sub:not(#_):not(#__):not(#___):not(#____) { max-width: 60ch; margin-top: 0 !important; }
+html body .nw-hero .nw-hero__inner:not(#_):not(#__):not(#___) { padding-bottom: 0 !important; }
+
+/* ── Influencer: "I talent" + "Ad integrazione" = un solo fondo, senza stacchi ──
+   Il JS avvolge il contenuto in .svc-generic-sticky: i selettori ">" non
+   arrivavano all'elemento. Tutti i livelli prendono lo stesso colore. */
+html body main #imkTalent:not(#_):not(#__):not(#___),
+html body main #imkTalent .svc-generic-sticky:not(#_):not(#__):not(#___),
+html body main #imkTalent .svc-integrazione:not(#_):not(#__):not(#___),
+html body main #imkTalent .svc-integrazione .container:not(#_):not(#__):not(#___),
+html body main #imkTalent .svc-integrazione__header:not(#_):not(#__):not(#___),
+html body main #imkTalent .svc-integrazione__pills:not(#_):not(#__):not(#___) {
+  background: #f8f3f6 !important; background-image: none !important; border: 0 !important; box-shadow: none !important;
+}
+html body main #imkTalent .svc-generic-sticky:not(#_):not(#__):not(#___) { padding-bottom: clamp(2rem, 4.5vw, 3.25rem) !important; }
+html body main #imkTalent .svc-integrazione:not(#_):not(#__):not(#___) { padding-bottom: 0 !important; margin-bottom: 0 !important; }
+
+/* ── Articolo News: la FAQ riserva la corsia "Ultime news" come tutte le altre sezioni ──
+   Stessa misura del corpo (gutter + 320px di corsia + 3rem): il bordo destro
+   coincide con quello dei risultati ("6-12 mesi"). */
+@media (min-width: 1100px) {
+  html body .art-faq:not(#_):not(#__):not(#___):not(#____) { padding-right: calc(320px + var(--gutter) + 3rem) !important; }
+}
+
+/* ── News: card bianche su fondo grigio chiaro, leggero rilievo ──
+   (il layout a 3 colonne resta quello del blocco sopra; qui solo superficie) */
+html body .nw-grid-wrap:not(:has(img)):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { background: #f5f5f5 !important; }
+html body .nw-grid-wrap:not(:has(img)) .nw-card:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) {
+  background: #fff !important; border: 1px solid rgba(0,0,0,.07) !important; padding-inline: 0 !important;
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 8px 20px -10px rgba(0,0,0,.16) !important;
+  transition: box-shadow .4s var(--ease-out, ease), border-color .4s ease !important;
+}
+html body .nw-grid-wrap:not(:has(img)) .nw-card:hover:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) {
+  background: #fff !important; border-color: rgba(0,0,0,.12) !important;
+  box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 16px 34px -14px rgba(0,0,0,.24) !important;
+}
+
+/* ── SMM: contenitore della timeline = rapporto reale delle immagini (1500×1200 = 5:4) ──
+   Il riquadro prende l'altezza dalla larghezza e l'immagine lo riempie
+   esattamente (stesso rapporto): nessun crop, nessuna banda, nessuna deformazione. */
+html body main .svc-path__sticky .svc-tabs__media:not(#_):not(#__):not(#___) {
+  aspect-ratio: 5 / 4 !important; height: auto !important; min-height: 0 !important; width: 100%; align-self: center; padding: 0 !important; border: 0 !important; background: transparent !important;
+}
+html body main .svc-tabs__media > .svc-tabs__media-img:not(#_):not(#__):not(#___) {
+  position: absolute; inset: 0; width: 100% !important; height: 100% !important; object-fit: cover; object-position: center; display: block; border-radius: inherit;
+}
+
+/* ── Influencer: respiro sotto "Ad integrazione" (stesso ritmo delle altre sezioni), fondo invariato ── */
+html body main #imkTalent .svc-generic-sticky:not(#_):not(#__):not(#___):not(#____) { padding-bottom: var(--section-py) !important; }
+
+/* ── Case Studies: niente corse sticky più alte dello schermo ──
+   #cs-works e .cs-cta tenevano un pannello sticky (914px e 1078px, più alti
+   della viewport) dentro una corsa da 118dvh: lo scroll restava "agganciato" e
+   la barra di scorrimento non rifletteva la lunghezza reale. Ora le sezioni
+   scorrono normalmente, come le altre pagine. */
+html body main #cs-works:not(#_):not(#__):not(#___) { min-height: 0 !important; }
+html body main #cs-works > .cs-works__sticky:not(#_):not(#__):not(#___) { position: relative !important; top: auto !important; min-height: 0 !important; }
+html body main > section.cs-cta:not(#_):not(#__):not(#___) { min-height: 0 !important; }
+html body main > section.cs-cta > .cs-cta__inner:not(#_):not(#__):not(#___) { position: relative !important; top: auto !important; min-height: 0 !important; }
+
+/* ── "Leggi l'articolo": due varianti, scelte dal fondo, identiche ai riferimenti della home ──
+   · fondo scuro (News in evidenza)  = "Scopri tutti i Tips & Tricks":
+       fucsia · bordo 2px · hover bianco con testo nero, sollevamento -3px,
+       ombra 0 14px 34px rgba(0,0,0,.35), transizione .32s var(--ease-out)
+   · fondo chiaro (Tips in evidenza) = "Scarica la brochure" (.btn--primary):
+       fucsia · hover nero con testo bianco, sollevamento -2px, --shadow-md,
+       transizione var(--dur-fast) var(--ease-out)
+   Niente tendina (::before) né freccia, come nei due riferimenti. L'hover
+   parte dall'intera card, che è il link. */
+html body .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+  display: inline-flex !important; align-items: center !important; gap: var(--space-3, .75rem) !important; width: fit-content;
+  padding: var(--space-4, 1rem) var(--space-8, 2rem) !important; min-height: 0 !important; height: auto !important; margin-top: 10px !important;
+  font: 600 14px/1.6 var(--font-secondary) !important; letter-spacing: .12em !important; text-transform: uppercase !important;
+  border-radius: var(--r-pill, 999px) !important; position: relative; z-index: 2; cursor: pointer; white-space: nowrap;
+  background: var(--primary, #DB005A) !important; color: #fff !important;
+}
+html body .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______)::before { display: none !important; }
+html body .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______)::after { content: none !important; display: none !important; }
+/* scuro */
+html body .nw-grid-wrap:not(:has(.nw-card__img)) .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+  border: 2px solid var(--primary, #DB005A) !important;
+  transition: background .32s var(--ease-out, ease), border-color .32s var(--ease-out, ease), color .32s var(--ease-out, ease), transform .32s var(--ease-out, ease), box-shadow .32s var(--ease-out, ease) !important;
+}
+html body .nw-grid-wrap:not(:has(.nw-card__img)) .nw-featured__card:hover .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______),
+html body .nw-grid-wrap:not(:has(.nw-card__img)) .nw-featured__card:focus-visible .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+  background: #fff !important; color: #000 !important; border-color: #fff !important; transform: translateY(-3px); box-shadow: 0 14px 34px rgba(0,0,0,.35);
+}
+/* chiaro */
+html body .nw-grid-wrap:has(.nw-card__img) .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+  border: 0 !important;
+  transition: background var(--dur-fast, 180ms) var(--ease-out, ease), color var(--dur-fast, 180ms) var(--ease-out, ease), border-color var(--dur-fast, 180ms) var(--ease-out, ease), transform var(--dur-fast, 180ms) var(--ease-out, ease), box-shadow var(--dur-fast, 180ms) var(--ease-out, ease) !important;
+}
+html body .nw-grid-wrap:has(.nw-card__img) .nw-featured__card:hover .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______),
+html body .nw-grid-wrap:has(.nw-card__img) .nw-featured__card:focus-visible .nw-featured__cta:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+  background: #000 !important; color: #fff !important; transform: translateY(-2px); box-shadow: var(--shadow-md);
+}
+
+/* ── Join Us · "Chi siamo": titolo vero (senza icona), testo più presente, blocco bilanciato sull'immagine ── */
+html body .lcn-about__title:not(#_):not(#__):not(#___) {
+  font-family: var(--font-primary); font-size: var(--t-sub) !important; font-weight: 900 !important; line-height: 1 !important;
+  letter-spacing: -0.03em !important; text-transform: uppercase; color: #080808; margin: 0 0 var(--gap-block, 48px) !important;
+}
+html body .lcn-about:not(#_):not(#__) { align-items: stretch !important; gap: clamp(2rem, 5vw, 5rem) !important; }
+html body .lcn-about__left:not(#_):not(#__) { display: flex; flex-direction: column; justify-content: center; }
+html body .lcn-about__text:not(#_):not(#__) { display: flex; flex-direction: column; gap: 1.25rem; max-width: 60ch; }
+html body .lcn-about__text p:not(#_):not(#__):not(#___):not(#____) {
+  font-size: clamp(1.0625rem, 1.35vw, 1.3rem) !important; line-height: 1.6 !important; margin: 0 !important;
+}
+html body .lcn-about__photo:not(#_):not(#__):not(#___) { min-height: clamp(260px, 30vw, 420px); }
+@media (max-width: 860px) { html body .lcn-about__photo:not(#_):not(#__):not(#___) { min-height: 0; aspect-ratio: 5 / 4; } }
+
+/* ── Contatti: icone social/sedi/telefono tutte dello stesso set (24px, stroke 1.8) ── */
+html body .contact-hub__icon:not(#_):not(#__) { width: 20px !important; height: 20px !important; flex: none; display: block; color: currentColor; }
+html body .contact-hub__pill:not(#_):not(#__) { gap: .6rem !important; align-items: center !important; line-height: 1; }
+
+/* ── Dama · Materiali: tutte le card identiche, qualunque sia il contenuto ── */
+.cs-attach__list { grid-auto-rows: 1fr; }
+.cs-attach__list > li { display: flex; }
+.cs-attach__item { flex: 1 1 auto; width: 100%; min-height: 96px; box-sizing: border-box; align-items: center; }
+.cs-attach__item > span:nth-child(2) { min-width: 0; align-self: center; }
+.cs-attach__title { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.6em; }
+.cs-attach__meta { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; min-height: 2.6em; }
+.cs-attach__icon, .cs-attach__go { flex: none; }
+
+/* ── Dama · CTA finale: stessa misura delle altre CTA (--t-sub), testo più breve invece di font più piccolo ── */
+html body .cs2-contact__title:not(#_):not(#__):not(#___):not(#____) {
+  font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
+}
+@media (max-width: 600px) { html body .cs2-contact__title:not(#_):not(#__):not(#___):not(#____) { font-size: 24px !important; } }
+
+/* ── Titoli dei blocchi CTA/form di chiusura: UN solo corpo in tutto il sito (--t-cta) ──
+   Prima: 49–75px a seconda della pagina (regole per pagina, alcune legate all'altezza della finestra). */
+html body :is(.cs-cta__title, .faq-contact__title, .nw-contact__title, .lcn-apply__title, .cs2-contact__title,
+  .art-contact__title, .tt-contact__title, .svc-caffe__title, .hc-contact__title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) {
+  font-size: var(--t-cta) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
+}
+
+/* La colonna del titolo non scende sotto la parola più lunga (a --t-cta): così lo
+   script di adattamento non rimpicciolisce il titolo e la misura resta uguale ovunque. */
+@media (min-width: 861px) {
+  html body :is(.faq-contact__inner, .nw-contact__inner, .art-contact__inner, .tt-contact__inner, .cs-cta__inner, .cs2-contact__inner):not(#_):not(#__):not(#___) {
+    grid-template-columns: minmax(min-content, 1fr) minmax(0, 1fr) !important;
+  }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   TIMELINE PAGINE SERVIZI (.svc-path / .svc-tabs): sistema visivo comune
+   Un solo blocco per le 10 pagine. Struttura, markup e navigazione invariati.
+   Regole di resa:
+   · l'immagine è la protagonista: riquadro il più alto possibile, rapporto 5:4 reale
+   · ombre neutre e morbide, niente alone fucsia sul contenitore
+   · la linea sta SEMPRE dietro e si ferma prima dei numeri (alone dello sfondo attorno al nodo)
+   · nessun sottolineato sotto i titoli dei passi
+   · i nodi non sono mai tagliati: la barra non ritaglia (padding per scala e anello)
+   ════════════════════════════════════════════════════════════════════ */
+html body .svc-path { --tl-bg: #fff; --tl-node: 46px; --tl-pad-top: 16px; }
+html body main > section.svc-bg-dark .svc-path__sticky,
+html body main > section.svc-bg-dark.svc-path { --tl-bg: #0d0a0c; }
+
+/* — Barra: nodi su una riga, mai ritagliati; spazio sopra per scala e anello — */
+html body .svc-tabs__strip:not(#_):not(#__):not(#___) {
+  padding: var(--tl-pad-top) 0 6px; --n: 6;
+}
+@media (min-width: 1101px) { html body .svc-tabs__strip:not(#_):not(#__):not(#___) { overflow: visible !important; } }
+/* — Linea: dietro i nodi, centrata sul loro asse — */
+html body .svc-tabs__strip:not(#_):not(#__):not(#___)::before,
+html body .svc-tabs__strip:not(#_):not(#__):not(#___)::after {
+  top: calc(var(--tl-pad-top) + var(--tl-node) / 2 - 2px); height: 4px; border-radius: 4px; z-index: 0;
+}
+html body .svc-tabs__strip:not(#_):not(#__):not(#___)::before { background: rgba(219,0,90,.14); }
+html body .svc-tabs__strip:not(#_):not(#__):not(#___)::after {
+  background: linear-gradient(90deg, var(--primary-hover, #a8003f) 0%, var(--primary, #DB005A) 60%, #ff2e7e 100%);
+  transition: width .6s var(--ease-out, cubic-bezier(.16,1,.3,1));
+}
+
+/* — Nodi: sempre pieni (opachi) e circondati da un anello del colore dello sfondo, così la linea
+     non li attraversa né li tocca in nessuno stato — */
+html body .svc-tabs__num:not(#_):not(#__):not(#___) {
+  position: relative; z-index: 2; flex: none; box-sizing: border-box;
+  width: var(--tl-node); height: var(--tl-node); min-width: var(--tl-node); line-height: 1; font-size: 16px; font-weight: 800;
+  color: var(--primary, #DB005A); background: var(--tl-bg); border: 2px solid rgba(219,0,90,.38);
+  box-shadow: 0 0 0 6px var(--tl-bg);
+  transition: transform var(--dur-base, 320ms) var(--ease-out, ease), background var(--dur-base, 320ms) ease,
+              border-color var(--dur-base, 320ms) ease, color var(--dur-base, 320ms) ease;
+}
+html body .svc-tabs__tab.is-done .svc-tabs__num:not(#_):not(#__):not(#___) {
+  background: #fbe3ec; border-color: var(--primary, #DB005A); color: var(--primary, #DB005A);
+}
+html body .svc-tabs__tab:hover .svc-tabs__num:not(#_):not(#__):not(#___) {
+  border-color: var(--primary, #DB005A); transform: translateY(-2px);
+}
+html body .svc-tabs__tab.is-active .svc-tabs__num:not(#_):not(#__):not(#___) {
+  background: var(--primary, #DB005A); border-color: var(--primary, #DB005A); color: #fff; transform: scale(1.1);
+  box-shadow: 0 0 0 6px var(--tl-bg), 0 0 0 8px rgba(219,0,90,.4);
+}
+html body .svc-tabs__tab.is-active:hover .svc-tabs__num:not(#_):not(#__):not(#___) { transform: scale(1.1) translateY(-2px); }
+html body .svc-tabs__tab:focus-visible { outline-offset: 10px; }
+
+/* — Etichette e titoli dei passi: leggibili, nessun sottolineato in nessuno stato — */
+html body .svc-tabs__tag:not(#_):not(#__):not(#___) { color: rgba(219,0,90,.66); font-weight: 700; }
+html body .svc-tabs__tab:hover .svc-tabs__tag:not(#_):not(#__):not(#___),
+html body .svc-tabs__tab.is-active .svc-tabs__tag:not(#_):not(#__):not(#___) { color: var(--primary, #DB005A); }
+html body .svc-tabs__title:not(#_):not(#__):not(#___) { color: rgba(8,8,8,.66); }
+html body .svc-tabs__tab:hover .svc-tabs__title:not(#_):not(#__):not(#___),
+html body .svc-tabs__tab.is-active .svc-tabs__title:not(#_):not(#__):not(#___) { color: #080808; }
+html body .svc-tabs__tab:not(#_):not(#__),
+html body .svc-tabs__tab:hover:not(#_):not(#__),
+html body .svc-tabs__tab *:not(#_):not(#__) { text-decoration: none !important; }
+html body .svc-tabs__tab:not(#_):not(#__)::after,
+html body .svc-tabs__tab:not(#_):not(#__)::before { content: none !important; display: none !important; border: 0 !important; }
+
+/* — Card attiva: pulita, neutra; solo un filo fucsia sottile in alto come accento — */
+html body .svc-tabs__panels:not(#_):not(#__) { isolation: isolate; }
+html body .svc-tabs__panels:not(#_):not(#__)::before { content: none; }
+html body .svc-tabs__panel:not(#_):not(#__):not(#___) {
+  position: relative; overflow: hidden;
+  background: #fff; border: 1px solid rgba(0,0,0,.08);
+  box-shadow: 0 1px 2px rgba(0,0,0,.05), 0 14px 32px -22px rgba(0,0,0,.28);
+}
+html body .svc-tabs__panel:not(#_):not(#__):not(#___)::before {
+  content: ''; position: absolute; left: 0; top: 0; height: 3px; width: 100%;
+  background: linear-gradient(90deg, var(--primary, #DB005A) 0, var(--primary, #DB005A) 18%, rgba(219,0,90,0) 55%);
+  animation: svcBarIn .7s var(--ease-out, ease) both; transform-origin: left;
+}
+@keyframes svcBarIn { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* — Immagine: protagonista, senza cornici decorative, ombra neutra e leggera — */
+html body .svc-tabs__media:not(#_):not(#__):not(#___) {
+  border: 0 !important; background: transparent; box-shadow: 0 10px 24px -14px rgba(0,0,0,.30);
+}
+html body .svc-tabs__panel:not(#_):not(#__) .svc-tabs__media-img { animation: svcMediaIn .8s var(--ease-out, ease) both; }
+@keyframes svcMediaIn { from { transform: scale(1.03); opacity: .75; } to { transform: none; opacity: 1; } }
+
+/* — Contenuto: ingresso a cascata, punti con pallino fucsia — */
+html body .svc-tabs__panel:not(#_):not(#__) .svc-tabs__copy > * { animation: svcCopyIn .55s var(--ease-out, ease) both; }
+html body .svc-tabs__panel:not(#_):not(#__) .svc-tabs__copy > *:nth-child(2) { animation-delay: .06s; }
+html body .svc-tabs__panel:not(#_):not(#__) .svc-tabs__copy > *:nth-child(3) { animation-delay: .12s; }
+html body .svc-tabs__panel:not(#_):not(#__) .svc-tabs__copy > *:nth-child(4) { animation-delay: .18s; }
+@keyframes svcCopyIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+html body .svc-tabs__points li:not(#_):not(#__):not(#___)::before { background: var(--primary, #DB005A) !important; }
+@media (prefers-reduced-motion: reduce) {
+  html body .svc-tabs__panel::before, html body .svc-tabs__media-img,
+  html body .svc-tabs__panel .svc-tabs__copy > * { animation: none !important; }
+}
+
+/* — Sezioni scure — */
+html body main > section.svc-bg-dark .svc-tabs__num:not(#_):not(#__):not(#___) { color: #fff; border-color: rgba(219,0,90,.6); }
+html body main > section.svc-bg-dark .svc-tabs__tab.is-done .svc-tabs__num:not(#_):not(#__):not(#___) { background: #3a0f22; }
+html body main > section.svc-bg-dark .svc-tabs__tab.is-active .svc-tabs__num:not(#_):not(#__):not(#___) { background: var(--primary, #DB005A); }
+html body main > section.svc-bg-dark .svc-tabs__strip:not(#_):not(#__):not(#___)::before { background: rgba(219,0,90,.3); }
+html body main > section.svc-bg-dark .svc-tabs__tag:not(#_):not(#__):not(#___) { color: rgba(255,120,175,.9); }
+html body main > section.svc-bg-dark .svc-tabs__title:not(#_):not(#__):not(#___) { color: rgba(255,255,255,.8); }
+html body main > section.svc-bg-dark .svc-tabs__tab.is-active .svc-tabs__title:not(#_):not(#__):not(#___),
+html body main > section.svc-bg-dark .svc-tabs__tab:hover .svc-tabs__title:not(#_):not(#__):not(#___) { color: #fff; }
+html body main > section.svc-bg-dark .svc-tabs__panel:not(#_):not(#__):not(#___) { background: #141014; border-color: rgba(255,255,255,.10); box-shadow: 0 14px 32px -22px rgba(0,0,0,.8); }
+
+/* — Tablet e mobile: la barra scorre in orizzontale, i nodi restano interi (padding su tutti i lati) — */
+@media (max-width: 1100px) {
+  html body .svc-tabs__strip:not(#_):not(#__):not(#___) { overflow-x: auto; overflow-y: hidden; padding: var(--tl-pad-top) 18px 14px; }
+  html body .svc-tabs__tab:not(#_):not(#__) { flex: 0 0 auto; }
+}
+
+/* — Layout: fisso e dentro la schermata quando i riquadri ci stanno, altrimenti scorre — */
+@media (min-width: 1101px) and (min-height: 700px) {
+  html body .svc-path:not(.svc-path--flow):not(#_):not(#__):not(#___) { height: 112dvh !important; }
+  html body .svc-path:not(.svc-path--flow) .svc-path__sticky:not(#_):not(#__):not(#___) {
+    height: 100dvh !important; min-height: 0 !important; overflow: hidden !important;
+    padding-top: calc(var(--nav-h) + .5rem) !important; padding-bottom: clamp(.75rem, 2.4dvh, 1.5rem) !important;
+  }
+  html body .svc-path:not(.svc-path--flow) .svc-path__sticky > .container:not(#_):not(#__):not(#___) { justify-content: center !important; }
+  html body .svc-path__sticky .svc-path__head:not(#_):not(#__):not(#___) { margin-bottom: clamp(.5rem, 1.6dvh, 1.25rem) !important; }
+  html body .svc-path__sticky .svc-path__head .smm-panel__big-title:not(#_):not(#__):not(#___) { font-size: min(var(--t-sub), 7dvh) !important; }
+  html body .svc-path__sticky .svc-tabs:not(#_):not(#__):not(#___) { gap: clamp(.5rem, 1.4dvh, 1.1rem); }
+  html body .svc-path:not(.svc-path--flow) .svc-tabs__panels:not(#_):not(#__):not(#___) { flex: 0 1 auto !important; }
+  /* il riquadro prende l'altezza (immagine protagonista) e l'immagine la riempie col suo rapporto */
+  html body .svc-path:not(.svc-path--flow) .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____) {
+    height: auto !important; min-height: clamp(320px, 45dvh, 600px) !important;
+    grid-template-columns: auto minmax(0, 1fr) !important; grid-template-rows: minmax(0, 1fr);
+    padding: clamp(.75rem, 1.8dvh, 1.25rem) !important; align-items: center; gap: clamp(1.5rem, 3vw, 3rem) !important;
+  }
+  html body .svc-path:not(.svc-path--flow) .svc-tabs__media:not(#_):not(#__):not(#___):not(#____) {
+    aspect-ratio: 5 / 4 !important; width: auto !important; height: min(100%, calc(52vw * .8)) !important; max-height: 100%; align-self: center;
+  }
+}
+@media (max-width: 1100px), (max-height: 699px) {
+  html body .svc-path:not(#_):not(#__):not(#___) { height: auto !important; min-height: 0 !important; }
+  html body .svc-path__sticky:not(#_):not(#__):not(#___) { position: relative !important; height: auto !important; overflow: visible !important; padding-top: max(var(--section-py), calc(var(--nav-h) + .75rem)) !important; padding-bottom: var(--section-py) !important; }
+}
+html body .svc-path.svc-path--flow:not(#_):not(#__):not(#___) { height: auto !important; min-height: 0 !important; }
+html body .svc-path.svc-path--flow .svc-path__sticky:not(#_):not(#__):not(#___) {
+  position: relative !important; height: auto !important; min-height: 0 !important; overflow: visible !important;
+  padding-top: max(var(--section-py), calc(var(--nav-h) + .75rem)) !important; padding-bottom: var(--section-py) !important;
+}
+html body .svc-path.svc-path--flow .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; height: auto !important; }
+html body .svc-path.svc-path--flow .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____) { width: 100% !important; height: auto !important; aspect-ratio: 5 / 4 !important; }
+@media (max-width: 860px) {
+  html body .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____):not(#_____) { grid-template-columns: minmax(0, 1fr) !important; }
+}
+
+/* ── Contatti · hero con form: tutto dentro la schermata, con lo spazio di sezione sotto ──
+   Sotto il form c'è il ritmo di sezione (--section-py, ridotto con l'altezza della finestra);
+   titolo, campi e gap si misurano su dvh perché il form stia nella viewport. Sotto gli 800px di
+   altezza il pannello non è più fisso e la pagina scorre (nessun taglio). */
+@media (min-height: 800px) {
+  html body .ct-inner:not(#_):not(#__):not(#___):not(#____) { padding-bottom: clamp(5rem, 9vw, 8rem) !important; justify-content: flex-start !important; }
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____) { font-size: min(150px, 26vw, 11dvh) !important; }
+  html body .ct-inner .ct-col .hc-header:not(#_):not(#__):not(#___) { margin-bottom: clamp(12px, 2.4dvh, 24px) !important; }
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { padding: clamp(.9rem, 2dvh, 1.5rem) clamp(1.25rem, 2.4vw, 2rem) !important; gap: clamp(6px, 1.1dvh, 10px) !important; }
+  html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { height: clamp(34px, 4.2dvh, 48px) !important; }
+  html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { min-height: clamp(44px, 6dvh, 72px) !important; height: clamp(44px, 6dvh, 72px) !important; }
+  html body .ct-inner .hc-form .f-label:not(#_):not(#__):not(#___) { margin-bottom: 2px !important; }
+}
+@media (max-height: 799px), (max-width: 819px) {
+  html body .ct-section:not(#_):not(#__):not(#___) { height: auto !important; }
+  html body .ct-inner:not(#_):not(#__):not(#___):not(#____) {
+    position: relative !important; top: auto !important; height: auto !important; overflow: visible !important;
+    padding-top: calc(var(--nav-h) + 1rem) !important; padding-bottom: clamp(5rem, 9vw, 8rem) !important;
+  }
+}
+
+/* ── Contatti: sezione "Facciamo prendere forma…" compatta, testo leggibile, social ──
+   Nessun box nuovo: solo spazi reali della sezione e resa di testo e icone. */
+html body .contact-hub:not(#_):not(#__):not(#___) { height: auto !important; min-height: 0 !important; }
+html body .contact-hub > .container:not(#_):not(#__):not(#___) {
+  position: relative !important; top: auto !important; height: auto !important; min-height: 0 !important; overflow: visible !important;
+  padding-block: clamp(2rem, 4vw, 3.5rem) !important; justify-content: flex-start !important;
+}
+html body .contact-hub__claim:not(#_):not(#__):not(#___) { margin-bottom: clamp(1.25rem, 2.5vw, 2rem) !important; }
+html body .contact-hub__claim-intro:not(#_):not(#__):not(#___):not(#____) {
+  color: var(--ink-body) !important; font-size: clamp(1rem, 1.3vw, 1.2rem) !important; font-weight: 500 !important; line-height: 1.6 !important; opacity: 1 !important; letter-spacing: 0 !important;
+}
+/* social: solo icone, grandi, uguali, in riga regolare; area cliccabile 56px */
+html body .contact-hub__socials:not(#_):not(#__) { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+html body .contact-hub__social:not(#_):not(#__) {
+  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; flex: none;
+  background: var(--primary, #DB005A); color: #fff; text-decoration: none; cursor: pointer;
+  transition: background var(--dur-fast, 180ms) var(--ease-out, ease), transform var(--dur-fast, 180ms) var(--ease-out, ease), box-shadow var(--dur-fast, 180ms) var(--ease-out, ease);
+}
+html body .contact-hub__social .contact-hub__icon:not(#_):not(#__) { width: 26px !important; height: 26px !important; color: #fff; }
+html body .contact-hub__social:hover:not(#_):not(#__), html body .contact-hub__social:focus-visible:not(#_):not(#__) {
+  background: #000; transform: translateY(-2px); box-shadow: var(--shadow-md);
+}
+html body .contact-hub__social:focus-visible:not(#_):not(#__) { outline: 3px solid var(--primary, #DB005A); outline-offset: 3px; }

@@ -119,3 +119,72 @@
   if (document.readyState !== 'loading') init();
   else document.addEventListener('DOMContentLoaded', init);
 }());
+
+/* ── Contorno che gira intorno alle card Tips della home ──
+   Stessa tecnica della pagina Tips & Tricks: un rect SVG lungo quanto il
+   perimetro vero, scoperto in hover tramite stroke-dashoffset. */
+(function tipTrace() {
+  var cards = document.querySelectorAll('.tip-card, .contact-hub__col');
+  if (!cards.length) return;
+  var NS = 'http://www.w3.org/2000/svg';
+  cards.forEach(function (card) {
+    if (card.querySelector('.nw-trace')) return;
+    var svg = document.createElementNS(NS, 'svg');
+    svg.setAttribute('class', 'nw-trace');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    var rect = document.createElementNS(NS, 'rect');
+    svg.appendChild(rect);
+    card.appendChild(svg);
+    var fit = function () {
+      var r = svg.getBoundingClientRect();
+      if (!r.width || !r.height) return;
+      var sw = 3, cs = getComputedStyle(card);
+      var bw = parseFloat(cs.borderTopWidth) || 0;
+      var rad = Math.max(0, (parseFloat(cs.borderTopLeftRadius) || 0) - bw);
+      svg.setAttribute('viewBox', '0 0 ' + r.width + ' ' + r.height);
+      rect.setAttribute('x', sw / 2); rect.setAttribute('y', sw / 2);
+      rect.setAttribute('width', Math.max(0, r.width - sw));
+      rect.setAttribute('height', Math.max(0, r.height - sw));
+      rect.setAttribute('rx', Math.max(0, rad - sw / 2));
+      rect.style.setProperty('--nw-len', rect.getTotalLength());
+    };
+    fit();
+    if (window.ResizeObserver) new ResizeObserver(fit).observe(svg);
+    else addEventListener('resize', fit, { passive: true });
+  });
+}());
+
+/* ── Timeline servizi: il pannello resta fermo solo se TUTTI i riquadri ci stanno ──
+   Per ogni .svc-path si mostra a turno ogni riquadro e si controlla che il suo contenuto
+   non esca dal pannello; se ne esce anche uno, la sezione scorre normalmente
+   (classe .svc-path--flow) invece di tagliare testo o CTA. */
+(function svcPathFit() {
+  var secs = document.querySelectorAll('.svc-path');
+  if (!secs.length) return;
+  function check(sec) {
+    sec.classList.remove('svc-path--flow');
+    if (innerWidth <= 1100 || innerHeight < 700) return;
+    var st = sec.querySelector('.svc-path__sticky');
+    if (!st) return;
+    var panels = [].slice.call(sec.querySelectorAll('.svc-tabs__panel'));
+    var was = panels.map(function (p) { return p.hidden; });
+    var overflow = false;
+    panels.forEach(function (p) { p.hidden = true; });
+    panels.forEach(function (p) {
+      p.hidden = false;
+      var copy = p.querySelector('.svc-tabs__copy');
+      if (p.scrollHeight > p.clientHeight + 2 || (copy && copy.getBoundingClientRect().bottom > p.getBoundingClientRect().bottom - 4)) overflow = true;
+      if (p.getBoundingClientRect().bottom > st.getBoundingClientRect().bottom - 4) overflow = true;
+      p.hidden = true;
+    });
+    panels.forEach(function (p, i) { p.hidden = was[i]; });
+    if (overflow) sec.classList.add('svc-path--flow');
+  }
+  var t;
+  function run() { clearTimeout(t); t = setTimeout(function () { secs.forEach(check); }, 120); }
+  addEventListener('load', run);
+  addEventListener('resize', run, { passive: true });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
+  run();
+}());

@@ -987,9 +987,9 @@ body:has(.vhero--fullscreen) {
   max-width: 62ch;
 }
 .about-section__body p {
-  font-size: 0.95rem !important;
-  line-height: 1.85 !important;
-  color: rgba(0,0,0,0.6) !important;
+  font-size: var(--text-body, 1rem) !important;
+  line-height: 1.6 !important;
+  color: var(--ink-body) !important;
 }
 .about-section__body strong { color: #000 !important; }
 

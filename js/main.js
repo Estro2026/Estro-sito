@@ -718,7 +718,15 @@ if (!window.__STATIC_CAPTURE__ &&
       const t = el.getBoundingClientRect().top;
       if (t > 1 && t < vh) { if (!target || t > target.t) target = { el, t }; }
     }
-    const set = c => [html, document.body].forEach(e => c ? e.style.setProperty('background-color', c, 'important') : e.style.removeProperty('background-color'));
+    /* Si ricolora solo il body: lo sfondo di html (che e quello della barra di scorrimento, e il
+       "canvas" della pagina) resta fisso. Prima html e body diventavano entrambi fucsia e la
+       barra di scorrimento, trasparente, si colorava di fucsia per tutta l'altezza. */
+    if (!html.dataset.baseBg) {
+      const hb = rgba(getComputedStyle(html).backgroundColor);
+      html.dataset.baseBg = (hb && hb.a > 0.9) ? "1" : "0";
+      if (html.dataset.baseBg === "0") html.style.setProperty("background-color", getComputedStyle(document.body).backgroundColor, "important");
+    }
+    const set = c => [document.body].forEach(e => c ? e.style.setProperty("background-color", c, "important") : e.style.removeProperty("background-color"));
     if (!target) { set(null); return; }
     set(colorAt(Math.min(40, innerWidth / 2), target.t - 4, target.el));
   }

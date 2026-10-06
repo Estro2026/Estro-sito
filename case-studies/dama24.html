@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Dama24 — L'estetica dell'accoglienza tra fisico e digitale. Un caso studio ESTRO." />
   <title>Dama24 — Case Study · ESTRO</title>
-  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
-  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
-  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
-  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261009m" />
+  <link rel="stylesheet" href="../css/base.css?v=20261009m" />
+  <link rel="stylesheet" href="../css/components.css?v=20261009m" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261009m" />
   <style>
     /* ══ TIPS & TRICKS ARTICLE ═══════════════════════════════ */
 
@@ -640,7 +640,7 @@
     /* ── Colonna laterale: pannello, agganciato fino al form ──── */
     .cs2-sidebar {
       position: sticky;
-      top: calc(var(--nav-h, 88px) + 24px);
+      top: calc(var(--nav-h) + 24px);
       background: var(--cs2-card);
       border: 1px solid rgba(0,0,0,0.08);
       border-radius: 14px;
@@ -1010,7 +1010,11 @@
     .d24-hero--revealed .d24-hero__sub    { opacity:1; transform:none; transition: opacity .55s .40s ease, transform .55s .40s ease; }
     .d24-hero--revealed .d24-hero__meta   { opacity:1; transform:none; transition: opacity .50s .55s ease, transform .50s .55s ease; }
   </style>
-  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261009m" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png" />
 </head>
 <body>
 
@@ -1166,6 +1170,28 @@
           <li><strong>Qualità dei lead:</strong> abbiamo spostato l'ago della bilancia verso contatti più profilati e in linea con l'esclusività del servizio offerto.</li>
         </ul>
 
+        <!-- Allegati: componente riusabile (.cs-attach), stesso markup in ogni case study.
+             type: pdf | slides | doc | file. I file vanno in /allegati. -->
+        <section class="cs-attach" aria-labelledby="cs-attach-title">
+          <h2 class="cs2-h2" id="cs-attach-title">Materiali del progetto</h2>
+          <ul class="cs-attach__list">
+            <li>
+              <a class="cs-attach__item" href="../allegati/dama24-presentazione.pdf" target="_blank" rel="noopener noreferrer" data-type="pdf">
+                <span class="cs-attach__icon" aria-hidden="true">PDF</span>
+                <span><span class="cs-attach__title">Presentazione del progetto</span><span class="cs-attach__meta">PDF · Dama24, strategia e risultati</span></span>
+                <span class="cs-attach__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a class="cs-attach__item" href="../allegati/dama24-linee-guida.pdf" target="_blank" rel="noopener noreferrer" data-type="doc">
+                <span class="cs-attach__icon" aria-hidden="true">DOC</span>
+                <span><span class="cs-attach__title">Linee guida editoriali</span><span class="cs-attach__meta">PDF · Tono di voce e identità visiva</span></span>
+                <span class="cs-attach__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
         <blockquote class="cs2-quote">
           <p>Trasformare l'eccellenza in una storia indimenticabile è l'unico modo per distinguersi davvero.</p>
         </blockquote>
@@ -1177,7 +1203,7 @@
         <!-- La CTA di ritorno chiude la lettura, in fondo
              alla pagina e non dopo il form. -->
         <div class="cs2-back">
-          <a href="../case-studies.html" class="btn btn--primary cs2-back__link">← Tutti i case study</a>
+          <a href="../case-studies.html" class="btn btn--primary cs2-back__link cta-arrow cta-arrow--back">Tutti i case study</a>
         </div>
 
       </div><!-- /.cs2-body__inner -->
@@ -1202,7 +1228,7 @@
               <div class="cs2-sidebar__thumb">
                 <img src="loghicasestudy/DAMA24_fucsia.webp" alt="" loading="lazy" />
               </div>
-              <span class="cs2-sidebar__title">Dama24 — L'estetica dell'accoglienza tra fisico e digitale</span>
+              <span class="cs2-sidebar__title">Dama24: L'estetica dell'accoglienza tra fisico e digitale</span>
             </a>
           </li>
           <li class="cs2-sidebar__item">
@@ -1210,7 +1236,7 @@
               <div class="cs2-sidebar__thumb">
                 <img src="loghicasestudy/FANUC_fucsia.webp" alt="" loading="lazy" />
               </div>
-              <span class="cs2-sidebar__title">Fanuc — Strategia e contenuti per l'automazione industriale</span>
+              <span class="cs2-sidebar__title">Fanuc: Strategia e contenuti per l'automazione industriale</span>
             </a>
           </li>
           <li class="cs2-sidebar__item">
@@ -1218,7 +1244,7 @@
               <div class="cs2-sidebar__thumb">
                 <img src="loghicasestudy/HUMANITAS_fucsia.webp" alt="" loading="lazy" />
               </div>
-              <span class="cs2-sidebar__title">Humanitas — Comunicazione istituzionale e divulgazione</span>
+              <span class="cs2-sidebar__title">Humanitas: Comunicazione istituzionale e divulgazione</span>
             </a>
           </li>
           <li class="cs2-sidebar__item">
@@ -1226,7 +1252,7 @@
               <div class="cs2-sidebar__thumb">
                 <img src="loghicasestudy/CUPRA_fucsia.webp" alt="" loading="lazy" />
               </div>
-              <span class="cs2-sidebar__title">Cupra — Brand experience e contenuti per il lancio</span>
+              <span class="cs2-sidebar__title">Cupra: Brand experience e contenuti per il lancio</span>
             </a>
           </li>
           <li class="cs2-sidebar__item">
@@ -1234,7 +1260,7 @@
               <div class="cs2-sidebar__thumb">
                 <img src="loghicasestudy/WOODOO.webp" alt="" loading="lazy" />
               </div>
-              <span class="cs2-sidebar__title">Woodoo Fest — Content &amp; video per il festival</span>
+              <span class="cs2-sidebar__title">Woodoo Fest: Content &amp; video per il festival</span>
             </a>
           </li>
         </ul>
@@ -1249,7 +1275,7 @@
       <div class="cs2-contact__inner">
         <div class="cs2-contact__left">
           <span class="cs2-contact__label reveal">Parliamoci</span>
-          <h2 class="cs2-contact__title reveal">Il tuo brand<br/>ha bisogno di un'identità<br/>che lasci il segno?</h2>
+          <h2 class="cs2-contact__title reveal">Pronto a lasciare<br/>il segno?</h2>
         </div>
         <div class="cs2-contact__right">
           <!-- Stesse classi del form in homepage (hc-*) -->
@@ -1291,7 +1317,7 @@
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="cs2-privacy">
                 <input type="checkbox" id="cs2-privacy" name="privacy" required />
-                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+                <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
               </label>
               <label class="svc-caffe__privacy" for="cs2-newsletter">
                 <input type="checkbox" id="cs2-newsletter" name="newsletter" value="si" />
@@ -1306,7 +1332,7 @@
 
   </main>
 
-  <script src="../js/main.js?v=20261006w"></script>
+  <script src="../js/main.js?v=20261009m"></script>
   <script>
   /* ═══════════════════════════════════════════════════════════
      ARTICOLO TIPS — motore della homepage, ridotto al necessario.
@@ -1542,9 +1568,9 @@
 
       <div class="sf-legal">
         <div class="sf-legal__links">
-          <a href="../privacy.html">Privacy Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           <span class="sf-legal__sep"></span>
-          <a href="../cookie.html">Cookie Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
         </div>
         <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
       </div>
@@ -1565,7 +1591,7 @@
     });
   }());
   </script>
-  <script src="../js/responsive.js?v=20261006w"></script>
+  <script src="../js/responsive.js?v=20261009m"></script>
 </body>
 </html>
 

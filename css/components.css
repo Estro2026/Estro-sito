@@ -6247,10 +6247,10 @@ body:has(.hero-video) .nav:not(.scrolled) {
   /* Flusso normale — parte subito sotto la nav */
   display: block;
   position: relative;
-  margin-top: var(--nav-h, 82px);
+  margin-top: var(--nav-h);
   width: 100%;
   /* Riempie tutta la viewport rimasta sotto la nav */
-  height: calc(100vh - var(--nav-h, 82px));
+  height: calc(100vh - var(--nav-h));
   background: #000;
   overflow: hidden;
 }
@@ -6279,9 +6279,9 @@ body:has(.hero-video) .nav:not(.scrolled) {
 .vhero {
   display: grid;
   grid-template-columns: 30% 70%;
-  margin-top: var(--nav-h, 82px);
+  margin-top: var(--nav-h);
   width: 100%;
-  height: calc(100vh - var(--nav-h, 82px));
+  height: calc(100vh - var(--nav-h));
   background: #0a0a0a;
   overflow: hidden;
   position: relative;
@@ -6376,7 +6376,7 @@ body:has(.hero-video) .nav:not(.scrolled) {
     grid-template-columns: 1fr;
     grid-template-rows: auto 1fr;
     height: auto;
-    min-height: calc(100vh - var(--nav-h, 82px));
+    min-height: calc(100vh - var(--nav-h));
   }
   .vhero__left {
     border-right: none;
@@ -9705,11 +9705,6 @@ body:has(.hero-video) .nav:not(.scrolled) {
   line-height: 1.45;
   align-self: start;
 }
-.svc-ai-workflow__tl-step--last .svc-ai-workflow__tl-text {
-  padding-bottom: 0;
-  font-weight: 600;
-  color: #DB005A;
-}
 
 /* ── AI workflow fixes ─────────────────────────────────────── */
 
@@ -9732,12 +9727,8 @@ body:has(.hero-video) .nav:not(.scrolled) {
 
 /* ── AI workflow: consegna finale = stessi altri step + numeri più bassi ── */
 
-/* rimuovi stile speciale sull'ultimo step */
-.svc-ai-workflow__tl-step--last .svc-ai-workflow__tl-text {
-  padding-bottom: 0 !important;
-  font-weight: inherit !important;
-  color: rgba(0,0,0,0.7) !important;
-}
+/* l'ultimo step ha la stessa tipografia degli altri: solo senza spazio sotto */
+.svc-ai-workflow__tl-step--last .svc-ai-workflow__tl-text { padding-bottom: 0 !important; }
 .svc-ai-workflow__tl-marker--final {
   background: #fff !important;
   border-color: rgba(219,0,90,0.25) !important;
@@ -14378,7 +14369,7 @@ html body main > section.cs-hero > .container.cs-hero__inner {
    ancorati in basso.
    ═══════════════════════════════════════════════════════════════ */
 html body main > section.lcn-hero {
-  padding-top: calc(var(--nav-h, 88px) + clamp(2rem, 5vh, 4rem)) !important;
+  padding-top: calc(var(--nav-h) + clamp(2rem, 5vh, 4rem)) !important;
   padding-bottom: clamp(2.5rem, 5vh, 4rem) !important;
 }
 html body main > section.lcn-hero .lcn-hero__kicker {
@@ -14534,7 +14525,7 @@ html body main > section#wd-stack > .svc-path__sticky {
     height: 100dvh !important;
     min-height: 0 !important;
     overflow: hidden !important;
-    padding-top: calc(var(--nav-h, 88px) + clamp(0.75rem, 2.4vh, 2rem)) !important;
+    padding-top: calc(var(--nav-h) + clamp(0.75rem, 2.4vh, 2rem)) !important;
     padding-bottom: clamp(1.75rem, 5vh, 3.5rem) !important;
   }
   html body main > section.svc-path > .svc-path__sticky > .container,

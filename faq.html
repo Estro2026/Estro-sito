@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="ESTRO — Domande frequenti su strategia, servizi, metodo e collaborazione." />
   <title>FAQ — ESTRO</title>
-  <link rel="stylesheet" href="css/tokens.css?v=20261006w" />
-  <link rel="stylesheet" href="css/base.css?v=20261006w" />
-  <link rel="stylesheet" href="css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261009m" />
+  <link rel="stylesheet" href="css/base.css?v=20261009m" />
+  <link rel="stylesheet" href="css/components.css?v=20261009m" />
   <style>
 
     /* ── FOOTER LOGO ──────────────────────────────────────── */
@@ -630,7 +630,11 @@
     .nav.nav--footer-hidden { transform: none !important; }
     .nav.nav--footer-hidden .nav__inner { opacity: 1 !important; }
   </style>
-  <link rel="stylesheet" href="css/responsive.css?v=20261006w" />
+  <link rel="stylesheet" href="css/responsive.css?v=20261009m" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png" />
 </head>
 <body>
 
@@ -1339,7 +1343,7 @@
       <div class="faq-contact__inner" data-cascade>
         <div class="faq-contact__left">
           <span class="faq-contact__label">Hai ancora domande?</span>
-          <h2 class="faq-contact__title" id="faqContactTitle">Scrivici.<br>Ti rispondiamo<br>entro 24 ore.</h2>
+          <h2 class="faq-contact__title" id="faqContactTitle">Scrivici,<br>rispondiamo<br>in 24 ore.</h2>
         </div>
         <div class="faq-contact__right">
           <!-- Stesse classi del form in homepage (hc-*): stesse
@@ -1383,7 +1387,7 @@
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="faq-privacy">
                 <input type="checkbox" id="faq-privacy" name="privacy" required />
-                <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+                <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
               </label>
               <label class="svc-caffe__privacy" for="faq-newsletter">
                 <input type="checkbox" id="faq-newsletter" name="newsletter" value="si" />
@@ -1611,9 +1615,9 @@
 
       <div class="sf-legal">
         <div class="sf-legal__links">
-          <a href="privacy.html">Privacy Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           <span class="sf-legal__sep"></span>
-          <a href="cookie.html">Cookie Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
         </div>
         <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
       </div>
@@ -1622,7 +1626,7 @@
   </footer>
 
 
-  <script src="js/main.js?v=20261006w"></script>
+  <script src="js/main.js?v=20261009m"></script>
   <script>
   /* La vecchia transizione fra sezioni era fatta di veli colorati
      che sfumavano sopra ciascuna sezione (bianco sulla hero, fucsia
@@ -1666,7 +1670,41 @@
       });
     });
   </script>
-  <script src="js/responsive.js?v=20261006w"></script>
+  <script src="js/responsive.js?v=20261009m"></script>
+  <script>
+    /* Categoria attiva: segue gli accordion aperti.
+       Quando una domanda si apre, la voce della sua categoria nella colonna
+       "Categorie" diventa attiva; aprendone una di un'altra categoria
+       l'evidenza si sposta. Se si chiudono tutte, nessuna voce è attiva. */
+    (function () {
+      var links = document.querySelectorAll('.faq-nav__list a');
+      var items = document.querySelectorAll('.faq-item');
+      if (!links.length || !items.length) return;
+      var byId = {};
+      links.forEach(function (a) { byId[a.getAttribute('href').slice(1)] = a; });
+      function setActive(id) {
+        links.forEach(function (a) {
+          var on = byId[id] === a;
+          a.classList.toggle('is-active', on);
+          if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+        });
+      }
+      function sync(preferred) {
+        var open = document.querySelectorAll('.faq-item.open');
+        if (!open.length) { setActive(null); return; }
+        var target = preferred && preferred.classList.contains('open') ? preferred : open[open.length - 1];
+        var group = target.closest('.faq-group');
+        setActive(group ? group.id : null);
+      }
+      var mo = new MutationObserver(function (list) {
+        var changed = null;
+        list.forEach(function (m) { if (m.target.classList.contains('open')) changed = m.target; });
+        sync(changed);
+      });
+      items.forEach(function (it) { mo.observe(it, { attributes: true, attributeFilter: ['class'] }); });
+      sync(null);
+    }());
+  </script>
 </body>
 </html>
 

@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="ESTRO — Lavora con noi. Entra in un team giovane e dinamico." />
   <title>Lavora con noi — ESTRO</title>
-  <link rel="stylesheet" href="css/tokens.css?v=20261006w" />
-  <link rel="stylesheet" href="css/base.css?v=20261006w" />
-  <link rel="stylesheet" href="css/components.css?v=20261006w" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261009m" />
+  <link rel="stylesheet" href="css/base.css?v=20261009m" />
+  <link rel="stylesheet" href="css/components.css?v=20261009m" />
   <style>
 
     body { background: #000 !important; }
@@ -25,7 +25,7 @@
       padding-bottom: clamp(3rem, 5vw, 4rem);
       padding-left: clamp(1.5rem, 6vw, 7rem);
       padding-right: clamp(1.5rem, 6vw, 7rem);
-      background: #060606 url('team building.png') center/cover no-repeat;
+      background: #060606 url('Joinus/herojoinus.webp') center/cover no-repeat;
       box-sizing: border-box;
     }
     .lcn-hero::before {
@@ -843,7 +843,7 @@
       height: 100dvh;
       min-height: 0 !important;
       overflow: hidden;
-      padding-top: calc(var(--nav-h, 88px) + 1.5rem) !important;
+      padding-top: calc(var(--nav-h) + 1.5rem) !important;
       padding-bottom: clamp(1.5rem, 3vh, 2.5rem) !important;
     }
     .lcn-hero__title {
@@ -1131,7 +1131,11 @@
       html.js-reveal .sx-rise { transform: none; }
     }
   </style>
-  <link rel="stylesheet" href="css/responsive.css?v=20261006w" />
+  <link rel="stylesheet" href="css/responsive.css?v=20261009m" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png" />
 </head>
 <body>
 
@@ -1236,7 +1240,7 @@
     <!-- ══ ABOUT ═════════════════════════════════════════════ -->
     <section class="lcn-about">
       <div class="lcn-about__left">
-        <span class="lcn-about__label reveal">Chi siamo</span>
+        <h2 class="lcn-about__title reveal">Chi siamo</h2>
         <div class="lcn-about__text">
           <p class="reveal">Estro è un collettivo di professionisti dove il lavoro viene affrontato con <strong>creatività e passione</strong>.</p>
           <p class="reveal" style="transition-delay:0.12s">Un collettivo dove sono <strong>le persone e le loro idee a fare la differenza</strong> e dove anche chi ha poca esperienza può mettersi in gioco e dove la sua <strong>passione può essere trasformata in una professione</strong>.</p>
@@ -1245,8 +1249,9 @@
         </div>
       </div>
       <div class="lcn-about__right reveal">
-        <div class="lcn-about__photo" aria-hidden="true">
-          <div class="lcn-about__photo-icon">
+        <div class="lcn-about__photo">
+          <img class="lcn-about__img" src="Joinus/chi%20siamo.webp" width="1500" height="1200" alt="Il team ESTRO al lavoro" loading="lazy" decoding="async">
+          <div class="lcn-about__photo-icon" aria-hidden="true" hidden>
             <svg viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
               <circle cx="20" cy="20" r="9"/>
               <circle cx="44" cy="20" r="9"/>
@@ -1397,7 +1402,7 @@
 
           <label class="lcn-apply__privacy">
             <input type="checkbox" name="privacy" required />
-            <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a>*</span>
+            <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>*</span>
           </label>
 
           <div>
@@ -1489,9 +1494,9 @@
 
       <div class="sf-legal">
         <div class="sf-legal__links">
-          <a href="privacy.html">Privacy Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           <span class="sf-legal__sep"></span>
-          <a href="cookie.html">Cookie Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
         </div>
         <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
       </div>
@@ -1500,7 +1505,7 @@
   </footer>
 
 
-  <script src="js/main.js?v=20261006w"></script>
+  <script src="js/main.js?v=20261009m"></script>
   <script>
   /* ═══════════════════════════════════════════════════════════
      LAVORA CON NOI — stesso motore delle altre pagine.
@@ -1727,7 +1732,7 @@
       });
     }
   </script>
-  <script src="js/responsive.js?v=20261006w"></script>
+  <script src="js/responsive.js?v=20261009m"></script>
 </body>
 </html>
 

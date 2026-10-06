@@ -64,11 +64,21 @@
   --t-sub:  clamp(1.75rem, 5.2vw, 5.1rem);
   --t-xl:   min(150px, 10vw);
   --t-amici: clamp(1rem, 5.2vw, 5.1rem);       /* "Alcuni amici soddisfatti / che ci hanno dato fiducia": sempre su due righe, quindi scende fino a 16px su telefono */
+  --t-cta:  clamp(1.9rem, 4.6vw, 5.5rem);          /* titolo dei blocchi CTA/form di chiusura pagina (Contattaci, Scrivici, Il prossimo successo…): identico in tutte le pagine */
   --t-h1:   clamp(2.2rem, 6.2vw, 5.6rem);          /* H1 delle pagine servizi: più grande dei titoli di sezione (--t-sub), frasi brevi su righe fisse nella colonna sinistra */
 
   /* Section spacing */
   --section-py: clamp(4rem, 8vw, 7rem);
   --section-px: clamp(1.5rem, 6vw, 7rem);
+
+  /* Nav: altezza unica (prima 82px in components.css e fallback 88px nelle regole) */
+  --nav-h: 82px;
+
+  /* Inchiostro del body: chiaro = nero 60% (About home), scuro = bianco 72% */
+  --text-body: 1rem;      /* 16px: body, descrizioni */
+  --text-ui: 0.875rem;    /* 14px: CTA, eyebrow, privacy */
+  --ink-body: rgba(0,0,0,0.70);
+  --ink-body-dark: rgba(255,255,255,0.80);
 
   /* Gap scale */
   --gap-xs: 0.5rem;
@@ -103,7 +113,7 @@
 
   /* Layout */
   --max-w: 1440px;
-  --gutter: clamp(1.5rem, 5vw, 5rem);
+  --gutter: clamp(1.5rem, 5vw, 6rem);
   --col-gap: clamp(0.75rem, 1.5vw, 1.5rem);
 
   /* Border */

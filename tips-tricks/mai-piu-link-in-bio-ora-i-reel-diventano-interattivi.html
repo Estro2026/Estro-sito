@@ -5,10 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="Mai più 'Link in Bio'? Ora i Reel diventano interattivi — ESTRO Tips & Tricks" />
   <title>Mai più "Link in Bio"? Ora i Reel diventano interattivi — ESTRO</title>
-  <link rel="stylesheet" href="../css/tokens.css?v=20261006w" />
-  <link rel="stylesheet" href="../css/base.css?v=20261006w" />
-  <link rel="stylesheet" href="../css/components.css?v=20261006w" />
-  <link rel="stylesheet" href="../css/hero.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/tokens.css?v=20261009m" />
+  <link rel="stylesheet" href="../css/base.css?v=20261009m" />
+  <link rel="stylesheet" href="../css/components.css?v=20261009m" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261009m" />
   <style>
     /* ══ TIPS & TRICKS ARTICLE ═══════════════════════════════ */
 
@@ -571,7 +571,7 @@
     /* ── Colonna laterale: pannello, agganciato fino al form ──── */
     .tt-sidebar {
       position: sticky;
-      top: calc(var(--nav-h, 88px) + 24px);
+      top: calc(var(--nav-h) + 24px);
       background: var(--tt-card);
       border: 1px solid rgba(0,0,0,0.08);
       border-radius: 14px;
@@ -792,7 +792,17 @@
       html.js-reveal .sx-rise { transform: none; }
     }
   </style>
-  <link rel="stylesheet" href="../css/responsive.css?v=20261006w" />
+  <link rel="stylesheet" href="../css/responsive.css?v=20261009m" />
+<style>
+/* Colonna laterale: anteprime più grandi (solo questo articolo) */
+html body .tt-sidebar__thumb:not(#_):not(#__):not(#___) { width: clamp(72px, 11dvh, 112px) !important; height: clamp(72px, 11dvh, 112px) !important; }
+html body .tt-sidebar__item > a:not(#_):not(#__):not(#___) { gap: 16px !important; }
+html body .tt-sidebar__title:not(#_):not(#__):not(#___) { font-size: 15px !important; }
+</style>
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png" />
 </head>
 <body>
 
@@ -872,7 +882,7 @@
           <span class="tt-hero__cat">Social &amp; Video</span>
           <time class="tt-hero__date" datetime="2026-03-19">19 marzo 2026</time>
         </div>
-        <h1 class="tt-hero__title">Mai più "Link in Bio"?<br>Ora i Reel diventano<br>interattivi</h1>
+        <h1 class="tt-hero__title">Mai più "Link in Bio"?<br>Ora i Reel diventano<br><em>interattivi</em></h1>
         <p class="tt-hero__intro">Il montaggio video non è più solo una questione di estetica: è una questione di connessioni.</p>
       </div>
     </section>
@@ -881,7 +891,7 @@
     <section class="tt-body">
       <div class="tt-body__layout">
       <div class="tt-body__inner">
-        <img class="tt-cover" src="../Foto%20tips%20and%20tricks/tt-01.webp" alt="Mai più Link in Bio: i Reel diventano interattivi" />
+        <h2 class="tt-h2">Il Reel diventa uno snodo di navigazione</h2>
 
         <p class="tt-p">Il montaggio video non è più solo una questione di estetica: è una questione di <strong>connessioni</strong>. Se fino a ieri un Reel era un contenuto chiuso in se stesso, oggi Meta cambia le regole del gioco trasformandolo in uno snodo di navigazione.</p>
 
@@ -923,7 +933,7 @@
         <!-- La CTA di ritorno chiude la lettura, in fondo
              all'articolo e non dopo il form. -->
         <div class="tt-back">
-          <a href="../tips-tricks.html" class="btn btn--primary tt-back__link">← Tutti i Tips &amp; Tricks</a>
+          <a href="../tips-tricks.html" class="btn btn--primary tt-back__link cta-arrow cta-arrow--back">Tutti i Tips &amp; Tricks</a>
         </div>
 
       </div><!-- /.tt-body__inner -->
@@ -1033,7 +1043,7 @@
             <div class="hc-consents">
               <label class="svc-caffe__privacy" for="tta-privacy">
                 <input type="checkbox" id="tta-privacy" name="privacy" required />
-                <span>Autorizzo il trattamento dei dati secondo la <a href="../privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+                <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
               </label>
               <label class="svc-caffe__privacy" for="tta-newsletter">
                 <input type="checkbox" id="tta-newsletter" name="newsletter" value="si" />
@@ -1048,7 +1058,7 @@
 
   </main>
 
-  <script src="../js/main.js?v=20261006w"></script>
+  <script src="../js/main.js?v=20261009m"></script>
   <script>
   /* ═══════════════════════════════════════════════════════════
      ARTICOLO TIPS — motore della homepage, ridotto al necessario.
@@ -1274,9 +1284,9 @@
 
       <div class="sf-legal">
         <div class="sf-legal__links">
-          <a href="../privacy.html">Privacy Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           <span class="sf-legal__sep"></span>
-          <a href="../cookie.html">Cookie Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
         </div>
         <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
       </div>
@@ -1284,7 +1294,7 @@
     </div>
   </footer>
 
-  <script src="../js/responsive.js?v=20261006w"></script>
+  <script src="../js/responsive.js?v=20261009m"></script>
 </body>
 </html>
 

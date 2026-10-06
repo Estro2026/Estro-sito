@@ -82,10 +82,10 @@
       window.addEventListener('resize', check, { passive: true });
     }());
   </script>
-  <link rel="stylesheet" href="css/tokens.css?v=20261006w" />
-  <link rel="stylesheet" href="css/base.css?v=20261006w" />
-  <link rel="stylesheet" href="css/components.css?v=20261006w" />
-  <link rel="stylesheet" href="css/hero.css?v=20261006w" />
+  <link rel="stylesheet" href="css/tokens.css?v=20261009m" />
+  <link rel="stylesheet" href="css/base.css?v=20261009m" />
+  <link rel="stylesheet" href="css/components.css?v=20261009m" />
+  <link rel="stylesheet" href="css/hero.css?v=20261009m" />
   <style>
     body { background: #000; }
     .about-section { border-top: none !important; }
@@ -299,7 +299,7 @@
       /* Il pannello è alto esattamente 100dvh e ritaglia: quindi il
          padding alto deve garantire lo spazio della nav (che gli
          passa sopra) senza che i loghi escano dal fondo. */
-      padding-block: max(clamp(4rem, 8vw, 7rem), calc(var(--nav-h, 88px) + 1rem))
+      padding-block: max(clamp(4rem, 8vw, 7rem), calc(var(--nav-h) + 1rem))
                      clamp(4rem, 8vw, 6rem) !important;
       overflow: hidden !important;
       /* stessa ragione del pannello About: sx-sweep sposta il fondo e
@@ -356,7 +356,7 @@
        uscire la seconda fila di loghi dal ritaglio. */
     @media (max-height: 780px) {
       .amici-sticky {
-        padding-block: calc(var(--nav-h, 88px) + 1rem)
+        padding-block: calc(var(--nav-h) + 1rem)
                        clamp(1.5rem, 4vh, 3rem) !important;
       }
       .amici-sticky .svc-clients__header {
@@ -1512,7 +1512,7 @@
       min-height: 0;
       display: flex;
       align-items: center;
-      padding-block: max(clamp(1.6rem, 3.2vh, 3rem), calc(var(--nav-h, 88px) + 0.75rem)) clamp(1.6rem, 3.2vh, 3rem);
+      padding-block: max(clamp(1.6rem, 3.2vh, 3rem), calc(var(--nav-h) + 0.75rem)) clamp(1.6rem, 3.2vh, 3rem);
       overflow: hidden;
     }
     /* Stessa soglia delle altre sezioni agganciate (era 1024×700, e
@@ -1897,7 +1897,7 @@
          successiva le sale sopra di 22px (.sx-rise) coprendola — è
          l'effetto "il pulsante sparisce dentro il contenitore sotto".
          Con questo margine l'ombra resta dentro il pannello. */
-      padding-block: calc(var(--nav-h, 88px) + clamp(0.5rem, 1.5vh, 1.2rem))
+      padding-block: calc(var(--nav-h) + clamp(0.5rem, 1.5vh, 1.2rem))
                      clamp(2.6rem, 5vh, 3.4rem);
       background:
         radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
@@ -2394,7 +2394,7 @@
       justify-content: center;
       background: #fff;
       overflow: hidden;
-      padding-block: max(clamp(2rem, 4vw, 3.5rem), calc(var(--nav-h, 88px) + 0.75rem))
+      padding-block: max(clamp(2rem, 4vw, 3.5rem), calc(var(--nav-h) + 0.75rem))
                      clamp(1.6rem, 3vh, 2.6rem);
     }
     @media (min-width: 900px) and (min-height: 640px) {
@@ -3530,10 +3530,9 @@
       width: 100%; height: 100%;
       object-fit: cover;
     }
-    /* Le immagini dei case study sono quadrate e la card è 4:5:
-       "cover" ne tagliava i bordi. Qui restano intere, su un fondo
-       sfumato dai colori dei loro bordi. */
-    .sr-reel__card--case img { object-fit: contain; }
+    /* Le immagini dei case study riempiono tutta la card (4:5):
+       niente spazio vuoto sopra e sotto. */
+    .sr-reel__card--case img { object-fit: cover; }
     /* Il retro delle foto (la metà lontana dell'anello) resta
        visibile ma velato: si legge la profondità dell'anello. */
     .sr-reel__card::after {
@@ -3568,6 +3567,65 @@
     }
     @media (max-width: 768px) {
       .sr-reel { --R: min(46vw, 34vh); }
+    }
+    /* ── Card dell'anello come lastre 3D ─────────────────────────────
+       Un solo bordo: la lastra chiara è 2px più grande della foto e
+       fa da cornice e da spessore insieme (niente doppia linea quando
+       la card è vista di sbieco). Piani: foto +1px · lastra -1px ·
+       velo del retro -1.5px. Card tutte quadrate e uguali; le 3 foto
+       verticali (4:5) perdono ~10% sopra e sotto. */
+    .sr-reel__card {
+      /* card quadrate con la stessa superficie delle vecchie 4:5
+         (lato = 1,12 × base ≈ √(1 × 1,25)); restano ~16px fra le card */
+      --side: calc(var(--w) * 1.12);
+      width: var(--side) !important;
+      left: calc(var(--side) / -2) !important;
+      height: auto !important;
+      top: calc(var(--side) / -2) !important;
+      overflow: visible !important;
+      border: 0 !important;
+      background: transparent !important;
+      box-shadow: none !important;
+      transform-style: preserve-3d;
+    }
+    .sr-reel__card img {
+      position: relative;
+      width: 100% !important; height: auto !important;
+      aspect-ratio: 1 / 1; /* tutte le card uguali: quadrate */
+      object-fit: cover !important;
+      border-radius: 10px;
+      border: 0;
+      transform: translateZ(1px);
+      /* velatura rosa: .sr-reel__tint, appoggiato sulla foto */
+    }
+    /* lastra: cornice + spessore, un unico corpo chiaro */
+    .sr-reel__card::before {
+      z-index: auto !important;
+      inset: -2px !important;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #ffffff 0%, #eadbe4 50%, #c9b2c2 100%) !important;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.35);
+      transform: translateZ(-1px);
+      backface-visibility: hidden;
+    }
+    /* velatura rosa ESTRO sulla foto (20% #DB005A): stessa misura e stessi
+       angoli della foto, mezzo pixel davanti, nessun bordo */
+    .sr-reel__tint {
+      position: absolute; inset: 0;
+      border-radius: 10px;
+      background: rgba(219,0,90,0.2);
+      transform: translateZ(1.5px);
+      backface-visibility: hidden;
+      pointer-events: none;
+    }
+    /* retro: velo scuro, senza bordo (la cornice è già la lastra) */
+    .sr-reel__card::after {
+      z-index: auto !important;
+      border-radius: 10px;
+      border: 0 !important;
+      background: rgba(18,4,16,0.55) !important;
+      transform: translateZ(-1.5px) rotateY(180deg) !important;
+      backface-visibility: hidden;
     }
     @media (prefers-reduced-motion: reduce) {
       .sr-reel__spin, .sr-reel__stars { animation: none; }
@@ -3814,7 +3872,7 @@
   ]
 }
 </script>
-  <link rel="stylesheet" href="css/responsive.css?v=20261006w" />
+  <link rel="stylesheet" href="css/responsive.css?v=20261009m" />
   <style>
     /* ═══════════════════════════════════════════════════════════
        REGOLA DEI TITOLI (homepage) — tre corpi, non uno per sezione
@@ -3861,7 +3919,7 @@
        ma mai sotto la nav che gli passa sopra. Prima 100px contro i 112
        di Case studies, Tips e Contatti. */
     html body .wall-sticky:not(#_):not(#_) {
-      padding-top: max(var(--section-py), calc(var(--nav-h, 88px) + 0.75rem)) !important;
+      padding-top: max(var(--section-py), calc(var(--nav-h) + 0.75rem)) !important;
     }
 
     /* ── Angoli arrotondati delle sezioni che salgono ───────────
@@ -3885,6 +3943,10 @@
     html.js-reveal #muro:not(#_)::after         { background: #fff; }
     html.js-reveal #contatti:not(#_)::after     { background: var(--primary, #DB005A); }
   </style>
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png" />
 </head>
 <body>
 <!-- Filtro SVG per rimuovere lo sfondo bianco dal video gatto -->
@@ -3994,26 +4056,26 @@
               <!-- orizzonte del pianeta: sotto l'anello, mai sopra -->
               <div class="sr-reel__horizon"></div>
               <div class="sr-reel__ring"><div class="sr-reel__plane"><div class="sr-reel__spin">
-                <div class="sr-reel__card sr-reel__card--case" style="--i:0;background:linear-gradient(#908678,#8c7c66)"><img src="assets/reel/case-ariston.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:1;background:linear-gradient(#17161b,#252428)"><img src="assets/reel/case-prada.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:2"><img src="assets/reel/reel-15.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:3"><img src="assets/reel/reel-02.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:4"><img src="assets/reel/reel-09.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:5;background:linear-gradient(#484018,#161616)"><img src="assets/reel/case-fanuc.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:6"><img src="assets/reel/case-blanx.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:7"><img src="assets/reel/reel-10.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:8;background:linear-gradient(#958e80,#3577cc)"><img src="assets/reel/case-biorepair.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:9"><img src="assets/reel/case-thefamily.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:10;background:linear-gradient(#d2d3ce,#d2d5d2)"><img src="assets/reel/case-fantabody.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:11"><img src="assets/reel/reel-18.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:12"><img src="assets/reel/case-bustomotor.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:13"><img src="assets/reel/reel-12.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:14;background:linear-gradient(#85a9d3,#acb083)"><img src="assets/reel/reel-19.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:15"><img src="assets/reel/reel-06.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:16;background:linear-gradient(#766a5d,#99696e)"><img src="assets/reel/case-miumiu.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:17"><img src="assets/reel/reel-20.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card sr-reel__card--case" style="--i:18;background:linear-gradient(#cdd3d5,#746d60)"><img src="assets/reel/case-bravo.webp" alt="" decoding="async"></div>
-                <div class="sr-reel__card" style="--i:19"><img src="assets/reel/reel-14.webp" alt="" decoding="async"></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:0;background:linear-gradient(#908678,#8c7c66)"><img src="assets/aristonfogliacase_3_11zon.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:1;background:linear-gradient(#17161b,#252428)"><img src="assets/reel/case-prada.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:2"><img src="assets/reel/reel-15.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:3"><img src="assets/reel/reel-02.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:4"><img src="assets/reel/reel-09.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:5;background:linear-gradient(#484018,#161616)"><img src="assets/fanuccase.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:6"><img src="assets/reel/case-blanx-sq.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:7"><img src="assets/reel/reel-10.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:8;background:linear-gradient(#958e80,#3577cc)"><img src="assets/biopaircase.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:9"><img src="assets/reel/case-thefamily-sq.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:10;background:linear-gradient(#d2d3ce,#d2d5d2)"><img src="assets/reel/case-fantabody.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:11"><img src="assets/reel/reel-18.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:12"><img src="assets/reel/case-bustomotor-sq.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:13"><img src="assets/reel/reel-12.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:14;background:linear-gradient(#85a9d3,#acb083)"><img src="assets/reel/reel-19.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:15"><img src="assets/reel/reel-06.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:16;background:linear-gradient(#766a5d,#99696e)"><img src="assets/reel/case-miumiu.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:17"><img src="assets/reel/reel-20.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card sr-reel__card--case" style="--i:18;background:linear-gradient(#cdd3d5,#746d60)"><img src="assets/bravocase.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
+                <div class="sr-reel__card" style="--i:19"><img src="assets/reel/reel-14.webp" alt="" decoding="async"><span class="sr-reel__tint" aria-hidden="true"></span></div>
               </div></div></div>
             </div>
           </div>
@@ -4278,16 +4340,17 @@
           <div class="cst-panel on" data-cst-panel="prada" role="tabpanel">
             <div class="cst-grid">
               <div class="cst-img cst-img--photo">
-                <img src="case-studies/home/prada-case.webp" alt="Prada — controllo creativo sul prodotto con l&apos;AI" loading="lazy">
+                <img src="case-studies/home/prada-case.webp" alt="Prada: controllo creativo sul prodotto con l&apos;AI" loading="lazy">
               </div>
               <div class="cst-right">
-                <div class="cst-info">
+                <a class="cst-info" href="case-studies/prada.html" aria-label="Apri il case study Prada">
+                  <span class="cst-info__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
                   <div class="cst-info__brand"><img src="Loghibrand/prada.webp" alt="Prada" loading="lazy"></div>
                   <div class="cst-info__sector">AI Product Control &middot; Luxury Visual &middot; Product Precision</div>
                   <div class="cst-info__title">Controllo creativo sul prodotto, senza perdere identit&agrave;</div>
                   <div class="cst-info__text">Varianti visive su borse e accessori, lavorando su materiali, cromie e dettagli con un alto livello di precisione per preservare proporzioni, riconoscibilit&agrave; e qualit&agrave; percepita del prodotto.</div>
                   <div class="cst-info__tags"><span>Luxury AI</span><span>Product control</span><span>Material variation</span><span>Visual precision</span></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -4296,16 +4359,17 @@
           <div class="cst-panel" data-cst-panel="miumiu" role="tabpanel">
             <div class="cst-grid">
               <div class="cst-img cst-img--photo">
-                <img src="case-studies/home/miumiu-case.webp" alt="Miu Miu — contenuti prodotto tra immagine, AI e movimento" loading="lazy">
+                <img src="case-studies/home/miumiu-case.webp" alt="Miu Miu: contenuti prodotto tra immagine, AI e movimento" loading="lazy">
               </div>
               <div class="cst-right">
-                <div class="cst-info">
+                <a class="cst-info" href="case-studies/miumiu.html" aria-label="Apri il case study Miu Miu">
+                  <span class="cst-info__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
                   <div class="cst-info__brand"><img src="case-studies/home/miumiu-logo.webp" alt="Miu Miu" loading="lazy"></div>
                   <div class="cst-info__sector">AI Product Control &middot; Motion Content &middot; Social Reel</div>
                   <div class="cst-info__title">Contenuti prodotto evoluti tra immagine, AI e movimento</div>
                   <div class="cst-info__text">Controllo creativo su varianti di borse e accessori, mantenendo intatti proporzioni, materiali e riconoscibilit&agrave; del prodotto. Il lavoro si &egrave; esteso alla produzione di brevi video per i reel, unendo post-produzione, AI e motion per dare continuit&agrave; al contenuto statico e dinamico.</div>
                   <div class="cst-info__tags"><span>Product control</span><span>Motion content</span><span>AI workflow</span><span>Social reel</span></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -4314,16 +4378,17 @@
           <div class="cst-panel" data-cst-panel="fanuc" role="tabpanel">
             <div class="cst-grid">
               <div class="cst-img cst-img--photo">
-                <img src="case-studies/home/fanuc-case.webp" alt="FANUC — performance e creatività per il B2B industriale" loading="lazy">
+                <img src="assets/fanuccase.webp" alt="FANUC: performance e creatività per il B2B industriale" loading="lazy">
               </div>
               <div class="cst-right">
-                <div class="cst-info">
+                <a class="cst-info" href="case-studies/fanuc.html" aria-label="Apri il case study FANUC">
+                  <span class="cst-info__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
                   <div class="cst-info__brand"><img src="Loghibrand/fanuc.webp" alt="FANUC" loading="lazy"></div>
                   <div class="cst-info__sector">B2B Industriale &middot; Omnichannel &middot; Performance</div>
                   <div class="cst-info__title">Performance e creativit&agrave; per il B2B industriale</div>
                   <div class="cst-info__text">Da una gara nazionale a un ecosistema omnichannel: roadshow, landing page, advertising e contenuti social coordinati per rendere l&apos;automazione pi&ugrave; distintiva e pi&ugrave; vicina alle persone.</div>
                   <div class="cst-info__tags"><span>Industrial B2B</span><span>Omnichannel</span><span>Roadshow</span><span>Performance</span></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -4332,16 +4397,17 @@
           <div class="cst-panel" data-cst-panel="ariston" role="tabpanel">
             <div class="cst-grid">
               <div class="cst-img cst-img--photo">
-                <img src="case-studies/home/ariston-case.webp" alt="Ariston — una strategia globale pronta per i mercati locali" loading="lazy">
+                <img src="assets/aristonfogliacase_3_11zon.webp" alt="Ariston: una strategia globale pronta per i mercati locali" loading="lazy">
               </div>
               <div class="cst-right">
-                <div class="cst-info">
+                <a class="cst-info" href="case-studies/ariston.html" aria-label="Apri il case study Ariston">
+                  <span class="cst-info__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
                   <div class="cst-info__brand"><img src="Loghibrand/aristonlogo.webp" alt="Ariston" loading="lazy"></div>
                   <div class="cst-info__sector">Strategia Globale &middot; Adattamento Locale &middot; Content System</div>
                   <div class="cst-info__title">Una strategia globale, pronta per i mercati locali</div>
                   <div class="cst-info__text">Un sistema di contenuti che tiene insieme visione internazionale e adattabilit&agrave; locale: un linguaggio comune, abbastanza flessibile da funzionare su mercati, target e priorit&agrave; diversi.</div>
                   <div class="cst-info__tags"><span>Global strategy</span><span>Local adaptation</span><span>Content system</span></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -4350,16 +4416,17 @@
           <div class="cst-panel" data-cst-panel="biorepair" role="tabpanel">
             <div class="cst-grid">
               <div class="cst-img cst-img--photo">
-                <img src="case-studies/home/biorepair-case.webp" alt="Biorepair — contenuti Amazon per i mercati internazionali" loading="lazy">
+                <img src="assets/biopaircase.webp" alt="Biorepair: contenuti Amazon per i mercati internazionali" loading="lazy">
               </div>
               <div class="cst-right">
-                <div class="cst-info">
+                <a class="cst-info" href="case-studies/biorepair.html" aria-label="Apri il case study Biorepair">
+                  <span class="cst-info__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
                   <div class="cst-info__brand"><img src="Loghibrand/biorepair.webp" alt="Biorepair" loading="lazy"></div>
                   <div class="cst-info__sector">Amazon Strategy &middot; Multimercato &middot; Contenuti A+</div>
                   <div class="cst-info__title">Comunicare la scienza a target diversi</div>
                   <div class="cst-info__text">Abbiamo portato i dentifrici Biorepair su Amazon in Italia, USA e UK mantenendo intatta l&apos;autorevolezza scientifica: contenuti A+ e Store Brand che cambiano tono e design in base alla cultura di ogni mercato, dalle linee kids a quelle premium.</div>
                   <div class="cst-info__tags"><span>Amazon</span><span>Multimercato</span><span>Contenuti A+</span><span>Render 3D</span></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -4368,16 +4435,17 @@
           <div class="cst-panel" data-cst-panel="bravo" role="tabpanel">
             <div class="cst-grid">
               <div class="cst-img cst-img--photo">
-                <img src="case-studies/home/bravo-case.webp" alt="Bravo — campagna Nonna Certified generata con l&apos;AI" loading="lazy">
+                <img src="assets/bravocase.webp" alt="Bravo: campagna Nonna Certified generata con l&apos;AI" loading="lazy">
               </div>
               <div class="cst-right">
-                <div class="cst-info">
+                <a class="cst-info" href="case-studies/bravo.html" aria-label="Apri il case study Bravo">
+                  <span class="cst-info__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
                   <div class="cst-info__brand"><img src="case-studies/home/bravo-logo.webp" alt="Bravo" loading="lazy"></div>
                   <div class="cst-info__sector">AI Branding &middot; Amazon Store &middot; Organic Growth</div>
                   <div class="cst-info__title">Dal nulla al brand: l&apos;AI d&agrave; colore al mondo del pulito</div>
                   <div class="cst-info__text">Senza un archivio fotografico abbiamo lanciato Bravo online fondendo i prodotti reali con scenari generati dall&apos;AI: colori saturi, banner Amazon che bucano lo schermo e una community Instagram cresciuta solo in organico.</div>
                   <div class="cst-info__tags"><span>AI branding</span><span>Amazon</span><span>Instagram</span><span>Organic growth</span></div>
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -4412,30 +4480,30 @@
                  destra e il testo sta SOPRA l'immagine. La leggibilità
                  la dà .tip-card__scrim, una velatura dal basso che si
                  sovrappone alla foto, non un fondo pieno. -->
-            <article class="tip-card tip-card--feature" data-idx="0">
+            <a class="tip-card tip-card--feature" data-idx="0" href="tips-tricks/mai-piu-link-in-bio-ora-i-reel-diventano-interattivi.html" aria-label="Leggi: Mai più Link in Bio? Ora i Reel diventano interattivi">
               <div class="tip-card__img">
                 <img src="Foto%20tips%20and%20tricks/cover-tips-%E2%80%93-interactive-reels.webp" alt="Mai più link in bio? Ora i Reel diventano interattivi" loading="lazy" />
                 <div class="tip-card__scrim" aria-hidden="true"></div>
                 <div class="tip-card__over">
-                  <p class="tip-card__date">19 MARZO 2025</p>
+                  <p class="tip-card__date">19 MARZO 2026</p>
                   <h3 class="tip-card__title">MAI PIÙ "LINK IN BIO"? ORA I REEL DIVENTANO INTERATTIVI</h3>
                 </div>
               </div>
-            </article>
+            </a>
             <!-- Anche le due card piccole hanno il testo sopra la
                  foto: così l'immagine prende tutta la card invece di
                  restare schiacciata sopra il titolo. -->
-            <article class="tip-card" data-idx="1">
+            <a class="tip-card" data-idx="1" href="tips-tricks/il-copywriter-crea-il-messaggio-il-social-media-manager-lo-guida.html" aria-label="Leggi: Il Copywriter crea il messaggio, il Social Media Manager lo guida">
               <div class="tip-card__img">
                 <img src="Foto%20tips%20and%20tricks/social-e-copy-copia.webp" alt="Il copywriter crea il messaggio, il Social Media Manager lo guida" loading="lazy" />
                 <div class="tip-card__scrim" aria-hidden="true"></div>
                 <div class="tip-card__over">
-                  <p class="tip-card__date">19 MARZO 2025</p>
+                  <p class="tip-card__date">MARZO 2026</p>
                   <h3 class="tip-card__title">IL COPYWRITER CREA IL MESSAGGIO, IL SOCIAL MEDIA MANAGER LO GUIDA</h3>
                 </div>
               </div>
-            </article>
-            <article class="tip-card" data-idx="2">
+            </a>
+            <a class="tip-card" data-idx="2" href="tips-tricks/core-web-vitals-nel-2024-cosa-cambia-e-come-ottimizzare-il-tuo-sito.html" aria-label="Leggi: Core Web Vitals nel 2024, cosa cambia e come ottimizzare il tuo sito">
               <div class="tip-card__img">
                 <img src="Foto%20tips%20and%20tricks/happy-sito-v02.webp" alt="Core Web Vitals nel 2024: cosa cambia e come ottimizzare il tuo sito" loading="lazy" />
                 <div class="tip-card__scrim" aria-hidden="true"></div>
@@ -4444,7 +4512,7 @@
                   <h3 class="tip-card__title">CORE WEB VITALS NEL 2024: COSA CAMBIA E COME OTTIMIZZARE IL TUO SITO</h3>
                 </div>
               </div>
-            </article>
+            </a>
           </div>
           <div class="tips-section__cta" id="tipsCTA">
             <a class="btn btn--primary" href="tips-tricks.html">SCOPRI TUTTI I TIPS &amp; TRICKS</a>
@@ -4562,7 +4630,7 @@
           <div class="hc-consents">
             <label class="svc-caffe__privacy" for="hc-privacy">
               <input type="checkbox" id="hc-privacy" name="privacy" required />
-              <span>Autorizzo il trattamento dei dati secondo la <a href="privacy.html">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+              <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
             </label>
             <label class="svc-caffe__privacy" for="hc-newsletter">
               <input type="checkbox" id="hc-newsletter" name="newsletter" value="si" />
@@ -4577,7 +4645,7 @@
   </main>
 
 
-  <script src="js/main.js?v=20261006w"></script>
+  <script src="js/main.js?v=20261009m"></script>
   <script>
   // ── TRANSIZIONE HERO → SERVICES + LOADING BAR PARTNER ───────────
   // Wrapper: 650dvh → scroll totale 550dvh (transizione + orizzontale + banda + HOLD ~75dvh)
@@ -5339,7 +5407,7 @@
       const card = document.createElement('a');
       card.className = 'svc-card';
       card.href = svc.href;
-      card.setAttribute('aria-label', svc.name + ' — scopri il servizio');
+      card.setAttribute('aria-label', svc.name + ': scopri il servizio');
       card.innerHTML = `
         <div class="svc-card__num">${svc.num}</div>
         <span class="svc-card__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
@@ -6570,9 +6638,9 @@
 
       <div class="sf-legal">
         <div class="sf-legal__links">
-          <a href="privacy.html">Privacy Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
           <span class="sf-legal__sep"></span>
-          <a href="cookie.html">Cookie Policy</a>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
         </div>
         <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
       </div>
@@ -6764,7 +6832,7 @@
     hero.addEventListener('pointerleave', () => { tx = 0; ty = 0; kick(); }, { passive: true });
   }());
   </script>
-  <script src="js/responsive.js?v=20261006w"></script>
+  <script src="js/responsive.js?v=20261009m"></script>
   <script>
   // ── Hero: all'atterraggio "FORMA" cambia font e poi si ripristina ──
   (function () {
