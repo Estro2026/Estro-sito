@@ -10570,7 +10570,8 @@ input[type="submit"], button[type="submit"] {
   position: relative;
   overflow: hidden;
 }
-.svc-hero__bgvideo {
+.svc-hero__bgvideo,
+.svc-hero__bgimg {
   position: absolute;
   inset: 0;
   width: 100%;

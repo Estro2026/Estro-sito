@@ -167,3 +167,12 @@ Mitigata, non riscritta:
 Un solo blocco in `css/responsive.css` ("TIMELINE PAGINE SERVIZI"), valido per le 10 pagine servizi: linea con binario rosato e riempimento fucsia→`#ff2e7e` con punta luminosa; nodi 46px (fatto = rosa chiaro, attivo = fucsia con alone e anello che pulsa); etichetta fucsia e barretta sotto il passo attivo; card con bordo rosato, filo fucsia in alto, ombra a due livelli e alone dietro; immagine con cornice rosata sfalsata (5:4, nessun crop). Ingresso a cascata di barra, immagine e testi. Pannello fisso (112dvh di corsa, 100dvh di schermata) solo se tutti i riquadri ci stanno: lo decide `js/responsive.js` (classe `.svc-path--flow`); sotto 1101px o 700px di altezza la sezione scorre normalmente.
 
 Aggiornamento timeline: ombra della card neutra (`0 1px 2px rgba(0,0,0,.05), 0 14px 32px -22px rgba(0,0,0,.28)`, niente alone fucsia); nodi con anello dello sfondo (`box-shadow: 0 0 0 6px var(--tl-bg)`) così la linea non li tocca; barra senza ritaglio su desktop (`overflow: visible`) e con padding 16/18/14 sotto i 1101px; nessun sottolineato sui passi; riquadro immagine alto `clamp(320px, 45dvh, 600px)` con immagine 5:4 che lo riempie.
+
+## 18. Schermi zoomati / bassi
+
+Due condizioni, solo desktop: **altezza ≤ 820px** (zoom 125–200%) e **larghezza 761–1100px**. Sopra non cambia nulla.
+- Hero pagine servizi, Contatti, Dama24: tutto il contenuto dentro la schermata (`min-height: 100dvh`), senza scroll interno; si riducono padding, gap, altezze dei campi (in `dvh`), corpo del titolo (`min(var(--t-h1), 10.5dvh)`), informativa privacy a 14px; sotto i 620px di altezza la card del form ha `zoom: .88` (Contatti `.8`).
+- Textarea dei form hero: `overflow-y: hidden`, nessuna scrollbar interna.
+- Timeline/card dinamiche (Web Design incluso): 761–1100px = immagine a sinistra (0,9fr) + testo e CTA a destra (1,1fr); la pila verticale solo sotto i 761px.
+
+Gerarchia tipografica nello zoom (desktop, altezza ≤ 820px): hero = `min(--t-h1, 10,5dvh)` (9dvh sotto 620px; in home `--t-hero`), titolo di sezione = hero / 1,4 (`--t-sub`, `--t-cta`, in home `--t-xl`, `--t-svc`, `--t-amici`), titolo di card = sezione / 1,4 (`--t-card`). Il titolo hero non si riduce mai per fare spazio. Fuori dallo zoom valgono i token di `tokens.css`.

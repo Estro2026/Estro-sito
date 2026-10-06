@@ -61,6 +61,9 @@
     const list = candidates();
     // 1) si torna al corpo del CSS
     list.forEach(el => { if (el.dataset.fitDone) { el.style.removeProperty('font-size'); delete el.dataset.fitDone; } });
+    // Zoom (desktop, altezza <= 820px): i titoli di sezione hanno tutti lo stesso corpo e la hero non si
+    // riduce; la lunghezza si gestisce con a-capo e max-width, non con la font-size.
+    if (window.matchMedia('(min-width: 861px) and (max-height: 820px)').matches) return;
     // 2) si stringono solo i titoli che sforano
     list.forEach(el => {
       const cs = getComputedStyle(el);
@@ -187,4 +190,34 @@
   addEventListener('resize', run, { passive: true });
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(run);
   run();
+}());
+
+/* ── Zoom: la card del form nella hero dei servizi non esce mai dalla schermata ──
+   Se, con le misure compatte del CSS, il pulsante finisce oltre il bordo basso (meno 16px di respiro),
+   la card si scala quanto serve (min 0,72). Fuori dallo zoom non fa nulla. */
+(function heroFormFit() {
+  var card = document.querySelector('.svc-hero__form-card');
+  if (!card) return;
+  var mq = window.matchMedia('(min-width: 861px) and (max-height: 820px)');
+  function run() {
+    card.style.zoom = '';
+    if (!mq.matches) return;
+    var btn = card.querySelector('.svc-hero__submit');
+    if (!btn) return;
+    for (var i = 0; i < 3; i++) {
+      var limit = innerHeight - 40;
+      var bottom = btn.getBoundingClientRect().bottom;
+      if (bottom <= limit) break;
+      var top = card.getBoundingClientRect().top;
+      var cur = parseFloat(card.style.zoom) || 1;
+      var k = (limit - top) / (bottom - top);
+      card.style.zoom = Math.max(0.72, cur * k).toFixed(3);
+    }
+  }
+  var t;
+  function later() { clearTimeout(t); t = setTimeout(run, 150); }
+  addEventListener('resize', later, { passive: true });
+  addEventListener('load', later);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(later);
+  later();
 }());

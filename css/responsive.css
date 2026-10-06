@@ -1304,27 +1304,14 @@ html body :is(.faq-contact__title, .lcn-positions__heading, .lcn-apply__title):n
   font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important;
 }
 
-/* ── Contatti: form nero, celle più calde, tutto dentro la viewport ──
-   Il pannello è alto una schermata (100dvh): titolo, spazi e campi si
-   misurano su dvh così hero + form restano visibili senza tagli. */
-html body .ct-inner:not(#_):not(#__) { padding-top: calc(var(--nav-h) + .5rem) !important; padding-bottom: 1rem !important; }
-html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___) { font-size: min(150px, 26vw, 13dvh) !important; margin-bottom: 8px !important; }
-html body .ct-inner .ct-col .hc-header:not(#_):not(#__) { margin-bottom: clamp(16px, 3dvh, 32px) !important; gap: 0 !important; }
+/* ── Contatti: form nero con celle più calde (dimensioni originali del form e della hero) ── */
 html body .ct-inner .hc-form:not(#_):not(#__) {
   background: #0b0b0d !important; border: 1px solid #2c2c33 !important;
-  border-radius: var(--r-box, 36px) !important;
-  padding: clamp(1rem, 2.4dvh, 2rem) clamp(1.25rem, 2.4vw, 2rem) !important;
-  gap: clamp(8px, 1.4dvh, 14px) !important;
+  border-radius: var(--r-box, 36px) !important; padding: clamp(1.5rem, 3vw, 2.5rem) !important;
 }
-html body .ct-inner .hc-form :is(.hc-row):not(#_):not(#__) { gap: clamp(8px, 1.4dvh, 14px) !important; }
-html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):not(#___) {
-  background: #1b1a22 !important; border: 1px solid #3a3946 !important; color: #fff !important;
-}
-html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___) { height: clamp(40px, 5.4dvh, 55px) !important; min-height: 0 !important; padding-block: 0 !important; }
-html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___) { min-height: clamp(56px, 9dvh, 96px) !important; padding: 12px 20px !important; }
+html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):not(#___) { background: #1b1a22 !important; border: 1px solid #3a3946 !important; color: #fff !important; }
 html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__):not(#___):focus { background: #24222e !important; border-color: #fff !important; }
 html body .ct-inner .hc-form .svc-caffe__field:not(#_):not(#__)::placeholder { color: rgba(255,255,255,.55) !important; }
-html body .ct-inner .hc-form .f-label:not(#_):not(#__) { margin-bottom: 4px !important; }
 
 /* ── Articolo news: titoli sulla scala del sito ──
    testata (titolo lungo di articolo) → tra --t-sub e --t-h1, senza
@@ -1348,11 +1335,6 @@ html body .nw-hero__sub:not(#_):not(#__):not(#___) { max-width: 52ch; font-size:
 html body .nw-contact__title:not(#_):not(#__):not(#___):not(#____) { font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important; }
 html body .nw-grid-wrap:not(#_):not(#__) { padding-block: var(--section-py) !important; padding-inline: var(--gutter) !important; }
 
-/* ── Contatti: spazi prima e dopo le sezioni ──
-   pannello hero: sotto la nav → titolo → form → fine schermata;
-   pannello sedi/social: stesso respiro di sezione del resto del sito
-   (scala con l'altezza della finestra: i pannelli sono alti 100dvh). */
-html body .ct-inner:not(#_):not(#__):not(#___) { padding-bottom: clamp(1rem, 4dvh, 2.5rem) !important; }
 
 /* ── News: regole visive del sito applicate alla pagina ──
    superficie bianca come le altre pagine, 36px sulle card, pillola sulle
@@ -2082,11 +2064,11 @@ html body main > section.svc-bg-dark .svc-tabs__panel:not(#_):not(#__):not(#___)
   /* il riquadro prende l'altezza (immagine protagonista) e l'immagine la riempie col suo rapporto */
   html body .svc-path:not(.svc-path--flow) .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____) {
     height: auto !important; min-height: clamp(320px, 45dvh, 600px) !important;
-    grid-template-columns: auto minmax(0, 1fr) !important; grid-template-rows: minmax(0, 1fr);
+    grid-template-columns: min(46%, calc((clamp(320px, 45dvh, 600px) - 2.5rem) * 1.25)) minmax(0, 1fr) !important; grid-template-rows: minmax(0, 1fr);
     padding: clamp(.75rem, 1.8dvh, 1.25rem) !important; align-items: center; gap: clamp(1.5rem, 3vw, 3rem) !important;
   }
   html body .svc-path:not(.svc-path--flow) .svc-tabs__media:not(#_):not(#__):not(#___):not(#____) {
-    aspect-ratio: 5 / 4 !important; width: auto !important; height: min(100%, calc(52vw * .8)) !important; max-height: 100%; align-self: center;
+    aspect-ratio: 5 / 4 !important; width: 100% !important; height: auto !important; align-self: center;
   }
 }
 @media (max-width: 1100px), (max-height: 699px) {
@@ -2100,51 +2082,563 @@ html body .svc-path.svc-path--flow .svc-path__sticky:not(#_):not(#__):not(#___) 
 }
 html body .svc-path.svc-path--flow .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; height: auto !important; }
 html body .svc-path.svc-path--flow .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____) { width: 100% !important; height: auto !important; aspect-ratio: 5 / 4 !important; }
-@media (max-width: 860px) {
+@media (max-width: 760px) {
   html body .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____):not(#_____) { grid-template-columns: minmax(0, 1fr) !important; }
 }
 
-/* ── Contatti · hero con form: tutto dentro la schermata, con lo spazio di sezione sotto ──
-   Sotto il form c'è il ritmo di sezione (--section-py, ridotto con l'altezza della finestra);
-   titolo, campi e gap si misurano su dvh perché il form stia nella viewport. Sotto gli 800px di
-   altezza il pannello non è più fisso e la pagina scorre (nessun taglio). */
-@media (min-height: 800px) {
-  html body .ct-inner:not(#_):not(#__):not(#___):not(#____) { padding-bottom: clamp(5rem, 9vw, 8rem) !important; justify-content: flex-start !important; }
-  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____) { font-size: min(150px, 26vw, 11dvh) !important; }
-  html body .ct-inner .ct-col .hc-header:not(#_):not(#__):not(#___) { margin-bottom: clamp(12px, 2.4dvh, 24px) !important; }
-  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { padding: clamp(.9rem, 2dvh, 1.5rem) clamp(1.25rem, 2.4vw, 2rem) !important; gap: clamp(6px, 1.1dvh, 10px) !important; }
-  html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { height: clamp(34px, 4.2dvh, 48px) !important; }
-  html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { min-height: clamp(44px, 6dvh, 72px) !important; height: clamp(44px, 6dvh, 72px) !important; }
-  html body .ct-inner .hc-form .f-label:not(#_):not(#__):not(#___) { margin-bottom: 2px !important; }
-}
-@media (max-height: 799px), (max-width: 819px) {
-  html body .ct-section:not(#_):not(#__):not(#___) { height: auto !important; }
-  html body .ct-inner:not(#_):not(#__):not(#___):not(#____) {
-    position: relative !important; top: auto !important; height: auto !important; overflow: visible !important;
-    padding-top: calc(var(--nav-h) + 1rem) !important; padding-bottom: clamp(5rem, 9vw, 8rem) !important;
-  }
+/* ── Contatti · hero: titolo e form alle dimensioni originali; il pannello cresce con il contenuto (nessun taglio) ──
+   Sopra: sotto la nav. Sotto il form: --section-py, lo stesso respiro che c'è sotto "Vedi tutti i case studies" in home. */
+html body .ct-section:not(#_):not(#__):not(#___) { height: auto !important; min-height: 100dvh; }
+html body .ct-inner:not(#_):not(#__):not(#___):not(#____) {
+  position: relative !important; top: auto !important; height: auto !important; min-height: 100dvh; overflow: visible !important;
+  padding-top: calc(var(--nav-h) + .5rem) !important; padding-bottom: var(--section-py) !important; justify-content: center !important;
 }
 
 /* ── Contatti: sezione "Facciamo prendere forma…" compatta, testo leggibile, social ──
    Nessun box nuovo: solo spazi reali della sezione e resa di testo e icone. */
 html body .contact-hub:not(#_):not(#__):not(#___) { height: auto !important; min-height: 0 !important; }
+/* spazio sopra e sotto = quello della sezione Case Studies in home (--section-py); angoli: solo quelli alti della sezione che sale, mai quelli bassi */
 html body .contact-hub > .container:not(#_):not(#__):not(#___) {
   position: relative !important; top: auto !important; height: auto !important; min-height: 0 !important; overflow: visible !important;
-  padding-block: clamp(2rem, 4vw, 3.5rem) !important; justify-content: flex-start !important;
+  padding-top: var(--section-py) !important; padding-bottom: var(--section-py) !important; justify-content: flex-start !important;
+  border-radius: inherit !important;
 }
-html body .contact-hub__claim:not(#_):not(#__):not(#___) { margin-bottom: clamp(1.25rem, 2.5vw, 2rem) !important; }
+html body .contact-hub:not(#_):not(#__):not(#___) { border-bottom-left-radius: 0 !important; border-bottom-right-radius: 0 !important; }
+html body .contact-hub__claim-big:not(#_):not(#__):not(#___):not(#____) { font-size: var(--t-sub) !important; font-weight: 900 !important; letter-spacing: -0.03em !important; line-height: 1 !important; }
 html body .contact-hub__claim-intro:not(#_):not(#__):not(#___):not(#____) {
   color: var(--ink-body) !important; font-size: clamp(1rem, 1.3vw, 1.2rem) !important; font-weight: 500 !important; line-height: 1.6 !important; opacity: 1 !important; letter-spacing: 0 !important;
 }
 /* social: solo icone, grandi, uguali, in riga regolare; area cliccabile 56px */
-html body .contact-hub__socials:not(#_):not(#__) { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; }
+html body .contact-hub__socials:not(#_):not(#__) { display: flex; flex-wrap: nowrap; justify-content: center; gap: clamp(6px, .8vw, 14px); }
 html body .contact-hub__social:not(#_):not(#__) {
-  display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; flex: none;
+  display: grid; place-items: center; width: clamp(40px, 3.6vw, 56px); height: clamp(40px, 3.6vw, 56px); border-radius: 50%; flex: none;
   background: var(--primary, #DB005A); color: #fff; text-decoration: none; cursor: pointer;
   transition: background var(--dur-fast, 180ms) var(--ease-out, ease), transform var(--dur-fast, 180ms) var(--ease-out, ease), box-shadow var(--dur-fast, 180ms) var(--ease-out, ease);
 }
-html body .contact-hub__social .contact-hub__icon:not(#_):not(#__) { width: 26px !important; height: 26px !important; color: #fff; }
+html body .contact-hub__social .contact-hub__icon:not(#_):not(#__) { width:  clamp(18px, 1.7vw, 26px) !important; height: clamp(18px, 1.7vw, 26px) !important; color: #fff; }
 html body .contact-hub__social:hover:not(#_):not(#__), html body .contact-hub__social:focus-visible:not(#_):not(#__) {
   background: #000; transform: translateY(-2px); box-shadow: var(--shadow-md);
 }
 html body .contact-hub__social:focus-visible:not(#_):not(#__) { outline: 3px solid var(--primary, #DB005A); outline-offset: 3px; }
+@media (max-width: 768px) {
+  html body .contact-hub__social:not(#_):not(#__) { width: 56px; height: 56px; }
+  html body .contact-hub__social .contact-hub__icon:not(#_):not(#__) { width: 26px !important; height: 26px !important; }
+  html body .contact-hub__socials:not(#_):not(#__) { gap: 14px; }
+}
+
+/* ── Contatti: form un po' più basso di prima e più aria sotto "Scrivici, facci domande…" ── */
+html body .ct-inner .ct-col .hc-header:not(#_):not(#__):not(#___) { margin-bottom: clamp(1.25rem, 2.4vw, 2.25rem) !important; }
+html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { padding: clamp(1.25rem, 2.4vw, 2rem) clamp(1.5rem, 3vw, 2.5rem) !important; }
+html body .ct-inner .hc-form, html body .ct-inner .hc-form .hc-row { gap: .55rem !important; }
+html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { min-height: 80px !important; height: 80px !important; }
+
+/* ── Contatti: il fondo del pannello bianco è un colore pieno, non solo un gradiente ──
+   Lo script degli angoli (js/main.js) campiona il colore sopra il footer che sale: con il solo
+   gradiente trovava il nero di .contact-hub e lo mostrava dietro gli angoli del footer. */
+html body .contact-hub > .container:not(#_):not(#__):not(#___) { background-color: #fff !important; }
+
+/* ── Form nella hero delle pagine servizi: "Invia" in hover = sfondo bianco, testo nero ──
+   (come le CTA su fondo scuro del sito; niente tendina nera) */
+html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___)::before { display: none !important; }
+html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___) { border: 2px solid var(--primary, #DB005A); }
+html body .svc-hero__form-card .svc-hero__submit:hover:not(#_):not(#__):not(#___),
+html body .svc-hero__form-card .svc-hero__submit:focus-visible:not(#_):not(#__):not(#___) {
+  background: #fff !important; color: #000 !important; border-color: #fff !important;
+}
+
+/* ── Homepage · FAQ (sezione nera): risposta chiara e leggibile ──
+   Il blocco "FAQ globali" colorava le risposte in nero (corretto sul bianco, illeggibile sul nero
+   della home). Qui le risposte seguono il fondo: bianco all'80%, peso 400, 16px, interlinea 1,7;
+   le domande restano bianche a 20px/600, quindi DOMANDA > RISPOSTA. */
+html body #faq .page-faq__answer-inner:not(#_):not(#__):not(#___):not(#____),
+html body #faq .page-faq__answer-inner p:not(#_):not(#__):not(#___):not(#____) {
+  color: var(--ink-body-dark) !important; font-size: var(--text-body, 1rem) !important; font-weight: 400 !important;
+  line-height: 1.7 !important; opacity: 1 !important;
+}
+html body #faq .page-faq__answer-inner strong:not(#_):not(#__):not(#___):not(#____),
+html body #faq .page-faq__answer-inner a:not(#_):not(#__):not(#___):not(#____) { color: #fff !important; font-weight: 700 !important; }
+
+/* ── Influencer · "I talent pronti…": l'immagine finisce pulita, senza alone scuro ──
+   Veniva da box-shadow: 0 32px 80px rgba(0,0,0,.14) !important su .svc-talent-pronti__visual. */
+html body main .svc-talent-pronti__visual:not(#_):not(#__):not(#___),
+html body main > section.svc-bg-dark.svc-talent-pronti .svc-talent-pronti__visual:not(#_):not(#__):not(#___) {
+  box-shadow: none !important; filter: none !important;
+}
+html body main .svc-talent-pronti__visual img:not(#_):not(#__):not(#___) { filter: none !important; box-shadow: none !important; }
+html body main .svc-talent-pronti__visual:not(#_):not(#__):not(#___)::before,
+html body main .svc-talent-pronti__visual:not(#_):not(#__):not(#___)::after { content: none !important; display: none !important; }
+
+/* ════════════════════════════════════════════════════════════════════
+   SCHERMI ZOOMATI / BASSI (zoom del browser 125–200%, finestre basse)
+   Condizione: desktop con altezza ≤ 820px. Sopra questa altezza non cambia nulla.
+   Hero delle pagine servizi: tutto il contenuto dentro la schermata, senza scroll interno;
+   si lavora su padding, gap, altezze dei campi e corpo del titolo, non si nasconde nulla.
+   ════════════════════════════════════════════════════════════════════ */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .svc-hero--videobg:not(#_):not(#__):not(#___) { min-height: 100dvh !important; height: auto !important; }
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___) {
+    padding-top: clamp(.5rem, 1.6dvh, 1rem) !important; padding-bottom: clamp(.75rem, 2.4dvh, 1.5rem) !important;
+    align-items: center !important; min-height: calc(100dvh - var(--nav-h)) !important; box-sizing: border-box;
+  }
+  html body .svc-hero__title:not(#_):not(#__):not(#___):not(#____) { font-size: min(var(--t-h1), 10.5dvh) !important; }
+  html body .svc-hero__left:not(#_):not(#__):not(#___) { gap: clamp(.5rem, 1.6dvh, 1rem) !important; }
+  html body .svc-hero__platforms:not(#_):not(#__):not(#___) img { width: clamp(28px, 4.4dvh, 40px); height: auto; }
+  html body .svc-hero__sub:not(#_):not(#__):not(#___) { margin-block: 0 !important; line-height: 1.45 !important; }
+  /* card del form */
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___) { padding: clamp(.75rem, 2dvh, 1.5rem) clamp(1rem, 1.6vw, 1.5rem) !important; }
+  html body .svc-hero__form-card-label:not(#_):not(#__):not(#___) { margin-bottom: clamp(6px, 1.4dvh, 14px) !important; }
+  html body .svc-hero__form:not(#_):not(#__):not(#___), html body .svc-hero__form-row:not(#_):not(#__):not(#___) { gap: clamp(6px, 1.2dvh, 10px) !important; }
+  html body .svc-hero__form-card .svc-hero__field:not(#_):not(#__):not(#___):not(#____) { padding-block: clamp(6px, 1.2dvh, 12px) !important; }
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____) { height: clamp(44px, 8dvh, 84px) !important; min-height: 0 !important; overflow: hidden; }
+  html body .svc-hero__form-card .f-label:not(#_):not(#__):not(#___) { margin-bottom: 2px !important; }
+  html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___):not(#____) { min-height: clamp(38px, 6dvh, 48px) !important; padding-block: 8px !important; margin-top: 2px !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .svc-hero__title:not(#_):not(#__):not(#___):not(#____) { font-size: min(var(--t-h1), 9dvh) !important; line-height: .98 !important; }
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___) { padding: .6rem 1rem !important; }
+  html body .svc-hero__form-card .svc-hero__field:not(textarea):not(#_):not(#__):not(#___):not(#____) { padding-block: 7px !important; }
+    html body .svc-hero__form-card .hc-consents:not(#_):not(#__):not(#___) { gap: 2px !important; }
+  html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___):not(#____) { min-height: 38px !important; padding-block: 6px !important; }
+  html body .svc-hero__left:not(#_):not(#__):not(#___) { gap: .4rem !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  /* informativa privacy = microcopy a 14px (scala del design system) */
+  html body .svc-hero__form-card .hc-consents .svc-caffe__privacy,
+  html body .svc-hero__form-card .hc-consents .svc-caffe__privacy span,
+  html body .svc-hero__form-card .hc-consents .svc-caffe__privacy a,
+  html body .svc-hero__form-card .hc-consents .svc-caffe__privacy em { font-size: 14px !important; line-height: 1.3 !important; }
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___) { padding-bottom: .5rem !important; }
+}
+
+/* ── Zoom/schermi bassi: hero Dama24 e hero Contatti dentro la schermata (stessa condizione: desktop, altezza ≤ 820px) ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .d24-hero__inner:not(#_):not(#__):not(#___) { padding-bottom: clamp(.75rem, 2.4dvh, 1.5rem) !important; }
+  html body .d24-hero__meta:not(#_):not(#__):not(#___) { padding-top: clamp(.75rem, 2.4dvh, 1.5rem) !important; padding-bottom: clamp(.75rem, 2.6dvh, 1.75rem) !important; }
+  html body .d24-hero__logo:not(#_):not(#__):not(#___) { max-height: 22dvh; width: auto; }
+
+  html body .ct-section:not(#_):not(#__):not(#___) { min-height: 100dvh; }
+  html body .ct-inner:not(#_):not(#__):not(#___):not(#____) {
+    min-height: 100dvh; padding-top: calc(var(--nav-h) + .25rem) !important; padding-bottom: clamp(.75rem, 3dvh, 1.75rem) !important; justify-content: center !important;
+  }
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____) { font-size: min(150px, 26vw, 12dvh) !important; }
+  html body .ct-inner .ct-col .hc-header:not(#_):not(#__):not(#___) { margin-bottom: clamp(.5rem, 1.6dvh, 1.25rem) !important; }
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { padding: clamp(.75rem, 1.8dvh, 1.5rem) clamp(1.25rem, 2.4vw, 2rem) !important; gap: clamp(5px, 1dvh, 9px) !important; }
+  html body .ct-inner .hc-form .hc-row:not(#_):not(#__):not(#___) { gap: clamp(5px, 1dvh, 9px) !important; }
+  html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { height: clamp(34px, 4.8dvh, 50px) !important; min-height: 0 !important; }
+  html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____) { height: clamp(40px, 7dvh, 80px) !important; min-height: 0 !important; }
+  html body .ct-inner .hc-form .f-label:not(#_):not(#__):not(#___) { margin-bottom: 2px !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { zoom: .86; }
+  html body .ct-inner .hc-form .svc-caffe__privacy, html body .ct-inner .hc-form .svc-caffe__privacy span, html body .ct-inner .hc-form .svc-caffe__privacy a { font-size: 14px !important; line-height: 1.3 !important; }
+}
+
+/* ── Contatti zoom: ulteriore compattezza, mai scroll dentro il form ── */
+html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____),
+html body .svc-hero__form-card textarea:not(#_):not(#__):not(#___):not(#____) { overflow-y: hidden !important; resize: none !important; }
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____) { font-size: min(150px, 26vw, 10dvh) !important; }
+  html body .ct-inner .ct-col .hc-sub:not(#_):not(#__):not(#___) { font-size: 14px !important; letter-spacing: .04em !important; }
+  html body .ct-inner .hc-form .svc-caffe__privacy, html body .ct-inner .hc-form .svc-caffe__privacy span, html body .ct-inner .hc-form .svc-caffe__privacy a, html body .ct-inner .hc-form .svc-caffe__privacy em { font-size: 14px !important; line-height: 1.3 !important; }
+  html body .ct-inner .hc-form .hc-consents:not(#_):not(#__):not(#___) { gap: 2px !important; }
+  html body .ct-inner .hc-form .hc-submit:not(#_):not(#__):not(#___):not(#____) { min-height: 40px !important; padding-block: 8px !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { zoom: .8; }
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____) { font-size: min(150px, 26vw, 9dvh) !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* il titolo si riduce: la colonna (che prende la larghezza dal titolo) non scende sotto una misura utile per il form */
+  html body .ct-inner .ct-col:not(#_):not(#__):not(#___) { min-width: min(100%, 600px); }
+}
+
+/* ── Zoom forte (larghezza 761–1100px): le card delle timeline restano immagine a sinistra + testo e CTA a destra ──
+   Web Design e tutte le pagine che usano la stessa timeline: la composizione NON diventa una pila verticale;
+   si stringono colonne, gap, padding e il corpo dell'immagine. Sotto i 761px (telefono) resta la pila. */
+@media (min-width: 761px) and (max-width: 1100px) {
+  html body #wd-stack .svc-tabs__panel.wd-pan:not(#_):not(#__):not(#___),
+  html body main > section.svc-path .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____) {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important; grid-template-rows: auto !important;
+    gap: clamp(1rem, 2.4vw, 2rem) !important; padding: clamp(.9rem, 2vw, 1.5rem) !important; align-items: center !important; height: auto !important;
+  }
+  html body #wd-stack .svc-tabs__panel.wd-pan .svc-tabs__media:not(#_):not(#__):not(#___):not(#____),
+  html body main > section.svc-path .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+    order: 0 !important; width: 100% !important; height: auto !important; min-height: 0 !important; aspect-ratio: 5 / 4 !important;
+  }
+  html body #wd-stack .svc-tabs__panel.wd-pan .wd-shot:not(#_):not(#__):not(#___) { min-height: 0 !important; height: 100% !important; }
+  html body #wd-stack .svc-tabs__panel.wd-pan .svc-tabs__copy:not(#_):not(#__):not(#___):not(#____),
+  html body main > section.svc-path .svc-tabs__copy:not(#_):not(#__):not(#___):not(#____) {
+    order: 1 !important; padding: 0 !important; gap: clamp(.5rem, 1.4vw, 1rem) !important; justify-content: center !important;
+  }
+}
+
+/* ── Zoom (altezza ≤ 820px): campo "Messaggio" più alto, spazio distribuito invece di comprimere i campi ──
+   La card del form riempie l'altezza disponibile nella hero e il surplus va alla textarea (con tetto);
+   input, label, CTA e padding restano alle misure compatte già definite. */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .svc-hero--videobg .svc-hero__right:not(#_):not(#__):not(#___) { align-self: stretch !important; display: flex !important; flex-direction: column; justify-content: center; }
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___):not(#____) { display: flex !important; flex-direction: column; flex: 0 1 auto; max-height: 100%; }
+  html body .svc-hero__form-card .svc-hero__form:not(#_):not(#__):not(#___):not(#____) { display: flex !important; flex-direction: column; flex: 1 1 auto; min-height: 0; }
+  html body .svc-hero__form-card .svc-hero__form > .f-field:has(textarea):not(#_):not(#__):not(#___) { display: flex; flex-direction: column; flex: 1 1 0; min-height: 0; }
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+    flex: 1 1 0; height: auto !important; min-height: clamp(64px, 11dvh, 96px) !important; max-height: 190px; overflow-y: hidden !important;
+  }
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___):not(#____) { padding-bottom: clamp(.4rem, 1.6dvh, 1rem) !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____) { min-height: 56px !important; }
+}
+
+/* ── Zoom: la gerarchia dei titoli resta evidente (titolo hero > titoli di sezione) ──
+   Con poca altezza i titoli di sezione scendono più di quelli della hero:
+   hero ≈ 10,5dvh (9dvh sotto 620px) contro sezioni ≈ 8,2dvh (6,6dvh). */
+@media (min-width: 861px) and (max-height: 820px) {
+  :root:not(#_):not(#__) { --t-sub: min(clamp(1.75rem, 5.2vw, 5.1rem), 8.2dvh); --t-cta: min(clamp(1.9rem, 4.6vw, 5.5rem), 7.4dvh); }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  :root:not(#_):not(#__) { --t-sub: min(clamp(1.75rem, 5.2vw, 5.1rem), 6.6dvh); --t-cta: min(clamp(1.9rem, 4.6vw, 5.5rem), 6.2dvh); }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* il surplus verticale della hero va alla textarea (fino a 150px) */
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___):not(#____):not(#_____) { flex: 1 1 auto; }
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { max-height: 150px; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { min-height: 62px !important; }
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___):not(#____):not(#_____) { padding: .5rem 1rem !important; }
+  html body .svc-hero__form-card .svc-hero__form-card-label { margin-bottom: 4px !important; }
+  html body .svc-hero__form-card .svc-hero__form, html body .svc-hero__form-card .svc-hero__form-row { gap: 4px !important; }
+  html body .svc-hero__form-card .svc-hero__field:not(textarea):not(#_):not(#__):not(#___):not(#____):not(#_____) { padding-block: 6px !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { min-height: 56px !important; }
+  html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___):not(#____):not(#_____) { min-height: 36px !important; }
+  html body .svc-hero__form-card .hc-consents { gap: 0 !important; margin-top: 0 !important; }
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___):not(#____):not(#_____) { padding-bottom: .3rem !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { gap: clamp(4px, 1dvh, 10px) !important; row-gap: clamp(4px, 1dvh, 10px) !important; }
+  html body .svc-hero__form-card .svc-hero__form-card-label:not(#_):not(#__):not(#___):not(#____) { margin-bottom: 0 !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .svc-hero__form-card .hc-consents .svc-caffe__privacy, html body .svc-hero__form-card .hc-consents .svc-caffe__privacy span { line-height: 1.2 !important; }
+}
+@media (min-width: 861px) and (max-width: 1100px) and (max-height: 820px) {
+  /* colonna del form più larga: meno righe di informativa, più altezza per il messaggio */
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___):not(#____):not(#_____) { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr) !important; }
+}
+
+/* ── Zoom: titoli di sezione delle pagine servizi sul token ridotto, così il titolo hero resta ≥ 1,25× ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body main > section.svc-path .svc-path__head .smm-panel__big-title:not(#_):not(#__):not(#___):not(#____),
+  html body :is(.svc-section-title, .svc-tools__title, .imk-intro__title, .svc-talent-pronti__title, .svc-ai-approccio__title, .svc-ai-workflow__title, .svc-process__title, .smm-panel__big-title, .pc-prod__title, .svc-caffe__title, .page-faq__title, .svc-clients__title):not(#_):not(#__):not(#___):not(#____) {
+    font-size: var(--t-sub) !important;
+  }
+  html body .nw-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { font-size: min(var(--t-h1), 10.5dvh) !important; }
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____):not(#_____) { font-size: min(150px, 26vw, 10.5dvh) !important; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   GERARCHIA TIPOGRAFICA NELLO ZOOM (desktop, altezza ≤ 820px)
+   Hero ≈ 1,4 × titolo di sezione ≈ 1,4² × titolo di card.
+   Si riusano i token del design system (--t-h1, --t-hero, --t-sub, --t-xl, --t-svc, --t-amici, --t-cta):
+   il titolo hero NON si riduce; scendono i livelli sotto, in proporzione.
+   Fuori da questa condizione i token restano quelli di tokens.css.
+   ════════════════════════════════════════════════════════════════════ */
+@media (min-width: 861px) and (max-height: 820px) {
+  :root:not(#_):not(#__):not(#___) {
+    --z-hero: min(clamp(2.2rem, 6.2vw, 5.6rem), 10.5dvh);       /* H1 di pagina (servizi, News, Tips, Contatti…) */
+    --z-hero-home: clamp(3rem, 7vw, 9rem);                        /* hero homepage = --t-hero */
+    --t-sub:   calc(var(--z-hero) / 1.4);                         /* titoli di sezione */
+    --t-cta:   calc(var(--z-hero) / 1.4);
+    --t-xl:    min(150px, 10vw, calc(var(--z-hero-home) / 1.4));  /* titoli brevi di sezione in home */
+    --t-svc:   min(clamp(1.75rem, 6.2vw, 7.4rem), calc(var(--z-hero-home) / 1.4));
+    --t-amici: min(clamp(1rem, 5.2vw, 5.1rem), calc(var(--z-hero-home) / 1.4));
+    --t-card:  calc(var(--t-sub) / 1.4);                          /* titoli di card/contenuto */
+  }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  :root:not(#_):not(#__):not(#___) { --z-hero: min(clamp(2.2rem, 6.2vw, 5.6rem), 9dvh); }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* titoli di card/contenuto: sempre sotto il titolo di sezione (≈ 1/1,4) */
+  html body .contact-hub__title:not(#_):not(#__):not(#___):not(#____) { font-size: min(clamp(1.8rem, 3vw, 2.6rem), max(18px, var(--t-card))) !important; line-height: 1.05 !important; }
+  /* titoli grandi più compatti in altezza */
+  html body :is(.svc-hero__title, .nw-hero__title, .lcn-hero__title, .cs-hero__title, .hc-title, .faq-hero__title):not(#_):not(#__):not(#___):not(#____):not(#_____) { line-height: .98 !important; }
+  html body :is(.smm-panel__big-title, .svc-section-title, .cs-works__title, .contact-hub__claim-big, .lcn-about__title, .nw-contact__title, .faq-contact__title):not(#_):not(#__):not(#___):not(#____):not(#_____) { line-height: 1 !important; }
+}
+
+/* ── Zoom: UN solo corpo per tutti i titoli di sezione, quello di "Passaparola" (--t-xl) ──
+   Il titolo hero resta il più grande (hero = 1,4 × sezione). I titoli lunghi vanno a capo
+   o restano su più righe: la font-size non cambia mai in base alla lunghezza. */
+@media (min-width: 861px) and (max-height: 820px) {
+  :root:not(#_):not(#__):not(#___):not(#____) {
+    --t-section: calc(var(--z-hero) / 1.4);
+    --t-xl: var(--t-section); --t-sub: var(--t-section); --t-cta: var(--t-section);
+    --t-svc: var(--t-section); --t-amici: var(--t-section); --t-card: calc(var(--t-section) / 1.4);
+  }
+  html body :is(.wall__title, .cs2__title, .tips-section__heading, .svc-title, .svc-clients__title, #contatti .hc-title,
+    .cs-works__title, .cs-cta__title, .contact-hub__claim-big, .page-faq__title, .faq-contact__title, .nw-contact__title,
+    .lcn-about__title, .lcn-positions__heading, .lcn-apply__title, .art-pricing__title, .art-timeline__title, .art-results__title,
+    .art-faq__title, .art-contact__title, .tt-contact__title, .cs2-contact__title, .smm-panel__big-title, .svc-section-title,
+    .svc-tools__title, .imk-intro__title, .svc-talent-pronti__title, .svc-ai-approccio__title, .svc-ai-workflow__title,
+    .svc-process__title, .pc-prod__title, .svc-caffe__title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+    font-size: var(--t-section) !important; line-height: 1 !important; letter-spacing: -0.03em !important; font-weight: 900 !important;
+  }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  :root:not(#_):not(#__):not(#___):not(#____) { --z-hero: min(clamp(2.2rem, 6.2vw, 5.6rem), 9dvh); }
+}
+
+/* ── Zoom · Home: titoli di sezione più grandi (hero home resta più grande: hero = 1,2 × sezione) ──
+   Case Studies, Tips, Servizi, Alcuni amici, FAQ, Contatti, About. "Alcuni amici" è su due righe fisse:
+   il corpo è limitato dalla larghezza (5,2vw, come in tokens.css) perché ogni riga entri intera. */
+@media (min-width: 861px) and (max-height: 820px) {
+  html:has(.ht-hero) :root, html:has(.ht-hero) {
+    --t-home-section: calc(var(--z-hero-home) / 1.2);
+  }
+  html:has(.ht-hero) body :is(.wall__title, .cs2__title, .tips-section__heading, .svc-title, #contatti .hc-title, #faq .page-faq__title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) {
+    font-size: var(--t-home-section) !important;
+  }
+  html:has(.ht-hero) body .svc-clients__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) {
+    font-size: min(var(--t-home-section), 5.2vw) !important;
+  }
+}
+
+/* ── Zoom: i valori dei titoli della home valgono per TUTTE le pagine ──
+   sezione = hero home / 1,2 (74,7px a 1280×720); la hero di ogni pagina = hero home (--t-hero), quindi
+   resta 1,2× i titoli di sezione. Card = sezione / 1,4. Nessuna dimensione per singola pagina. */
+@media (min-width: 861px) and (max-height: 820px) {
+  :root:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+    --z-hero: var(--z-hero-home);
+    --t-section: calc(var(--z-hero-home) / 1.2);
+    --t-xl: var(--t-section); --t-sub: var(--t-section); --t-cta: var(--t-section); --t-svc: var(--t-section);
+    --t-amici: min(var(--t-section), 5.2vw); --t-card: calc(var(--t-section) / 1.4); --t-home-section: var(--t-section);
+  }
+  html body :is(.svc-hero__title, .nw-hero__title, .lcn-hero__title, .cs-hero__title, .ct-inner .ct-col .hc-title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+    font-size: var(--z-hero) !important; line-height: .98 !important;
+  }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  :root:not(#_):not(#__):not(#___):not(#____):not(#_____) { --z-hero: var(--z-hero-home); }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* "Alcuni amici…" è su due righe fisse: stesso criterio della home (corpo limitato dalla larghezza) */
+  html body .svc-clients__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) { font-size: var(--t-amici) !important; }
+  /* "Prendiamoci un caffè": la colonna del titolo non scende sotto la parola più lunga, la font-size non cambia */
+  html body .svc-caffe .svc-caffe__inner:not(#_):not(#__):not(#___):not(#____) { grid-template-columns: minmax(min-content, 1.12fr) minmax(0, .88fr) !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* la colonna del titolo hero non scende sotto la parola più lunga (la font-size non si tocca) */
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { grid-template-columns: minmax(min-content, 1fr) minmax(0, 1.1fr) !important; }
+  html body .svc-ai-approccio__inner:not(#_):not(#__):not(#___):not(#____) { grid-template-columns: minmax(min-content, 1.08fr) minmax(0, .92fr) !important; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  /* colonna testo della hero: solo interlinee e gap (il corpo del titolo non cambia) */
+  html body .svc-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) { line-height: .9 !important; margin-bottom: 4px !important; }
+  html body .svc-hero__sub:not(#_):not(#__):not(#___):not(#____) { line-height: 1.3 !important; font-size: 14px !important; }
+  html body .svc-hero__platforms:not(#_):not(#__):not(#___) { margin-bottom: 8px !important; }
+  html body .svc-hero__kicker:not(#_):not(#__):not(#___) { margin-bottom: 2px !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) { :root:not(#_):not(#__):not(#___) { --hero-min: min(max(34rem, 72dvh), 100dvh); } }
+@media (min-width: 861px) and (max-height: 820px) {
+  /* stessi valori della home anche nel case study Fanuc e negli articoli */
+  html body :is(.d24-block__title, .d24-numbers__title, .d24-results__title, .d24-contact__title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) {
+    font-size: var(--t-section) !important; line-height: 1 !important; letter-spacing: -0.03em !important;
+  }
+  html body :is(.art-hero__title, .tt-hero__title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) {
+    font-size: var(--z-hero) !important; line-height: .98 !important;
+  }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* articolo news: il titolo hero (a corpo pieno) usa tutta la larghezza: la corsia "Ultime news" parte dal corpo, non dalla hero */
+  html body .art-hero__inner:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { padding-right: var(--gutter) !important; }
+}
+
+/* ── Zoom: hero che stanno nella schermata (senza tagli) ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  /* le righe del titolo sono quelle decise dai <br>: niente righe in più per il solo corpo grande */
+  html body .svc-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________) { white-space: nowrap !important; }
+}
+@media (min-width: 861px) and (max-height: 700px) {
+  /* Contatti: form ridotto in proporzione tra 621 e 700px di altezza (sotto i 620 resta 0,8) */
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____) { zoom: .88; }
+}
+@media (min-width: 861px) and (max-height: 620px) {
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____):not(#_____) { zoom: .8; }
+}
+
+/* ════════════════════════════════════════════════════════════════════
+   ZOOM · hero: mai tagliate, mai sotto la nav (desktop, altezza ≤ 820px)
+   Le hero crescono con il contenuto (min-height = schermata) invece di avere un'altezza fissa
+   che taglia sopra (sotto la nav) o sotto; gli spazi si riducono, i corpi dei titoli no.
+   ════════════════════════════════════════════════════════════════════ */
+@media (min-width: 861px) and (max-height: 820px) {
+  /* News e Tips: testo sotto la nav, altezza minima uguale alla FAQ ma libera di crescere */
+  html body :is(.faq-hero, .nw-hero):not(#_):not(#__):not(#___):not(#____):not(#_____) { height: auto !important; min-height: var(--hero-min) !important; }
+  html body .nw-hero:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+    padding-top: calc(var(--nav-h) + 1.25rem) !important; padding-bottom: clamp(1.5rem, 4dvh, 3rem) !important; justify-content: flex-end !important;
+  }
+  html body .nw-hero .nw-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { max-width: none; }
+
+  /* Articoli (News e Tips): la hero sta nella schermata */
+  html body :is(.art-hero, .tt-hero):not(#_):not(#__):not(#___):not(#____):not(#_____) {
+    min-height: 0 !important; height: auto !important;
+    padding-top: calc(var(--nav-h) + 1rem) !important; padding-bottom: clamp(1rem, 3dvh, 2rem) !important;
+  }
+  html body :is(.art-hero, .tt-hero) :is(.art-hero__meta, .tt-hero__meta):not(#_):not(#__):not(#___) { margin-bottom: .5rem !important; }
+  html body :is(.art-hero__intro, .tt-hero__intro):not(#_):not(#__):not(#___):not(#____) { margin-top: .5rem !important; }
+
+  /* Lavora con noi: altezza minima = schermata, nessun ritaglio; più respiro sopra e sotto */
+  html body main > section.lcn-hero:not(#_):not(#__):not(#___):not(#____) {
+    height: auto !important; min-height: 100dvh !important; overflow: visible !important;
+    padding-top: calc(var(--nav-h) + 2rem) !important; padding-bottom: clamp(1.5rem, 4dvh, 3rem) !important;
+  }
+}
+
+/* ── Zoom · timeline Web Design (e analoghe): sempre placeholder/immagine a sinistra, testo + CTA a destra ── */
+@media (min-width: 761px) and (max-height: 820px) {
+  html body #wd-stack .svc-tabs__panel.wd-pan:not(#_):not(#__):not(#___):not(#____),
+  html body main > section.svc-path .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____):not(#_____) {
+    grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr) !important; grid-template-rows: auto !important; height: auto !important;
+    gap: clamp(1rem, 2.4vw, 2.5rem) !important; padding: clamp(.9rem, 2vw, 1.75rem) !important; align-items: center !important;
+  }
+  html body #wd-stack .svc-tabs__panel.wd-pan .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____),
+  html body main > section.svc-path .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) {
+    order: 0 !important; width: 100% !important; height: auto !important; min-height: 0 !important; aspect-ratio: 5 / 4 !important;
+  }
+  html body #wd-stack .svc-tabs__panel.wd-pan .svc-tabs__copy:not(#_):not(#__):not(#___):not(#____):not(#_____),
+  html body main > section.svc-path .svc-tabs__copy:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) {
+    order: 1 !important; padding: 0 !important; justify-content: center !important;
+  }
+}
+
+/* ── Zoom · Contatti: titolo hero > titolo di sezione, form meno compresso (messaggio utilizzabile) ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) { font-size: calc(var(--z-hero) * 1.12) !important; }
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____):not(#_____) { zoom: 1 !important; }
+  html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___):not(#____):not(#_____) { height: clamp(36px, 5dvh, 46px) !important; }
+  html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____):not(#_____) { height: clamp(76px, 13dvh, 130px) !important; min-height: 0 !important; }
+  html body .ct-section:not(#_):not(#__):not(#___):not(#____) { height: auto !important; }
+  html body .ct-inner:not(#_):not(#__):not(#___):not(#____):not(#_____) { height: auto !important; min-height: 100dvh; padding-bottom: clamp(1rem, 3dvh, 2rem) !important; }
+}
+
+/* ── Zoom: compattazione degli spazi (non dei corpi) per far stare le hero nella schermata ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  /* News/Tips: la scritta NEWS di sfondo non occupa altezza nel flusso */
+  html body .nw-hero__watermark:not(#_):not(#__):not(#___):not(#____) { position: absolute !important; inset: 0 !important; margin: 0 !important; pointer-events: none; }
+  html body .nw-hero__kicker:not(#_):not(#__):not(#___):not(#____) { margin-bottom: .5rem !important; }
+  /* Lavora con noi */
+  html body main > section.lcn-hero:not(#_):not(#__):not(#___):not(#____):not(#_____) { padding-top: calc(var(--nav-h) + 1rem) !important; }
+  html body .lcn-hero__kicker:not(#_):not(#__):not(#___) { margin-bottom: .5rem !important; }
+  html body .lcn-hero__title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) { margin-bottom: .75rem !important; }
+  html body .lcn-hero__bottom:not(#_):not(#__):not(#___):not(#____) { padding-top: .5rem !important; }
+  html body .lcn-hero__sub:not(#_):not(#__):not(#___):not(#____) { margin-bottom: .75rem !important; }
+  html body .lcn-hero__stats:not(#_):not(#__):not(#___):not(#____) { padding-top: .875rem !important; }
+  /* Articoli */
+  html body :is(.art-hero, .tt-hero):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { padding-top: calc(var(--nav-h) + .5rem) !important; padding-bottom: clamp(.75rem, 2dvh, 1.25rem) !important; }
+  html body :is(.art-hero__title, .tt-hero__title):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________) { margin-bottom: .75rem !important; }
+  /* Contatti */
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________) { font-size: calc(var(--z-hero) * 1.06) !important; }
+  html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { height: clamp(72px, 11dvh, 120px) !important; }
+  html body .ct-inner .ct-col .hc-header:not(#_):not(#__):not(#___):not(#____) { margin-bottom: clamp(.5rem, 1.4dvh, 1rem) !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* con poca altezza il corpo hero (e, in proporzione, quello delle sezioni) ha un tetto in dvh */
+  :root:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { --z-hero-home: min(clamp(3rem, 7vw, 9rem), 15dvh); }
+  html body .ct-inner .hc-form input.svc-caffe__field:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { height: clamp(34px, 4.6dvh, 44px) !important; }
+  html body .ct-inner .hc-form textarea.svc-caffe__field:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { height: clamp(72px, 10dvh, 110px) !important; }
+}
+@media (min-width: 861px) and (max-height: 640px) {
+  html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { zoom: .86 !important; }
+}
+
+/* ── Zoom · form nella hero dei servizi: misure in dvh, il form sta nella schermata anche senza scaling ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .svc-hero__form-card:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { padding: clamp(.45rem, 1.5dvh, 1.1rem) clamp(.9rem, 1.4vw, 1.4rem) !important; gap: clamp(2px, .8dvh, 8px) !important; }
+  html body .svc-hero__form-card .svc-hero__form-card-label:not(#_):not(#__):not(#___):not(#____):not(#_____) { font-size: clamp(15px, 2.4dvh, 18px) !important; line-height: 1.2 !important; margin: 0 0 clamp(2px, .6dvh, 6px) !important; }
+  html body .svc-hero__form-card .svc-hero__form:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______), html body .svc-hero__form-card .svc-hero__form-row:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { gap: clamp(3px, .9dvh, 8px) !important; }
+  html body .svc-hero__form-card .f-label:not(#_):not(#__):not(#___):not(#____):not(#_____) { font-size: clamp(13px, 2.1dvh, 16px) !important; line-height: 1.15 !important; margin: 0 0 1px !important; }
+  html body .svc-hero__form-card .svc-hero__field:not(textarea):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { height: clamp(30px, 5dvh, 44px) !important; min-height: 0 !important; padding-block: 0 !important; line-height: 1 !important; }
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { min-height: clamp(44px, 8dvh, 96px) !important; padding-block: 8px !important; }
+  html body .svc-hero__form-card .hc-consents:not(#_):not(#__):not(#___):not(#____) { gap: 0 !important; margin: 0 !important; }
+  html body .svc-hero__form-card .hc-consents .svc-caffe__privacy, html body .svc-hero__form-card .hc-consents .svc-caffe__privacy span, html body .svc-hero__form-card .hc-consents .svc-caffe__privacy a, html body .svc-hero__form-card .hc-consents .svc-caffe__privacy em { font-size: clamp(12px, 2dvh, 14px) !important; line-height: 1.2 !important; }
+  html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { min-height: clamp(32px, 5.2dvh, 46px) !important; height: auto; padding-block: 4px !important; margin: 2px 0 0 !important; }
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { padding-bottom: clamp(.5rem, 2dvh, 1.25rem) !important; }
+}
+
+/* ── Zoom · Contatti: titolo più vicino al sottotitolo, respiro corretto sotto il form ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .ct-inner .ct-col .hc-header:not(#_):not(#__):not(#___):not(#____):not(#_____) { gap: 0 !important; }
+  html body .ct-inner .ct-col .hc-title:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________):not(#__________) { margin-bottom: 0 !important; line-height: .9 !important; padding-bottom: 0 !important; }
+  html body .ct-inner .ct-col .hc-sub:not(#_):not(#__):not(#___):not(#____):not(#_____) { margin-top: 2px !important; line-height: 1.3 !important; }
+  html body .ct-inner:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { padding-bottom: clamp(2rem, 6dvh, var(--section-py)) !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* la sezione dopo sale di 22px sulla hero: il respiro sotto il form la compensa */
+  html body .ct-inner:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) { padding-bottom: clamp(2.75rem, 8dvh, var(--section-py)) !important; }
+}
+
+/* ── Home: spazio sopra "Scopri tutti i Tips & Tricks" = spazio sopra "Scarica la brochure" (About) ──
+   Entrambi partono da --cta-gap, ma sotto la griglia delle card restano 27px di aria (margine interno della CTA e
+   del contenitore) contro i 12 del testo About: si compensano 15px, così il vuoto visibile è lo stesso a ogni zoom. */
+html body .tips-section__cta:not(#_):not(#__):not(#___) { margin-top: calc(var(--cta-gap) - 15px) !important; }
+
+/* ── Zoom · form hero servizi: messaggio più basso e fondo libero (la sezione dopo sale di ~22px sulla hero) ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) {
+    min-height: clamp(40px, 6.5dvh, 68px) !important; max-height: clamp(48px, 9dvh, 84px) !important; flex: 0 0 auto !important; height: clamp(44px, 8dvh, 76px) !important;
+  }
+  html body .svc-hero__form-card .svc-hero__form > .f-field:has(textarea):not(#_):not(#__):not(#___):not(#____) { flex: 0 0 auto !important; }
+  html body .svc-hero--videobg .svc-hero__inner:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________) { padding-bottom: clamp(2.25rem, 6dvh, 3.25rem) !important; }
+  html body .svc-hero__right:not(#_):not(#__):not(#___):not(#____) { justify-content: center !important; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  /* il messaggio occupa lo spazio che resta (fino a 120px) lasciando libero il fondo della hero */
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________) {
+    flex: 1 1 0 !important; height: auto !important; min-height: clamp(40px, 6.5dvh, 68px) !important; max-height: 120px !important;
+  }
+  html body .svc-hero__form-card .svc-hero__form > .f-field:has(textarea):not(#_):not(#__):not(#___):not(#____):not(#_____) { flex: 1 1 0 !important; min-height: 0; }
+}
+@media (min-width: 861px) and (max-height: 820px) {
+  html body .svc-hero__form-card .svc-hero__form > .f-field:has(textarea):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { flex: 0 0 auto !important; }
+  html body .svc-hero__form-card .svc-hero__textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________):not(#__________) {
+    flex: 0 0 auto !important; height: clamp(52px, 14dvh, 130px) !important; min-height: 0 !important; max-height: none !important;
+  }
+  html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+    min-height: clamp(42px, 6.4dvh, 52px) !important; padding: 12px 24px !important; font-size: 14px !important; margin-top: clamp(4px, 1dvh, 10px) !important;
+  }
+  html body .svc-hero__form-card .hc-consents:not(#_):not(#__):not(#___):not(#____):not(#_____) { margin-top: clamp(3px, .8dvh, 8px) !important; }
+}
+
+/* ── Zoom (tranne home): form della sezione prima del footer = stessa larghezza (38vw) su tutte le pagine,
+   allineato a destra con il margine di sito, come il contenuto delle sezioni sopra ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html:not(:has(.ht-hero)) body :is(.svc-caffe__inner, .faq-contact__inner, .nw-contact__inner, .cs-cta__inner, .cs2-contact__inner, .art-contact__inner, .tt-contact__inner, .lcn-apply__layout):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______) {
+    grid-template-columns: minmax(min-content, 1fr) 35vw !important; column-gap: clamp(1rem, 2vw, 2rem) !important;
+    max-width: none !important; width: 100% !important; margin-inline: 0 !important; padding-inline: 0 !important; justify-content: space-between;
+  }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe__form, .faq-contact .hc-form, .nw-contact .hc-form, .cs-cta .hc-form, .cs2-contact .hc-form, .art-contact .hc-form, .tt-contact .hc-form, .lcn-apply__form):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) {
+    width: 35vw !important; max-width: 100% !important; margin-left: auto !important; margin-right: 0 !important;
+  }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact):not(#_):not(#__):not(#___):not(#____):not(#_____) { padding-inline: var(--gutter) !important; }
+}
+
+/* ── Zoom (tranne home): form prima del footer più compatto in verticale ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) :is(form, .svc-caffe__form):not(#_):not(#__):not(#___):not(#____):not(#_____) { gap: clamp(5px, 1dvh, 9px) !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) .hc-row:not(#_):not(#__):not(#___):not(#____):not(#_____) { gap: clamp(5px, 1dvh, 9px) !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) input.svc-caffe__field:not(#_):not(#__):not(#___):not(#____):not(#_____), 
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) :is(input, select):not([type=checkbox]):not(#_):not(#__):not(#___):not(#____):not(#_____) { height: clamp(34px, 5dvh, 44px) !important; min-height: 0 !important; padding-block: 0 !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) textarea:not(#_):not(#__):not(#___):not(#____):not(#_____) { height: clamp(50px, 9dvh, 84px) !important; min-height: 0 !important; padding-block: 8px !important; overflow-y: hidden !important; resize: none !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) .f-label:not(#_):not(#__):not(#___):not(#____):not(#_____) { margin-bottom: 2px !important; font-size: clamp(13px, 2.1dvh, 16px) !important; line-height: 1.15 !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) .hc-consents:not(#_):not(#__):not(#___):not(#____) { gap: 0 !important; margin: 0 !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) .svc-caffe__privacy:not(#_):not(#__):not(#___):not(#____):not(#_____) { font-size: 14px !important; line-height: 1.25 !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) :is(button[type=submit], .btn):not(#_):not(#__):not(#___):not(#____):not(#_____) { min-height: clamp(40px, 6dvh, 50px) !important; padding-block: 10px !important; margin-top: clamp(3px, .8dvh, 8px) !important; }
+}
+
+/* ── Zoom (tranne home): form prima del footer · messaggio un po' più alto, informativa un po' più piccola ── */
+@media (min-width: 861px) and (max-height: 820px) {
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { height: clamp(64px, 12dvh, 104px) !important; }
+  html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) :is(.svc-caffe__privacy, .svc-caffe__privacy span, .svc-caffe__privacy a, .svc-caffe__privacy em):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { font-size: 12.5px !important; line-height: 1.25 !important; }
+}
