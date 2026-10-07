@@ -491,8 +491,8 @@
     .tt-hero__intro,
     .tt-p,
     .tt-list li,
-    .tt-cta-block p { color: rgba(0,0,0,0.66) !important; }
-    .tt-hero__date { color: rgba(0,0,0,0.45) !important; }
+    .tt-cta-block p { color: rgba(0,0,0,0.70) !important; }
+    .tt-hero__date { color: rgba(0,0,0,0.60) !important; }
     /* Niente riga fra titolo e occhiello: il titolo e la frase che
        lo segue sono un blocco unico, il filetto li separava e basta. */
     .tt-hero__intro {
@@ -529,10 +529,10 @@
       background: linear-gradient(
         to top,
         var(--tt-paper) 0%,
-        rgba(255,255,255,0.94) 26%,
-        rgba(255,255,255,0.72) 48%,
-        rgba(255,255,255,0.34) 72%,
-        rgba(255,255,255,0.12) 100%
+        var(--tt-paper) 38%,
+        rgba(255,255,255,0.92) 58%,
+        rgba(255,255,255,0.58) 78%,
+        rgba(255,255,255,0.14) 100%
       );
     }
     /* la hero cresce un po': serve aria sopra la velatura perché
@@ -798,6 +798,28 @@
 html body .tt-sidebar__thumb:not(#_):not(#__):not(#___) { width: clamp(72px, 11dvh, 112px) !important; height: clamp(72px, 11dvh, 112px) !important; }
 html body .tt-sidebar__item > a:not(#_):not(#__):not(#___) { gap: 16px !important; }
 html body .tt-sidebar__title:not(#_):not(#__):not(#___) { font-size: 15px !important; }
+
+/* Hero: occhiello, data e frase di apertura erano troppo leggeri
+   per stare sopra la copertina. Stesse misure, inchiostro pieno e
+   peso maggiore; il tracking largo dell'occhiello si stringe. */
+html body .tt-hero__cat:not(#_):not(#__):not(#___) {
+  font-weight: 800 !important;
+  letter-spacing: 0.14em !important;
+  color: var(--primary) !important;
+  border-color: rgba(219,0,90,0.6) !important;
+}
+html body .tt-hero__date:not(#_):not(#__):not(#___):not(#____) {
+  font-weight: 700 !important;
+  letter-spacing: 0.04em !important;
+  font-size: 15px !important;
+  color: var(--tt-ink) !important;
+}
+html body .tt-hero__intro:not(#_):not(#__):not(#___):not(#____) {
+  font-weight: 500 !important;
+  color: var(--tt-ink) !important;
+  font-size: 18px !important;
+  line-height: 1.6 !important;
+}
 </style>
   <link rel="icon" href="../favicon.ico" sizes="any" />
   <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
@@ -860,7 +882,7 @@ html body .tt-sidebar__title:not(#_):not(#__):not(#___) { font-size: 15px !impor
               <span class="nav__avatar"></span>
             </div>
             <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
-            <a class="nav__joinus nav__joinus--outline" href="../lavora-con-noi.html">
+            <a class="nav__joinus nav__joinus--outline" href="https://tally.so/r/2ELLBj">
               
               <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
               Join Us
