@@ -1,0 +1,1598 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Dama24 — L'estetica dell'accoglienza tra fisico e digitale. Un caso studio ESTRO." />
+  <title>Dama24 — Case Study · ESTRO</title>
+  <link rel="stylesheet" href="../css/tokens.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/base.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/components.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261017d" />
+  <style>
+    /* ══ TIPS & TRICKS ARTICLE ═══════════════════════════════ */
+
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+
+    .cs2-hero {
+      background: #000;
+      min-height: 72vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 120px;
+      padding-bottom: clamp(4rem, 7vw, 6rem);
+      position: relative;
+      overflow: hidden;
+    }
+    /* Placeholder immagine hero */
+    .cs2-hero__img {
+      position: absolute;
+      inset: 0;
+      background: #111;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .cs2-hero__img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #060606 30%, rgba(6,6,6,0.6) 60%, rgba(6,6,6,0.3) 100%);
+    }
+    /* Icona placeholder centrata */
+    .cs2-hero__img-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      opacity: 0.12;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .cs2-hero__img-icon svg { width: 72px; height: 72px; }
+    .cs2-hero__img-icon span {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    .cs2-hero__inner {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: 0 clamp(1.5rem, 5vw, 6rem);
+    }
+    .cs2-hero__meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      flex-wrap: wrap;
+    }
+    .cs2-hero__cat {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid rgba(219,0,90,0.4);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+    }
+    .cs2-hero__date {
+      font-family: var(--font-secondary);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+    .cs2-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 5vw, 60px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1.75rem;
+    }
+    .cs2-hero__intro {
+      font-family: var(--font-secondary);
+      font-size: clamp(0.9rem, 1.3vw, 1rem);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.38);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+
+    /* Sidebar */
+    .cs2-sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+    }
+
+    /* Search bar */
+    .cs2-sidebar__search {
+      position: relative;
+    }
+    .cs2-sidebar__search input {
+      width: 100%;
+      background: #f4f4f4;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 8px;
+      padding: 0.8rem 1rem 0.8rem 2.75rem;
+      font-family: var(--font-secondary);
+      font-size: 0.85rem;
+      color: #080808;
+      outline: none;
+      transition: border-color 200ms, background 200ms;
+      box-sizing: border-box;
+    }
+    .cs2-sidebar__search input::placeholder { color: rgba(0,0,0,0.35); }
+    .cs2-sidebar__search input:focus {
+      border-color: var(--primary);
+      background: rgba(219,0,90,0.04);
+    }
+    .cs2-sidebar__search-icon {
+      position: absolute;
+      left: 0.9rem;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: rgba(0,0,0,0.3);
+    }
+    .cs2-sidebar__search-icon svg { width: 15px; height: 15px; display: block; }
+
+    .cs2-sidebar__label {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.3);
+      display: block;
+    }
+
+    /* Card lista articoli */
+    .cs2-sidebar__list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .cs2-sidebar__item a {
+      display: grid;
+      grid-template-columns: 160px 1fr;
+      gap: 1rem;
+      align-items: center;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 0.6rem;
+      transition: background 200ms;
+    }
+    .cs2-sidebar__item a:hover { background: #f4f4f4; }
+    .cs2-sidebar__item.active a {
+      pointer-events: none;
+      background: rgba(219,0,90,0.06);
+    }
+    /* Il riquadro non è un segnaposto per una foto: ospita il logo
+       del cliente, quindi niente trama a griglia dietro — solo un
+       fondo neutro su cui il marchio si stacca. */
+    .cs2-sidebar__thumb {
+      aspect-ratio: 4/3;
+      border-radius: 8px;
+      background: #f2f2f3;
+      border: 1px solid rgba(0,0,0,0.07);
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .cs2-sidebar__item.active .cs2-sidebar__thumb {
+      outline: 2px solid rgba(219,0,90,0.35);
+    }
+    .cs2-sidebar__thumb svg { width: 22px; height: 22px; opacity: 0.18; }
+    .cs2-sidebar__title {
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      line-height: 1.45;
+      color: rgba(0,0,0,0.55);
+      font-weight: 500;
+    }
+    .cs2-sidebar__item.active .cs2-sidebar__title {
+      color: rgba(219,0,90,0.7);
+      font-weight: 600;
+    }
+    .cs2-sidebar__item a:hover .cs2-sidebar__title { color: #080808; }
+
+    /* ── Corpo articolo ─────────────────────────────────── */
+    .cs2-body {
+      background: #fff;
+      padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .cs2-body__layout {
+      display: grid;
+      grid-template-columns: 1fr 420px;
+      gap: clamp(3rem, 5vw, 5rem);
+      align-items: start;
+    }
+    .cs2-body__inner { max-width: 700px; }
+
+    .cs2-p {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.6);
+      margin-bottom: 1.5rem;
+    }
+    .cs2-p:last-child { margin-bottom: 0; }
+    .cs2-p strong { color: #080808; font-weight: 700; }
+    .cs2-p em { font-style: italic; }
+
+    .cs2-h2 {
+      font-family: var(--font-primary);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      color: #080808;
+      margin-top: clamp(3rem, 5vw, 4rem);
+      margin-bottom: 1.25rem;
+    }
+    .cs2-h2:first-child { margin-top: 0; }
+
+    .cs2-callout {
+      background: #fafafa;
+      border: 1px solid rgba(0,0,0,0.07);
+      border-left: 3px solid var(--primary);
+      padding: 1.5rem 1.75rem;
+      border-radius: 0 12px 12px 0;
+      margin: 2rem 0;
+    }
+    .cs2-callout p {
+      font-family: var(--font-secondary);
+      font-size: 0.92rem;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.6);
+      margin: 0;
+    }
+    .cs2-callout p strong { color: #080808; font-weight: 700; }
+
+    .cs2-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 1.75rem;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .cs2-list li {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(0,0,0,0.58);
+      padding: 0.75rem 0 0.75rem 1.5rem;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      position: relative;
+    }
+    .cs2-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .cs2-list li strong { color: #080808; font-weight: 700; }
+
+    .cs2-cta-block {
+      background: var(--primary);
+      border-radius: 16px;
+      padding: 2rem 2.25rem;
+      margin-top: 3rem;
+    }
+    .cs2-cta-block p {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.85);
+      margin: 0;
+    }
+    .cs2-cta-block a {
+      color: #fff;
+      font-weight: 700;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    /* ── Form contatti ──────────────────────────────────── */
+    .cs2-contact {
+      background: var(--primary);
+      padding-inline: clamp(1.5rem, 5vw, 5rem);
+    }
+    .cs2-contact__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1440px;
+      width: 100%;
+      margin-inline: auto;
+      gap: clamp(3rem, 8vw, 8rem);
+      align-items: center;
+      padding-block: clamp(4rem, 8vw, 7rem);
+    }
+    .cs2-contact__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .cs2-contact__label {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: block;
+    }
+    .cs2-contact__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+    .cs2-contact .contact-home__form { width: 100%; display: flex; flex-direction: column; gap: var(--space-4); }
+    .cs2-contact .contact-home__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    .cs2-contact .contact-home__field {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      font-family: var(--font-secondary);
+      font-size: var(--text-base);
+      width: 100%;
+      outline: none;
+      transition: border-color 200ms, background 200ms;
+    }
+    .cs2-contact .contact-home__field::placeholder { color: rgba(255,255,255,0.45); }
+    .cs2-contact .contact-home__field:focus {
+      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.25);
+    }
+    .cs2-contact .contact-home__textarea { width: 100%; resize: vertical; min-height: 110px; }
+    .cs2-contact .contact-home__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-family: var(--font-secondary);
+      font-size: var(--text-xs);
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+    .cs2-contact .contact-home__privacy a { color: #fff; text-decoration: underline; }
+    .cs2-contact .contact-home__submit-wrap { display: flex; }
+    @media (max-width: 860px) {
+      .cs2-contact__inner { grid-template-columns: 1fr; }
+      .cs2-contact .contact-home__row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Back ───────────────────────────────────────────── */
+    .cs2-back {
+      background: var(--primary);
+      padding: 1.5rem clamp(1.5rem, 5vw, 6rem);
+      border-top: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .cs2-back__link {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 200ms;
+    }
+    .cs2-back__link:hover { color: #fff; }
+    .cs2-back__brand {
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1024px) {
+      .cs2-hero__inner { grid-template-columns: 1fr; }
+      .cs2-body__layout { grid-template-columns: 1fr; }
+      .cs2-sidebar { display: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    /* Sopra la hero il vetro e' quello della homepage: stessi
+       valori, cosi' l'header si comporta e si legge allo stesso
+       modo. Qui c'erano un velo piu' denso (0.62) e una formula
+       diversa, nati quando la pagina non aveva la hero scura. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled) .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav--on-dark .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: drop-shadow(0 0 1.5px rgba(255,255,255,0.5));
+    }
+    .nav .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+/* la misura di "Menu" e' una sola per tutto il sito: 16px,       dichiarata in css/components.css. Qui c'erano 14px !important       ed era la ragione per cui questo header risultava piu' basso       di quello della homepage. */
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       UN SOLO COLORE, INVERTITO — carta bianca
+       Stessa impostazione dell'articolo News (una superficie sola,
+       il colore solo su testi, tag e card) ma ribaltata: qui la
+       carta è chiara e l'inchiostro scuro.
+       ═══════════════════════════════════════════════════════════ */
+    :root { --cs2-paper: #ffffff; --cs2-card: #f6f6f7; --cs2-ink: #0b0b0c; }
+    body { background: var(--cs2-paper) !important; }
+    .cs2-hero,
+    .cs2-body,
+    .cs2-back { background: var(--cs2-paper) !important; }
+    .cs2-hero__img::after { content: none !important; }
+
+    /* Testi in positivo */
+    .cs2-hero__title,
+    .cs2-h2,
+    .cs2-p strong,
+    .cs2-sidebar__title { color: var(--cs2-ink) !important; }
+    .cs2-hero__intro,
+    .cs2-p,
+    .cs2-list li,
+    .cs2-cta-block p { color: rgba(0,0,0,0.66) !important; }
+    .cs2-hero__date { color: rgba(0,0,0,0.45) !important; }
+    /* Niente riga fra titolo e occhiello: il titolo e la frase che
+       lo segue sono un blocco unico, il filetto li separava e basta. */
+    .cs2-hero__intro {
+      border-top: 0 !important;
+      padding-top: 0 !important;
+      margin-top: 0.25rem;
+    }
+
+    /* Accento: uno solo, il fucsia */
+    .cs2-hero__cat,
+    .cs2-sidebar__label,
+    .cs2-back__link { color: var(--primary); }
+    .cs2-hero__cat { border-color: rgba(219,0,90,0.35) !important; }
+
+    /* ── Copertina della hero ──────────────────────────────────
+       Al posto del segnaposto tratteggiato c'è la copertina del
+       progetto, la stessa che compare nella card in elenco.
+       La pagina è su carta bianca e il titolo è in nero, quindi
+       sopra l'immagine scende una velatura chiara: piena dove
+       stanno le parole (il testo è allineato in basso) e quasi
+       assente in alto, dove la copertina si vede pulita. */
+    .cs2-hero__img {
+      inset: 0 !important;
+      border: 0 !important;
+      border-radius: 0;
+      background:
+        url("DAMA24.png") center / cover no-repeat !important;
+    }
+    .cs2-hero__img::after {
+      content: '' !important;
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to top,
+        var(--cs2-paper) 0%,
+        rgba(255,255,255,0.94) 26%,
+        rgba(255,255,255,0.72) 48%,
+        rgba(255,255,255,0.34) 72%,
+        rgba(255,255,255,0.12) 100%
+      );
+    }
+    /* la hero cresce un po': serve aria sopra la velatura perché
+       la copertina si legga davvero */
+    .cs2-hero { min-height: min(86vh, 760px); }
+
+
+    /* ── Citazione ─────────────────────────────────────────────
+       Una sola in tutta la pagina: chiude il racconto prima dei
+       risultati, quindi si stacca dal corpo con il filetto fucsia
+       invece che con un riquadro pieno come il callout. */
+    /* Una sola citazione in tutta la pagina: chiude il racconto
+       prima dei risultati, quindi si stacca dal corpo con il
+       filetto fucsia invece che con un riquadro pieno. */
+    .cs2-quote {
+      margin: clamp(2rem, 4vw, 3rem) 0;
+      padding: 0.25rem 0 0.25rem clamp(1.25rem, 3vw, 2rem);
+      border-left: 3px solid var(--primary);
+    }
+    .cs2-quote p {
+      font-family: var(--font-primary);
+      font-size: clamp(1.25rem, 2.4vw, 1.75rem);
+      line-height: 1.35;
+      color: var(--cs2-ink);
+      margin: 0;
+      font-weight: 400;
+      font-synthesis-weight: none;
+    }
+
+    /* ── I media dentro la lettura ─────────────────────────────
+       I due video che nella versione precedente stavano nella
+       intro e nella hero tornano qui, dentro il corpo: spezzano i
+       muri di testo e danno il ritmo che alla lettura mancava.
+       Sono decorativi, quindi non portano didascalia. */
+    .cs2-figure {
+      margin: clamp(2rem, 4vw, 3.25rem) 0;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #0e0e0e;
+      box-shadow: 0 10px 34px rgba(0,0,0,0.10);
+    }
+    .cs2-figure video,
+    .cs2-figure img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 16/9;
+    }
+    /* a piena larghezza della colonna di lettura, ma può sforare
+       un po' ai lati: è un respiro, non un'illustrazione */
+    .cs2-figure--wide {
+      margin-inline: calc(clamp(0px, 2vw, 28px) * -1);
+    }
+
+    /* ── Miniature della colonna: qui sono loghi, non foto ──────
+       I file hanno margini interni diversi, quindi stanno dentro
+       il riquadro con `contain` invece di riempirlo. */
+    .cs2-sidebar__thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      padding: 6px;
+      box-sizing: border-box;
+      display: block;
+      opacity: 0.85;
+    }
+    .cs2-sidebar__item.active .cs2-sidebar__thumb img,
+    .cs2-sidebar__item a:hover .cs2-sidebar__thumb img { opacity: 1; }
+
+    /* ── Meno righe, più respiro ─────────────────────────────── */
+    .cs2-list,
+    .cs2-list li { border: 0 !important; }
+    .cs2-list { margin-block: 0.75rem 2rem !important; gap: 0.35rem; }
+    .cs2-list li { padding: 0.25rem 0 0.25rem 1.5rem !important; position: relative; }
+    .cs2-list li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.75em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .cs2-p { margin-bottom: 1.75rem !important; max-width: 68ch; }
+    .cs2-h2 { margin-top: clamp(1.75rem, 3vw, 2.5rem) !important; }
+    .cs2-h2:first-child { margin-top: 0 !important; }
+    .cs2-body { padding-block: 40px !important; }
+
+    /* L'unico blocco con un fondo: l'inciso */
+    .cs2-cta-block {
+      background: var(--cs2-card) !important;
+      border: 1px solid rgba(0,0,0,0.08) !important;
+      border-left: 3px solid var(--primary) !important;
+      border-radius: 0 14px 14px 0 !important;
+      box-shadow: none !important;
+      padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.2rem);
+    }
+    .cs2-cta-block a { color: var(--primary) !important; text-decoration: underline; text-underline-offset: 2px; }
+
+    /* ── Colonna laterale: pannello, agganciato fino al form ──── */
+    .cs2-sidebar {
+      position: sticky;
+      top: calc(var(--nav-h) + 24px);
+      background: var(--cs2-card);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 14px;
+      padding: 1.5rem 1.4rem;
+    }
+    .cs2-sidebar__label { color: var(--primary) !important; }
+    .cs2-sidebar__label::before {
+      content: '';
+      display: inline-block;
+      vertical-align: -4px;
+      width: 19px; height: 19px;
+      margin-right: 0.55rem;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .cs2-sidebar__item a:hover { background: rgba(0,0,0,0.04); }
+    .cs2-sidebar__item.active a { background: rgba(219,0,90,0.07); }
+    .cs2-sidebar__item.active .cs2-sidebar__title { color: var(--primary) !important; }
+
+    /* ── CTA di ritorno: come la "Invia" ─────────────────────── */
+    .cs2-back {
+      border: 0 !important;
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0 0 !important;
+      display: flex;
+    }
+    .cs2-back__link::before { display: none !important; }
+    .cs2-back__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem clamp(2rem, 5vw, 3.5rem);
+      border-radius: 999px;
+      background: transparent !important;
+      color: var(--cs2-ink) !important;
+      border: 2px solid var(--cs2-ink) !important;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .cs2-back__link:hover,
+    .cs2-back__link:active {
+      background: var(--cs2-ink) !important;
+      color: #fff !important;
+      border-color: var(--cs2-ink) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE — solo su form e footer, come in homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ── Ingresso dei testi: linguaggio del body di About ────── */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+    .reveal { opacity: 1; transform: none; }
+
+    /* ── Titoli 60px ─────────────────────────────────────────── */
+    .cs2-hero__title,
+    .cs2-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Form: identico a quello della homepage ──────────────── */
+    .cs2-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .cs2-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .cs2-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .cs2-contact .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .cs2-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .cs2-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .cs2-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .cs2-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .cs2-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .cs2-contact .hc-consents .svc-caffe__privacy span,
+    .cs2-contact .hc-consents .svc-caffe__privacy a,
+    .cs2-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .cs2-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .cs2-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .cs2-contact .hc-submit::before { display: none !important; }
+    .cs2-contact .hc-submit:hover,
+    .cs2-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .cs2-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — corpo minimo 16px
+       Fuori: header e footer; a 14px solo tagline/etichette e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button,
+    .cs2-p,
+    .cs2-list li,
+    .cs2-hero__intro,
+    .cs2-cta-block p,
+    .cs2-sidebar__title { font-size: max(16px, 1rem) !important; }
+    /* La citazione non è testo corrente ma un manifesto: sta sopra
+       il minimo del corpo, altrimenti la regola qui sopra la
+       riportava a 16px come un paragrafo qualsiasi. */
+    .cs2-quote p { font-size: clamp(1.25rem, 2.4vw, 1.75rem) !important; }
+    .cs2-hero__cat,
+    .cs2-hero__date,
+    .cs2-sidebar__label,
+    .cs2-contact__label { font-size: 14px !important; }
+    main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
+    .cs2-h2,
+    .cs2-hero__title,
+    .cs2-contact__title { font-size: revert !important; }
+    .cs2-hero__title,
+    .cs2-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HERO ORIGINALE — video di sfondo, logo al posto del titolo e
+       la riga di attributi del progetto. Ripristinata identica a
+       com'era: il resto della pagina segue lo schema delle pagine
+       interne, la hero no.
+       ═══════════════════════════════════════════════════════════ */
+    .d24-hero {
+      background: #080808;
+      min-height: 100svh;
+      display: grid;
+      grid-template-rows: 1fr auto;
+      padding-top: 100px;
+      position: relative;
+      overflow: hidden;
+    }
+    .d24-hero__bg {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 55% 50% at 75% 35%, rgba(219,0,90,0.14) 0%, transparent 65%),
+        radial-gradient(ellipse 40% 40% at 15% 70%, rgba(219,0,90,0.06) 0%, transparent 60%);
+    }
+    /* video background hero */
+    .d24-hero__video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden;
+    }
+    /* Al posto del video di sfondo c'è la foto del progetto. È
+       quadrata e la hero è una fascia larga: riempiendola tutta
+       tagliava sopra e sotto. Contenuta invece si vede per
+       intera — niente dettagli persi — e sta a destra, così la
+       fascia scura che avanza cade a sinistra, dove ci sono logo e
+       testo. Il fondo è già quasi nero, quindi lo stacco non si
+       legge come un vuoto. */
+    /* La foto del catering è 16:9 come la hero: riempie la fascia
+       da bordo a bordo. Il soggetto — mano e vassoio — sta al
+       centro, quindi il poco che il ritaglio toglie ai lati è
+       tendaggio. */
+    .d24-hero__video img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+    /* La velatura va SOPRA la foto, non sotto: è lei a tenere
+       leggibili logo e testo in basso a sinistra. */
+    .d24-hero__video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(to top, #080808 0%, rgba(8,8,8,0.55) 45%, rgba(8,8,8,0.25) 100%),
+        linear-gradient(to right, rgba(8,8,8,0.35) 0%, transparent 60%);
+    }
+    /* logo hero — grande al posto del titolo */
+    .d24-hero__logo {
+      max-width: clamp(260px, 38vw, 560px);
+      width: 100%;
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1);
+      margin-bottom: 2rem;
+      margin-left: -30px;
+    }
+    .d24-hero__inner {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 clamp(1.5rem, 5vw, 6rem) clamp(3rem, 6vw, 5rem);
+    }
+    .d24-hero__kicker {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+    }
+    .d24-hero__kicker-line {
+      width: 40px;
+      height: 1px;
+      background: var(--primary);
+    }
+    .d24-hero__kicker span {
+      font-family: var(--font-secondary);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--primary);
+    }
+    .d24-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(4rem, 11vw, 13rem);
+      color: #fff;
+      line-height: 0.88;
+      letter-spacing: -0.03em;
+      text-transform: uppercase;
+      margin-bottom: 2.5rem;
+    }
+    .d24-hero__sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(1rem, 1.6vw, 1.2rem);
+      color: rgba(255,255,255,0.5);
+      max-width: 52ch;
+      line-height: 1.6;
+    }
+    .d24-hero__meta {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: clamp(2rem, 6vw, 6rem);
+      flex-wrap: wrap;
+      /* i 26px in più sotto tengono la riga degli attributi fuori
+         dai 22px che la sezione seguente si prende salendo */
+      padding: clamp(1.5rem, 3vw, 2.5rem) clamp(1.5rem, 5vw, 6rem)
+               calc(clamp(1.5rem, 3vw, 2.5rem) + 26px);
+    }
+    .d24-hero__meta-item { display: flex; flex-direction: column; gap: 0.35rem; }
+    .d24-hero__meta-label {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+    }
+    .d24-hero__meta-value {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.75);
+    }
+
+    /* ── Ingresso della hero ── */
+    .d24-hero__kicker, .d24-hero__logo, .d24-hero__sub, .d24-hero__meta { opacity: 0; transform: translateY(20px); }
+    .d24-hero--revealed .d24-hero__kicker { opacity:1; transform:none; transition: opacity .55s .10s ease, transform .55s .10s ease; }
+    .d24-hero--revealed .d24-hero__logo   { opacity:1; transform:none; transition: opacity .60s .22s ease, transform .60s .22s ease; }
+    .d24-hero--revealed .d24-hero__sub    { opacity:1; transform:none; transition: opacity .55s .40s ease, transform .55s .40s ease; }
+    .d24-hero--revealed .d24-hero__meta   { opacity:1; transform:none; transition: opacity .50s .55s ease, transform .50s .55s ease; }
+  </style>
+  <link rel="stylesheet" href="../css/responsive.css?v=20261017d" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png" />
+</head>
+<body>
+
+  <header class="nav nav--on-dark" role="banner"><!-- nav--on-dark di partenza: la hero e' scura, quindi MENU e simbolo nascono bianchi e non cambiano colore al primo frame. Lo stato lo ricalcola js/main.js. -->
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
+        <img src="../Logoestrofooter.webp" alt="ESTRO" />
+      </a>
+      <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links nav__mega-links--2col">
+              <a href="../servizi/social-media-management.html">Social media management</a>
+              <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+              <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google ads</a>
+              <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social ads</a>
+              <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+              <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+              <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+              <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+              <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione e renderizzazione</a>
+              <a href="../servizi/servizio-ai.html">AI</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+              <a href="../news.html">News</a>
+              <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="../faq.html">FAQ</a>
+              <a href="../contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="https://tally.so/r/2ELLBj">
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ══ HERO ══════════════════════════════════════════ -->
+    <section class="d24-hero" id="d24-hero" data-nav-theme="dark">
+      <div class="d24-hero__bg" aria-hidden="true"></div>
+      <div class="d24-hero__video" aria-hidden="true">
+        <img src="../Dama/catering.webp" alt="" />
+      </div>
+      <div class="d24-hero__inner">
+        <div class="d24-hero__kicker">
+          <span>Case Study &nbsp;&nbsp;&nbsp;&nbsp; Social Media</span>
+        </div>
+        <h1 class="visually-hidden">Dama24 — Case study</h1>
+        <img class="d24-hero__logo" src="../case-studies/loghicasestudy/DAMA24.png" alt="Dama24">
+        <p class="d24-hero__sub">L'estetica dell'accoglienza tra fisico e digitale</p>
+      </div>
+      <div class="d24-hero__meta">
+        <div class="d24-hero__meta-item">
+          <span class="d24-hero__meta-label">Settore</span>
+          <span class="d24-hero__meta-value">Banqueting di alta gamma</span>
+        </div>
+        <div class="d24-hero__meta-item">
+          <span class="d24-hero__meta-label">Servizi</span>
+          <span class="d24-hero__meta-value">Digital Identity · Social · Advertising</span>
+        </div>
+        <div class="d24-hero__meta-item">
+          <span class="d24-hero__meta-label">Obiettivo</span>
+          <span class="d24-hero__meta-value">Posizionamento luxury</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CORPO ARTICOLO ════════════════════════════════ -->
+    <section class="cs2-body">
+      <div class="cs2-body__layout">
+      <div class="cs2-body__inner">
+
+        <h2 class="cs2-h2">Il progetto</h2>
+
+        <p class="cs2-p">Dama24 ci ha chiesto di elevare il proprio posizionamento nel mondo del banqueting di alta gamma, trasformando la percezione del brand <strong>da semplice servizio di catering a vera e propria «esperienza d'arte»</strong>. La sfida era ambiziosa: trasmettere l'eleganza, la cura dei dettagli e il savoir-faire italiano attraverso ogni punto di contatto, coordinando la presenza online con l'impatto scenografico degli eventi fisici.</p>
+
+        <figure class="cs2-figure cs2-figure--wide">
+          <video autoplay muted loop playsinline aria-hidden="true">
+            <source src="../case-studies/GIFMINIBURGERS.mp4" type="video/mp4">
+          </video>
+        </figure>
+
+        <h2 class="cs2-h2 cs2-h2--num"><span class="cs2-h2__num">01</span><span class="cs2-h2__text">Digital Identity: il sito web, un atelier digitale</span></h2>
+
+        <ul class="cs2-list">
+          <li><strong>Design immersivo:</strong> un'interfaccia pulita, dove il bianco e gli spazi vuoti danno respiro alle immagini di alta qualità. Ogni pagina è pensata per far vivere all'utente l'atmosfera di un evento firmato Dama24 prima ancora di averlo prenotato.</li>
+          <li><strong>Narrazione sensoriale:</strong> i testi e i visual non descrivono solo i piatti, ma l'emozione dell'accoglienza. Abbiamo trasformato la navigazione in un percorso che riflette la «visione del mondo» del target: colta, raffinata e mai scontata.</li>
+        </ul>
+
+        <h2 class="cs2-h2 cs2-h2--num"><span class="cs2-h2__num">02</span><span class="cs2-h2__text">Social &amp; eventi: il racconto dell'effimero</span></h2>
+
+        <ul class="cs2-list">
+          <li><strong>Social storytelling:</strong> abbiamo trasformato Instagram nella vetrina del «dietro le quinte» del lusso. Non mostriamo solo il risultato finale, ma la cura meticolosa nella scelta delle materie prime, la precisione dei gesti e l'arte del banqueting in movimento.</li>
+          <li><strong>L'evento come contenuto:</strong> ogni evento fisico diventa un generatore di contenuti organici. Abbiamo coordinato la copertura visiva per catturare l'autenticità dei momenti, trasformando l'esperienza degli ospiti in una testimonianza di valore per il brand.</li>
+        </ul>
+
+        <figure class="cs2-figure cs2-figure--wide">
+          <video autoplay muted loop playsinline aria-hidden="true">
+            <source src="../case-studies/videobanquetingecateringeventi.mp4" type="video/mp4">
+          </video>
+        </figure>
+
+        <h2 class="cs2-h2 cs2-h2--num"><span class="cs2-h2__num">03</span><span class="cs2-h2__text">Advertising di precisione: intercettare l'eccellenza</span></h2>
+
+        <p class="cs2-p">Per un brand di lusso, la massa è il nemico. Abbiamo progettato una strategia di Advertising &amp; Performance chirurgica:</p>
+
+        <ul class="cs2-list">
+          <li><strong>Google Ads:</strong> abbiamo intercettato la domanda attiva di chi cerca servizi di banqueting premium, presidiando le chiavi di ricerca legate al lusso e agli eventi corporate di alto livello.</li>
+          <li><strong>Meta Ads ispirazionali:</strong> campagne video mirate a un target ultra-profilato, lavorando sulla «domanda latente» attraverso contenuti emozionali che stimolano il desiderio e la distinzione.</li>
+        </ul>
+
+        <h2 class="cs2-h2">Il risultato: un codice di stile inconfondibile</h2>
+
+        <p class="cs2-p">La collaborazione con Dama24 ha prodotto un ecosistema di comunicazione dove la forma è sostanza. Abbiamo dimostrato che l'accoglienza di lusso si può comunicare con efficacia solo se si parla la stessa lingua del cliente:</p>
+
+        <ul class="cs2-list">
+          <li><strong>Posizionamento:</strong> il brand è oggi riconosciuto come un punto di riferimento per chi cerca un'esperienza sartoriale tra fisico e digitale.</li>
+          <li><strong>Coerenza omnichannel:</strong> dal primo click sul sito all'ultimo brindisi dell'evento, l'identità Dama24 rimane forte, chiara e inconfondibile.</li>
+          <li><strong>Qualità dei lead:</strong> abbiamo spostato l'ago della bilancia verso contatti più profilati e in linea con l'esclusività del servizio offerto.</li>
+        </ul>
+
+        <!-- Allegati: componente riusabile (.cs-attach), stesso markup in ogni case study.
+             type: pdf | slides | doc | file. I file vanno in /allegati. -->
+        <section class="cs-attach" aria-labelledby="cs-attach-title">
+          <h2 class="cs2-h2" id="cs-attach-title">Materiali del progetto</h2>
+          <ul class="cs-attach__list">
+            <li>
+              <a class="cs-attach__item" href="../allegati/dama24-presentazione.pdf" target="_blank" rel="noopener noreferrer" data-type="pdf">
+                <span class="cs-attach__icon" aria-hidden="true">PDF</span>
+                <span><span class="cs-attach__title">Presentazione del progetto</span><span class="cs-attach__meta">PDF · Dama24, strategia e risultati</span></span>
+                <span class="cs-attach__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
+              </a>
+            </li>
+            <li>
+              <a class="cs-attach__item" href="../allegati/dama24-linee-guida.pdf" target="_blank" rel="noopener noreferrer" data-type="doc">
+                <span class="cs-attach__icon" aria-hidden="true">DOC</span>
+                <span><span class="cs-attach__title">Linee guida editoriali</span><span class="cs-attach__meta">PDF · Tono di voce e identità visiva</span></span>
+                <span class="cs-attach__go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="7" y1="17" x2="17" y2="7"/><polyline points="8 7 17 7 17 16"/></svg></span>
+              </a>
+            </li>
+          </ul>
+        </section>
+
+        <blockquote class="cs2-quote">
+          <p>Trasformare l'eccellenza in una storia indimenticabile è l'unico modo per distinguersi davvero.</p>
+        </blockquote>
+
+        <div class="cs2-cta-block">
+          <p><a href="../contatti.html">Il tuo brand ha bisogno di un'identità che lasci il segno?</a></p>
+        </div>
+
+        <!-- La CTA di ritorno chiude la lettura, in fondo
+             alla pagina e non dopo il form. -->
+        <div class="cs2-back">
+          <a href="https://estro.agency/case-studies/" class="btn btn--primary cs2-back__link cta-arrow cta-arrow--back" target="_blank" rel="noopener">Tutti i case study</a>
+        </div>
+
+      </div><!-- /.cs2-body__inner -->
+
+      <aside class="cs2-sidebar">
+
+        <div class="cs2-sidebar__search">
+          <span class="cs2-sidebar__search-icon">
+            <svg viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="6.5" cy="6.5" r="5" stroke="currentColor" stroke-width="1.5"/>
+              <path d="M10.5 10.5 L14 14" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+            </svg>
+          </span>
+          <input type="search" placeholder="Cerca case study…" />
+        </div>
+
+        <span class="cs2-sidebar__label">Altri case study</span>
+
+        <ul class="cs2-sidebar__list">
+          <li class="cs2-sidebar__item active">
+            <a href="dama24.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/DAMA24_fucsia.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Dama24: L'estetica dell'accoglienza tra fisico e digitale</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="fanuc.html">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/FANUC_fucsia.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Fanuc: Strategia e contenuti per l'automazione industriale</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/HUMANITAS_fucsia.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Humanitas: Comunicazione istituzionale e divulgazione</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/CUPRA_fucsia.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Cupra: Brand experience e contenuti per il lancio</span>
+            </a>
+          </li>
+          <li class="cs2-sidebar__item">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">
+              <div class="cs2-sidebar__thumb">
+                <img src="loghicasestudy/WOODOO.webp" alt="" loading="lazy" />
+              </div>
+              <span class="cs2-sidebar__title">Woodoo Fest: Content &amp; video per il festival</span>
+            </a>
+          </li>
+        </ul>
+
+      </aside>
+
+      </div><!-- /.cs2-body__layout -->
+    </section>
+
+    <!-- ══ FORM CONTATTI ═════════════════════════════════ -->
+    <section class="cs2-contact" data-nav-theme="dark">
+      <div class="cs2-contact__inner">
+        <div class="cs2-contact__left">
+          <span class="cs2-contact__label reveal">Parliamoci</span>
+          <h2 class="cs2-contact__title reveal">Pronto a lasciare<br/>il segno?</h2>
+        </div>
+        <div class="cs2-contact__right">
+          <!-- Stesse classi del form in homepage (hc-*) -->
+          <form class="hc-form" action="#" method="post">
+            <div class="hc-row">
+              <div class="f-field">
+                <label class="f-label" for="d24-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="d24-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="d24-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="d24-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+              </div>
+            </div>
+            <div class="hc-row">
+              <div class="f-field">
+                <label class="f-label" for="d24-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="d24-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="d24-f-telefono">Telefono</label>
+                <input id="d24-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+              </div>
+            </div>
+            <div class="hc-row">
+              <div class="f-field">
+                <label class="f-label" for="d24-f-azienda">Azienda</label>
+                <input id="d24-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="d24-f-sito">Sito Web</label>
+                <input id="d24-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+              </div>
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="d24-f-messaggio">Messaggio</label>
+              <textarea id="d24-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
+            </div>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="cs2-privacy">
+                <input type="checkbox" id="cs2-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+              </label>
+              <label class="svc-caffe__privacy" for="cs2-newsletter">
+                <input type="checkbox" id="cs2-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
+            </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="../js/main.js?v=20261017d"></script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     ARTICOLO TIPS — motore della homepage, ridotto al necessario.
+     La vecchia regia (veli colorati sopra ogni sezione, tende a
+     inizio e fine pagina, titoli scomposti lettera per lettera, e
+     un blocco che chiamava un observer mai definito) è stata
+     rimossa: qui la pagina è un articolo, quindi le sezioni non
+     si annunciano una per una. Restano l'acqua sui titoli,
+     l'ingresso in cascata dei testi e la salita — solo sulle due
+     sezioni finali, form e footer.
+     ═══════════════════════════════════════════════════════════ */
+  function cs2Boot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFxCs2' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
+    }
+
+    // il titolo dell'articolo è già in vista al caricamento
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.cs2-hero__title'));
+
+    // Gli h2 del corpo restano fuori dall'acqua: sono titoli di
+    // paragrafo, non di sezione, e interrompevano la lettura.
+    // Entrano con la cascata come il resto del testo.
+    document.querySelectorAll('.cs2-contact__title, .sf-ghost').forEach(el => {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+      }, el.classList.contains('sf-ghost')
+           ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+           : { threshold: 0.15 });
+      el.classList.add('wl-wait'); io.observe(el);
+    });
+
+    /* ── Salita: solo form e footer ────────────────────────── */
+    /* La lettura sale sopra la hero, poi il form sale sopra la
+       lettura e il footer sopra il form: la transizione c'è a ogni
+       cambio di sezione, non solo in fondo. */
+    const RISE = ['.cs2-body', '.cs2-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso dei testi: linguaggio del body di About ───
+       Niente stati nascosti duraturi: opacità di partenza alta e
+       spostamento contenuto, un blocco alla volta mentre scorre. */
+    const bodyBits = document.querySelectorAll(
+      '.cs2-p, .cs2-list, .cs2-callout, .cs2-h2, .cs2-answer__inner, ' +
+      '.cs2-list, .cs2-quote, .cs2-sidebar__item, ' +
+      '.cs2-contact__label, .cs2-contact__sub, .hc-form'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+
+    /* ── L'occhio delle FAQ, come in homepage ──────────────── */
+    const EYE_OPEN = '<svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    const EYE_CLOSED = '<svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    document.querySelectorAll('.cs2-faq__q-icon').forEach(icon => {
+      icon.textContent = '';                    // via il "+"
+      icon.innerHTML = EYE_OPEN + EYE_CLOSED;
+      icon.setAttribute('aria-hidden', 'true');
+    });
+
+    /* ── La colonna si ferma dove inizia il form ───────────── */
+    const rail = document.querySelector('.cs2-rail');
+    const contact = document.querySelector('.cs2-contact');
+    if (rail && contact) {
+      // la corsia si ferma 48px prima del form, così la lista non
+      // arriva mai a toccarlo
+      const fitRail = () => { rail.style.height = Math.max(0, contact.offsetTop - 48) + 'px'; };
+      fitRail();
+      addEventListener('resize', fitRail, { passive: true });
+      addEventListener('load', fitRail);
+    }
+
+    /* ── Nav chiara/scura ────────────────────────────────────
+       Qui, a differenza degli articoli, la pagina non è tutta
+       chiara: la hero è scura e il resto è su carta bianca. La nav
+       cambia quindi in base a dove si trova. */
+    const nav = document.querySelector('.nav');
+    const heroDark = document.querySelector('.d24-hero');
+    if (nav) {
+      const sync = () => {
+        const onDark = heroDark ? (heroDark.getBoundingClientRect().bottom > 64) : true;
+        /* nav--on-dark e .scrolled: unica autorita in js/main.js,
+           come in homepage. Qui restavano due toggle locali che
+           decidevano con criteri propri (bordo della hero a 64px e
+           scrollY > 8), quindi l'header si comportava in modo
+           diverso dal resto del sito. */
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', cs2Boot);
+  } else { cs2Boot(); }
+  </script>
+
+      <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
+            <img src="../Logoestrofooter.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="../servizi/social-media-management.html">Social media management</a>
+            <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+            <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google Ads</a>
+            <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social Ads</a>
+            <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+            <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+            <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+            <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+            <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+            <a href="../news.html">News</a>
+            <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="../faq.html">FAQ</a>
+            <a href="../contatti.html">Contatti</a>
+            <a href="https://tally.so/r/2ELLBj" target="_blank" rel="noopener">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <script>
+  /* ── Ingresso della hero: kicker, logo, sottotitolo e attributi
+     entrano in cascata al caricamento (come nella versione
+     originale della pagina) ─────────────────────────────────── */
+  (function () {
+    const h = document.getElementById('d24-hero');
+    if (!h) return;
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () { h.classList.add('d24-hero--revealed'); });
+    });
+  }());
+  </script>
+  <script src="../js/responsive.js?v=20261017d"></script>
+</body>
+</html>
+
+
