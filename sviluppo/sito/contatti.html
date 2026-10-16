@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ESTRO — Contattaci per iniziare il tuo progetto. Siamo a Milano." />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>Contatti — ESTRO</title>
+  <meta property="og:title" content="Contatti — ESTRO" />
+  <meta property="og:description" content="Parliamo del tuo progetto. ESTRO — Milano." />
+  <meta property="og:type" content="website" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/tokens.css?v=20261017d" />
+  <link rel="stylesheet" href="css/base.css?v=20261017d" />
+  <link rel="stylesheet" href="css/components.css?v=20261017d" />
+  <link rel="stylesheet" href="css/hero.css?v=20261017d" />
+  <style>
+    /* Le regole della vecchia pagina (heading e claim tenuti a
+       opacità 0 in attesa di uno script per lettere, e la sezione
+       .contact-home fucsia) sono state rimosse: i titoli ora usano
+       l'acqua e i blocchi la cascata, come in homepage. */
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage, da chiuso e da aperto
+       Il markup era già uguale: quello che mancava erano queste
+       regole, che in home stanno nello <style> della pagina.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__menu-icon span,
+    .nav--on-dark .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    /* In home l'etichetta del mega menu resta a 16px come il resto
+       delle voci: qui deve valere lo stesso. */
+    .nav__mega-label { font-size: 16px !important; }
+/* la misura di "Menu" e' una sola per tutto il sito: 16px, in css/components.css */
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE FRA SEZIONI — stesso pattern della homepage
+       Progresso 0→1 scritto da un solo rAF (--sxi). La sezione
+       entrante sale sopra la precedente con gli angoli
+       arrotondati; la fascia sotto la riempie ::after con la
+       stessa superficie, quindi non si apre mai un buco.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    /* La sezione dei contatti porta solo il valore: la salita la
+       fanno il video e il pannello, insieme, con lo stesso --sxi
+       ereditato — se ognuno lo calcolasse dal proprio riquadro
+       partirebbero sfasati. */
+    html.js-reveal .ct-section.sx-rise {
+      transform: none;
+      border-radius: 0;
+      box-shadow: none;
+      z-index: auto;
+      will-change: auto;
+    }
+    html.js-reveal .ct-section.sx-rise::after { content: none; }
+    /* Stessa ragione per il hub: ora contiene un pannello agganciato,
+       e un transform sull'antenato romperebbe l'ancoraggio. La
+       sezione porta il valore, il pannello fa la salita. */
+    html.js-reveal .contact-hub.sx-rise {
+      transform: none;
+      border-radius: 0;
+      box-shadow: none;
+      z-index: auto;
+      will-change: auto;
+    }
+    html.js-reveal .contact-hub.sx-rise::after { content: none; }
+    html.js-reveal .contact-hub > .container {
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .ct-section .ct-video {
+      inset: 0 0 auto 0;
+      height: calc(100% + 22px);
+      z-index: 0;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .ct-section .ct-inner {
+      /* sticky, non relative: qui il pannello è agganciato */
+      position: sticky;
+      z-index: 1;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+    }
+    /* Il footer non ritaglia: la fascia della salita sta fuori dal
+       suo riquadro. La scritta ESTRO resta contenuta lo stesso,
+       perché il ritaglio ce l'ha .sf-ghost per conto suo. */
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       CONTATTI — nera con il video delle sezioni scure della home
+       ═══════════════════════════════════════════════════════════ */
+    .ct-section {
+      position: relative;
+      background: transparent;
+      overflow: visible;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    /* ── Blocco identico alle sezioni della homepage ──────────
+       La sezione è la corsa dello scroll (145dvh) e non ritaglia;
+       il figlio è il pannello agganciato alto una schermata esatta,
+       che porta la superficie. Il footer resta fuori. */
+    .ct-section,
+    .contact-hub {
+      height: 145dvh;
+      overflow: visible;
+      padding-block: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+    .ct-inner,
+    .contact-hub > .container {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* La superficie chiara sta sul pannello, perché è il pannello a
+       salire. Ma il pannello è un .container, cioè incolonnato:
+       col fondo addosso si vedeva un riquadro bianco dentro la
+       sezione bianca — un contenitore dentro l'altro. Qui il
+       pannello va a tutta larghezza e la misura editoriale passa al
+       contenuto, che resta al centro. */
+    .contact-hub { background: #000; }
+    .contact-hub > .container {
+      max-width: none !important;
+      margin-inline: 0 !important;
+      padding-inline: 0 !important;
+      background:
+        radial-gradient(ellipse 45% 30% at 88% 50%, rgba(219,0,90,0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 38% 28% at 10% 50%, rgba(219,0,90,0.05) 0%, transparent 70%),
+        linear-gradient(180deg, #fff 0%, #fdf2f7 50%, #fff 100%);
+      padding-block: clamp(2rem, 4vw, 3.5rem);
+    }
+    .contact-hub__claim,
+    .contact-hub__grid {
+      width: 100%;
+      max-width: 1440px;
+      margin-inline: auto;
+      padding-inline: var(--gutter);
+    }
+    .contact-hub__claim { margin-bottom: clamp(1.6rem, 3.4vw, 3rem) !important; }
+    /* Icone un filo più grandi */
+    .contact-hub__icon { width: 19px; height: 19px; }
+    @media (max-width: 819px), (max-height: 559px) {
+      .ct-section, .contact-hub { height: auto; }
+      .ct-inner, .contact-hub > .container {
+        position: static;
+        height: auto;
+        overflow: visible;
+      }
+    }
+    .ct-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+      background: #000;
+    }
+    /* Stessi valori della home: frammento ingrandito e ruotato,
+       con la crominanza portata sul fucsia ESTRO. */
+    .ct-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.85) rotate(9deg);
+      transform-origin: 74% 62%;
+      filter: hue-rotate(-54deg) saturate(1.05) brightness(0.6);
+      opacity: 0.6;
+    }
+    .ct-video__fade {
+      position: absolute;
+      left: 0; right: 0;
+      height: 200px;
+      z-index: 1;
+      pointer-events: none;
+    }
+    .ct-video__fade--top    { top: 0;    background: linear-gradient(to bottom, #000, transparent); }
+    .ct-video__fade--bottom { bottom: 0; background: linear-gradient(to top,    #000, transparent); }
+
+    /* ── Form: stesse misure della sezione Contatti in home ──── */
+    .hc-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      /* col titolo a 150px e i consensi a 16 il blocco sforava di
+         4px: lo spazio rientra dagli stacchi, non dai testi */
+      gap: clamp(1.25rem, 2.6vw, 2.2rem);
+      padding-block: max(clamp(2rem, 4vw, 3rem), calc(var(--nav-h) + 0.75rem)) clamp(2rem, 4vw, 3rem);
+      width: 100%;
+    }
+    .hc-header {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      gap: 0.75rem;
+    }
+    .hc-title {
+      font-family: var(--font-primary);
+      /* stesso corpo dei titoli di sezione: 150px su desktop */
+      font-size: min(150px, 26vw);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.02em;
+    }
+    .hc-sub {
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      text-transform: uppercase;
+    }
+    .hc-form {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .hc-textarea { min-height: 130px; resize: vertical; }
+    .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.75);
+    }
+    .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    /* I consensi sono testo da leggere prima di spuntare una
+       casella, non microcopy decorativo: minimo di lettura. */
+    .hc-consents .svc-caffe__privacy span,
+    .hc-consents .svc-caffe__privacy a,
+    .hc-consents .svc-caffe__privacy em { line-height: 1.5; font-size: 16px !important; }
+    /* Le pill dell'hub stavano a 13px */
+    .contact-hub__pill { font-size: 16px !important; }
+    /* CTA del form: identica a quella della home, stesse misure e
+       stesso comportamento in hover (bordo bianco su fondo vuoto
+       che si riempie di bianco con testo fucsia, sollevandosi di
+       2px). La tendina ::before del bottone resta disattivata: era
+       quella che tagliava in due la CTA durante il passaggio. */
+    .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .hc-submit::before { display: none !important; }
+    #ct-hero .hc-submit:hover,
+    #ct-hero .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       INGRESSO DEI TESTI — stesso linguaggio della homepage
+       Il blocco si compone in cascata dietro al titolo, con la
+       stessa curva e ritardi crescenti. Nessuno stato nascosto:
+       opacità di partenza alta e spostamento contenuto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal [data-cascade] .hc-sub,
+    html.js-reveal [data-cascade] .hc-form,
+    html.js-reveal [data-cascade] .contact-hub__claim-intro,
+    html.js-reveal [data-cascade] .contact-hub__col {
+      transform: translateY(16px) scale(0.94);
+      transform-origin: center;
+      opacity: 0.78;
+      transition: transform 0.78s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.5s ease;
+      transition-delay: var(--cs-delay, 0s);
+    }
+    html.js-reveal [data-cascade] .hc-sub                  { --cs-delay: 0.18s; }
+    html.js-reveal [data-cascade] .hc-form                 { --cs-delay: 0.34s; }
+    html.js-reveal [data-cascade] .contact-hub__claim-intro{ --cs-delay: 0.18s; }
+    html.js-reveal [data-cascade] .contact-hub__col:nth-child(1) { --cs-delay: 0.30s; }
+    html.js-reveal [data-cascade] .contact-hub__col:nth-child(2) { --cs-delay: 0.42s; }
+    html.js-reveal [data-cascade] .contact-hub__col:nth-child(3) { --cs-delay: 0.54s; }
+    html.js-reveal [data-cascade].cs-in .hc-sub,
+    html.js-reveal [data-cascade].cs-in .hc-form,
+    html.js-reveal [data-cascade].cs-in .contact-hub__claim-intro,
+    html.js-reveal [data-cascade].cs-in .contact-hub__col {
+      transform: none;
+      opacity: 1;
+    }
+
+    /* ── Hub: il claim lungo sta sotto il suo titolo ─────────── */
+    .contact-hub__claim {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(0.6rem, 1.4vw, 1.1rem);
+    }
+    /* I tre box erano invisibili: avevano la classe .reveal, che
+       li tiene a opacità 0 finché non arriva la classe .visible da
+       main.js, che su questa pagina non veniva mai aggiunta. Ora
+       l'ingresso è quello in cascata qui sopra e la classe non
+       serve più. */
+    .contact-hub__col { opacity: 1; }
+
+    /* ── Tipografia allineata alla homepage ─────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise,
+      html.js-reveal .ct-section .ct-video,
+      html.js-reveal .ct-section .ct-inner { transform: none; }
+    }
+  </style>
+  <link rel="stylesheet" href="css/responsive.css?v=20261017d" />
+  <link rel="icon" href="favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.png" />
+</head>
+<body>
+
+  <!-- ══ NAV ══════════════════════════════════════════════ -->
+  <header class="nav nav--on-dark" role="banner"><!-- nav--on-dark di partenza: la prima sezione e' scura, quindi MENU e simbolo nascono bianchi e non cambiano colore al primo frame. Lo stato lo ricalcola js/main.js. -->
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="index.html" aria-label="ESTRO — Homepage">
+        <img src="assets/img/brand/logo-estro.webp" alt="ESTRO" />
+      </a>
+      <div class="nav__right">
+        <a class="nav__joinus" href="contatti.html">
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links nav__mega-links--2col">
+              <a href="servizi/social-media-management.html">Social media management</a>
+              <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+              <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google ads</a>
+              <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social ads</a>
+              <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+              <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+              <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+              <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+              <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione e renderizzazione</a>
+              <a href="servizi/servizio-ai.html">AI</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+              <a href="news.html">News</a>
+              <a href="tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="faq.html">FAQ</a>
+              <a href="contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="https://tally.so/r/2ELLBj">
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main>
+
+
+    <!-- ══ CONTATTI ══════════════════════════════════════════
+         Nera con il video di sfondo delle sezioni scure della
+         home, non più fucsia. Struttura e classi sono quelle
+         della sezione Contatti in homepage (hc-*), così il form
+         ha le stesse misure senza doverle ridichiarare. -->
+    <section class="ct-section" id="ct-hero" aria-label="Contatti" data-nav-theme="dark">
+      <div class="ct-video" aria-hidden="true">
+        <video class="ct-video__el" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+        <div class="ct-video__fade ct-video__fade--top"></div>
+        <div class="ct-video__fade ct-video__fade--bottom"></div>
+      </div>
+      <div class="container hc-inner ct-inner" data-cascade>
+        <div class="ct-col">
+        <div class="hc-header">
+          <h2 class="hc-title" id="ctTitle">Contatti</h2>
+          <p class="hc-sub">SCRIVICI, FACCI DOMANDE, FISSIAMO UN APPUNTAMENTO!</p>
+        </div>
+        <form class="hc-form" action="#" method="post">
+          <div class="hc-row">
+            <div class="f-field">
+              <label class="f-label" for="cnt-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="cnt-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="cnt-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="cnt-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+            </div>
+          </div>
+          <div class="hc-row">
+            <div class="f-field">
+              <label class="f-label" for="cnt-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="cnt-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="cnt-f-telefono">Telefono</label>
+              <input id="cnt-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+            </div>
+          </div>
+          <div class="hc-row">
+            <div class="f-field">
+              <label class="f-label" for="cnt-f-azienda">Azienda</label>
+              <input id="cnt-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="cnt-f-sito">Sito Web</label>
+              <input id="cnt-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+            </div>
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="cnt-f-messaggio">Messaggio</label>
+            <textarea id="cnt-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
+          </div>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="ct-privacy">
+              <input type="checkbox" id="ct-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+            </label>
+            <label class="svc-caffe__privacy" for="ct-newsletter">
+              <input type="checkbox" id="ct-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
+          </div>
+          <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+        </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ SEDI / SOCIAL / CHIAMACI ═════════════════════════ -->
+    <section class="contact-hub" id="contactHub" aria-label="Sedi, social e contatti diretti" data-cascade>
+      <div class="container">
+        <!-- Il claim lungo sta SOTTO il suo titolo, non sopra -->
+        <h2 class="contact-hub__claim">
+          <span class="contact-hub__claim-big" id="ctHubTitle">Facciamo prendere<br>forma alle tue idee.</span>
+          <span class="contact-hub__claim-intro" id="ctHubIntro">Comunicare è bello, ma una buona strategia digital deve lasciare il segno.</span>
+        </h2>
+
+        <div class="contact-hub__grid">
+
+          <div class="contact-hub__col">
+            <img class="contact-hub__cat" src="assets/img/home/home-gatto-pre-footer.webp" alt="" aria-hidden="true" />
+            <h3 class="contact-hub__title">SEDI</h3>
+            <div class="contact-hub__pills">
+              <a class="contact-hub__pill" href="https://maps.google.com/?q=Milano" target="_blank" rel="noopener noreferrer">
+                <svg class="contact-hub__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11Z"/><circle cx="12" cy="10" r="2.4"/></svg>
+                Milano
+              </a>
+                    </div>
+          </div>
+
+          <div class="contact-hub__col">
+            <img class="contact-hub__cat" src="assets/img/home/home-gatto-pre-footer.webp" alt="" aria-hidden="true" />
+            <h3 class="contact-hub__title">SOCIAL</h3>
+            <div class="contact-hub__socials">
+              <a class="contact-hub__social" href="https://www.instagram.com/estro.agency" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Instagram"><svg class="contact-hub__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M12 2.2c3.2 0 3.6 0 4.8.1 3.3.1 4.8 1.7 4.9 4.9.1 1.3.1 1.6.1 4.8s0 3.6-.1 4.8c-.1 3.2-1.7 4.8-4.9 4.9-1.3.1-1.6.1-4.8.1s-3.6 0-4.8-.1c-3.3-.1-4.8-1.7-4.9-4.9C2.2 15.6 2.2 15.2 2.2 12s0-3.6.1-4.8C2.4 3.9 4 2.4 7.2 2.3 8.4 2.2 8.8 2.2 12 2.2ZM12 0C8.7 0 8.3 0 7.1.1 2.7.3.3 2.7.1 7.1 0 8.3 0 8.7 0 12s0 3.7.1 4.9c.2 4.4 2.6 6.8 7 7C8.3 24 8.7 24 12 24s3.7 0 4.9-.1c4.4-.2 6.8-2.6 7-7 .1-1.2.1-1.6.1-4.9s0-3.7-.1-4.9c-.2-4.4-2.6-6.8-7-7C15.7 0 15.3 0 12 0Zm0 5.8a6.2 6.2 0 1 0 0 12.4 6.2 6.2 0 0 0 0-12.4ZM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8Zm6.4-11.8a1.4 1.4 0 1 0 0 2.9 1.4 1.4 0 0 0 0-2.9Z"/></svg><span class="visually-hidden">Instagram</span></a>
+              <a class="contact-hub__social" href="https://www.linkedin.com/company/estro-agency" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" title="LinkedIn"><svg class="contact-hub__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M20.4 20.5h-3.6v-5.6c0-1.3 0-3-1.8-3s-2.1 1.4-2.1 2.9v5.7H9.4V9h3.4v1.6c.5-.9 1.6-1.8 3.4-1.8 3.6 0 4.3 2.4 4.3 5.5v6.2ZM5.3 7.4a2.1 2.1 0 1 1 0-4.1 2.1 2.1 0 0 1 0 4.1Zm1.8 13.1H3.6V9h3.5v11.5Z"/></svg><span class="visually-hidden">LinkedIn</span></a>
+              <a class="contact-hub__social" href="https://www.facebook.com/estroagency" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Facebook"><svg class="contact-hub__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M13.5 22v-8.2h2.8l.4-3.3h-3.2V8.4c0-.9.3-1.6 1.6-1.6h1.7V3.9c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.5H7.5v3.3h2.8V22h3.2Z"/></svg><span class="visually-hidden">Facebook</span></a>
+              <a class="contact-hub__social" href="https://www.youtube.com/@estroagency" target="_blank" rel="noopener noreferrer" aria-label="YouTube" title="YouTube"><svg class="contact-hub__icon" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true" focusable="false"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2C0 8.1 0 12 0 12s0 3.9.5 5.8a3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1c.5-1.9.5-5.8.5-5.8s0-3.9-.5-5.8ZM9.6 15.6V8.4l6.2 3.6-6.2 3.6Z"/></svg><span class="visually-hidden">YouTube</span></a>
+            </div>
+          </div>
+
+          <div class="contact-hub__col">
+            <img class="contact-hub__cat" src="assets/img/home/home-gatto-pre-footer.webp" alt="" aria-hidden="true" />
+            <h3 class="contact-hub__title">CHIAMACI</h3>
+            <div class="contact-hub__pills">
+              <a class="contact-hub__pill" href="tel:+393406881494">
+                <svg class="contact-hub__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4h3.2l1.5 4-2 1.4a11 11 0 0 0 5 5l1.4-2 4 1.5V17a2 2 0 0 1-2.2 2C10.4 18.6 5.4 13.6 5 6.2A2 2 0 0 1 5 4Z"/></svg>
+                340 68 81 494
+              </a>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="js/main.js?v=20261017d"></script>
+
+  <!-- ══ MOTION CONTATTI ═══════════════════════════════════
+       Tutto il motion specifico della pagina in un solo IIFE.
+
+       1. "CONTATTI" heading: per-lettera page-load
+          (stesso effetto visivo di TIPS & TRICKS, eseguito
+           al caricamento anziché allo scroll perché above-fold)
+       2. Hero → bianco: overlay scroll-driven reversibile
+       3. Hub titolo: per-lettera scroll-driven identico ad
+          amiciLetters / tipsLetters di main.js
+          formula: p = c01((ENTRY - sR.top) / ENTRY), ENTRY = vh*0.70
+          revealLetters: base=0, dur=0.08, stagger=0.012
+       4. Hub intro: time-based 380ms (pattern panel SMM)
+       5. Hub → footer: distanceToBottom 120px (identico
+          caffè→footer di google-ads.html)              ══ -->
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     CONTATTI — stesso motore della homepage
+     Tre pezzi, gli stessi dell'index: l'acqua sui titoli, la
+     salita fra sezioni scritta da un solo rAF, e l'ingresso in
+     cascata dei blocchi di testo.
+     ═══════════════════════════════════════════════════════════ */
+  // Il footer sta più in basso di questo script nel documento:
+  // senza attendere il parsing, la salita non lo troverebbe.
+  function ctBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ────────────────────────────────────
+       Rifrazione con feTurbulence + feDisplacementMap, curva a
+       campana: parte da zero, sale e torna a zero. Nessuna
+       trasformazione sul testo, quindi niente stiramenti. */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
+    }
+
+    // l'introduzione NON prende l'acqua: è testo corrente, entra
+    // con la cascata come i corpi testo della home
+    [['ctTitle', 1000], ['ctHubTitle', 950]].forEach(([id, ms]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, ms); io.disconnect(); } });
+      }, { threshold: 0.15 });
+      el.classList.add('wl-wait'); io.observe(el);
+    });
+
+    /* La scritta ESTRO del footer parte appena si atterra sul
+       footer, non a metà: soglia bassa e margine negativo. */
+    const ghost = document.querySelector('.sf-ghost');
+    if (ghost) {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(ghost, 1000); io.disconnect(); } });
+      }, { threshold: 0.01, rootMargin: '0px 0px -10% 0px' });
+      ghost.classList.add('wl-wait'); io.observe(ghost);
+    }
+
+    /* ── Transizione fra sezioni ─────────────────────────────
+       Stesso pattern della home: un solo rAF scrive --sxi, il CSS
+       fa il resto. Sulla sezione dei contatti il valore lo porta
+       la sezione e lo ereditano video e pannello, così salgono
+       insieme (era il difetto corretto sulla FAQ). */
+    const RISE = ['.ct-section', '.contact-hub', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          // la corsa non può essere più lunga di quanto l'elemento
+          // riesca a salire: il footer è basso e sta a fondo pagina
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso in cascata dei testi ───────────────────────
+       Stesso linguaggio di About e Contatti in home: il blocco si
+       compone dietro al titolo, con ritardi crescenti. */
+    document.querySelectorAll('[data-cascade]').forEach(panel => {
+      const check = () => {
+        const r = panel.getBoundingClientRect();
+        const vh = window.innerHeight;
+        if (r.top > vh || r.bottom < 0) return false;
+        const vis = (Math.min(vh, r.bottom) - Math.max(0, r.top)) / Math.min(vh, r.height || vh);
+        if (vis >= 0.5 || r.top <= vh * 0.4) { panel.classList.add('cs-in'); return true; }
+        return false;
+      };
+      if (RM) { panel.classList.add('cs-in'); return; }
+      const io = new IntersectionObserver(() => { if (check()) io.disconnect(); },
+        { threshold: [0, 0.25, 0.5, 0.75] });
+      io.observe(panel);
+      requestAnimationFrame(check);
+    });
+
+    /* ── Nav chiara/scura secondo la sezione sotto la pill ───── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const marks = [...document.querySelectorAll('[data-nav-theme]')];
+      let wasDark = null;
+      const sync = () => {
+        const probe = nav.getBoundingClientRect().bottom - 6;
+        let dark = false;
+        for (const m of marks) {
+          const r = m.getBoundingClientRect();
+          if (r.top <= probe && r.bottom >= probe) dark = m.dataset.navTheme === 'dark';
+        }
+        if (dark !== wasDark) { wasDark = dark; nav.classList.toggle('nav--on-dark', dark); }
+        nav.classList.toggle('scrolled', scrollY > 8);
+      };
+      addEventListener('scroll', sync, { passive: true });
+      addEventListener('resize', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ctBoot);
+  } else { ctBoot(); }
+  </script>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="index.html" aria-label="ESTRO — Homepage">
+            <img src="assets/img/brand/logo-estro.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="servizi/social-media-management.html">Social media management</a>
+            <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+            <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google Ads</a>
+            <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social Ads</a>
+            <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+            <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+            <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+            <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+            <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione 3D</a>
+            <a href="servizi/servizio-ai.html">AI</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+            <a href="news.html">News</a>
+            <a href="tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="faq.html">FAQ</a>
+            <a href="contatti.html">Contatti</a>
+            <a href="https://tally.so/r/2ELLBj" target="_blank" rel="noopener">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="js/responsive.js?v=20261017d"></script>
+</body>
+</html>

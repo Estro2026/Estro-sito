@@ -1008,14 +1008,8 @@ html body svg:is(.eye-open, .eye-closed) { overflow: visible !important; }
 html body .faq-item:not(#_) { padding-right: 12px !important; overflow: clip !important; overflow-clip-margin: 8px; }
 html body .faq-item__icon:not(#_) { flex-shrink: 0 !important; }
 
-/* Form hero servizi: colore pieno, niente blur/trasparenza; radius di sistema */
-html body .svc-hero__form-card:not(#_) {
-  background: #141414 !important;
-  backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
-  border: 1px solid #2a2a2a !important;
-  border-radius: var(--r-box, 36px) !important;
-}
-html body .svc-hero__form-card .svc-hero__field:not(#_) { background: #232323 !important; }
+/* Form hero servizi: radius di sistema (fondo e campi: vedi "Form nella hero delle pagine servizi: restyling") */
+html body .svc-hero__form-card:not(#_) { border-radius: var(--r-box, 36px) !important; }
 
 /* Sezioni pre-footer (Parliamoci / Candidati ora / Scrivici…): stesso margine
    sinistro del resto della pagina (--gutter) a qualsiasi zoom */
@@ -2641,4 +2635,243 @@ html body .tips-section__cta:not(#_):not(#__):not(#___) { margin-top: calc(var(-
 @media (min-width: 861px) and (max-height: 820px) {
   html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) textarea:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { height: clamp(64px, 12dvh, 104px) !important; }
   html:not(:has(.ht-hero)) body :is(.svc-caffe, .faq-contact, .nw-contact, .cs-cta, .cs2-contact, .art-contact, .tt-contact, .lcn-apply) :is(.svc-caffe__privacy, .svc-caffe__privacy span, .svc-caffe__privacy a, .svc-caffe__privacy em):not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { font-size: 12.5px !important; line-height: 1.25 !important; }
+}
+
+/* ══ Articoli News: sottotitoli e tabelle (pagine generate dai testi di
+   estro.agency/news). Corpo scuro: stessi colori di .art-p / .art-h2 ══ */
+html body .art-body__inner > .art-h2:not(:first-child):not(#a):not(#b):not(#c) { margin-top: var(--gap-block, 48px) !important; }
+html body .art-h3:not(#a):not(#b) {
+  color: #fff; font-family: var(--font-secondary, "DM Sans", sans-serif); font-size: 20px; font-weight: 700;
+  line-height: 1.3; margin: 32px 0 12px;
+}
+html body .art-body .art-list li:not(#a) { color: rgba(255,255,255,.68); }
+html body .art-table-wrap:not(#a) {
+  margin: 8px 0 28px; overflow-x: auto; -webkit-overflow-scrolling: touch;
+  border: 1px solid rgba(255,255,255,.12); border-radius: var(--r-box, 36px);
+}
+html body .art-table:not(#a) {
+  width: 100%; border-collapse: collapse; min-width: 520px;
+  font-family: var(--font-secondary, "DM Sans", sans-serif); font-size: 15px; line-height: 1.5;
+}
+html body .art-table :is(th, td):not(#a) { text-align: left; vertical-align: top; padding: 16px 22px; border-bottom: 1px solid rgba(255,255,255,.1); }
+html body .art-table tr:last-child td:not(#a) { border-bottom: 0; }
+html body .art-table th:not(#a) { color: #fff; font-weight: 700; font-size: 14px; letter-spacing: .06em; text-transform: uppercase; background: rgba(255,255,255,.04); }
+html body .art-table td:not(#a) { color: rgba(255,255,255,.72); }
+html body .art-table td:first-child:not(#a) { color: #fff; font-weight: 600; }
+
+/* ══ Nav: foto del team negli avatar (menu "Siamo oltre 40 Creativi" e
+   pulsante Join Us). Le foto sono quadrate: ingrandite 2,6× e centrate
+   sul viso di ciascuno (posizioni misurate sulle foto). ══ */
+html body :is(.nav__mega-avatars, .nav__joinus-avatars) .nav__avatar:not(#a):not(#b) {
+  background-color: #2a2a2a !important; background-repeat: no-repeat !important; background-size: 257% !important;
+}
+html body :is(.nav__mega-avatars, .nav__joinus-avatars) .nav__avatar:not(#a):not(#b)::before,
+html body :is(.nav__mega-avatars, .nav__joinus-avatars) .nav__avatar:not(#a):not(#b)::after { display: none !important; }
+html body .nav__mega-avatars .nav__avatar:nth-child(1):not(#a):not(#b) { background-image: url("../assets/team/team-1.webp") !important; background-position: 57% 12% !important; }
+html body .nav__mega-avatars .nav__avatar:nth-child(2):not(#a):not(#b) { background-image: url("../assets/team/team-2.webp") !important; background-position: 47% 22% !important; }
+html body .nav__mega-avatars .nav__avatar:nth-child(3):not(#a):not(#b) { background-image: url("../assets/team/team-3.webp") !important; background-position: 50% 50% !important; }
+html body .nav__mega-avatars .nav__avatar:nth-child(4):not(#a):not(#b) { background-image: url("../assets/team/team-4.webp") !important; background-position: 53% 16% !important; }
+html body .nav__mega-avatars .nav__avatar:nth-child(5):not(#a):not(#b) { background-image: url("../assets/team/team-5.webp") !important; background-position: 47% 12% !important; }
+html body .nav__joinus-avatars .nav__avatar:nth-child(1):not(#a):not(#b) { background-image: url("../assets/team/team-2.webp") !important; background-size: 195% !important; background-position: 50% 30% !important; }
+html body .nav__joinus-avatars .nav__avatar:nth-child(2):not(#a):not(#b) { background-image: url("../assets/team/team-4.webp") !important; background-position: 53% 16% !important; }
+
+/* ══ Articoli Tips & Tricks: sottotitolo di secondo livello (testi da
+   estro.agency/tips-tricks). Corpo chiaro: stesso nero di .tt-h2 ══ */
+html body .tt-h3:not(#a):not(#b) {
+  color: #080808; font-family: var(--font-secondary, "DM Sans", sans-serif); font-size: 20px; font-weight: 700;
+  line-height: 1.3; margin: 32px 0 12px;
+}
+html body .tt-body__inner > .tt-h2:first-child:not(#a):not(#b) { margin-top: 0 !important; }
+
+/* Home, Case studies: card senza pagina sul sito originale (Prada, Miu Miu).
+   Stesso aspetto delle altre, ma non cliccabile: niente freccia e niente hover */
+html body .cs2-sticky div.cst-info--static:not(#_):not(#__) { position: relative; color: inherit; cursor: default; }
+
+/* ══ Pagina AI: video Vimeo di sfondo nella hero ═════════════════════
+   Il player è 16:9, la hero no: l'iframe è grande quanto serve per
+   coprire tutto il riquadro (come object-fit: cover), centrato e ritagliato.
+   Dietro c'è il fondo scuro della hero, che si vede mentre il video carica. */
+html body .svc-hero__vimeo:not(#_) {
+  position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none;
+  background: #141014; container-type: size;
+}
+html body .svc-hero__vimeo iframe:not(#_) {
+  position: absolute; top: 50%; left: 50%; border: 0;
+  width: max(100cqw, 177.78cqh); height: max(100cqh, 56.25cqw); max-width: none !important; max-height: none !important;
+  transform: translate(-50%, -50%);
+}
+/* movimento ridotto: niente video, resta il fondo scuro con la velatura */
+@media (prefers-reduced-motion: reduce) { html body .svc-hero__vimeo iframe:not(#_) { display: none; } }
+
+/* ══ Contatti: i campi stanno direttamente sulla pagina, senza contenitore ══
+   (niente pannello attorno al form: solo celle piene e grigie, non trasparenti) */
+html body .ct-inner .hc-form:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______):not(#_______):not(#________):not(#_________) {
+  background: transparent !important; border: 0 !important; border-radius: 0 !important;
+  box-shadow: none !important; padding: 0 !important;
+}
+
+/* ══ Form nella hero delle pagine servizi: restyling ═════════════════
+   Tinta unita (#141414, niente blur né trasparenze), profondità con
+   un'ombra, titolo nel font dei titoli come le hero ("SCRIVICI." col
+   punto fucsia), campi con bordo pieno e focus fucsia ben visibile,
+   casella privacy disegnata. Le misure che crescono valgono solo sugli
+   schermi alti (da 900px di altezza): sotto restano le regole compatte. */
+html body .svc-hero__form-card:not(#_):not(#__):not(#___) {
+  background: rgba(14,6,14,.56) !important; border: 1px solid rgba(255,255,255,.16) !important;
+  -webkit-backdrop-filter: blur(20px) saturate(1.25) !important; backdrop-filter: blur(20px) saturate(1.25) !important;
+  box-shadow: 0 30px 60px -30px rgba(0,0,0,.6), inset 0 1px 0 rgba(255,255,255,.14) !important;
+}
+html body .svc-hero__form-card .svc-hero__form-card-label:not(#_):not(#__):not(#___) {
+  font-family: var(--font-primary) !important; font-size: clamp(1.3rem, 1.75vw, 1.7rem) !important; font-weight: 900 !important;
+  text-transform: uppercase !important; letter-spacing: -0.02em !important; line-height: 1 !important; color: #fff !important;
+}
+html body .svc-hero__form-card .svc-hero__form-card-label:not(#_):not(#__):not(#___)::after { content: '.'; color: var(--primary, #DB005A); }
+html body .svc-hero__form-card .svc-hero__form-card-sub:not(#_):not(#__) {
+  font-family: var(--font-secondary); font-size: 14px; line-height: 1.45; font-weight: 400;
+  color: rgba(255,255,255,.72); margin: 6px 0 16px;
+}
+@media (min-width: 861px) and (max-height: 899px) { html body .svc-hero__form-card .svc-hero__form-card-sub:not(#_):not(#__) { display: none; } }
+@media (min-height: 900px) { html body .svc-hero__form-card:not(#_):not(#__):not(#___):not(#____) { padding: 30px 32px !important; } }
+
+/* campi: bordo pieno, hover, focus fucsia con alone (contrasto e visibilità da tastiera) */
+html body .svc-hero__form-card .svc-hero__field:not(#_):not(#__):not(#___):not(#____) {
+  background: rgba(255,255,255,.09) !important; border: 1px solid rgba(255,255,255,.24) !important; color: #fff !important;
+  transition: border-color .2s ease, box-shadow .2s ease !important;
+}
+html body .svc-hero__form-card .svc-hero__field:hover:not(:focus):not(#_):not(#__):not(#___):not(#____) { border-color: rgba(255,255,255,.5) !important; background: rgba(255,255,255,.12) !important; }
+html body .svc-hero__form-card .svc-hero__field:focus:not(#_):not(#__):not(#___):not(#____) {
+  background: rgba(255,255,255,.13) !important; border-color: var(--primary, #DB005A) !important;
+  box-shadow: 0 0 0 3px rgba(219,0,90,.3) !important; outline: none !important;
+}
+html body .svc-hero__form-card .svc-hero__field:not(#_):not(#__):not(#___):not(#____)::placeholder { color: rgba(255,255,255,.6) !important; opacity: 1; }
+html body .svc-hero__form-card .f-label:not(#_):not(#__):not(#___) { font-size: 14px !important; font-weight: 600 !important; letter-spacing: .02em !important; color: rgba(255,255,255,.88) !important; }
+html body .svc-hero__form-card .f-label__req:not(#_):not(#__):not(#___) { color: var(--primary, #DB005A) !important; }
+
+/* consensi: casella disegnata (20px, fucsia da selezionata), link con sottolineatura fucsia */
+html body .svc-hero__form-card .svc-hero__privacy input[type="checkbox"]:not(#_):not(#__):not(#___) {
+  -webkit-appearance: none; appearance: none; flex: none; width: 20px; height: 20px; margin: 0 !important;
+  border: 1.5px solid rgba(255,255,255,.45); border-radius: 6px; background: rgba(255,255,255,.09); display: inline-grid; place-content: center;
+  cursor: pointer; transition: background-color .2s ease, border-color .2s ease, box-shadow .2s ease;
+}
+html body .svc-hero__form-card .svc-hero__privacy input[type="checkbox"]:hover:not(#_):not(#__):not(#___) { border-color: rgba(255,255,255,.8); }
+html body .svc-hero__form-card .svc-hero__privacy input[type="checkbox"]:checked:not(#_):not(#__):not(#___) { background: var(--primary, #DB005A); border-color: var(--primary, #DB005A); }
+html body .svc-hero__form-card .svc-hero__privacy input[type="checkbox"]:checked:not(#_):not(#__):not(#___)::after {
+  content: ''; width: 12px; height: 12px; background: #fff;
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12.5l4.5 4.5L19 7.5'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+html body .svc-hero__form-card .svc-hero__privacy input[type="checkbox"]:focus-visible:not(#_):not(#__):not(#___) { outline: 2px solid #fff; outline-offset: 2px; }
+html body .svc-hero__form-card .svc-hero__privacy a:not(#_):not(#__):not(#___) { color: #fff !important; text-decoration: underline; text-decoration-color: var(--primary, #DB005A); text-underline-offset: 3px; text-decoration-thickness: 2px; }
+html body .svc-hero__form-card .svc-hero__privacy a:hover:not(#_):not(#__):not(#___) { color: var(--primary, #DB005A) !important; }
+
+/* pulsante: ombra fucsia che lo stacca dalla scheda */
+html body .svc-hero__form-card .svc-hero__submit:not(#_):not(#__):not(#___):not(#____) { box-shadow: 0 14px 30px -16px rgba(219,0,90,.9); }
+html body .svc-hero__form-card .svc-hero__submit:hover:not(#_):not(#__):not(#___):not(#____) { box-shadow: 0 14px 30px -16px rgba(255,255,255,.5); }
+
+/* ══ Pagina AI · timeline: il riquadro si adatta alle immagini ═══════════
+   Le foto sono 1920×900 (32:15): nel vecchio riquadro 5:4 ne sarebbe
+   rimasto un terzo. Ora il riquadro ha il loro rapporto (nessun taglio),
+   il video del passo 04 il suo 16:9, e alle immagini va più larghezza.
+   Vale solo per #ai-stack: le altre timeline restano come sono. */
+html body #ai-stack .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) {
+  aspect-ratio: 32 / 15 !important; width: 100% !important; height: auto !important; min-height: 0 !important; align-self: center;
+}
+html body #ai-stack #ai-pan-4 .svc-tabs__media:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { aspect-ratio: 16 / 9 !important; }
+html body #ai-stack .svc-tabs__media-video:not(#_) { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+@media (min-width: 761px) {
+  html body #ai-stack .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+}
+@media (min-width: 761px) and (max-width: 1100px), (min-width: 761px) and (max-height: 820px) {
+  html body #ai-stack .svc-tabs__panel:not(#_):not(#__):not(#___):not(#____):not(#_____):not(#______) { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) !important; }
+}
+
+/* ══ Pagina AI · passo 04: video con un solo comando (play/pausa) ═══════
+   Nessuna interfaccia di Vimeo (titolo, autore, mi piace, condividi...).
+   Il pulsante copre tutto il riquadro: un clic sul video = play/pausa.
+   Il cerchio fucsia con l'icona si vede da fermo; in riproduzione sparisce
+   e riappare (con la pausa) al passaggio del mouse o col focus da tastiera. */
+html body #ai-pan-4 .svc-tabs__media-video:not(#_) { pointer-events: none; }
+html body #ai-pan-4 .svc-tabs__media-toggle:not(#_):not(#__) {
+  position: absolute; inset: 0; z-index: 2; width: 100%; height: 100%; margin: 0; padding: 0;
+  border: 0; background: transparent; cursor: pointer; display: grid; place-items: center; border-radius: inherit;
+  -webkit-tap-highlight-color: transparent;
+}
+html body #ai-pan-4 .svc-tabs__media-toggle:not(#_):not(#__)::before {
+  content: ''; width: 68px; height: 68px; border-radius: 50%; background: var(--primary, #DB005A);
+  box-shadow: 0 14px 30px -12px rgba(0,0,0,.55);
+  transition: opacity .25s ease, transform .35s cubic-bezier(.34,1.56,.64,1), background-color .2s ease;
+}
+html body #ai-pan-4 .svc-tabs__media-toggle:not(#_):not(#__)::after {
+  content: ''; position: absolute; width: 26px; height: 26px; background: #fff; transition: opacity .25s ease, transform .35s cubic-bezier(.34,1.56,.64,1);
+  -webkit-mask: var(--ai-play) center / contain no-repeat; mask: var(--ai-play) center / contain no-repeat; transform: translateX(2px);
+  --ai-play: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 4.5v15l13-7.5z'/%3E%3C/svg%3E");
+  --ai-pause: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M6 4h4.5v16H6zM13.5 4H18v16h-4.5z'/%3E%3C/svg%3E");
+}
+html body #ai-pan-4 .svc-tabs__media-toggle:hover:not(#_):not(#__)::before { background: #fff; transform: scale(1.06); }
+html body #ai-pan-4 .svc-tabs__media-toggle:hover:not(#_):not(#__)::after { background: var(--primary, #DB005A); }
+html body #ai-pan-4 .svc-tabs__media-toggle:focus-visible:not(#_):not(#__) { outline: 3px solid var(--primary, #DB005A); outline-offset: -6px; }
+/* in riproduzione: icona di pausa, nascosta finché non c'è hover o focus */
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:not(#_):not(#__)::after { -webkit-mask-image: var(--ai-pause); mask-image: var(--ai-pause); transform: none; }
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:not(#_):not(#__)::before,
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:not(#_):not(#__)::after { opacity: 0; }
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:hover:not(#_):not(#__)::before,
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:hover:not(#_):not(#__)::after,
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:focus-visible:not(#_):not(#__)::before,
+html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:focus-visible:not(#_):not(#__)::after { opacity: 1; }
+@media (hover: none) {
+  html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:not(#_):not(#__)::before,
+  html body #ai-pan-4 .svc-tabs__media-toggle.is-playing:not(#_):not(#__)::after { opacity: 0; }
+}
+
+/* ══ MOBILE / TOUCH — bersagli di tocco e testi leggibili ═══════════════
+   · bersagli ≥ 44×44px. Dove l'aspetto non deve cambiare (logo, menu, CTA
+     della barra, icone social) si estende solo l'area di tocco con un
+     pseudo-elemento invisibile; per i link di testo in elenco (footer, menu)
+     si porta la riga a 44px.
+   · etichette e CTA mai sotto i 14px sugli schermi stretti. */
+@media (max-width: 1024px), (pointer: coarse) {
+  html body :is(.nav__logo, .nav__joinus, .nav__menu-btn, .sf-social a):not(#_):not(#__) { position: relative; }
+  html body :is(.nav__logo, .nav__joinus, .nav__menu-btn, .sf-social a):not(#_):not(#__)::after {
+    content: ''; position: absolute; left: 50%; top: 50%;
+    width: max(100%, 44px); height: max(100%, 44px); transform: translate(-50%, -50%);
+  }
+  html body :is(.sf-links a, .sf-legal__links a):not(#_):not(#__) { display: inline-flex; align-items: center; min-height: 44px; }
+  html body .sf-links:not(#_):not(#__) { gap: 0; }
+  html body .sf-legal__links:not(#_):not(#__) { flex-wrap: wrap; gap: 0 20px; }
+  html body .nav__mega-links a:not(#_):not(#__) { display: flex; align-items: center; min-height: 44px; }
+  html body .contact-hub__pill:not(#_):not(#__) { min-height: 44px; }
+}
+
+/* CTA e pulsanti: una sola misura in tutto il sito (14px) e il testo può andare a capo
+   quando lo schermo è molto stretto, invece di essere tagliato */
+html body :is(.btn, .nav__joinus):not(#_):not(#__):not(#___) { font-size: 14px !important; }
+@media (max-width: 420px) {
+  html body .btn:not(#_):not(#__):not(#___) { white-space: normal !important; text-align: center; max-width: 100%; line-height: 1.25; }
+}
+
+/* Tips: la card in evidenza non deve superare la larghezza dello schermo */
+html body .nw-featured__card:not(#_):not(#__) { grid-template-columns: minmax(0, 1fr); }
+html body .nw-featured__card > *:not(#_):not(#__) { min-width: 0; }
+html body .nw-featured__img:not(#_):not(#__) { max-width: 100%; }
+
+@media (max-width: 768px) {
+  html body :is(.page-hero__kicker, .page-hero__meta-item, .service-row__num):not(#_):not(#__):not(#___) { font-size: 14px !important; }
+  html body :is(.d24-hero__meta-label, .d24-block__eyebrow, .d24-contact__label, .d24-intro__label, .d24-numbers__label, .d24-results__label, .d24-numbers__col-title, .d24-back__brand):not(#_):not(#__):not(#___) {
+    font-size: 14px !important; letter-spacing: .08em !important;
+  }
+}
+
+/* ── Mobile/touch · rifiniture ─────────────────────────────────────────── */
+@media (max-width: 1024px), (pointer: coarse) {
+  html body :is(.sf-links a, .sf-legal__links a):not(#_):not(#__):not(#___) { min-width: 44px; }
+  html body .contact-hub__pill:not(#_):not(#__):not(#___):not(#____) { min-height: 44px !important; }
+  html body .cst-tab:not(#_):not(#__):not(#___) { min-height: 44px; }
+}
+/* informativa privacy dei form, "Sfoglia" del CV, CTA citazione e settori: mai sotto i 14px */
+html body :is(.contact-home__privacy, .contact-home__privacy span, .contact-home__privacy a, .contact-home__privacy em, .lcn-apply__file-label strong, .d24-quote__cta):not(#_):not(#__):not(#___) { font-size: 14px !important; }
+@media (max-width: 768px) {
+  html body .svc-settori__item span:not(#_):not(#__):not(#___) { font-size: 14px !important; line-height: 1.25; }
+}
+@media (max-width: 1024px), (pointer: coarse) {
+  html body .svc-hero__platforms a:not(#_):not(#__):not(#___) { display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px; }
 }

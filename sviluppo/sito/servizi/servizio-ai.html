@@ -1,0 +1,2478 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="ESTRO — Servizio AI: l'intelligenza artificiale al servizio del tuo brand. E-commerce, prototipazione, campagne foto e video con AI." />
+  <meta name="theme-color" content="#FFFFFF" />
+  <title>Servizio AI — ESTRO</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/tokens.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/base.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/components.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261017d" />
+  <style>
+    body { background: #000 !important; }
+    /* Hero: esattamente 100dvh */
+    .svc-hero--videobg {
+      height: 100dvh !important; min-height: unset !important;
+      max-height: 100dvh !important; overflow: hidden !important;
+    }
+/* Hero reveal */
+    .svc-hero { position: relative; overflow: hidden; }
+    .svc-hero__kicker, .svc-hero__title, .svc-hero__sub, .svc-hero__tagline, .svc-hero__form { opacity: 0; transform: translateY(22px); }
+    .svc-hero--revealed .svc-hero__kicker  { opacity: 1; transform: none; transition: opacity 0.55s 0.10s ease, transform 0.55s 0.10s ease; }
+    .svc-hero--revealed .svc-hero__title   { opacity: 1; transform: none; transition: opacity 0.60s 0.25s ease, transform 0.60s 0.25s ease; }
+    .svc-hero--revealed .svc-hero__sub     { opacity: 1; transform: none; transition: opacity 0.55s 0.52s ease, transform 0.55s 0.52s ease; }
+    .svc-hero--revealed .svc-hero__tagline { opacity: 1; transform: none; transition: opacity 0.50s 0.62s ease, transform 0.50s 0.62s ease; }
+    .svc-hero--revealed .svc-hero__form    { opacity: 1; transform: none; transition: opacity 0.55s 0.72s ease, transform 0.55s 0.72s ease; }
+    /* Nav transitions */
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+    /* Split-letter .tl spans */
+    .svc-clients__title .tl, .svc-magic__title .tl, .svc-caffe__title .tl,
+    .svc-ai-approccio__title .tl, .svc-ai-workflow__title .tl {
+      display: inline-block; opacity: 0; transform: translateY(0.8em);
+    }
+    /* Clienti */
+    /* La sezione e' la corsa del pannello, come in homepage: senza
+       padding e senza taglio. Con i respiri di sezione (112px sopra,
+       96px sotto) sommati al pannello da 100dvh restava un mare di
+       vuoto sopra e sotto ai loghi. */
+    #ai-clienti { background: #000 !important; color: #fff !important;
+      min-height: 0 !important; height: 118dvh !important; display: block !important;
+      padding: 0 !important; overflow: visible !important; }
+    #ai-clienti .svc-clients__title { opacity:0; transform:translateY(30px); transition:none !important; }
+    #ai-clienti .svc-clients__marquee-wrap { display:flex !important; flex-direction:column !important; gap:2rem !important; }
+    #ai-clienti .svc-clients__track { animation: ai-marquee 110s linear infinite !important; }
+    #ai-clienti .svc-clients__track--rev { animation-direction: reverse !important; }
+    #ai-clienti .svc-clients__track:hover,
+    #ai-clienti .svc-clients__track--rev:hover { animation-play-state: paused !important; }
+    @keyframes ai-marquee { from{transform:translateX(0);} to{transform:translateX(-50%);} }
+    #ai-clienti .svc-clients__logo { width: clamp(100px,12vw,180px) !important; flex-shrink:0 !important; display:flex !important; align-items:center !important; justify-content:center !important; }
+    #ai-clienti .svc-clients__logo img { width:auto !important; filter:brightness(0) invert(1) !important; opacity:0.8 !important; object-fit:contain !important; }
+    #ai-clienti .svc-clients__logo:hover img { opacity: 1 !important; }
+    #ai-clienti .svc-clients__logo--seven img { max-height: clamp(32px,4.5vw,56px) !important; }
+    #ai-clienti .svc-clients__logo--big img   { max-height: clamp(80px,11vw,136px) !important; }
+    #ai-clienti .svc-clients__logo--xl img    { max-height: clamp(95px,13.5vw,166px) !important; }
+    #ai-clienti .svc-clients__logo--xxl img   { max-height: clamp(140px,20vw,250px) !important; }
+    /* Caffè */
+    .svc-caffe .btn { text-align: center; justify-content: center; }
+    .svc-caffe__title .caffe-nowrap { white-space: nowrap; display: inline-block; }
+    /* ── SMM STACKED PANELS ─────────────────────────────────── */
+    .smm-stack { position: relative; height: 400dvh; }
+    .smm-panel {
+      position: sticky; top: 0; height: 100dvh;
+      display: flex; align-items: center; overflow: hidden; will-change: transform;
+    }
+    .smm-panel:nth-child(1) { z-index: 1; }
+    .smm-panel:nth-child(2) { z-index: 2; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(3) { z-index: 3; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(4) { z-index: 4; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(5) { z-index: 5; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(6) { z-index: 6; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(7) { z-index: 7; border-radius: 24px 24px 0 0; }
+    .smm-panel:nth-child(8) { z-index: 8; border-radius: 24px 24px 0 0; }
+    .smm-panel--dark  { background: #050505; color: #fff; }
+    .smm-panel--light { background: #f9f9f9; color: #080808; }
+    .smm-panel__inner {
+      width: 100%; display: grid; grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 6vw, 7rem); align-items: center; padding-block: clamp(2rem, 4vw, 4rem);
+    }
+    .smm-panel__copy { display: flex; flex-direction: column; gap: 1.25rem; }
+    .smm-panel__tag {
+      display: inline-flex; align-self: flex-start;
+      font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+      padding: 0.35em 1em; border-radius: 100px;
+      color: var(--primary, #DB005A); background: rgba(219,0,90,0.12); border: 1px solid rgba(219,0,90,0.3);
+    }
+    .smm-panel__title {
+      font-family: var(--font-primary); font-size: clamp(2.4rem, 4vw, 4.8rem);
+      font-weight: 900; line-height: 0.94; letter-spacing: -0.03em; margin: 0;
+    }
+    .smm-panel--dark .smm-panel__title  { color: #fff; }
+    .smm-panel--light .smm-panel__title { color: #080808; }
+    .smm-panel__text { font-size: clamp(0.88rem, 1vw, 1rem); line-height: 1.75; margin: 0; }
+    .smm-panel--dark .smm-panel__text   { color: rgba(255,255,255,0.68); }
+    .smm-panel--light .smm-panel__text  { color: rgba(0,0,0,0.62); }
+    .smm-panel__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.4rem; }
+    .smm-panel__list li { font-size: 0.875rem; padding-left: 1.3em; position: relative; }
+    .smm-panel__list li::before { content: '✓'; position: absolute; left: 0; color: var(--primary, #DB005A); font-weight: 700; }
+    .smm-panel--dark .smm-panel__list li  { color: rgba(255,255,255,0.72); }
+    .smm-panel--light .smm-panel__list li { color: rgba(0,0,0,0.68); }
+    .smm-panel__visual {
+      aspect-ratio: 4/3; border-radius: 14px; overflow: hidden;
+      background: rgba(219,0,90,0.10); border: 1px solid rgba(219,0,90,0.15);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .smm-panel--light .smm-panel__visual { background: rgba(219,0,90,0.06); }
+    .smm-panel__visual-label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.35; }
+    .smm-panel [data-reveal] { opacity: 0; transform: translateY(22px); }
+    .smm-panel .btn { text-align: center; justify-content: center; }
+    @media (max-width: 768px) {
+      .smm-panel__inner { grid-template-columns: 1fr; gap: 2rem; }
+      .smm-panel__visual { display: none; }
+    }
+
+    /* ── PRODUZIONE ACCORDION ───────────────────────────────── */
+    .pc-prod { padding: clamp(4rem,8vw,7rem) 0; }
+    .pc-prod__head { margin-bottom: 3rem; }
+    .pc-prod__kicker { font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase; color: #DB005A; margin: 0 0 0.6rem; font-weight: 600; }
+    .pc-prod__title { font-size: clamp(2rem,4vw,3rem); font-weight: 800; margin: 0 0 1rem; line-height: 1.1; font-family: var(--font-primary); }
+    .pc-prod__sub { font-size: clamp(0.9rem,1.2vw,1.05rem); color: rgba(0,0,0,0.55); line-height: 1.7; max-width: 560px; margin: 0; }
+
+    .pc-acc { border-top: 1px solid rgba(0,0,0,0.07); margin-top: 2.5rem; }
+
+    .pc-acc__item {
+      position: relative;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+      overflow: hidden;
+      opacity: 0;
+      transform: translateY(32px);
+      transition: border-left-color 0.35s,
+                  opacity 0.55s cubic-bezier(.4,0,.2,1),
+                  transform 0.55s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__item.pc-item--in {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* barra sinistra che si disegna dall'alto */
+    .pc-acc__item::before {
+      content: ''; position: absolute; left: 0; top: 0;
+      width: 2px; height: 100%; background: #DB005A;
+      transform: scaleY(0); transform-origin: top;
+      transition: transform 0.45s cubic-bezier(.4,0,.2,1);
+      z-index: 1;
+    }
+    .pc-acc__item.is-open::before { transform: scaleY(1); }
+    /* shimmer gradient a sinistra su hover */
+    .pc-acc__item::after {
+      content: ''; position: absolute; inset: 0; pointer-events: none;
+      background: linear-gradient(90deg, rgba(219,0,90,0.05) 0%, transparent 55%);
+      opacity: 0; transition: opacity 0.35s;
+    }
+    .pc-acc__item:hover::after, .pc-acc__item.is-open::after { opacity: 1; }
+
+    .pc-acc__head {
+      display: flex; align-items: center; gap: clamp(1rem,3vw,2rem);
+      padding: clamp(1.2rem,2.2vw,1.7rem) clamp(0.5rem,1.5vw,1.5rem);
+      cursor: pointer; user-select: none;
+    }
+
+    .pc-acc__num {
+      font-size: clamp(2rem,4.5vw,3.5rem); font-weight: 900; line-height: 1;
+      font-family: var(--font-primary);
+      color: transparent; -webkit-text-stroke: 1.5px rgba(0,0,0,0.15);
+      min-width: clamp(2.6rem,5vw,4.2rem); flex-shrink: 0; display: inline-block;
+      transition: -webkit-text-stroke-color 0.35s, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+    }
+    .pc-acc__item:hover .pc-acc__num,
+    .pc-acc__item.is-open .pc-acc__num {
+      -webkit-text-stroke-color: #DB005A;
+      transform: scale(1.08);
+    }
+
+    .pc-acc__name {
+      flex: 1; font-size: clamp(1rem,1.9vw,1.3rem); font-weight: 700;
+      font-family: var(--font-primary); color: #080808; line-height: 1.25;
+      transition: transform 0.35s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__item:hover .pc-acc__name,
+    .pc-acc__item.is-open .pc-acc__name { transform: translateX(7px); }
+
+    /* ── occhio ── */
+    .pc-acc__eye {
+      width: 42px; height: 42px; border-radius: 50%;
+      border: 1.5px solid rgba(0,0,0,0.12);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; position: relative;
+      transition: background 0.35s, border-color 0.35s, transform 0.3s cubic-bezier(.34,1.56,.64,1);
+    }
+    .pc-acc__item.is-open .pc-acc__eye { background: #DB005A; border-color: #DB005A; color: #fff; }
+    .pc-acc__item:hover .pc-acc__eye    { border-color: rgba(219,0,90,0.5); transform: scale(1.1); }
+    .pc-acc__item.is-open .pc-acc__eye  { transform: scale(1.1); }
+
+    .pc-acc__eye-svg {
+      width: 26px; height: 26px; position: absolute;
+      transition: opacity 0.3s cubic-bezier(.4,0,.2,1), transform 0.3s cubic-bezier(.4,0,.2,1);
+    }
+    /* stato di default: occhio chiuso visibile */
+    .pc-acc__eye-svg--closed { opacity: 1; transform: translateY(0) scale(1); }
+    .pc-acc__eye-svg--open   { opacity: 0; transform: translateY(5px) scale(0.6); }
+    /* stato aperto: occhio aperto visibile con bounce */
+    .pc-acc__item.is-open .pc-acc__eye-svg--closed { opacity: 0; transform: translateY(-5px) scale(0.6); }
+    .pc-acc__item.is-open .pc-acc__eye-svg--open   { opacity: 1; transform: translateY(0) scale(1); animation: pc-eye-pop 0.45s cubic-bezier(.34,1.56,.64,1); }
+
+    @keyframes pc-eye-pop {
+      0%   { transform: translateY(6px) scale(0.4); opacity: 0; }
+      65%  { transform: translateY(-3px) scale(1.2); opacity: 1; }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    /* ── corpo accordion ── */
+    .pc-acc__body {
+      display: grid; grid-template-rows: 0fr;
+      transition: grid-template-rows 0.45s cubic-bezier(.4,0,.2,1);
+    }
+    .pc-acc__body-inner { overflow: hidden; }
+    .pc-acc__item.is-open .pc-acc__body { grid-template-rows: 1fr; }
+
+    .pc-acc__text {
+      padding: 0.2rem 0 2rem clamp(3.6rem,8.5vw,6.6rem);
+      color: rgba(0,0,0,0.52); font-size: clamp(0.87rem,1.1vw,1rem);
+      line-height: 1.85; margin: 0;
+      opacity: 0; transform: translateY(10px); filter: blur(3px);
+      transition: opacity 0.4s 0.1s, transform 0.4s cubic-bezier(.4,0,.2,1) 0.1s, filter 0.4s 0.1s;
+    }
+    .pc-acc__item.is-open .pc-acc__text { opacity: 1; transform: translateY(0); filter: blur(0); }
+
+    @media (max-width: 640px) {
+      .pc-acc__text { padding-left: 0.5rem; }
+      .pc-acc__num  { font-size: 2rem; }
+      .pc-acc__eye  { width: 34px; height: 34px; }
+      .pc-acc__eye-svg { width: 20px; height: 20px; }
+    }
+
+    /* ── scroll dots ── */
+    #ai-scroll-dots {
+      position: fixed; right: 20px; top: 50%; transform: translateY(-50%);
+      display: flex; flex-direction: column; gap: 9px;
+      z-index: 9999; pointer-events: none;
+      opacity: 0; transition: opacity 0.5s;
+    }
+    #ai-scroll-dots.ai-dots--visible { opacity: 1; }
+    .ai-sd {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: transparent;
+      border: 1.5px solid rgba(219,0,90,0.3);
+      transition: background 0.25s, border-color 0.25s, transform 0.35s cubic-bezier(.34,1.56,.64,1);
+      opacity: 0.35;
+    }
+    .ai-sd.ai-sd--on {
+      background: #DB005A; border-color: #DB005A;
+      transform: scale(1.5); opacity: 1;
+    }
+    @media (max-width: 768px) { #ai-scroll-dots { right: 10px; } }
+
+
+
+    /* ── Corpi della nav, come in homepage ─────────────────────
+       La scritta MENU sta al minimo di lettura (16px), la CTA
+       "Contattaci" a 14px come tutte le CTA del sito. Qui non
+       c'erano e restavano ai valori di default del componente. */
+    .nav__menu-label-open,
+    .nav__menu-label-close { font-size: max(16px, var(--text-min, 1rem)) !important; }
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ── La hero non copre il raccordo ─────────────────────────
+       Avevo tenuto la hero sopra per non far vedere il bianco
+       della sezione seguente nella prima schermata: ma cosi' la
+       salita non si vedeva mai, perche' la sovrapposizione e'
+       costante. Vince la transizione: la hero sta sotto e il
+       raccordo arrotondato si vede da subito. */
+    .svc-hero--videobg {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Sfondo della hero: segnaposto dichiarato ──────────────
+       Il <video> di sfondo non ha ancora una sorgente, quindi la
+       hero restava nera senza che si capisse perche'. Qui il posto
+       si dichiara: trama diagonale, cornice tratteggiata e la
+       scritta che dice cos'e'. Appena si mette l'immagine (o il
+       video) basta togliere .svc-hero__ph dal markup. */
+    .svc-hero__ph {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        repeating-linear-gradient(135deg,
+          rgba(255,255,255,0.045) 0 14px,
+          transparent 14px 28px),
+        #141014;
+    }
+    .svc-hero__ph::before {
+      content: '';
+      position: absolute;
+      inset: clamp(12px, 1.4vw, 22px);
+      border: 1px dashed rgba(255,255,255,0.22);
+      border-radius: 10px;
+    }
+    .svc-hero__ph-label {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      white-space: nowrap;
+    }
+    .svc-hero__ph-label svg { width: 22px; height: 22px; flex-shrink: 0; }
+    @media (max-width: 700px) {
+      .svc-hero__ph-label { font-size: 12px; letter-spacing: 0.12em; }
+    }
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       Stesse regole del vetro della nav: chiaro sopra hero e
+       servizi, scuro sopra le sezioni scure, con il MENU che segue
+       il fondo invece di imporsi. Prima questa pagina aveva solo un
+       pezzo di quel sistema e sul dark il testo bianco finiva su
+       vetro bianco.
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      /* solo una diffusione morbida verso il basso, nessun contorno */
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      /* Il vetro cambia formula uscendo dalla scena hero+servizi:
+         la transizione la copre insieme al colore del MENU, così il
+         passaggio non scatta. */
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    /* Sopra sezioni scure il vetro si scurisce: MENU resta chiaro */
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+
+    /* ── Sopra HERO e SERVIZI: vetro chiaro, tendente al bianco ──
+       Finché la scena hero+servizi è in viewport la nav non ha
+       .scrolled: è il segnale già usato dal progetto, quindi non
+       serve un secondo sistema.
+       Il vetro è davvero trasparente: la leggibilità non viene più
+       dalla densità del velo ma dal blur, che scioglie il fondo, e
+       dalla desaturazione, che gli toglie il rosa. Quello che non si
+       può tenere fisso è il colore del MENU: sotto la pill passa un
+       fondo chiaro sulla hero e nero sui Servizi, quindi il testo
+       segue il fondo invece di imporsi su entrambi. */
+    /* Hero: il vetro deve leggersi come vetro, non come un velo scuro.
+       La luce viene dal brightness sul fondo — il video dietro la pill
+       sta intorno a L 0.30 e viene portato in alto — più da un velo
+       bianco leggero. Così la pill resta traslucida e luminosa, con il
+       MENU nero largamente sopra soglia e il fucsia del logo a ~5:1. */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    /* Sopra la hero il fondo è chiaro → MENU nero */
+    .nav:not(.scrolled) .nav__menu-btn {
+      color: #111 !important;
+      text-shadow: none !important;
+    }
+    /* ── Sopra i SERVIZI il fondo è nero ────────────────────────
+       Il vetro resta trasparente come richiesto, quindi sotto la pill
+       c'è il nero: il MENU passa a bianco, esattamente come fa già
+       sopra tutte le altre sezioni scure. Logo e simbolo invece non
+       cambiano: stesso fucsia pieno che hanno nel resto della pagina,
+       nessun filtro e nessun alone. */
+    .nav:not(.scrolled).nav--svc .nav__inner {
+      background: rgba(255,255,255,0.10) !important;
+      backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+      -webkit-backdrop-filter: blur(34px) saturate(45%) brightness(1.2) !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-btn {
+      color: #fff !important;
+      text-shadow: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__logo img {
+      filter: none !important;
+    }
+    .nav:not(.scrolled).nav--svc .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    /* Logo e simbolo restano il fucsia di brand, pieno e senza
+       filtri: sul vetro chiaro è la combinazione più leggibile. */
+    .nav:not(.scrolled) .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: none !important;
+    }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    /* Il simbolo resta fucsia, solo reso più leggibile: nessun neon */
+    .nav--on-dark .nav__menu-icon span {
+      background: var(--primary) !important;
+      filter: drop-shadow(0 0 1.5px rgba(255,255,255,0.5));
+    }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    /* ═══════════════════════════════════════════════════════════
+       SERVIZI — TIMELINE ORIZZONTALE
+       I servizi sono un percorso, non un elenco: una linea con sei
+       tappe numerate, tutte visibili insieme. Si clicca una tappa e
+       sotto si apre il suo riquadro, uno alla volta. La linea si
+       riempie di fucsia fino alla tappa scelta.
+       ═══════════════════════════════════════════════════════════ */
+    /* La sezione e' la corsa; il pannello dentro resta agganciato
+       in alto e occupa una schermata intera, come le sezioni della
+       homepage. La corsa e' poco piu' alta della schermata: quanto
+       basta perche' il pannello si fermi e poi lasci il posto. */
+    .svc-path {
+      background: #fff;
+      color: #080808;
+      /* corsa breve: quanto basta perche' il pannello si fermi un
+         attimo e poi lasci il posto. A 135dvh restava incollato
+         troppo a lungo mentre si scorreva. */
+      height: 112dvh;
+      padding-block: 0;
+    }
+    .svc-path__sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: #fff;
+      /* la nav e' fissa e alta circa 100px: senza questo spazio il
+         titolo le finiva sotto. Qui sopra c'e' aria vera, non il
+         minimo indispensabile. */
+      padding-top: clamp(8rem, 16vh, 11rem);
+      padding-bottom: clamp(2rem, 4vh, 3rem);
+    }
+    /* Dentro la schermata nulla scorre: il riquadro prende
+       l'altezza del suo contenuto e i respiri intorno sono tarati
+       perche' il caso piu' lungo — testo, quattro punti e la CTA —
+       ci stia comunque. Se scorresse, la CTA finirebbe fuori vista:
+       e' l'unica cosa che non puo' succedere. */
+    .svc-path__sticky > .container {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      height: 100%;
+      min-height: 0;
+    }
+    .svc-path__sticky .svc-path__head { margin-bottom: clamp(1.25rem, 2.8vh, 2rem); }
+    .svc-path__sticky .svc-tabs {
+      gap: clamp(1rem, 2.2vh, 1.6rem);
+      /* la timeline resta alta quanto serve, il riquadro si prende
+         lo spazio che avanza nella schermata: cosi' il fondo della
+         card non sfora mai il bordo basso */
+      flex: 1 1 auto;
+      min-height: 0;
+    }
+    .svc-path__sticky .svc-tabs__panels { flex: 1 1 auto; min-height: 0; }
+    .svc-path__sticky .svc-tabs__panel {
+      height: 100%;
+      padding: clamp(1.1rem, 2.2vh, 1.6rem);
+      gap: clamp(1.25rem, 2.4vw, 2.25rem);
+    }
+    /* la foto riempie l'altezza del riquadro invece di imporgliela:
+       con un rapporto fisso era lei a farlo diventare troppo alto */
+    .svc-path__sticky .svc-tabs__media { aspect-ratio: auto; height: 100%; }
+    .svc-path__sticky .svc-tabs__copy {
+      overflow: visible;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+    .svc-path__sticky .svc-tabs__text { line-height: 1.6; }
+    .svc-path__sticky .svc-tabs__points { gap: 0.35rem; }
+
+    /* ── Testata della sezione ─────────────────────────────────
+       Titolo e occhiello aprono la sezione, sopra la timeline. */
+    .svc-path__head {
+      text-align: center;
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+    }
+    .svc-path__head .smm-panel__big-title {
+      font-size: min(60px, 9vw) !important;
+      line-height: 1.05;
+      color: var(--primary, #DB005A);
+      /* le parole non si spezzano mai: vanno a capo intere */
+      word-break: keep-all;
+      overflow-wrap: normal;
+      hyphens: none;
+      /* larghezza tarata perche' stia su due righe */
+      max-width: 19ch;
+      margin: 0 auto;
+    }
+    .svc-path__head .smm-panel__statement-sub {
+      color: rgba(0,0,0,0.62);
+      font-size: 16px;
+      margin-top: clamp(1.25rem, 2.5vw, 2rem);
+      line-height: 1.5;
+      /* su una riga sola */
+      max-width: none;
+      white-space: nowrap;
+      margin-inline: auto;
+    }
+    .svc-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2rem, 4vw, 3.25rem);
+    }
+    .svc-tabs__strip {
+      position: relative;
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+      gap: 0;
+      padding-top: 6px;
+      --p: 0;
+    }
+    .svc-tabs__strip::before,
+    .svc-tabs__strip::after {
+      content: '';
+      position: absolute;
+      top: 25px;
+      height: 2px;
+      border-radius: 2px;
+      pointer-events: none;
+    }
+    .svc-tabs__strip::before {
+      left: calc(100% / var(--n, 6) / 2);
+      right: calc(100% / var(--n, 6) / 2);
+      background: rgba(0,0,0,0.10);
+    }
+    .svc-tabs__strip::after {
+      left: calc(100% / var(--n, 6) / 2);
+      width: calc((100% - 100% / var(--n, 6)) * var(--p));
+      background: var(--primary, #DB005A);
+      transition: width var(--dur-base, 460ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1));
+    }
+    .svc-tabs__tab {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.85rem;
+      padding: 0 0.6rem;
+      min-width: 0;
+      text-align: center;
+      background: none;
+      border: 0;
+      cursor: pointer;
+      color: inherit;
+      font: inherit;
+    }
+    .svc-tabs__tab:focus-visible {
+      outline: 2px solid var(--primary, #DB005A);
+      outline-offset: 6px;
+      border-radius: 10px;
+    }
+    .svc-tabs__num {
+      position: relative;
+      z-index: 1;
+      width: 40px; height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      font-family: var(--font-secondary);
+      font-size: 15px;
+      font-weight: 700;
+      line-height: 1;
+      color: rgba(0,0,0,0.45);
+      background: #fff;
+      border: 2px solid rgba(0,0,0,0.12);
+      transition: transform var(--dur-base, 360ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1)),
+                  background var(--dur-base, 360ms) ease,
+                  border-color var(--dur-base, 360ms) ease,
+                  color var(--dur-base, 360ms) ease,
+                  box-shadow var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-done .svc-tabs__num {
+      border-color: var(--primary, #DB005A);
+      color: var(--primary, #DB005A);
+    }
+    .svc-tabs__tab:hover .svc-tabs__num {
+      border-color: var(--primary, #DB005A);
+      transform: translateY(-2px);
+    }
+    .svc-tabs__tab.is-active .svc-tabs__num {
+      background: var(--primary, #DB005A);
+      border-color: var(--primary, #DB005A);
+      color: #fff;
+      transform: scale(1.22);
+      box-shadow: 0 10px 26px rgba(219,0,90,0.32);
+    }
+    .svc-tabs__tag {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(0,0,0,0.38);
+      transition: color var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-active .svc-tabs__tag { color: var(--primary, #DB005A); }
+    .svc-tabs__title {
+      font-family: var(--font-primary);
+      font-size: clamp(0.95rem, 1.15vw, 1.15rem);
+      line-height: 1.25;
+      font-weight: 400;
+      font-synthesis-weight: none;
+      color: rgba(0,0,0,0.55);
+      overflow-wrap: normal;
+      word-break: normal;
+      hyphens: none;
+      transition: color var(--dur-base, 360ms) ease;
+    }
+    .svc-tabs__tab.is-active .svc-tabs__title { color: #080808; }
+    .svc-tabs__panels { position: relative; }
+    .svc-tabs__panel[hidden] { display: none !important; }
+    .svc-tabs__panel {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(1.75rem, 3.5vw, 3.5rem);
+      align-items: stretch;
+      background: #fff;
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 22px;
+      padding: clamp(1.5rem, 3vw, 2.5rem);
+      box-shadow: 0 26px 64px rgba(0,0,0,0.10);
+      animation: svcTabIn var(--dur-base, 420ms) var(--ease-out, cubic-bezier(0.22,1,0.36,1)) both;
+    }
+    @keyframes svcTabIn {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: none; }
+    }
+    .svc-tabs__media {
+      position: relative;
+      aspect-ratio: 4/3;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(219,0,90,0.06);
+      border: 1px solid rgba(219,0,90,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .svc-tabs__media-img {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .svc-tabs__media-label {
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      opacity: 0.35;
+      padding: 1rem;
+      text-align: center;
+    }
+    .svc-tabs__copy {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 1rem;
+    }
+    .svc-tabs__copy > :first-child { margin-top: 0; }
+    .svc-tabs__text {
+      font-size: max(16px, 1rem);
+      line-height: 1.75;
+      color: rgba(0,0,0,0.62);
+      margin: 0;
+    }
+    .svc-tabs__points {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    .svc-tabs__points li {
+      font-size: max(16px, 1rem);
+      line-height: 1.6;
+      color: rgba(0,0,0,0.68);
+      padding-left: 1.5em;
+      position: relative;
+    }
+    .svc-tabs__points li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.62em;
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--primary, #DB005A);
+    }
+    .svc-tabs__cta {
+      font-size: 14px !important;
+      margin-top: 0.35rem;
+    }
+    @media (max-width: 1100px) {
+      .svc-tabs__strip {
+        grid-auto-columns: minmax(170px, 1fr);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 6px;
+      }
+      .svc-tabs__tab { scroll-snap-align: center; }
+      .svc-tabs__strip::before,
+      .svc-tabs__strip::after { display: none; }
+    }
+    @media (max-width: 760px) {
+      .svc-tabs__panel { grid-template-columns: 1fr; }
+      .svc-tabs__media { order: 2; }
+      .svc-tabs__copy  { order: 1; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .svc-tabs__num, .svc-tabs__strip::after { transition: none; }
+      .svc-tabs__panel { animation: none; }
+    }
+
+    /* ── Video dietro la sezione "amici" ───────────────────────
+       Stessa regione video della homepage: sta sotto al contenuto,
+       il fucsia del brand entra fra i colori della forma ruotando
+       la crominanza, e una sfumatura ne chiude il bordo basso. */
+    .svc-clients { position: relative; isolation: isolate; }
+    .amici-video {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+      z-index: 0;
+      pointer-events: none;
+    }
+    .amici-video__el {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transform: scale(1.6); /* come in homepage */
+      filter: hue-rotate(-54deg) saturate(1.08);
+    }
+    .amici-video__fade {
+      pointer-events: none;
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 8rem;
+      background: linear-gradient(to bottom, transparent, #0a0a0a);
+    }
+    /* il contenuto sta sopra al video */
+    /* Il contenuto sta sopra al video. Il selettore chiedeva il
+       figlio diretto della sezione, ma da quando il pannello
+       agganciato si e' messo in mezzo il titolo non lo era piu': il
+       video, assoluto e a z-index 0, gli passava davanti. */
+    .svc-clients .container,
+    .svc-clients .svc-clients__header,
+    .svc-clients .svc-clients__marquee-wrap {
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Clienti e FAQ: pannelli agganciati ────────────────────
+       Come in homepage: la sezione e' la corsa, il figlio dentro
+       resta fermo in alto per una schermata intera e poi lascia il
+       posto. Prima le due sezioni erano solo alte una schermata,
+       senza fermarsi. */
+    .svc-clients,
+    .page-faq {
+      min-height: 0 !important;
+      height: 118dvh !important;
+      display: block !important;
+      /* La corsa non deve tagliare ne' avere padding: con overflow
+         hidden il pannello si ancorava a questa scatola invece che
+         alla finestra, e con i padding lo spazio interno restava
+         piu' basso del pannello, quindi non aveva dove fermarsi.
+         Il taglio e i respiri passano al pannello. */
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    .svc-clients .svc-clients__sticky,
+    .page-faq .page-faq__sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+    }
+    /* il video di sfondo sta dentro il pannello, quindi lo copre
+       per tutta la schermata */
+    .svc-clients .svc-clients__sticky { background: #050505; }
+    .svc-clients .amici-video { height: 100%; }
+    .page-faq .page-faq__sticky {
+      background: var(--surface-dark, #0a0a0a);
+      padding-block: clamp(4rem, 8vh, 6rem);
+    }
+    /* la lista delle domande scorre dentro il pannello solo se
+       davvero non ci sta, non per difetto */
+    .page-faq .page-faq__inner { max-height: 100%; overflow: auto; }
+
+    /* ── Sezione "Prendiamoci un caffè" ────────────────────────
+       Corpo e CTA identici al form prima del footer in homepage:
+       campi a 16px, area messaggio 130px, form largo al massimo
+       780px, e il pulsante trasparente col bordo bianco da 2px che
+       si inverte all'hover — non piu il pulsante pieno a tutta
+       larghezza che aveva questa pagina. */
+    .svc-caffe .svc-caffe__form {
+      width: 100%;
+      max-width: 780px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .svc-caffe .hc-row { gap: 0.875rem; }
+    .svc-caffe .svc-caffe__field {
+      font-size: 1rem !important;
+    }
+    .svc-caffe .svc-caffe__field::placeholder { font-size: 1rem; }
+    .svc-caffe .hc-textarea { min-height: 130px; resize: vertical; }
+    .svc-caffe .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    /* i due consensi vanno a 16px come il resto del form: la
+       regola generale del microcopy li teneva a 14 */
+    .svc-caffe .hc-consents .svc-caffe__privacy,
+    .svc-caffe .hc-consents .svc-caffe__privacy span,
+    .svc-caffe .hc-consents .svc-caffe__privacy a,
+    .svc-caffe .hc-consents .svc-caffe__privacy em {
+      font-size: 16px !important;
+      line-height: 1.5;
+    }
+    .svc-caffe .hc-consents .svc-caffe__privacy em {
+      font-style: normal;
+      opacity: 0.65;
+    }
+    .svc-caffe .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      font-size: 0.875rem !important;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .svc-caffe .hc-submit::before { display: none !important; }
+    .svc-caffe .hc-submit:hover,
+    .svc-caffe .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ── FAQ su carta bianca ───────────────────────────────────
+       Era sul fondo scuro come clienti: due sezioni scure di fila
+       si leggevano come una sola. */
+    .page-faq .page-faq__sticky { background: #fff !important; }
+    .page-faq,
+    .page-faq .page-faq__title,
+    .page-faq .page-faq__question { color: #080808 !important; }
+    .page-faq .page-faq__answer-inner { color: rgba(0,0,0,0.66) !important; }
+    .page-faq .page-faq__item { border-color: rgba(0,0,0,0.10) !important; }
+    .page-faq .page-faq__q-icon,
+    .page-faq .page-faq__question::after { color: var(--primary, #DB005A) !important; }
+
+    /* ── Clienti: la sezione prende il colore del video ────────
+       Il video ha il fondo nero pieno e sul grigio scuro della
+       sezione se ne vedeva il bordo. Stesso nero, e il contorno
+       sparisce. */
+    .svc-clients__sticky { background: #000 !important; }
+    .amici-video__fade { background: linear-gradient(to bottom, transparent, #000) !important; }
+
+    /* ── Niente dissolvenza sul footer ─────────────────────────
+       Il footer entrava sfumando: era l'unica sezione a farlo e
+       stonava con la salita che usano tutte le altre. */
+    .site-footer,
+    .site-footer * {
+      animation: none !important;
+    }
+    html.js-reveal .site-footer { opacity: 1 !important; }
+
+    /* ── Tipografia: minimi condivisi ──────────────────────────
+       Corpo mai sotto i 16px; tagline, tag e CTA a 14px. */
+    main p, main li, main a, main span, main label,
+    main input, main textarea,
+    .svc-tabs__text, .svc-tabs__points li,
+    .page-faq__answer-inner,
+    .service-detail__body p,
+    .svc-tools__item span { font-size: max(16px, 1rem) !important; }
+    main a.btn, main button.btn, .btn.btn,
+    .svc-tabs__cta,
+    .svc-hero__tagline,
+    .svc-tabs__tag,
+    .svc-caffe__privacy,
+    .svc-hero__kicker,
+    .svc-clients__logo span,
+    .svc-tabs__media-label { font-size: 14px !important; }
+    /* I titoli non seguono il minimo del corpo. Qui c'era un
+       font-size: revert !important che li riportava alla misura
+       del browser — minuscola — e che, dichiarato in pagina,
+       batteva le misure condivise. Le misure dei titoli stanno
+       ora tutte in components.css. */
+    .smm-panel__statement-sub { font-size: 16px !important; }
+    .page-faq__question { font-size: max(16px, 1rem) !important; }
+
+    /* ── Sezioni a piena schermata con blocco leggero ──────────
+       Come in homepage: ogni sezione e' una corsa poco piu' alta
+       della finestra, con dentro un pannello che resta fermo per
+       una schermata. Fanno eccezione la sezione fucsia e il
+       footer, che restano come sono. */
+    .svc-generic-runway {
+      height: 118dvh !important;
+      min-height: 0 !important;
+      display: block !important;
+      padding: 0 !important;
+      overflow: visible !important;
+    }
+    .svc-generic-sticky {
+      position: sticky;
+      top: 0;
+      height: 100dvh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow: hidden;
+      padding-block: clamp(4rem, 8vh, 6rem);
+    }
+
+    /* ── Niente scorrimento orizzontale ────────────────────────
+       Alcune griglie a colonne fisse sforavano il contenitore. */
+    .svc-process__grid,
+    .svc-channels__grid,
+    .svc-tools__grid,
+    .service-detail__grid { max-width: 100%; }
+    .svc-process__card,
+    .svc-channels__card { min-width: 0; }
+    /* le card del processo entrano ruotate e sbalzate: e' voluto,
+       ma una sbordava di 22px. clip taglia senza creare un
+       contenitore di scorrimento, quindi non tocca le sticky. */
+    .svc-process { overflow-x: clip; }
+  </style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Che cos'è il servizio AI di ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "Offriamo soluzioni di intelligenza artificiale applicate al marketing: automazione dei contenuti, chatbot, analisi dei dati, personalizzazione delle campagne e ottimizzazione dei processi comunicativi." } },
+    { "@type": "Question", "name": "Come l'intelligenza artificiale può aiutare il mio business?", "acceptedAnswer": { "@type": "Answer", "text": "L'AI permette di produrre contenuti più velocemente, personalizzare la comunicazione su larga scala, analizzare i dati in tempo reale e automatizzare attività ripetitive, liberando tempo per le attività strategiche." } },
+    { "@type": "Question", "name": "L'AI sostituisce il lavoro creativo del team ESTRO?", "acceptedAnswer": { "@type": "Answer", "text": "No. L'AI è uno strumento che amplifica le capacità del nostro team creativo, non lo sostituisce. Ogni contenuto prodotto con AI viene revisionato, personalizzato e approvato da professionisti prima della pubblicazione." } },
+    { "@type": "Question", "name": "ESTRO crea chatbot e assistenti virtuali?", "acceptedAnswer": { "@type": "Answer", "text": "Sì, progettiamo e sviluppiamo chatbot per customer service, lead generation e supporto alle vendite, integrabili su sito web, WhatsApp, Instagram e altre piattaforme." } },
+    { "@type": "Question", "name": "I contenuti creati con AI sono originali e unici?", "acceptedAnswer": { "@type": "Answer", "text": "Sì. Utilizziamo l'AI come punto di partenza, ma ogni contenuto viene personalizzato, rielaborato e adattato alla voce e all'identità del tuo brand dal nostro team editoriale." } },
+    { "@type": "Question", "name": "Come vengono gestiti i dati aziendali quando si usano strumenti AI?", "acceptedAnswer": { "@type": "Answer", "text": "La sicurezza dei tuoi dati è una priorità. Utilizziamo strumenti conformi al GDPR e alle normative sulla privacy, e definiamo con ogni cliente le policy di utilizzo dei dati prima di iniziare qualsiasi progetto." } }
+  ]
+}
+</script>
+  <link rel="stylesheet" href="../css/responsive.css?v=20261017d" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png" />
+</head>
+<body>
+
+  <header class="nav nav--on-dark" role="banner"><!-- nav--on-dark di partenza: sotto la nav c'e' la hero scura, quindi MENU e simbolo nascono bianchi e non c'e' nessun cambio di colore al primo frame. Lo stato viene poi ricalcolato da js/main.js. -->
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
+        <img src="../assets/img/brand/logo-estro.webp" alt="ESTRO" />
+      </a>
+      <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links nav__mega-links--2col">
+              <a href="social-media-management.html">Social media management</a>
+              <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+              <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google ads</a>
+              <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social ads</a>
+              <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+              <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+              <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+              <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+              <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione e renderizzazione</a>
+              <a href="servizio-ai.html">AI</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+              <a href="../news.html">News</a>
+              <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="../faq.html">FAQ</a>
+              <a href="../contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="https://tally.so/r/2ELLBj">
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main>
+
+    <!-- ══ HERO ══════════════════════════════════════════════════ -->
+    <section class="svc-hero svc-hero--videobg" id="ai-hero" aria-labelledby="page-title" data-nav-theme="dark">
+      <div class="svc-hero__vimeo" aria-hidden="true">
+        <iframe title="Video di sfondo: AI Creative Production" src="https://player.vimeo.com/video/1204496524?h=fb7735de7e&amp;background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;autopause=0&amp;dnt=1" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; fullscreen; picture-in-picture; encrypted-media" tabindex="-1"></iframe>
+      </div>
+      <div class="svc-hero__bgvideo-overlay" aria-hidden="true"></div>
+      <div class="container svc-hero__inner">
+
+        <div class="svc-hero__left">
+          <p class="svc-hero__kicker">AI Creative Production</p>
+          <h1 class="svc-hero__title" id="page-title"><em>L'AI</em> al<br/>servizio<br/>del brand.</h1>
+          <p class="svc-hero__sub">Utilizziamo l'AI come estensione della direzione creativa per migliorare efficienza, qualità e velocità di esecuzione, mantenendo pieno controllo sul risultato finale.</p>
+          <p class="svc-hero__tagline"><strong>Sei nel posto giusto!</strong></p>
+        </div>
+        <div class="svc-hero__right">
+          <div class="svc-hero__form-card">
+            <p class="svc-hero__form-card-label">Scrivici</p>
+            <p class="svc-hero__form-card-sub">Ti rispondiamo entro 24 ore.</p>
+            <form class="svc-hero__form" action="../contatti.html" method="get">
+              <div class="svc-hero__form-row">
+                <div class="f-field">
+                  <label class="f-label" for="ai-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="ai-f-nome" class="svc-hero__field" type="text" name="nome" placeholder="Mario" required />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="ai-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="ai-f-cognome" class="svc-hero__field" type="text" name="cognome" placeholder="Rossi" required />
+                </div>
+              </div>
+              <div class="svc-hero__form-row">
+                <div class="f-field">
+                  <label class="f-label" for="ai-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                  <input id="ai-f-email" class="svc-hero__field" type="email" name="email" placeholder="mario@azienda.it" required />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="ai-f-telefono">Telefono</label>
+                  <input id="ai-f-telefono" class="svc-hero__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+                </div>
+              </div>
+              <div class="svc-hero__form-row">
+                <div class="f-field">
+                  <label class="f-label" for="ai-f-azienda">Azienda</label>
+                  <input id="ai-f-azienda" class="svc-hero__field" type="text" name="azienda" placeholder="Nome azienda" />
+                </div>
+                <div class="f-field">
+                  <label class="f-label" for="ai-f-sito">Sito Web</label>
+                  <input id="ai-f-sito" class="svc-hero__field" type="url" name="sito" placeholder="www.acme.it" />
+                </div>
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="ai-f-messaggio">Messaggio</label>
+                <textarea id="ai-f-messaggio" class="svc-hero__field svc-hero__textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="4"></textarea>
+              </div>
+              <div class="hc-consents">
+                <label class="svc-hero__privacy" for="ai-hero-privacy">
+                  <input type="checkbox" id="ai-hero-privacy" name="privacy" required />
+                  <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+                </label>
+                <label class="svc-hero__privacy" for="ai-hero-newsletter">
+                  <input type="checkbox" id="ai-hero-newsletter" name="newsletter" value="si" />
+                  <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+                </label>
+              </div>
+              <button class="btn btn--primary svc-hero__submit" type="submit">Invia</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ══ SMM STACK ════════════════════════════════════════════ -->
+    <!-- ══ SERVIZI — galleria a fisarmonica ═══════════════════════ -->
+    <section class="svc-path" id="ai-stack" aria-label="I servizi">
+      <div class="svc-path__sticky">
+      <div class="container">
+        <div class="svc-path__head">
+          <h2 class="smm-panel__big-title" id="ai-path-title">L'INTELLIGENZA ARTIFICIALE AL LAVORO PER TE.</h2>
+          <p class="smm-panel__statement-sub">Quattro tappe, dall'analisi dei processi agli strumenti su misura.</p>
+        </div>
+        <div class="svc-tabs">
+          <div class="svc-tabs__strip" role="tablist" aria-label="I servizi">
+            <button class="svc-tabs__tab is-active" type="button" role="tab" id="ai-tab-1" aria-controls="ai-pan-1" aria-selected="true" tabindex="0">
+              <span class="svc-tabs__num" aria-hidden="true">01</span>
+              <span class="svc-tabs__tag">Contesto</span>
+              <span class="svc-tabs__title">Un nuovo scenario per la produzione creativa</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="ai-tab-2" aria-controls="ai-pan-2" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">02</span>
+              <span class="svc-tabs__tag">Catalogo</span>
+              <span class="svc-tabs__title">E-Commerce e Contenuti Prodotto</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="ai-tab-3" aria-controls="ai-pan-3" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">03</span>
+              <span class="svc-tabs__tag">Sperimentazione</span>
+              <span class="svc-tabs__title">Prototipazione e Sviluppo Creativo</span>
+            </button>
+            <button class="svc-tabs__tab" type="button" role="tab" id="ai-tab-4" aria-controls="ai-pan-4" aria-selected="false" tabindex="-1">
+              <span class="svc-tabs__num" aria-hidden="true">04</span>
+              <span class="svc-tabs__tag">Produzione</span>
+              <span class="svc-tabs__title">Campagne Fotografiche e Video</span>
+            </button>
+          </div>
+          <div class="svc-tabs__panels">
+            <div class="svc-tabs__panel is-active" role="tabpanel" id="ai-pan-1" aria-labelledby="ai-tab-1">
+              <div class="svc-tabs__media">
+                <img class="svc-tabs__media-img" src="../assets/img/ai/ai-contesto-bravo.webp" width="1920" height="900" alt="Bravo, Nonna approved: una nonna in pelliccia leopardata fa surf su una spugna verde in una cucina" decoding="async" loading="lazy">
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Oggi la comunicazione richiede volumi sempre maggiori di contenuti, su canali differenti, con tempi sempre più compressi e aspettative qualitative elevate. L'<strong>intelligenza artificiale</strong> consente di ripensare radicalmente i <strong>flussi creativi e produttivi</strong>, rendendoli più rapidi, flessibili, <strong>scalabili e controllabili</strong>.</p>
+                <ul class="svc-tabs__points">
+                  <li>Più rapidi</li>
+                  <li>Più flessibili</li>
+                  <li>Più scalabili</li>
+                  <li>Più controllabili</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="ai-pan-2" aria-labelledby="ai-tab-2" hidden>
+              <div class="svc-tabs__media">
+                <img class="svc-tabs__media-img" src="../assets/img/ai/ai-catalogo-prada.webp" width="1920" height="900" alt="Prada: espositore con borse in pelle e un nastro azzurro di carta ripiegata" decoding="async" loading="lazy">
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Partendo da semplici still life o fotografie, realizziamo <strong>contenuti in alta definizione</strong> su <strong>modelli virtuali</strong>, ambientazioni lifestyle, pronti per <strong>e-commerce, ADV e social</strong>.</p>
+                <ul class="svc-tabs__points">
+                  <li>Tempi e costi di produzione ridotti</li>
+                  <li>Coerenza visiva su tutta la gamma</li>
+                  <li>Aumento della qualità percepita del catalogo</li>
+                  <li>Gestione facilitata di aggiornamenti e stagionalità</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="ai-pan-3" aria-labelledby="ai-tab-3" hidden>
+              <div class="svc-tabs__media">
+                <img class="svc-tabs__media-img" src="../assets/img/ai/ai-sperimentazione-ariston.webp" width="1920" height="900" alt="Ariston: una famiglia gioca in un salotto con pompa di calore e caldaia a vista" decoding="async" loading="lazy">
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">L'intelligenza artificiale consente di accelerare i processi di <strong>concept e prototipazione</strong>. Partendo da un unico prototipo base, sviluppiamo <strong>render avanzati</strong> che consentono ai brand di <strong>validare le scelte creative</strong> prima della produzione fisica.</p>
+                <ul class="svc-tabs__points">
+                  <li>Varianti colore</li>
+                  <li>Materiali e finiture</li>
+                  <li>Configurazioni stilistiche</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+            <div class="svc-tabs__panel" role="tabpanel" id="ai-pan-4" aria-labelledby="ai-tab-4" hidden>
+              <div class="svc-tabs__media">
+                <iframe class="svc-tabs__media-video" id="aiVimeo" title="Video: campagne foto e video generate con AI" src="https://player.vimeo.com/video/1203881241?h=8a79d93ea7&amp;controls=0&amp;title=0&amp;byline=0&amp;portrait=0&amp;badge=0&amp;like=0&amp;share=0&amp;watchlater=0&amp;playsinline=1&amp;dnt=1" frameborder="0" referrerpolicy="strict-origin-when-cross-origin" allow="autoplay; picture-in-picture; encrypted-media" loading="lazy" tabindex="-1"></iframe>
+                <button class="svc-tabs__media-toggle" id="aiVimeoToggle" type="button" aria-pressed="false" aria-label="Riproduci il video"></button>
+              </div>
+              <div class="svc-tabs__copy">
+                <p class="svc-tabs__text">Progettiamo <strong>campagne foto e video generate con AI</strong> per advertising, comunicazione digital, lancio prodotto e contenuti editoriali. Utilizziamo l'AI strategicamente per <strong>pre-visualizzare concept</strong>, costruire <strong>storyboard visivi</strong> e produrre contenuti finali ad alto impatto.</p>
+                <ul class="svc-tabs__points">
+                  <li>Advertising</li>
+                  <li>Comunicazione digital</li>
+                  <li>Lancio prodotto</li>
+                  <li>Contenuti editoriali</li>
+                </ul>
+                <a class="btn btn--primary svc-tabs__cta" href="../contatti.html">Scopri di più</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div><!-- /.svc-path__sticky -->
+    </section>
+
+
+    <!-- ══ UN APPROCCIO TRASPARENTE ══════════════════════════════ -->
+    <section class="svc-ai-approccio section">
+      <div class="container svc-ai-approccio__inner">
+        <div class="svc-ai-approccio__left reveal">
+          <p class="svc-ai-pill-kicker">IL NOSTRO APPROCCIO</p>
+          <h2 class="svc-ai-approccio__title">Un approccio trasparente</h2>
+          <p class="svc-content-block__text">L'AI offre grandi opportunità, ma presenta ancora limiti tecnici, soprattutto nella produzione video ad altissimo realismo.</p>
+          <p class="svc-content-block__text" style="margin-top:var(--space-4);">Quando il progetto richiede massimo realismo, integriamo l'AI con produzione tradizionale, attivando shooting fotografici, riprese video e crew specializzate.</p>
+          <a class="btn btn--primary" href="../contatti.html" style="margin-top:var(--space-8);">Parliamo del tuo progetto</a>
+        </div>
+        <div class="svc-ai-approccio__right reveal reveal-delay-1">
+          <p class="svc-content-block__text svc-ai-approccio__lead">Durante la fase di briefing definiamo con precisione:</p>
+          <ol class="svc-ai-steps">
+            <li class="svc-ai-step">
+              <span class="svc-ai-step__num">1</span>
+              <span>Obiettivi del progetto</span>
+            </li>
+            <li class="svc-ai-step">
+              <span class="svc-ai-step__num">2</span>
+              <span>Fattibilità tecnica</span>
+            </li>
+            <li class="svc-ai-step">
+              <span class="svc-ai-step__num">3</span>
+              <span>Livello di realismo richiesto</span>
+            </li>
+            <li class="svc-ai-step">
+              <span class="svc-ai-step__num">4</span>
+              <span>Alternative produttive</span>
+            </li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ IL NOSTRO WORKFLOW AI DRIVEN ══════════════════════════ -->
+    <section class="svc-ai-workflow section">
+      <div class="container">
+        <header class="svc-ai-workflow__head reveal">
+          <p class="svc-ai-pill-kicker">COME LAVORIAMO</p>
+          <h2 class="svc-ai-workflow__title">IL NOSTRO WORKFLOW<br>AI DRIVEN</h2>
+          <p class="svc-ai-workflow__sub">Processi strutturati e collaudati per garantire risultati di qualità.</p>
+        </header>
+        <div class="svc-ai-workflow__grid">
+
+          <div class="svc-ai-workflow__card reveal">
+            <div class="svc-ai-workflow__card-deco" aria-hidden="true">01</div>
+            <div class="svc-ai-workflow__card-head">
+              <div class="svc-ai-workflow__icon-wrap">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm-8 13c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.65 0-3 1.35-3 3s1.35 3 3 3 3-1.35 3-3-1.35-3-3-3z"/></svg>
+              </div>
+              <h3 class="svc-ai-workflow__card-title">Workflow Immagini</h3>
+            </div>
+            <ol class="svc-ai-workflow__timeline">
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>1</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Ricezione e analisi del brief</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>2</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Definizione concept creativo</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>3</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Produzione immagini</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>4</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Fase di revisione e ottimizzazione</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step svc-ai-workflow__tl-step--last">
+                <div class="svc-ai-workflow__tl-marker svc-ai-workflow__tl-marker--final"><span>5</span></div>
+                <p class="svc-ai-workflow__tl-text">Consegna finale</p>
+              </li>
+            </ol>
+          </div>
+
+          <div class="svc-ai-workflow__card reveal reveal-delay-1">
+            <div class="svc-ai-workflow__card-deco" aria-hidden="true">02</div>
+            <div class="svc-ai-workflow__card-head">
+              <div class="svc-ai-workflow__icon-wrap">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4z"/></svg>
+              </div>
+              <h3 class="svc-ai-workflow__card-title">Workflow Video</h3>
+            </div>
+            <ol class="svc-ai-workflow__timeline">
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>1</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Ricezione e analisi del brief</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>2</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Sviluppo storyboard visuale</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>3</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Creazione delle scene principali</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>4</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Validazione creativa</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step">
+                <div class="svc-ai-workflow__tl-marker"><span>5</span></div>
+                <div class="svc-ai-workflow__tl-line" aria-hidden="true"></div>
+                <p class="svc-ai-workflow__tl-text">Produzione video</p>
+              </li>
+              <li class="svc-ai-workflow__tl-step svc-ai-workflow__tl-step--last">
+                <div class="svc-ai-workflow__tl-marker svc-ai-workflow__tl-marker--final"><span>6</span></div>
+                <p class="svc-ai-workflow__tl-text">Consegna finale</p>
+              </li>
+            </ol>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ CLIENTI ════════════════════════════════════════════════ -->
+    <section class="section svc-clients" id="ai-clienti" data-nav-theme="dark">
+      <!-- Pannello agganciato, come in homepage. -->
+      <div class="svc-clients__sticky">
+        <div class="container">
+          <h2 class="svc-clients__title" id="ai-clienti-title">ALCUNI AMICI SODDISFATTI<br>CHE CI HANNO DATO FIDUCIA</h2>
+        </div>
+        <div class="svc-clients__marquee-wrap">
+          <div class="svc-clients__track">
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-langelica.webp" alt="L'Angelica" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../assets/img/loghi-brand/brand-seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wudy.webp" alt="Wudy" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-langelica.webp" alt="L'Angelica" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../assets/img/loghi-brand/brand-seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wudy.webp" alt="Wudy" /></div>
+          </div>
+          <div class="svc-clients__track svc-clients__track--rev">
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wudy.webp" alt="Wudy" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../assets/img/loghi-brand/brand-seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-langelica.webp" alt="L'Angelica" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-prada.webp" alt="Prada" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wudy.webp" alt="Wudy" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-wolf.webp" alt="Wolf" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-terranova.webp" alt="Terranova" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-ted.webp" alt="TED" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-star.webp" alt="Star" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-spotify.webp" alt="Spotify" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-sjgang.webp" alt="SJ Gang" /></div>
+            <div class="svc-clients__logo svc-clients__logo--seven"><img src="../assets/img/loghi-brand/brand-seven.webp" alt="Seven" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-sector.webp" alt="Sector" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-seat.webp" alt="SEAT" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-remax.webp" alt="RE/MAX" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-redbull.webp" alt="Red Bull" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-rai.webp" alt="RAI" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pyrex.webp" alt="Pyrex" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-plenitude.webp" alt="Plenitude" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-patagonia.webp" alt="Patagonia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-pandora.webp" alt="Pandora" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-motoguzzi.webp" alt="Moto Guzzi" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-leolandia.webp" alt="Leolandia" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-lamborghini.webp" alt="Lamborghini" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-langelica.webp" alt="L'Angelica" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-kawasaki.webp" alt="Kawasaki" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-humanitas.webp" alt="Humanitas" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-gucci.webp" alt="Gucci" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-fanuc.webp" alt="Fanuc" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elmec.webp" alt="Elmec" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-elco.webp" alt="Elco" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-disclaimerlogo.webp" alt="Disclaimer" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-cupra.webp" alt="Cupra" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-coswelllogo.webp" alt="Coswell" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-condenast.webp" alt="Condé Nast" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-cartier.webp" alt="Cartier" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-bocconi.webp" alt="Bocconi" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-biorepair.webp" alt="Biorepair" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-awlab.webp" alt="Awlab" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aristonlogo.webp" alt="Ariston" /></div>
+            <div class="svc-clients__logo svc-clients__logo--big"><img src="../assets/img/loghi-brand/brand-aprilia.webp" alt="Aprilia" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-accenture.webp" alt="Accenture" /></div>
+            <div class="svc-clients__logo"><img src="../assets/img/loghi-brand/brand-abctools.webp" alt="Abctools" /></div>
+            <div class="svc-clients__logo svc-clients__logo--xl"><img src="../assets/img/loghi-brand/brand-prada.webp" alt="Prada" /></div>
+          </div>
+        </div>
+      </div><!-- /.svc-clients__sticky -->
+    </section>
+
+    
+    <!-- ══ CAFFÈ CTA ═════════════════════════════════════════════ -->
+    
+    <!-- FAQ -->
+    <section class="page-faq">
+      <div class="page-faq__sticky">
+        <div class="page-faq__inner">
+        <h2 class="page-faq__title">Domande Frequenti</h2>
+        <dl class="page-faq__list">
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Che cos'è il servizio AI di ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Offriamo soluzioni di intelligenza artificiale applicate al marketing: automazione dei contenuti, chatbot, analisi dei dati, personalizzazione delle campagne e ottimizzazione dei processi comunicativi.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come l'intelligenza artificiale può aiutare il mio business?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">L'AI permette di produrre contenuti più velocemente, personalizzare la comunicazione su larga scala, analizzare i dati in tempo reale e automatizzare attività ripetitive, liberando tempo per le attività strategiche.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">L'AI sostituisce il lavoro creativo del team ESTRO?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">No. L'AI è uno strumento che amplifica le capacità del nostro team creativo, non lo sostituisce. Ogni contenuto prodotto con AI viene revisionato, personalizzato e approvato da professionisti prima della pubblicazione.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">ESTRO crea chatbot e assistenti virtuali?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì, progettiamo e sviluppiamo chatbot per customer service, lead generation e supporto alle vendite, integrabili su sito web, WhatsApp, Instagram e altre piattaforme.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">I contenuti creati con AI sono originali e unici?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">Sì. Utilizziamo l'AI come punto di partenza, ma ogni contenuto viene personalizzato, rielaborato e adattato alla voce e all'identità del tuo brand dal nostro team editoriale.</div></div>
+          </div>
+          <div class="page-faq__item">
+            <button class="page-faq__question" aria-expanded="false">Come vengono gestiti i dati aziendali quando si usano strumenti AI?</button>
+            <div class="page-faq__answer"><div class="page-faq__answer-inner">La sicurezza dei tuoi dati è una priorità. Utilizziamo strumenti conformi al GDPR e alle normative sulla privacy, e definiamo con ogni cliente le policy di utilizzo dei dati prima di iniziare qualsiasi progetto.</div></div>
+          </div>
+        </dl>
+      </div>
+      </div><!-- /.page-faq__sticky -->
+    </section>
+
+<section class="svc-caffe svc-caffe--fuchsia" id="ai-caffe" aria-label="Contattaci" data-nav-theme="dark">
+      <div class="container svc-caffe__inner">
+        <div class="svc-caffe__left reveal">
+          <h2 class="svc-caffe__title"><span class="caffe-nowrap">Prendiamoci</span><br/>un caffè!</h2>
+          <p class="svc-caffe__sub">Anche virtuale</p>
+        </div>
+        <form class="svc-caffe__form reveal reveal-delay-1" action="../contatti.html" method="get">
+          <div class="hc-row">
+            <div class="f-field">
+              <label class="f-label" for="ai2-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="ai2-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="ai2-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="ai2-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+            </div>
+          </div>
+          <div class="hc-row">
+            <div class="f-field">
+              <label class="f-label" for="ai2-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+              <input id="ai2-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="ai2-f-telefono">Telefono</label>
+              <input id="ai2-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+            </div>
+          </div>
+          <div class="hc-row">
+            <div class="f-field">
+              <label class="f-label" for="ai2-f-azienda">Azienda</label>
+              <input id="ai2-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="ai2-f-sito">Sito Web</label>
+              <input id="ai2-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+            </div>
+          </div>
+          <div class="f-field">
+            <label class="f-label" for="ai2-f-messaggio">Messaggio</label>
+            <textarea id="ai2-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
+          </div>
+          <div class="hc-consents">
+            <label class="svc-caffe__privacy" for="ai-privacy">
+              <input type="checkbox" id="ai-privacy" name="privacy" required />
+              <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+            </label>
+            <label class="svc-caffe__privacy" for="ai-newsletter">
+              <input type="checkbox" id="ai-newsletter" name="newsletter" value="si" />
+              <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+            </label>
+          </div>
+          <button class="btn btn--primary hc-submit" type="submit">Contattaci</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <script>
+  (function () { var h = document.querySelector('.svc-hero'); if (!h) return; requestAnimationFrame(function () { requestAnimationFrame(function () { h.classList.add('svc-hero--revealed'); }); }); })();
+  </script>
+  <script src="../js/main.js?v=20261017d"></script>
+  <script>
+  /* ── Servizio AI: scroll-driven motion ── */
+  (function () {
+    'use strict';
+
+    function c01(v) { return Math.max(0, Math.min(1, v)); }
+    function ease(t) { return 0.5 - Math.cos(Math.PI * t) / 2; }
+
+    var heroEl    = document.getElementById('ai-hero');
+    var clientiEl = document.getElementById('ai-clienti');
+    var magicEl   = document.getElementById('ai-magic');
+    var caffeEl   = document.getElementById('ai-caffe');
+    var navEl     = document.querySelector('.nav');
+
+    function splitLetters(el) {
+      if (!el) return [];
+      var raw = el.innerHTML, out = '', i = 0;
+      while (i < raw.length) {
+        if (raw[i] === '<') {
+          var j = raw.indexOf('>', i); out += raw.slice(i, j + 1); i = j + 1;
+        } else if (raw[i] === '&') {
+          var k2 = raw.indexOf(';', i); out += '<span class="tl">' + raw.slice(i, k2 + 1) + '</span>'; i = k2 + 1;
+        } else if (raw[i] === ' ') {
+          out += ' '; i++;
+        } else {
+          out += '<span class="tl">' + raw[i] + '</span>'; i++;
+        }
+      }
+      el.innerHTML = out;
+      el.style.opacity = '1';
+      el.style.transform = 'none';
+      return Array.from(el.querySelectorAll('.tl'));
+    }
+
+    function revLetters(letters, p) {
+      letters.forEach(function (el, i) {
+        var lP = ease(c01((p - i * 0.012) / 0.08));
+        el.style.opacity   = lP.toFixed(3);
+        el.style.transform = 'translateY(' + ((1 - lP) * 0.8).toFixed(3) + 'em)';
+      });
+    }
+
+    /* Le dissolvenze fra sezioni sono state rimosse: il passaggio
+       lo fa la salita con il raccordo arrotondato, nessun contenuto
+       deve sparire per far entrare quello dopo. La funzione resta
+       come guscio inerte perche' il resto dello script la chiama. */
+    function makeTransOv() { return { style: { opacity: 0 } }; }
+
+    var heroOv         = makeTransOv(heroEl,    '#fff');
+    var cliToMagicOv   = makeTransOv(clientiEl, '#fff');
+    var magicToCaffeOv = makeTransOv(magicEl,   '#DB005A');
+
+    /* niente velatura a tutto schermo in uscita */
+
+
+    var caffeExitOv = { style: { opacity: 0 } };
+
+    /* niente reveal lettera per lettera sul titolo clienti: su
+       quel titolo l'unico effetto e' l'acqua (waterLetters) */
+    var clientiLetters = [];
+    var magicLetters   = splitLetters(magicEl  && magicEl.querySelector('.svc-magic__title'));
+    var caffeLetters   = splitLetters(caffeEl  && caffeEl.querySelector('.svc-caffe__title'));
+
+    var magicCat   = magicEl && magicEl.querySelector('.svc-magic__cat');
+    var magicLinks = magicEl && magicEl.querySelector('.svc-magic__links');
+    var caffeSub   = caffeEl && caffeEl.querySelector('.svc-caffe__sub');
+    var caffeForm  = caffeEl && caffeEl.querySelector('.svc-caffe__form');
+
+    function unlockContainer(el) {
+      if (!el) return;
+      el.style.cssText += ';opacity:1!important;transform:none!important;transition:none!important';
+    }
+    unlockContainer(magicEl && magicEl.querySelector('.svc-magic__content'));
+    unlockContainer(caffeEl && caffeEl.querySelector('.svc-caffe__left'));
+
+    function initHide(el) {
+      if (!el) return;
+      Object.assign(el.style, { opacity:'0', transform:'translateY(20px)', willChange:'opacity,transform', transition:'none' });
+    }
+    initHide(magicCat);
+    initHide(magicLinks);
+    initHide(caffeSub);
+    initHide(caffeForm);
+
+    document.querySelectorAll('#ai-clienti .reveal,#ai-magic .reveal,#ai-caffe .reveal').forEach(function (el) {
+      el.style.transition = 'none';
+    });
+
+    var C_DARK = [5,5,5], C_WHITE = [255,255,255], C_FUCHSIA = [219,0,90];
+    function luma(c) { return 0.299*c[0] + 0.587*c[1] + 0.114*c[2]; }
+    function blend(a,b,t) { return [a[0]*(1-t)+b[0]*t, a[1]*(1-t)+b[1]*t, a[2]*(1-t)+b[2]*t]; }
+    var prevDark = null;
+
+    function p_enter(el) {
+      if (!el) return 0;
+      return ease(c01((window.innerHeight - el.getBoundingClientRect().top) / window.innerHeight));
+    }
+    /* 0→1 mentre il TOP di el sale da navH+range a navH */
+    function p_exit(el) {
+      if (!el) return 0;
+      var r = el.getBoundingClientRect();
+      var navH = navEl ? navEl.offsetHeight : 72;
+      var range = window.innerHeight * 0.15;
+      return ease(c01((navH + range - r.top) / range));
+    }
+    /* 0 quando fromEl è centrato, 1 quando toEl è centrato
+       earlyEndVh: 0.5 = completa il fade 0.5vh prima che toEl raggiunga il centro */
+    function p_between(fromEl, toEl, earlyEndVh) {
+      if (!fromEl || !toEl) return 0;
+      var scrollY = window.scrollY;
+      var vpCenter = window.innerHeight / 2;
+      var fromTop = fromEl.getBoundingClientRect().top + scrollY;
+      var toTop   = toEl.getBoundingClientRect().top   + scrollY;
+      var s0 = fromTop + fromEl.offsetHeight / 2 - vpCenter;
+      var s1 = toTop   + toEl.offsetHeight   / 2 - vpCenter - ((earlyEndVh || 0) * window.innerHeight);
+      return ease(c01((scrollY - s0) / (s1 - s0)));
+    }
+
+    function secP(el) {
+      if (!el) return 0;
+      var ENTRY = window.innerHeight * 0.70;
+      return c01((ENTRY - el.getBoundingClientRect().top) / ENTRY);
+    }
+
+    var prodEls = Array.from(document.querySelectorAll('.pc-prod'));
+    var stackEl = document.getElementById('ai-stack');
+    var panels  = stackEl ? Array.from(stackEl.querySelectorAll('.smm-panel')) : [];
+
+    var apprEl = document.querySelector('.svc-ai-approccio');
+    var wfEl   = document.querySelector('.svc-ai-workflow');
+
+    var stackToApprOv = makeTransOv(stackEl, '#fff');
+    var wfToCliOv     = makeTransOv(wfEl,    '#0a0a0a');
+
+    /* Anche questi due titoli hanno solo l'effetto acqua: erano
+       lettera per lettera, ora li muove waterLetters. */
+    var apprLetters = [];
+    var wfLetters   = [];
+
+    var apprKicker = apprEl && apprEl.querySelector('.svc-ai-pill-kicker');
+    var apprP1     = apprEl && apprEl.querySelectorAll('.svc-content-block__text')[0];
+    var apprP2     = apprEl && apprEl.querySelectorAll('.svc-content-block__text')[1];
+    var apprBtn    = apprEl && apprEl.querySelector('.btn');
+    var apprRight  = apprEl && apprEl.querySelector('.svc-ai-approccio__right');
+    var wfKicker   = wfEl   && wfEl.querySelector('.svc-ai-pill-kicker');
+    var wfSub      = wfEl   && wfEl.querySelector('.svc-ai-workflow__sub');
+    var wfCards    = wfEl   ? Array.from(wfEl.querySelectorAll('.svc-ai-workflow__card')) : [];
+
+    [apprKicker, apprP1, apprP2, apprBtn, apprRight, wfKicker, wfSub].forEach(function(el) { initHide(el); });
+    wfCards.forEach(function(el) { initHide(el); });
+
+    var heroOvOp = 0, cliToMagOp = 0, magToCafOp = 0;
+
+    function tick() {
+      requestAnimationFrame(tick);
+      var vh = window.innerHeight;
+
+      heroOvOp   = p_enter(clientiEl);
+      cliToMagOp = ease(c01((p_enter(magicEl) - 0.25) / 0.75));
+      magToCafOp = ease(c01((p_enter(caffeEl) - 0.25) / 0.75));
+
+      if (heroOv)         heroOv.style.opacity         = heroOvOp.toFixed(3);
+      if (cliToMagicOv)   cliToMagicOv.style.opacity   = cliToMagOp.toFixed(3);
+      if (magicToCaffeOv) magicToCaffeOv.style.opacity = magToCafOp.toFixed(3);
+
+      revLetters(clientiLetters, secP(clientiEl));
+
+      var mR = magicEl ? magicEl.getBoundingClientRect() : null;
+      if (mR) {
+        var p1 = ease(c01((vh - mR.top) / vh));
+        revLetters(magicLetters, ease(c01(p1 / 0.85)));
+        var catP = ease(c01((p1 - 0.05) / 0.80));
+        if (magicCat) { magicCat.style.opacity = catP.toFixed(3); magicCat.style.transform = 'translateY(' + ((1-catP)*24).toFixed(1) + 'px)'; }
+        var linksP = ease(c01((p1 - 0.20) / 0.70));
+        if (magicLinks) { magicLinks.style.opacity = linksP.toFixed(3); magicLinks.style.transform = 'translateY(' + ((1-linksP)*20).toFixed(1) + 'px)'; }
+      }
+
+      var cR = caffeEl ? caffeEl.getBoundingClientRect() : null;
+      if (cR) {
+        var p2 = ease(c01((vh - cR.top) / vh));
+        revLetters(caffeLetters, ease(c01(p2 / 0.85)));
+        var subP = ease(c01((p2 - 0.10) / 0.75));
+        if (caffeSub) { caffeSub.style.opacity = subP.toFixed(3); caffeSub.style.transform = 'translateY(' + ((1-subP)*16).toFixed(1) + 'px)'; }
+        var formP = ease(c01((p2 - 0.20) / 0.70));
+        if (caffeForm) { caffeForm.style.opacity = formP.toFixed(3); caffeForm.style.transform = 'translateY(' + ((1-formP)*20).toFixed(1) + 'px)'; }
+      }
+
+      /* stack → approccio overlay */
+      if (stackToApprOv && apprEl) stackToApprOv.style.opacity = p_enter(apprEl).toFixed(3);
+
+      /* workflow → clienti: 0 quando clienti entra dal basso, 1 quando clienti è centrata */
+      if (wfToCliOv && wfEl && clientiEl) {
+        var vh2 = window.innerHeight;
+        var cliTop2 = clientiEl.getBoundingClientRect().top;
+        var wfP = ease(c01((vh2 - cliTop2) / (vh2 / 2 + clientiEl.offsetHeight / 2)));
+        wfToCliOv.style.opacity = wfP.toFixed(3);
+        wfEl.style.background = wfP >= 0.95 ? '#000' : '';
+      }
+
+      /* approccio section */
+      var aR = apprEl ? apprEl.getBoundingClientRect() : null;
+      if (aR) {
+        var aP = ease(c01((vh - aR.top) / vh));
+        revLetters(apprLetters, ease(c01(aP / 0.70)));
+        var aK  = ease(c01((aP - 0.05) / 0.70)); if (apprKicker) { apprKicker.style.opacity = aK.toFixed(3);  apprKicker.style.transform = 'translateY(' + ((1-aK)*18).toFixed(1) + 'px)'; }
+        var aT1 = ease(c01((aP - 0.15) / 0.70)); if (apprP1) { apprP1.style.opacity = aT1.toFixed(3); apprP1.style.transform = 'translateY(' + ((1-aT1)*16).toFixed(1) + 'px)'; }
+        var aT2 = ease(c01((aP - 0.22) / 0.65)); if (apprP2) { apprP2.style.opacity = aT2.toFixed(3); apprP2.style.transform = 'translateY(' + ((1-aT2)*16).toFixed(1) + 'px)'; }
+        /* Il pulsante viene liberato del tutto a rivelazione
+           finita. Due cose inline lo tenevano fermo in hover:
+           il transform, riscritto a ogni frame, che vinceva sulla
+           regola di hover, e soprattutto transition: none, messo
+           da initHide per non animare l'entrata e mai piu' tolto.
+           Con transition: none l'hover cambiava valori di colpo,
+           senza easing: il salto di 2px era impercettibile e i
+           colori scattavano, quindi sembrava che l'effetto non ci
+           fosse. Tolte le proprieta' inline, il pulsante torna a
+           usare la transizione dichiarata su .btn, la stessa di
+           tutti gli altri. */
+        var aBt = ease(c01((aP - 0.30) / 0.60));
+        if (apprBtn) {
+          apprBtn.style.opacity = aBt.toFixed(3);
+          if (aBt > 0.999) {
+            apprBtn.style.removeProperty("transform");
+            apprBtn.style.removeProperty("transition");
+            apprBtn.style.removeProperty("will-change");
+          } else {
+            apprBtn.style.transition = "none";
+            apprBtn.style.transform = "translateY(" + ((1-aBt)*14).toFixed(1) + "px)";
+          }
+        }
+        var aRt = ease(c01((aP - 0.12) / 0.72)); if (apprRight) { apprRight.style.opacity  = aRt.toFixed(3); apprRight.style.transform  = 'translateY(' + ((1-aRt)*18).toFixed(1) + 'px)'; }
+      }
+
+      /* workflow section */
+      var wR2 = wfEl ? wfEl.getBoundingClientRect() : null;
+      if (wR2) {
+        var wP = ease(c01((vh - wR2.top) / vh));
+        revLetters(wfLetters, ease(c01(wP / 0.60)));
+        var wK = ease(c01((wP - 0.05) / 0.65)); if (wfKicker) { wfKicker.style.opacity = wK.toFixed(3); wfKicker.style.transform = 'translateY(' + ((1-wK)*16).toFixed(1) + 'px)'; }
+        var wS = ease(c01((wP - 0.18) / 0.65)); if (wfSub)    { wfSub.style.opacity    = wS.toFixed(3); wfSub.style.transform    = 'translateY(' + ((1-wS)*14).toFixed(1) + 'px)'; }
+        wfCards.forEach(function(card, i) {
+          var cP = ease(c01((wP - 0.22 - i * 0.10) / 0.65));
+          card.style.opacity = cP.toFixed(3);
+          card.style.transform = 'translateY(' + ((1-cP)*22).toFixed(1) + 'px)';
+        });
+      }
+
+      var maxS = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      caffeExitOv.style.opacity = ease(c01(1 - (maxS - window.scrollY) / 120)).toFixed(3);
+
+      if (navEl) {
+        var navMid = (navEl.getBoundingClientRect().height || 80) / 2;
+        var base = C_DARK;
+
+        if (heroEl) {
+          var hR = heroEl.getBoundingClientRect();
+          if (hR.top <= navMid && hR.bottom > navMid) base = blend(C_DARK, C_WHITE, heroOvOp);
+        }
+
+        if (stackEl) {
+          var stR = stackEl.getBoundingClientRect();
+          if (stR.top <= navMid && stR.bottom > navMid) {
+            panels.forEach(function(panel) {
+              var pR2 = panel.getBoundingClientRect();
+              if (pR2.top <= navMid && pR2.bottom > navMid) {
+                base = panel.classList.contains('smm-panel--dark') ? C_DARK : C_WHITE;
+              }
+            });
+          }
+        }
+        if (apprEl) { var apR = apprEl.getBoundingClientRect(); if (apR.top <= navMid && apR.bottom > navMid) base = C_WHITE; }
+        if (wfEl)   { var wfR = wfEl.getBoundingClientRect();   if (wfR.top <= navMid && wfR.bottom > navMid)   base = C_WHITE; }
+        prodEls.forEach(function (prod) {
+          var pR = prod.getBoundingClientRect();
+          if (pR.top <= navMid && pR.bottom > navMid) base = C_WHITE;
+        });
+
+        if (clientiEl) {
+          var clR = clientiEl.getBoundingClientRect();
+          if (clR.top <= navMid && clR.bottom > navMid) base = blend(C_DARK, C_WHITE, cliToMagOp);
+        }
+        if (magicEl) {
+          var mgR = magicEl.getBoundingClientRect();
+          if (mgR.top <= navMid && mgR.bottom > navMid) base = blend(C_WHITE, C_FUCHSIA, magToCafOp);
+        }
+        if (caffeEl) {
+          var caR2 = caffeEl.getBoundingClientRect();
+          if (caR2.top <= navMid && caR2.bottom > navMid) base = C_FUCHSIA;
+        }
+
+        var isDark = luma(base) < 140;
+        /* nav--on-dark: unica autorita = data-nav-theme in js/main.js (identico alla homepage) */
+      }
+    }
+    requestAnimationFrame(tick);
+
+    /* ── smm-stack panel reveal ── */
+    panels.forEach(function(panel) {
+      var revEls = Array.from(panel.querySelectorAll('[data-reveal]'));
+      revEls.forEach(function(el) { el.style.opacity = '0'; el.style.transform = 'translateY(22px)'; });
+      var obs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          revEls.forEach(function(el, j) {
+            el.style.transition = 'opacity 0.52s ' + (j * 0.025) + 's ease, transform 0.52s ' + (j * 0.025) + 's ease';
+            el.style.opacity = '1';
+            el.style.transform = 'none';
+          });
+          obs.disconnect();
+        }
+      }, { threshold: 0.15 });
+      obs.observe(panel);
+    });
+
+    /* ── reveal generale: approccio, workflow e altre sezioni ── */
+    var skipSections = ['ai-clienti','ai-magic','ai-caffe','ai-stack'];
+    Array.from(document.querySelectorAll('.reveal')).filter(function(el) {
+      return !skipSections.some(function(id) { return el.closest('#' + id); })
+        && !el.closest('.svc-ai-approccio')
+        && !el.closest('.svc-ai-workflow');
+    }).forEach(function(el) {
+      el.style.opacity = '0';
+      el.style.transform = 'translateY(24px)';
+      var delay = el.classList.contains('reveal-delay-1') ? '0.15s' : '0s';
+      var revObs = new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          el.style.transition = 'opacity 0.55s ' + delay + ' ease, transform 0.55s ' + delay + ' ease';
+          el.style.opacity = '1';
+          el.style.transform = 'none';
+          revObs.disconnect();
+        }
+      }, { threshold: 0.12 });
+      revObs.observe(el);
+    });
+  })();
+  </script>
+  <div id="ai-scroll-dots" aria-hidden="true"></div>
+
+  <script>
+  /* ── scroll dots per accordion items ── */
+  (function () {
+    var wrap = document.getElementById('ai-scroll-dots');
+    var items = Array.from(document.querySelectorAll('.pc-acc__item'));
+    if (!items.length) return;
+
+    /* crea un dot per ogni item */
+    items.forEach(function () {
+      var d = document.createElement('span');
+      d.className = 'ai-sd';
+      wrap.appendChild(d);
+    });
+    var dots = Array.from(wrap.querySelectorAll('.ai-sd'));
+
+    /* mostra/nascondi il pannello quando le sezioni accordion sono in viewport */
+    var sections = Array.from(document.querySelectorAll('.pc-acc'));
+    var secObs = new IntersectionObserver(function () {
+      var anyIn = sections.some(function (s) {
+        var r = s.getBoundingClientRect();
+        return r.top < window.innerHeight && r.bottom > 0;
+      });
+      wrap.classList.toggle('ai-dots--visible', anyIn);
+    }, { threshold: 0 });
+    sections.forEach(function (s) { secObs.observe(s); });
+
+    /* accende il dot quando l'item entra in viewport */
+    var itemObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        var idx = items.indexOf(entry.target);
+        if (idx >= 0) dots[idx].classList.toggle('ai-sd--on', entry.isIntersecting);
+      });
+    }, { threshold: 0.25 });
+    items.forEach(function (item) { itemObs.observe(item); });
+  })();
+  </script>
+
+  <script>
+  (function () {
+    /* ── accordion toggle ── */
+    document.querySelectorAll('.pc-acc__head').forEach(function (head) {
+      function toggle() {
+        var item = head.closest('.pc-acc__item');
+        var isOpen = item.classList.contains('is-open');
+        item.classList.toggle('is-open', !isOpen);
+        head.setAttribute('aria-expanded', String(!isOpen));
+      }
+      head.addEventListener('click', toggle);
+      head.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+      });
+    });
+
+    /* ── reveal items in catena: ogni item appare quando il precedente è al 90% visibile ── */
+    var items = Array.from(document.querySelectorAll('.pc-acc__item'));
+
+    function revealNext(idx) {
+      if (idx >= items.length) return;
+      items[idx].classList.add('pc-item--in');
+      if (idx + 1 >= items.length) return;
+      var io = new IntersectionObserver(function (entries) {
+        if (entries[0].intersectionRatio >= 0.9) {
+          io.disconnect();
+          revealNext(idx + 1);
+        }
+      }, { threshold: [0.9] });
+      io.observe(items[idx]);
+    }
+
+    /* parte quando la prima sezione accordion entra in viewport */
+    var firstAcc = document.querySelector('.pc-acc');
+    if (firstAcc) {
+      var startObs = new IntersectionObserver(function (entries) {
+        if (entries[0].isIntersecting) { startObs.disconnect(); revealNext(0); }
+      }, { threshold: 0.05 });
+      startObs.observe(firstAcc);
+    }
+  })();
+  </script>
+
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
+            <img src="../assets/img/brand/logo-estro.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="../servizi/social-media-management.html">Social media management</a>
+            <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+            <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google Ads</a>
+            <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social Ads</a>
+            <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+            <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+            <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+            <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+            <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+            <a href="../news.html">News</a>
+            <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="../faq.html">FAQ</a>
+            <a href="../contatti.html">Contatti</a>
+            <a href="https://tally.so/r/2ELLBj" target="_blank" rel="noopener">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+
+  <script>
+  /* ── Schede orizzontali dei servizi ───────────────────────────
+     Una scheda alla volta. I <button> hanno role="tab" e il
+     pannello role="tabpanel": la tastiera funziona come in una
+     vera barra di schede — frecce per spostarsi, Home/Fine agli
+     estremi — e i lettori di schermo annunciano lo stato. */
+  (function () {
+    const strip = document.querySelector('.svc-tabs__strip');
+    if (!strip) return;
+    const tabs = Array.from(strip.querySelectorAll('.svc-tabs__tab'));
+    const panels = tabs.map(t => document.getElementById(t.getAttribute('aria-controls')));
+
+    /* --n e --p: quante tappe ha la linea e fin dove e' percorsa.
+       Il tratto fucsia si ferma sul nodo scelto. */
+    strip.style.setProperty('--n', tabs.length);
+
+    function select(i, focus) {
+      tabs.forEach((t, k) => {
+        const on = k === i;
+        t.classList.toggle('is-active', on);
+        t.classList.toggle('is-done', k < i);
+        t.setAttribute('aria-selected', on ? 'true' : 'false');
+        t.tabIndex = on ? 0 : -1;
+        const p = panels[k];
+        if (!p) return;
+        p.classList.toggle('is-active', on);
+        p.hidden = !on;
+      });
+      strip.style.setProperty('--p', tabs.length > 1 ? (i / (tabs.length - 1)).toFixed(4) : 0);
+      if (focus && tabs[i]) tabs[i].focus();
+    }
+
+    /* stato iniziale coerente con la scheda gia' marcata attiva */
+    select(Math.max(0, tabs.findIndex(t => t.classList.contains('is-active'))), false);
+
+    strip.addEventListener('click', e => {
+      const t = e.target.closest('.svc-tabs__tab');
+      if (!t) return;
+      select(tabs.indexOf(t), false);
+    });
+
+    strip.addEventListener('keydown', e => {
+      const i = tabs.indexOf(e.target.closest('.svc-tabs__tab'));
+      if (i < 0) return;
+      let n = null;
+      if (e.key === 'ArrowRight') n = (i + 1) % tabs.length;
+      else if (e.key === 'ArrowLeft') n = (i - 1 + tabs.length) % tabs.length;
+      else if (e.key === 'Home') n = 0;
+      else if (e.key === 'End') n = tabs.length - 1;
+      if (n === null) return;
+      e.preventDefault();
+      select(n, true);
+    });
+  }());
+  </script>
+  <script>
+  /* ── Effetti condivisi delle pagine servizi ───────────────────
+     Salita fra sezioni, acqua sui titoli, ingresso dei testi.
+     Stesse funzioni delle altre pagine del sito. */
+  (function () {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFxSvc' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
+    }
+    // il titolo della hero e gia in vista al caricamento
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.svc-hero__title'));
+    // gli altri titoli di sezione ondeggiano quando entrano
+    document.querySelectorAll(
+      '.smm-panel__big-title, .svc-clients__title, .svc-caffe__title, ' +
+      '.page-faq__title, .svc-section-title, .svc-tools__title, ' +
+      '.svc-process__title, .svc-channels__title, .sf-ghost, ' +
+      '.svc-ai-approccio__title, .svc-ai-workflow__title')
+      .forEach(el => {
+        const io = new IntersectionObserver(es => {
+          es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+        }, el.classList.contains('sf-ghost')
+             ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+             : { threshold: 0.15 });
+        el.classList.add('wl-wait'); io.observe(el);
+      });
+
+    /* ── Salita delle sezioni ──────────────────────────────── */
+    /* Tutte le sezioni del corpo salgono su quella prima. La hero
+       e' la prima, quindi non sale; la fucsia e il footer salgono
+       come sulle altre pagine del sito. */
+    const RISE = ['main > section:not(.svc-hero)', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      /* Si parte da 0, cioe' "sollevata e con gli angoli tondi", non
+         dal valore di ripiego 1 che vale "in piano".
+         Il ciclo di disegno aggiorna solo le sezioni vicine alla
+         finestra: una sezione ancora lontana non veniva toccata e
+         restava sul ripiego, quindi piatta. Quando poi entrava nel
+         raggio d'azione il valore passava da 1 a 0 in un fotogramma:
+         il raccordo non si vedeva arrivare, compariva squadrato e
+         scattava. Partendo da 0 la sezione e' gia' pronta prima di
+         essere in scena, e la salita si legge da quando affaccia dal
+         basso. */
+      el.style.setProperty('--sxi', '0');
+      secs.push(el);
+    }));
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso dei testi ────────────────────────────────── */
+    const bodyBits = document.querySelectorAll(
+      '.svc-tabs__text, .svc-tabs__points, .svc-tabs__tab, ' +
+      '.svc-caffe__sub, .svc-caffe__form, .page-faq__item, ' +
+      '.smm-panel__statement-sub, .svc-clients__logo, ' +
+      '.service-detail__body p, .service-detail__item, ' +
+      '.svc-tools__item, .svc-process__card-text, ' +
+      '.imk-intro p, .svc-channels p, .svc-prod p, .pc-prod p'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+  }());
+  </script>
+  <script>
+  /* ── Sezioni a piena schermata con blocco leggero ─────────────
+     Come in homepage: ogni sezione del corpo diventa una corsa poco
+     piu' alta della finestra, con dentro un pannello che resta
+     fermo per una schermata e poi lascia il posto.
+     Si decide qui e non nel CSS perche' la regola vale solo se il
+     contenuto ci sta davvero: se non ci sta, il pannello lo
+     taglierebbe, quindi la sezione resta libera. La verifica e'
+     fatta dopo il caricamento, quando immagini e font hanno gia'
+     la loro altezza definitiva. */
+  (function () {
+    const SKIP = ['svc-hero', 'svc-caffe', 'svc-path', 'svc-clients', 'page-faq'];
+
+    function wrap(sec) {
+      const panel = document.createElement('div');
+      panel.className = 'svc-generic-sticky';
+      while (sec.firstChild) panel.appendChild(sec.firstChild);
+      sec.appendChild(panel);
+      sec.classList.add('svc-generic-runway');
+      return panel;
+    }
+    function unwrap(sec, panel) {
+      sec.classList.remove('svc-generic-runway');
+      while (panel.firstChild) sec.insertBefore(panel.firstChild, panel);
+      panel.remove();
+    }
+
+    function pass() {
+      document.querySelectorAll('main > section').forEach(sec => {
+        if (SKIP.some(c => sec.classList.contains(c))) return;
+        if (sec.querySelector(':scope > .svc-generic-sticky')) return;
+        const panel = wrap(sec);
+        /* se il contenuto sfora il pannello si torna indietro:
+           meglio una sezione libera che una tagliata */
+        if (panel.scrollHeight > panel.clientHeight + 2) unwrap(sec, panel);
+      });
+    }
+
+    if (document.readyState === 'complete') pass();
+    else addEventListener('load', pass);
+
+    let t = null;
+    addEventListener('resize', () => {
+      clearTimeout(t);
+      t = setTimeout(() => {
+        document.querySelectorAll('main > section > .svc-generic-sticky').forEach(p => {
+          if (p.scrollHeight > p.clientHeight + 2) unwrap(p.parentElement, p);
+        });
+        pass();
+      }, 200);
+    }, { passive: true });
+  }());
+  </script>
+
+  <script>
+  /* ── Video di sfondo nella sezione clienti, come in homepage ──
+     Se la sezione non ce l'ha, glielo si mette: stessa sorgente,
+     stesso filtro che porta la forma sul fucsia di brand, stessa
+     sfumatura che chiude il bordo basso. Decorativo. */
+  (function () {
+    const sec = document.querySelector('.svc-clients');
+    if (!sec) return;
+    const host = sec.querySelector('.svc-clients__sticky') || sec;
+    if (host.querySelector('.amici-video')) return;
+    const box = document.createElement('div');
+    box.className = 'amici-video';
+    box.setAttribute('aria-hidden', 'true');
+    box.innerHTML =
+      '<video class="amici-video__el" autoplay loop muted playsinline preload="metadata" ' +
+      'src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>' +
+      '<div class="amici-video__fade"></div>';
+    host.insertBefore(box, host.firstChild);
+  }());
+  </script>
+  <script>
+  /* ── Alternanza degli sfondi ──────────────────────────────────
+     La prima sezione dopo la hero e' chiara, poi si alterna. Due
+     sezioni hanno un colore fisso e non seguono il turno: i clienti
+     stanno sempre sul nero (il video dietro lo richiede) e le FAQ
+     sempre su carta bianca. L'alternanza riprende dal colore che
+     hanno, così non si accavallano due sezioni uguali di seguito.
+     Hero, sezione fucsia e footer restano quello che sono. */
+  (function () {
+    const SKIP = ['svc-hero', 'svc-caffe'];
+    const PINNED = { 'svc-clients': 'dark', 'page-faq': 'light' };
+    let light = true;
+    document.querySelectorAll('main > section').forEach(sec => {
+      if (SKIP.some(c => sec.classList.contains(c))) return;
+      let tone = null;
+      for (const cls in PINNED) if (sec.classList.contains(cls)) tone = PINNED[cls];
+      if (!tone) { tone = light ? 'light' : 'dark'; }
+      sec.classList.add('svc-bg-' + tone);
+      light = (tone !== 'light');
+    });
+  }());
+  </script>
+  <script>
+  /* ── La sezione fucsia occupa una schermata e si blocca ───────
+     Stessa meccanica delle altre sezioni: la sezione e' la corsa,
+     dentro c'e' un pannello alto almeno una schermata che resta
+     fermo e poi lascia il posto al footer. */
+  (function () {
+    const sec = document.querySelector('.svc-caffe');
+    if (!sec || sec.querySelector(':scope > .svc-generic-sticky')) return;
+
+    function pass() {
+      if (sec.querySelector(':scope > .svc-generic-sticky')) return;
+      const panel = document.createElement('div');
+      panel.className = 'svc-generic-sticky';
+      while (sec.firstChild) panel.appendChild(sec.firstChild);
+      sec.appendChild(panel);
+      /* Niente guardia sull'altezza: qui il pannello ha un minimo,
+         non un'altezza fissa, quindi un contenuto piu' alto lo fa
+         crescere invece di essere tagliato. */
+      sec.classList.add('svc-caffe-runway');
+    }
+    if (document.readyState === 'complete') pass();
+    else addEventListener('load', pass);
+  }());
+  </script>
+  <script src="../js/responsive.js?v=20261017d"></script>
+  <script>
+  /* Passo 04 della timeline AI: del player Vimeo non si vede nessuna interfaccia (titolo, autore, mi piace,
+     condividi...). Resta un solo comando nostro: play/pausa con un clic sul video o da tastiera.
+     Si parla con il player via postMessage (nessuna libreria). Il video si ferma da solo se si cambia tappa. */
+  (function () {
+    var frame = document.getElementById('aiVimeo'), btn = document.getElementById('aiVimeoToggle');
+    if (!frame || !btn) return;
+    var ORIGIN = 'https://player.vimeo.com', playing = false, ready = false;
+    function send(method, value) {
+      if (!frame.contentWindow) return;
+      var m = { method: method }; if (value !== undefined) m.value = value;
+      frame.contentWindow.postMessage(JSON.stringify(m), ORIGIN);
+    }
+    function paint() {
+      btn.setAttribute('aria-pressed', playing ? 'true' : 'false');
+      btn.setAttribute('aria-label', playing ? 'Metti in pausa il video' : 'Riproduci il video');
+      btn.classList.toggle('is-playing', playing);
+    }
+    window.addEventListener('message', function (e) {
+      if (e.origin !== ORIGIN || e.source !== frame.contentWindow) return;
+      var d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch (err) { return; }
+      if (!d) return;
+      if (d.event === 'ready') { ready = true; ['play', 'pause', 'ended'].forEach(function (n) { send('addEventListener', n); }); }
+      else if (d.event === 'play') { playing = true; paint(); }
+      else if (d.event === 'pause' || d.event === 'ended') { playing = false; paint(); }
+    });
+    frame.addEventListener('load', function () { send('addEventListener', 'ready'); ['play', 'pause', 'ended'].forEach(function (n) { send('addEventListener', n); }); });
+    btn.addEventListener('click', function () { send(playing ? 'pause' : 'play'); });
+    var panel = frame.closest('.svc-tabs__panel');
+    if (panel && window.MutationObserver) {
+      new MutationObserver(function () { if (panel.hidden && playing) send('pause'); }).observe(panel, { attributes: true, attributeFilter: ['hidden', 'class'] });
+    }
+    paint();
+  }());
+  </script>
+</body>
+</html>

@@ -1,0 +1,2324 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="È una domanda che ogni CMO e imprenditore si pone prima o poi. Assumere un team marketing interno o affidarsi a un’agenzia esterna? La risposta dipende…" />
+  <title>Agenzia di comunicazione o team interno: cosa conviene davvero nel 2026 — ESTRO</title>
+  <link rel="stylesheet" href="../css/tokens.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/base.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/components.css?v=20261017d" />
+  <link rel="stylesheet" href="../css/hero.css?v=20261017d" />
+  <style>
+    /* ══ ARTICLE PAGE ════════════════════════════════════════ */
+
+    body { background: #000 !important; }
+    .nav__menu-btn, .nav__menu-icon span, .nav__menu-label-close, .nav__menu-label-open { transition: color 180ms ease, background-color 180ms ease !important; }
+    .nav__logo img { transition: filter 180ms ease !important; }
+
+    /* ── Hero ───────────────────────────────────────────── */
+    .art-hero {
+      background: #000;
+      min-height: 86vh;
+      display: flex;
+      align-items: flex-end;
+      padding-top: 120px;
+      padding-bottom: clamp(4rem, 7vw, 6rem);
+      position: relative;
+      overflow: hidden;
+    }
+    .art-hero__bg {
+      position: absolute;
+      inset: 0;
+      background: #111;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+    }
+    .art-hero__bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, #060606 35%, rgba(6,6,6,0.65) 65%, rgba(6,6,6,0.35) 100%);
+    }
+    .art-hero__bg-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      opacity: 0.1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+    .art-hero__bg-icon svg { width: 80px; height: 80px; }
+    .art-hero__inner {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      padding: 0 clamp(1.5rem, 5vw, 6rem);
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: clamp(4rem, 6vw, 7rem);
+      align-items: end;
+    }
+    .art-hero__left {}
+    .art-hero__meta {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .art-hero__cat {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--primary);
+      border: 1px solid rgba(219,0,90,0.4);
+      padding: 0.4rem 1rem;
+      border-radius: 100px;
+    }
+    .art-hero__date {
+      font-family: var(--font-secondary);
+      font-size: 0.68rem;
+      color: rgba(255,255,255,0.25);
+      letter-spacing: 0.08em;
+    }
+    .art-hero__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2.2rem, 5.5vw, 68px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 2rem;
+    }
+    .art-hero__intro {
+      font-family: var(--font-secondary);
+      font-size: clamp(0.9rem, 1.3vw, 1rem);
+      line-height: 1.75;
+      color: rgba(255,255,255,0.38);
+      max-width: 60ch;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.5rem;
+    }
+
+    /* Sidebar ultime news */
+    .art-hero__sidebar {
+      padding-bottom: 0.5rem;
+      border-left: 1px solid rgba(255,255,255,0.08);
+      padding-left: 2.5rem;
+    }
+    .art-hero__sidebar-label {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
+      margin-bottom: 1.5rem;
+      display: block;
+    }
+    .art-hero__sidebar-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .art-hero__sidebar-list li {
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
+    .art-hero__sidebar-list li:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .art-hero__sidebar-list a {
+      display: block;
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.4);
+      text-decoration: none;
+      padding: 1rem 0;
+      transition: color 200ms;
+    }
+    .art-hero__sidebar-list a:hover { color: rgba(255,255,255,0.85); }
+    .art-hero__sidebar-list li.active a {
+      color: rgba(255,255,255,0.18);
+      pointer-events: none;
+      font-style: italic;
+    }
+
+    /* ── Risposta diretta ───────────────────────────────── */
+    .art-answer {
+      background: var(--primary);
+      padding: clamp(2.5rem, 5vw, 4rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .art-answer__inner { max-width: 820px; }
+    .art-answer__label {
+      font-family: var(--font-secondary);
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 1.1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .art-answer__label::before { content: '⚡'; letter-spacing: 0; }
+    .art-answer__text {
+      font-family: var(--font-secondary);
+      font-size: clamp(1rem, 1.6vw, 1.18rem);
+      line-height: 1.7;
+      color: #fff;
+      font-weight: 500;
+    }
+
+    /* ── Corpo articolo ─────────────────────────────────── */
+    .art-body {
+      background: #fff;
+      padding: clamp(4rem, 7vw, 6rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .art-body--tight { padding-top: clamp(2rem, 3.5vw, 3rem); padding-bottom: clamp(2rem, 3.5vw, 3rem); }
+    .art-body__inner { max-width: 700px; }
+
+    .art-h2 {
+      font-family: var(--font-primary);
+      font-size: clamp(1.5rem, 3.2vw, 2.4rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 1.02;
+      letter-spacing: -0.025em;
+      color: #080808;
+      margin-top: clamp(3.5rem, 6vw, 5rem);
+      margin-bottom: 1.5rem;
+    }
+    .art-h2:first-child { margin-top: 0; }
+
+    .art-p {
+      font-family: var(--font-secondary);
+      font-size: 1rem;
+      line-height: 1.9;
+      color: rgba(0,0,0,0.55);
+      margin-bottom: 1.5rem;
+    }
+    .art-p:last-child { margin-bottom: 0; }
+
+    .art-list {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0 1.75rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-top: 1px solid rgba(0,0,0,0.07);
+    }
+    .art-list li {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.7;
+      color: rgba(0,0,0,0.58);
+      padding: 0.7rem 0 0.7rem 1.5rem;
+      position: relative;
+      border-bottom: 1px solid rgba(0,0,0,0.07);
+    }
+    .art-list li::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    .art-callout {
+      background: #fafafa;
+      border: 1px solid rgba(0,0,0,0.07);
+      border-left: 3px solid var(--primary);
+      padding: 1.5rem 1.75rem;
+      border-radius: 0 12px 12px 0;
+      margin: 2.5rem 0;
+      max-width: 560px;
+    }
+    .art-callout p {
+      font-family: var(--font-secondary);
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.6);
+      margin: 0;
+    }
+    .art-callout strong { color: #080808; font-weight: 700; }
+
+    /* ── Tabella prezzi ─────────────────────────────────── */
+    .art-pricing {
+      background: #0a0a0a;
+      padding: clamp(5rem, 8vw, 7rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .art-pricing__label {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .art-pricing__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 4.5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .art-pricing__intro {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.35);
+      max-width: 640px;
+      margin-bottom: clamp(3rem, 5vw, 4rem);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .art-pricing__grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    .art-pkg {
+      background: linear-gradient(160deg, #181818 0%, #111 100%);
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 18px;
+      padding: clamp(1.75rem, 3vw, 2.5rem);
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      transition: border-color 300ms, transform 300ms;
+      position: relative;
+      overflow: hidden;
+    }
+    .art-pkg:hover {
+      border-color: rgba(219,0,90,0.4);
+      transform: translateY(-3px);
+    }
+    /* Accento top per il Full Stack */
+    .art-pkg:last-child {
+      border-color: rgba(219,0,90,0.25);
+    }
+    .art-pkg:last-child::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 2px;
+      background: var(--primary);
+      border-radius: 18px 18px 0 0;
+    }
+    .art-pkg__name {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1.25rem;
+    }
+    .art-pkg__price {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 3.5vw, 2.8rem);
+      font-weight: 900;
+      color: #fff;
+      letter-spacing: -0.03em;
+      line-height: 1;
+      margin-bottom: 0.35rem;
+    }
+    .art-pkg__price span {
+      font-family: var(--font-secondary);
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.28);
+      font-weight: 400;
+      letter-spacing: 0;
+    }
+    .art-pkg__checklist {
+      list-style: none;
+      padding: 0;
+      margin: 1.5rem 0 0;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding-top: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.6rem;
+      flex: 1;
+    }
+    .art-pkg__checklist li {
+      font-family: var(--font-secondary);
+      font-size: 0.8rem;
+      line-height: 1.5;
+      color: rgba(255,255,255,0.38);
+      padding-left: 1.25rem;
+      position: relative;
+    }
+    .art-pkg__checklist li::before {
+      content: '✓';
+      position: absolute;
+      left: 0;
+      color: var(--primary);
+      font-size: 0.72rem;
+      font-weight: 700;
+    }
+    .art-pricing__note {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.22);
+      margin-top: 2rem;
+      max-width: 640px;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .art-pricing__note strong { color: rgba(255,255,255,0.4); }
+
+    /* ── Timeline onboarding ────────────────────────────── */
+    .art-timeline {
+      background: #fff;
+      padding: clamp(5rem, 8vw, 7rem) clamp(1.5rem, 5vw, 6rem) clamp(2.5rem, 4vw, 3.5rem);
+    }
+    .art-timeline__label {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .art-timeline__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 4.5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #080808;
+      margin-bottom: 1rem;
+    }
+    .art-timeline__intro {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(0,0,0,0.45);
+      max-width: 640px;
+      margin-bottom: clamp(3.5rem, 6vw, 5rem);
+      border-top: 1px solid rgba(0,0,0,0.07);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+    }
+    .art-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      max-width: 680px;
+    }
+    .art-step {
+      display: grid;
+      grid-template-columns: 110px 1fr;
+      gap: 0 2.5rem;
+      position: relative;
+    }
+    .art-step__time {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--primary);
+      text-align: right;
+      padding-top: 0.15rem;
+      padding-bottom: 2.5rem;
+    }
+    .art-step:last-child .art-step__time { padding-bottom: 0; }
+    .art-step__content {
+      border-left: 1px solid rgba(0,0,0,0.1);
+      padding-left: 2.5rem;
+      padding-bottom: 3rem;
+      position: relative;
+    }
+    .art-step:last-child .art-step__content { padding-bottom: 0; border-left-color: transparent; }
+    .art-step__content::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 0.1rem;
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+    .art-step__title {
+      font-family: var(--font-primary);
+      font-size: 0.95rem;
+      font-weight: 900;
+      text-transform: uppercase;
+      letter-spacing: -0.01em;
+      color: #080808;
+      margin-bottom: 0.75rem;
+    }
+    .art-step__text {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.5);
+    }
+
+    /* ── Risultati nel tempo ────────────────────────────── */
+    .art-results {
+      background: #080808;
+      padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 6rem);
+    }
+    .art-results__label {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .art-results__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 4.5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #fff;
+      margin-bottom: 1rem;
+    }
+    .art-results__intro {
+      font-family: var(--font-secondary);
+      font-size: 0.95rem;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: clamp(2.5rem, 5vw, 4rem);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 1.25rem;
+      margin-top: 1.25rem;
+      max-width: 560px;
+    }
+    .art-results__grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .art-result-card {
+      background: #141414;
+      border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 16px;
+      padding: 1.75rem 1.5rem;
+      border-top: 2px solid transparent;
+      transition: border-color 250ms, transform 250ms;
+    }
+    .art-result-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .art-result-card__period {
+      font-family: var(--font-primary);
+      font-size: 1.1rem;
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--primary);
+      margin-bottom: 0.75rem;
+      display: block;
+      line-height: 1;
+    }
+    .art-result-card__text {
+      font-family: var(--font-secondary);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.4);
+    }
+
+    /* ── FAQ accordion ──────────────────────────────────── */
+    .art-faq {
+      background: #fff;
+      padding: clamp(3rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 5rem);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .art-faq__label,
+    .art-faq__title,
+    .art-faq__list {
+      width: 100%;
+      max-width: 1440px;
+    }
+    .art-faq__label {
+      font-family: var(--font-secondary);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      display: block;
+    }
+    .art-faq__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 4.5vw, 56px);
+      font-weight: 900;
+      text-transform: uppercase;
+      line-height: 0.97;
+      letter-spacing: -0.03em;
+      color: #080808;
+      margin-bottom: clamp(3rem, 5vw, 4rem);
+    }
+    .art-faq__list {
+      max-width: 1440px;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .art-faq__item {
+      background: transparent;
+      border-bottom: 1px solid rgba(0,0,0,0.1);
+      overflow: hidden;
+    }
+    .art-faq__item:first-child { border-top: 1px solid rgba(0,0,0,0.1); }
+    .art-faq__q {
+      font-family: var(--font-secondary);
+      font-size: 0.92rem;
+      font-weight: 600;
+      color: rgba(0,0,0,0.55);
+      padding: 1.4rem 0;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      user-select: none;
+      transition: color 180ms;
+    }
+    .art-faq__item.open .art-faq__q { color: #080808; }
+    .art-faq__q-icon {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      font-weight: 300;
+      color: rgba(0,0,0,0.2);
+      line-height: 1;
+      transition: transform 300ms ease, color 200ms;
+    }
+    .art-faq__item.open .art-faq__q-icon {
+      transform: rotate(45deg);
+      color: var(--primary);
+    }
+    .art-faq__a {
+      font-family: var(--font-secondary);
+      font-size: 0.88rem;
+      line-height: 1.8;
+      color: rgba(0,0,0,0.45);
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 350ms ease, padding 350ms ease;
+    }
+    .art-faq__item.open .art-faq__a {
+      max-height: 200px;
+      padding: 0 0 1.4rem;
+    }
+
+    /* ── Form contatti / Parliamoci ─────────────────────── */
+    .art-contact {
+      background: var(--primary);
+      padding-inline: clamp(1.5rem, 5vw, 5rem);
+    }
+    .art-contact__inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      max-width: 1440px;
+      width: 100%;
+      margin-inline: auto;
+      gap: clamp(3rem, 8vw, 8rem);
+      align-items: center;
+      padding-block: clamp(4rem, 8vw, 7rem);
+    }
+    .art-contact__left {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+    .art-contact__label {
+      font-family: var(--font-secondary);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      display: block;
+    }
+    .art-contact__title {
+      font-family: var(--font-primary);
+      font-size: clamp(2rem, 3.8vw, 3.5rem);
+      font-weight: 900;
+      text-transform: uppercase;
+      color: #fff;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
+    }
+    .art-contact__sub {
+      font-family: var(--font-secondary);
+      font-size: clamp(1rem, 1.5vw, 1.2rem);
+      line-height: 1.6;
+      color: rgba(255,255,255,0.65);
+    }
+    .art-contact .contact-home__form { width: 100%; display: flex; flex-direction: column; gap: var(--space-4); }
+    .art-contact .contact-home__row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-4);
+    }
+    .art-contact .contact-home__field {
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.22);
+      color: #fff;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      font-family: var(--font-secondary);
+      font-size: var(--text-base);
+      width: 100%;
+      outline: none;
+      transition: border-color 200ms, background 200ms;
+    }
+    .art-contact .contact-home__field::placeholder { color: rgba(255,255,255,0.45); }
+    .art-contact .contact-home__field:focus {
+      border-color: rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.25);
+    }
+    .art-contact .contact-home__textarea { width: 100%; resize: vertical; min-height: 110px; }
+    .art-contact .contact-home__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-3);
+      font-family: var(--font-secondary);
+      font-size: var(--text-xs);
+      color: rgba(255,255,255,0.55);
+      line-height: 1.5;
+    }
+    .art-contact .contact-home__privacy a { color: #fff; text-decoration: underline; }
+    .art-contact .contact-home__submit-wrap { display: flex; }
+    @media (max-width: 860px) {
+      .art-contact__inner { grid-template-columns: 1fr; }
+      .art-contact .contact-home__row { grid-template-columns: 1fr; }
+    }
+
+    /* ── Back ───────────────────────────────────────────── */
+    .art-back {
+      background: var(--primary);
+      padding: 1.5rem clamp(1.5rem, 5vw, 6rem);
+      border-top: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .art-back__link {
+      font-family: var(--font-secondary);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      transition: color 200ms;
+    }
+    .art-back__link:hover { color: #fff; }
+    .art-back__brand {
+      font-family: var(--font-primary);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1024px) {
+      .art-hero__inner { grid-template-columns: 1fr; }
+      .art-hero__sidebar { display: none; }
+      .art-results__grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 860px) {
+      .art-pricing__grid { grid-template-columns: 1fr; }
+      .art-results__grid { grid-template-columns: 1fr; }
+      .art-step { grid-template-columns: 90px 1fr; gap: 1rem; }
+    }
+
+    /* ══ REVEAL ══════════════════════════════════════════════ */
+    .reveal,
+    .art-h2, .art-p, .art-list, .art-callout, .art-step, .art-result-card {
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.65s cubic-bezier(.25,.46,.45,.94), transform 0.65s cubic-bezier(.25,.46,.45,.94);
+    }
+    .reveal.is-visible,
+    .art-h2.is-visible, .art-p.is-visible, .art-list.is-visible,
+    .art-callout.is-visible, .art-step.is-visible, .art-result-card.is-visible {
+      opacity: 1; transform: none;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER — identico alla homepage
+       ═══════════════════════════════════════════════════════════ */
+    .nav__inner {
+      border: 0 !important;
+      background: rgba(255,255,255,0.58) !important;
+      backdrop-filter: blur(28px) saturate(185%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(185%) !important;
+      box-shadow: 0 12px 34px rgba(0,0,0,0.14) !important;
+      transition: background 0.35s ease, box-shadow 0.35s ease,
+                  backdrop-filter 0.35s ease,
+                  -webkit-backdrop-filter 0.35s ease;
+    }
+    .nav--on-dark .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(255,255,255,0.30) !important;
+      backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      -webkit-backdrop-filter: blur(30px) saturate(70%) brightness(1.35) !important;
+      box-shadow: 0 6px 22px rgba(0,0,0,0.12) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #111 !important; text-shadow: none !important; }
+    .nav:not(.scrolled).nav--on-dark .nav__menu-btn { color: #fff !important; }
+    .nav:not(.scrolled) .nav__menu-icon span,
+    .nav--on-dark .nav__menu-icon span { background: var(--primary) !important; filter: none !important; }
+    .nav:not(.scrolled) .nav__logo img { filter: none !important; }
+    .nav__menu-btn,
+    .nav__menu-icon span {
+      transition: color 0.35s ease, background 0.35s ease, filter 0.35s ease;
+    }
+    .nav__mega-label { font-size: 16px !important; }
+/* la misura di "Menu" e' una sola per tutto il sito: 16px,       dichiarata in css/components.css. Qui c'erano 14px !important       ed era la ragione per cui questo header risultava piu' basso       di quello della homepage. */
+    a.nav__joinus, .nav__joinus.nav__joinus { font-size: 14px !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       UN SOLO COLORE — la pagina è un articolo, non una sequenza
+       di sezioni. Prima alternava nero, bianco, grigio chiaro e
+       fucsia pieno: cinque superfici che spezzavano la lettura in
+       blocchi. Ora la carta è una sola, scura, e il colore vive
+       dove serve — testi, tag, bordi delle card, numeri.
+       ═══════════════════════════════════════════════════════════ */
+    :root { --art-ink: #0a0a0a; --art-card: #141414; }
+    body { background: var(--art-ink) !important; }
+    .art-hero,
+    .art-answer,
+    .art-body,
+    .art-pricing,
+    .art-timeline,
+    .art-results,
+    .art-faq,
+    .art-back {
+      background: var(--art-ink) !important;
+    }
+    .art-hero__bg,
+    .art-hero__bg::after { background: transparent !important; background-image: none !important; }
+
+    /* Testi in negativo, con la stessa gerarchia di prima */
+    .art-h2 { color: #fff !important; }
+    .art-p,
+    .art-list li,
+    .art-callout,
+    .art-callout p { color: rgba(255,255,255,0.68) !important; }
+    .art-list { border-top-color: rgba(255,255,255,0.10) !important; }
+    .art-list li { border-bottom-color: rgba(255,255,255,0.10) !important; }
+    .art-callout {
+      background: var(--art-card) !important;
+      border-color: rgba(255,255,255,0.10) !important;
+    }
+    /* Card e riquadri: superficie sollevata, filo di luce, e il
+       fucsia come unico accento */
+    .art-pricing__card,
+    .art-step,
+    .art-result-card,
+    .art-faq__item {
+      background: var(--art-card) !important;
+      border: 1px solid rgba(255,255,255,0.10) !important;
+      color: rgba(255,255,255,0.72);
+    }
+    .art-pricing__card:hover,
+    .art-result-card:hover { border-color: rgba(219,0,90,0.55) !important; }
+    .art-pricing__card *,
+    .art-step *,
+    .art-result-card *,
+    .art-faq__item * { border-color: rgba(255,255,255,0.10); }
+    .art-faq__q { color: #fff !important; }
+    .art-faq__a { color: rgba(255,255,255,0.68) !important; }
+    /* L'accento: tag, etichette, numeri, pallini, link */
+    .art-hero__cat,
+    .art-answer__label,
+    .art-pricing__label,
+    .art-timeline__label,
+    .art-results__label,
+    .art-faq__label,
+    .art-contact__label,
+    .art-step__num,
+    .art-result-card__num,
+    .art-pricing__price { color: var(--primary) !important; }
+    /* La "risposta diretta" non è più una banda fucsia piena: resta
+       il blocco più importante, ma marcato da un filetto, non da un
+       cambio di carta. */
+    .art-answer {
+      border-left: 3px solid var(--primary);
+      padding-left: calc(clamp(1.5rem, 5vw, 6rem) - 3px);
+    }
+    .art-answer__text { color: #fff !important; }
+    .art-back { border-top: 1px solid rgba(255,255,255,0.10); }
+    /* il colore della CTA lo fissa il blocco pulsanti più a valle:
+       qui restava un fucsia !important dal vecchio stile testuale */
+    .art-back__brand { color: rgba(255,255,255,0.10) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       COLONNA "ULTIME NEWS" — agganciata per tutta la pagina
+       ═══════════════════════════════════════════════════════════ */
+    .art-main { position: relative; }
+    .art-hero__inner { grid-template-columns: 1fr !important; }
+    @media (min-width: 1100px) {
+      .art-rail {
+        position: absolute;
+        top: 0;
+        right: clamp(1.5rem, 5vw, 6rem);
+        width: 320px;
+        height: 100%;
+        pointer-events: none;
+        z-index: 3;
+      }
+      .art-rail .art-hero__sidebar {
+        position: sticky;
+        top: calc(var(--nav-h) + 24px);
+        pointer-events: auto;
+        border-left: 1px solid rgba(255,255,255,0.10);
+        padding-left: 2rem;
+      }
+      /* il testo dell'articolo lascia la corsia libera */
+      .art-hero__inner,
+      .art-answer,
+      .art-body,
+      .art-pricing,
+      .art-timeline,
+      .art-results,
+      .art-faq { padding-right: calc(320px + clamp(1.5rem, 5vw, 6rem) + 3rem) !important; }
+    }
+    @media (max-width: 1099px) {
+      .art-rail { padding: 0 clamp(1.5rem, 5vw, 6rem) clamp(2rem, 4vw, 3rem); }
+      .art-rail .art-hero__sidebar { border-left: 0; padding-left: 0; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TRANSIZIONE — solo su form e footer, come in homepage
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .sx-rise {
+      position: relative;
+      z-index: 2;
+      transform: translateY(calc((1 - var(--sxi, 1)) * -22px));
+      border-radius: calc((1 - var(--sxi, 1)) * 32px) calc((1 - var(--sxi, 1)) * 32px) 0 0;
+      box-shadow: 0 calc((1 - var(--sxi, 1)) * -14px) calc((1 - var(--sxi, 1)) * 34px) rgba(0,0,0,0.30);
+      will-change: transform;
+    }
+    html.js-reveal .sx-rise::after {
+      content: '';
+      position: absolute;
+      left: 0; right: 0; top: 100%;
+      height: calc((1 - var(--sxi, 1)) * 22px);
+      background: inherit;
+      pointer-events: none;
+      z-index: -1;
+    }
+    footer.site-footer { overflow: visible; }
+
+    /* ═══════════════════════════════════════════════════════════
+       INGRESSO DEI TESTI — linguaggio del body di About
+       Nessuno stato nascosto duraturo: opacità di partenza alta e
+       spostamento contenuto.
+       ═══════════════════════════════════════════════════════════ */
+    html.js-reveal .ab-armed {
+      transform: translateY(14px);
+      opacity: 0.72;
+      transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+                  opacity 0.45s ease;
+    }
+    html.js-reveal .ab-armed.ab-in { transform: none; opacity: 1; }
+    /* .reveal non è più guidata: se restasse, terrebbe tutto a 0 */
+    .reveal { opacity: 1; transform: none; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TITOLI 60px
+       ═══════════════════════════════════════════════════════════ */
+    .art-hero__title,
+    .art-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Form: identico a quello della homepage ─────────────── */
+    .art-contact .hc-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.875rem;
+    }
+    .art-contact .hc-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.875rem;
+    }
+    .art-contact .hc-textarea { min-height: 130px; resize: vertical; }
+    .art-contact .svc-caffe__field {
+      width: 100%;
+      padding: 1rem 1.25rem;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.15) !important;
+      border: 1px solid rgba(255,255,255,0.35) !important;
+      color: #fff !important;
+      font-family: var(--font-secondary);
+      font-size: 16px;
+      outline: none;
+      transition: border-color var(--dur-fast), background var(--dur-fast);
+    }
+    .art-contact .svc-caffe__field::placeholder { color: rgba(255,255,255,0.72) !important; }
+    .art-contact .svc-caffe__field:focus {
+      border-color: #fff !important;
+      background: rgba(255,255,255,0.22) !important;
+    }
+    .art-contact .hc-consents {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+      margin-top: 0.25rem;
+    }
+    .art-contact .hc-consents .svc-caffe__privacy {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.6rem;
+      cursor: pointer;
+      margin: 0;
+      color: rgba(255,255,255,0.85);
+    }
+    .art-contact .hc-consents .svc-caffe__privacy input[type="checkbox"] {
+      margin-top: 0.2em;
+      flex-shrink: 0;
+      width: 16px; height: 16px;
+      accent-color: #fff;
+      cursor: pointer;
+    }
+    .art-contact .hc-consents .svc-caffe__privacy span,
+    .art-contact .hc-consents .svc-caffe__privacy a,
+    .art-contact .hc-consents .svc-caffe__privacy em {
+      line-height: 1.5;
+      font-size: 16px !important;
+    }
+    .art-contact .hc-consents a {
+      color: #fff !important;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .art-contact .hc-submit {
+      width: auto;
+      align-self: center;
+      padding-block: 0.85rem;
+      padding-inline: clamp(2rem, 5vw, 3.5rem);
+      margin-top: 0.5rem;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-size: 14px !important;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .art-contact .hc-submit::before { display: none !important; }
+    .art-contact .hc-submit:hover,
+    .art-contact .hc-submit:active {
+      background: #fff !important;
+      color: #DB005A !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+    @media (max-width: 700px) {
+      .art-contact .hc-row { grid-template-columns: 1fr; }
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       TIPOGRAFIA — corpo minimo 16px
+       Fuori: header e footer; a 14px solo tagline/etichette e CTA.
+       ═══════════════════════════════════════════════════════════ */
+    main p,
+    main li,
+    main a,
+    main span,
+    main label,
+    main input,
+    main textarea,
+    main button,
+    main dt, main dd,
+    .art-p,
+    .art-list li,
+    .art-callout,
+    .art-hero__intro,
+    .art-answer__text,
+    .art-faq__q,
+    .art-faq__a,
+    .art-hero__sidebar-list a { font-size: max(16px, 1rem) !important; }
+    /* Tagline / etichette / date: 14px */
+    .art-hero__cat,
+    .art-hero__date,
+    .art-hero__sidebar-label,
+    .art-answer__label,
+    .art-pricing__label,
+    .art-timeline__label,
+    .art-results__label,
+    .art-faq__label,
+    .art-contact__label,
+    .art-pricing__tag,
+    .art-step__time,
+    .art-back__link { font-size: 14px !important; }
+    /* Nomi dei pacchetti e titoli degli step stavano a 10 e 15px:
+       sono testo di lettura, non etichette. */
+    .art-pkg__name,
+    .art-step__title { font-size: 16px !important; }
+    /* CTA: 14px */
+    main a.btn, main button.btn, main .btn.btn { font-size: 14px !important; }
+    /* Titoli e numeri restano alla loro scala */
+    .art-h2,
+    .art-hero__title,
+    .art-contact__title,
+    .art-step__num,
+    .art-result-card__num,
+    .art-pricing__price,
+    .art-back__brand { font-size: revert !important; }
+    .art-hero__title,
+    .art-contact__title { font-size: min(60px, 11vw) !important; }
+
+    /* ── Footer: stesse misure della home ───────────────────── */
+    .site-footer a,
+    .site-footer p,
+    .site-footer span,
+    .site-footer li,
+    .site-footer h3,
+    .site-footer h4 { font-size: 14px !important; }
+    .site-footer .sf-ghost { font-size: 22vw !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       TESTI RIMASTI NERI SU NERO
+       Il passaggio a superficie unica scura aveva coperto solo una
+       parte dei testi: titoli, intro e corpi delle sezioni
+       timeline, risultati, pacchetti e FAQ erano ancora tarati sul
+       fondo bianco di prima, quindi #080808 su #0a0a0a.
+       ═══════════════════════════════════════════════════════════ */
+    .art-timeline__title,
+    .art-results__title,
+    .art-pricing__title,
+    .art-faq__title,
+    .art-step__title,
+    .art-result-card__title,
+    .art-pkg__name,
+    .art-callout strong,
+    main strong { color: #fff !important; }
+    .art-timeline__intro,
+    .art-results__intro,
+    .art-pricing__intro,
+    .art-pricing__note,
+    .art-step__text,
+    .art-result-card__text,
+    .art-pkg__checklist li,
+    .art-hero__intro { color: rgba(255,255,255,0.68) !important; }
+    .art-hero__intro,
+    .art-pricing__intro,
+    .art-pricing__note,
+    .art-timeline__intro,
+    .art-results__intro,
+    .art-pkg__checklist,
+    .art-pkg__checklist li { border-color: rgba(255,255,255,0.10) !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       VIA I RIQUADRI SENZA RAGIONE — linguaggio delle FAQ in home
+       Step, risultati, pacchetti e domande erano scatole con fondo
+       e bordo: su una pagina a colore unico creavano quattro tipi
+       di contenitore diversi senza che nessuno dicesse niente.
+       Restano solo filetti orizzontali, come nelle FAQ della
+       homepage. L'unico blocco che tiene un fondo è il callout,
+       perché è davvero un inciso.
+       ═══════════════════════════════════════════════════════════ */
+    .art-step,
+    .art-result-card,
+    .art-pkg,
+    .art-faq__item {
+      background: transparent !important;
+      border: 0 !important;
+      border-bottom: 1px solid rgba(255,255,255,0.10) !important;
+      border-radius: 0 !important;
+      box-shadow: none !important;
+    }
+    .art-step:first-child,
+    .art-result-card:first-child,
+    .art-pkg:first-child,
+    .art-faq__item:first-child { border-top: 1px solid rgba(255,255,255,0.10) !important; }
+    .art-pricing__card:hover,
+    .art-result-card:hover { border-color: rgba(255,255,255,0.10) !important; }
+    .art-step__content { border: 0 !important; }
+
+    /* Occhio delle domande: lo stesso delle FAQ in homepage */
+    .art-faq__q {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      width: 100%;
+      cursor: pointer;
+      color: #fff !important;
+      padding-block: 1.4rem;
+    }
+    .art-faq__q-icon {
+      flex-shrink: 0;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid rgba(219,0,90,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      transition: background 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+      position: relative;
+      font-size: 0 !important;
+    }
+    .art-faq__item:hover .art-faq__q-icon { border-color: rgba(219,0,90,0.5); transform: scale(1.1); }
+    .art-faq__item.open .art-faq__q-icon { background: var(--primary); border-color: var(--primary); color: #fff; transform: scale(1.1); }
+    .art-faq__q-icon svg {
+      width: 22px; height: 22px;
+      position: absolute;
+      transition: opacity 0.2s ease, transform 0.25s cubic-bezier(.34,1.56,.64,1);
+    }
+    .art-faq__q-icon .eye-open   { opacity: 0; transform: translateY(4px) scale(0.6); }
+    .art-faq__q-icon .eye-closed { opacity: 1; transform: translateY(0) scale(1); }
+    .art-faq__item.open .art-faq__q-icon .eye-open   { opacity: 1; transform: translateY(0) scale(1); }
+    .art-faq__item.open .art-faq__q-icon .eye-closed { opacity: 0; transform: translateY(-4px) scale(0.6); }
+
+    /* ═══════════════════════════════════════════════════════════
+       HEADER SCURO GIÀ ALL'ATTERRAGGIO
+       Senza .scrolled la nav usa il vetro chiaro con il MENU nero,
+       tarato sulla hero luminosa della home. Qui sotto la pill c'è
+       nero da subito, quindi il vetro scuro e il MENU bianco
+       valgono fin dal primo fotogramma.
+       ═══════════════════════════════════════════════════════════ */
+    .nav:not(.scrolled) .nav__inner {
+      background: rgba(16,10,14,0.34) !important;
+      backdrop-filter: blur(28px) saturate(140%) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(140%) !important;
+      box-shadow: 0 12px 36px rgba(0,0,0,0.32) !important;
+    }
+    .nav:not(.scrolled) .nav__menu-btn { color: #fff !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       LEGGIBILITÀ — meno righe, più respiro, un po' di rilievo
+       La pagina era attraversata da filetti dappertutto: sopra
+       l'intro, sopra e sotto ogni voce di elenco, fra gli step,
+       fra le card. Righe che non separavano niente e spezzavano la
+       lettura. Restano solo dove dividono davvero: fra una domanda
+       e l'altra.
+       ═══════════════════════════════════════════════════════════ */
+    .art-hero__intro,
+    .art-pricing__intro,
+    .art-pricing__note,
+    .art-timeline__intro,
+    .art-results__intro,
+    .art-list,
+    .art-list li,
+    .art-pkg,
+    .art-pkg__checklist,
+    .art-pkg__checklist li,
+    .art-step,
+    .art-step:first-child,
+    .art-result-card,
+    .art-result-card:first-child {
+      border: 0 !important;
+    }
+    .art-hero__intro { padding-top: 0 !important; }
+    /* Elenchi: il pallino fucsia basta a segnare la voce */
+    .art-list { margin-block: 0.75rem 2rem !important; gap: 0.35rem; }
+    .art-list li { padding: 0.25rem 0 0.25rem 1.5rem !important; }
+    /* Ritmo di lettura più ampio fra i blocchi */
+    .art-p { margin-bottom: 1.75rem !important; max-width: 68ch; }
+    .art-h2 { margin-top: clamp(4rem, 7vw, 6rem) !important; }
+
+    /* Rilievo: le due superfici che valgono davvero — l'inciso e la
+       risposta diretta — si staccano dalla carta con un piano
+       leggermente più chiaro, un filo di luce in alto e un'ombra
+       morbida. Nient'altro sulla pagina ha un fondo. */
+    .art-callout,
+    .art-answer__inner {
+      background: linear-gradient(180deg, #17171a 0%, #121214 100%) !important;
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-left: 3px solid var(--primary) !important;
+      border-radius: 0 14px 14px 0 !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+      padding: clamp(1.5rem, 3vw, 2rem) clamp(1.5rem, 3vw, 2.2rem);
+    }
+    .art-answer { border-left: 0 !important; padding-left: clamp(1.5rem, 5vw, 6rem) !important; }
+
+    /* ── "L'onboarding": una linea sola, verticale ───────────
+       I filetti orizzontali fra uno step e l'altro suggerivano tre
+       blocchi separati, mentre è una sequenza. Ora c'è un'unica
+       guida verticale con i tre momenti segnati sopra. */
+    .art-steps {
+      position: relative;
+      padding-left: 2.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(2rem, 3.5vw, 2.75rem);
+    }
+    .art-steps::before {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 6px;
+      bottom: 6px;
+      width: 2px;
+      background: linear-gradient(180deg, var(--primary) 0%, rgba(219,0,90,0.15) 100%);
+      border-radius: 2px;
+    }
+    .art-step { position: relative; padding: 0 !important; display: block !important; }
+    .art-step::before {
+      content: '';
+      position: absolute;
+      left: -2.25rem;
+      top: 0.45em;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: var(--art-ink);
+      border: 2px solid var(--primary);
+    }
+    .art-step__time { margin-bottom: 0.3rem; }
+    .art-step__content { padding: 0 !important; }
+
+    /* Risultati: quattro momenti in fila, separati dallo spazio e
+       dal numero fucsia, non da quattro riquadri */
+    .art-results__grid { gap: clamp(1.5rem, 3vw, 2.5rem) !important; }
+    .art-result-card { padding: 0 !important; }
+
+    /* Pacchetti: stessa logica, il prezzo fa da titolo */
+    .art-pricing__grid { gap: clamp(1.75rem, 3.5vw, 3rem) !important; }
+    .art-pkg { padding: 0 !important; }
+
+    /* ── Colonna "Ultime news": un pannello, non un elenco nudo ── */
+    .art-rail .art-hero__sidebar {
+      background: linear-gradient(180deg, #17171a 0%, #121214 100%);
+      border: 1px solid rgba(255,255,255,0.08) !important;
+      border-radius: 16px;
+      padding: 1.5rem 1.4rem !important;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+    .art-hero__sidebar-label { color: var(--primary) !important; }
+    .art-hero__sidebar-list li { border-top-color: rgba(255,255,255,0.08) !important; }
+    .art-hero__sidebar-list li:first-child { border-top: 0 !important; }
+    .art-hero__sidebar-list li:last-child { border-bottom: 0 !important; }
+    .art-hero__sidebar-list a { color: rgba(255,255,255,0.62) !important; }
+    .art-hero__sidebar-list a:hover { color: #fff !important; }
+    .art-hero__sidebar-list li.active a { color: var(--primary) !important; font-style: normal; }
+
+    /* ── CTA di ritorno, subito dopo le domande ──────────────── */
+    /* La CTA sta a sinistra, incolonnata con il titolo e con le
+       domande. Restava al centro perche' .art-faq e' una colonna
+       flex con align-items: center: titolo ed elenco hanno width
+       100% e max-width 1440 e quindi riempiono la colonna, mentre
+       questo blocco — largo quanto il suo pulsante — veniva
+       centrato. Prende la stessa misura degli altri figli e il
+       pulsante parte da sinistra. */
+    .art-back {
+      border: 0 !important;
+      padding: clamp(2.5rem, 5vw, 3.5rem) 0 0 !important;
+      display: flex;
+      justify-content: flex-start;
+      width: 100%;
+      max-width: 1440px;
+    }
+    /* Stesso comportamento delle altre CTA del sito (la "Invia" del
+       form qui sotto e quelle in homepage): bordo pieno su fondo
+       vuoto che si riempie di bianco con il testo fucsia,
+       sollevandosi di 2px. Stesse durate e stessa curva. */
+    /* la tendina nera di .btn--primary va spenta anche qui, come
+       sulla "Invia": era lei a far sembrare diverso il passaggio */
+    .art-back__link::before { display: none !important; }
+    .art-back__link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem clamp(2rem, 5vw, 3.5rem);
+      border-radius: 999px;
+      background: transparent !important;
+      color: #fff !important;
+      border: 2px solid #fff !important;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      text-decoration: none;
+      transition: background var(--dur-base) var(--ease-out),
+                  color var(--dur-base) var(--ease-out),
+                  transform var(--dur-base) var(--ease-out),
+                  box-shadow var(--dur-base) var(--ease-out);
+    }
+    .art-back__link:hover,
+    .art-back__link:active {
+      background: #fff !important;
+      color: var(--primary) !important;
+      border-color: #fff !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.20);
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       CORREZIONI DI DETTAGLIO
+       ═══════════════════════════════════════════════════════════ */
+    /* 1 — I pallini erano due per step: quello nuovo sulla guida
+       verticale e quello vecchio di .art-step__content, rimasto
+       dall'impaginazione a due colonne. Resta solo il primo, ed è
+       centrato sulla linea (guida a x=7px, pallino da 14px che
+       parte a x=0). */
+    .art-step__content::before { content: none !important; }
+    .art-steps::before { left: 7px !important; }
+    .art-step::before {
+      left: calc(-2.25rem + 1px) !important;
+      top: 0.35em !important;
+    }
+    .art-step__time { text-align: left !important; padding: 0 !important; }
+
+    /* 2 — Tempi dei risultati: non quattro riquadri uguali ma una
+       progressione. Il periodo fa da titolo, una barra fucsia che
+       cresce dice a che punto della curva siamo. Niente icone
+       decorative. */
+    .art-results__grid { grid-template-columns: repeat(4, 1fr) !important; }
+    .art-result-card {
+      display: flex !important;
+      flex-direction: column;
+      gap: 0.75rem;
+      padding-top: 1.25rem !important;
+      position: relative;
+    }
+    .art-result-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: var(--primary);
+      width: var(--rc-w, 25%);
+    }
+    .art-result-card::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      border-radius: 3px;
+      background: rgba(255,255,255,0.10);
+      z-index: -1;
+    }
+    .art-result-card:nth-child(1) { --rc-w: 25%; }
+    .art-result-card:nth-child(2) { --rc-w: 50%; }
+    .art-result-card:nth-child(3) { --rc-w: 75%; }
+    .art-result-card:nth-child(4) { --rc-w: 100%; }
+    .art-result-card__period {
+      font-family: var(--font-primary) !important;
+      font-size: clamp(1.1rem, 1.6vw, 1.35rem) !important;
+      letter-spacing: -0.01em;
+      text-transform: uppercase;
+      color: #fff !important;
+    }
+    .art-result-card__text { color: rgba(255,255,255,0.60) !important; }
+
+    /* 3 — Spazi fra le sezioni: erano fino a 7rem sopra e sotto,
+       quindi 14 fra una e l'altra. Dimezzati, il ritmo resta ampio
+       ma non si aprono vuoti. */
+    .art-body,
+    .art-pricing,
+    .art-timeline,
+    .art-results,
+    .art-faq {
+      padding-block: clamp(2.5rem, 4vw, 3.5rem) !important;
+    }
+    .art-answer { padding-block: clamp(1.5rem, 3vw, 2.5rem) !important; }
+    .art-body--tight { padding-block: clamp(1rem, 2vw, 1.5rem) !important; }
+
+    /* 4 — Pacchetti: card vere, non righe. Piano rialzato con un
+       alone fucsia in alto, prezzo in evidenza e sollevamento in
+       hover. */
+    .art-pricing__grid { gap: clamp(1rem, 1.8vw, 1.5rem) !important; }
+    .art-pkg {
+      position: relative;
+      padding: clamp(1.6rem, 2.6vw, 2.1rem) !important;
+      border-radius: 18px !important;
+      background:
+        radial-gradient(120% 70% at 50% -10%, rgba(219,0,90,0.22) 0%, transparent 60%),
+        linear-gradient(180deg, #191919 0%, #121212 100%) !important;
+      border: 1px solid rgba(255,255,255,0.09) !important;
+      box-shadow: 0 20px 44px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.07);
+      transition: transform 0.45s var(--ease-out, cubic-bezier(.16,1,.3,1)),
+                  border-color 0.45s ease, box-shadow 0.45s ease;
+    }
+    .art-pkg:hover {
+      transform: translateY(-6px);
+      border-color: rgba(219,0,90,0.55) !important;
+      box-shadow: 0 28px 60px rgba(0,0,0,0.6), inset 0 1px 0 rgba(255,255,255,0.10);
+    }
+    .art-pkg__name {
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--primary) !important;
+      font-size: 14px !important;
+      font-weight: 700;
+      margin-bottom: 0.4rem;
+    }
+    .art-pkg__price {
+      font-family: var(--font-primary);
+      font-size: clamp(1.6rem, 2.4vw, 2.1rem) !important;
+      color: #fff !important;
+      line-height: 1;
+      margin-bottom: 1.1rem;
+    }
+    .art-pkg__price span { font-size: 14px !important; color: rgba(255,255,255,0.5) !important; }
+    .art-pkg__checklist { display: flex; flex-direction: column; gap: 0.55rem; }
+    .art-pkg__checklist li { padding: 0 0 0 1.4rem !important; position: relative; }
+    .art-pkg__checklist li::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0.6em;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--primary);
+    }
+
+    /* 5 — "Risposta diretta": un segno disegnato al posto
+       dell'emoji. */
+    .art-answer__label::before {
+      content: '' !important;
+      width: 18px;
+      height: 18px;
+      flex-shrink: 0;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 12.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M8.5 12.5l2.5 2.5 4.5-5'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+
+    /* 6 — Lo sfondo della hero è un segnaposto: si deve capire.
+       Riquadro tratteggiato, icona immagine e didascalia. */
+    /* Il segnaposto occupa tutta la hero: è lì che andrà
+       l'immagine, quindi il riquadro deve avere la sua misura
+       vera, non una cornice rientrata. */
+    .art-hero__bg {
+      background: repeating-linear-gradient(135deg, rgba(255,255,255,0.022) 0 12px, transparent 12px 24px) !important;
+      border: 1px dashed rgba(255,255,255,0.14);
+      border-radius: 0;
+      inset: 0 !important;
+    }
+    .art-hero__bg::after { content: none !important; }
+    /* La targhetta del segnaposto sta in basso a destra, non al
+       centro: al centro finiva sotto il titolo e i due testi si
+       accavallavano. */
+    .art-hero__bg-icon {
+      opacity: 0.45 !important;
+      top: auto !important;
+      left: auto !important;
+      right: clamp(1rem, 2vw, 1.75rem) !important;
+      bottom: clamp(1rem, 2vw, 1.75rem) !important;
+      transform: none !important;
+      flex-direction: row !important;
+      align-items: center !important;
+      gap: 0.6rem !important;
+    }
+    .art-hero__bg-icon svg { width: 22px !important; height: 22px !important; }
+    .art-hero__bg-icon::after {
+      content: 'Immagine di copertina — segnaposto';
+      font-family: var(--font-secondary);
+      font-size: 14px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      white-space: nowrap;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       1 — Stacco prima dei titoli di paragrafo
+       6rem sopra ogni h2, sommati al padding della sezione, davano
+       un vuoto di quasi due schermate fra un paragrafo e l'altro.
+       ═══════════════════════════════════════════════════════════ */
+    .art-h2 { margin-top: clamp(1.75rem, 3vw, 2.5rem) !important; }
+    .art-h2:first-child { margin-top: 0 !important; }
+    /* Quei tre titoli aprono la loro sezione, quindi lo stacco non
+       è il loro margine ma la somma dei due padding: 56px sotto la
+       sezione precedente più 56 sopra la nuova, 112px di vuoto.
+       Scendono a 40+40, e l'ultimo blocco di ogni sezione non
+       aggiunge il suo margine di coda. */
+    .art-body,
+    .art-pricing,
+    .art-timeline,
+    .art-results,
+    .art-faq { padding-block: 40px !important; }
+    .art-body--tight { padding-block: 20px !important; }
+    main > section > * > *:last-child,
+    main > section > *:last-child { margin-bottom: 0 !important; }
+
+    /* ═══════════════════════════════════════════════════════════
+       2 — Via i modi da "interfaccia generata"
+       Aloni radiali colorati sotto le card, riflessi di vetro sul
+       bordo alto, doppi gradienti e ombre esagerate: effetti che
+       non dicono niente e si assomigliano tutti. Restano superfici
+       piatte, un bordo netto e un segno di colore dove serve.
+       ═══════════════════════════════════════════════════════════ */
+    /* Il filetto fucsia in cima ce l'avevano tutte e tre: sembrava
+       una selezione, ma non selezionava niente. Ora le card sono
+       neutre e il colore marca una cosa sola — il pacchetto
+       consigliato — che lo dice anche a parole con la sua etichetta.
+       L'hover resta un semplice sollevamento. */
+    .art-pkg {
+      background: #141416 !important;
+      box-shadow: none !important;
+      border-radius: 14px !important;
+      border: 1px solid rgba(255,255,255,0.09) !important;
+    }
+    .art-pkg:hover {
+      transform: translateY(-4px);
+      background: #17171a !important;
+      box-shadow: none !important;
+      border-color: rgba(255,255,255,0.18) !important;
+    }
+    /* Un solo contorno: il fondo virato creava un secondo bordo
+       percepito appena dentro quello fucsia. Stessa carta delle
+       altre card, a marcarla è il bordo e l'etichetta. */
+    .art-pkg--pick {
+      border-color: var(--primary) !important;
+      background: #141416 !important;
+    }
+    .art-pkg--pick:hover { border-color: var(--primary) !important; }
+    /* La riga spezzata in cima al Full Stack era un vecchio accento:
+       una barretta fucsia alta 2px con raggio 18px, sovrapposta al
+       bordo della card che ora ne ha 14 — due curve diverse allo
+       stesso angolo, e la linea si interrompeva. Ora l'accento è il
+       bordo stesso, quindi la barretta non serve più. */
+    .art-pkg:last-child::before { content: none !important; }
+    .art-pkg:last-child { border-color: rgba(255,255,255,0.09); }
+    /* L'etichetta sta a cavallo del bordo alto, quindi la card non
+       può ritagliare (aveva overflow: hidden dallo stile vecchio),
+       e la griglia ha bisogno di un filo di spazio sopra per non
+       tagliarla contro il titolo. */
+    .art-pkg { overflow: visible !important; }
+    .art-pricing__grid { padding-top: 14px !important; }
+    .art-pkg__badge {
+      position: absolute;
+      top: -11px;
+      left: clamp(1.6rem, 2.6vw, 2.1rem);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.25rem 0.7rem;
+      border-radius: 999px;
+      background: var(--primary);
+      color: #fff;
+      font-family: var(--font-secondary);
+      font-size: 14px !important;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+    .art-pkg__badge::before {
+      content: '';
+      width: 13px; height: 13px;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2.6l2.7 5.9 6.4.7-4.8 4.4 1.3 6.3L12 16.6 6.4 19.9l1.3-6.3L2.9 9.2l6.4-.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='black'%3E%3Cpath d='M12 2.6l2.7 5.9 6.4.7-4.8 4.4 1.3 6.3L12 16.6 6.4 19.9l1.3-6.3L2.9 9.2l6.4-.7z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+
+    /* Nota "Importante": un segno di avviso davanti, così si
+       distingue dal testo corrente. */
+    /* L'icona si allinea alla prima riga del testo, non al bordo
+       alto del paragrafo: con line-height 1.7 il centro della riga
+       cade a 0.85em, e l'icona alta 18px va centrata lì. */
+    .art-pricing__note {
+      position: relative;
+      padding-left: 1.9rem !important;
+      padding-top: 2rem !important;
+      line-height: 1.7;
+    }
+    .art-pricing__note::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      /* il paragrafo ha 2rem di padding sopra: senza tenerne conto
+         l'icona finiva in quello spazio, staccata dal testo */
+      top: calc(2rem + 0.85em - 9px);
+      width: 18px;
+      height: 18px;
+      background: var(--primary);
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.6l9 15.4H3z'/%3E%3Cpath d='M12 9.5v4'/%3E%3Cpath d='M12 16.4v.01'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.9' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 3.6l9 15.4H3z'/%3E%3Cpath d='M12 9.5v4'/%3E%3Cpath d='M12 16.4v.01'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    .art-pricing__note strong { color: #fff !important; }
+    .art-callout,
+    .art-answer__inner,
+    .art-rail .art-hero__sidebar {
+      background: #141416 !important;
+      box-shadow: none !important;
+    }
+    .art-rail .art-hero__sidebar { border-radius: 14px; }
+
+    /* ═══════════════════════════════════════════════════════════
+       3 — Icone pop: forme piene, geometria semplice, angoli
+       morbidi. Le precedenti erano a filo sottile e a 17px si
+       chiudevano su sé stesse — sembravano quattro trattini uguali.
+       ═══════════════════════════════════════════════════════════ */
+    .art-pricing__label::before,
+    .art-timeline__label::before,
+    .art-results__label::before,
+    .art-faq__label::before,
+    .art-contact__label::before,
+    .art-hero__sidebar-label::before {
+      content: '';
+      display: inline-block;
+      vertical-align: -6px;
+      width: 24px;
+      height: 24px;
+      margin-right: 0.6rem;
+      background: currentColor;
+      -webkit-mask-position: center;
+      mask-position: center;
+      -webkit-mask-size: contain;
+      mask-size: contain;
+      -webkit-mask-repeat: no-repeat;
+      mask-repeat: no-repeat;
+    }
+    /* cartellino del prezzo */
+    .art-pricing__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M11.2 2.6H19a2.4 2.4 0 0 1 2.4 2.4v7.8c0 .64-.25 1.25-.7 1.7l-6.8 6.8a2.4 2.4 0 0 1-3.4 0l-7.8-7.8a2.4 2.4 0 0 1 0-3.4l6.8-6.8c.45-.45 1.06-.7 1.7-.7Zm5.6 3.6a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M11.2 2.6H19a2.4 2.4 0 0 1 2.4 2.4v7.8c0 .64-.25 1.25-.7 1.7l-6.8 6.8a2.4 2.4 0 0 1-3.4 0l-7.8-7.8a2.4 2.4 0 0 1 0-3.4l6.8-6.8c.45-.45 1.06-.7 1.7-.7Zm5.6 3.6a1.7 1.7 0 1 0 0 3.4 1.7 1.7 0 0 0 0-3.4Z'/%3E%3C/svg%3E");
+    }
+    /* calendario pieno */
+    .art-timeline__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2a1.3 1.3 0 0 1 1.3 1.3V4h7.4v-.7a1.3 1.3 0 1 1 2.6 0V4H19a3 3 0 0 1 3 3v1.4H2V7a3 3 0 0 1 3-3h.7v-.7A1.3 1.3 0 0 1 7 2Z'/%3E%3Cpath fill='black' d='M2 10.6h20V19a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-8.4Zm5 3a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M7 2a1.3 1.3 0 0 1 1.3 1.3V4h7.4v-.7a1.3 1.3 0 1 1 2.6 0V4H19a3 3 0 0 1 3 3v1.4H2V7a3 3 0 0 1 3-3h.7v-.7A1.3 1.3 0 0 1 7 2Z'/%3E%3Cpath fill='black' d='M2 10.6h20V19a3 3 0 0 1-3 3H5a3 3 0 0 1-3-3v-8.4Zm5 3a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Zm5 0a1.4 1.4 0 1 0 0 2.8 1.4 1.4 0 0 0 0-2.8Z'/%3E%3C/svg%3E");
+    }
+    /* barre in crescita */
+    .art-results__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2.5' y='14' width='5' height='7.5' rx='2'/%3E%3Crect fill='black' x='9.5' y='9' width='5' height='12.5' rx='2'/%3E%3Crect fill='black' x='16.5' y='2.5' width='5' height='19' rx='2'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='2.5' y='14' width='5' height='7.5' rx='2'/%3E%3Crect fill='black' x='9.5' y='9' width='5' height='12.5' rx='2'/%3E%3Crect fill='black' x='16.5' y='2.5' width='5' height='19' rx='2'/%3E%3C/svg%3E");
+    }
+    /* Due fumetti sovrapposti: dice "domande e risposte" meglio del
+       punto interrogativo, che a questa misura si chiudeva su sé
+       stesso e restava una macchia. Il "?" è ritagliato dentro la
+       bolla grande, quindi resta leggibile anche in piccolo. */
+    .art-faq__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M9.4 1.8h9.3A3.3 3.3 0 0 1 22 5.1v6.6a3.3 3.3 0 0 1-3.3 3.3h-.5v2.4a.8.8 0 0 1-1.3.62l-3.77-3.02H9.4a3.3 3.3 0 0 1-3.3-3.3V5.1a3.3 3.3 0 0 1 3.3-3.3Zm4.65 2.55a3.1 3.1 0 0 0-3.1 2.72 1.2 1.2 0 0 0 2.38.3.72.72 0 1 1 .92.82c-.85.32-1.4 1.14-1.4 2.06v.3a1.2 1.2 0 1 0 2.4 0 3.13 3.13 0 0 0-1.2-6.2Z'/%3E%3Cpath fill='black' d='M4.05 6.9v5.1a5.35 5.35 0 0 0 5.35 5.35h2.55l1.6 1.28H9.4a1.6 1.6 0 0 0-.35 0l-3.2 2.56a.8.8 0 0 1-1.3-.62v-2.42A3.55 3.55 0 0 1 2 14.6V9.9A3.3 3.3 0 0 1 4.05 6.9Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M9.4 1.8h9.3A3.3 3.3 0 0 1 22 5.1v6.6a3.3 3.3 0 0 1-3.3 3.3h-.5v2.4a.8.8 0 0 1-1.3.62l-3.77-3.02H9.4a3.3 3.3 0 0 1-3.3-3.3V5.1a3.3 3.3 0 0 1 3.3-3.3Zm4.65 2.55a3.1 3.1 0 0 0-3.1 2.72 1.2 1.2 0 0 0 2.38.3.72.72 0 1 1 .92.82c-.85.32-1.4 1.14-1.4 2.06v.3a1.2 1.2 0 1 0 2.4 0 3.13 3.13 0 0 0-1.2-6.2Z'/%3E%3Cpath fill='black' d='M4.05 6.9v5.1a5.35 5.35 0 0 0 5.35 5.35h2.55l1.6 1.28H9.4a1.6 1.6 0 0 0-.35 0l-3.2 2.56a.8.8 0 0 1-1.3-.62v-2.42A3.55 3.55 0 0 1 2 14.6V9.9A3.3 3.3 0 0 1 4.05 6.9Z'/%3E%3C/svg%3E");
+    }
+    /* busta piena */
+    .art-contact__label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2.4 7.55 12 13.6l9.6-6.05V17a3 3 0 0 1-3 3H5.4a3 3 0 0 1-3-3V7.55Z'/%3E%3Cpath fill='black' d='M5.4 4h13.2a3 3 0 0 1 2.94 2.4L12 12.3 2.46 6.4A3 3 0 0 1 5.4 4Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M2.4 7.55 12 13.6l9.6-6.05V17a3 3 0 0 1-3 3H5.4a3 3 0 0 1-3-3V7.55Z'/%3E%3Cpath fill='black' d='M5.4 4h13.2a3 3 0 0 1 2.94 2.4L12 12.3 2.46 6.4A3 3 0 0 1 5.4 4Z'/%3E%3C/svg%3E");
+    }
+    /* fogli sovrapposti */
+    .art-hero__sidebar-label::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E");
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect fill='black' x='6' y='2.5' width='15.5' height='15.5' rx='3.4'/%3E%3Cpath fill='black' d='M2.5 7.4a2.6 2.6 0 0 1 1.4-1.15v11.2a2.7 2.7 0 0 0 2.7 2.7h11.2A2.6 2.6 0 0 1 15.4 21.5H6.6a4.1 4.1 0 0 1-4.1-4.1V7.4Z'/%3E%3C/svg%3E");
+    }
+    /* spunta piena nella "risposta diretta" */
+    .art-answer__label::before {
+      content: '' !important;
+      width: 24px;
+      height: 24px;
+      flex-shrink: 0;
+      background: currentColor;
+      -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm4.7 6.6a1.3 1.3 0 0 0-1.84.05l-4.06 4.4-1.68-1.6a1.3 1.3 0 0 0-1.79 1.88l2.64 2.5a1.3 1.3 0 0 0 1.85-.06l4.94-5.35a1.3 1.3 0 0 0-.06-1.82Z'/%3E%3C/svg%3E") center / contain no-repeat;
+              mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M12 2.2a9.8 9.8 0 1 1 0 19.6 9.8 9.8 0 0 1 0-19.6Zm4.7 6.6a1.3 1.3 0 0 0-1.84.05l-4.06 4.4-1.68-1.6a1.3 1.3 0 0 0-1.79 1.88l2.64 2.5a1.3 1.3 0 0 0 1.85-.06l4.94-5.35a1.3 1.3 0 0 0-.06-1.82Z'/%3E%3C/svg%3E") center / contain no-repeat;
+    }
+    /* triangolo pieno sull'avviso */
+    .art-pricing__note::before {
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M10.3 3.3a2 2 0 0 1 3.4 0l8 13.6a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3l8-13.6ZM12 8.3a1.25 1.25 0 0 0-1.25 1.25v3.4a1.25 1.25 0 1 0 2.5 0v-3.4A1.25 1.25 0 0 0 12 8.3Zm0 7a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z'/%3E%3C/svg%3E") !important;
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' fill-rule='evenodd' d='M10.3 3.3a2 2 0 0 1 3.4 0l8 13.6a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3l8-13.6ZM12 8.3a1.25 1.25 0 0 0-1.25 1.25v3.4a1.25 1.25 0 1 0 2.5 0v-3.4A1.25 1.25 0 0 0 12 8.3Zm0 7a1.3 1.3 0 1 0 0 2.6 1.3 1.3 0 0 0 0-2.6Z'/%3E%3C/svg%3E") !important;
+    }
+    /* Anche il triangolo dell'avviso cresce con le altre; il centro
+       resta agganciato alla prima riga (padding 2rem + mezza riga,
+       meno metà icona). */
+    .art-pricing__note::before {
+      width: 22px !important;
+      height: 22px !important;
+      top: calc(2rem + 0.85em - 11px) !important;
+    }
+    /* stella piena sull'etichetta del pacchetto */
+    .art-pkg__badge::before {
+      width: 17px; height: 17px;
+      -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 1.9c.4 0 .77.23.95.6l2.62 5.4 5.9.83a1.06 1.06 0 0 1 .58 1.82l-4.3 4.14 1.03 5.94a1.06 1.06 0 0 1-1.55 1.11L12 18.94l-5.23 2.8a1.06 1.06 0 0 1-1.55-1.11l1.03-5.94-4.3-4.14A1.06 1.06 0 0 1 2.53 8.73l5.9-.83 2.62-5.4c.18-.37.55-.6.95-.6Z'/%3E%3C/svg%3E") !important;
+              mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='black' d='M12 1.9c.4 0 .77.23.95.6l2.62 5.4 5.9.83a1.06 1.06 0 0 1 .58 1.82l-4.3 4.14 1.03 5.94a1.06 1.06 0 0 1-1.55 1.11L12 18.94l-5.23 2.8a1.06 1.06 0 0 1-1.55-1.11l1.03-5.94-4.3-4.14A1.06 1.06 0 0 1 2.53 8.73l5.9-.83 2.62-5.4c.18-.37.55-.6.95-.6Z'/%3E%3C/svg%3E") !important;
+    }
+
+    /* ═══════════════════════════════════════════════════════════
+       4 — Occhio delle domande tagliato a destra
+       .art-faq__item ritagliava, e in hover l'occhio cresce del
+       10% oltre il bordo. Il ritaglio serve solo alla risposta che
+       si apre, e ce l'ha già per conto suo.
+       ═══════════════════════════════════════════════════════════ */
+    .art-faq__item { overflow: visible !important; }
+    .art-faq__q { padding-right: 4px; }
+
+    @media (prefers-reduced-motion: reduce) {
+      html.js-reveal .sx-rise { transform: none; }
+    }
+  /* Hero: niente immagine, stesso video ingrandito della hero News */
+    .art-hero__video { position:absolute; inset:0; overflow:hidden; z-index:0; pointer-events:none; background:#000; }
+    .art-hero__video-el { display:block; width:100%; height:100%; object-fit:cover; transform:scale(1.15); filter:hue-rotate(-54deg) saturate(1.05) brightness(0.62); opacity:.72; }
+    .art-hero__video::before, .art-hero__video::after { content:''; position:absolute; left:0; right:0; height:200px; z-index:1; }
+    .art-hero__video::before { top:0; background:linear-gradient(to bottom,#000,transparent); }
+    .art-hero__video::after { bottom:0; background:linear-gradient(to top,#000,transparent); }
+    .art-hero__inner { position:relative; z-index:2; }
+  </style>
+  <link rel="stylesheet" href="../css/responsive.css?v=20261017d" />
+  <link rel="icon" href="../favicon.ico" sizes="any" />
+  <link rel="icon" type="image/png" sizes="32x32" href="../assets/favicon/favicon-32.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="../assets/favicon/favicon-192.png" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.png" />
+</head>
+<body>
+
+  <header class="nav nav--on-dark" role="banner"><!-- nav--on-dark di partenza: la hero e' scura. Lo stato lo ricalcola js/main.js. -->
+    <div class="nav__inner">
+      <button class="nav__menu-btn" aria-label="Apri menu" aria-expanded="false">
+        <span class="nav__menu-icon"><span></span><span></span><span></span></span>
+        <span class="nav__menu-label-close">Menu</span>
+        <span class="nav__menu-label-open">Chiudi</span>
+      </button>
+      <a class="nav__logo" href="../index.html" aria-label="ESTRO — Homepage">
+        <img src="../assets/img/brand/logo-estro.webp" alt="ESTRO" />
+      </a>
+      <div class="nav__right">
+        <a class="nav__joinus" href="../contatti.html">
+          Contattaci <svg width="11" height="11" viewBox="0 0 11 11" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" style="flex-shrink:0"><path d="M2 9L9 2M9 2H3.5M9 2V7.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
+      </div>
+    </div>
+    <div class="nav__mega-wrapper" aria-hidden="true">
+      <div class="nav__mega">
+        <div class="nav__mega-inner">
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">I Nostri Servizi</p>
+            <nav class="nav__mega-links nav__mega-links--2col">
+              <a href="../servizi/social-media-management.html">Social media management</a>
+              <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+              <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google ads</a>
+              <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social ads</a>
+              <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+              <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+              <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+              <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+              <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione e renderizzazione</a>
+              <a href="../servizi/servizio-ai.html">AI</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--dark">
+            <p class="nav__mega-label">Esplora</p>
+            <nav class="nav__mega-links">
+              <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+              <a href="../news.html">News</a>
+              <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+              <a href="../faq.html">FAQ</a>
+              <a href="../contatti.html">Contatti</a>
+            </nav>
+          </div>
+          <div class="nav__mega-panel nav__mega-panel--pink">
+            <p class="nav__mega-label">Team</p>
+            <div class="nav__mega-avatars">
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+              <span class="nav__avatar"></span>
+            </div>
+            <p class="nav__mega-headline">Siamo oltre <strong>40</strong> Creativi</p>
+            <a class="nav__joinus nav__joinus--outline" href="https://tally.so/r/2ELLBj">
+              
+              <span class="nav__joinus-avatars"><span class="nav__avatar"></span><span class="nav__avatar"></span></span>
+              Join Us
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <div class="nav__overlay" aria-hidden="true"></div>
+
+  <main class="art-main" data-nav-theme="dark"><!-- L'articolo tiene MENU e simbolo sempre bianchi: il tema scuro e' dichiarato su tutto il main, non sezione per sezione. -->
+
+    <!-- Colonna "Ultime news": sta qui, fuori dalla hero, perché
+         deve restare agganciata per tutta la lunghezza dell'articolo.
+         La corsia è alta quanto <main>; dentro, il riquadro è sticky
+         e si ferma sotto la nav. -->
+    <div class="art-rail" aria-label="Ultime news">
+      <aside class="art-hero__sidebar">
+        <span class="art-hero__sidebar-label">Ultime news</span>
+        <ul class="art-hero__sidebar-list">
+          <li><a href="come-funziona-iniziare-a-lavorare-con-unagenzia-di-comunicazione-digitale.html">Come funziona iniziare a lavorare con un’agenzia di comunicazione digitale</a></li>
+          <li><a href="quanto-costa-unagenzia-di-comunicazione-digitale-nel-2026.html">Quanto costa un’agenzia di comunicazione digitale nel 2026</a></li>
+          <li><a href="geo-vs-seo-cosa-cambia-per-i-brand-quando-le-ai-rispondono-al-posto-di-google.html">GEO vs SEO: cosa cambia per i brand quando le AI rispondono al posto di Google</a></li>
+          <li class="active"><a href="agenzia-di-comunicazione-o-team-interno-cosa-conviene-davvero-nel-2026.html">Agenzia di comunicazione o team interno: cosa conviene davvero nel 2026</a></li>
+          <li><a href="come-scegliere-unagenzia-di-comunicazione-la-guida-definitiva.html">Come scegliere un’agenzia di comunicazione: la guida definitiva</a></li>
+          <li><a href="come-costruire-una-strategia-di-advertising-digitale-integrata-nel-2026.html">Come costruire una strategia di advertising digitale integrata nel 2026</a></li>
+        </ul>
+      </aside>
+    </div>
+
+
+    <!-- ══ HERO ══════════════════════════════════════════ -->
+    <section class="art-hero" data-nav-theme="dark">
+      <div class="art-hero__video" aria-hidden="true">
+        <video class="art-hero__video-el" autoplay loop muted playsinline preload="metadata"
+               src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260421_072701_f6a01abb-eb30-4559-9d6e-774362defbc3.mp4"></video>
+      </div>      <div class="art-hero__inner">
+        <div class="art-hero__left">
+          <div class="art-hero__meta">
+            <span class="art-hero__cat">Strategia</span>
+            <time class="art-hero__date" datetime="2026-04-17">17 aprile 2026</time>
+          </div>
+          <h1 class="art-hero__title">Agenzia di comunicazione o team interno: cosa conviene davvero nel 2026</h1>
+          <p class="art-hero__intro">È una domanda che ogni CMO e imprenditore si pone prima o poi. Assumere un <strong>team marketing interno</strong> o <strong>affidarsi a un’agenzia esterna?</strong> La risposta dipende da numeri che raramente vengono messi sul tavolo in modo chiaro. Eccoli.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ RISPOSTA DIRETTA ═══════════════════════════════ -->
+    <div class="art-answer" data-nav-theme="dark">
+      <div class="art-answer__inner">
+        <span class="art-answer__label reveal">Risposta diretta</span>
+        <p class="art-answer__text reveal"><strong>Costruire</strong> un <strong>team interno completo</strong> (strategia, contenuti, advertising, design, social) costa tra 250.000€ e 300.000€ l’anno in soli stipendi, senza contare <strong>selezione</strong>, <strong>formazione</strong>, <strong>tool</strong> e <strong>tempo di ramp-up</strong>. Un’agenzia strutturata offre le stesse competenze operative da subito, con un investimento tra 18.000€ e 37.200€/anno.</p>
+      </div>
+    </div>
+
+    <!-- ══ ARTICOLO ═══════════════════════════════════════ -->
+    <section class="art-body">
+      <div class="art-body__inner">
+        <h2 class="art-h2">Il costo reale di un team interno</h2>
+        <p class="art-p">Quando le aziende valutano di internalizzare, spesso calcolano solo lo stipendio di una o due figure. Il conto reale è molto diverso.</p>
+        <h3 class="art-h3">RAL media (Milano)</h3>
+        <div class="art-table-wrap">
+          <table class="art-table">
+          <thead>
+            <tr><th>Figura</th><th>RAL annua</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Marketing Manager / Strategy</strong></td><td>€&nbsp;45.000&nbsp;–&nbsp;€&nbsp;65.000</td></tr>
+            <tr><td><strong>Social Media Manager</strong></td><td>€&nbsp;28.000&nbsp;–&nbsp;€&nbsp;38.000</td></tr>
+            <tr><td><strong>Graphic Designer</strong></td><td>€&nbsp;28.000&nbsp;–&nbsp;€&nbsp;40.000</td></tr>
+            <tr><td><strong>Copywriter</strong></td><td>€&nbsp;28.000&nbsp;–&nbsp;€&nbsp;38.000</td></tr>
+            <tr><td><strong>Media Buyer / Ads Specialist</strong></td><td>€&nbsp;35.000&nbsp;–&nbsp;€&nbsp;50.000</td></tr>
+            <tr><td><strong>Totale stimato</strong></td><td><strong>€&nbsp;164.000&nbsp;–&nbsp;€&nbsp;231.000</strong></td></tr>
+          </tbody>
+          </table>
+        </div>
+        <p class="art-p">A questo si aggiunge il costo del lavoro (contributi, TFR, benefit): circa il 30–35% in più sulle RAL. Il totale reale supera facilmente i 250.000€/anno, solo in stipendi, senza tool, senza formazione continua, senza i mesi di ricerca e onboarding.</p>
+        <h2 class="art-h2">Il costo di un'agenzia a confronto</h2>
+        <h3 class="art-h3">Il costo di un’agenzia a confronto</h3>
+        <div class="art-table-wrap">
+          <table class="art-table">
+          <thead>
+            <tr><th>Pacchetto</th><th>Canone mensile</th><th>Investimento annuo</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Organico</strong></td><td>€&nbsp;1.500</td><td>€&nbsp;18.000</td></tr>
+            <tr><td><strong>Performance</strong></td><td>€&nbsp;2.200</td><td>€&nbsp;26.400</td></tr>
+            <tr><td><strong>Full Stack (team completo)</strong></td><td>€&nbsp;3.100</td><td>€&nbsp;37.200</td></tr>
+          </tbody>
+          </table>
+        </div>
+        <p class="art-p">Con il Full Stack hai accesso a un team di 8 persone per 37.200€/anno. Lo stesso team internamente costerebbe 6–8 volte di più.</p>
+        <h2 class="art-h2">Oltre i costi: i fattori spesso dimenticati</h2>
+        <p class="art-p"><strong>Velocità di avvio</strong></p>
+        <p class="art-p">Un team interno richiede mesi di selezione, onboarding e ramp-up prima di produrre risultati. Un’agenzia è operativa in 2–3 settimane. Per un brand che deve crescere adesso, questo gap non è trascurabile.</p>
+        <p class="art-p"><strong>Competenze trasversali</strong></p>
+        <p class="art-p">Un dipendente è bravo in quello che sa fare. Un’agenzia porta competenze verticali su ogni area (ads, design, copy, strategia) aggiornate in tempo reale perché lavora su decine di clienti in settori diversi.</p>
+        <p class="art-p"><strong>Flessibilità</strong></p>
+        <p class="art-p">Se il mercato cambia o le priorità si spostano, un’agenzia si adatta. Un team interno è un costo fisso: anche quando l’attività rallenta, gli stipendi continuano.</p>
+        <p class="art-p"><strong>Rischio</strong></p>
+        <p class="art-p">Un dipendente che se ne va porta via con sé conoscenza del brand, relazioni, competenze. Con un’agenzia strutturata, la continuità è garantita dal sistema, non dalle singole persone.</p>
+        <h2 class="art-h2">Quando conviene internalizzare</h2>
+        <ul class="art-list">
+          <li>L’azienda produce volumi di contenuto molto elevati (es. e-commerce con centinaia di SKU)</li>
+          <li>Si ha bisogno di reattività estrema in tempo reale (es. brand con forte componente news/live)</li>
+          <li>Il budget marketing supera i 500.000€/anno e si può costruire un reparto completo</li>
+          <li>C’è già una forte competenza interna e serve solo supporto su aree specifiche</li>
+        </ul>
+        <h2 class="art-h2">La soluzione ibrida</h2>
+        <p class="art-p">Molte <strong>aziende</strong> di medie dimensioni mantengono <strong>1–2 figure interne</strong> (un marketing manager che coordina) e affidano <strong>l’esecuzione a un’agenzia</strong>. Si ottiene il meglio dei due mondi: conoscenza interna del business + esecuzione esterna specializzata.</p>
+      </div>
+    </section>
+
+    <!-- ══ FAQ ════════════════════════════════════════════ -->
+    <section class="art-faq">
+      <span class="art-faq__label reveal">FAQ</span>
+      <h2 class="art-faq__title reveal">Domande frequenti</h2>
+      <div class="art-faq__list reveal">
+        <div class="art-faq__item">
+          <div class="art-faq__q">Un' agenzia può lavorare con un team interno già esistente? <span class="art-faq__q-icon">+</span></div>
+          <div class="art-faq__a">Sì. Non siamo sostitutivi, siamo complementari. Possiamo potenziare un team interno su aree specifiche (ads, produzione video, strategia) senza sostituire le figure già presenti.</div>
+        </div>
+        <div class="art-faq__item">
+          <div class="art-faq__q">L' agenzia conosce abbastanza il mio settore per produrre contenuti di valore? <span class="art-faq__q-icon">+</span></div>
+          <div class="art-faq__a">La fase di onboarding serve esattamente a questo: trasferire conoscenza di prodotto, mercato e tono di voce al team. Poi il lavoro continuativo approfondisce questa conoscenza nel tempo.</div>
+        </div>
+      </div>
+      <!-- La CTA di ritorno chiude la lettura, subito dopo le
+           domande: prima stava in fondo alla pagina, dopo il form,
+           dove nessuno la cercava. -->
+      <div class="art-back">
+        <!-- stesse classi della CTA "Invia": così eredita le stesse
+             transizioni di base e non può comportarsi diversamente -->
+        <a href="../news.html" class="btn btn--primary art-back__link cta-arrow cta-arrow--back">Tutti gli articoli</a>
+      </div>
+    </section>
+
+    <!-- ══ FORM CONTATTI ═════════════════════════════════ -->
+    <section class="art-contact" data-nav-theme="dark">
+      <div class="art-contact__inner">
+        <div class="art-contact__left">
+          <span class="art-contact__label reveal">Pronto a iniziare?</span>
+          <h2 class="art-contact__title reveal">La prima call<br/>è gratuita.</h2>
+          <p class="art-contact__sub reveal">Senza impegno fino alla firma del contratto.</p>
+        </div>
+        <div class="art-contact__right">
+          <!-- Stesse classi del form in homepage (hc-*): stesse
+               misure e stessa riga dei consensi con la newsletter. -->
+          <form class="hc-form" action="#" method="post">
+            <div class="hc-row">
+              <div class="f-field">
+                <label class="f-label" for="nwa-f-nome">Nome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="nwa-f-nome" class="svc-caffe__field" type="text" name="nome" placeholder="Mario" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="nwa-f-cognome">Cognome <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="nwa-f-cognome" class="svc-caffe__field" type="text" name="cognome" placeholder="Rossi" required />
+              </div>
+            </div>
+            <div class="hc-row">
+              <div class="f-field">
+                <label class="f-label" for="nwa-f-email">Email <span class="f-label__req" aria-hidden="true">*</span></label>
+                <input id="nwa-f-email" class="svc-caffe__field" type="email" name="email" placeholder="mario@azienda.it" required />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="nwa-f-telefono">Telefono</label>
+                <input id="nwa-f-telefono" class="svc-caffe__field" type="tel" name="telefono" placeholder="+39 02 ..." />
+              </div>
+            </div>
+            <div class="hc-row">
+              <div class="f-field">
+                <label class="f-label" for="nwa-f-azienda">Azienda</label>
+                <input id="nwa-f-azienda" class="svc-caffe__field" type="text" name="azienda" placeholder="Nome azienda" />
+              </div>
+              <div class="f-field">
+                <label class="f-label" for="nwa-f-sito">Sito Web</label>
+                <input id="nwa-f-sito" class="svc-caffe__field" type="url" name="sito" placeholder="www.acme.it" />
+              </div>
+            </div>
+            <div class="f-field">
+              <label class="f-label" for="nwa-f-messaggio">Messaggio</label>
+              <textarea id="nwa-f-messaggio" class="svc-caffe__field hc-textarea" name="messaggio" placeholder="Descrivici la situazione attuale e cosa vorresti risolvere." rows="5"></textarea>
+            </div>
+            <div class="hc-consents">
+              <label class="svc-caffe__privacy" for="art-privacy">
+                <input type="checkbox" id="art-privacy" name="privacy" required />
+                <span>Autorizzo il trattamento dei dati secondo la <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a><span class="f-label__req" style="color:inherit" aria-hidden="true"> *</span></span>
+              </label>
+              <label class="svc-caffe__privacy" for="art-newsletter">
+                <input type="checkbox" id="art-newsletter" name="newsletter" value="si" />
+                <span>Acconsento a ricevere comunicazioni e aggiornamenti tramite newsletter. <em>(facoltativo)</em></span>
+              </label>
+            </div>
+            <button class="btn btn--primary hc-submit" type="submit">Invia</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══ BACK ══════════════════════════════════════════ -->
+  </main>
+
+  <script src="../js/main.js?v=20261017d"></script>
+  <script>
+  /* ═══════════════════════════════════════════════════════════
+     ARTICOLO — motore della homepage, ridotto al necessario.
+     La vecchia regia (veli colorati sopra ogni sezione, tende a
+     inizio e fine pagina, titoli scomposti lettera per lettera, e
+     un blocco che chiamava un observer mai definito) è stata
+     rimossa: qui la pagina è un articolo, quindi le sezioni non
+     si annunciano una per una. Restano l'acqua sui titoli,
+     l'ingresso in cascata dei testi e la salita — solo sulle due
+     sezioni finali, form e footer.
+     ═══════════════════════════════════════════════════════════ */
+  function artBoot() {
+    const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    document.documentElement.classList.add('js-reveal');
+
+    /* ── Acqua sui titoli ──────────────────────────────────── */
+    let wlN = 0;
+    function wlMakeFilter() {
+      const NS = 'http://www.w3.org/2000/svg';
+      const id = 'wlFx' + (++wlN);
+      const svg = document.createElementNS(NS, 'svg');
+      svg.setAttribute('aria-hidden', 'true');
+      svg.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
+      svg.innerHTML =
+        '<filter id="' + id + '" x="-25%" y="-25%" width="150%" height="150%" color-interpolation-filters="sRGB">' +
+          '<feTurbulence type="fractalNoise" baseFrequency="0.010 0.030" numOctaves="2" seed="7" result="n"/>' +
+          '<feDisplacementMap in="SourceGraphic" in2="n" scale="0" xChannelSelector="R" yChannelSelector="G"/>' +
+        '</filter>';
+      document.body.appendChild(svg);
+      return { id, turb: svg.querySelector('feTurbulence'), disp: svg.querySelector('feDisplacementMap') };
+    }
+
+    function waterLetters(el, ms) {
+      if (!el || el.dataset.wlDone === '1') return;
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      el.dataset.wlDone = '1';
+      if (RM) return;
+      // fade/reveal standard: stato iniziale in CSS (.wl-wait), qui parte
+      el.classList.add('wl-in');
+    }
+
+    // il titolo dell'articolo è già in vista al caricamento
+    (h => { if (!h) return; h.classList.add('wl-wait'); requestAnimationFrame(() => waterLetters(h, 1000)); })(document.querySelector('.art-hero__title'));
+
+    // Gli h2 del corpo restano fuori dall'acqua: sono titoli di
+    // paragrafo, non di sezione, e interrompevano la lettura.
+    // Entrano con la cascata come il resto del testo.
+    document.querySelectorAll('.art-contact__title, .sf-ghost').forEach(el => {
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => { if (e.isIntersecting) { waterLetters(el, 900); io.disconnect(); } });
+      }, el.classList.contains('sf-ghost')
+           ? { threshold: 0.01, rootMargin: '0px 0px -10% 0px' }
+           : { threshold: 0.15 });
+      el.classList.add('wl-wait'); io.observe(el);
+    });
+
+    /* ── Salita: solo form e footer ────────────────────────── */
+    const RISE = ['.art-contact', '.site-footer'];
+    const secs = [];
+    RISE.forEach(sel => document.querySelectorAll(sel).forEach(el => {
+      el.classList.add('sx-rise');
+      secs.push(el);
+    }));
+
+    if (secs.length && !RM) {
+      const clamp01 = v => v < 0 ? 0 : v > 1 ? 1 : v;
+      let queued = false;
+      const paint = () => {
+        queued = false;
+        const vh = window.innerHeight;
+        for (const el of secs) {
+          const r = el.getBoundingClientRect();
+          if (r.bottom < -vh || r.top > vh * 2) continue;
+          const run = Math.min(vh * 0.85, Math.max(r.height, 1));
+          el.style.setProperty('--sxi', clamp01((vh - r.top) / run).toFixed(3));
+        }
+      };
+      const schedule = () => { if (!queued) { queued = true; requestAnimationFrame(paint); } };
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule, { passive: true });
+      paint();
+    } else {
+      secs.forEach(el => el.style.setProperty('--sxi', '1'));
+    }
+
+    /* ── Ingresso dei testi: linguaggio del body di About ───
+       Niente stati nascosti duraturi: opacità di partenza alta e
+       spostamento contenuto, un blocco alla volta mentre scorre. */
+    const bodyBits = document.querySelectorAll(
+      '.art-p, .art-list, .art-callout, .art-h2, .art-answer__inner, ' +
+      '.art-pricing__card, .art-step, .art-result-card, .art-faq__item, ' +
+      '.art-contact__label, .art-contact__sub, .hc-form'
+    );
+    if (RM) {
+      bodyBits.forEach(el => el.classList.add('ab-in'));
+    } else {
+      bodyBits.forEach(el => el.classList.add('ab-armed'));
+      const io = new IntersectionObserver(es => {
+        es.forEach(e => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('ab-in');
+          io.unobserve(e.target);
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -8% 0px' });
+      bodyBits.forEach(el => io.observe(el));
+    }
+
+    /* ── L'occhio delle FAQ, come in homepage ──────────────── */
+    const EYE_OPEN = '<svg class="eye-open" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 13 20 8 28 8C36 8 46 13 52 26C46 39 36 44 28 44C20 44 10 39 4 26Z"/><circle cx="28" cy="26" r="9"/><circle cx="28" cy="26" r="4"/><line x1="10" y1="15" x2="7" y2="7"/><line x1="19" y1="9" x2="18" y2="1"/><line x1="28" y1="8" x2="28" y2="0"/><line x1="37" y1="9" x2="38" y2="1"/><line x1="46" y1="15" x2="49" y2="7"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    const EYE_CLOSED = '<svg class="eye-closed" viewBox="0 0 56 52" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 26C10 39 20 44 28 44C36 44 46 39 52 26"/><line x1="10" y1="37" x2="7" y2="45"/><line x1="19" y1="43" x2="18" y2="51"/><line x1="28" y1="44" x2="28" y2="52"/><line x1="37" y1="43" x2="38" y2="51"/><line x1="46" y1="37" x2="49" y2="45"/></svg>';
+    document.querySelectorAll('.art-faq__q-icon').forEach(icon => {
+      icon.textContent = '';                    // via il "+"
+      icon.innerHTML = EYE_OPEN + EYE_CLOSED;
+      icon.setAttribute('aria-hidden', 'true');
+    });
+
+    /* ── La colonna si ferma dove inizia il form ───────────── */
+    const rail = document.querySelector('.art-rail');
+    const contact = document.querySelector('.art-contact');
+    if (rail && contact) {
+      // la corsia si ferma 48px prima del form, così la lista non
+      // arriva mai a toccarlo
+      const answerBox = document.querySelector(".art-answer__inner");
+      const fitRail = () => {
+        /* parte dall'inizio del primo box del corpo, non dalla hero */
+        const main = rail.offsetParent || document.body;
+        const top = answerBox ? answerBox.getBoundingClientRect().top - main.getBoundingClientRect().top : 0;
+        rail.style.top = Math.max(0, top) + "px";
+        rail.style.height = Math.max(0, contact.offsetTop - 48 - top) + "px";
+      };
+      fitRail();
+      addEventListener('resize', fitRail, { passive: true });
+      addEventListener('load', fitRail);
+    }
+
+    /* ── Nav chiara/scura ──────────────────────────────────── */
+    const nav = document.querySelector('.nav');
+    if (nav) {
+      const sync = () => {
+        /* nav--on-dark e .scrolled: unica autorita in js/main.js,
+           come in homepage. Qui la nav veniva forzata sempre scura
+           "perche' l'articolo e' tutto scuro", ma il corpo e la
+           timeline sono su carta bianca: le sezioni scure sono ora
+           marcate una per una e la nav le segue. */
+      };
+      addEventListener('scroll', sync, { passive: true });
+      sync();
+    }
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', artBoot);
+  } else { artBoot(); }
+  </script>
+  <script>
+    document.querySelectorAll('.art-faq__q').forEach(function(q) {
+      q.addEventListener('click', function() {
+        var item = this.closest('.art-faq__item');
+        var isOpen = item.classList.contains('open');
+        document.querySelectorAll('.art-faq__item').forEach(function(i) { i.classList.remove('open'); });
+        if (!isOpen) item.classList.add('open');
+      });
+    });
+  </script>
+  <!-- ══ FOOTER ══════════════════════════════════════════ -->
+  <footer class="site-footer" role="contentinfo" data-nav-theme="dark">
+    <div class="sf-ghost" aria-hidden="true">ESTRO</div>
+    <div class="sf-inner">
+      <div class="sf-cols">
+
+        <div class="sf-col">
+          <a class="nav__logo sf-logo" href="../index.html" aria-label="ESTRO — Homepage">
+            <img src="../assets/img/brand/logo-estro.webp" alt="ESTRO" />
+          </a>
+          <p class="sf-tagline">Idee che prendono forma.</p>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Servizi</h4>
+          <nav class="sf-links">
+            <a href="../servizi/social-media-management.html">Social media management</a>
+            <a href="https://estro.agency/influencer-marketing/" target="_blank" rel="noopener">Influencer marketing</a>
+            <a href="https://estro.agency/google-ads-per-il-tuo-business/" target="_blank" rel="noopener">Google Ads</a>
+            <a href="https://estro.agency/campagne-pubblicitarie-social-per-il-tuo-business/" target="_blank" rel="noopener">Social Ads</a>
+            <a href="https://estro.agency/strategia-digitale/" target="_blank" rel="noopener">Strategia digitale</a>
+            <a href="https://estro.agency/graphic-design/" target="_blank" rel="noopener">Graphic design</a>
+            <a href="https://estro.agency/web-design/" target="_blank" rel="noopener">Web design</a>
+            <a href="https://estro.agency/produzione-contenuti/" target="_blank" rel="noopener">Produzione contenuti</a>
+            <a href="https://estro.agency/modellazione-3d/" target="_blank" rel="noopener">Modellazione 3D</a>
+            <a href="../servizi/servizio-ai.html">AI</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Esplora</h4>
+          <nav class="sf-links">
+            <a href="https://estro.agency/case-studies/" target="_blank" rel="noopener">Case Studies</a>
+            <a href="../news.html">News</a>
+            <a href="../tips-tricks.html">Tips &amp; Tricks</a>
+            <a href="../faq.html">FAQ</a>
+            <a href="../contatti.html">Contatti</a>
+            <a href="https://tally.so/r/2ELLBj" target="_blank" rel="noopener">Lavora con noi</a>
+          </nav>
+        </div>
+
+        <div class="sf-col">
+          <h4 class="sf-col__title">Contatti</h4>
+          <div class="sf-contact">
+            <div class="sf-contact__block">
+              <strong>YUBA S.r.l.</strong>
+              <span>C.F./P. IVA 09955650966</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Milano</span>
+              <span>Via Vigevano n.27, 20144</span>
+            </div>
+            <div class="sf-contact__block">
+              <span class="sf-contact__label">Varese</span>
+              <span>Via Mazzini n.1, 21013 Gallarate</span>
+            </div>
+          </div>
+          <h4 class="sf-col__title">Seguici</h4>
+          <div class="sf-social">
+            <a href="https://www.instagram.com/estro.agency" aria-label="Instagram" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5.5"/><circle cx="12" cy="12" r="4.2"/><circle cx="17.4" cy="6.6" r="1.1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/estro-agency" aria-label="LinkedIn" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.66H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/estroagency" aria-label="Facebook" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 12.07C24 5.4 18.63 0 12 0S0 5.4 0 12.07C0 18.1 4.39 23.1 10.13 24v-8.44H7.08v-3.49h3.05V9.41c0-3.02 1.79-4.69 4.53-4.69 1.31 0 2.69.24 2.69.24v2.97h-1.52c-1.49 0-1.96.93-1.96 1.89v2.25h3.33l-.53 3.49h-2.8V24C19.61 23.1 24 18.1 24 12.07z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@estroagency" aria-label="YouTube" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23.5 6.5a3 3 0 0 0-2.12-2.12C19.5 3.87 12 3.87 12 3.87s-7.5 0-9.38.51A3 3 0 0 0 .5 6.5C0 8.38 0 12 0 12s0 3.62.5 5.5a3 3 0 0 0 2.12 2.12c1.88.51 9.38.51 9.38.51s7.5 0 9.38-.51A3 3 0 0 0 23.5 17.5C24 15.62 24 12 24 12s0-3.62-.5-5.5zM9.6 15.6V8.4l6.2 3.6-6.2 3.6z"/></svg>
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="sf-legal">
+        <div class="sf-legal__links">
+          <a href="https://www.iubenda.com/privacy-policy/62391001" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <span class="sf-legal__sep"></span>
+          <a href="https://www.iubenda.com/privacy-policy/62391001/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+        </div>
+        <p class="sf-legal__copy">© 2026 Estro. Tutti i diritti riservati.</p>
+      </div>
+
+    </div>
+  </footer>
+
+  <script src="../js/responsive.js?v=20261017d"></script>
+</body>
+</html>
+
+

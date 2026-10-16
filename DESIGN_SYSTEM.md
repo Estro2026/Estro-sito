@@ -97,7 +97,7 @@ Tema scuro: `[data-theme="dark"]` ridefinisce i token (bg #111111, black #f0f0f0
 - Ombre: `--shadow-sm/md/lg` (vedi tokens). Card Tips/News: riposo `0 1px 2px rgba(0,0,0,.05), 0 8px 20px -10px rgba(0,0,0,.16)`; hover `0 2px 4px rgba(0,0,0,.06), 0 16px 34px -14px rgba(0,0,0,.24)`.
 - Contorno che gira (`.nw-trace`): stroke fucsia 3px, `stroke-linecap: round`, 0.55s `cubic-bezier(.35,0,.25,1)`.
 - Opacità testo: nero .6 body chiaro, bianco .72 body scuro; bianco .35–.55 solo per elementi decorativi/secondari.
-- Form pagina Contatti: pannello #0b0b0d con bordo #2c2c33, celle #1b1a22 bordo #3a3946 (focus #24222e/bianco). Form GHL: campi 55px, label 16/500, pulsante 14/600 bordo 2px (vedi `css/ghl-form.README.md`).
+- Form pagina Contatti: nessun pannello attorno ai campi (i campi stanno direttamente sulla pagina), celle piene #1b1a22 bordo #3a3946 (focus #24222e/bianco). Form GHL: campi 55px, label 16/500, pulsante 14/600 bordo 2px (vedi `css/ghl-form.README.md`).
 
 ## 9. Transizioni e hover
 
@@ -161,6 +161,7 @@ Mitigata, non riscritta:
 - Case Studies: `#cs-works` e `.cs-cta` non usano più pannelli sticky più alti della viewport.
 - Join Us "Chi siamo": titolo `--t-sub` senza icona, body `clamp(1.0625rem, 1.35vw, 1.3rem)`, colonne a pari altezza.
 - Icone Contatti: un solo set SVG 24px, stroke 1.8, linecap/linejoin round.
+- Form nella hero delle pagine servizi (.svc-hero__form-card, css/responsive.css blocco "Form nella hero delle pagine servizi: restyling" + css/ghl-form--hero-servizi.css): scheda in vetro scuro (fondo rgba(14,6,14,.56), blur 20px, bordo bianco .16 + riflesso interno, radius 36) che lascia intravedere lo sfondo della hero (video o righe); titolo "SCRIVICI." in font titoli 900 maiuscolo col punto fucsia; riga "Ti rispondiamo entro 24 ore." solo con altezza ≥ 900px (sotto resta la versione compatta); campi traslucidi (bianco .09, bordo bianco .24, hover bianco .12 / bordo .5, focus bianco .13 con bordo fucsia + alone   0 0 3px rgba(219,0,90,.3)), placeholder bianco .6, label 14/600; casella privacy disegnata 20px (fucsia da selezionata, segno bianco); link privacy bianco con sottolineatura fucsia; pulsante fucsia con ombra (hover bianco/nero). Sotto i 900px di larghezza la colonna del form è nascosta.
 
 ## 17. Timeline servizi (`.svc-path` / `.svc-tabs`)
 
